@@ -912,8 +912,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
  
 diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/spell/postgres.aspell
 --- pology-0.12.ori/lang/ru/spell/postgres.aspell	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/lang/ru/spell/postgres.aspell	2016-04-12 07:54:31.527513738 +0300
-@@ -0,0 +1,488 @@
++++ pology-0.12/lang/ru/spell/postgres.aspell	2016-04-13 09:30:28.148168241 +0300
+@@ -0,0 +1,491 @@
 +personal_ws-1.1 ru 0 UTF-8
 +Агрегатор
 +БО
@@ -975,6 +975,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +взаимоблокировок
 +взаимозаменяем
 +виртуализации
++воспроизводимости
 +восьмибайтное
 +восьмибайтном
 +восьмибайтные
@@ -1129,6 +1130,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +нежурналируемыми
 +нежурналируемых
 +незаархивированные
++незаблокированных
 +неинтуитивным
 +неинтуитивных
 +неконфликтующие
@@ -1194,6 +1196,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +переподключиться
 +перепроверяется
 +перепроверялись
++пересборки
 +пересвеченные
 +пересоберите
 +пересобирались
@@ -1404,27 +1407,28 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +языкозависимые
 diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres-names.aspell pology-0.12/lang/ru/spell/postgres-names.aspell
 --- pology-0.12.ori/lang/ru/spell/postgres-names.aspell	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/lang/ru/spell/postgres-names.aspell	2016-04-03 12:07:46.655621140 +0300
-@@ -0,0 +1,20 @@
++++ pology-0.12/lang/ru/spell/postgres-names.aspell	2016-04-13 09:18:48.522183453 +0300
+@@ -0,0 +1,21 @@
 +personal_ws-1.1 ru 0 UTF-8
-+Хейуорд
-+Хейуорду
-+Хейуорде
-+Уолли
-+д'Арк
-+Кормаком
-+Тадхоуп
-+Хангыль
-+Скалигера
-+Тридентского
-+Пердью
-+Фрайбергская
-+Левенштейн
-+Левенштейна
 +Аргоннская
 +Аргоннской
++Кормаком
 +Криптоком
 +Криптокоме
++Левенштейн
++Левенштейна
++Метлакалте
++Пердью
++Скалигера
++Тадхоуп
++Тридентского
++Уолли
++Фрайбергская
++Хангыль
++Хейуорд
++Хейуорде
++Хейуорду
++д'Арк
 +
 diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
 --- pology-0.12.ori/pology/markup.py	2014-07-24 22:57:17.000000000 +0400
@@ -1449,8 +1453,8 @@ diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
                     "Missing placeholder tags in translation: %(taglist)s.",
 diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.py
 --- pology-0.12.ori/pology/remove_ru.py	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/pology/remove_ru.py	2016-03-30 17:02:52.740585483 +0300
-@@ -0,0 +1,136 @@
++++ pology-0.12/pology/remove_ru.py	2016-04-13 09:47:52.049721456 +0300
+@@ -0,0 +1,152 @@
 +# -*- coding: utf-8 -*-
 +
 +"""
@@ -1526,6 +1530,9 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +
 +_people_re = re.compile(ur"("\
 +u"Аарон Д\. Гиффорд|"\
++u"Алекс Хансакер|"\
++u"Андреас Сельтенрейх|"\
++u"Андрес Фройнд|"\
 +u"Антс Аасма|"\
 +u"Б\. Палмер|"\
 +u"Брайан Глэдмен|"\
@@ -1535,6 +1542,8 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Герман Мендез Браво|"\
 +u"Д'Арси Дж\. М\. Каин|"\
 +u"Д\. Уитли|"\
++u"Джефф Джейнс|"\
++u"Джим Нэсби|"\
 +u"Джин Селков мл.|"\
 +u"Джо Геллерштейну|"\
 +u"Джо Конвей|"\
@@ -1545,15 +1554,19 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Жозефом Жюстом Скалигером|"\
 +u"КайГай Кохей|"\
 +u"Катрин Сейр|"\
++u"Киотаро Хоригучи|"\
 +u"Кристофер Кингс-Линн|"\
 +u"Линус Толке|"\
 +u"Майкл Дж\. Фромбергер|"\
-+u"Майкл Мескес|"\
 +u"Майклом Стоунбрейкером|"\
++u"Мануэль Матар|"\
 +u"Марк Кирквуд|"\
++u"Марко Ненчарини|"\
 +u"Марселя Корнакера|"\
 +u"Мартин Утеш|"\
 +u"Мартина Потера|"\
++u"Михаэль Мескес|"\
++u"Мишель Пакье|"\
 +u"Нейл Конвей|"\
 +u"Норм Уолш|"\
 +u"О'Рейли|"\
@@ -1568,14 +1581,21 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Саймон Тэтем|"\
 +u"Сатоши Нагаясу|"\
 +u"Стефаном Симковичем|"\
++u"Стивен Фрост|"\
 +u"Такахиро Итагаки|"\
 +u"Тацуо Исии|"\
 +u"Том Лейн|"\
++u"Томас Вондра|"\
++u"Томас Мунро|"\
++u"Фабиан Коэльо"\
 +u"Фёдор Сигаев|"\
 +u"Хейкки Линнакангас|"\
 +u"Шигеру Ханада|"\
++u"Элвис Пранскевичус|"\
 +u"Эндри Ю|"\
 +u"Эндрю Гирт|"\
++u"Эндрю Дунстан|"\
++u"Эцуро Фудзита|"\
 +u"Янко Рихтер|"\
 +
 +#u"|"\
