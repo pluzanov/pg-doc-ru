@@ -1,0 +1,2069 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: sql.xml:5(title)
+msgid "SQL"
+msgstr "SQL"
+
+#: sql.xml:8(para)
+msgid ""
+"This chapter introduces the mathematical concepts behind relational "
+"databases. It is not required reading, so if you bog down or want to get "
+"straight to some simple examples feel free to jump ahead to the next chapter "
+"and come back when you have more time and patience. This stuff is supposed "
+"to be fun!"
+msgstr ""
+
+#: sql.xml:16(para)
+msgid ""
+"This material originally appeared as a part of Stefan Simkovics' Master's "
+"Thesis (<xref linkend=\"sim98\" endterm=\"sim98\"/>)."
+msgstr ""
+
+#: sql.xml:23(para)
+msgid ""
+"<acronym>SQL</acronym> has become the most popular relational query "
+"language. The name <quote><acronym>SQL</acronym></quote> is an abbreviation "
+"for <firstterm>Structured Query Language</firstterm>. In 1974 Donald "
+"Chamberlin and others defined the language SEQUEL (<firstterm>Structured "
+"English Query Language</firstterm>) at IBM Research. This language was first "
+"implemented in an IBM prototype called SEQUEL-XRM in 1974-75. In 1976-77 a "
+"revised version of SEQUEL called SEQUEL/2 was defined and the name was "
+"changed to <acronym>SQL</acronym> subsequently."
+msgstr ""
+
+#: sql.xml:38(para)
+msgid ""
+"A new prototype called System R was developed by IBM in 1977. System R "
+"implemented a large subset of SEQUEL/2 (now <acronym>SQL</acronym>) and a "
+"number of changes were made to <acronym>SQL</acronym> during the project. "
+"System R was installed in a number of user sites, both internal IBM sites "
+"and also some selected customer sites. Thanks to the success and acceptance "
+"of System R at those user sites IBM started to develop commercial products "
+"that implemented the <acronym>SQL</acronym> language based on the System R "
+"technology."
+msgstr ""
+
+#: sql.xml:51(para)
+msgid ""
+"Over the next years IBM and also a number of other vendors announced "
+"<acronym>SQL</acronym> products such as <productname>SQL/DS</productname> "
+"(IBM), <productname>DB2</productname> (IBM), <productname>ORACLE</"
+"productname> (Oracle Corp.), <productname>DG/SQL</productname> (Data General "
+"Corp.), and <productname>SYBASE</productname> (Sybase Inc.)."
+msgstr ""
+
+#: sql.xml:61(para)
+msgid ""
+"<acronym>SQL</acronym> is also an official standard now. In 1982 the "
+"American National Standards Institute (<acronym>ANSI</acronym>) chartered "
+"its Database Committee X3H2 to develop a proposal for a standard relational "
+"language. This proposal was ratified in 1986 and consisted essentially of "
+"the IBM dialect of <acronym>SQL</acronym>. In 1987 this <acronym>ANSI</"
+"acronym> standard was also accepted as an international standard by the "
+"International Organization for Standardization (<acronym>ISO</acronym>). "
+"This original standard version of <acronym>SQL</acronym> is often referred "
+"to, informally, as <quote><abbrev>SQL/86</abbrev></quote>. In 1989 the "
+"original standard was extended and this new standard is often, again "
+"informally, referred to as <quote><abbrev>SQL/89</abbrev></quote>. Also in "
+"1989, a related standard called <firstterm>Database Language Embedded "
+"<acronym>SQL</acronym></firstterm> (<acronym>ESQL</acronym>) was developed."
+msgstr ""
+
+#: sql.xml:82(para)
+msgid ""
+"The <acronym>ISO</acronym> and <acronym>ANSI</acronym> committees have been "
+"working for many years on the definition of a greatly expanded version of "
+"the original standard, referred to informally as <firstterm><acronym>SQL2</"
+"acronym></firstterm> or <firstterm><acronym>SQL/92</acronym></firstterm>. "
+"This version became a ratified standard - <quote>International Standard ISO/"
+"IEC 9075:1992, Database Language <acronym>SQL</acronym></quote> - in late "
+"1992. <acronym>SQL/92</acronym> is the version normally meant when people "
+"refer to <quote>the <acronym>SQL</acronym> standard</quote>. A detailed "
+"description of <acronym>SQL/92</acronym> is given in <xref linkend="
+"\"date97\" endterm=\"date97\"/>. At the time of writing this document a new "
+"standard informally referred to as <firstterm><acronym>SQL3</acronym></"
+"firstterm> is under development. It is planned to make <acronym>SQL</"
+"acronym> a Turing-complete language, i.e., all computable queries (e.g., "
+"recursive queries) will be possible. This has now been completed as SQL:2003."
+msgstr ""
+
+#: sql.xml:104(title)
+#, fuzzy
+msgid "The Relational Data Model"
+msgstr "The <placeholder-1/> data model"
+
+#: sql.xml:106(para)
+msgid ""
+"As mentioned before, <acronym>SQL</acronym> is a relational language. That "
+"means it is based on the <firstterm>relational data model</firstterm> first "
+"published by E.F. Codd in 1970. We will give a formal description of the "
+"relational model later (in <xref linkend=\"formal-notion\" endterm=\"formal-"
+"notion\"/>) but first we want to have a look at it from a more intuitive "
+"point of view."
+msgstr ""
+
+#: sql.xml:131(para)
+msgid ""
+"SUPPLIER is a table storing the number (SNO), the name (SNAME) and the city "
+"(CITY) of a supplier."
+msgstr ""
+
+#: sql.xml:138(para)
+msgid ""
+"PART is a table storing the number (PNO) the name (PNAME) and the price "
+"(PRICE) of a part."
+msgstr ""
+
+#: sql.xml:145(para)
+msgid ""
+"SELLS stores information about which part (PNO) is sold by which supplier "
+"(SNO). It serves in a sense to connect the other two tables together."
+msgstr ""
+
+#: sql.xml:154(title)
+#, fuzzy
+msgid "The Suppliers and Parts Database"
+msgstr "Шаблоны баз данных"
+
+#: sql.xml:118(para)
+msgid ""
+"A <firstterm>relational database</firstterm> is a database that is perceived "
+"by its users as a <firstterm>collection of tables</firstterm> (and nothing "
+"else but tables). A table consists of rows and columns where each row "
+"represents a record and each column represents an attribute of the records "
+"contained in the table. <xref linkend=\"supplier-fig\" endterm=\"supplier-fig"
+"\"/> shows an example of a database consisting of three tables: "
+"<placeholder-1/>\n"
+"\n"
+"    <example><placeholder-2/>\n"
+"<screen>SUPPLIER:                   SELLS:\n"
+" SNO |  SNAME  |  CITY       SNO | PNO\n"
+"----+---------+--------     -----+-----\n"
+" 1  |  Smith  | London        1  |  1\n"
+" 2  |  Jones  | Paris         1  |  2\n"
+" 3  |  Adams  | Vienna        2  |  4\n"
+" 4  |  Blake  | Rome          3  |  1\n"
+"                              3  |  3\n"
+"                              4  |  2\n"
+"PART:                         4  |  3\n"
+" PNO |  PNAME  |  PRICE       4  |  4\n"
+"----+---------+---------\n"
+" 1  |  Screw  |   10\n"
+" 2  |  Nut    |    8\n"
+" 3  |  Bolt   |   15\n"
+" 4  |  Cam    |   25</screen></example>"
+msgstr ""
+
+#: sql.xml:174(para)
+msgid ""
+"The tables PART and SUPPLIER can be regarded as <firstterm>entities</"
+"firstterm> and SELLS can be regarded as a <firstterm>relationship</"
+"firstterm> between a particular part and a particular supplier."
+msgstr ""
+
+#: sql.xml:182(para)
+msgid ""
+"As we will see later, <acronym>SQL</acronym> operates on tables like the "
+"ones just defined but before that we will study the theory of the relational "
+"model."
+msgstr ""
+
+#: sql.xml:191(title)
+#, fuzzy
+msgid "Relational Data Model Formalities"
+msgstr ""
+"Relational Database Management System, Реляционная система управления базами "
+"данных"
+
+#: sql.xml:193(para)
+msgid ""
+"The mathematical concept underlying the relational model is the set-"
+"theoretic <firstterm>relation</firstterm> which is a subset of the Cartesian "
+"product of a list of domains. This set-theoretic relation gives the model "
+"its name (do not confuse it with the relationship from the <firstterm>Entity-"
+"Relationship model</firstterm>). Formally a domain is simply a set of "
+"values. For example the set of integers is a domain. Also the set of "
+"character strings of length 20 and the real numbers are examples of domains."
+msgstr ""
+
+#: sql.xml:206(para)
+msgid ""
+"The <firstterm>Cartesian product</firstterm> of domains "
+"<parameter>D<subscript>1</subscript></parameter>, <parameter>D<subscript>2</"
+"subscript></parameter>, ... <parameter>D<subscript>k</subscript></"
+"parameter>, written <parameter>D<subscript>1</subscript></parameter> "
+"&times;\n"
+"    <parameter>D<subscript>2</subscript></parameter> &times; ... &times;\n"
+"    <parameter>D<subscript>k</subscript></parameter> is the set of all k-"
+"tuples <parameter>v<subscript>1</subscript></parameter>, "
+"<parameter>v<subscript>2</subscript></parameter>, ... "
+"<parameter>v<subscript>k</subscript></parameter>, such that "
+"<parameter>v<subscript>1</subscript></parameter> &isin;\n"
+"    <parameter>D<subscript>1</subscript></parameter>, "
+"<parameter>v<subscript>2</subscript></parameter> &isin;\n"
+"    <parameter>D<subscript>2</subscript></parameter>, ... "
+"<parameter>v<subscript>k</subscript></parameter> &isin;\n"
+"    <parameter>D<subscript>k</subscript></parameter>."
+msgstr ""
+
+#: sql.xml:241(para)
+msgid ""
+"For example, when we have <parameter>k</parameter>=2, "
+"<parameter>D<subscript>1</subscript></parameter>=<literal>{0,1}</literal> "
+"and <parameter>D<subscript>2</subscript></parameter>=<literal>{a,b,c}</"
+"literal> then <parameter>D<subscript>1</subscript></parameter> &times;\n"
+"    <parameter>D<subscript>2</subscript></parameter> is <literal>{(0,a),(0,"
+"b),(0,c),(1,a),(1,b),(1,c)}</literal>."
+msgstr ""
+
+#: sql.xml:256(para)
+msgid ""
+"A Relation is any subset of the Cartesian product of one or more domains: "
+"<parameter>R</parameter> &sube;\n"
+"    <parameter>D<subscript>1</subscript></parameter> &times;\n"
+"    <parameter>D<subscript>2</subscript></parameter> &times; ... &times;\n"
+"    <parameter>D<subscript>k</subscript></parameter>."
+msgstr ""
+
+#: sql.xml:271(para)
+msgid ""
+"For example <literal>{(0,a),(0,b),(1,a)}</literal> is a relation; it is in "
+"fact a subset of <parameter>D<subscript>1</subscript></parameter> &times;\n"
+"    <parameter>D<subscript>2</subscript></parameter> mentioned above."
+msgstr ""
+
+#: sql.xml:279(para)
+msgid ""
+"The members of a relation are called tuples. Each relation of some Cartesian "
+"product <parameter>D<subscript>1</subscript></parameter> &times;\n"
+"    <parameter>D<subscript>2</subscript></parameter> &times; ... &times;\n"
+"    <parameter>D<subscript>k</subscript></parameter> is said to have arity "
+"<literal>k</literal> and is therefore a set of <literal>k</literal>-tuples."
+msgstr ""
+
+#: sql.xml:290(para)
+msgid ""
+"A relation can be viewed as a table (as we already did, remember <xref "
+"linkend=\"supplier-fig\" endterm=\"supplier-fig\"/> where every tuple is "
+"represented by a row and every column corresponds to one component of a "
+"tuple. Giving names (called attributes) to the columns leads to the "
+"definition of a <firstterm>relation scheme</firstterm>."
+msgstr ""
+
+#: sql.xml:328(para)
+msgid ""
+"A <firstterm>relation scheme</firstterm> is just a kind of template whereas "
+"a <firstterm>relation</firstterm> is an instance of a <firstterm>relation "
+"scheme</firstterm>. The relation consists of tuples (and can therefore be "
+"viewed as a table); not so the relation scheme."
+msgstr ""
+
+#: sql.xml:299(para)
+msgid ""
+"A <firstterm>relation scheme</firstterm> <literal>R</literal> is a finite "
+"set of attributes <parameter>A<subscript>1</subscript></parameter>, "
+"<parameter>A<subscript>2</subscript></parameter>, ... "
+"<parameter>A<subscript>k</subscript></parameter>. There is a domain "
+"<parameter>D<subscript>i</subscript></parameter>, for each attribute "
+"<parameter>A<subscript>i</subscript></parameter>, 1 &lt;= <literal>i</"
+"literal> &lt;= <literal>k</literal>, where the values of the attributes are "
+"taken from. We often write a relation scheme as "
+"<literal>R(<parameter>A<subscript>1</subscript></parameter>, "
+"<parameter>A<subscript>2</subscript></parameter>, ... "
+"<parameter>A<subscript>k</subscript></parameter>)</literal>. <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:340(title)
+#, fuzzy
+msgid "Domains vs. Data Types"
+msgstr "Двоичные типы данных"
+
+#: sql.xml:342(para)
+msgid ""
+"We often talked about <firstterm>domains</firstterm> in the last section. "
+"Recall that a domain is, formally, just a set of values (e.g., the set of "
+"integers or the real numbers). In terms of database systems we often talk of "
+"<firstterm>data types</firstterm> instead of domains. When we define a table "
+"we have to make a decision about which attributes to include. Additionally "
+"we have to decide which kind of data is going to be stored as attribute "
+"values. For example the values of <classname>SNAME</classname> from the "
+"table <classname>SUPPLIER</classname> will be character strings, whereas "
+"<classname>SNO</classname> will store integers. We define this by assigning "
+"a data type to each attribute. The type of <classname>SNAME</classname> will "
+"be <type>VARCHAR(20)</type> (this is the <acronym>SQL</acronym> type for "
+"character strings of length &lt;= 20), the type of <classname>SNO</"
+"classname> will be <type>INTEGER</type>. With the assignment of a data type "
+"we also have selected a domain for an attribute. The domain of "
+"<classname>SNAME</classname> is the set of all character strings of length "
+"&lt;= 20, the domain of <classname>SNO</classname> is the set of all integer "
+"numbers."
+msgstr ""
+
+#: sql.xml:372(title)
+msgid "Operations in the Relational Data Model"
+msgstr ""
+
+#: sql.xml:387(para)
+msgid ""
+"The <firstterm>Relational Algebra</firstterm> which is an algebraic "
+"notation, where queries are expressed by applying specialized operators to "
+"the relations."
+msgstr ""
+
+#: sql.xml:396(para)
+msgid ""
+"The <firstterm>Relational Calculus</firstterm> which is a logical notation, "
+"where queries are expressed by formulating some logical restrictions that "
+"the tuples in the answer must satisfy."
+msgstr ""
+
+#: sql.xml:374(para)
+msgid ""
+"In the previous section (<xref linkend=\"formal-notion\" endterm=\"formal-"
+"notion\"/>) we defined the mathematical notion of the relational model. Now "
+"we know how the data can be stored using a relational data model but we do "
+"not know what to do with all these tables to retrieve something from the "
+"database yet. For example somebody could ask for the names of all suppliers "
+"that sell the part 'Screw'. Therefore two rather different kinds of "
+"notations for expressing operations on relations have been defined: "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:407(title)
+#, fuzzy
+msgid "Relational Algebra"
+msgstr "Обоснование"
+
+#: sql.xml:415(para)
+msgid ""
+"SELECT (&sigma;): extracts <firstterm>tuples</firstterm> from a relation "
+"that satisfy a given restriction. Let <parameter>R</parameter> be a table "
+"that contains an attribute <parameter>A</parameter>. &sigma;<subscript>A=a</"
+"subscript>(R) = {t &isin; R &mid; t(A) = a} where <literal>t</literal> "
+"denotes a tuple of <parameter>R</parameter> and <literal>t(A)</literal> "
+"denotes the value of attribute <parameter>A</parameter> of tuple <literal>t</"
+"literal>."
+msgstr ""
+
+#: sql.xml:430(para)
+msgid ""
+"PROJECT (&pi;): extracts specified <firstterm>attributes</firstterm> "
+"(columns) from a relation. Let <classname>R</classname> be a relation that "
+"contains an attribute <classname>X</classname>. &pi;<subscript>X</"
+"subscript>(<classname>R</classname>) = {t(X) &mid; t &isin; <classname>R</"
+"classname>}, where <literal>t</literal>(<classname>X</classname>) denotes "
+"the value of attribute <classname>X</classname> of tuple <literal>t</"
+"literal>."
+msgstr ""
+
+#: sql.xml:442(para)
+msgid ""
+"PRODUCT (&times;): builds the Cartesian product of two relations. Let "
+"<classname>R</classname> be a table with arity <literal>k</"
+"literal><subscript>1</subscript> and let <classname>S</classname> be a table "
+"with arity <literal>k</literal><subscript>2</subscript>. <classname>R</"
+"classname> &times; <classname>S</classname> is the set of all <literal>k</"
+"literal><subscript>1</subscript> + <literal>k</literal><subscript>2</"
+"subscript>-tuples whose first <literal>k</literal><subscript>1</subscript> "
+"components form a tuple in <classname>R</classname> and whose last "
+"<literal>k</literal><subscript>2</subscript> components form a tuple in "
+"<classname>S</classname>."
+msgstr ""
+
+#: sql.xml:460(para)
+msgid ""
+"UNION (&cup;): builds the set-theoretic union of two tables. Given the "
+"tables <classname>R</classname> and <classname>S</classname> (both must have "
+"the same arity), the union <classname>R</classname> &cup; <classname>S</"
+"classname> is the set of tuples that are in <classname>R</classname> or "
+"<classname>S</classname> or both."
+msgstr ""
+
+#: sql.xml:471(para)
+msgid ""
+"INTERSECT (&cap;): builds the set-theoretic intersection of two tables. "
+"Given the tables <classname>R</classname> and <classname>S</classname>, "
+"<classname>R</classname> &cap; <classname>S</classname> is the set of tuples "
+"that are in <classname>R</classname> and in <classname>S</classname>. We "
+"again require that <classname>R</classname> and <classname>S</classname> "
+"have the same arity."
+msgstr ""
+
+#: sql.xml:486(para)
+msgid ""
+"DIFFERENCE (&minus; or &setmn;): builds the set difference of two tables. "
+"Let <classname>R</classname> and <classname>S</classname> again be two "
+"tables with the same arity. <classname>R</classname> - <classname>S</"
+"classname> is the set of tuples in <classname>R</classname> but not in "
+"<classname>S</classname>."
+msgstr ""
+
+#: sql.xml:497(para)
+msgid ""
+"JOIN (&prod;): connects two tables by their common attributes. Let "
+"<classname>R</classname> be a table with the attributes <classname>A</"
+"classname>,<classname>B</classname> and <classname>C</classname> and let "
+"<classname>S</classname> be a table with the attributes <classname>C</"
+"classname>,<classname>D</classname> and <classname>E</classname>. There is "
+"one attribute common to both relations, the attribute <classname>C</"
+"classname>. R &prod; S = &pi;<subscript>R.A,R.B,R.C,S.D,S.E</"
+"subscript>(&sigma;<subscript>R.C=S.C</subscript>(R &times; S)). What are we "
+"doing here? We first calculate the Cartesian product <classname>R</"
+"classname> &times; <classname>S</classname>. Then we select those tuples "
+"whose values for the common attribute <classname>C</classname> are equal "
+"(&sigma;<subscript>R.C = S.C</subscript>). Now we have a table that contains "
+"the attribute <classname>C</classname> two times and we correct this by "
+"projecting out the duplicate column."
+msgstr ""
+
+#: sql.xml:525(title)
+msgid "An Inner Join"
+msgstr ""
+
+#: sql.xml:527(para)
+msgid ""
+"Let's have a look at the tables that are produced by evaluating the steps "
+"necessary for a join. Let the following two tables be given: "
+"<screen>R:                 S:\n"
+" A | B | C          C | D | E\n"
+"---+---+---        ---+---+---\n"
+" 1 | 2 | 3          3 | a | b\n"
+" 4 | 5 | 6          6 | c | d\n"
+" 7 | 8 | 9</screen>"
+msgstr ""
+
+#: sql.xml:541(para)
+msgid ""
+"First we calculate the Cartesian product <classname>R</classname> &times; "
+"<classname>S</classname> and get: <screen>R x S:\n"
+" A | B | R.C | S.C | D | E\n"
+"---+---+-----+-----+---+---\n"
+" 1 | 2 |  3  |  3  | a | b\n"
+" 1 | 2 |  3  |  6  | c | d\n"
+" 4 | 5 |  6  |  3  | a | b\n"
+" 4 | 5 |  6  |  6  | c | d\n"
+" 7 | 8 |  9  |  3  | a | b\n"
+" 7 | 8 |  9  |  6  | c | d</screen>"
+msgstr ""
+
+#: sql.xml:557(para)
+msgid ""
+"After the selection &sigma;<subscript>R.C=S.C</subscript>(R &times; S) we "
+"get: <screen> A | B | R.C | S.C | D | E\n"
+"---+---+-----+-----+---+---\n"
+" 1 | 2 |  3  |  3  | a | b\n"
+" 4 | 5 |  6  |  6  | c | d</screen>"
+msgstr ""
+
+#: sql.xml:568(para)
+msgid ""
+"To remove the duplicate column <classname>S</classname>.<classname>C</"
+"classname> we project it out by the following operation: &pi;<subscript>R.A,"
+"R.B,R.C,S.D,S.E</subscript>(&sigma;<subscript>R.C=S.C</subscript>(R &times; "
+"S)) and get: <screen> A | B | C | D | E\n"
+"---+---+---+---+---\n"
+" 1 | 2 | 3 | a | b\n"
+" 4 | 5 | 6 | c | d</screen>"
+msgstr ""
+
+#: sql.xml:590(programlisting)
+#, no-wrap
+msgid "R &divide; S = {t &mid; &forall; t<subscript>s</subscript> &isin; S &exist; t<subscript>r</subscript> &isin; R"
+msgstr ""
+
+#: sql.xml:583(para)
+msgid ""
+"DIVIDE (&divide;): Let <classname>R</classname> be a table with the "
+"attributes A, B, C, and D and let <classname>S</classname> be a table with "
+"the attributes C and D. Then we define the division as: <placeholder-1/> "
+"such that t<subscript>r</subscript>(A,B)=t&and;t<subscript>r</subscript>(C,"
+"D)=t<subscript>s</subscript>} where t<subscript>r</subscript>(x,y) denotes a "
+"tuple of table <classname>R</classname> that consists only of the components "
+"<literal>x</literal> and <literal>y</literal>. Note that the tuple "
+"<literal>t</literal> only consists of the components <classname>A</"
+"classname> and <classname>B</classname> of relation <classname>R</classname>."
+msgstr ""
+
+#: sql.xml:604(para)
+msgid ""
+"Given the following tables <screen>R:                    S:\n"
+" A | B | C | D         C | D\n"
+"---+---+---+---       ---+---\n"
+" a | b | c | d         c | d\n"
+" a | b | e | f         e | f\n"
+" b | c | e | f\n"
+" e | d | c | d\n"
+" e | d | e | f\n"
+" a | b | d | e</screen> R &divide; S is derived as <screen> A | B\n"
+"---+---\n"
+" a | b\n"
+" e | d</screen>"
+msgstr ""
+
+#: sql.xml:409(para)
+#, fuzzy
+msgid ""
+"The <firstterm>Relational Algebra</firstterm> was introduced by E. F. Codd "
+"in 1972. It consists of a set of operations on relations: <placeholder-1/>"
+msgstr ""
+"<firstterm>Этап разбора</firstterm> разделяется на две части: <placeholder-1/"
+">"
+
+#: sql.xml:629(para)
+msgid ""
+"For a more detailed description and definition of the relational algebra "
+"refer to [<xref linkend=\"ull88\" endterm=\"ull88\"/>] or [<xref linkend="
+"\"date04\" endterm=\"date04\"/>]."
+msgstr ""
+
+#: sql.xml:636(title)
+msgid "A Query Using Relational Algebra"
+msgstr ""
+
+#: sql.xml:647(programlisting)
+#, no-wrap
+msgid "&pi;<subscript>SUPPLIER.SNAME</subscript>(&sigma;<subscript>PART.PNAME='Screw'</subscript>(SUPPLIER &prod; SELLS &prod; PART))"
+msgstr ""
+
+#: sql.xml:637(para)
+msgid ""
+"Recall that we formulated all those relational operators to be able to "
+"retrieve data from the database. Let's return to our example from the "
+"previous section (<xref linkend=\"operations\" endterm=\"operations\"/>) "
+"where someone wanted to know the names of all suppliers that sell the part "
+"<literal>Screw</literal>. This question can be answered using relational "
+"algebra by the following operation: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:650(para)
+msgid ""
+"We call such an operation a query. If we evaluate the above query against "
+"the our example tables (<xref linkend=\"supplier-fig\" endterm=\"supplier-fig"
+"\"/>) we will obtain the following result: <screen> SNAME\n"
+"-------\n"
+" Smith\n"
+" Adams</screen>"
+msgstr ""
+
+#: sql.xml:665(title)
+#, fuzzy
+msgid "Relational Calculus"
+msgstr "Слоты репликации"
+
+#: sql.xml:674(para)
+msgid ""
+"The <firstterm>Domain Relational Calculus</firstterm> (<acronym>DRC</"
+"acronym>), where variables stand for components (attributes) of the tuples."
+msgstr ""
+
+#: sql.xml:682(para)
+msgid ""
+"The <firstterm>Tuple Relational Calculus</firstterm> (<acronym>TRC</"
+"acronym>), where variables stand for tuples."
+msgstr ""
+
+#: sql.xml:667(para)
+msgid ""
+"The relational calculus is based on the <firstterm>first order logic</"
+"firstterm>. There are two variants of the relational calculus: "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:690(para)
+msgid ""
+"We want to discuss the tuple relational calculus only because it is the one "
+"underlying the most relational languages. For a detailed discussion on "
+"<acronym>DRC</acronym> (and also <acronym>TRC</acronym>) see <xref linkend="
+"\"date04\" endterm=\"date04\"/> or <xref linkend=\"ull88\" endterm=\"ull88\"/"
+">."
+msgstr ""
+
+#: sql.xml:702(title)
+msgid "Tuple Relational Calculus"
+msgstr ""
+
+#: sql.xml:708(programlisting)
+#, no-wrap
+msgid "x(A) &mid; F(x)"
+msgstr ""
+
+#: sql.xml:704(para)
+msgid ""
+"The queries used in <acronym>TRC</acronym> are of the following form: "
+"<placeholder-1/> where <literal>x</literal> is a tuple variable "
+"<classname>A</classname> is a set of attributes and <literal>F</literal> is "
+"a formula. The resulting relation consists of all tuples <literal>t(A)</"
+"literal> that satisfy <literal>F(t)</literal>."
+msgstr ""
+
+#: sql.xml:721(programlisting)
+#, no-wrap
+msgid ""
+"{x(SNAME) &mid; x &isin; SUPPLIER &and;\n"
+"    &exist; y &isin; SELLS &exist; z &isin; PART (y(SNO)=x(SNO) &and;\n"
+"    z(PNO)=y(PNO) &and;\n"
+"    z(PNAME)='Screw')}"
+msgstr ""
+
+#: sql.xml:716(para)
+msgid ""
+"If we want to answer the question from example <xref linkend=\"suppl-rel-alg"
+"\" endterm=\"suppl-rel-alg\"/> using <acronym>TRC</acronym> we formulate the "
+"following query: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:727(para)
+msgid ""
+"Evaluating the query against the tables from <xref linkend=\"supplier-fig\" "
+"endterm=\"supplier-fig\"/> again leads to the same result as in <xref "
+"linkend=\"suppl-rel-alg\" endterm=\"suppl-rel-alg\"/>."
+msgstr ""
+
+#: sql.xml:737(title)
+msgid "Relational Algebra vs. Relational Calculus"
+msgstr ""
+
+#: sql.xml:739(para)
+msgid ""
+"The relational algebra and the relational calculus have the same "
+"<firstterm>expressive power</firstterm>; i.e., all queries that can be "
+"formulated using relational algebra can also be formulated using the "
+"relational calculus and vice versa. This was first proved by E. F. Codd in "
+"1972. This proof is based on an algorithm (<quote>Codd's reduction "
+"algorithm</quote>) by which an arbitrary expression of the relational "
+"calculus can be reduced to a semantically equivalent expression of "
+"relational algebra. For a more detailed discussion on that refer to <xref "
+"linkend=\"date04\" endterm=\"date04\"/> and <xref linkend=\"ull88\" endterm="
+"\"ull88\"/>."
+msgstr ""
+
+#: sql.xml:754(para)
+msgid ""
+"It is sometimes said that languages based on the relational calculus are "
+"<quote>higher level</quote> or <quote>more declarative</quote> than "
+"languages based on relational algebra because the algebra (partially) "
+"specifies the order of operations while the calculus leaves it to a compiler "
+"or interpreter to determine the most efficient order of evaluation."
+msgstr ""
+
+#: sql.xml:766(title)
+msgid "The <acronym>SQL</acronym> Language"
+msgstr "Язык <acronym>SQL</acronym>"
+
+#: sql.xml:782(para)
+msgid "Commands for insertion, deletion or modification of data."
+msgstr ""
+
+#: sql.xml:793(programlisting)
+#, no-wrap
+msgid "A &lt; B + 3."
+msgstr ""
+
+#: sql.xml:788(para)
+msgid ""
+"Arithmetic capability: In <acronym>SQL</acronym> it is possible to involve "
+"arithmetic operations as well as comparisons, e.g.: <placeholder-1/> Note "
+"that + or other arithmetic operators appear neither in relational algebra "
+"nor in relational calculus."
+msgstr ""
+
+#: sql.xml:802(para)
+msgid ""
+"Assignment and Print Commands: It is possible to print a relation "
+"constructed by a query and to assign a computed relation to a relation name."
+msgstr ""
+
+#: sql.xml:810(para)
+msgid ""
+"Aggregate Functions: Operations such as <firstterm>average</firstterm>, "
+"<firstterm>sum</firstterm>, <firstterm>max</firstterm>, etc. can be applied "
+"to columns of a relation to obtain a single quantity."
+msgstr ""
+
+#: sql.xml:768(para)
+msgid ""
+"As is the case with most modern relational languages, <acronym>SQL</acronym> "
+"is based on the tuple relational calculus. As a result every query that can "
+"be formulated using the tuple relational calculus (or equivalently, "
+"relational algebra) can also be formulated using <acronym>SQL</acronym>. "
+"There are, however, capabilities beyond the scope of relational algebra or "
+"calculus. Here is a list of some additional features provided by "
+"<acronym>SQL</acronym> that are not part of relational algebra or calculus: "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:822(title)
+#, fuzzy
+msgid "Select"
+msgstr "выборка"
+
+#: sql.xml:824(para)
+msgid ""
+"The most often used command in <acronym>SQL</acronym> is the "
+"<command>SELECT</command> statement, used to retrieve data. The syntax is: "
+"<synopsis>SELECT [ ALL | DISTINCT [ ON ( <replaceable class=\"parameter"
+"\">expression</replaceable> [, ...] ) ] ]\n"
+"    * | <replaceable class=\"parameter\">expression</replaceable> [ [ AS ] "
+"<replaceable class=\"parameter\">output_name</replaceable> ] [, ...]\n"
+"    [ INTO [ TEMPORARY | TEMP ] [ TABLE ] <replaceable class=\"parameter"
+"\">new_table</replaceable> ]\n"
+"    [ FROM <replaceable class=\"parameter\">from_item</replaceable> "
+"[, ...] ]\n"
+"    [ WHERE <replaceable class=\"parameter\">condition</replaceable> ]\n"
+"    [ GROUP BY <replaceable class=\"parameter\">expression</replaceable> "
+"[, ...] ]\n"
+"    [ HAVING <replaceable class=\"parameter\">condition</replaceable> "
+"[, ...] ]\n"
+"    [ { UNION | INTERSECT | EXCEPT } [ ALL ] <replaceable class=\"parameter"
+"\">select</replaceable> ]\n"
+"    [ ORDER BY <replaceable class=\"parameter\">expression</replaceable> "
+"[ ASC | DESC | USING <replaceable class=\"parameter\">operator</"
+"replaceable> ] [ NULLS { FIRST | LAST } ] [, ...] ]\n"
+"    [ LIMIT { <replaceable class=\"parameter\">count</replaceable> | "
+"ALL } ]\n"
+"    [ OFFSET <replaceable class=\"parameter\">start</replaceable> ]\n"
+"    [ FOR { UPDATE | SHARE } [ OF <replaceable class=\"parameter"
+"\">table_name</replaceable> [, ...] ] [ NOWAIT | SKIP LOCKED ] [...] ]</"
+"synopsis>"
+msgstr ""
+
+#: sql.xml:843(para)
+msgid ""
+"Now we will illustrate the complex syntax of the <command>SELECT</command> "
+"statement with various examples. The tables used for the examples are "
+"defined in <xref linkend=\"supplier-fig\" endterm=\"supplier-fig\"/>."
+msgstr ""
+
+#: sql.xml:851(title)
+#, fuzzy
+msgid "Simple Selects"
+msgstr "Простые таблицы"
+
+#: sql.xml:857(title)
+#, fuzzy
+msgid "Simple Query with Qualification"
+msgstr "условие фильтра"
+
+#: sql.xml:862(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT * FROM PART\n"
+"    WHERE PRICE &gt; 10;"
+msgstr "SELECT * FROM tbl WHERE a COLLATE \"C\" &gt; 'foo';"
+
+#: sql.xml:858(para)
+msgid ""
+"To retrieve all tuples from table PART where the attribute PRICE is greater "
+"than 10 we formulate the following query: <placeholder-1/> and get the "
+"table: <screen> PNO |  PNAME  |  PRICE\n"
+"-----+---------+--------\n"
+"  3  |  Bolt   |   15\n"
+"  4  |  Cam    |   25</screen>"
+msgstr ""
+
+#: sql.xml:879(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT PNAME, PRICE\n"
+"    FROM PART\n"
+"    WHERE PRICE &gt; 10;"
+msgstr ""
+"SELECT name, altitude\n"
+"    FROM cities\n"
+"    WHERE altitude &gt; 500;"
+
+#: sql.xml:873(para)
+msgid ""
+"Using <quote>*</quote> in the <command>SELECT</command> statement will "
+"deliver all attributes from the table. If we want to retrieve only the "
+"attributes PNAME and PRICE from table PART we use the statement: "
+"<placeholder-1/> In this case the result is: <screen>                      "
+"PNAME  |  PRICE\n"
+"                     --------+--------\n"
+"                      Bolt   |   15\n"
+"                      Cam    |   25</screen> Note that the <acronym>SQL</"
+"acronym> <command>SELECT</command> corresponds to the <quote>projection</"
+"quote> in relational algebra not to the <quote>selection</quote> (see <xref "
+"linkend=\"rel-alg\" endterm=\"rel-alg\"/> for more details)."
+msgstr ""
+
+#: sql.xml:900(programlisting)
+#, no-wrap
+msgid ""
+"SELECT PNAME, PRICE\n"
+"    FROM PART\n"
+"    WHERE PNAME = 'Bolt' AND\n"
+"         (PRICE = 0 OR PRICE &lt;= 15);"
+msgstr ""
+
+#: sql.xml:896(para)
+msgid ""
+"The qualifications in the WHERE clause can also be logically connected using "
+"the keywords OR, AND, and NOT: <placeholder-1/> will lead to the result: "
+"<screen> PNAME  |  PRICE\n"
+"--------+--------\n"
+" Bolt   |   15</screen>"
+msgstr ""
+
+#: sql.xml:917(programlisting)
+#, no-wrap
+msgid ""
+"SELECT PNAME, PRICE * 2 AS DOUBLE\n"
+"    FROM PART\n"
+"    WHERE PRICE * 2 &lt; 50;"
+msgstr ""
+
+#: sql.xml:912(para)
+msgid ""
+"Arithmetic operations can be used in the target list and in the WHERE "
+"clause. For example if we want to know how much it would cost if we take two "
+"pieces of a part we could use the following query: <placeholder-1/> and we "
+"get: <screen> PNAME  |  DOUBLE\n"
+"--------+---------\n"
+" Screw  |    20\n"
+" Nut    |    16\n"
+" Bolt   |    30</screen> Note that the word DOUBLE after the keyword AS is "
+"the new title of the second column. This technique can be used for every "
+"element of the target list to assign a new title to the resulting column. "
+"This new title is often referred to as alias. The alias cannot be used "
+"throughout the rest of the query."
+msgstr ""
+
+#: sql.xml:853(para)
+#, fuzzy
+msgid ""
+"Here are some simple examples using a <command>SELECT</command> statement: "
+"<placeholder-1/>"
+msgstr ""
+"Теперь мы можем показать несколько операторов <command>INSERT</command>: "
+"<placeholder-1/>"
+
+#: sql.xml:941(title)
+#, fuzzy
+msgid "Joins"
+msgstr "Типы соединений"
+
+#: sql.xml:943(para)
+msgid ""
+"The following example shows how <firstterm>joins</firstterm> are realized in "
+"<acronym>SQL</acronym>."
+msgstr ""
+
+#: sql.xml:952(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNAME, P.PNAME\n"
+"    FROM SUPPLIER S, PART P, SELLS SE\n"
+"    WHERE S.SNO = SE.SNO AND\n"
+"          P.PNO = SE.PNO;"
+msgstr ""
+
+#: sql.xml:948(para)
+msgid ""
+"To join the three tables SUPPLIER, PART and SELLS over their common "
+"attributes we formulate the following statement: <placeholder-1/> and get "
+"the following table as a result: <screen> SNAME | PNAME\n"
+"-------+-------\n"
+" Smith | Screw\n"
+" Smith | Nut\n"
+" Jones | Cam\n"
+" Adams | Screw\n"
+" Adams | Bolt\n"
+" Blake | Nut\n"
+" Blake | Bolt\n"
+" Blake | Cam</screen>"
+msgstr ""
+
+#: sql.xml:971(para)
+msgid ""
+"In the FROM clause we introduced an alias name for every relation because "
+"there are common named attributes (SNO and PNO) among the relations. Now we "
+"can distinguish between the common named attributes by simply prefixing the "
+"attribute name with the alias name followed by a dot. The join is calculated "
+"in the same way as shown in <xref linkend=\"join-example\" endterm=\"join-"
+"example\"/>. First the Cartesian product SUPPLIER &times; PART &times; SELLS "
+"is derived. Now only those tuples satisfying the conditions given in the "
+"WHERE clause are selected (i.e., the common named attributes have to be "
+"equal). Finally we project out all columns but S.SNAME and P.PNAME."
+msgstr ""
+
+#: sql.xml:990(programlisting)
+#, no-wrap
+msgid ""
+"SELECT sname, pname from supplier\n"
+"    JOIN sells USING (sno)\n"
+"    JOIN part USING (pno);"
+msgstr ""
+
+#: sql.xml:988(para)
+msgid ""
+"Another way to perform joins is to use the SQL JOIN syntax as follows: "
+"<placeholder-1/> giving again: <screen> sname | pname\n"
+"-------+-------\n"
+" Smith | Screw\n"
+" Adams | Screw\n"
+" Smith | Nut\n"
+" Blake | Nut\n"
+" Adams | Bolt\n"
+" Blake | Bolt\n"
+" Jones | Cam\n"
+" Blake | Cam\n"
+"(8 rows)</screen>"
+msgstr ""
+
+#: sql.xml:1007(para)
+msgid ""
+"A joined table, created using JOIN syntax, is a table reference list item "
+"that occurs in a FROM clause and before any WHERE, GROUP BY, or HAVING "
+"clause. Other table references, including table names or other JOIN clauses, "
+"can be included in the FROM clause if separated by commas. JOINed tables are "
+"logically like any other table listed in the FROM clause."
+msgstr ""
+
+#: sql.xml:1016(para)
+msgid ""
+"SQL JOINs come in two main types, CROSS JOINs (unqualified joins) and "
+"<firstterm>qualified JOINs</firstterm>. Qualified joins can be further "
+"subdivided based on the way in which the <firstterm>join condition</"
+"firstterm> is specified (ON, USING, or NATURAL) and the way in which it is "
+"applied (INNER or OUTER join)."
+msgstr ""
+
+#: sql.xml:1025(title)
+msgid "Join Types"
+msgstr "Типы соединений"
+
+#: sql.xml:1027(term)
+#, fuzzy
+msgctxt "term"
+msgid "CROSS JOIN"
+msgstr "CROSS JOIN"
+
+#: sql.xml:1030(replaceable) sql.xml:1051(replaceable)
+msgid "T1"
+msgstr "T1"
+
+#: sql.xml:1031(command)
+#, fuzzy
+msgctxt "command"
+msgid "CROSS JOIN"
+msgstr "CROSS JOIN"
+
+#: sql.xml:1032(replaceable) sql.xml:1065(replaceable)
+msgid "T2"
+msgstr "T2"
+
+#: sql.xml:1035(para)
+msgid ""
+"A cross join takes two tables T1 and T2 having N and M rows respectively, "
+"and returns a joined table containing all N*M possible joined rows. For each "
+"row R1 of T1, each row R2 of T2 is joined with R1 to yield a joined table "
+"row JR consisting of all fields in R1 and R2. A CROSS JOIN is equivalent to "
+"an INNER JOIN ON TRUE."
+msgstr ""
+
+#: sql.xml:1047(term)
+msgid "Qualified JOINs"
+msgstr ""
+
+#: sql.xml:1052(arg)
+msgid "NATURAL"
+msgstr "NATURAL"
+
+#: sql.xml:1054(arg) sql.xml:1093(arg)
+msgid "INNER"
+msgstr "INNER"
+
+#: sql.xml:1057(arg) sql.xml:1114(arg)
+msgid "LEFT"
+msgstr "LEFT"
+
+#: sql.xml:1058(arg) sql.xml:1136(arg)
+msgid "RIGHT"
+msgstr "RIGHT"
+
+#: sql.xml:1059(arg) sql.xml:1158(arg)
+msgid "FULL"
+msgstr "FULL"
+
+#: sql.xml:1061(arg) sql.xml:1115(arg) sql.xml:1137(arg) sql.xml:1159(arg)
+msgid "OUTER"
+msgstr "OUTER"
+
+#: sql.xml:1064(command) sql.xml:1094(command) sql.xml:1116(command)
+#: sql.xml:1138(command) sql.xml:1160(command)
+msgid "JOIN"
+msgstr "JOIN"
+
+#: sql.xml:1067(replaceable)
+#, fuzzy
+msgid "search condition"
+msgstr "Условие поиска"
+
+#: sql.xml:1067(arg)
+msgid "ON <placeholder-1/>"
+msgstr "ON <placeholder-1/>"
+
+#: sql.xml:1068(replaceable)
+msgid "join column list"
+msgstr "список столбцов соединения"
+
+#: sql.xml:1068(arg)
+#, fuzzy
+msgid "USING ( <placeholder-1/> )"
+msgstr "USING ( <placeholder-1/> [, ...] )"
+
+#: sql.xml:1072(para)
+msgid ""
+"A qualified JOIN must specify its join condition by providing one (and only "
+"one) of NATURAL, ON, or USING. The ON clause takes a <replaceable>search "
+"condition</replaceable>, which is the same as in a WHERE clause. The USING "
+"clause takes a comma-separated list of column names, which the joined tables "
+"must have in common, and joins the tables on equality of those columns. "
+"NATURAL is shorthand for a USING clause that lists all the common column "
+"names of the two tables. A side-effect of both USING and NATURAL is that "
+"only one copy of each joined column is emitted into the result table "
+"(compare the relational-algebra definition of JOIN, shown earlier)."
+msgstr ""
+
+#: sql.xml:1098(para)
+msgid ""
+"For each row R1 of T1, the joined table has a row for each row in T2 that "
+"satisfies the join condition with R1."
+msgstr ""
+"Для каждой строки R1 из T1 в результирующей таблице содержится строка для "
+"каждой строки в T2, удовлетворяющей условию соединения с R1."
+
+#: sql.xml:1103(para)
+msgid ""
+"The words INNER and OUTER are optional for all JOINs. INNER is the default. "
+"LEFT, RIGHT, and FULL imply an OUTER JOIN."
+msgstr ""
+
+#: sql.xml:1120(para)
+#, fuzzy
+msgid ""
+"First, an INNER JOIN is performed. Then, for each row in T1 that does not "
+"satisfy the join condition with any row in T2, an additional joined row is "
+"returned with null fields in the columns from T2."
+msgstr ""
+"Сначала выполняется внутреннее соединение (INNER JOIN). Затем в результат "
+"добавляются все строки из T1, которым не соответствуют никакие строки в T2, "
+"а вместо значений столбцов T2 вставляются NULL. Таким образом, в "
+"результирующей таблице всегда будет минимум одна строка для каждой строки из "
+"T1."
+
+#: sql.xml:1127(para)
+msgid "The joined table unconditionally has a row for each row in T1."
+msgstr ""
+
+#: sql.xml:1142(para)
+#, fuzzy
+msgid ""
+"First, an INNER JOIN is performed. Then, for each row in T2 that does not "
+"satisfy the join condition with any row in T1, an additional joined row is "
+"returned with null fields in the columns from T1."
+msgstr ""
+"Сначала выполняется внутреннее соединение (INNER JOIN). Затем в результат "
+"добавляются все строки из T1, которым не соответствуют никакие строки в T2, "
+"а вместо значений столбцов T2 вставляются NULL. Таким образом, в "
+"результирующей таблице всегда будет минимум одна строка для каждой строки из "
+"T1."
+
+#: sql.xml:1149(para)
+msgid "The joined table unconditionally has a row for each row in T2."
+msgstr ""
+
+#: sql.xml:1164(para)
+#, fuzzy
+msgid ""
+"First, an INNER JOIN is performed. Then, for each row in T1 that does not "
+"satisfy the join condition with any row in T2, an additional joined row is "
+"returned with null fields in the columns from T2. Also, for each row in T2 "
+"that does not satisfy the join condition with any row in T1, an additional "
+"joined row is returned with null fields in the columns from T1."
+msgstr ""
+"Сначала выполняется внутреннее соединение. Затем в результат добавляются все "
+"строки из T1, которым не соответствуют никакие строки в T2, а вместо "
+"значений столбцов T2 вставляются NULL. И наконец, в результат включаются все "
+"строки из T2, которым не соответствуют никакие строки в T1, а вместо "
+"значений столбцов T1 вставляются NULL."
+
+#: sql.xml:1174(para)
+msgid ""
+"The joined table unconditionally has a row for every row of T1 and a row for "
+"every row of T2."
+msgstr ""
+
+#: sql.xml:1188(para)
+msgid ""
+"JOINs of all types can be chained together or nested where either or both of "
+"<replaceable class=\"parameter\">T1</replaceable> and <replaceable class="
+"\"parameter\">T2</replaceable> can be JOINed tables. Parenthesis can be used "
+"around JOIN clauses to control the order of JOINs which are otherwise "
+"processed left to right."
+msgstr ""
+
+#: sql.xml:1199(title)
+msgid "Aggregate Functions"
+msgstr "Агрегатные функции"
+
+#: sql.xml:1213(title) sql.xml:1274(title)
+msgid "Aggregates"
+msgstr "Агрегатные функции"
+
+#: sql.xml:1219(programlisting)
+#, no-wrap
+msgid ""
+"SELECT AVG(PRICE) AS AVG_PRICE\n"
+"    FROM PART;"
+msgstr ""
+
+#: sql.xml:1215(para)
+#, fuzzy
+msgid ""
+"If we want to know the average cost of all parts in table PART we use the "
+"following query: <placeholder-1/>"
+msgstr ""
+"Чтобы создать секционированную таблицу, выполните следующее: <placeholder-1/>"
+
+#: sql.xml:1223(para)
+msgid ""
+"The result is: <screen> AVG_PRICE\n"
+"-----------\n"
+"   14.5</screen>"
+msgstr ""
+
+#: sql.xml:1235(programlisting)
+#, no-wrap
+msgid ""
+"SELECT COUNT(PNO)\n"
+"    FROM PART;"
+msgstr ""
+
+#: sql.xml:1231(para)
+msgid ""
+"If we want to know how many parts are defined in table PART we use the "
+"statement: <placeholder-1/> and get: <screen> COUNT\n"
+"-------\n"
+"   4</screen>"
+msgstr ""
+
+#: sql.xml:1201(para)
+msgid ""
+"<acronym>SQL</acronym> provides aggregate functions such as AVG, COUNT, SUM, "
+"MIN, and MAX. The argument(s) of an aggregate function are evaluated at each "
+"row that satisfies the WHERE clause, and the aggregate function is "
+"calculated over this set of input values. Normally, an aggregate delivers a "
+"single result for a whole <command>SELECT</command> statement. But if "
+"grouping is specified in the query, then a separate calculation is done over "
+"the rows of each group, and an aggregate result is delivered per group (see "
+"next section). <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1250(title)
+#, fuzzy
+msgid "Aggregation by Groups"
+msgstr "Агрегатные функции"
+
+#: sql.xml:1252(para)
+msgid ""
+"<acronym>SQL</acronym> allows one to partition the tuples of a table into "
+"groups. Then the aggregate functions described above can be applied to the "
+"groups &mdash; i.e., the value of the aggregate function is no longer "
+"calculated over all the values of the specified column but over all values "
+"of a group. Thus the aggregate function is evaluated separately for every "
+"group."
+msgstr ""
+
+#: sql.xml:1279(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNO, S.SNAME, COUNT(SE.PNO)\n"
+"    FROM SUPPLIER S, SELLS SE\n"
+"    WHERE S.SNO = SE.SNO\n"
+"    GROUP BY S.SNO, S.SNAME;"
+msgstr ""
+
+#: sql.xml:1275(para)
+msgid ""
+"If we want to know how many parts are sold by every supplier we formulate "
+"the query: <placeholder-1/> and get: <screen> SNO | SNAME | COUNT\n"
+"-----+-------+-------\n"
+"  1  | Smith |   2\n"
+"  2  | Jones |   1\n"
+"  3  | Adams |   2\n"
+"  4  | Blake |   3</screen>"
+msgstr ""
+
+#: sql.xml:1294(para)
+msgid ""
+"Now let's have a look of what is happening here. First the join of the "
+"tables SUPPLIER and SELLS is derived: <screen> S.SNO | S.SNAME | SE.PNO\n"
+"-------+---------+--------\n"
+"   1   |  Smith  |   1\n"
+"   1   |  Smith  |   2\n"
+"   2   |  Jones  |   4\n"
+"   3   |  Adams  |   1\n"
+"   3   |  Adams  |   3\n"
+"   4   |  Blake  |   2\n"
+"   4   |  Blake  |   3\n"
+"   4   |  Blake  |   4</screen>"
+msgstr ""
+
+#: sql.xml:1311(para)
+msgid ""
+"Next we partition the tuples into groups by putting all tuples together that "
+"agree on both attributes S.SNO and S.SNAME: <screen> S.SNO | S.SNAME | SE."
+"PNO\n"
+"-------+---------+--------\n"
+"   1   |  Smith  |   1\n"
+"                 |   2\n"
+"--------------------------\n"
+"   2   |  Jones  |   4\n"
+"--------------------------\n"
+"   3   |  Adams  |   1\n"
+"                 |   3\n"
+"--------------------------\n"
+"   4   |  Blake  |   2\n"
+"                 |   3\n"
+"                 |   4</screen>"
+msgstr ""
+
+#: sql.xml:1330(para)
+msgid ""
+"In our example we got four groups and now we can apply the aggregate "
+"function COUNT to every group leading to the final result of the query given "
+"above."
+msgstr ""
+
+#: sql.xml:1262(para)
+msgid ""
+"The partitioning of the tuples into groups is done by using the keywords "
+"<command>GROUP BY</command> followed by a list of attributes that define the "
+"groups. If we have <command>GROUP BY A<subscript>1</subscript>, &tdot;, "
+"A<subscript>k</subscript></command> we partition the relation into groups, "
+"such that two tuples are in the same group if and only if they agree on all "
+"the attributes A<subscript>1</subscript>, &tdot;, A<subscript>k</subscript>. "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1338(para)
+msgid ""
+"Note that for a query using GROUP BY and aggregate functions to make sense, "
+"the target list can only refer directly to the attributes being grouped by. "
+"Other attributes can only be used inside the arguments of aggregate "
+"functions. Otherwise there would not be a unique value to associate with the "
+"other attributes."
+msgstr ""
+
+#: sql.xml:1346(para)
+msgid ""
+"Also observe that it makes no sense to ask for an aggregate of an aggregate, "
+"e.g., AVG(MAX(sno)), because a <command>SELECT</command> only does one pass "
+"of grouping and aggregation. You can get a result of this kind by using a "
+"temporary table or a sub-SELECT in the FROM clause to do the first level of "
+"aggregation."
+msgstr ""
+
+#: sql.xml:1357(title) sql.xml:1372(title)
+msgid "Having"
+msgstr ""
+
+#: sql.xml:1378(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNO, S.SNAME, COUNT(SE.PNO)\n"
+"    FROM SUPPLIER S, SELLS SE\n"
+"    WHERE S.SNO = SE.SNO\n"
+"    GROUP BY S.SNO, S.SNAME\n"
+"    HAVING COUNT(SE.PNO) &gt; 1;"
+msgstr ""
+
+#: sql.xml:1374(para)
+msgid ""
+"If we want only those suppliers selling more than one part we use the query: "
+"<placeholder-1/> and get: <screen> SNO | SNAME | COUNT\n"
+"-----+-------+-------\n"
+"  1  | Smith |   2\n"
+"  3  | Adams |   2\n"
+"  4  | Blake |   3</screen>"
+msgstr ""
+
+#: sql.xml:1359(para)
+msgid ""
+"The HAVING clause works much like the WHERE clause and is used to consider "
+"only those groups satisfying the qualification given in the HAVING clause. "
+"Essentially, WHERE filters out unwanted input rows before grouping and "
+"aggregation are done, whereas HAVING filters out unwanted group rows post-"
+"GROUP. Therefore, WHERE cannot refer to the results of aggregate functions. "
+"On the other hand, there's no point in writing a HAVING condition that "
+"doesn't involve an aggregate function! If your condition doesn't involve "
+"aggregates, you might as well write it in WHERE, and thereby avoid the "
+"computation of aggregates for groups that you're just going to throw away "
+"anyway. <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1397(title)
+msgid "Subqueries"
+msgstr "Подзапросы"
+
+#: sql.xml:1407(title)
+#, fuzzy
+msgid "Subselect"
+msgstr "выборка"
+
+#: sql.xml:1413(programlisting)
+#, no-wrap
+msgid ""
+"SELECT *\n"
+"    FROM PART\n"
+"    WHERE PRICE &gt; (SELECT PRICE FROM PART\n"
+"                   WHERE PNAME='Screw');"
+msgstr ""
+
+#: sql.xml:1409(para)
+msgid ""
+"If we want to know all parts having a greater price than the part named "
+"'Screw' we use the query: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1419(para)
+msgid ""
+"The result is: <screen> PNO |  PNAME  |  PRICE\n"
+"-----+---------+--------\n"
+"  3  |  Bolt   |   15\n"
+"  4  |  Cam    |   25</screen>"
+msgstr ""
+
+#: sql.xml:1428(para)
+msgid ""
+"When we look at the above query we can see the keyword <command>SELECT</"
+"command> two times. The first one at the beginning of the query - we will "
+"refer to it as outer <command>SELECT</command> - and the one in the WHERE "
+"clause which begins a nested query - we will refer to it as inner "
+"<command>SELECT</command>. For every tuple of the outer <command>SELECT</"
+"command> the inner <command>SELECT</command> has to be evaluated. After "
+"every evaluation we know the price of the tuple named 'Screw' and we can "
+"check if the price of the actual tuple is greater. (Actually, in this "
+"example the inner query need only be evaluated once, since it does not "
+"depend on the state of the outer query.)"
+msgstr ""
+
+#: sql.xml:1447(programlisting)
+#, no-wrap
+msgid ""
+"SELECT *\n"
+"    FROM SUPPLIER S\n"
+"    WHERE NOT EXISTS\n"
+"        (SELECT * FROM SELLS SE\n"
+"         WHERE SE.SNO = S.SNO);"
+msgstr ""
+
+#: sql.xml:1443(para)
+msgid ""
+"If we want to know all suppliers that do not sell any part (e.g., to be able "
+"to remove these suppliers from the database) we use: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1454(para)
+msgid ""
+"In our example the result will be empty because every supplier sells at "
+"least one part. Note that we use S.SNO from the outer <command>SELECT</"
+"command> within the WHERE clause of the inner <command>SELECT</command>. "
+"Here the subquery must be evaluated afresh for each tuple from the outer "
+"query, i.e., the value for S.SNO is always taken from the current tuple of "
+"the outer <command>SELECT</command>."
+msgstr ""
+
+#: sql.xml:1399(para)
+msgid ""
+"In the WHERE and HAVING clauses the use of subqueries (subselects) is "
+"allowed in every place where a value is expected. In this case the value "
+"must be derived by evaluating the subquery first. The usage of subqueries "
+"extends the expressive power of <acronym>SQL</acronym>. <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1468(title)
+#, fuzzy
+msgid "Subqueries in FROM"
+msgstr "Подзапросы в CHECK"
+
+#: sql.xml:1479(title)
+msgid "Subselect in FROM"
+msgstr ""
+
+#: sql.xml:1485(programlisting)
+#, no-wrap
+msgid ""
+"SELECT MAX(subtable.avgprice)\n"
+"    FROM (SELECT AVG(P.PRICE) AS avgprice\n"
+"          FROM SUPPLIER S, PART P, SELLS SE\n"
+"          WHERE S.SNO = SE.SNO AND\n"
+"                P.PNO = SE.PNO\n"
+"          GROUP BY S.SNO) subtable;"
+msgstr ""
+
+#: sql.xml:1481(para)
+msgid ""
+"If we want to know the highest average part price among all our suppliers, "
+"we cannot write MAX(AVG(PRICE)), but we can write: <placeholder-1/> The "
+"subquery returns one row per supplier (because of its GROUP BY) and then we "
+"aggregate over those rows in the outer query."
+msgstr ""
+
+#: sql.xml:1470(para)
+msgid ""
+"A somewhat different way of using subqueries is to put them in the FROM "
+"clause. This is a useful feature because a subquery of this kind can output "
+"multiple columns and rows, whereas a subquery used in an expression must "
+"deliver just a single result. It also lets us get more than one round of "
+"grouping/aggregation without resorting to a temporary table. <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1500(title) sql.xml:1507(title)
+msgid "Union, Intersect, Except"
+msgstr ""
+
+#: sql.xml:1512(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNAME = 'Jones'\n"
+"UNION\n"
+"    SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNAME = 'Adams';"
+msgstr ""
+
+#: sql.xml:1509(para)
+msgid ""
+"The following query is an example for UNION: <placeholder-1/> gives the "
+"result: <screen> SNO | SNAME |  CITY\n"
+"-----+-------+--------\n"
+"  2  | Jones | Paris\n"
+"  3  | Adams | Vienna</screen>"
+msgstr ""
+
+#: sql.xml:1531(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNO &gt; 1\n"
+"INTERSECT\n"
+"    SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNO &lt; 3;"
+msgstr ""
+
+#: sql.xml:1528(para)
+msgid ""
+"Here is an example for INTERSECT: <placeholder-1/> gives the result: "
+"<screen> SNO | SNAME |  CITY\n"
+"-----+-------+--------\n"
+"  2  | Jones | Paris</screen> The only tuple returned by both parts of the "
+"query is the one having SNO=2."
+msgstr ""
+
+#: sql.xml:1551(programlisting)
+#, no-wrap
+msgid ""
+"SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNO &gt; 1\n"
+"EXCEPT\n"
+"    SELECT S.SNO, S.SNAME, S.CITY\n"
+"    FROM SUPPLIER S\n"
+"    WHERE S.SNO &gt; 3;"
+msgstr ""
+
+#: sql.xml:1548(para)
+msgid ""
+"Finally an example for EXCEPT: <placeholder-1/> gives the result: <screen> "
+"SNO | SNAME |  CITY\n"
+"-----+-------+--------\n"
+"  2  | Jones | Paris\n"
+"  3  | Adams | Vienna</screen>"
+msgstr ""
+
+#: sql.xml:1502(para)
+msgid ""
+"These operations calculate the union, intersection and set theoretic "
+"difference of the tuples derived by two subqueries. <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1572(title)
+msgid "Data Definition"
+msgstr "Определение данных"
+
+#: sql.xml:1574(para)
+#, fuzzy
+msgid ""
+"There is a set of commands used for data definition included in the "
+"<acronym>SQL</acronym> language."
+msgstr "добавляет управляющие структуры к языку <acronym>SQL</acronym>,"
+
+#: sql.xml:1580(title)
+#, fuzzy
+msgid "Create Table"
+msgstr "Создание таблицы"
+
+#: sql.xml:1593(title)
+#, fuzzy
+msgid "Table Creation"
+msgstr "Табличные выражения"
+
+#: sql.xml:1600(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE SUPPLIER\n"
+"    (SNO   INTEGER,\n"
+"     SNAME VARCHAR(20),\n"
+"     CITY  VARCHAR(20));"
+msgstr ""
+
+#: sql.xml:1605(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE PART\n"
+"    (PNO   INTEGER,\n"
+"     PNAME VARCHAR(20),\n"
+"     PRICE DECIMAL(4 , 2));"
+msgstr ""
+
+#: sql.xml:1610(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE SELLS\n"
+"    (SNO INTEGER,\n"
+"     PNO INTEGER);"
+msgstr ""
+
+#: sql.xml:1595(para)
+msgid ""
+"To create the tables defined in <xref linkend=\"supplier-fig\" endterm="
+"\"supplier-fig\"/> the following <acronym>SQL</acronym> statements are used: "
+"<placeholder-1/>\n"
+"\n"
+"<placeholder-2/>\n"
+"\n"
+"<placeholder-3/>"
+msgstr ""
+
+#: sql.xml:1582(para)
+#, fuzzy
+msgid ""
+"The most fundamental command for data definition is the one that creates a "
+"new relation (a new table). The syntax of the <command>CREATE TABLE</"
+"command> command is: <synopsis>CREATE TABLE <replaceable class=\"parameter"
+"\">table_name</replaceable>\n"
+"    (<replaceable class=\"parameter\">name_of_attr_1</replaceable> "
+"<replaceable class=\"parameter\">type_of_attr_1</replaceable>\n"
+"     [, <replaceable class=\"parameter\">name_of_attr_2</replaceable> "
+"<replaceable class=\"parameter\">type_of_attr_2</replaceable>\n"
+"     [, ...]]);</synopsis>\n"
+"\n"
+"      <placeholder-1/>"
+msgstr ""
+"<literal>\\c</literal> или <literal>\\connect</literal> "
+"<literal>[ <replaceable class=\"parameter\">имя_базы</replaceable> "
+"[ <replaceable class=\"parameter\">имя_пользователя</replaceable> ] "
+"[ <replaceable class=\"parameter\">компьютер</replaceable> ] [ <replaceable "
+"class=\"parameter\">порт</replaceable> ] ] | <replaceable class=\"parameter"
+"\">строка_подключения</replaceable></literal>"
+
+#: sql.xml:1619(title)
+#, fuzzy
+msgid "Data Types in <acronym>SQL</acronym>"
+msgstr "Расширение <acronym>SQL</acronym>"
+
+#: sql.xml:1627(para)
+msgid "INTEGER: signed fullword binary integer (31 bits precision)."
+msgstr ""
+
+#: sql.xml:1633(para)
+msgid "SMALLINT: signed halfword binary integer (15 bits precision)."
+msgstr ""
+
+#: sql.xml:1639(para)
+#, fuzzy
+msgid ""
+"DECIMAL (<replaceable class=\"parameter\">p</replaceable>[,<replaceable "
+"class=\"parameter\">q</replaceable>]): signed packed decimal number of up to "
+"<replaceable class=\"parameter\">p</replaceable> digits, with <replaceable "
+"class=\"parameter\">q</replaceable> digits to the right of the decimal "
+"point. If <replaceable class=\"parameter\">q</replaceable> is omitted it is "
+"assumed to be 0."
+msgstr ""
+"<literal>sum(<replaceable class=\"parameter\">X</replaceable>*<replaceable "
+"class=\"parameter\">Y</replaceable>) - sum(<replaceable class=\"parameter"
+"\">X</replaceable>) * sum(<replaceable class=\"parameter\">Y</replaceable>)/"
+"<replaceable class=\"parameter\">N</replaceable></literal> (<quote>сумма "
+"произведений</quote> независимых и зависимых переменных)"
+
+#: sql.xml:1652(para)
+msgid "FLOAT: signed doubleword floating point number."
+msgstr ""
+
+#: sql.xml:1658(para)
+#, fuzzy
+msgid ""
+"VARCHAR(<replaceable class=\"parameter\">n</replaceable>): varying length "
+"character string of maximum length <replaceable class=\"parameter\">n</"
+"replaceable>."
+msgstr ""
+"pg_dump <replaceable class=\"parameter\">имя_базы</replaceable> | gzip &gt; "
+"<replaceable class=\"parameter\">имя_файла</replaceable>.gz"
+
+#: sql.xml:1666(para)
+#, fuzzy
+msgid ""
+"CHAR(<replaceable class=\"parameter\">n</replaceable>): fixed length "
+"character string of length <replaceable class=\"parameter\">n</replaceable>."
+msgstr ""
+"cat <replaceable class=\"parameter\">имя_файла</replaceable>* | psql "
+"<replaceable class=\"parameter\">имя_базы</replaceable>"
+
+#: sql.xml:1621(para)
+#, fuzzy
+msgid ""
+"The following is a list of some data types that are supported by "
+"<acronym>SQL</acronym>: <placeholder-1/>"
+msgstr ""
+"Для <productname>SSPI</productname> доступны следующие параметры "
+"конфигурации: <placeholder-1/>"
+
+#: sql.xml:1678(title) sql.xml:1701(title)
+#, fuzzy
+msgid "Create Index"
+msgstr "Создание индексов"
+
+#: sql.xml:1680(para)
+msgid ""
+"Indexes are used to speed up access to a relation. If a relation "
+"<classname>R</classname> has an index on attribute <classname>A</classname> "
+"then we can retrieve all tuples <replaceable>t</replaceable> having "
+"<replaceable>t</replaceable>(<classname>A</classname>) = <replaceable>a</"
+"replaceable> in time roughly proportional to the number of such tuples "
+"<replaceable>t</replaceable> rather than in time proportional to the size of "
+"<classname>R</classname>."
+msgstr ""
+
+#: sql.xml:1695(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"CREATE INDEX <replaceable class=\"parameter\">index_name</replaceable>\n"
+"    ON <replaceable class=\"parameter\">table_name</replaceable> ( <replaceable class=\"parameter\">name_of_attribute</replaceable> );"
+msgstr "pg_dump -j <replaceable class=\"parameter\">число</replaceable> -F d -f <replaceable class=\"parameter\">выходной_каталог</replaceable> <replaceable class=\"parameter\">имя_базы</replaceable>"
+
+#: sql.xml:1691(para)
+#, fuzzy
+msgid ""
+"To create an index in <acronym>SQL</acronym> the <command>CREATE INDEX</"
+"command> command is used. The syntax is: <placeholder-1/>"
+msgstr ""
+"Затем вы можете использовать его в команде <command>SELECT</command>, "
+"например так: <placeholder-1/>"
+
+#: sql.xml:1707(programlisting)
+#, no-wrap
+msgid "CREATE INDEX I ON SUPPLIER (SNAME);"
+msgstr ""
+
+#: sql.xml:1703(para)
+msgid ""
+"To create an index named I on attribute SNAME of relation SUPPLIER we use "
+"the following statement: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1710(para)
+msgid ""
+"The created index is maintained automatically, i.e., whenever a new tuple is "
+"inserted into the relation SUPPLIER the index I is adapted. Note that the "
+"only changes a user can perceive when an index is present are increased "
+"speed for <command>SELECT</command> and decreases in speed of updates."
+msgstr ""
+
+#: sql.xml:1722(title)
+#, fuzzy
+msgid "Create View"
+msgstr "Создание или добавление"
+
+#: sql.xml:1724(para)
+msgid ""
+"A view can be regarded as a <firstterm>virtual table</firstterm>, i.e., a "
+"table that does not <emphasis>physically</emphasis> exist in the database "
+"but looks to the user as if it does. By contrast, when we talk of a "
+"<firstterm>base table</firstterm> there is really a physically stored "
+"counterpart of each row of the table somewhere in the physical storage."
+msgstr ""
+
+#: sql.xml:1735(para)
+msgid ""
+"Views do not have their own, physically separate, distinguishable stored "
+"data. Instead, the system stores the definition of the view (i.e., the rules "
+"about how to access physically stored base tables in order to materialize "
+"the view) somewhere in the system catalogs (see <xref linkend=\"tutorial-"
+"catalogs-title\" endterm=\"tutorial-catalogs-title\"/>). For a discussion on "
+"different techniques to implement views refer to <citetitle>SIM98</"
+"citetitle>."
+msgstr ""
+
+#: sql.xml:1755(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"CREATE VIEW <replaceable class=\"parameter\">view_name</replaceable>\n"
+"    AS <replaceable class=\"parameter\">select_stmt</replaceable>"
+msgstr ""
+"CREATE TABLE <replaceable class=\"parameter\">имя_таблицы</replaceable> (\n"
+"    <replaceable class=\"parameter\">имя_столбца</replaceable> SERIAL\n"
+");"
+
+#: sql.xml:1750(para)
+msgid ""
+"In <acronym>SQL</acronym> the <command>CREATE VIEW</command> command is used "
+"to define a view. The syntax is: <placeholder-1/> where <replaceable class="
+"\"parameter\">select_stmt</replaceable> is a valid select statement as "
+"defined in <xref linkend=\"select-title\" endterm=\"select-title\"/>. Note "
+"that <replaceable class=\"parameter\">select_stmt</replaceable> is not "
+"executed when the view is created. It is just stored in the "
+"<firstterm>system catalogs</firstterm> and is executed whenever a query "
+"against the view is made."
+msgstr ""
+
+#: sql.xml:1772(programlisting)
+#, no-wrap
+msgid ""
+"CREATE VIEW London_Suppliers\n"
+"    AS SELECT S.SNAME, P.PNAME\n"
+"        FROM SUPPLIER S, PART P, SELLS SE\n"
+"        WHERE S.SNO = SE.SNO AND\n"
+"              P.PNO = SE.PNO AND\n"
+"              S.CITY = 'London';"
+msgstr ""
+
+#: sql.xml:1767(para)
+msgid ""
+"Let the following view definition be given (we use the tables from <xref "
+"linkend=\"supplier-fig\" endterm=\"supplier-fig\"/> again): <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1785(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT * FROM London_Suppliers\n"
+"    WHERE PNAME = 'Screw';"
+msgstr "SELECT * FROM orders WHERE order_nr = 3501;"
+
+#: sql.xml:1780(para)
+msgid ""
+"Now we can use this <firstterm>virtual relation</firstterm>\n"
+"      <classname>London_Suppliers</classname> as if it were another base "
+"table: <placeholder-1/> which will return the following table: <screen> "
+"SNAME | PNAME\n"
+"-------+-------\n"
+" Smith | Screw                 </screen>"
+msgstr ""
+
+#: sql.xml:1795(para)
+msgid ""
+"To calculate this result the database system has to do a <emphasis>hidden</"
+"emphasis> access to the base tables SUPPLIER, SELLS and PART first. It does "
+"so by executing the query given in the view definition against those base "
+"tables. After that the additional qualifications (given in the query against "
+"the view) can be applied to obtain the resulting table."
+msgstr ""
+
+#: sql.xml:1808(title)
+msgid "Drop Table, Drop Index, Drop View"
+msgstr ""
+
+#: sql.xml:1814(programlisting)
+#, fuzzy, no-wrap
+msgid "DROP TABLE <replaceable class=\"parameter\">table_name</replaceable>;"
+msgstr "TABLE <replaceable class=\"parameter\">имя</replaceable>"
+
+#: sql.xml:1810(para)
+#, fuzzy
+msgid ""
+"To destroy a table (including all tuples stored in that table) the "
+"<command>DROP TABLE</command> command is used: <placeholder-1/>"
+msgstr ""
+"Для загрузки журнального файла в такую таблицу можно использовать команду "
+"<command>COPY FROM</command>: <placeholder-1/>"
+
+#: sql.xml:1820(programlisting)
+#, fuzzy, no-wrap
+msgid "DROP TABLE SUPPLIER;"
+msgstr "DROP TABLESPACE"
+
+#: sql.xml:1817(para)
+#, fuzzy
+msgid ""
+"To destroy the SUPPLIER table use the following statement: <placeholder-1/>"
+msgstr ""
+"Чтобы создать секционированную таблицу, выполните следующее: <placeholder-1/>"
+
+#: sql.xml:1826(programlisting)
+#, fuzzy, no-wrap
+msgid "DROP INDEX <replaceable class=\"parameter\">index_name</replaceable>;"
+msgstr "TABLE <replaceable class=\"parameter\">имя</replaceable>"
+
+#: sql.xml:1823(para)
+#, fuzzy
+msgid ""
+"The <command>DROP INDEX</command> command is used to destroy an index: "
+"<placeholder-1/>"
+msgstr ""
+"Затем вы можете использовать его в команде <command>SELECT</command>, "
+"например так: <placeholder-1/>"
+
+#: sql.xml:1833(programlisting)
+#, fuzzy, no-wrap
+msgid "DROP VIEW <replaceable class=\"parameter\">view_name</replaceable>;"
+msgstr "TABLE <replaceable class=\"parameter\">имя</replaceable>"
+
+#: sql.xml:1829(para)
+#, fuzzy
+msgid ""
+"Finally to destroy a given view use the command <command>DROP VIEW</"
+"command>: <placeholder-1/>"
+msgstr ""
+"Для загрузки журнального файла в такую таблицу можно использовать команду "
+"<command>COPY FROM</command>: <placeholder-1/>"
+
+#: sql.xml:1839(title)
+msgid "Data Manipulation"
+msgstr "Модификация данных"
+
+#: sql.xml:1842(title)
+#, fuzzy
+msgid "Insert Into"
+msgstr "Добавление"
+
+#: sql.xml:1850(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"INSERT INTO <replaceable class=\"parameter\">table_name</replaceable> (<replaceable class=\"parameter\">name_of_attr_1</replaceable>\n"
+"    [, <replaceable class=\"parameter\">name_of_attr_2</replaceable> [, ...]])\n"
+"    VALUES (<replaceable class=\"parameter\">val_attr_1</replaceable> [, <replaceable class=\"parameter\">val_attr_2</replaceable> [, ...]]);"
+msgstr "<literal>REFERENCES <replaceable class=\"parameter\">внешняя_таблица</replaceable> [ ( <replaceable class=\"parameter\">внешний_столбец</replaceable> ) ] [ MATCH <replaceable class=\"parameter\">тип_совпадения</replaceable> ] [ ON DELETE <replaceable class=\"parameter\">действие</replaceable> ] [ ON UPDATE <replaceable class=\"parameter\">действие</replaceable> ]</literal> (ограничение столбца)"
+
+#: sql.xml:1844(para)
+msgid ""
+"Once a table is created (see <xref linkend=\"create-title\" endterm=\"create-"
+"title\"/>), it can be filled with tuples using the command <command>INSERT "
+"INTO</command>. The syntax is: <placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1860(programlisting)
+#, no-wrap
+msgid ""
+"INSERT INTO SUPPLIER (SNO, SNAME, CITY)\n"
+"    VALUES (1, 'Smith', 'London');"
+msgstr ""
+
+#: sql.xml:1855(para)
+msgid ""
+"To insert the first tuple into the relation SUPPLIER (from <xref linkend="
+"\"supplier-fig\" endterm=\"supplier-fig\"/>) we use the following statement: "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1867(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"INSERT INTO SELLS (SNO, PNO)\n"
+"    VALUES (1, 1);"
+msgstr "INSERT INTO foo (f1) VALUES (42);"
+
+#: sql.xml:1864(para)
+#, fuzzy
+msgid ""
+"To insert the first tuple into the relation SELLS we use: <placeholder-1/>"
+msgstr ""
+"Таким образом, создать таблицу в новой схеме можно так: <placeholder-1/>"
+
+#: sql.xml:1873(title)
+#, fuzzy
+msgid "Update"
+msgstr "Изменение данных"
+
+#: sql.xml:1879(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"UPDATE <replaceable class=\"parameter\">table_name</replaceable>\n"
+"    SET <replaceable class=\"parameter\">name_of_attr_1</replaceable> = <replaceable class=\"parameter\">value_1</replaceable>\n"
+"        [, ... [, <replaceable class=\"parameter\">name_of_attr_k</replaceable> = <replaceable class=\"parameter\">value_k</replaceable>]]\n"
+"    WHERE <replaceable class=\"parameter\">condition</replaceable>;"
+msgstr "<literal>FOREIGN KEY ( <replaceable class=\"parameter\">имя_столбца</replaceable> [, ... ] ) REFERENCES <replaceable class=\"parameter\">внешняя_таблица</replaceable> [ ( <replaceable class=\"parameter\">внешний_столбец</replaceable> [, ... ] ) ] [ MATCH <replaceable class=\"parameter\">тип_совпадения</replaceable> ] [ ON DELETE <replaceable class=\"parameter\">действие</replaceable> ] [ ON UPDATE <replaceable class=\"parameter\">действие</replaceable> ]</literal> (ограничение таблицы)"
+
+#: sql.xml:1875(para)
+#, fuzzy
+msgid ""
+"To change one or more attribute values of tuples in a relation the "
+"<command>UPDATE</command> command is used. The syntax is: <placeholder-1/>"
+msgstr ""
+"Добавление нескольких строк с использованием многострочного синтаксиса "
+"<command>VALUES</command>: <placeholder-1/>"
+
+#: sql.xml:1889(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE PART\n"
+"    SET PRICE = 15\n"
+"    WHERE PNAME = 'Screw';"
+msgstr ""
+
+#: sql.xml:1885(para)
+#, fuzzy
+msgid ""
+"To change the value of attribute PRICE of the part 'Screw' in the relation "
+"PART we use: <placeholder-1/>"
+msgstr ""
+"Изменение типов двух существующих столбцов в одной операции: <placeholder-1/>"
+
+#: sql.xml:1894(para)
+msgid ""
+"The new value of attribute PRICE of the tuple whose name is 'Screw' is now "
+"15."
+msgstr ""
+
+#: sql.xml:1901(title)
+#, fuzzy
+msgid "Delete"
+msgstr "delete"
+
+#: sql.xml:1907(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"DELETE FROM <replaceable class=\"parameter\">table_name</replaceable>\n"
+"    WHERE <replaceable class=\"parameter\">condition</replaceable>;"
+msgstr ""
+"CREATE TABLE <replaceable class=\"parameter\">имя_таблицы</replaceable> (\n"
+"    <replaceable class=\"parameter\">имя_столбца</replaceable> SERIAL\n"
+");"
+
+#: sql.xml:1903(para)
+#, fuzzy
+msgid ""
+"To delete a tuple from a particular table use the command DELETE FROM. The "
+"syntax is: <placeholder-1/>"
+msgstr ""
+"Создать частичный индекс для нашего примера можно так: <placeholder-1/>"
+
+#: sql.xml:1915(programlisting)
+#, no-wrap
+msgid ""
+"DELETE FROM SUPPLIER\n"
+"    WHERE SNAME = 'Smith';"
+msgstr ""
+
+#: sql.xml:1911(para)
+#, fuzzy
+msgid ""
+"To delete the supplier called 'Smith' of the table SUPPLIER the following "
+"statement is used: <placeholder-1/>"
+msgstr ""
+"Чтобы создать секционированную таблицу, выполните следующее: <placeholder-1/>"
+
+#: sql.xml:1922(title)
+msgid "System Catalogs"
+msgstr "Системные каталоги"
+
+#: sql.xml:1924(para)
+msgid ""
+"In every <acronym>SQL</acronym> database system <firstterm>system catalogs</"
+"firstterm> are used to keep track of which tables, views indexes etc. are "
+"defined in the database. These system catalogs can be queried as if they "
+"were normal relations. For example there is one catalog used for the "
+"definition of views. This catalog stores the query from the view definition. "
+"Whenever a query against a view is made, the system first gets the "
+"<firstterm>view definition query</firstterm> out of the catalog and "
+"materializes the view before proceeding with the user query (see <xref "
+"linkend=\"sim98\" endterm=\"sim98\"/> for a more detailed description). For "
+"more information about system catalogs refer to <xref linkend=\"date04\" "
+"endterm=\"date04\"/>."
+msgstr ""
+
+#: sql.xml:1948(title)
+#, fuzzy
+msgid "Embedded <acronym>SQL</acronym>"
+msgstr "Расширение <acronym>SQL</acronym>"
+
+#: sql.xml:1958(para)
+msgid ""
+"There are queries that cannot be formulated using pure <acronym>SQL</"
+"acronym> (i.e., recursive queries). To be able to perform such queries we "
+"need a host language with a greater expressive power than <acronym>SQL</"
+"acronym>."
+msgstr ""
+
+#: sql.xml:1967(para)
+msgid ""
+"We simply want to access a database from some application that is written in "
+"the host language (e.g., a ticket reservation system with a graphical user "
+"interface is written in C and the information about which tickets are still "
+"left is stored in a database that can be accessed using embedded "
+"<acronym>SQL</acronym>)."
+msgstr ""
+
+#: sql.xml:1950(para)
+msgid ""
+"In this section we will sketch how <acronym>SQL</acronym> can be embedded "
+"into a host language (e.g., <literal>C</literal>). There are two main "
+"reasons why we want to use <acronym>SQL</acronym> from a host language: "
+"<placeholder-1/>"
+msgstr ""
+
+#: sql.xml:1978(para)
+msgid ""
+"A program using embedded <acronym>SQL</acronym> in a host language consists "
+"of statements of the host language and of <firstterm>embedded <acronym>SQL</"
+"acronym></firstterm> (<acronym>ESQL</acronym>) statements. Every "
+"<acronym>ESQL</acronym> statement begins with the keywords <command>EXEC "
+"SQL</command>. The <acronym>ESQL</acronym> statements are transformed to "
+"statements of the host language by a <firstterm>precompiler</firstterm> "
+"(which usually inserts calls to library routines that perform the various "
+"<acronym>SQL</acronym> commands)."
+msgstr ""
+
+#: sql.xml:1993(para)
+msgid ""
+"When we look at the examples throughout <xref linkend=\"select-title\" "
+"endterm=\"select-title\"/> we realize that the result of the queries is very "
+"often a set of tuples. Most host languages are not designed to operate on "
+"sets so we need a mechanism to access every single tuple of the set of "
+"tuples returned by a SELECT statement. This mechanism can be provided by "
+"declaring a <firstterm>cursor</firstterm>. After that we can use the "
+"<command>FETCH</command> command to retrieve a tuple and set the cursor to "
+"the next tuple."
+msgstr ""
+
+#: sql.xml:2005(para)
+msgid ""
+"For a detailed discussion on embedded <acronym>SQL</acronym> refer to <xref "
+"linkend=\"date97\" endterm=\"date97\"/>, <xref linkend=\"date04\" endterm="
+"\"date04\"/>, or <xref linkend=\"ull88\" endterm=\"ull88\"/>."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: sql.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

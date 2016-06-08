@@ -1,0 +1,282 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/prepare_transaction.xml:8(indexterm)
+msgid "<primary>PREPARE TRANSACTION</primary>"
+msgstr "<primary>PREPARE TRANSACTION</primary>"
+
+#: ref/prepare_transaction.xml:13(refentrytitle)
+msgctxt "refentrytitle"
+msgid "PREPARE TRANSACTION"
+msgstr "PREPARE TRANSACTION"
+
+#: ref/prepare_transaction.xml:14(manvolnum)
+msgid "7"
+msgstr "7"
+
+#: ref/prepare_transaction.xml:15(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#: ref/prepare_transaction.xml:19(refname)
+msgctxt "refname"
+msgid "PREPARE TRANSACTION"
+msgstr "PREPARE TRANSACTION"
+
+#: ref/prepare_transaction.xml:20(refpurpose)
+msgid "prepare the current transaction for two-phase commit"
+msgstr "подготовить текущую транзакцию для двухфазной фиксации"
+
+#: ref/prepare_transaction.xml:24(replaceable)
+#: ref/prepare_transaction.xml:67(replaceable)
+msgid "transaction_id"
+msgstr "id_транзакции"
+
+#: ref/prepare_transaction.xml:24(synopsis)
+#, no-wrap
+msgid "PREPARE TRANSACTION <placeholder-1/>"
+msgstr "PREPARE TRANSACTION <placeholder-1/>"
+
+#: ref/prepare_transaction.xml:28(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/prepare_transaction.xml:30(para)
+msgid ""
+"<command>PREPARE TRANSACTION</command> prepares the current transaction for "
+"two-phase commit. After this command, the transaction is no longer "
+"associated with the current session; instead, its state is fully stored on "
+"disk, and there is a very high probability that it can be committed "
+"successfully, even if a database crash occurs before the commit is requested."
+msgstr ""
+"<command>PREPARE TRANSACTION</command> подготавливает текущую транзакцию для "
+"двухфазной фиксации. После этой команды транзакция перестаёт быть связанной "
+"с текущим сеансом; её состояние полностью сохраняется на диске, и есть очень "
+"большая вероятность, что она будет успешно зафиксирована, даже если до этого "
+"времени работа базы данных будет прервана аварийно."
+
+#: ref/prepare_transaction.xml:39(para)
+msgid ""
+"Once prepared, a transaction can later be committed or rolled back with "
+"<xref linkend=\"sql-commit-prepared\"/> or <xref linkend=\"sql-rollback-"
+"prepared\"/>, respectively. Those commands can be issued from any session, "
+"not only the one that executed the original transaction."
+msgstr ""
+"Подготовленную транзакцию затем можно зафиксировать или отменить командами "
+"<xref linkend=\"sql-commit-prepared\"/> и <xref linkend=\"sql-rollback-"
+"prepared\"/>, соответственно. Эти команды можно вызывать из любого сеанса, "
+"не только из того, в котором эта транзакция создавалась."
+
+#: ref/prepare_transaction.xml:47(para)
+msgid ""
+"From the point of view of the issuing session, <command>PREPARE TRANSACTION</"
+"command> is not unlike a <command>ROLLBACK</command> command: after "
+"executing it, there is no active current transaction, and the effects of the "
+"prepared transaction are no longer visible. (The effects will become visible "
+"again if the transaction is committed.)"
+msgstr ""
+"С точки зрения сеанса, выполняющего команду, <command>PREPARE TRANSACTION</"
+"command> не отличается от <command>ROLLBACK</command>: после её выполнения "
+"не активна никакая транзакция, а результат действия подготовленной "
+"транзакции становится невидимым (Он окажется видимым снова, если транзакция "
+"будет зафиксирована.)"
+
+#: ref/prepare_transaction.xml:55(para)
+msgid ""
+"If the <command>PREPARE TRANSACTION</command> command fails for any reason, "
+"it becomes a <command>ROLLBACK</command>: the current transaction is "
+"canceled."
+msgstr ""
+"Если при выполнении команды <command>PREPARE TRANSACTION</command> по какой-"
+"то причине происходит сбой, команда действует как <command>ROLLBACK</"
+"command>: текущая транзакция откатывается."
+
+#: ref/prepare_transaction.xml:63(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#: ref/prepare_transaction.xml:69(para)
+msgid ""
+"An arbitrary identifier that later identifies this transaction for "
+"<command>COMMIT PREPARED</command> or <command>ROLLBACK PREPARED</command>. "
+"The identifier must be written as a string literal, and must be less than "
+"200 bytes long. It must not be the same as the identifier used for any "
+"currently prepared transaction."
+msgstr ""
+"Произвольный идентификатор, по которому затем на эту транзакцию будут "
+"ссылаться команды <command>COMMIT PREPARED</command> или <command>ROLLBACK "
+"PREPARED</command>. Идентификатор должен задаваться строковой константой не "
+"длиннее 200 байтов и должен отличаться от идентификаторов любых других "
+"подготовленных на данный момент транзакций."
+
+#: ref/prepare_transaction.xml:82(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/prepare_transaction.xml:84(para)
+msgid ""
+"<command>PREPARE TRANSACTION</command> is not intended for use in "
+"applications or interactive sessions. Its purpose is to allow an external "
+"transaction manager to perform atomic global transactions across multiple "
+"databases or other transactional resources. Unless you're writing a "
+"transaction manager, you probably shouldn't be using <command>PREPARE "
+"TRANSACTION</command>."
+msgstr ""
+"<command>PREPARE TRANSACTION</command> не предназначена для использования в "
+"приложениях или интерактивных сеансах. Её задача — дать возможность внешнему "
+"менеджеру транзакций выполнять атомарные глобальные транзакции, охватывающие "
+"несколько баз данных или другие транзакционные ресурсы. Обычно применять "
+"<command>PREPARE TRANSACTION</command> следует только при разработке "
+"собственного менеджера транзакций."
+
+#: ref/prepare_transaction.xml:93(para)
+msgid ""
+"This command must be used inside a transaction block. Use <xref linkend="
+"\"sql-begin\"/> to start one."
+msgstr ""
+"Эта команда должна выполняться внутри блока транзакции. Начинает блок "
+"транзакции команда <xref linkend=\"sql-begin\"/>."
+
+#: ref/prepare_transaction.xml:98(para)
+msgid ""
+"It is not currently allowed to <command>PREPARE</command> a transaction that "
+"has executed any operations involving temporary tables, created any cursors "
+"<literal>WITH HOLD</literal>, or executed <command>LISTEN</command> or "
+"<command>UNLISTEN</command>. Those features are too tightly tied to the "
+"current session to be useful in a transaction to be prepared."
+msgstr ""
+"В настоящее время команда <command>PREPARE</command> неспособна "
+"подготавливать транзакции, в которых выполнялись какие-либо действия с "
+"временными таблицами, создавались курсоры <literal>WITH HOLD</literal> или "
+"выполнялись команды <command>LISTEN</command> и <command>UNLISTEN</command>. "
+"Эти функции слишком тесно связаны с текущим сеансом, так что в "
+"подготовленной транзакции они не были бы полезны."
+
+#: ref/prepare_transaction.xml:107(para)
+msgid ""
+"If the transaction modified any run-time parameters with <command>SET</"
+"command> (without the <literal>LOCAL</literal> option), those effects "
+"persist after <command>PREPARE TRANSACTION</command>, and will not be "
+"affected by any later <command>COMMIT PREPARED</command> or "
+"<command>ROLLBACK PREPARED</command>. Thus, in this one respect "
+"<command>PREPARE TRANSACTION</command> acts more like <command>COMMIT</"
+"command> than <command>ROLLBACK</command>."
+msgstr ""
+"Если транзакция меняет какие-либо параметры времени выполнения командой "
+"<command>SET</command> (без указания <literal>LOCAL</literal>), их значения "
+"сохраняются после <command>PREPARE TRANSACTION</command> и не зависят от "
+"последующих команд <command>COMMIT PREPARED</command> и <command>ROLLBACK "
+"PREPARED</command>. Так что в этом отношении <command>PREPARE TRANSACTION</"
+"command> больше похожа на <command>COMMIT</command>, чем на "
+"<command>ROLLBACK</command>."
+
+#: ref/prepare_transaction.xml:117(para)
+msgid ""
+"All currently available prepared transactions are listed in the <link "
+"linkend=\"view-pg-prepared-xacts\"><structname>pg_prepared_xacts</"
+"structname></link> system view."
+msgstr ""
+"Все существующие в текущий момент подготовленные транзакции показываются в "
+"системном представлении <link linkend=\"view-pg-prepared-xacts"
+"\"><structname>pg_prepared_xacts</structname></link>."
+
+#: ref/prepare_transaction.xml:124(para)
+msgid ""
+"It is unwise to leave transactions in the prepared state for a long time. "
+"This will interfere with the ability of <command>VACUUM</command> to reclaim "
+"storage, and in extreme cases could cause the database to shut down to "
+"prevent transaction ID wraparound (see <xref linkend=\"vacuum-for-wraparound"
+"\"/>). Keep in mind also that the transaction continues to hold whatever "
+"locks it held. The intended usage of the feature is that a prepared "
+"transaction will normally be committed or rolled back as soon as an external "
+"transaction manager has verified that other databases are also prepared to "
+"commit."
+msgstr ""
+"Оставлять транзакции в подготовленном состоянии на долгое время не "
+"рекомендуется. Это повлияет на способность команды <command>VACUUM</command> "
+"высвобождать пространство, а в крайнем случае может привести к отключению "
+"базы данных для предотвращения наложения ID транзакций (см. <xref remap="
+"\"4\" linkend=\"vacuum-for-wraparound\"/>). Также учтите, что транзакция "
+"продолжит удерживать все свои блокировки. Это сделано с расчётом на то, что "
+"подготовленная транзакция будет зафиксирована или отменена как только "
+"внешний менеджер транзакций убедится, что все другие базы данных так же "
+"готовы к фиксации."
+
+#: ref/prepare_transaction.xml:136(para)
+msgid ""
+"If you have not set up an external transaction manager to track prepared "
+"transactions and ensure they get closed out promptly, it is best to keep the "
+"prepared-transaction feature disabled by setting <xref linkend=\"guc-max-"
+"prepared-transactions\"/> to zero. This will prevent accidental creation of "
+"prepared transactions that might then be forgotten and eventually cause "
+"problems."
+msgstr ""
+"В отсутствие настроенного внешнего менеджера транзакций, который бы "
+"отслеживал подготовленные транзакции и своевременно закрывал их, лучше вовсе "
+"отключить поддержку подготовленных транзакций, установив <xref linkend=\"guc-"
+"max-prepared-transactions\"/> равным нулю. Это не позволит случайно создать "
+"подготовленные транзакции, которые могут быть забыты и в конце концов станут "
+"причиной проблем."
+
+#: ref/prepare_transaction.xml:148(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/prepare_transaction.xml:153(programlisting)
+#, no-wrap
+msgid "PREPARE TRANSACTION 'foobar';"
+msgstr "PREPARE TRANSACTION 'foobar';"
+
+#: ref/prepare_transaction.xml:149(para)
+msgid ""
+"Prepare the current transaction for two-phase commit, using <literal>foobar</"
+"literal> as the transaction identifier: <placeholder-1/>"
+msgstr ""
+"Текущая транзакция подготавливается для двухфазной фиксации, при этом ей "
+"назначается идентификатор <literal>foobar</literal>: <placeholder-1/>"
+
+#: ref/prepare_transaction.xml:157(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#: ref/prepare_transaction.xml:159(para)
+msgid ""
+"<command>PREPARE TRANSACTION</command> is a <productname>PostgreSQL</"
+"productname> extension. It is intended for use by external transaction "
+"management systems, some of which are covered by standards (such as X/Open "
+"XA), but the SQL side of those systems is not standardized."
+msgstr ""
+"Оператор <command>PREPARE TRANSACTION</command> является расширением "
+"<productname>PostgreSQL</productname>. Он предназначен для использования "
+"внешними системами управления транзакциями, некоторые из которых работают по "
+"стандартам (например, X/Open XA), но сторона SQL в этих системах не "
+"стандартизирована."
+
+#: ref/prepare_transaction.xml:169(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/prepare_transaction.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

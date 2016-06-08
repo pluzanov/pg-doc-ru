@@ -1,0 +1,1488 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/pg_restore.xml:5(indexterm)
+msgid "<primary>pg_restore</primary>"
+msgstr "<primary>pg_restore</primary>"
+
+#: ref/pg_restore.xml:10(refentrytitle)
+msgctxt "refentrytitle"
+msgid "pg_restore"
+msgstr "pg_restore"
+
+#: ref/pg_restore.xml:11(manvolnum)
+msgid "1"
+msgstr "1"
+
+#: ref/pg_restore.xml:12(refmiscinfo)
+msgid "Application"
+msgstr "Приложение"
+
+#: ref/pg_restore.xml:16(refname)
+msgctxt "refname"
+msgid "pg_restore"
+msgstr "pg_restore"
+
+#: ref/pg_restore.xml:19(productname)
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+#: ref/pg_restore.xml:20(application)
+msgid "pg_dump"
+msgstr "pg_dump"
+
+#: ref/pg_restore.xml:18(refpurpose)
+msgid ""
+"restore a <placeholder-1/> database from an archive file created by "
+"<placeholder-2/>"
+msgstr ""
+"восстановить базу данных <placeholder-1/> из файла архива, созданного "
+"командой <placeholder-2/>"
+
+#: ref/pg_restore.xml:26(command)
+msgctxt "command"
+msgid "pg_restore"
+msgstr "pg_restore"
+
+#: ref/pg_restore.xml:27(replaceable)
+msgid "connection-option"
+msgstr "параметр-подключения"
+
+#: ref/pg_restore.xml:28(replaceable)
+msgid "option"
+msgstr "параметр"
+
+#: ref/pg_restore.xml:29(replaceable) ref/pg_restore.xml:80(replaceable)
+#: ref/pg_restore.xml:164(replaceable) ref/pg_restore.xml:165(replaceable)
+#, fuzzy
+msgid "filename"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"имя_файла\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename"
+
+#: ref/pg_restore.xml:35(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/pg_restore.xml:37(para)
+msgid ""
+"<application>pg_restore</application> is a utility for restoring a "
+"<productname>PostgreSQL</productname> database from an archive created by "
+"<xref linkend=\"app-pgdump\"/> in one of the non-plain-text formats. It will "
+"issue the commands necessary to reconstruct the database to the state it was "
+"in at the time it was saved. The archive files also allow "
+"<application>pg_restore</application> to be selective about what is "
+"restored, or even to reorder the items prior to being restored. The archive "
+"files are designed to be portable across architectures."
+msgstr ""
+"Утилита <application>pg_restore</application> предназначена для "
+"восстановления базы данных <productname>PostgreSQL</productname> из архива, "
+"созданного командой <xref linkend=\"app-pgdump\"/> в любом из не текстовых "
+"форматов. Она выполняет команды, необходимые для восстановления того "
+"состояния базы данных, в котором база была сохранена. При наличии файлов "
+"архивов, <application>pg_restore</application> может восстанавливать данные "
+"избирательно или даже переупорядочить объекты перед восстановлением. "
+"Заметьте, что разработанный для файлов архива формат не привязан к "
+"архитектуре."
+
+#: ref/pg_restore.xml:49(para)
+msgid ""
+"<application>pg_restore</application> can operate in two modes. If a "
+"database name is specified, <application>pg_restore</application> connects "
+"to that database and restores archive contents directly into the database. "
+"Otherwise, a script containing the SQL commands necessary to rebuild the "
+"database is created and written to a file or standard output. This script "
+"output is equivalent to the plain text output format of "
+"<application>pg_dump</application>. Some of the options controlling the "
+"output are therefore analogous to <application>pg_dump</application> options."
+msgstr ""
+"Утилита <application>pg_restore</application> может работать в двух режимах. "
+"Если указывается имя базы данных, <application>pg_restore</application> "
+"подключается к этой базе данных и восстанавливает содержимое архива "
+"непосредственно в неё. В противном случае, создаётся SQL-скрипт с командами, "
+"необходимыми для пересоздания базы данных, который затем выводится в файл "
+"или в стандартное устройство вывода. Сформированный скрипт будет в точности "
+"соответствовать выводу <application>pg_dump</application> в простом "
+"текстовом формате. Поэтому некоторые из параметров, управляющих выводом, "
+"аналогичны параметрам <application>pg_dump</application>."
+
+#: ref/pg_restore.xml:61(para)
+msgid ""
+"Obviously, <application>pg_restore</application> cannot restore information "
+"that is not present in the archive file. For instance, if the archive was "
+"made using the <quote>dump data as <command>INSERT</command> commands</"
+"quote> option, <application>pg_restore</application> will not be able to "
+"load the data using <command>COPY</command> statements."
+msgstr ""
+"Разумеется, <application>pg_restore</application> может восстановить "
+"информацию, только если она присутствует в файле архива, и только в "
+"существующем виде. Например, если архив был создан с указанием "
+"<quote>выгрузить данные в виде команд <command>INSERT</command></quote>, "
+"<application>pg_restore</application> не сможет загрузить эти данные, "
+"используя операторы <command>COPY</command>."
+
+#: ref/pg_restore.xml:72(title)
+#, fuzzy
+msgid "Options"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Параметры\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Аргументы"
+
+#: ref/pg_restore.xml:82(para)
+msgid ""
+"Specifies the location of the archive file (or directory, for a directory-"
+"format archive) to be restored. If not specified, the standard input is used."
+msgstr ""
+"Указывает расположение восстанавливаемого файла архива (или каталога, для "
+"архива в формате каталога). По умолчанию используется устройство "
+"стандартного ввода."
+
+#: ref/pg_restore.xml:91(option)
+msgid "-a"
+msgstr "-a"
+
+#: ref/pg_restore.xml:92(option)
+msgid "--data-only"
+msgstr "--data-only"
+
+#: ref/pg_restore.xml:94(para)
+msgid ""
+"Restore only the data, not the schema (data definitions). Table data, large "
+"objects, and sequence values are restored, if present in the archive."
+msgstr ""
+"Восстанавливать только данные, без схемы (определений данных). При этом "
+"восстанавливаются данные таблиц, большие объекты и значения "
+"последовательностей, имеющиеся в архиве."
+
+#: ref/pg_restore.xml:100(para)
+msgid ""
+"This option is similar to, but for historical reasons not identical to, "
+"specifying <option>--section=data</option>."
+msgstr ""
+"Флаг похож на <option>--section=data</option>, но по историческим причинам "
+"не равнозначен ему."
+
+#: ref/pg_restore.xml:108(option)
+msgid "-c"
+msgstr "-c"
+
+#: ref/pg_restore.xml:109(option)
+msgid "--clean"
+msgstr "--clean"
+
+#: ref/pg_restore.xml:111(para)
+msgid ""
+"Clean (drop) database objects before recreating them. (Unless <option>--if-"
+"exists</option> is used, this might generate some harmless error messages, "
+"if any objects were not present in the destination database.)"
+msgstr ""
+"Удалить (DROP) объекты базы данных, прежде чем пересоздавать их. (Без "
+"дополнительного указания <option>--if-exists</option> при этом могут "
+"выдаваться безвредные сообщения об ошибках, если таких объектов не окажется "
+"в целевой базе данных.)"
+
+#: ref/pg_restore.xml:121(option)
+msgid "-C"
+msgstr "-C"
+
+#: ref/pg_restore.xml:122(option)
+msgid "--create"
+msgstr "--create"
+
+#: ref/pg_restore.xml:124(para)
+msgid ""
+"Create the database before restoring into it. If <option>--clean</option> is "
+"also specified, drop and recreate the target database before connecting to "
+"it."
+msgstr ""
+"Создать базу данных, прежде чем восстанавливать данные. Если также указан "
+"параметр <option>--clean</option>, удалить и пересоздать целевую базу данных "
+"перед подключением к ней."
+
+#: ref/pg_restore.xml:130(para)
+msgid ""
+"When this option is used, the database named with <option>-d</option> is "
+"used only to issue the initial <command>DROP DATABASE</command> and "
+"<command>CREATE DATABASE</command> commands. All data is restored into the "
+"database name that appears in the archive."
+msgstr ""
+"С этим параметром база, заданная параметром <option>-d</option>, применяется "
+"только для подключения и выполнения начальных команд <command>DROP DATABASE</"
+"command> и <command>CREATE DATABASE</command>. Все данные восстанавливаются "
+"в базу данных, имя которой записано в архиве."
+
+#: ref/pg_restore.xml:140(replaceable) ref/pg_restore.xml:141(replaceable)
+#, fuzzy
+msgid "dbname"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"dbname\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"база_данных\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"dbname"
+
+#: ref/pg_restore.xml:140(option)
+msgid "-d <placeholder-1/>"
+msgstr "-d <placeholder-1/>"
+
+#: ref/pg_restore.xml:141(option)
+msgid "--dbname=<placeholder-1/>"
+msgstr "--dbname=<placeholder-1/>"
+
+#: ref/pg_restore.xml:143(para)
+msgid ""
+"Connect to database <replaceable class=\"parameter\">dbname</replaceable> "
+"and restore directly into the database."
+msgstr ""
+"Подключиться к базе данных <replaceable class=\"parameter\">имя_базы</"
+"replaceable> и восстановить данные непосредственно в неё."
+
+#: ref/pg_restore.xml:152(option)
+msgid "-e"
+msgstr "-e"
+
+#: ref/pg_restore.xml:153(option)
+msgid "--exit-on-error"
+msgstr "--exit-on-error"
+
+#: ref/pg_restore.xml:155(para)
+msgid ""
+"Exit if an error is encountered while sending SQL commands to the database. "
+"The default is to continue and to display a count of errors at the end of "
+"the restoration."
+msgstr ""
+"Завершать работу в случае возникновения ошибки при выполнении команд SQL в "
+"базе данных. По умолчанию процесс восстановления продолжается, а по его "
+"окончании выдаётся число ошибок."
+
+#: ref/pg_restore.xml:164(option)
+msgid "-f <placeholder-1/>"
+msgstr "-f <placeholder-1/>"
+
+#: ref/pg_restore.xml:165(option)
+msgid "--file=<placeholder-1/>"
+msgstr "--file=<placeholder-1/>"
+
+#: ref/pg_restore.xml:167(para)
+msgid ""
+"Specify output file for generated script, or for the listing when used with "
+"<option>-l</option>. Default is the standard output."
+msgstr ""
+"Задаёт файл для вывода сгенерированного скрипта или списка объектов, "
+"полученного с параметром <option>-l</option>. По умолчанию используется "
+"стандартный вывод."
+
+#: ref/pg_restore.xml:176(replaceable) ref/pg_restore.xml:177(replaceable)
+msgid "format"
+msgstr "format"
+
+#: ref/pg_restore.xml:176(option)
+msgid "-F <placeholder-1/>"
+msgstr "-F <placeholder-1/>"
+
+#: ref/pg_restore.xml:177(option)
+msgid "--format=<placeholder-1/>"
+msgstr "--format=<placeholder-1/>"
+
+#: ref/pg_restore.xml:187(literal)
+msgid "c"
+msgstr "c"
+
+#: ref/pg_restore.xml:188(literal)
+msgid "custom"
+msgstr "custom"
+
+#: ref/pg_restore.xml:190(para)
+msgid ""
+"The archive is in the custom format of <application>pg_dump</application>."
+msgstr ""
+"Архив сохранён в настраиваемом формате <application>pg_dump</application>."
+
+#: ref/pg_restore.xml:198(literal)
+msgid "d"
+msgstr "d"
+
+#: ref/pg_restore.xml:199(literal)
+#, fuzzy
+msgid "directory"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"каталог\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"directory"
+
+#: ref/pg_restore.xml:201(para)
+msgid "The archive is a directory archive."
+msgstr "Архив сохранён в каталоге."
+
+#: ref/pg_restore.xml:208(literal)
+msgid "t"
+msgstr "t"
+
+#: ref/pg_restore.xml:209(literal)
+msgid "tar"
+msgstr "tar"
+
+#: ref/pg_restore.xml:211(para)
+msgid "The archive is a <command>tar</command> archive."
+msgstr "Архив сохранён в формате <command>tar</command>."
+
+#: ref/pg_restore.xml:179(para)
+msgid ""
+"Specify format of the archive. It is not necessary to specify the format, "
+"since <application>pg_restore</application> will determine the format "
+"automatically. If specified, it can be one of the following: <placeholder-1/>"
+msgstr ""
+"Задаёт формат архива. Указывать формат необязательно, так как "
+"<application>pg_restore</application> определяет формат автоматически. Но "
+"если формат задаётся, допускается один из этих вариантов: <placeholder-1/>"
+
+#: ref/pg_restore.xml:221(replaceable) ref/pg_restore.xml:222(replaceable)
+#, fuzzy
+msgid "index"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"индекс\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"index"
+
+#: ref/pg_restore.xml:221(option)
+msgid "-I <placeholder-1/>"
+msgstr "-I <placeholder-1/>"
+
+#: ref/pg_restore.xml:222(option)
+msgid "--index=<placeholder-1/>"
+msgstr "--index=<placeholder-1/>"
+
+#: ref/pg_restore.xml:224(para)
+msgid ""
+"Restore definition of named index only. Multiple indexes may be specified "
+"with multiple <option>-I</option> switches."
+msgstr ""
+"Восстановить определение только заданного индекса. Добавив дополнительные "
+"ключи <option>-I</option>, можно указать несколько индексов."
+
+#: ref/pg_restore.xml:232(replaceable) ref/pg_restore.xml:233(replaceable)
+msgid "number-of-jobs"
+msgstr "число-заданий"
+
+#: ref/pg_restore.xml:232(option)
+msgid "-j <placeholder-1/>"
+msgstr "-j <placeholder-1/>"
+
+#: ref/pg_restore.xml:233(option)
+msgid "--jobs=<placeholder-1/>"
+msgstr "--jobs=<placeholder-1/>"
+
+#: ref/pg_restore.xml:235(para)
+msgid ""
+"Run the most time-consuming parts of <application>pg_restore</application> "
+"&mdash; those which load data, create indexes, or create constraints &mdash; "
+"using multiple concurrent jobs. This option can dramatically reduce the time "
+"to restore a large database to a server running on a multiprocessor machine."
+msgstr ""
+"Запустить наиболее длительные операции <application>pg_restore</application> "
+"(в частности, загрузку данных, создание индексов или ограничений) в "
+"нескольких параллельных заданиях. Это позволяет кардинально сократить время "
+"восстановления большой базы данных, когда сервер работает на "
+"многопроцессорном компьютере."
+
+#: ref/pg_restore.xml:244(para)
+msgid ""
+"Each job is one process or one thread, depending on the operating system, "
+"and uses a separate connection to the server."
+msgstr ""
+"Каждое задание выполняется в отдельном задании или потоке, в зависимости от "
+"операционной системы, и использует отдельное подключение к серверу."
+
+#: ref/pg_restore.xml:250(para)
+msgid ""
+"The optimal value for this option depends on the hardware setup of the "
+"server, of the client, and of the network. Factors include the number of CPU "
+"cores and the disk setup. A good place to start is the number of CPU cores "
+"on the server, but values larger than that can also lead to faster restore "
+"times in many cases. Of course, values that are too high will lead to "
+"decreased performance because of thrashing."
+msgstr ""
+"Оптимальное значение этого параметра зависит от аппаратной конфигурации "
+"сервера, клиента и сети. В частности, имеет значение количество процессорных "
+"ядер и устройство дискового хранилища. В качестве начального значения можно "
+"выбрать число ядер на сервере, но и при увеличении этого значения во многих "
+"случаях восстановление будет быстрее. Конечно, при слишком больших значениях "
+"производительность упадёт из-за перегрузки."
+
+#: ref/pg_restore.xml:260(para)
+msgid ""
+"Only the custom and directory archive formats are supported with this "
+"option. The input must be a regular file or directory (not, for example, a "
+"pipe). This option is ignored when emitting a script rather than connecting "
+"directly to a database server. Also, multiple jobs cannot be used together "
+"with the option <option>--single-transaction</option>."
+msgstr ""
+"Этот параметр поддерживается только с архивом в специальном формате или в "
+"каталоге. Входные данные должны поступать из обычного файла или каталога (а "
+"не, например из канала ввода). Данный параметр игнорируется, когда "
+"генерируется скрипт (нет прямого подключения к базе данных). Кроме того, "
+"несколько заданий не могут выполняться в сочетании с параметром <option>--"
+"single-transaction</option>."
+
+#: ref/pg_restore.xml:273(option)
+msgid "-l"
+msgstr "-l"
+
+#: ref/pg_restore.xml:274(option)
+msgid "--list"
+msgstr "--list"
+
+#: ref/pg_restore.xml:276(para)
+msgid ""
+"List the contents of the archive. The output of this operation can be used "
+"as input to the <option>-L</option> option. Note that if filtering switches "
+"such as <option>-n</option> or <option>-t</option> are used with <option>-l</"
+"option>, they will restrict the items listed."
+msgstr ""
+"Вывести содержимое архива. Вывод этой операции можно подать на вход этой же "
+"команде с параметром <option>-L</option>. Учтите, что когда вместе с "
+"<option>-l</option> применяются параметры фильтрации (например, <option>-n</"
+"option> или <option>-t</option>), они сокращают список выводимых объектов."
+
+#: ref/pg_restore.xml:286(replaceable) ref/pg_restore.xml:287(replaceable)
+msgid "list-file"
+msgstr "файл-список"
+
+#: ref/pg_restore.xml:286(option)
+msgid "-L <placeholder-1/>"
+msgstr "-L <placeholder-1/>"
+
+#: ref/pg_restore.xml:287(option)
+msgid "--use-list=<placeholder-1/>"
+msgstr "--use-list=<placeholder-1/>"
+
+#: ref/pg_restore.xml:289(para)
+msgid ""
+"Restore only those archive elements that are listed in <replaceable class="
+"\"parameter\">list-file</replaceable>, and restore them in the order they "
+"appear in the file. Note that if filtering switches such as <option>-n</"
+"option> or <option>-t</option> are used with <option>-L</option>, they will "
+"further restrict the items restored."
+msgstr ""
+"Восстановить из архива только элементы, перечисленные в <replaceable class="
+"\"parameter\">файле-списке</replaceable>, и в том порядке, в каком они идут "
+"в этом файле. Заметьте, что когда вместе с <option>-L</option> применяются "
+"параметры фильтрации (например, <option>-n</option> или <option>-t</"
+"option>), они дополнительно ограничивают восстанавливаемые объекты."
+
+#: ref/pg_restore.xml:296(para)
+msgid ""
+"<replaceable class=\"parameter\">list-file</replaceable> is normally created "
+"by editing the output of a previous <option>-l</option> operation. Lines can "
+"be moved or removed, and can also be commented out by placing a semicolon "
+"(<literal>;</literal>) at the start of the line. See below for examples."
+msgstr ""
+"Данный <replaceable class=\"parameter\">файл-список</replaceable> обычно "
+"представляет собой отредактированный результат предыдущей операции <option>-"
+"l</option>. Строки в нём могут быть переставлены или удалены, а также могут "
+"быть закомментированы точкой с запятой (<literal>;</literal>), добавленной в "
+"начале строки. См. примеры ниже."
+
+#: ref/pg_restore.xml:306(replaceable)
+msgid "namespace"
+msgstr "пространство_имён"
+
+#: ref/pg_restore.xml:306(option)
+msgid "-n <placeholder-1/>"
+msgstr "-n <placeholder-1/>"
+
+#: ref/pg_restore.xml:307(replaceable)
+#, fuzzy
+msgid "schema"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"schema\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"схема\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"schema"
+
+#: ref/pg_restore.xml:307(option)
+msgid "--schema=<placeholder-1/>"
+msgstr "--schema=<placeholder-1/>"
+
+#: ref/pg_restore.xml:309(para)
+msgid ""
+"Restore only objects that are in the named schema. Multiple schemas may be "
+"specified with multiple <option>-n</option> switches. This can be combined "
+"with the <option>-t</option> option to restore just a specific table."
+msgstr ""
+"Восстановить только объекты в указанной схеме. Добавив дополнительные ключи "
+"<option>-n</option>, можно указать несколько схем. Этот параметр можно "
+"сочетать с <option>-t</option>, чтобы восстановить только определённую "
+"таблицу."
+
+#: ref/pg_restore.xml:319(option)
+msgid "-O"
+msgstr "-O"
+
+#: ref/pg_restore.xml:320(option)
+msgid "--no-owner"
+msgstr "--no-owner"
+
+#: ref/pg_restore.xml:322(para)
+msgid ""
+"Do not output commands to set ownership of objects to match the original "
+"database. By default, <application>pg_restore</application> issues "
+"<command>ALTER OWNER</command> or <command>SET SESSION AUTHORIZATION</"
+"command> statements to set ownership of created schema elements. These "
+"statements will fail unless the initial connection to the database is made "
+"by a superuser (or the same user that owns all of the objects in the "
+"script). With <option>-O</option>, any user name can be used for the initial "
+"connection, and this user will own all the created objects."
+msgstr ""
+"Не генерировать команды, устанавливающие владение объектами, как в исходной "
+"базе данных. По умолчанию, <application>pg_restore</application> генерирует "
+"команды <command>ALTER OWNER</command> или <command>SET SESSION "
+"AUTHORIZATION</command>, восстанавливающие исходных владельцев создаваемых "
+"элементов схемы. Однако эти команды можно будет выполнить, только если к "
+"базе данных первоначально подключается суперпользователь (или пользователь, "
+"владеющими всеми объектами в скрипте). Чтобы получить скрипт, который сможет "
+"восстановить любой подключающийся пользователь (но при этом он станет "
+"владельцем всех созданных объектов), используется <option>-O</option>."
+
+#: ref/pg_restore.xml:339(replaceable) ref/pg_restore.xml:340(replaceable)
+msgid "function-name(argtype [, ...])"
+msgstr "имя-функции(тип-аргумента[, ...])"
+
+#: ref/pg_restore.xml:339(option)
+msgid "-P <placeholder-1/>"
+msgstr "-P <placeholder-1/>"
+
+#: ref/pg_restore.xml:340(option)
+msgid "--function=<placeholder-1/>"
+msgstr "--function=<placeholder-1/>"
+
+#: ref/pg_restore.xml:342(para)
+msgid ""
+"Restore the named function only. Be careful to spell the function name and "
+"arguments exactly as they appear in the dump file's table of contents. "
+"Multiple functions may be specified with multiple <option>-P</option> "
+"switches."
+msgstr ""
+"Восстановить только указанную функцию. При этом важно записать имя функции и "
+"аргументы в точности так, как они фигурируют в оглавлении файла архива. "
+"Добавив дополнительные ключи <option>-P</option>, можно указать несколько "
+"функций."
+
+#: ref/pg_restore.xml:352(option)
+msgid "-R"
+msgstr "-R"
+
+#: ref/pg_restore.xml:353(option)
+msgid "--no-reconnect"
+msgstr "--no-reconnect"
+
+#: ref/pg_restore.xml:355(para)
+msgid "This option is obsolete but still accepted for backwards compatibility."
+msgstr "Параметр является устаревшим, но в целях совместимости ещё работает."
+
+#: ref/pg_restore.xml:363(option)
+msgid "-s"
+msgstr "-s"
+
+#: ref/pg_restore.xml:364(option)
+msgid "--schema-only"
+msgstr "--schema-only"
+
+#: ref/pg_restore.xml:366(para)
+msgid ""
+"Restore only the schema (data definitions), not data, to the extent that "
+"schema entries are present in the archive."
+msgstr ""
+"Восстановить только схему (определения данных), без данных, в объёме, в "
+"котором элементы схемы представлены в архиве."
+
+#: ref/pg_restore.xml:370(para)
+msgid ""
+"This option is the inverse of <option>--data-only</option>. It is similar "
+"to, but for historical reasons not identical to, specifying <option>--"
+"section=pre-data --section=post-data</option>."
+msgstr ""
+"Действие параметра противоположно действию <option>--data-only</option>. Это "
+"похоже на указание <option>--section=pre-data --section=post-data</option>, "
+"но по историческим причинам не равнозначно ему."
+
+#: ref/pg_restore.xml:376(para)
+msgid ""
+"(Do not confuse this with the <option>--schema</option> option, which uses "
+"the word <quote>schema</quote> in a different meaning.)"
+msgstr ""
+"(Не путайте этот параметр с <option>--schema</option>, где слово "
+"<quote>схема</quote> используется в другом значении.)"
+
+#: ref/pg_restore.xml:384(replaceable) ref/pg_restore.xml:385(replaceable)
+#: ref/pg_restore.xml:679(replaceable) ref/pg_restore.xml:680(replaceable)
+msgid "username"
+msgstr "имя_пользователя"
+
+#: ref/pg_restore.xml:384(option)
+msgid "-S <placeholder-1/>"
+msgstr "-S <placeholder-1/>"
+
+#: ref/pg_restore.xml:385(option)
+msgid "--superuser=<placeholder-1/>"
+msgstr "--superuser=<placeholder-1/>"
+
+#: ref/pg_restore.xml:387(para)
+msgid ""
+"Specify the superuser user name to use when disabling triggers. This is "
+"relevant only if <option>--disable-triggers</option> is used."
+msgstr ""
+"Задаёт имя суперпользователя, полномочия которого будут использоваться для "
+"отключения триггеров. Этот параметр применяется только с параметром "
+"<option>--disable-triggers</option>."
+
+#: ref/pg_restore.xml:395(replaceable) ref/pg_restore.xml:396(replaceable)
+#, fuzzy
+msgid "table"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"table\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"таблица"
+
+#: ref/pg_restore.xml:395(option)
+msgid "-t <placeholder-1/>"
+msgstr "-t <placeholder-1/>"
+
+#: ref/pg_restore.xml:396(option)
+msgid "--table=<placeholder-1/>"
+msgstr "--table=<placeholder-1/>"
+
+#: ref/pg_restore.xml:398(para)
+#, fuzzy
+msgid ""
+"Restore definition and/or data of only the named table. For this purpose, "
+"<quote>table</quote> includes views, materialized views, sequences, and "
+"foreign tables. Multiple tables can be selected by writing multiple <option>-"
+"t</option> switches. This option can be combined with the <option>-n</"
+"option> option to specify table(s) in a particular schema."
+msgstr ""
+"Восстановить определение и/или данные только указанной таблицы. Добавив "
+"дополнительные ключи <option>-t</option>, можно указать несколько таблиц. "
+"Этот параметр можно сочетать с <option>-n</option>, указывающим схему."
+
+#: ref/pg_restore.xml:408(para)
+#, fuzzy
+msgid ""
+"When <option>-t</option> is specified, <application>pg_restore</application> "
+"makes no attempt to restore any other database objects that the selected "
+"table(s) might depend upon. Therefore, there is no guarantee that a specific-"
+"table restore into a clean database will succeed."
+msgstr ""
+"При использовании <option>-t</option>, <application>pg_dump</application> не "
+"выгружает прочие объекты, от которых выгружаемые таблицы могут зависеть. "
+"Таким образом не гарантируется, что выгруженные таблицы будут успешно "
+"восстановлены на чистой базе данных."
+
+#: ref/pg_restore.xml:418(para)
+msgid ""
+"This flag does not behave identically to the <option>-t</option> flag of "
+"<application>pg_dump</application>. There is not currently any provision for "
+"wild-card matching in <application>pg_restore</application>, nor can you "
+"include a schema name within its <option>-t</option>."
+msgstr ""
+
+#: ref/pg_restore.xml:427(para)
+msgid ""
+"In versions prior to <productname>PostgreSQL</productname> 9.6, this flag "
+"matched only tables, not any other type of relation."
+msgstr ""
+
+#: ref/pg_restore.xml:436(option)
+#, fuzzy
+msgid "--strict-names"
+msgstr "--username="
+
+#: ref/pg_restore.xml:438(para)
+msgid ""
+"Require that each schema (-n / --schema) and table (-t / --table) qualifier "
+"match at least one schema/table in the backup file."
+msgstr ""
+
+#: ref/pg_restore.xml:446(replaceable) ref/pg_restore.xml:447(replaceable)
+#, fuzzy
+msgid "trigger"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"trigger\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"триггер"
+
+#: ref/pg_restore.xml:446(option)
+msgid "-T <placeholder-1/>"
+msgstr "-T <placeholder-1/>"
+
+#: ref/pg_restore.xml:447(option)
+msgid "--trigger=<placeholder-1/>"
+msgstr "--trigger=<placeholder-1/>"
+
+#: ref/pg_restore.xml:449(para)
+msgid ""
+"Restore named trigger only. Multiple triggers may be specified with multiple "
+"<option>-T</option> switches."
+msgstr ""
+"Восстановить только указанный триггер. Добавив дополнительные ключи <option>-"
+"T</option>, можно указать несколько триггеров."
+
+#: ref/pg_restore.xml:457(option)
+msgid "-v"
+msgstr "-v"
+
+#: ref/pg_restore.xml:458(option)
+msgid "--verbose"
+msgstr "--verbose"
+
+#: ref/pg_restore.xml:460(para)
+msgid "Specifies verbose mode."
+msgstr "Включает режим подробных сообщений."
+
+#: ref/pg_restore.xml:467(option)
+msgid "-V"
+msgstr "-V"
+
+#: ref/pg_restore.xml:468(option)
+msgid "--version"
+msgstr "--version"
+
+#: ref/pg_restore.xml:470(para)
+msgid "Print the <application>pg_restore</application> version and exit."
+msgstr "Сообщить версию <application>pg_restore</application> и завершиться."
+
+#: ref/pg_restore.xml:477(option)
+msgid "-x"
+msgstr "-x"
+
+#: ref/pg_restore.xml:478(option)
+msgid "--no-privileges"
+msgstr "--no-privileges"
+
+#: ref/pg_restore.xml:479(option)
+msgid "--no-acl"
+msgstr "--no-acl"
+
+#: ref/pg_restore.xml:481(para)
+msgid "Prevent restoration of access privileges (grant/revoke commands)."
+msgstr "Не восстанавливать права доступа (не выполнять команды GRANT/REVOKE)."
+
+#: ref/pg_restore.xml:488(option)
+msgid "-1"
+msgstr "-1"
+
+#: ref/pg_restore.xml:489(option)
+msgid "--single-transaction"
+msgstr "--single-transaction"
+
+#: ref/pg_restore.xml:491(para)
+msgid ""
+"Execute the restore as a single transaction (that is, wrap the emitted "
+"commands in <command>BEGIN</command>/<command>COMMIT</command>). This "
+"ensures that either all the commands complete successfully, or no changes "
+"are applied. This option implies <option>--exit-on-error</option>."
+msgstr ""
+"Произвести восстановление в одной транзакции (то есть, завернуть выполняемые "
+"команды в <command>BEGIN</command>/<command>COMMIT</command>). При этом "
+"гарантируется, что либо все команды будут выполнены успешно, либо не будет "
+"никаких изменений. Этот режим подразумевает <option>--exit-on-error</option>."
+
+#: ref/pg_restore.xml:502(option)
+msgid "--disable-triggers"
+msgstr "--disable-triggers"
+
+#: ref/pg_restore.xml:504(para)
+msgid ""
+"This option is relevant only when performing a data-only restore. It "
+"instructs <application>pg_restore</application> to execute commands to "
+"temporarily disable triggers on the target tables while the data is "
+"reloaded. Use this if you have referential integrity checks or other "
+"triggers on the tables that you do not want to invoke during data reload."
+msgstr ""
+"Этот параметр действует только при выгрузке одних данных. С ним "
+"<application>pg_restore</application> выполняет команды, отключающие "
+"триггеры в целевых таблицах на время загрузки данных. Используйте его, если "
+"в ваших таблицах определены проверки ссылочной целостности или другие "
+"триггеры, которые вы не хотели бы выполнять в процессе загрузки данных."
+
+#: ref/pg_restore.xml:513(para)
+msgid ""
+"Presently, the commands emitted for <option>--disable-triggers</option> must "
+"be done as superuser. So you should also specify a superuser name with "
+"<option>-S</option> or, preferably, run <application>pg_restore</"
+"application> as a <productname>PostgreSQL</productname> superuser."
+msgstr ""
+"В настоящее время команды, генерируемые с <option>--disable-triggers</"
+"option>, должны выполнятся суперпользователем. Поэтому необходимо также "
+"задать имя суперпользователя в параметре <option>-S</option> или, что "
+"предпочтительнее, запускать <application>pg_restore</application> от имени "
+"суперпользователя <productname>PostgreSQL</productname>."
+
+#: ref/pg_restore.xml:524(option)
+msgid "--enable-row-security"
+msgstr "--enable-row-security"
+
+#: ref/pg_restore.xml:526(para)
+msgid ""
+"This option is relevant only when restoring the contents of a table which "
+"has row security. By default, <application>pg_restore</application> will set "
+"<xref linkend=\"guc-row-security\"/> to off, to ensure that all data is "
+"restored in to the table. If the user does not have sufficient privileges to "
+"bypass row security, then an error is thrown. This parameter instructs "
+"<application>pg_restore</application> to set <xref linkend=\"guc-row-security"
+"\"/> to on instead, allowing the user to attempt to restore the contents of "
+"the table with row security enabled. This might still fail if the user does "
+"not have the right to insert the rows from the dump into the table."
+msgstr ""
+"Этот параметр имеет смысл только при восстановлении содержимого таблицы, для "
+"которой включена защита строк. По умолчанию <application>pg_restore</"
+"application> устанавливает для <xref linkend=\"guc-row-security\"/> значение "
+"off для уверенности, что в таблице восстановлены все данные. Если у "
+"пользователя недостаточно прав для обхода защиты строк, выдаётся ошибка. "
+"Этот параметр указывает <application>pg_restore</application> установить в "
+"<xref linkend=\"guc-row-security\"/> значение on, чтобы пользователь мог "
+"попытаться восстановить содержимое таблицы с включённой защитой строк. "
+"Однако и при этом возможна ошибка, если пользователь не будет иметь права "
+"добавлять в эту таблицу выгруженные строки данных."
+
+#: ref/pg_restore.xml:539(para)
+msgid ""
+"Note that this option currently also requires the dump be in "
+"<command>INSERT</command> format, as <command>COPY TO</command> does not "
+"support row security."
+msgstr ""
+"Заметьте, что в настоящее время для этого требуется, чтобы выгрузка "
+"выполнялась в режиме <command>INSERT</command>, так как <command>COPY TO</"
+"command> не поддерживает защиту строк."
+
+#: ref/pg_restore.xml:547(option)
+msgid "--if-exists"
+msgstr "--if-exists"
+
+#: ref/pg_restore.xml:549(para)
+msgid ""
+"Use conditional commands (i.e. add an <literal>IF EXISTS</literal> clause) "
+"when cleaning database objects. This option is not valid unless <option>--"
+"clean</option> is also specified."
+msgstr ""
+"При очистке целевой базы использовать условные команды (добавлять "
+"предложение <literal>IF EXISTS</literal>). Применяется только с параметром "
+"<option>--clean</option>."
+
+#: ref/pg_restore.xml:558(option)
+msgid "--no-data-for-failed-tables"
+msgstr "--no-data-for-failed-tables"
+
+#: ref/pg_restore.xml:560(para)
+msgid ""
+"By default, table data is restored even if the creation command for the "
+"table failed (e.g., because it already exists). With this option, data for "
+"such a table is skipped. This behavior is useful if the target database "
+"already contains the desired table contents. For example, auxiliary tables "
+"for <productname>PostgreSQL</productname> extensions such as "
+"<productname>PostGIS</productname> might already be loaded in the target "
+"database; specifying this option prevents duplicate or obsolete data from "
+"being loaded into them."
+msgstr ""
+"По умолчанию данные восстанавливаются даже при ошибке команды создания "
+"таблицы (например, когда она уже существует). С этим параметром данные в "
+"таком случае не восстанавливаются. Это поведение полезно, если в целевой "
+"таблице уже содержатся нужные данные. Например, вспомогательные таблицы для "
+"расширений <productname>PostgreSQL</productname> (в частности, "
+"<productname>PostGIS</productname>) могут быть уже заполнены; этот параметр "
+"позволяет предотвратить дублирование или загрузку устаревших данных в эти "
+"таблицы."
+
+#: ref/pg_restore.xml:572(para)
+msgid ""
+"This option is effective only when restoring directly into a database, not "
+"when producing SQL script output."
+msgstr ""
+"Этот параметр действует только при восстановлении непосредственно в базу "
+"данных (не при генерации SQL-скрипта)."
+
+#: ref/pg_restore.xml:580(option)
+msgid "--no-security-labels"
+msgstr "--no-security-labels"
+
+#: ref/pg_restore.xml:582(para)
+msgid ""
+"Do not output commands to restore security labels, even if the archive "
+"contains them."
+msgstr ""
+"Не выводить команды, восстанавливающие метки безопасности, даже если они "
+"содержатся в архиве."
+
+#: ref/pg_restore.xml:590(option)
+msgid "--no-tablespaces"
+msgstr "--no-tablespaces"
+
+#: ref/pg_restore.xml:592(para)
+msgid ""
+"Do not output commands to select tablespaces. With this option, all objects "
+"will be created in whichever tablespace is the default during restore."
+msgstr ""
+"Не формировать команды для указания табличных пространств. Все объекты будут "
+"создаваться в табличном пространстве по умолчанию."
+
+#: ref/pg_restore.xml:601(replaceable)
+msgid "sectionname"
+msgstr "имя секции"
+
+#: ref/pg_restore.xml:601(option)
+msgid "--section=<placeholder-1/>"
+msgstr "--section=<placeholder-1/>"
+
+#: ref/pg_restore.xml:603(para)
+msgid ""
+"Only restore the named section. The section name can be <option>pre-data</"
+"option>, <option>data</option>, or <option>post-data</option>. This option "
+"can be specified more than once to select multiple sections. The default is "
+"to restore all sections."
+msgstr ""
+"Восстановить только указанный раздел. В качестве имени раздела можно задать "
+"<option>pre-data</option>, <option>data</option> или <option>post-data</"
+"option>. Указав этот параметр неоднократно, можно выбрать несколько "
+"разделов. По умолчанию восстанавливаются все разделы."
+
+#: ref/pg_restore.xml:609(para)
+msgid ""
+"The data section contains actual table data as well as large-object "
+"definitions. Post-data items consist of definitions of indexes, triggers, "
+"rules and constraints other than validated check constraints. Pre-data items "
+"consist of all other data definition items."
+msgstr ""
+"Раздел &laquo;data&raquo; содержит собственно данные таблиц и определения "
+"больших объектов. В разделе &laquo;post-data&raquo; содержатся определения "
+"индексов, триггеров, правил и ограничений (кроме отдельно проверяемых). "
+"Раздел &laquo;pre-data&raquo; содержит все остальные определения."
+
+#: ref/pg_restore.xml:620(option)
+msgid "--use-set-session-authorization"
+msgstr "--use-set-session-authorization"
+
+#: ref/pg_restore.xml:622(para)
+msgid ""
+"Output SQL-standard <command>SET SESSION AUTHORIZATION</command> commands "
+"instead of <command>ALTER OWNER</command> commands to determine object "
+"ownership. This makes the dump more standards-compatible, but depending on "
+"the history of the objects in the dump, might not restore properly."
+msgstr ""
+"Выводить команды <command>SET SESSION AUTHORIZATION</command>, "
+"соответствующие стандарту, вместо <command>ALTER OWNER</command>, для "
+"назначения владельцев объектов. В результате выгруженный скрипт будет более "
+"стандартизированным, но может не восстановиться корректно, в зависимости от "
+"истории объектов."
+
+#: ref/pg_restore.xml:633(option)
+msgid "-?"
+msgstr "-?"
+
+#: ref/pg_restore.xml:634(option)
+msgid "--help"
+msgstr "--help"
+
+#: ref/pg_restore.xml:636(para)
+msgid ""
+"Show help about <application>pg_restore</application> command line "
+"arguments, and exit."
+msgstr ""
+"Показать справку по аргументам командной строки <application>pg_restore</"
+"application> и завершиться."
+
+#: ref/pg_restore.xml:74(para)
+msgid ""
+"<application>pg_restore</application> accepts the following command line "
+"arguments. <placeholder-1/>"
+msgstr ""
+"Утилита <application>pg_restore</application> принимает следующие аргументы "
+"командной строки. <placeholder-1/>"
+
+#: ref/pg_restore.xml:652(replaceable) ref/pg_restore.xml:653(replaceable)
+msgid "host"
+msgstr "host"
+
+#: ref/pg_restore.xml:652(option)
+msgid "-h <placeholder-1/>"
+msgstr "-h <placeholder-1/>"
+
+#: ref/pg_restore.xml:653(option)
+msgid "--host=<placeholder-1/>"
+msgstr "--host=<placeholder-1/>"
+
+#: ref/pg_restore.xml:655(para)
+msgid ""
+"Specifies the host name of the machine on which the server is running. If "
+"the value begins with a slash, it is used as the directory for the Unix "
+"domain socket. The default is taken from the <envar>PGHOST</envar> "
+"environment variable, if set, else a Unix domain socket connection is "
+"attempted."
+msgstr ""
+"Указывает имя компьютера, на котором запущен сервер. Если значение "
+"начинается с косой черты, оно интерпретируется как имя каталога с доменным "
+"сокетом Unix. Значение по умолчанию берётся из переменной окружения "
+"<envar>PGHOST</envar>, если она установлена. В противном случае выполняется "
+"подключение к доменному сокету."
+
+#: ref/pg_restore.xml:666(replaceable) ref/pg_restore.xml:667(replaceable)
+#, fuzzy
+msgid "port"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"port\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"порт"
+
+#: ref/pg_restore.xml:666(option)
+msgid "-p <placeholder-1/>"
+msgstr "-p <placeholder-1/>"
+
+#: ref/pg_restore.xml:667(option)
+msgid "--port=<placeholder-1/>"
+msgstr "--port=<placeholder-1/>"
+
+#: ref/pg_restore.xml:669(para)
+msgid ""
+"Specifies the TCP port or local Unix domain socket file extension on which "
+"the server is listening for connections. Defaults to the <envar>PGPORT</"
+"envar> environment variable, if set, or a compiled-in default."
+msgstr ""
+"Указывает TCP-порт или расширение локального файла Unix-сокета, на котором "
+"сервер слушает подключения. По умолчанию берётся значение переменной "
+"окружения <envar>PGPORT</envar>, если оно установлено, либо значение времени "
+"компиляции."
+
+#: ref/pg_restore.xml:679(option)
+msgid "-U <placeholder-1/>"
+msgstr "-U <placeholder-1/>"
+
+#: ref/pg_restore.xml:680(option)
+msgid "--username=<placeholder-1/>"
+msgstr "--username=<placeholder-1/>"
+
+#: ref/pg_restore.xml:682(para)
+msgid "User name to connect as."
+msgstr "Имя пользователя, под которым производится подключение."
+
+#: ref/pg_restore.xml:689(option)
+msgid "-w"
+msgstr "-w"
+
+#: ref/pg_restore.xml:690(option)
+msgid "--no-password"
+msgstr "--no-password"
+
+#: ref/pg_restore.xml:692(para)
+msgid ""
+"Never issue a password prompt. If the server requires password "
+"authentication and a password is not available by other means such as a "
+"<filename>.pgpass</filename> file, the connection attempt will fail. This "
+"option can be useful in batch jobs and scripts where no user is present to "
+"enter a password."
+msgstr ""
+"Не выдавать запрос на ввод пароля. Если сервер требует аутентификацию по "
+"паролю и пароль не доступен с помощью других средств, таких как файл "
+"<filename>.pgpass</filename>, попытка соединения не удастся. Этот параметр "
+"может быть полезен в пакетных заданиях и скриптах, где нет пользователя, "
+"который вводит пароль."
+
+#: ref/pg_restore.xml:704(option)
+msgid "-W"
+msgstr "-W"
+
+#: ref/pg_restore.xml:705(option)
+msgid "--password"
+msgstr "--password"
+
+#: ref/pg_restore.xml:707(para)
+msgid ""
+"Force <application>pg_restore</application> to prompt for a password before "
+"connecting to a database."
+msgstr "Принудительно запрашивать пароль перед подключением к базе данных."
+
+#: ref/pg_restore.xml:712(para)
+msgid ""
+"This option is never essential, since <application>pg_restore</application> "
+"will automatically prompt for a password if the server demands password "
+"authentication. However, <application>pg_restore</application> will waste a "
+"connection attempt finding out that the server wants a password. In some "
+"cases it is worth typing <option>-W</option> to avoid the extra connection "
+"attempt."
+msgstr ""
+"Это несущественный параметр, так как <application>pg_restore</application> "
+"запрашивает пароль автоматически, если сервер проверяет подлинность по "
+"паролю. Однако, чтобы понять это, <application>pg_restore</application> "
+"лишний раз подключается к серверу. Поэтому иногда имеет смысл ввести "
+"<option>-W</option>, чтобы исключить эту ненужную попытку подключения."
+
+#: ref/pg_restore.xml:725(replaceable)
+msgid "rolename"
+msgstr "имя роли"
+
+#: ref/pg_restore.xml:725(option)
+msgid "--role=<placeholder-1/>"
+msgstr "--role=<placeholder-1/>"
+
+#: ref/pg_restore.xml:727(para)
+msgid ""
+"Specifies a role name to be used to perform the restore. This option causes "
+"<application>pg_restore</application> to issue a <command>SET ROLE</command> "
+"<replaceable class=\"parameter\">rolename</replaceable> command after "
+"connecting to the database. It is useful when the authenticated user "
+"(specified by <option>-U</option>) lacks privileges needed by "
+"<application>pg_restore</application>, but can switch to a role with the "
+"required rights. Some installations have a policy against logging in "
+"directly as a superuser, and use of this option allows restores to be "
+"performed without violating the policy."
+msgstr ""
+"Задаёт имя роли, которая будет осуществлять восстановление. Получив это имя, "
+"<application>pg_restore</application> выполнит <command>SET ROLE</command> "
+"<replaceable class=\"parameter\">имя_роли</replaceable> после подключения к "
+"базе данных. Это полезно, когда проходящий проверку пользователь (указанный "
+"в <option>-U</option>) не имеет прав, необходимых для "
+"<application>pg_restore</application>, но может переключиться на роль, "
+"наделённую этими правами. В некоторых окружениях правила запрещают "
+"подключаться к серверу непосредственно суперпользователю, и этот параметр "
+"позволяет выполнить восстановление, не нарушая их."
+
+#: ref/pg_restore.xml:646(para)
+msgid ""
+"<application>pg_restore</application> also accepts the following command "
+"line arguments for connection parameters: <placeholder-1/>"
+msgstr ""
+"<application>pg_restore</application> также принимает в качестве параметров "
+"соединения следующие аргументы командной строки: <placeholder-1/>"
+
+#: ref/pg_restore.xml:747(title)
+msgid "Environment"
+msgstr "Переменные окружения"
+
+#: ref/pg_restore.xml:751(envar)
+msgid "PGHOST"
+msgstr "PGHOST"
+
+#: ref/pg_restore.xml:752(envar)
+msgid "PGOPTIONS"
+msgstr "PGOPTIONS"
+
+#: ref/pg_restore.xml:753(envar)
+msgid "PGPORT"
+msgstr "PGPORT"
+
+#: ref/pg_restore.xml:754(envar)
+msgid "PGUSER"
+msgstr "PGUSER"
+
+#: ref/pg_restore.xml:757(para)
+msgid "Default connection parameters"
+msgstr "Параметры подключения по умолчанию"
+
+#: ref/pg_restore.xml:764(para)
+msgid ""
+"This utility, like most other <productname>PostgreSQL</productname> "
+"utilities, also uses the environment variables supported by "
+"<application>libpq</application> (see <xref linkend=\"libpq-envars\"/>). "
+"However, it does not read <envar>PGDATABASE</envar> when a database name is "
+"not supplied."
+msgstr ""
+"Как и большинство других утилит <productname>PostgreSQL</productname>, эта "
+"утилита также использует переменные среды, поддерживаемые "
+"<application>libpq</application> (см. <xref remap=\"4\" linkend=\"libpq-"
+"envars\"/>). Однако она не учитывает <envar>PGDATABASE</envar>, когда имя "
+"базы не указано."
+
+#: ref/pg_restore.xml:775(title)
+msgid "Diagnostics"
+msgstr "Диагностика"
+
+#: ref/pg_restore.xml:777(para)
+msgid ""
+"When a direct database connection is specified using the <option>-d</option> "
+"option, <application>pg_restore</application> internally executes "
+"<acronym>SQL</acronym> statements. If you have problems running "
+"<application>pg_restore</application>, make sure you are able to select "
+"information from the database using, for example, <xref linkend=\"app-psql\"/"
+">. Also, any default connection settings and environment variables used by "
+"the <application>libpq</application> front-end library will apply."
+msgstr ""
+"Когда с параметром <option>-d</option> устанавливается прямое подключение к "
+"базе данных, <application>pg_restore</application> выполняет обычные "
+"операторы <acronym>SQL</acronym>. При этом применяются все свойства "
+"подключения по умолчанию и переменные окружения, которые использует "
+"клиентская библиотека <application>libpq</application>. Если вы "
+"сталкиваетесь с проблемами при запуске <application>pg_restore</"
+"application>, убедитесь в том, что вы можете получить информацию из базы "
+"данных, используя, например <xref linkend=\"app-psql\"/>."
+
+#: ref/pg_restore.xml:791(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/pg_restore.xml:800(programlisting)
+#, no-wrap
+msgid "CREATE DATABASE foo WITH TEMPLATE template0;"
+msgstr "CREATE DATABASE foo WITH TEMPLATE template0;"
+
+#: ref/pg_restore.xml:793(para)
+msgid ""
+"If your installation has any local additions to the <literal>template1</"
+"literal> database, be careful to load the output of <application>pg_restore</"
+"application> into a truly empty database; otherwise you are likely to get "
+"errors due to duplicate definitions of the added objects. To make an empty "
+"database without any local additions, copy from <literal>template0</literal> "
+"not <literal>template1</literal>, for example: <placeholder-1/>"
+msgstr ""
+"Если в вашей инсталляции база данных <literal>template1</literal> содержит "
+"какие-либо дополнения, важно убедиться в том, что вывод "
+"<application>pg_restore</application> загружается в действительно пустую "
+"базу; иначе вы, скорее всего, получите ошибки из-за дублирования определений "
+"создаваемых объектов. Чтобы получить пустую базу данных без дополнительных "
+"объектов, выберите в качестве шаблона <literal>template0</literal>, а не "
+"<literal>template1</literal>, например так: <placeholder-1/>"
+
+#: ref/pg_restore.xml:808(para)
+msgid ""
+"When restoring data to a pre-existing table and the option <option>--disable-"
+"triggers</option> is used, <application>pg_restore</application> emits "
+"commands to disable triggers on user tables before inserting the data, then "
+"emits commands to re-enable them after the data has been inserted. If the "
+"restore is stopped in the middle, the system catalogs might be left in the "
+"wrong state."
+msgstr ""
+"При восстановлении данных в уже существующие таблицы с параметром <option>--"
+"disable-triggers</option>, <application>pg_restore</application> выполняет "
+"команды, отключающие триггеры в пользовательских таблицах до добавления "
+"данных, а затем, после добавления данных, выполняет команды, снова "
+"включающие эти триггеры. Если восстановление прервётся в середине, системные "
+"каталоги могут оказаться в некорректном состоянии."
+
+#: ref/pg_restore.xml:819(para)
+msgid ""
+"<application>pg_restore</application> cannot restore large objects "
+"selectively; for instance, only those for a specific table. If an archive "
+"contains large objects, then all large objects will be restored, or none of "
+"them if they are excluded via <option>-L</option>, <option>-t</option>, or "
+"other options."
+msgstr ""
+"Утилита <application>pg_restore</application> не способна восстанавливать "
+"большие объекты избирательно; например, только для определённой таблицы. "
+"Если архив содержит большие объекты, они будут восстановлены все, либо не "
+"будут восстановлены никакие (если они были исключены параметрами <option>-L</"
+"option>, <option>-t</option> и т. п.)."
+
+#: ref/pg_restore.xml:803(para)
+msgid ""
+"The limitations of <application>pg_restore</application> are detailed below. "
+"<placeholder-1/>"
+msgstr ""
+"Ограничения <application>pg_restore</application> описаны ниже. "
+"<placeholder-1/>"
+
+#: ref/pg_restore.xml:830(para)
+msgid ""
+"See also the <xref linkend=\"app-pgdump\"/> documentation for details on "
+"limitations of <application>pg_dump</application>."
+msgstr ""
+"Также обратитесь к документации <xref linkend=\"app-pgdump\"/>, чтобы узнать "
+"о связанных ограничениях <application>pg_dump</application>."
+
+#: ref/pg_restore.xml:835(para)
+msgid ""
+"Once restored, it is wise to run <command>ANALYZE</command> on each restored "
+"table so the optimizer has useful statistics; see <xref linkend=\"vacuum-for-"
+"statistics\"/> and <xref linkend=\"autovacuum\"/> for more information."
+msgstr ""
+"После восстановления имеет смысл запустить <command>ANALYZE</command> для "
+"каждой восстановленной таблицы, чтобы оптимизатор получил актуальную "
+"статистику; за дополнительными сведениями обратитесь к <xref remap=\"3\" "
+"linkend=\"vacuum-for-statistics\"/> и <xref remap=\"3\" linkend=\"autovacuum"
+"\"/>."
+
+#: ref/pg_restore.xml:846(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/pg_restore.xml:848(para)
+msgid ""
+"Assume we have dumped a database called <literal>mydb</literal> into a "
+"custom-format dump file: <screen><prompt>$</prompt> <userinput>pg_dump -Fc "
+"mydb &gt; db.dump</userinput></screen>"
+msgstr ""
+"Предположим, что мы выгрузили базу данных <literal>mydb</literal> в файл "
+"специального формата: <screen><prompt>$</prompt> <userinput>pg_dump -Fc mydb "
+"&gt; db.dump</userinput></screen>"
+
+#: ref/pg_restore.xml:855(para)
+msgid ""
+"To drop the database and recreate it from the dump: <screen><prompt>$</"
+"prompt> <userinput>dropdb mydb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput></"
+"screen> The database named in the <option>-d</option> switch can be any "
+"database existing in the cluster; <application>pg_restore</application> only "
+"uses it to issue the <command>CREATE DATABASE</command> command for "
+"<literal>mydb</literal>. With <option>-C</option>, data is always restored "
+"into the database name that appears in the dump file."
+msgstr ""
+"Мы можем удалить базу данных и восстановить её из копии: <screen><prompt>$</"
+"prompt> <userinput>dropdb mydb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput></"
+"screen> В аргументе <option>-d</option> можно указать любую базу данных, "
+"существующую в кластере; <application>pg_restore</application> использует "
+"её, только чтобы выполнить команду <command>CREATE DATABASE</command> для "
+"базы <literal>mydb</literal>. С параметром <option>-C</option> данные всегда "
+"восстанавливаются в базу, имя которой записано в файле архива."
+
+#: ref/pg_restore.xml:868(para)
+msgid ""
+"To reload the dump into a new database called <literal>newdb</literal>: "
+"<screen><prompt>$</prompt> <userinput>createdb -T template0 newdb</"
+"userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput></"
+"screen> Notice we don't use <option>-C</option>, and instead connect "
+"directly to the database to be restored into. Also note that we clone the "
+"new database from <literal>template0</literal> not <literal>template1</"
+"literal>, to ensure it is initially empty."
+msgstr ""
+"Восстановить данные в новую базу <literal>newdb</literal> можно так: "
+"<screen><prompt>$</prompt> <userinput>createdb -T template0 newdb</"
+"userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput></"
+"screen> Обратите внимание, мы не используем параметр <option>-C</option>, а "
+"вместо этого подключаемся непосредственно к базе, в которую хотим "
+"восстановить данные. Также заметьте, что мы создаём базу данных из шаблона "
+"<literal>template0</literal>, а не <literal>template1</literal>, чтобы "
+"изначально она была гарантированно пустой."
+
+#: ref/pg_restore.xml:885(programlisting)
+#, no-wrap
+msgid ""
+";\n"
+"; Archive created at Mon Sep 14 13:55:39 2009\n"
+";     dbname: DBDEMOS\n"
+";     TOC Entries: 81\n"
+";     Compression: 9\n"
+";     Dump Version: 1.10-0\n"
+";     Format: CUSTOM\n"
+";     Integer: 4 bytes\n"
+";     Offset: 8 bytes\n"
+";     Dumped from database version: 8.3.5\n"
+";     Dumped by pg_dump version: 8.3.8\n"
+";\n"
+";\n"
+"; Selected TOC Entries:\n"
+";\n"
+"3; 2615 2200 SCHEMA - public pasha\n"
+"1861; 0 0 COMMENT - SCHEMA public pasha\n"
+"1862; 0 0 ACL - public pasha\n"
+"317; 1247 17715 TYPE public composite pasha\n"
+"319; 1247 25899 DOMAIN public domain0 pasha"
+msgstr ""
+";\n"
+"; Archive created at Mon Sep 14 13:55:39 2009\n"
+";     dbname: DBDEMOS\n"
+";     TOC Entries: 81\n"
+";     Compression: 9\n"
+";     Dump Version: 1.10-0\n"
+";     Format: CUSTOM\n"
+";     Integer: 4 bytes\n"
+";     Offset: 8 bytes\n"
+";     Dumped from database version: 8.3.5\n"
+";     Dumped by pg_dump version: 8.3.8\n"
+";\n"
+";\n"
+"; Selected TOC Entries:\n"
+";\n"
+"3; 2615 2200 SCHEMA - public pasha\n"
+"1861; 0 0 COMMENT - SCHEMA public pasha\n"
+"1862; 0 0 ACL - public pasha\n"
+"317; 1247 17715 TYPE public composite pasha\n"
+"319; 1247 25899 DOMAIN public domain0 pasha"
+
+#: ref/pg_restore.xml:880(para)
+msgid ""
+"To reorder database items, it is first necessary to dump the table of "
+"contents of the archive: <screen><prompt>$</prompt> <userinput>pg_restore -l "
+"db.dump &gt; db.list</userinput></screen> The listing file consists of a "
+"header and one line for each item, e.g.: <placeholder-1/> Semicolons start a "
+"comment, and the numbers at the start of lines refer to the internal archive "
+"ID assigned to each item."
+msgstr ""
+"Чтобы переупорядочить элементы базы данных, сначала необходимо получить "
+"оглавление архива: <screen><prompt>$</prompt> <userinput>pg_restore -l db."
+"dump &gt; db.list</userinput></screen> Файл оглавления содержит заголовок и "
+"по одной строке для каждого элемента, например: <placeholder-1/> С точки с "
+"запятой начинаются комментарии, а число в начале строки обозначает "
+"внутренний идентификатор, назначаемый каждому элементу в архиве."
+
+#: ref/pg_restore.xml:911(programlisting)
+#, no-wrap
+msgid ""
+"10; 145433 TABLE map_resolutions postgres\n"
+";2; 145344 TABLE species postgres\n"
+";4; 145359 TABLE nt_header postgres\n"
+"6; 145402 TABLE species_records postgres\n"
+";8; 145416 TABLE ss_old postgres"
+msgstr ""
+"10; 145433 TABLE map_resolutions postgres\n"
+";2; 145344 TABLE species postgres\n"
+";4; 145359 TABLE nt_header postgres\n"
+"6; 145402 TABLE species_records postgres\n"
+";8; 145416 TABLE ss_old postgres"
+
+#: ref/pg_restore.xml:909(para)
+msgid ""
+"Lines in the file can be commented out, deleted, and reordered. For example: "
+"<placeholder-1/> could be used as input to <application>pg_restore</"
+"application> and would only restore items 10 and 6, in that order: "
+"<screen><prompt>$</prompt> <userinput>pg_restore -L db.list db.dump</"
+"userinput></screen>"
+msgstr ""
+"Строки в этом файле можно закомментировать, удалить или переместить. "
+"Например, список: <placeholder-1/> можно передать утилите "
+"<application>pg_restore</application>, чтобы восстановить только элементы 10 "
+"и 6 в указанном порядке: <screen><prompt>$</prompt> <userinput>pg_restore -L "
+"db.list db.dump</userinput></screen>"
+
+#: ref/pg_restore.xml:923(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/pg_restore.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

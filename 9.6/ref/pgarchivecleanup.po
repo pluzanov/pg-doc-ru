@@ -1,0 +1,333 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/pgarchivecleanup.xml:5(indexterm)
+msgid "<primary>pg_archivecleanup</primary>"
+msgstr "<primary>pg_archivecleanup</primary>"
+
+#: ref/pgarchivecleanup.xml:10(application)
+msgctxt "application"
+msgid "pg_archivecleanup"
+msgstr "pg_archivecleanup"
+
+#: ref/pgarchivecleanup.xml:11(manvolnum)
+msgid "1"
+msgstr "1"
+
+#: ref/pgarchivecleanup.xml:12(refmiscinfo)
+msgid "Application"
+msgstr "Приложение"
+
+#: ref/pgarchivecleanup.xml:16(refname)
+msgctxt "refname"
+msgid "pg_archivecleanup"
+msgstr "pg_archivecleanup"
+
+#: ref/pgarchivecleanup.xml:17(productname)
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+#: ref/pgarchivecleanup.xml:17(refpurpose)
+msgid "clean up <placeholder-1/> WAL archive files"
+msgstr "вычистить файлы архивов WAL <placeholder-1/>"
+
+#: ref/pgarchivecleanup.xml:22(command)
+msgctxt "command"
+msgid "pg_archivecleanup"
+msgstr "pg_archivecleanup"
+
+#: ref/pgarchivecleanup.xml:23(replaceable)
+msgid "option"
+msgstr "параметр"
+
+#: ref/pgarchivecleanup.xml:24(replaceable)
+msgid "archivelocation"
+msgstr "расположение_архива"
+
+#: ref/pgarchivecleanup.xml:25(replaceable)
+msgid "oldestkeptwalfile"
+msgstr "старейший_сохраняемый_файл"
+
+#: ref/pgarchivecleanup.xml:30(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/pgarchivecleanup.xml:32(para)
+msgid ""
+"<application>pg_archivecleanup</application> is designed to be used as an "
+"<literal>archive_cleanup_command</literal> to clean up WAL file archives "
+"when running as a standby server (see <xref linkend=\"warm-standby\"/>). "
+"<application>pg_archivecleanup</application> can also be used as a "
+"standalone program to clean WAL file archives."
+msgstr ""
+"Утилита <application>pg_archivecleanup</application> предназначена для "
+"использования в качестве <literal>archive_cleanup_command</literal> для "
+"удаления старых файлов WAL на резервном сервере (см. <xref remap=\"4\" "
+"linkend=\"warm-standby\"/>). <application>pg_archivecleanup</application> "
+"можно использовать и как отдельную программу для выполнения тех же действий."
+
+#: ref/pgarchivecleanup.xml:44(programlisting)
+#, no-wrap
+msgid "archive_cleanup_command = 'pg_archivecleanup <replaceable>archivelocation</replaceable> %r'"
+msgstr "archive_cleanup_command = 'pg_archivecleanup <replaceable>расположение_архива</replaceable> %r'"
+
+#: ref/pgarchivecleanup.xml:40(para)
+msgid ""
+"To configure a standby server to use <application>pg_archivecleanup</"
+"application>, put this into its <filename>recovery.conf</filename> "
+"configuration file: <placeholder-1/> where <replaceable>archivelocation</"
+"replaceable> is the directory from which WAL segment files should be removed."
+msgstr ""
+"Чтобы использовать <application>pg_archivecleanup</application> на резервном "
+"сервере, добавьте эту строку в файл конфигурации <filename>recovery.conf</"
+"filename>: <placeholder-1/> Здесь <replaceable>расположение_архива</"
+"replaceable> определяет каталог, из которого должны удаляться файлы "
+"сегментов WAL."
+
+#: ref/pgarchivecleanup.xml:48(para)
+msgid ""
+"When used within <xref linkend=\"archive-cleanup-command\"/>, all WAL files "
+"logically preceding the value of the <literal>%r</literal> argument will be "
+"removed from <replaceable>archivelocation</replaceable>. This minimizes the "
+"number of files that need to be retained, while preserving crash-restart "
+"capability. Use of this parameter is appropriate if the "
+"<replaceable>archivelocation</replaceable> is a transient staging area for "
+"this particular standby server, but <emphasis>not</emphasis> when the "
+"<replaceable>archivelocation</replaceable> is intended as a long-term WAL "
+"archive area, or when multiple standby servers are recovering from the same "
+"archive location."
+msgstr ""
+"Вызываемая в качестве <xref linkend=\"archive-cleanup-command\"/>, эта "
+"программа просматривает <replaceable>расположение_архива</replaceable> и "
+"удаляет все файлы WAL, логически предшествующие значению аргумента <literal>"
+"%r</literal>. Целью этой операции является сокращение числа сохраняемых "
+"файлов без потери возможности восстановления при перезапуске. Такой вариант "
+"использования уместен, когда <replaceable>расположение_архива</replaceable> "
+"указывает на область рабочих файлов конкретного резервного сервера, но "
+"<emphasis>не</emphasis> когда <replaceable>расположение_архива</replaceable> "
+"— каталог с архивом WAL для долговременного хранения, или когда несколько "
+"резервных серверов восстанавливают записи WAL из одного расположения."
+
+#: ref/pgarchivecleanup.xml:69(programlisting)
+#, no-wrap
+msgid ""
+"pg_archivecleanup -d archive 000000010000003700000010.00000020.backup\n"
+"\n"
+"pg_archivecleanup:  keep WAL file \"archive/000000010000003700000010\" and later\n"
+"pg_archivecleanup:  removing file \"archive/00000001000000370000000F\"\n"
+"pg_archivecleanup:  removing file \"archive/00000001000000370000000E\""
+msgstr ""
+"pg_archivecleanup -d archive 000000010000003700000010.00000020.backup\n"
+"\n"
+"pg_archivecleanup:  keep WAL file \"archive/000000010000003700000010\" and later\n"
+"pg_archivecleanup:  removing file \"archive/00000001000000370000000F\"\n"
+"pg_archivecleanup:  removing file \"archive/00000001000000370000000E\""
+
+#: ref/pgarchivecleanup.xml:59(para)
+msgid ""
+"When used as a standalone program all WAL files logically preceding the "
+"<replaceable>oldestkeptwalfile</replaceable> will be removed from "
+"<replaceable>archivelocation</replaceable>. In this mode, if you specify a "
+"<filename>.partial</filename> or <filename>.backup</filename> file name, "
+"then only the file prefix will be used as the "
+"<replaceable>oldestkeptwalfile</replaceable>. This treatment of <filename>."
+"backup</filename> file name allows you to remove all WAL files archived "
+"prior to a specific base backup without error. For example, the following "
+"example will remove all files older than WAL file name "
+"<filename>000000010000003700000010</filename>: <placeholder-1/>"
+msgstr ""
+"При отдельном использовании этой программы из каталога "
+"<replaceable>расположение_архива</replaceable> будут удалены все файлы WAL, "
+"логически предшествующие файлу <replaceable>старейший_сохраняемый_файл</"
+"replaceable>. В этом режиме, если вы укажете имя файла с расширением "
+"<filename>.partial</filename> или <filename>.backup</filename>, "
+"<replaceable>старейший_сохраняемый_файл</replaceable> будет определяться по "
+"имени без расширения. Благодаря такой интерпретации расширения <filename>."
+"backup</filename> будут корректно удалены все файлы WAL, заархивированные до "
+"определённой базовой копии. Например, следующая команда удалит все файлы "
+"старее файла WAL с именем <filename>000000010000003700000010</filename>: "
+"<placeholder-1/>"
+
+#: ref/pgarchivecleanup.xml:75(para)
+msgid ""
+"<application>pg_archivecleanup</application> assumes that "
+"<replaceable>archivelocation</replaceable> is a directory readable and "
+"writable by the server-owning user."
+msgstr ""
+"<application>pg_archivecleanup</application> рассчитывает на то, что "
+"<replaceable>расположение_архива</replaceable> доступно для чтения и записи "
+"пользователю, владеющему серверным процессом."
+
+#: ref/pgarchivecleanup.xml:83(title)
+#, fuzzy
+msgid "Options"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Параметры\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Аргументы"
+
+#: ref/pgarchivecleanup.xml:91(option)
+msgid "-d"
+msgstr "-d"
+
+#: ref/pgarchivecleanup.xml:93(para)
+msgid "Print lots of debug logging output on <filename>stderr</filename>."
+msgstr "Выводить подробные отладочные сообщения в <filename>stderr</filename>."
+
+#: ref/pgarchivecleanup.xml:100(option)
+msgid "-n"
+msgstr "-n"
+
+#: ref/pgarchivecleanup.xml:102(para)
+msgid ""
+"Print the names of the files that would have been removed on "
+"<filename>stdout</filename> (performs a dry run)."
+msgstr ""
+"Вывести имена файлов, которые должны быть удалены, в <filename>stdout</"
+"filename> (не выполняя удаление)."
+
+#: ref/pgarchivecleanup.xml:109(option)
+msgid "-V"
+msgstr "-V"
+
+#: ref/pgarchivecleanup.xml:110(option)
+msgid "--version"
+msgstr "--version"
+
+#: ref/pgarchivecleanup.xml:112(para)
+msgid ""
+"Print the <application>pg_archivecleanup</application> version and exit."
+msgstr ""
+"Вывести версию <application>pg_archivecleanup</application> и завершиться."
+
+#: ref/pgarchivecleanup.xml:119(option)
+msgid "-x"
+msgstr "-x"
+
+#: ref/pgarchivecleanup.xml:119(replaceable)
+msgid "extension"
+msgstr "расширение"
+
+#: ref/pgarchivecleanup.xml:121(para)
+msgid ""
+"When using the program as a standalone utility, provide an extension that "
+"will be stripped from all file names before deciding if they should be "
+"deleted. This is typically useful for cleaning up archives that have been "
+"compressed during storage, and therefore have had an extension added by the "
+"compression program. For example: <literal>-x .gz</literal>."
+msgstr ""
+"При отдельном использовании этой программы укажите расширение, которое будет "
+"убрано из имён файлов до принятия решения об удалении определённых файлов. "
+"Это обычно полезно для очистки файлов архивов, которые сжимаются для "
+"хранения и получают расширение, задаваемое программой сжатия. Например: "
+"<literal>-x .gz</literal>."
+
+#: ref/pgarchivecleanup.xml:134(option)
+msgid "-?"
+msgstr "-?"
+
+#: ref/pgarchivecleanup.xml:135(option)
+msgid "--help"
+msgstr "--help"
+
+#: ref/pgarchivecleanup.xml:137(para)
+msgid ""
+"Show help about <application>pg_archivecleanup</application> command line "
+"arguments, and exit."
+msgstr ""
+"Вывести справку об аргументах командной строки "
+"<application>pg_archivecleanup</application> и завершиться."
+
+#: ref/pgarchivecleanup.xml:85(para)
+msgid ""
+"<application>pg_archivecleanup</application> accepts the following command-"
+"line arguments: <placeholder-1/>"
+msgstr ""
+"<application>pg_archivecleanup</application> принимает следующие аргументы "
+"командной строки: <placeholder-1/>"
+
+#: ref/pgarchivecleanup.xml:148(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/pgarchivecleanup.xml:150(para)
+msgid ""
+"<application>pg_archivecleanup</application> is designed to work with "
+"<productname>PostgreSQL</productname> 8.0 and later when used as a "
+"standalone utility, or with <productname>PostgreSQL</productname> 9.0 and "
+"later when used as an archive cleanup command."
+msgstr ""
+"Программа <application>pg_archivecleanup</application> рассчитана на работу "
+"с <productname>PostgreSQL</productname> 8.0 и новее как отдельная утилита, а "
+"также с <productname>PostgreSQL</productname> 9.0 и новее как команда "
+"очистки архива."
+
+#: ref/pgarchivecleanup.xml:157(para)
+msgid ""
+"<application>pg_archivecleanup</application> is written in C and has an easy-"
+"to-modify source code, with specifically designated sections to modify for "
+"your own needs"
+msgstr ""
+"Программа <application>pg_archivecleanup</application> написана на C; её "
+"исходный код легко поддаётся модификации (он содержит секции, "
+"предназначенные для изменения при надобности)"
+
+#: ref/pgarchivecleanup.xml:165(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/pgarchivecleanup.xml:168(programlisting)
+#, no-wrap
+msgid "archive_cleanup_command = 'pg_archivecleanup -d /mnt/standby/archive %r 2&gt;&gt;cleanup.log'"
+msgstr "archive_cleanup_command = 'pg_archivecleanup -d /mnt/standby/archive %r 2&gt;&gt;cleanup.log'"
+
+#: ref/pgarchivecleanup.xml:167(para)
+msgid ""
+"On Linux or Unix systems, you might use: <placeholder-1/> where the archive "
+"directory is physically located on the standby server, so that the "
+"<varname>archive_command</varname> is accessing it across NFS, but the files "
+"are local to the standby. This will:"
+msgstr ""
+"В системах Linux или Unix можно использовать команду: <placeholder-1/> "
+"Предполагается, что каталог архива физически располагается на резервном "
+"сервере, так что команда <varname>archive_command</varname> обращается к "
+"нему по NFS, но для резервного сервера эти файлы локальные. Эта команда "
+"будет:"
+
+#: ref/pgarchivecleanup.xml:176(para)
+msgid "produce debugging output in <filename>cleanup.log</filename>"
+msgstr "выводить отладочную информацию в <filename>cleanup.log</filename>"
+
+#: ref/pgarchivecleanup.xml:181(para)
+msgid "remove no-longer-needed files from the archive directory"
+msgstr "удалять ставшие ненужными файлы из каталога архива"
+
+#: ref/pgarchivecleanup.xml:189(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/pgarchivecleanup.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

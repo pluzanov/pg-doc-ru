@@ -1,0 +1,193 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/do.xml:8(indexterm)
+msgid "<primary>DO</primary>"
+msgstr "<primary>DO</primary>"
+
+#: ref/do.xml:12(indexterm)
+msgid "<primary>anonymous code blocks</primary>"
+msgstr "<primary>анонимные блоки кода</primary>"
+
+#: ref/do.xml:17(refentrytitle)
+msgctxt "refentrytitle"
+msgid "DO"
+msgstr "DO"
+
+#: ref/do.xml:18(manvolnum)
+msgid "7"
+msgstr "7"
+
+#: ref/do.xml:19(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#: ref/do.xml:23(refname)
+msgctxt "refname"
+msgid "DO"
+msgstr "DO"
+
+#: ref/do.xml:24(refpurpose)
+msgid "execute an anonymous code block"
+msgstr "выполнить анонимный блок кода"
+
+#: ref/do.xml:28(replaceable) ref/do.xml:67(replaceable)
+msgid "lang_name"
+msgstr "имя_языка"
+
+#: ref/do.xml:28(replaceable) ref/do.xml:56(replaceable)
+msgid "code"
+msgstr "код"
+
+#: ref/do.xml:28(synopsis)
+#, no-wrap
+msgid "DO [ LANGUAGE <placeholder-1/> ] <placeholder-2/>"
+msgstr "DO [ LANGUAGE <placeholder-1/> ] <placeholder-2/>"
+
+#: ref/do.xml:32(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/do.xml:34(para)
+msgid ""
+"<command>DO</command> executes an anonymous code block, or in other words a "
+"transient anonymous function in a procedural language."
+msgstr ""
+"<command>DO</command> выполняет анонимный блок кода или, другими словами, "
+"разовую анонимную функцию на процедурном языке."
+
+#: ref/do.xml:39(para)
+msgid ""
+"The code block is treated as though it were the body of a function with no "
+"parameters, returning <type>void</type>. It is parsed and executed a single "
+"time."
+msgstr ""
+"Блок кода воспринимается, как если бы это было тело функции, которая не "
+"имеет параметров и возвращает <type>void</type>. Этот код разбирается и "
+"выполняется один раз."
+
+#: ref/do.xml:45(para)
+msgid ""
+"The optional <literal>LANGUAGE</literal> clause can be written either before "
+"or after the code block."
+msgstr ""
+"Необязательное предложение <literal>LANGUAGE</literal> можно записать до или "
+"после блока кода."
+
+#: ref/do.xml:52(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#: ref/do.xml:58(para)
+msgid ""
+"The procedural language code to be executed. This must be specified as a "
+"string literal, just as in <command>CREATE FUNCTION</command>. Use of a "
+"dollar-quoted literal is recommended."
+msgstr ""
+"Выполняемый код на процедурном языке. Он должен задаваться в виде текстовой "
+"строки (её рекомендуется заключать в доллары), как и код в <command>CREATE "
+"FUNCTION</command>."
+
+#: ref/do.xml:69(para)
+msgid ""
+"The name of the procedural language the code is written in. If omitted, the "
+"default is <literal>plpgsql</literal>."
+msgstr ""
+"Имя процедурного языка, на котором написан код. По умолчанию подразумевается "
+"<literal>plpgsql</literal>."
+
+#: ref/do.xml:79(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/do.xml:81(para)
+msgid ""
+"The procedural language to be used must already have been installed into the "
+"current database by means of <command>CREATE LANGUAGE</command>. "
+"<literal>plpgsql</literal> is installed by default, but other languages are "
+"not."
+msgstr ""
+"Применяемый процедурный язык должен быть уже зарегистрирован в текущей базе "
+"с помощью команды <command>CREATE LANGUAGE</command>. По умолчанию "
+"зарегистрирован только <literal>plpgsql</literal>, но не другие языки."
+
+#: ref/do.xml:87(para)
+msgid ""
+"The user must have <literal>USAGE</literal> privilege for the procedural "
+"language, or must be a superuser if the language is untrusted. This is the "
+"same privilege requirement as for creating a function in the language."
+msgstr ""
+"Пользователь должен иметь право <literal>USAGE</literal> для данного "
+"процедурного языка, либо быть суперпользователем, если этот язык "
+"недоверенный. Такие же требования действуют и при создании функции на этом "
+"языке."
+
+#: ref/do.xml:96(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/do.xml:100(programlisting)
+#, no-wrap
+msgid ""
+"DO $$DECLARE r record;\n"
+"BEGIN\n"
+"    FOR r IN SELECT table_schema, table_name FROM information_schema.tables\n"
+"             WHERE table_type = 'VIEW' AND table_schema = 'public'\n"
+"    LOOP\n"
+"        EXECUTE 'GRANT ALL ON ' || quote_ident(r.table_schema) || '.' || quote_ident(r.table_name) || ' TO webuser';\n"
+"    END LOOP;\n"
+"END$$;"
+msgstr ""
+"DO $$DECLARE r record;\n"
+"BEGIN\n"
+"    FOR r IN SELECT table_schema, table_name FROM information_schema.tables\n"
+"             WHERE table_type = 'VIEW' AND table_schema = 'public'\n"
+"    LOOP\n"
+"        EXECUTE 'GRANT ALL ON ' || quote_ident(r.table_schema) || '.' || quote_ident(r.table_name) || ' TO webuser';\n"
+"    END LOOP;\n"
+"END$$;"
+
+#: ref/do.xml:97(para)
+msgid ""
+"Grant all privileges on all views in schema <literal>public</literal> to "
+"role <literal>webuser</literal>: <placeholder-1/>"
+msgstr ""
+"Следующий код даст все права для всех представлений в схеме <literal>public</"
+"literal> роли <literal>webuser</literal>: <placeholder-1/>"
+
+#: ref/do.xml:111(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#: ref/do.xml:113(para)
+msgid "There is no <command>DO</command> statement in the SQL standard."
+msgstr "Оператор <command>DO</command> отсутствует в стандарте SQL."
+
+#: ref/do.xml:119(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/do.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

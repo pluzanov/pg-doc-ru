@@ -1,0 +1,594 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: pgstandby.xml:5(indexterm)
+msgid "<primary>pg_standby</primary>"
+msgstr "<primary>pg_standby</primary>"
+
+#: pgstandby.xml:10(application)
+msgctxt "application"
+msgid "pg_standby"
+msgstr "pg_standby"
+
+#: pgstandby.xml:11(manvolnum)
+msgid "1"
+msgstr "1"
+
+#: pgstandby.xml:12(refmiscinfo)
+msgid "Application"
+msgstr "Приложение"
+
+#: pgstandby.xml:16(refname)
+msgctxt "refname"
+msgid "pg_standby"
+msgstr "pg_standby"
+
+#: pgstandby.xml:17(productname)
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+#: pgstandby.xml:17(refpurpose)
+msgid "supports the creation of a <placeholder-1/> warm standby server"
+msgstr "поддерживает создание сервера тёплого резерва <placeholder-1/>"
+
+#: pgstandby.xml:22(command)
+msgctxt "command"
+msgid "pg_standby"
+msgstr "pg_standby"
+
+#: pgstandby.xml:23(replaceable)
+msgid "option"
+msgstr "параметр"
+
+#: pgstandby.xml:24(replaceable)
+msgid "archivelocation"
+msgstr "расположение_архива"
+
+#: pgstandby.xml:25(replaceable)
+msgid "nextwalfile"
+msgstr "следующий_файл_wal"
+
+#: pgstandby.xml:26(replaceable)
+msgid "xlogfilepath"
+msgstr "каталог_xlog"
+
+#: pgstandby.xml:27(replaceable)
+msgid "restartwalfile"
+msgstr "файл_перезапуска_wal"
+
+#: pgstandby.xml:32(title)
+msgid "Description"
+msgstr "Описание"
+
+#: pgstandby.xml:34(para)
+msgid ""
+"<application>pg_standby</application> supports creation of a <quote>warm "
+"standby</quote> database server. It is designed to be a production-ready "
+"program, as well as a customizable template should you require specific "
+"modifications."
+msgstr ""
+"Программа <application>pg_standby</application> поддерживает создание "
+"сервера в режиме <quote>тёплого резерва</quote>. Она предназначена как для "
+"непосредственного применения в производственной среде, так и для "
+"использования в качестве настраиваемой заготовки, когда требуются "
+"специальные модификации."
+
+#: pgstandby.xml:40(para)
+msgid ""
+"<application>pg_standby</application> is designed to be a waiting "
+"<varname>restore_command</varname>, which is needed to turn a standard "
+"archive recovery into a warm standby operation. Other configuration is "
+"required as well, all of which is described in the main server manual (see "
+"<xref linkend=\"warm-standby\"/>)."
+msgstr ""
+"<application>pg_standby</application> ожидает выполнения команды "
+"<varname>restore_command</varname>, которая, в свою очередь, нужна для "
+"перехода от стандартного восстановления архива к режиму тёплого резерва. Для "
+"этого также требуется другая настройка, которая описывается в основном "
+"руководстве сервера (см. <xref remap=\"4\" linkend=\"warm-standby\"/>)."
+
+#: pgstandby.xml:52(programlisting)
+#, no-wrap
+msgid "restore_command = 'pg_standby <replaceable>archiveDir</replaceable> %f %p %r'"
+msgstr "restore_command = 'pg_standby <replaceable>каталог_архива</replaceable> %f %p %r'"
+
+#: pgstandby.xml:48(para)
+msgid ""
+"To configure a standby server to use <application>pg_standby</application>, "
+"put this into its <filename>recovery.conf</filename> configuration file: "
+"<placeholder-1/> where <replaceable>archiveDir</replaceable> is the "
+"directory from which WAL segment files should be restored."
+msgstr ""
+"Чтобы настроить резервный сервер на использование <application>pg_standby</"
+"application>, поместите эту строку в файл конфигурации <filename>recovery."
+"conf</filename>: <placeholder-1/> Здесь <replaceable>каталог_архива</"
+"replaceable> — каталог, из которого должны восстанавливаться сегменты WAL."
+
+#: pgstandby.xml:56(para)
+msgid ""
+"If <replaceable>restartwalfile</replaceable> is specified, normally by using "
+"the <literal>%r</literal> macro, then all WAL files logically preceding this "
+"file will be removed from <replaceable>archivelocation</replaceable>. This "
+"minimizes the number of files that need to be retained, while preserving "
+"crash-restart capability. Use of this parameter is appropriate if the "
+"<replaceable>archivelocation</replaceable> is a transient staging area for "
+"this particular standby server, but <emphasis>not</emphasis> when the "
+"<replaceable>archivelocation</replaceable> is intended as a long-term WAL "
+"archive area."
+msgstr ""
+"Если указывается <replaceable>файл_перезапуска_wal</replaceable>, обычно с "
+"помощью макроса <literal>%r</literal>, тогда все файлы WAL, предшествующие "
+"указанному, будут удалены из каталога <replaceable>расположение_архива</"
+"replaceable>. Это позволяет сократить число сохраняемых файлов без потери "
+"возможности восстановления при перезапуске. Такой вариант использования "
+"уместен, когда <replaceable>расположение_архива</replaceable> указывает на "
+"область рабочих файлов конкретного резервного сервера, но <emphasis>не</"
+"emphasis> когда <replaceable>расположение_архива</replaceable> — каталог с "
+"архивом WAL для долговременного хранения."
+
+#: pgstandby.xml:66(para)
+msgid ""
+"<application>pg_standby</application> assumes that "
+"<replaceable>archivelocation</replaceable> is a directory readable by the "
+"server-owning user. If <replaceable>restartwalfile</replaceable> (or "
+"<literal>-k</literal>) is specified, the <replaceable>archivelocation</"
+"replaceable> directory must be writable too."
+msgstr ""
+"<application>pg_standby</application> рассчитывает на то, что "
+"<replaceable>расположение_архива</replaceable> доступно для чтения "
+"пользователю, владеющему серверным процессом. Если указывается "
+"<replaceable>файл_перезапуска_wal</replaceable> (или <literal>-k</literal>), "
+"каталог <replaceable>расположение_архива</replaceable> должен быть также "
+"доступен для записи."
+
+#: pgstandby.xml:79(term)
+msgid "Smart Failover"
+msgstr "Умное переключение"
+
+#: pgstandby.xml:81(para)
+msgid ""
+"In smart failover, the server is brought up after applying all WAL files "
+"available in the archive. This results in zero data loss, even if the "
+"standby server has fallen behind, but if there is a lot of unapplied WAL it "
+"can be a long time before the standby server becomes ready. To trigger a "
+"smart failover, create a trigger file containing the word <literal>smart</"
+"literal>, or just create it and leave it empty."
+msgstr ""
+"При умном переключении сервер включается в работу, применив изменения из "
+"всех файлов WAL, имеющихся в архиве. В результате никакие данные не "
+"теряются, даже если данный резервный сервер отстал, но если применить нужно "
+"большое количество изменений WAL, подготовка к работе может быть длительной. "
+"Чтобы вызвать умное переключение, создайте файл-триггер, содержащий слово "
+"<literal>smart</literal>, либо просто пустой файл."
+
+#: pgstandby.xml:92(term)
+msgid "Fast Failover"
+msgstr "Быстрое переключение"
+
+#: pgstandby.xml:94(para)
+msgid ""
+"In fast failover, the server is brought up immediately. Any WAL files in the "
+"archive that have not yet been applied will be ignored, and all transactions "
+"in those files are lost. To trigger a fast failover, create a trigger file "
+"and write the word <literal>fast</literal> into it. <application>pg_standby</"
+"application> can also be configured to execute a fast failover automatically "
+"if no new WAL file appears within a defined interval."
+msgstr ""
+"При быстром переключении сервер включается в работу немедленно. Все ещё не "
+"применённые файлы WAL в архиве будут игнорироваться и все транзакции в этих "
+"файлах будут потеряны. Чтобы вызвать быстрое переключение, создайте фай-"
+"триггер и запишите в него слово <literal>fast</literal>. Программу "
+"<application>pg_standby</application> можно также настроить так, чтобы "
+"быстрое переключение происходило автоматически, если за определённое время "
+"не появляется новый файл WAL."
+
+#: pgstandby.xml:73(para)
+msgid ""
+"There are two ways to fail over to a <quote>warm standby</quote> database "
+"server when the master server fails: <placeholder-1/>"
+msgstr ""
+"При отказе ведущего сервера переключение на сервер <quote>тёплого резерва</"
+"quote> возможно двумя способами: <placeholder-1/>"
+
+#: pgstandby.xml:111(title)
+#, fuzzy
+msgid "Options"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Параметры\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Аргументы"
+
+#: pgstandby.xml:119(option)
+msgid "-c"
+msgstr "-c"
+
+#: pgstandby.xml:121(para)
+msgid ""
+"Use <literal>cp</literal> or <literal>copy</literal> command to restore WAL "
+"files from archive. This is the only supported behavior so this option is "
+"useless."
+msgstr ""
+"Применять для восстановления файлов WAL из архива команду <literal>cp</"
+"literal> или <literal>copy</literal>. На данный момент поддерживается только "
+"это поведение, так что этот параметр бесполезен."
+
+#: pgstandby.xml:129(option)
+msgid "-d"
+msgstr "-d"
+
+#: pgstandby.xml:131(para)
+msgid "Print lots of debug logging output on <filename>stderr</filename>."
+msgstr "Выводить подробные отладочные сообщения в <filename>stderr</filename>."
+
+#: pgstandby.xml:138(option)
+msgid "-k"
+msgstr "-k"
+
+#: pgstandby.xml:140(para)
+msgid ""
+"Remove files from <replaceable>archivelocation</replaceable> so that no more "
+"than this many WAL files before the current one are kept in the archive. "
+"Zero (the default) means not to remove any files from "
+"<replaceable>archivelocation</replaceable>. This parameter will be silently "
+"ignored if <replaceable>restartwalfile</replaceable> is specified, since "
+"that specification method is more accurate in determining the correct "
+"archive cut-off point. Use of this parameter is <emphasis>deprecated</"
+"emphasis> as of <productname>PostgreSQL</productname> 8.3; it is safer and "
+"more efficient to specify a <replaceable>restartwalfile</replaceable> "
+"parameter. A too small setting could result in removal of files that are "
+"still needed for a restart of the standby server, while a too large setting "
+"wastes archive space."
+msgstr ""
+"Удалить файлы из каталога <replaceable>расположение_архива</replaceable>, "
+"чтобы в нём осталось не больше заданного числа файлов WAL, предшествующих "
+"текущему. Ноль (по умолчанию) означает, что не нужно удалять никакие файлы "
+"из каталога <replaceable>расположение_архива</replaceable>. Этот параметр "
+"будет просто игнорироваться, если указан <replaceable>файл_перезапуска_wal</"
+"replaceable>, так как этот метод более точно определяет правильную точку "
+"отсечения архива. Этот параметр считается <emphasis>устаревшим</emphasis> с "
+"<productname>PostgreSQL</productname> 8.3; надёжнее и эффективнее "
+"использовать параметр <replaceable>файл_перезапуска_wal</replaceable>. При "
+"слишком маленьком значении данного параметра могут быть удалены файлы, "
+"требующиеся для перезапуска резервного сервера, тогда как при слишком "
+"большом будет неэффективно расходоваться место в архиве."
+
+#: pgstandby.xml:160(option)
+msgid "-r"
+msgstr "-r"
+
+#: pgstandby.xml:160(replaceable)
+msgid "maxretries"
+msgstr "макс_повторов"
+
+#: pgstandby.xml:162(para)
+msgid ""
+"Set the maximum number of times to retry the copy command if it fails "
+"(default 3). After each failure, we wait for <replaceable>sleeptime</"
+"replaceable> * <replaceable>num_retries</replaceable> so that the wait time "
+"increases progressively. So by default, we will wait 5 secs, 10 secs, then "
+"15 secs before reporting the failure back to the standby server. This will "
+"be interpreted as end of recovery and the standby will come up fully as a "
+"result."
+msgstr ""
+"Устанавливает, сколько раз максимум нужно повторять команду copy в случае "
+"ошибки (по умолчанию 3). После каждой ошибки программа приостанавливается на "
+"<replaceable>время_задержки</replaceable> * <replaceable>число_повторов</"
+"replaceable>, так что время ожидания постепенно увеличивается. По умолчанию "
+"она ждёт 5, 10, затем 15 секунд, и только потом сообщает резервному серверу "
+"об ошибке. Это событие будет воспринято как завершение восстановления, и в "
+"результате резервный сервер полностью включится в работу."
+
+#: pgstandby.xml:176(option)
+msgid "-s"
+msgstr "-s"
+
+#: pgstandby.xml:176(replaceable)
+msgid "sleeptime"
+msgstr "время_задержки"
+
+#: pgstandby.xml:178(para)
+msgid ""
+"Set the number of seconds (up to 60, default 5) to sleep between tests to "
+"see if the WAL file to be restored is available in the archive yet. The "
+"default setting is not necessarily recommended; consult <xref linkend=\"warm-"
+"standby\"/> for discussion."
+msgstr ""
+"Задаёт количество секунд (до 60, по умолчанию 5) для паузы между проверками "
+"наличия файла WAL в архиве. Значение по умолчанию не обязательно наилучшее; "
+"за подробностями обратитесь к <xref remap=\"3\" linkend=\"warm-standby\"/>."
+
+#: pgstandby.xml:188(option)
+msgid "-t"
+msgstr "-t"
+
+#: pgstandby.xml:188(replaceable)
+msgid "triggerfile"
+msgstr "файл_триггер"
+
+#: pgstandby.xml:190(para)
+msgid ""
+"Specify a trigger file whose presence should cause failover. It is "
+"recommended that you use a structured file name to avoid confusion as to "
+"which server is being triggered when multiple servers exist on the same "
+"system; for example <filename>/tmp/pgsql.trigger.5432</filename>."
+msgstr ""
+"Указывает файл-триггер, при появлении которого должна начаться отработка "
+"отказа. Имя этого файла рекомендуется выбирать по определённой схеме, "
+"позволяющей однозначно понять, для какого сервера вызывается отработка "
+"отказа, когда таких серверов в одной системе несколько; например, <filename>/"
+"tmp/pgsql.trigger.5432</filename>."
+
+#: pgstandby.xml:201(option)
+msgid "-V"
+msgstr "-V"
+
+#: pgstandby.xml:202(option)
+msgid "--version"
+msgstr "--version"
+
+#: pgstandby.xml:204(para)
+msgid "Print the <application>pg_standby</application> version and exit."
+msgstr "Вывести версию <application>pg_standby</application> и завершиться."
+
+#: pgstandby.xml:211(option)
+msgid "-w"
+msgstr "-w"
+
+#: pgstandby.xml:211(replaceable)
+msgid "maxwaittime"
+msgstr "макс_время_ожидания"
+
+#: pgstandby.xml:213(para)
+msgid ""
+"Set the maximum number of seconds to wait for the next WAL file, after which "
+"a fast failover will be performed. A setting of zero (the default) means "
+"wait forever. The default setting is not necessarily recommended; consult "
+"<xref linkend=\"warm-standby\"/> for discussion."
+msgstr ""
+"Задаёт максимальное время ожидания (в секундах) следующего файла WAL, по "
+"истечении которого будет произведено быстрое переключение. При нуле "
+"(значении по умолчанию) ожидание бесконечно. Значение по умолчанию не "
+"обязательно наилучшее; за подробностями обратитесь к <xref remap=\"3\" "
+"linkend=\"warm-standby\"/>."
+
+#: pgstandby.xml:224(option)
+msgid "-?"
+msgstr "-?"
+
+#: pgstandby.xml:225(option)
+msgid "--help"
+msgstr "--help"
+
+#: pgstandby.xml:227(para)
+msgid ""
+"Show help about <application>pg_standby</application> command line "
+"arguments, and exit."
+msgstr ""
+"Вывести справку об аргументах командной строки <application>pg_standby</"
+"application> и завершиться."
+
+#: pgstandby.xml:113(para)
+msgid ""
+"<application>pg_standby</application> accepts the following command-line "
+"arguments: <placeholder-1/>"
+msgstr ""
+"<application>pg_standby</application> принимает следующие аргументы "
+"командной строки: <placeholder-1/>"
+
+#: pgstandby.xml:239(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: pgstandby.xml:241(para)
+msgid ""
+"<application>pg_standby</application> is designed to work with "
+"<productname>PostgreSQL</productname> 8.2 and later."
+msgstr ""
+"Программа <application>pg_standby</application> предназначена для работы с "
+"<productname>PostgreSQL</productname> 8.2 и новее."
+
+#: pgstandby.xml:245(para)
+msgid ""
+"<productname>PostgreSQL</productname> 8.3 provides the <literal>%r</literal> "
+"macro, which is designed to let <application>pg_standby</application> know "
+"the last file it needs to keep. With <productname>PostgreSQL</productname> "
+"8.2, the <literal>-k</literal> option must be used if archive cleanup is "
+"required. This option remains available in 8.3, but its use is deprecated."
+msgstr ""
+"С <productname>PostgreSQL</productname>, начиная с 8.3, можно использовать "
+"макрос <literal>%r</literal>, который позволяет <application>pg_standby</"
+"application> узнать, какой последний файл нужно сохранять. Для "
+"<productname>PostgreSQL</productname> 8.2, если требуется очищать архив, "
+"нужно применять параметр <literal>-k</literal>. Этот параметр сохранился и "
+"после 8.3, но теперь он считается устаревшим."
+
+#: pgstandby.xml:252(para)
+msgid ""
+"<productname>PostgreSQL</productname> 8.4 provides the "
+"<varname>recovery_end_command</varname> option. Without this option a "
+"leftover trigger file can be hazardous."
+msgstr ""
+"<productname>PostgreSQL</productname>, начиная с 8.4, поддерживает параметр "
+"<varname>recovery_end_command</varname>. В нём можно задать команду, "
+"удаляющую файл-триггер во избежание ошибок."
+
+#: pgstandby.xml:258(para)
+msgid ""
+"<application>pg_standby</application> is written in C and has an easy-to-"
+"modify source code, with specifically designated sections to modify for your "
+"own needs"
+msgstr ""
+"Программа <application>pg_standby</application> написана на C; её исходный "
+"код легко поддаётся модификации (он содержит секции, предназначенные для "
+"изменения при надобности)"
+
+#: pgstandby.xml:266(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: pgstandby.xml:270(programlisting)
+#, no-wrap
+msgid ""
+"archive_command = 'cp %p .../archive/%f'\n"
+"\n"
+"restore_command = 'pg_standby -d -s 2 -t /tmp/pgsql.trigger.5442 .../archive %f %p %r 2&gt;&gt;standby.log'\n"
+"\n"
+"recovery_end_command = 'rm -f /tmp/pgsql.trigger.5442'"
+msgstr ""
+"archive_command = 'cp %p .../archive/%f'\n"
+"\n"
+"restore_command = 'pg_standby -d -s 2 -t /tmp/pgsql.trigger.5442 .../archive %f %p %r 2&gt;&gt;standby.log'\n"
+"\n"
+"recovery_end_command = 'rm -f /tmp/pgsql.trigger.5442'"
+
+#: pgstandby.xml:281(para) pgstandby.xml:328(para)
+msgid "produce debugging output in <filename>standby.log</filename>"
+msgstr "выводить отладочную информацию в <filename>standby.log</filename>"
+
+#: pgstandby.xml:286(para)
+msgid "sleep for 2 seconds between checks for next WAL file availability"
+msgstr "ждать 2 секунды между проверками появления следующего файла WAL"
+
+#: pgstandby.xml:291(para)
+msgid ""
+"stop waiting only when a trigger file called <filename>/tmp/pgsql."
+"trigger.5442</filename> appears, and perform failover according to its "
+"content"
+msgstr ""
+"прекращать ожидание, только когда появляется файл-триггер с именем "
+"<filename>/tmp/pgsql.trigger.5442</filename>, и выполнить переключение "
+"согласно его содержимому"
+
+#: pgstandby.xml:298(para) pgstandby.xml:345(para)
+msgid "remove the trigger file when recovery ends"
+msgstr "удалять файл-триггер по завершении восстановления"
+
+#: pgstandby.xml:303(para) pgstandby.xml:350(para)
+msgid "remove no-longer-needed files from the archive directory"
+msgstr "удалять ставшие ненужными файлы из каталога архива"
+
+#: pgstandby.xml:268(para)
+msgid ""
+"On Linux or Unix systems, you might use: <placeholder-1/> where the archive "
+"directory is physically located on the standby server, so that the "
+"<varname>archive_command</varname> is accessing it across NFS, but the files "
+"are local to the standby (enabling use of <literal>ln</literal>). This will: "
+"<placeholder-2/>"
+msgstr ""
+"В системах Linux или Unix можно использовать команды: <placeholder-1/> "
+"Предполагается, что каталог архива физически располагается на резервном "
+"сервере, так что команда <varname>archive_command</varname> обращается к "
+"нему по NFS, но для резервного сервера эти файлы локальные (для этого "
+"применяется <literal>ln</literal>). Эти команды будут: <placeholder-2/>"
+
+#: pgstandby.xml:312(programlisting)
+#, no-wrap
+msgid ""
+"archive_command = 'copy %p ...\\\\archive\\\\%f'\n"
+"\n"
+"restore_command = 'pg_standby -d -s 5 -t C:\\pgsql.trigger.5442 ...\\archive %f %p %r 2&gt;&gt;standby.log'\n"
+"\n"
+"recovery_end_command = 'del C:\\pgsql.trigger.5442'"
+msgstr ""
+"archive_command = 'copy %p ...\\\\archive\\\\%f'\n"
+"\n"
+"restore_command = 'pg_standby -d -s 5 -t C:\\pgsql.trigger.5442 ...\\archive %f %p %r 2&gt;&gt;standby.log'\n"
+"\n"
+"recovery_end_command = 'del C:\\pgsql.trigger.5442'"
+
+#: pgstandby.xml:323(para)
+msgid ""
+"use the <literal>copy</literal> command to restore WAL files from archive"
+msgstr ""
+"применять команду <literal>copy</literal> для восстановления файлов WAL из "
+"архива"
+
+#: pgstandby.xml:333(para)
+msgid "sleep for 5 seconds between checks for next WAL file availability"
+msgstr "ждать 5 секунд между проверками появления следующего файла WAL"
+
+#: pgstandby.xml:338(para)
+msgid ""
+"stop waiting only when a trigger file called <filename>C:\\pgsql."
+"trigger.5442</filename> appears, and perform failover according to its "
+"content"
+msgstr ""
+"прекращать ожидание, только когда появляется файл-триггер с именем "
+"<filename>C:\\pgsql.trigger.5442</filename>, и выполнить переключение "
+"согласно его содержимому"
+
+#: pgstandby.xml:310(para)
+msgid ""
+"On Windows, you might use: <placeholder-1/> Note that backslashes need to be "
+"doubled in the <varname>archive_command</varname>, but <emphasis>not</"
+"emphasis> in the <varname>restore_command</varname> or "
+"<varname>recovery_end_command</varname>. This will: <placeholder-2/>"
+msgstr ""
+"В Windows можно использовать такие команды: <placeholder-1/> Заметьте, что "
+"обратную косую черту нужно дублировать в <varname>archive_command</varname>, "
+"но <emphasis>не</emphasis> в <varname>restore_command</varname> или "
+"<varname>recovery_end_command</varname>. Эти команды будут: <placeholder-2/>"
+
+#: pgstandby.xml:357(para)
+msgid ""
+"The <literal>copy</literal> command on Windows sets the final file size "
+"before the file is completely copied, which would ordinarily confuse "
+"<application>pg_standby</application>. Therefore <application>pg_standby</"
+"application> waits <literal>sleeptime</literal> seconds once it sees the "
+"proper file size. GNUWin32's <literal>cp</literal> sets the file size only "
+"after the file copy is complete."
+msgstr ""
+"Команда <literal>copy</literal> в Windows устанавливает окончательный размер "
+"файла до того, как файл будет окончательно скопирован, что обычно сбивает с "
+"толку <application>pg_standby</application>. Поэтому "
+"<application>pg_standby</application> ждёт <literal>время_задержки</literal> "
+"после того, как увидит подходящий размер файла. Команда <literal>cp</"
+"literal> из GNUWin32 устанавливает размер файла, только когда завершает "
+"копирование."
+
+#: pgstandby.xml:366(para)
+msgid ""
+"Since the Windows example uses <literal>copy</literal> at both ends, either "
+"or both servers might be accessing the archive directory across the network."
+msgstr ""
+"Так как в примере для Windows с обеих сторон применяется <literal>copy</"
+"literal>, любой или оба этих сервера могут обращаться к каталогу архива по "
+"сети."
+
+#: pgstandby.xml:375(title)
+msgid "Author"
+msgstr "Автор"
+
+#: pgstandby.xml:377(para)
+msgid "Simon Riggs <email>simon@2ndquadrant.com</email>"
+msgstr "Саймон Риггс <email>simon@2ndquadrant.com</email>"
+
+#: pgstandby.xml:383(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: pgstandby.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

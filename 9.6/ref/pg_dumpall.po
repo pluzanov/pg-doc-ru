@@ -1,0 +1,955 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/pg_dumpall.xml:8(indexterm)
+msgid "<primary>pg_dumpall</primary>"
+msgstr "<primary>pg_dumpall</primary>"
+
+#: ref/pg_dumpall.xml:13(application)
+msgctxt "application"
+msgid "pg_dumpall"
+msgstr "pg_dumpall"
+
+#: ref/pg_dumpall.xml:14(manvolnum)
+msgid "1"
+msgstr "1"
+
+#: ref/pg_dumpall.xml:15(refmiscinfo)
+msgid "Application"
+msgstr "Приложение"
+
+#: ref/pg_dumpall.xml:19(refname)
+msgctxt "refname"
+msgid "pg_dumpall"
+msgstr "pg_dumpall"
+
+#: ref/pg_dumpall.xml:20(productname)
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+#: ref/pg_dumpall.xml:20(refpurpose)
+msgid "extract a <placeholder-1/> database cluster into a script file"
+msgstr "выгрузить кластер баз данных <placeholder-1/> в формате скрипта"
+
+#: ref/pg_dumpall.xml:25(command)
+msgctxt "command"
+msgid "pg_dumpall"
+msgstr "pg_dumpall"
+
+#: ref/pg_dumpall.xml:26(replaceable)
+msgid "connection-option"
+msgstr "параметр-подключения"
+
+#: ref/pg_dumpall.xml:27(replaceable)
+msgid "option"
+msgstr "параметр"
+
+#: ref/pg_dumpall.xml:32(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/pg_dumpall.xml:34(para)
+msgid ""
+"<application>pg_dumpall</application> is a utility for writing out "
+"(<quote>dumping</quote>) all <productname>PostgreSQL</productname> databases "
+"of a cluster into one script file. The script file contains <acronym>SQL</"
+"acronym> commands that can be used as input to <xref linkend=\"app-psql\"/> "
+"to restore the databases. It does this by calling <xref linkend=\"app-pgdump"
+"\"/> for each database in a cluster. <application>pg_dumpall</application> "
+"also dumps global objects that are common to all databases. "
+"(<application>pg_dump</application> does not save these objects.) This "
+"currently includes information about database users and groups, tablespaces, "
+"and properties such as access permissions that apply to databases as a whole."
+msgstr ""
+"Утилита <application>pg_dumpall</application> предназначена для записи "
+"(<quote>выгрузки</quote>) всех баз данных кластера <productname>PostgreSQL</"
+"productname> в один файл в формате скрипта. Этот файл содержит команды "
+"<acronym>SQL</acronym>, так что передав его на вход <xref linkend=\"app-psql"
+"\"/>, можно восстановить все базы данных. Чтобы его сформировать, "
+"<application>pg_dumpall</application> вызывает для каждой базы данных в "
+"кластере <xref linkend=\"app-pgdump\"/> и дополнительно выгружает глобальные "
+"объекты, общие для всех баз данных. (Утилита <application>pg_dump</"
+"application> не сохраняет эти объекты.) В настоящее время, к таким объектам "
+"относятся группы, пользователи и табличные пространства, а также такие "
+"свойства, как права доступа, которые применяются к базам данных в целом."
+
+#: ref/pg_dumpall.xml:49(para)
+msgid ""
+"Since <application>pg_dumpall</application> reads tables from all databases "
+"you will most likely have to connect as a database superuser in order to "
+"produce a complete dump. Also you will need superuser privileges to execute "
+"the saved script in order to be allowed to add users and groups, and to "
+"create databases."
+msgstr ""
+"Так как утилита <application>pg_dumpall</application> читает таблицы из всех "
+"баз данных, для получения полного содержимого баз запускать её, как правило, "
+"нужно от имени суперпользователя. Чтобы впоследствии выполнить сохранённый "
+"скрипт, также необходимо иметь права суперпользователя, позволяющие "
+"создавать пользователей, группы и собственно базы данных."
+
+#: ref/pg_dumpall.xml:57(para)
+msgid ""
+"The SQL script will be written to the standard output. Use the [-f|file] "
+"option or shell operators to redirect it into a file."
+msgstr ""
+"Генерируемый SQL-скрипт записывается в стандартное устройство вывода. Чтобы "
+"перенаправить его в файл, воспользуйтесь параметром [-f|file] или "
+"операторами оболочки."
+
+#: ref/pg_dumpall.xml:62(para)
+msgid ""
+"<application>pg_dumpall</application> needs to connect several times to the "
+"<productname>PostgreSQL</productname> server (once per database). If you use "
+"password authentication it will ask for a password each time. It is "
+"convenient to have a <filename>~/.pgpass</filename> file in such cases. See "
+"<xref linkend=\"libpq-pgpass\"/> for more information."
+msgstr ""
+"Утилите <application>pg_dumpall</application> требуется подключаться к "
+"серверу <productname>PostgreSQL</productname> несколько раз (к каждой базе "
+"по отдельности). Если вы проходите проверку подлинности по паролю, вам "
+"придётся каждый раз вводить пароль. Чтобы избежать этого, удобно иметь файл "
+"<filename>~/.pgpass</filename>. За дополнительными сведениями обратитесь к "
+"<xref remap=\"3\" linkend=\"libpq-pgpass\"/>."
+
+#: ref/pg_dumpall.xml:74(title)
+#, fuzzy
+msgid "Options"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Параметры\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Аргументы"
+
+#: ref/pg_dumpall.xml:82(option)
+msgid "-a"
+msgstr "-a"
+
+#: ref/pg_dumpall.xml:83(option)
+msgid "--data-only"
+msgstr "--data-only"
+
+#: ref/pg_dumpall.xml:85(para)
+msgid "Dump only the data, not the schema (data definitions)."
+msgstr "Выгружать только данные, без схемы (определений данных)."
+
+#: ref/pg_dumpall.xml:92(option)
+msgid "-c"
+msgstr "-c"
+
+#: ref/pg_dumpall.xml:93(option)
+msgid "--clean"
+msgstr "--clean"
+
+#: ref/pg_dumpall.xml:95(para)
+msgid ""
+"Include SQL commands to clean (drop) databases before recreating them. "
+"<command>DROP</command> commands for roles and tablespaces are added as well."
+msgstr ""
+"Добавить команды SQL для удаления (DROP) баз данных перед командами, "
+"создающими их. В дополнение к ним добавляются команды <command>DROP</"
+"command> для ролей и табличных пространств."
+
+#: ref/pg_dumpall.xml:104(replaceable) ref/pg_dumpall.xml:105(replaceable)
+#, fuzzy
+msgid "filename"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"имя_файла\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"filename"
+
+#: ref/pg_dumpall.xml:104(option)
+msgid "-f <placeholder-1/>"
+msgstr "-f <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:105(option)
+msgid "--file=<placeholder-1/>"
+msgstr "--file=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:107(para)
+msgid ""
+"Send output to the specified file. If this is omitted, the standard output "
+"is used."
+msgstr ""
+"Направить вывод в указанный файл. Если этот параметр опущен, скрипт "
+"записывается в стандартный вывод."
+
+#: ref/pg_dumpall.xml:115(option)
+msgid "-g"
+msgstr "-g"
+
+#: ref/pg_dumpall.xml:116(option)
+msgid "--globals-only"
+msgstr "--globals-only"
+
+#: ref/pg_dumpall.xml:118(para)
+msgid "Dump only global objects (roles and tablespaces), no databases."
+msgstr ""
+"Выгружать только глобальные объекты (роли и табличные пространства), без баз "
+"данных."
+
+#: ref/pg_dumpall.xml:125(option)
+msgid "-o"
+msgstr "-o"
+
+#: ref/pg_dumpall.xml:126(option)
+msgid "--oids"
+msgstr "--oids"
+
+#: ref/pg_dumpall.xml:128(para)
+msgid ""
+"Dump object identifiers (<acronym>OID</acronym>s) as part of the data for "
+"every table. Use this option if your application references the "
+"<acronym>OID</acronym> columns in some way (e.g., in a foreign key "
+"constraint). Otherwise, this option should not be used."
+msgstr ""
+"Выгружать идентификаторы объектов (<acronym>OID</acronym>s) вместе с данными "
+"таблиц. Используйте этот параметр, если в приложении есть ссылки на "
+"<acronym>OID</acronym>, например во внешних ключах. В противном случае, этот "
+"параметр лучше не использовать."
+
+#: ref/pg_dumpall.xml:139(option)
+msgid "-O"
+msgstr "-O"
+
+#: ref/pg_dumpall.xml:140(option)
+msgid "--no-owner"
+msgstr "--no-owner"
+
+#: ref/pg_dumpall.xml:142(para)
+msgid ""
+"Do not output commands to set ownership of objects to match the original "
+"database. By default, <application>pg_dumpall</application> issues "
+"<command>ALTER OWNER</command> or <command>SET SESSION AUTHORIZATION</"
+"command> statements to set ownership of created schema elements. These "
+"statements will fail when the script is run unless it is started by a "
+"superuser (or the same user that owns all of the objects in the script). To "
+"make a script that can be restored by any user, but will give that user "
+"ownership of all the objects, specify <option>-O</option>."
+msgstr ""
+"Не генерировать команды, устанавливающие владение объектами, как в исходной "
+"базе данных. По умолчанию, <application>pg_dumpall</application> генерирует "
+"команды <command>ALTER OWNER</command> или <command>SET SESSION "
+"AUTHORIZATION</command>, восстанавливающие исходных владельцев для "
+"создаваемых элементов схемы. Однако выполнить эти команды сможет только "
+"суперпользователь (или пользователь, владеющий всеми объектами, создаваемыми "
+"скриптом). Чтобы получить скрипт, который сможет восстановить любой "
+"пользователь (но при этом он станет владельцем всех объектов), используется "
+"<option>-O</option>."
+
+#: ref/pg_dumpall.xml:159(option)
+msgid "-r"
+msgstr "-r"
+
+#: ref/pg_dumpall.xml:160(option)
+msgid "--roles-only"
+msgstr "--roles-only"
+
+#: ref/pg_dumpall.xml:162(para)
+msgid "Dump only roles, no databases or tablespaces."
+msgstr "Выгружать только роли, без баз данных и табличных пространств."
+
+#: ref/pg_dumpall.xml:169(option)
+msgid "-s"
+msgstr "-s"
+
+#: ref/pg_dumpall.xml:170(option)
+msgid "--schema-only"
+msgstr "--schema-only"
+
+#: ref/pg_dumpall.xml:172(para)
+msgid "Dump only the object definitions (schema), not data."
+msgstr "Выгружать только определения объектов (схемы), без данных."
+
+#: ref/pg_dumpall.xml:179(replaceable) ref/pg_dumpall.xml:180(replaceable)
+#: ref/pg_dumpall.xml:470(replaceable) ref/pg_dumpall.xml:471(replaceable)
+msgid "username"
+msgstr "имя_пользователя"
+
+#: ref/pg_dumpall.xml:179(option)
+msgid "-S <placeholder-1/>"
+msgstr "-S <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:180(option)
+msgid "--superuser=<placeholder-1/>"
+msgstr "--superuser=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:182(para)
+msgid ""
+"Specify the superuser user name to use when disabling triggers. This is "
+"relevant only if <option>--disable-triggers</option> is used. (Usually, it's "
+"better to leave this out, and instead start the resulting script as "
+"superuser.)"
+msgstr ""
+"Указать суперпользователя, который будет использоваться для отключения "
+"триггеров. Параметр имеет значение только вместе с <option>--disable-"
+"triggers</option>. Обычно его лучше не использовать, а запускать полученный "
+"скрипт от имени суперпользователя."
+
+#: ref/pg_dumpall.xml:192(option)
+msgid "-t"
+msgstr "-t"
+
+#: ref/pg_dumpall.xml:193(option)
+msgid "--tablespaces-only"
+msgstr "--tablespaces-only"
+
+#: ref/pg_dumpall.xml:195(para)
+msgid "Dump only tablespaces, no databases or roles."
+msgstr "Выгружать только табличные пространства, без баз данных и ролей."
+
+#: ref/pg_dumpall.xml:202(option)
+msgid "-v"
+msgstr "-v"
+
+#: ref/pg_dumpall.xml:203(option)
+msgid "--verbose"
+msgstr "--verbose"
+
+#: ref/pg_dumpall.xml:205(para)
+msgid ""
+"Specifies verbose mode. This will cause <application>pg_dumpall</"
+"application> to output start/stop times to the dump file, and progress "
+"messages to standard error. It will also enable verbose output in "
+"<application>pg_dump</application>."
+msgstr ""
+"Включить режим подробных сообщений. В этом режиме <application>pg_dumpall</"
+"application> записывает в выходной файл время начала/завершения выгрузки, а "
+"в стандартный канал ошибок — сообщения о процессе. При этом подробные "
+"сообщения будет также выводить <application>pg_dump</application>."
+
+#: ref/pg_dumpall.xml:215(option)
+msgid "-V"
+msgstr "-V"
+
+#: ref/pg_dumpall.xml:216(option)
+msgid "--version"
+msgstr "--version"
+
+#: ref/pg_dumpall.xml:218(para)
+msgid "Print the <application>pg_dumpall</application> version and exit."
+msgstr "Сообщить версию <application>pg_dumpall</application> и завершиться."
+
+#: ref/pg_dumpall.xml:225(option)
+msgid "-x"
+msgstr "-x"
+
+#: ref/pg_dumpall.xml:226(option)
+msgid "--no-privileges"
+msgstr "--no-privileges"
+
+#: ref/pg_dumpall.xml:227(option)
+msgid "--no-acl"
+msgstr "--no-acl"
+
+#: ref/pg_dumpall.xml:229(para)
+msgid "Prevent dumping of access privileges (grant/revoke commands)."
+msgstr "Не выгружать права доступа (команды GRANT/REVOKE)."
+
+#: ref/pg_dumpall.xml:236(option)
+msgid "--binary-upgrade"
+msgstr "--binary-upgrade"
+
+#: ref/pg_dumpall.xml:238(para)
+msgid ""
+"This option is for use by in-place upgrade utilities. Its use for other "
+"purposes is not recommended or supported. The behavior of the option may "
+"change in future releases without notice."
+msgstr ""
+"Этот параметр предназначен для утилит обновления сервера. Использование для "
+"иных целей не рекомендуется и не поддерживается. Поведение параметра может "
+"быть изменено в последующих версиях без предварительного уведомления."
+
+#: ref/pg_dumpall.xml:248(option)
+msgid "--column-inserts"
+msgstr "--column-inserts"
+
+#: ref/pg_dumpall.xml:249(option)
+msgid "--attribute-inserts"
+msgstr "--attribute-inserts"
+
+#: ref/pg_dumpall.xml:251(para)
+msgid ""
+"Dump data as <command>INSERT</command> commands with explicit column names "
+"(<literal>INSERT INTO <replaceable>table</replaceable> (<replaceable>column</"
+"replaceable>, ...) VALUES ...</literal>). This will make restoration very "
+"slow; it is mainly useful for making dumps that can be loaded into non-"
+"<productname>PostgreSQL</productname> databases."
+msgstr ""
+"Выгружать данные в виде команд <command>INSERT</command> с явно задаваемыми "
+"именами столбцов (<literal>INSERT INTO <replaceable>таблица</replaceable> "
+"(<replaceable>столбец</replaceable>, ...) VALUES ...</literal>). При этом "
+"восстановление будет очень медленным; в основном это применяется для "
+"выгрузки данных, которые затем будут загружаться не в "
+"<productname>PostgreSQL</productname>."
+
+#: ref/pg_dumpall.xml:264(option)
+msgid "--disable-dollar-quoting"
+msgstr "--disable-dollar-quoting"
+
+#: ref/pg_dumpall.xml:266(para)
+msgid ""
+"This option disables the use of dollar quoting for function bodies, and "
+"forces them to be quoted using SQL standard string syntax."
+msgstr ""
+"Этот параметр запрещает заключать в доллары тело функций, что оставляет "
+"возможность только заключать их в кавычки, применяя стандартный синтаксис "
+"SQL."
+
+#: ref/pg_dumpall.xml:274(option)
+msgid "--disable-triggers"
+msgstr "--disable-triggers"
+
+#: ref/pg_dumpall.xml:276(para)
+msgid ""
+"This option is relevant only when creating a data-only dump. It instructs "
+"<application>pg_dumpall</application> to include commands to temporarily "
+"disable triggers on the target tables while the data is reloaded. Use this "
+"if you have referential integrity checks or other triggers on the tables "
+"that you do not want to invoke during data reload."
+msgstr ""
+"Этот параметр действует только при выгрузке одних данных. С ним "
+"<application>pg_dumpall</application> добавляет команды, отключающие "
+"триггеры в целевых таблицах на время загрузки данных. Используйте его, если "
+"в ваших таблицах определены проверки ссылочной целостности или другие "
+"триггеры, которые вы не хотели бы выполнять в процессе загрузки данных."
+
+#: ref/pg_dumpall.xml:285(para)
+msgid ""
+"Presently, the commands emitted for <option>--disable-triggers</option> must "
+"be done as superuser. So, you should also specify a superuser name with "
+"<option>-S</option>, or preferably be careful to start the resulting script "
+"as a superuser."
+msgstr ""
+"В настоящее время команды, генерируемые с параметром <option>--disable-"
+"triggers</option>, должны исполняться от имени суперпользователя. Таким "
+"образом, необходимо также передавать флаг <option>-S</option>, либо при "
+"восстановлении выполнять скрипт от имени суперпользователя."
+
+#: ref/pg_dumpall.xml:295(option)
+msgid "--if-exists"
+msgstr "--if-exists"
+
+#: ref/pg_dumpall.xml:297(para)
+msgid ""
+"Use conditional commands (i.e. add an <literal>IF EXISTS</literal> clause) "
+"to clean databases and other objects. This option is not valid unless "
+"<option>--clean</option> is also specified."
+msgstr ""
+"Использовать условные команды (т. е. добавлять предложение <literal>IF "
+"EXISTS</literal>) при очистке базы данных и других объектов. Этот параметр "
+"принимается, только если также указан параметр <option>--clean</option>."
+
+#: ref/pg_dumpall.xml:306(option)
+msgid "--inserts"
+msgstr "--inserts"
+
+#: ref/pg_dumpall.xml:308(para)
+msgid ""
+"Dump data as <command>INSERT</command> commands (rather than <command>COPY</"
+"command>). This will make restoration very slow; it is mainly useful for "
+"making dumps that can be loaded into non-<productname>PostgreSQL</"
+"productname> databases. Note that the restore might fail altogether if you "
+"have rearranged column order. The <option>--column-inserts</option> option "
+"is safer, though even slower."
+msgstr ""
+"Выгружать данные в виде команд <command>INSERT</command>, а не "
+"<command>COPY</command>. При этом восстановление значительно замедлится; в "
+"основном это применяется для выгрузки данных, которые затем будут "
+"загружаться не в <productname>PostgreSQL</productname>. Заметьте, что "
+"восстановление может вовсе не выполниться при изменении порядка столбцов в "
+"таблицах. В этом смысле параметр <option>--column-inserts</option> "
+"безопаснее, но восстановление будет ещё медленнее."
+
+#: ref/pg_dumpall.xml:321(replaceable)
+msgid "timeout"
+msgstr "время_ожидания"
+
+#: ref/pg_dumpall.xml:321(option)
+msgid "--lock-wait-timeout=<placeholder-1/>"
+msgstr "--lock-wait-timeout=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:323(para)
+msgid ""
+"Do not wait forever to acquire shared table locks at the beginning of the "
+"dump. Instead, fail if unable to lock a table within the specified "
+"<replaceable class=\"parameter\">timeout</replaceable>. The timeout may be "
+"specified in any of the formats accepted by <command>SET statement_timeout</"
+"command>. Allowed values vary depending on the server version you are "
+"dumping from, but an integer number of milliseconds is accepted by all "
+"versions since 7.3. This option is ignored when dumping from a pre-7.3 "
+"server."
+msgstr ""
+"Не ждать бесконечно получения разделяемых блокировок таблиц в начале "
+"процедуры выгрузки. Вместо этого, выдать ошибку, если не удастся "
+"заблокировать таблицы за указанное <replaceable class=\"parameter"
+"\">время_ожидания</replaceable>. Это время можно задать в любом из форматов, "
+"принимаемых командой <command>SET statement_timeout</command>. Допустимые "
+"значения зависят от версии сервера, выгружающего данные, но количество "
+"миллисекунд в виде целого числа принимают все версии, начиная с 7.3. Более "
+"ранние версии игнорируют этот параметр."
+
+#: ref/pg_dumpall.xml:337(option)
+msgid "--no-security-labels"
+msgstr "--no-security-labels"
+
+#: ref/pg_dumpall.xml:339(para)
+msgid "Do not dump security labels."
+msgstr "Не выгружать метки безопасности."
+
+#: ref/pg_dumpall.xml:346(option)
+msgid "--no-tablespaces"
+msgstr "--no-tablespaces"
+
+#: ref/pg_dumpall.xml:348(para)
+msgid ""
+"Do not output commands to create tablespaces nor select tablespaces for "
+"objects. With this option, all objects will be created in whichever "
+"tablespace is the default during restore."
+msgstr ""
+"Не выводить команды, создающие или выбирающие табличные пространства для "
+"объектов. С этим параметром все объекты будут созданы в пространстве по "
+"умолчанию, установленном во время восстановления."
+
+#: ref/pg_dumpall.xml:358(option)
+msgid "--no-unlogged-table-data"
+msgstr "--no-unlogged-table-data"
+
+#: ref/pg_dumpall.xml:360(para)
+msgid ""
+"Do not dump the contents of unlogged tables. This option has no effect on "
+"whether or not the table definitions (schema) are dumped; it only suppresses "
+"dumping the table data."
+msgstr ""
+"Не выгружать содержимое нежурналируемых таблиц. Этот параметр не влияет на "
+"то, как выгружаются определения этих таблиц (схема); он отключает только "
+"выгрузку данных из них."
+
+#: ref/pg_dumpall.xml:369(option)
+msgid "--quote-all-identifiers"
+msgstr "--quote-all-identifiers"
+
+#: ref/pg_dumpall.xml:371(para)
+msgid ""
+"Force quoting of all identifiers. This may be useful when dumping a database "
+"for migration to a future version that may have introduced additional "
+"keywords."
+msgstr ""
+"Принудительно экранировать все идентификаторы. Может быть полезно при "
+"миграции на новую версию сервера, для избежания конфликтов с новыми "
+"резервными словами."
+
+#: ref/pg_dumpall.xml:380(option)
+msgid "--use-set-session-authorization"
+msgstr "--use-set-session-authorization"
+
+#: ref/pg_dumpall.xml:382(para)
+msgid ""
+"Output SQL-standard <command>SET SESSION AUTHORIZATION</command> commands "
+"instead of <command>ALTER OWNER</command> commands to determine object "
+"ownership. This makes the dump more standards compatible, but depending on "
+"the history of the objects in the dump, might not restore properly."
+msgstr ""
+"Выводить команды <command>SET SESSION AUTHORIZATION</command>, "
+"соответствующие стандарту, вместо <command>ALTER OWNER</command>, для "
+"назначения владельцев объектов. В результате выгруженный скрипт будет более "
+"стандартизированным, но может не восстановиться корректно, в зависимости от "
+"истории объектов."
+
+#: ref/pg_dumpall.xml:393(option)
+msgid "-?"
+msgstr "-?"
+
+#: ref/pg_dumpall.xml:394(option)
+msgid "--help"
+msgstr "--help"
+
+#: ref/pg_dumpall.xml:396(para)
+msgid ""
+"Show help about <application>pg_dumpall</application> command line "
+"arguments, and exit."
+msgstr ""
+"Показать справку по аргументам командной строки <application>pg_dumpall</"
+"application> и завершиться."
+
+#: ref/pg_dumpall.xml:76(para)
+msgid ""
+"The following command-line options control the content and format of the "
+"output. <placeholder-1/>"
+msgstr ""
+"Параметры командной строки для управления содержимым и форматом вывода. "
+"<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:411(replaceable) ref/pg_dumpall.xml:412(replaceable)
+#, fuzzy
+msgid "connstr"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"строка подключения\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"connstr"
+
+#: ref/pg_dumpall.xml:411(option)
+msgid "-d <placeholder-1/>"
+msgstr "-d <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:412(option)
+msgid "--dbname=<placeholder-1/>"
+msgstr "--dbname=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:414(para)
+msgid ""
+"Specifies parameters used to connect to the server, as a connection string. "
+"See <xref linkend=\"libpq-connstring\"/> for more information."
+msgstr ""
+"Указывает параметры подключения к серверу в формате строки подключения. См. "
+"<xref remap=\"4\" linkend=\"libpq-connstring\"/> для более подробной "
+"информации."
+
+#: ref/pg_dumpall.xml:418(para)
+msgid ""
+"The option is called <literal>--dbname</literal> for consistency with other "
+"client applications, but because <application>pg_dumpall</application> needs "
+"to connect to many databases, database name in the connection string will be "
+"ignored. Use <literal>-l</literal> option to specify the name of the "
+"database used to dump global objects and to discover what other databases "
+"should be dumped."
+msgstr ""
+"Этот параметр называется <literal>--dbname</literal> для согласованности с "
+"другими клиентскими приложениями, но так как <application>pg_dumpall</"
+"application> подключается не к одной базе данных, имя базы в строке "
+"подключения игнорируется. Чтобы указать имя базы данных, через подключение к "
+"которой будут выгружаться глобальные объекты и находиться другие выгружаемые "
+"базы, воспользуйтесь параметром <literal>-l</literal>."
+
+#: ref/pg_dumpall.xml:430(replaceable) ref/pg_dumpall.xml:431(replaceable)
+msgid "host"
+msgstr "host"
+
+#: ref/pg_dumpall.xml:430(option)
+msgid "-h <placeholder-1/>"
+msgstr "-h <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:431(option)
+msgid "--host=<placeholder-1/>"
+msgstr "--host=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:433(para)
+msgid ""
+"Specifies the host name of the machine on which the database server is "
+"running. If the value begins with a slash, it is used as the directory for "
+"the Unix domain socket. The default is taken from the <envar>PGHOST</envar> "
+"environment variable, if set, else a Unix domain socket connection is "
+"attempted."
+msgstr ""
+"Указывает имя компьютера, на котором запущен сервер баз данных. Если "
+"значение начинается с косой черты, оно интерпретируется как имя каталога с "
+"доменным сокетом Unix. Значение по умолчанию берётся из переменной окружения "
+"<envar>PGHOST</envar>, если она установлена. В противном случае выполняется "
+"подключение к доменному сокету."
+
+#: ref/pg_dumpall.xml:444(replaceable) ref/pg_dumpall.xml:445(replaceable)
+#, fuzzy
+msgid "dbname"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"dbname\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"база_данных\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"dbname"
+
+#: ref/pg_dumpall.xml:444(option)
+msgid "-l <placeholder-1/>"
+msgstr "-l <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:445(option)
+msgid "--database=<placeholder-1/>"
+msgstr "--database=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:447(para)
+msgid ""
+"Specifies the name of the database to connect to for dumping global objects "
+"and discovering what other databases should be dumped. If not specified, the "
+"<literal>postgres</literal> database will be used, and if that does not "
+"exist, <literal>template1</literal> will be used."
+msgstr ""
+"Задаёт имя базы данных, через подключение к которой будут выгружаться "
+"глобальные объекты и находиться другие выгружаемые базы. По умолчанию "
+"используется база <literal>postgres</literal>, а в случае её отсутствия — "
+"<literal>template1</literal>."
+
+#: ref/pg_dumpall.xml:457(replaceable) ref/pg_dumpall.xml:458(replaceable)
+#, fuzzy
+msgid "port"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"port\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"порт"
+
+#: ref/pg_dumpall.xml:457(option)
+msgid "-p <placeholder-1/>"
+msgstr "-p <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:458(option)
+msgid "--port=<placeholder-1/>"
+msgstr "--port=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:460(para)
+msgid ""
+"Specifies the TCP port or local Unix domain socket file extension on which "
+"the server is listening for connections. Defaults to the <envar>PGPORT</"
+"envar> environment variable, if set, or a compiled-in default."
+msgstr ""
+"Указывает TCP-порт или расширение локального файла Unix-сокета, на котором "
+"сервер слушает подключения. По умолчанию берётся значение переменной "
+"окружения <envar>PGPORT</envar>, если оно установлено, либо значение времени "
+"компиляции."
+
+#: ref/pg_dumpall.xml:470(option)
+msgid "-U <placeholder-1/>"
+msgstr "-U <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:471(option)
+msgid "--username=<placeholder-1/>"
+msgstr "--username=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:473(para)
+msgid "User name to connect as."
+msgstr "Имя пользователя, под которым производится подключение."
+
+#: ref/pg_dumpall.xml:480(option)
+msgid "-w"
+msgstr "-w"
+
+#: ref/pg_dumpall.xml:481(option)
+msgid "--no-password"
+msgstr "--no-password"
+
+#: ref/pg_dumpall.xml:483(para)
+msgid ""
+"Never issue a password prompt. If the server requires password "
+"authentication and a password is not available by other means such as a "
+"<filename>.pgpass</filename> file, the connection attempt will fail. This "
+"option can be useful in batch jobs and scripts where no user is present to "
+"enter a password."
+msgstr ""
+"Не выдавать запрос на ввод пароля. Если сервер требует аутентификацию по "
+"паролю и пароль не доступен с помощью других средств, таких как файл "
+"<filename>.pgpass</filename>, попытка соединения не удастся. Этот параметр "
+"может быть полезен в пакетных заданиях и скриптах, где нет пользователя, "
+"который вводит пароль."
+
+#: ref/pg_dumpall.xml:495(option)
+msgid "-W"
+msgstr "-W"
+
+#: ref/pg_dumpall.xml:496(option)
+msgid "--password"
+msgstr "--password"
+
+#: ref/pg_dumpall.xml:498(para)
+msgid ""
+"Force <application>pg_dumpall</application> to prompt for a password before "
+"connecting to a database."
+msgstr "Принудительно запрашивать пароль перед подключением к базе данных."
+
+#: ref/pg_dumpall.xml:503(para)
+msgid ""
+"This option is never essential, since <application>pg_dumpall</application> "
+"will automatically prompt for a password if the server demands password "
+"authentication. However, <application>pg_dumpall</application> will waste a "
+"connection attempt finding out that the server wants a password. In some "
+"cases it is worth typing <option>-W</option> to avoid the extra connection "
+"attempt."
+msgstr ""
+"Это несущественный параметр, так как <application>pg_dumpall</application> "
+"запрашивает пароль автоматически, если сервер проверяет подлинность по "
+"паролю. Однако, чтобы понять это, <application>pg_dumpall</application> "
+"лишний раз подключается к серверу. Поэтому иногда имеет смысл ввести "
+"<option>-W</option>, чтобы исключить эту ненужную попытку подключения."
+
+#: ref/pg_dumpall.xml:513(para)
+msgid ""
+"Note that the password prompt will occur again for each database to be "
+"dumped. Usually, it's better to set up a <filename>~/.pgpass</filename> file "
+"than to rely on manual password entry."
+msgstr ""
+"Заметьте, что пароль будет запрашиваться повторно для выгрузки каждой базы "
+"данных. Поэтому обычно лучше настроить файл <filename>~/.pgpass</filename>, "
+"и не вводить пароль каждый раз вручную."
+
+#: ref/pg_dumpall.xml:522(replaceable)
+msgid "rolename"
+msgstr "имя роли"
+
+#: ref/pg_dumpall.xml:522(option)
+msgid "--role=<placeholder-1/>"
+msgstr "--role=<placeholder-1/>"
+
+#: ref/pg_dumpall.xml:524(para)
+msgid ""
+"Specifies a role name to be used to create the dump. This option causes "
+"<application>pg_dumpall</application> to issue a <command>SET ROLE</command> "
+"<replaceable class=\"parameter\">rolename</replaceable> command after "
+"connecting to the database. It is useful when the authenticated user "
+"(specified by <option>-U</option>) lacks privileges needed by "
+"<application>pg_dumpall</application>, but can switch to a role with the "
+"required rights. Some installations have a policy against logging in "
+"directly as a superuser, and use of this option allows dumps to be made "
+"without violating the policy."
+msgstr ""
+"Задаёт имя роли, которая будет осуществлять выгрузку. Получив это имя, "
+"<application>pg_dumpall</application> выполнит <command>SET ROLE</command> "
+"<replaceable class=\"parameter\">имя_роли</replaceable> после подключения к "
+"базе данных. Это полезно, когда проходящий проверку пользователь (указанный "
+"в <option>-U</option>) не имеет прав, необходимых для "
+"<application>pg_dumpall</application>, но может переключиться на роль, "
+"наделённую этими правами. В некоторых окружениях правила запрещают "
+"подключаться к серверу непосредственно суперпользователю, и этот параметр "
+"позволяет выполнить выгрузку, не нарушая их."
+
+#: ref/pg_dumpall.xml:406(para)
+msgid ""
+"The following command-line options control the database connection "
+"parameters. <placeholder-1/>"
+msgstr "Далее описаны параметры управления подключением. <placeholder-1/>"
+
+#: ref/pg_dumpall.xml:543(title)
+msgid "Environment"
+msgstr "Переменные окружения"
+
+#: ref/pg_dumpall.xml:547(envar)
+msgid "PGHOST"
+msgstr "PGHOST"
+
+#: ref/pg_dumpall.xml:548(envar)
+msgid "PGOPTIONS"
+msgstr "PGOPTIONS"
+
+#: ref/pg_dumpall.xml:549(envar)
+msgid "PGPORT"
+msgstr "PGPORT"
+
+#: ref/pg_dumpall.xml:550(envar)
+msgid "PGUSER"
+msgstr "PGUSER"
+
+#: ref/pg_dumpall.xml:553(para)
+msgid "Default connection parameters"
+msgstr "Параметры подключения по умолчанию"
+
+#: ref/pg_dumpall.xml:560(para)
+msgid ""
+"This utility, like most other <productname>PostgreSQL</productname> "
+"utilities, also uses the environment variables supported by "
+"<application>libpq</application> (see <xref linkend=\"libpq-envars\"/>)."
+msgstr ""
+"Эта утилита, как и большинство других утилит <productname>PostgreSQL</"
+"productname>, также использует переменные среды, поддерживаемые "
+"<application>libpq</application> (см. <xref remap=\"4\" linkend=\"libpq-"
+"envars\"/>)."
+
+#: ref/pg_dumpall.xml:570(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/pg_dumpall.xml:572(para)
+msgid ""
+"Since <application>pg_dumpall</application> calls <application>pg_dump</"
+"application> internally, some diagnostic messages will refer to "
+"<application>pg_dump</application>."
+msgstr ""
+"Так как <application>pg_dumpall</application> внутри себя вызывает "
+"<application>pg_dump</application>, часть диагностических сообщений будет "
+"относиться к <application>pg_dump</application>."
+
+#: ref/pg_dumpall.xml:578(para)
+msgid ""
+"Once restored, it is wise to run <command>ANALYZE</command> on each database "
+"so the optimizer has useful statistics. You can also run <command>vacuumdb -"
+"a -z</command> to analyze all databases."
+msgstr ""
+"После восстановления имеет смысл запустить <command>ANALYZE</command> для "
+"каждой базы данных, чтобы оптимизатор получил актуальную статистику. Также "
+"можно запустить анализ для всех баз данных, выполнив команду "
+"<command>vacuumdb -a -z</command>."
+
+#: ref/pg_dumpall.xml:585(para)
+msgid ""
+"<application>pg_dumpall</application> requires all needed tablespace "
+"directories to exist before the restore; otherwise, database creation will "
+"fail for databases in non-default locations."
+msgstr ""
+"При использовании <application>pg_dumpall</application> требуется, чтобы все "
+"необходимые каталоги табличных пространств существовали до восстановления; в "
+"противном случае, создание баз данных в нестандартном размещении завершится "
+"ошибкой."
+
+#: ref/pg_dumpall.xml:595(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/pg_dumpall.xml:596(para)
+msgid ""
+"To dump all databases: <screen><prompt>$</prompt> <userinput>pg_dumpall &gt; "
+"db.out</userinput></screen>"
+msgstr ""
+"Чтобы выгрузить все базы данных, выполните: <screen><prompt>$</prompt> "
+"<userinput>pg_dumpall &gt; db.out</userinput></screen>"
+
+#: ref/pg_dumpall.xml:602(para)
+msgid ""
+"To reload database(s) from this file, you can use: <screen><prompt>$</"
+"prompt> <userinput>psql -f db.out postgres</userinput></screen> (It is not "
+"important to which database you connect here since the script file created "
+"by <application>pg_dumpall</application> will contain the appropriate "
+"commands to create and connect to the saved databases.)"
+msgstr ""
+"Загрузить базы данных из этого файла можно так: <screen><prompt>$</prompt> "
+"<userinput>psql -f db.out postgres</userinput></screen> (К какой базе данных "
+"вы подключаетесь, здесь не важно, так как скрипт, созданный утилитой "
+"<application>pg_dumpall</application>, будет содержать все команды, "
+"требующиеся для создания сохранённых баз данных и подключения к ним.)"
+
+#: ref/pg_dumpall.xml:613(title)
+msgid "See Also"
+msgstr "См. также"
+
+#: ref/pg_dumpall.xml:615(para)
+msgid ""
+"Check <xref linkend=\"app-pgdump\"/> for details on possible error "
+"conditions."
+msgstr ""
+"Обратитесь к описанию <xref remap=\"3\" linkend=\"app-pgdump\"/>, чтобы "
+"узнать об условиях, при которых могут возникнуть проблемы."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/pg_dumpall.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

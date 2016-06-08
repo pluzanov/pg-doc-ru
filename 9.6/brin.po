@@ -1,0 +1,1067 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: brin.xml:5(title)
+msgid "BRIN Indexes"
+msgstr "Индексы BRIN"
+
+#: brin.xml:7(indexterm)
+msgid "<primary>index</primary><secondary>BRIN</secondary>"
+msgstr "<primary>индекс</primary><secondary>BRIN</secondary>"
+
+#: brin.xml:12(title)
+msgid "Introduction"
+msgstr "Введение"
+
+#: brin.xml:14(para)
+msgid ""
+"<acronym>BRIN</acronym> stands for Block Range Index. <acronym>BRIN</"
+"acronym> is designed for handling very large tables in which certain columns "
+"have some natural correlation with their physical location within the table. "
+"A <firstterm>block range</firstterm> is a group of pages that are physically "
+"adjacent in the table; for each block range, some summary info is stored by "
+"the index. For example, a table storing a store's sale orders might have a "
+"date column on which each order was placed, and most of the time the entries "
+"for earlier orders will appear earlier in the table as well; a table storing "
+"a ZIP code column might have all codes for a city grouped together naturally."
+msgstr ""
+"<acronym>BRIN</acronym> расшифровывается как &laquo;Block Range Index&raquo; "
+"(Индекс зон блоков). <acronym>BRIN</acronym> предназначается для обработки "
+"очень больших таблиц, в которых определённые столбцы некоторым естественным "
+"образом коррелируют с их физическим расположением в таблице. "
+"<firstterm>Зоной блоков</firstterm> называется группа страниц, физически "
+"расположенных в таблице рядом; для каждой зоны в индексе сохраняется "
+"некоторая сводная информация. Например, в таблице заказов магазина может "
+"содержаться поле с датой добавления заказа, и практически всегда записи "
+"более ранних заказов и в таблице будут размещены ближе к началу; в таблице, "
+"содержащей столбец с почтовым индексом, также естественным образом могут "
+"группироваться записи по городам."
+
+#: brin.xml:29(para)
+msgid ""
+"<acronym>BRIN</acronym> indexes can satisfy queries via regular bitmap index "
+"scans, and will return all tuples in all pages within each range if the "
+"summary info stored by the index is <firstterm>consistent</firstterm> with "
+"the query conditions. The query executor is in charge of rechecking these "
+"tuples and discarding those that do not match the query conditions &mdash; "
+"in other words, these indexes are lossy. Because a <acronym>BRIN</acronym> "
+"index is very small, scanning the index adds little overhead compared to a "
+"sequential scan, but may avoid scanning large parts of the table that are "
+"known not to contain matching tuples."
+msgstr ""
+"Индексы <acronym>BRIN</acronym> могут удовлетворять запросы, выполняя "
+"обычное сканирование по битовой карте, и будут возвращать все кортежи во "
+"всех страницах каждой зоны, если сводные данные, сохранённые в индексе, "
+"<firstterm>соответствуют</firstterm> условиям запроса. Исполнитель запроса "
+"должен перепроверить эти кортежи и отбросить те, что не соответствуют "
+"условиям запроса &mdash; другими словами, эти индексы неточные. Так как "
+"индекс <acronym>BRIN</acronym> очень маленький, сканирование индекса влечёт "
+"мизерные издержки по сравнению с последовательным сканированием, но может "
+"избавить от необходимости сканирования больших областей таблицы, которые "
+"определённо не содержат подходящие кортежи."
+
+#: brin.xml:42(para)
+msgid ""
+"The specific data that a <acronym>BRIN</acronym> index will store, as well "
+"as the specific queries that the index will be able to satisfy, depend on "
+"the operator class selected for each column of the index. Data types having "
+"a linear sort order can have operator classes that store the minimum and "
+"maximum value within each block range, for instance; geometrical types might "
+"store the bounding box for all the objects in the block range."
+msgstr ""
+"Конкретные данные, которые будут хранится в индексе <acronym>BRIN</acronym>, "
+"а также запросы, которые сможет поддержать этот индекс, зависят от класса "
+"операторов, выбранного для каждого столбца индекса. Например, типы данных с "
+"линейным порядком сортировки могут иметь классы операторов, хранящие "
+"минимальное и максимальное значение для каждой зоны блоков; для "
+"геометрических типов может храниться прямоугольник, вмещающий все объекты в "
+"зоне блоков."
+
+#: brin.xml:52(para)
+msgid ""
+"The size of the block range is determined at index creation time by the "
+"<literal>pages_per_range</literal> storage parameter. The number of index "
+"entries will be equal to the size of the relation in pages divided by the "
+"selected value for <literal>pages_per_range</literal>. Therefore, the "
+"smaller the number, the larger the index becomes (because of the need to "
+"store more index entries), but at the same time the summary data stored can "
+"be more precise and more data blocks can be skipped during an index scan."
+msgstr ""
+"Размер зоны блоков определяется в момент создания индекса параметром "
+"хранения <literal>pages_per_range</literal>. Число записей в индексе будет "
+"равняться размеру отношения в страницах, делённому на установленное значение "
+"<literal>pages_per_range</literal>. Таким образом, чем меньше это число, тем "
+"больше становится индекс (так как в нём требуется хранить больше элементов), "
+"но в то же время сводные данные могут быть более точными и большее число "
+"блоков данных может быть пропущено при сканировании индекса."
+
+#: brin.xml:63(title)
+msgid "Index Maintenance"
+msgstr "Обслуживание индекса"
+
+#: brin.xml:65(para)
+msgid ""
+"At the time of creation, all existing index pages are scanned and a summary "
+"index tuple is created for each range, including the possibly-incomplete "
+"range at the end. As new pages are filled with data, page ranges that are "
+"already summarized will cause the summary information to be updated with "
+"data from the new tuples. When a new page is created that does not fall "
+"within the last summarized range, that range does not automatically acquire "
+"a summary tuple; those tuples remain unsummarized until a summarization run "
+"is invoked later, creating initial summaries. This process can be invoked "
+"manually using the <function>brin_summarize_new_values(regclass)</function> "
+"function, or automatically when <command>VACUUM</command> processes the "
+"table."
+msgstr ""
+"Во время создания индекса сканируются все существующие страницы, и в "
+"результате в индексе создаётся сводный кортеж для каждой зоны, в том числе, "
+"возможно неполной зоны в конце. По мере того, как данными наполняются новые "
+"страницы, если они оказываются в зонах, для которых уже есть сводная "
+"информация, она будет обновлена с учётом данных из новых кортежей. Если же "
+"создаётся новая страница, которая не попадает в последнюю зону, для новой "
+"зоны автоматически не рассчитывается сводная запись; кортежи на таких "
+"страницах остаются неучтёнными, пока позже не будет проведён расчёт сводных "
+"данных. Эта процедура может быть вызвана вручную, с помощью функции "
+"<function>brin_summarize_new_values(regclass)</function>, или автоматически, "
+"когда таблицу будет обрабатывать <command>VACUUM</command>."
+
+#: brin.xml:84(title)
+msgid "Built-in Operator Classes"
+msgstr "Встроенные классы операторов"
+
+#: brin.xml:86(para)
+msgid ""
+"The core <productname>PostgreSQL</productname> distribution includes the "
+"<acronym>BRIN</acronym> operator classes shown in <xref linkend=\"brin-"
+"builtin-opclasses-table\"/>."
+msgstr ""
+"В базовый дистрибутив <productname>PostgreSQL</productname> включены классы "
+"операторов <acronym>BRIN</acronym>, перечисленные в <xref remap=\"6\" "
+"linkend=\"brin-builtin-opclasses-table\"/>."
+
+#: brin.xml:92(para)
+msgid ""
+"The <firstterm>minmax</firstterm> operator classes store the minimum and the "
+"maximum values appearing in the indexed column within the range. The "
+"<firstterm>inclusion</firstterm> operator classes store a value which "
+"includes the values in the indexed column within the range."
+msgstr ""
+"Классы операторов <firstterm>minmax</firstterm> хранят минимальные и "
+"максимальные значения, встречающиеся в индексированном столбце в "
+"определённой зоне. Классы операторов <firstterm>inclusion</firstterm> хранят "
+"значение, в котором содержатся значения индексированного столбца в "
+"определённой зоне."
+
+#: brin.xml:101(title)
+msgid "Built-in <acronym>BRIN</acronym> Operator Classes"
+msgstr "Встроенные классы операторов <acronym>BRIN</acronym>"
+
+#: brin.xml:105(entry)
+#, fuzzy
+msgid "Name"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Имя\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Название"
+
+#: brin.xml:106(entry)
+msgid "Indexed Data Type"
+msgstr "Индексируемый тип данных"
+
+#: brin.xml:107(entry)
+msgid "Indexable Operators"
+msgstr "Индексируемые операторы"
+
+#: brin.xml:112(literal)
+msgid "abstime_minmax_ops"
+msgstr "abstime_minmax_ops"
+
+#: brin.xml:113(type)
+msgid "abstime"
+msgstr "abstime"
+
+#: brin.xml:115(literal) brin.xml:126(literal) brin.xml:137(literal)
+#: brin.xml:148(literal) brin.xml:177(literal) brin.xml:188(literal)
+#: brin.xml:199(literal) brin.xml:210(literal) brin.xml:221(literal)
+#: brin.xml:232(literal) brin.xml:255(literal) brin.xml:266(literal)
+#: brin.xml:277(literal) brin.xml:288(literal) brin.xml:299(literal)
+#: brin.xml:310(literal) brin.xml:321(literal) brin.xml:341(literal)
+#: brin.xml:352(literal) brin.xml:363(literal) brin.xml:374(literal)
+#: brin.xml:385(literal) brin.xml:396(literal) brin.xml:407(literal)
+#: brin.xml:418(literal) brin.xml:429(literal) brin.xml:440(literal)
+#: brin.xml:451(literal)
+msgid "&lt;"
+msgstr "&lt;"
+
+#: brin.xml:116(literal) brin.xml:127(literal) brin.xml:138(literal)
+#: brin.xml:149(literal) brin.xml:178(literal) brin.xml:189(literal)
+#: brin.xml:200(literal) brin.xml:211(literal) brin.xml:222(literal)
+#: brin.xml:233(literal) brin.xml:256(literal) brin.xml:267(literal)
+#: brin.xml:278(literal) brin.xml:289(literal) brin.xml:300(literal)
+#: brin.xml:311(literal) brin.xml:322(literal) brin.xml:342(literal)
+#: brin.xml:353(literal) brin.xml:364(literal) brin.xml:375(literal)
+#: brin.xml:386(literal) brin.xml:397(literal) brin.xml:408(literal)
+#: brin.xml:419(literal) brin.xml:430(literal) brin.xml:441(literal)
+#: brin.xml:452(literal)
+msgid "&lt;="
+msgstr "&lt;="
+
+#: brin.xml:117(literal) brin.xml:128(literal) brin.xml:139(literal)
+#: brin.xml:150(literal) brin.xml:179(literal) brin.xml:190(literal)
+#: brin.xml:201(literal) brin.xml:212(literal) brin.xml:223(literal)
+#: brin.xml:234(literal) brin.xml:246(literal) brin.xml:257(literal)
+#: brin.xml:268(literal) brin.xml:279(literal) brin.xml:290(literal)
+#: brin.xml:301(literal) brin.xml:312(literal) brin.xml:323(literal)
+#: brin.xml:340(literal) brin.xml:343(literal) brin.xml:354(literal)
+#: brin.xml:365(literal) brin.xml:376(literal) brin.xml:387(literal)
+#: brin.xml:398(literal) brin.xml:409(literal) brin.xml:420(literal)
+#: brin.xml:431(literal) brin.xml:442(literal) brin.xml:453(literal)
+msgid "="
+msgstr "="
+
+#: brin.xml:118(literal) brin.xml:129(literal) brin.xml:140(literal)
+#: brin.xml:151(literal) brin.xml:180(literal) brin.xml:191(literal)
+#: brin.xml:202(literal) brin.xml:213(literal) brin.xml:224(literal)
+#: brin.xml:235(literal) brin.xml:258(literal) brin.xml:269(literal)
+#: brin.xml:280(literal) brin.xml:291(literal) brin.xml:302(literal)
+#: brin.xml:313(literal) brin.xml:324(literal) brin.xml:345(literal)
+#: brin.xml:355(literal) brin.xml:366(literal) brin.xml:377(literal)
+#: brin.xml:388(literal) brin.xml:399(literal) brin.xml:410(literal)
+#: brin.xml:421(literal) brin.xml:432(literal) brin.xml:443(literal)
+#: brin.xml:454(literal)
+msgid "&gt;="
+msgstr "&gt;="
+
+#: brin.xml:119(literal) brin.xml:130(literal) brin.xml:141(literal)
+#: brin.xml:152(literal) brin.xml:181(literal) brin.xml:192(literal)
+#: brin.xml:203(literal) brin.xml:214(literal) brin.xml:225(literal)
+#: brin.xml:236(literal) brin.xml:259(literal) brin.xml:270(literal)
+#: brin.xml:281(literal) brin.xml:292(literal) brin.xml:303(literal)
+#: brin.xml:314(literal) brin.xml:325(literal) brin.xml:344(literal)
+#: brin.xml:356(literal) brin.xml:367(literal) brin.xml:378(literal)
+#: brin.xml:389(literal) brin.xml:400(literal) brin.xml:411(literal)
+#: brin.xml:422(literal) brin.xml:433(literal) brin.xml:444(literal)
+#: brin.xml:455(literal)
+msgid "&gt;"
+msgstr "&gt;"
+
+#: brin.xml:123(literal)
+msgid "int8_minmax_ops"
+msgstr "int8_minmax_ops"
+
+#: brin.xml:124(type)
+msgid "bigint"
+msgstr "bigint"
+
+#: brin.xml:134(literal)
+msgid "bit_minmax_ops"
+msgstr "bit_minmax_ops"
+
+#: brin.xml:135(type)
+msgid "bit"
+msgstr "bit"
+
+#: brin.xml:145(literal)
+msgid "varbit_minmax_ops"
+msgstr "varbit_minmax_ops"
+
+#: brin.xml:146(type)
+msgid "bit varying"
+msgstr "bit varying"
+
+#: brin.xml:156(literal)
+msgid "box_inclusion_ops"
+msgstr "box_inclusion_ops"
+
+#: brin.xml:157(type)
+msgid "box"
+msgstr "box"
+
+#: brin.xml:159(literal) brin.xml:248(literal) brin.xml:332(literal)
+msgid "&lt;&lt;"
+msgstr "&lt;&lt;"
+
+#: brin.xml:160(literal) brin.xml:333(literal)
+msgid "&amp;&lt;"
+msgstr "&amp;&lt;"
+
+#: brin.xml:161(literal) brin.xml:243(literal) brin.xml:334(literal)
+msgid "&amp;&amp;"
+msgstr "&amp;&amp;"
+
+#: brin.xml:162(literal) brin.xml:335(literal)
+msgid "&amp;&gt;"
+msgstr "&amp;&gt;"
+
+#: brin.xml:163(literal) brin.xml:247(literal) brin.xml:336(literal)
+msgid "&gt;&gt;"
+msgstr "&gt;&gt;"
+
+#: brin.xml:164(literal)
+msgid "~="
+msgstr "~="
+
+#: brin.xml:165(literal) brin.xml:337(literal)
+msgid "@&gt;"
+msgstr "@&gt;"
+
+#: brin.xml:166(literal) brin.xml:338(literal)
+msgid "&lt;@"
+msgstr "&lt;@"
+
+#: brin.xml:167(literal)
+msgid "&amp;&lt;|"
+msgstr "&amp;&lt;|"
+
+#: brin.xml:168(literal)
+msgid "&lt;&lt;|"
+msgstr "&lt;&lt;|"
+
+#: brin.xml:169(literal)
+msgid "|&gt;&gt;"
+msgstr "|&gt;&gt;"
+
+#: brin.xml:170(literal)
+msgid "|&amp;&gt;"
+msgstr "|&amp;&gt;"
+
+#: brin.xml:174(literal)
+msgid "bytea_minmax_ops"
+msgstr "bytea_minmax_ops"
+
+#: brin.xml:175(type)
+msgid "bytea"
+msgstr "bytea"
+
+#: brin.xml:185(literal)
+msgid "bpchar_minmax_ops"
+msgstr "bpchar_minmax_ops"
+
+#: brin.xml:186(type)
+msgid "character"
+msgstr "character"
+
+#: brin.xml:196(literal)
+msgid "char_minmax_ops"
+msgstr "char_minmax_ops"
+
+#: brin.xml:197(type)
+msgid "\"char\""
+msgstr "\"char\""
+
+#: brin.xml:207(literal)
+msgid "date_minmax_ops"
+msgstr "date_minmax_ops"
+
+#: brin.xml:208(type)
+msgid "date"
+msgstr "date"
+
+#: brin.xml:218(literal)
+msgid "float8_minmax_ops"
+msgstr "float8_minmax_ops"
+
+#: brin.xml:219(type)
+msgid "double precision"
+msgstr "double precision"
+
+#: brin.xml:229(literal)
+msgid "inet_minmax_ops"
+msgstr "inet_minmax_ops"
+
+#: brin.xml:230(type) brin.xml:241(type)
+msgid "inet"
+msgstr "inet"
+
+#: brin.xml:240(literal)
+msgid "network_inclusion_ops"
+msgstr "network_inclusion_ops"
+
+#: brin.xml:244(literal)
+msgid "&gt;&gt;="
+msgstr "&gt;&gt;="
+
+#: brin.xml:245(literal)
+msgid "&lt;&lt;="
+msgstr "&lt;&lt;="
+
+#: brin.xml:252(literal)
+msgid "int4_minmax_ops"
+msgstr "int4_minmax_ops"
+
+#: brin.xml:253(type)
+msgid "integer"
+msgstr "integer"
+
+#: brin.xml:263(literal)
+msgid "interval_minmax_ops"
+msgstr "interval_minmax_ops"
+
+#: brin.xml:264(type)
+msgid "interval"
+msgstr "interval"
+
+#: brin.xml:274(literal)
+msgid "macaddr_minmax_ops"
+msgstr "macaddr_minmax_ops"
+
+#: brin.xml:275(type)
+msgid "macaddr"
+msgstr "macaddr"
+
+#: brin.xml:285(literal)
+msgid "name_minmax_ops"
+msgstr "name_minmax_ops"
+
+#: brin.xml:286(type)
+#, fuzzy
+msgid "name"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"имя\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name"
+
+#: brin.xml:296(literal)
+msgid "numeric_minmax_ops"
+msgstr "numeric_minmax_ops"
+
+#: brin.xml:297(type)
+msgid "numeric"
+msgstr "numeric"
+
+#: brin.xml:307(literal)
+msgid "pg_lsn_minmax_ops"
+msgstr "pg_lsn_minmax_ops"
+
+#: brin.xml:308(type)
+msgid "pg_lsn"
+msgstr "pg_lsn"
+
+#: brin.xml:318(literal)
+msgid "oid_minmax_ops"
+msgstr "oid_minmax_ops"
+
+#: brin.xml:319(type)
+msgid "oid"
+msgstr "oid"
+
+#: brin.xml:329(literal)
+msgid "range_inclusion_ops"
+msgstr "range_inclusion_ops"
+
+#: brin.xml:330(type)
+msgid "any range type"
+msgstr "любой тип диапазона"
+
+#: brin.xml:339(literal)
+msgid "-|-"
+msgstr "-|-"
+
+#: brin.xml:349(literal)
+msgid "float4_minmax_ops"
+msgstr "float4_minmax_ops"
+
+#: brin.xml:350(type)
+msgid "real"
+msgstr "real"
+
+#: brin.xml:360(literal)
+msgid "reltime_minmax_ops"
+msgstr "reltime_minmax_ops"
+
+#: brin.xml:361(type)
+msgid "reltime"
+msgstr "reltime"
+
+#: brin.xml:371(literal)
+msgid "int2_minmax_ops"
+msgstr "int2_minmax_ops"
+
+#: brin.xml:372(type)
+msgid "smallint"
+msgstr "smallint"
+
+#: brin.xml:382(literal)
+msgid "text_minmax_ops"
+msgstr "text_minmax_ops"
+
+#: brin.xml:383(type)
+#, fuzzy
+msgid "text"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"текст\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text"
+
+#: brin.xml:393(literal)
+msgid "tid_minmax_ops"
+msgstr "tid_minmax_ops"
+
+#: brin.xml:394(type)
+msgid "tid"
+msgstr "tid"
+
+#: brin.xml:404(literal)
+msgid "timestamp_minmax_ops"
+msgstr "timestamp_minmax_ops"
+
+#: brin.xml:405(type)
+msgid "timestamp without time zone"
+msgstr "timestamp without time zone"
+
+#: brin.xml:415(literal)
+msgid "timestamptz_minmax_ops"
+msgstr "timestamptz_minmax_ops"
+
+#: brin.xml:416(type)
+msgid "timestamp with time zone"
+msgstr "timestamp with time zone"
+
+#: brin.xml:426(literal)
+msgid "time_minmax_ops"
+msgstr "time_minmax_ops"
+
+#: brin.xml:427(type)
+msgid "time without time zone"
+msgstr "time without time zone"
+
+#: brin.xml:437(literal)
+msgid "timetz_minmax_ops"
+msgstr "timetz_minmax_ops"
+
+#: brin.xml:438(type)
+msgid "time with time zone"
+msgstr "time with time zone"
+
+#: brin.xml:448(literal)
+msgid "uuid_minmax_ops"
+msgstr "uuid_minmax_ops"
+
+#: brin.xml:449(type)
+msgid "uuid"
+msgstr "uuid"
+
+#: brin.xml:464(title)
+msgid "Extensibility"
+msgstr "Расширяемость"
+
+#: brin.xml:466(para)
+msgid ""
+"The <acronym>BRIN</acronym> interface has a high level of abstraction, "
+"requiring the access method implementer only to implement the semantics of "
+"the data type being accessed. The <acronym>BRIN</acronym> layer itself takes "
+"care of concurrency, logging and searching the index structure."
+msgstr ""
+"Интерфейс <acronym>BRIN</acronym> характеризуется высоким уровнем абстракции "
+"и таким образом требует от разработчика метода доступа реализовать только "
+"смысловое наполнение обрабатываемого типа данных. Уровень <acronym>BRIN</"
+"acronym> берёт на себя заботу о параллельном доступе, поддержке журнала и "
+"поиске в структуре индекса."
+
+#: brin.xml:473(para)
+msgid ""
+"All it takes to get a <acronym>BRIN</acronym> access method working is to "
+"implement a few user-defined methods, which define the behavior of summary "
+"values stored in the index and the way they interact with scan keys. In "
+"short, <acronym>BRIN</acronym> combines extensibility with generality, code "
+"reuse, and a clean interface."
+msgstr ""
+"Всё, что нужно, чтобы получить работающий метод доступа <acronym>BRIN</"
+"acronym> — это реализовать несколько пользовательских методов, определяющих "
+"поведение сводных значений, хранящихся в индексе, и их взаимоотношения с "
+"ключами сканирования. Словом, <acronym>BRIN</acronym> сочетает расширяемость "
+"с универсальностью, повторным использованием кода и аккуратным интерфейсом."
+
+#: brin.xml:488(function)
+msgid "BrinOpcInfo *opcInfo(Oid type_oid)"
+msgstr "BrinOpcInfo *opcInfo(Oid type_oid)"
+
+#: brin.xml:494(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct BrinOpcInfo\n"
+"{\n"
+"    /* Number of columns stored in an index column of this opclass */\n"
+"    uint16      oi_nstored;\n"
+"\n"
+"    /* Opaque pointer for the opclass' private use */\n"
+"    void       *oi_opaque;\n"
+"\n"
+"    /* Type cache entries of the stored columns */\n"
+"    TypeCacheEntry *oi_typcache[FLEXIBLE_ARRAY_MEMBER];\n"
+"} BrinOpcInfo;"
+msgstr ""
+"typedef struct BrinOpcInfo\n"
+"{\n"
+"    /* Число полей, хранящихся в столбце индекса этого класса операторов */\n"
+"    uint16      oi_nstored;\n"
+"\n"
+"    /* Прозрачный указатель для частного использования классом операторов */\n"
+"    void       *oi_opaque;\n"
+"\n"
+"    /* Элементы кеша типов для сохранённых столбцов */\n"
+"    TypeCacheEntry *oi_typcache[FLEXIBLE_ARRAY_MEMBER];\n"
+"} BrinOpcInfo;"
+
+#: brin.xml:490(para)
+msgid ""
+"Returns internal information about the indexed columns' summary data. The "
+"return value must point to a palloc'd <structname>BrinOpcInfo</structname>, "
+"which has this definition: <placeholder-1/>\n"
+"      <structname>BrinOpcInfo</structname>.<structfield>oi_opaque</"
+"structfield> can be used by the operator class routines to pass information "
+"between support procedures during an index scan."
+msgstr ""
+"Возвращает внутреннюю информацию о сводных данных индексированных столбцов. "
+"Возвращаемое значение должно указывать на <structname>BrinOpcInfo</"
+"structname> (в памяти palloc) со следующим определением: <placeholder-1/>\n"
+"      Поле <structname>BrinOpcInfo</structname>.<structfield>oi_opaque</"
+"structfield> могут использовать подпрограммы класса операторов для передачи "
+"информации опорным процедурам при сканировании индекса."
+
+#: brin.xml:513(function)
+msgid "bool consistent(BrinDesc *bdesc, BrinValues *column, ScanKey key)"
+msgstr "bool consistent(BrinDesc *bdesc, BrinValues *column, ScanKey key)"
+
+#: brin.xml:516(para)
+msgid ""
+"Returns whether the ScanKey is consistent with the given indexed values for "
+"a range. The attribute number to use is passed as part of the scan key."
+msgstr ""
+"Показывает, соответствует ли значение ScanKey заданным индексированным "
+"значениям некоторой зоны. Номер целевого атрибута передаётся в составе ключа "
+"сканирования."
+
+#: brin.xml:525(function)
+msgid ""
+"bool addValue(BrinDesc *bdesc, BrinValues *column, Datum newval, bool isnull)"
+msgstr ""
+"bool addValue(BrinDesc *bdesc, BrinValues *column, Datum newval, bool isnull)"
+
+#: brin.xml:528(para)
+msgid ""
+"Given an index tuple and an indexed value, modifies the indicated attribute "
+"of the tuple so that it additionally represents the new value. If any "
+"modification was done to the tuple, <literal>true</literal> is returned."
+msgstr ""
+"Для заданного кортежа индекса и индексируемого значения изменяет выбранный "
+"атрибут кортежа, чтобы он дополнительно охватывал новое значение. Если в "
+"кортеж вносятся какие-либо изменения, возвращается <literal>true</literal>."
+
+#: brin.xml:538(function)
+msgid "bool unionTuples(BrinDesc *bdesc, BrinValues *a, BrinValues *b)"
+msgstr "bool unionTuples(BrinDesc *bdesc, BrinValues *a, BrinValues *b)"
+
+#: brin.xml:541(para)
+msgid ""
+"Consolidates two index tuples. Given two index tuples, modifies the "
+"indicated attribute of the first of them so that it represents both tuples. "
+"The second tuple is not modified."
+msgstr ""
+"Консолидирует два кортежа индекса. Получая два кортежа, изменяет выбранный "
+"атрибут первого из них, что он охватывал оба кортежа. Второй кортеж не "
+"изменяется."
+
+#: brin.xml:482(para)
+msgid ""
+"There are four methods that an operator class for <acronym>BRIN</acronym> "
+"must provide: <placeholder-1/> The core distribution includes support for "
+"two types of operator classes: minmax and inclusion. Operator class "
+"definitions using them are shipped for in-core data types as appropriate. "
+"Additional operator classes can be defined by the user for other data types "
+"using equivalent definitions, without having to write any source code; "
+"appropriate catalog entries being declared is enough. Note that assumptions "
+"about the semantics of operator strategies are embedded in the support "
+"procedures' source code."
+msgstr ""
+"Класс операторов для <acronym>BRIN</acronym> должен предоставлять четыре "
+"метода: <placeholder-1/> Основной дистрибутив включает поддержку двух типов "
+"классов операторов: minmax и inclusion. Определения классов операторов, "
+"использующие их, представлены для встроенных типов данных, насколько это "
+"уместно. Пользователь может определить дополнительные классы операторов для "
+"других типов данных, применяя аналогичные определения, обойдясь без "
+"написания исходного кода; достаточно будет объявить нужные записи в "
+"каталоге. Заметьте, что предположения о семантике стратегий операторов "
+"зашиты в исходном коде опорных процедур."
+
+#: brin.xml:559(para)
+msgid ""
+"Operator classes that implement completely different semantics are also "
+"possible, provided implementations of the four main support procedures "
+"described above are written. Note that backwards compatibility across major "
+"releases is not guaranteed: for example, additional support procedures might "
+"be required in later releases."
+msgstr ""
+"Также возможно создать классы операторов, воплощающие полностью другую "
+"семантику, разработав реализации четырёх основных опорных процедур, "
+"описанных выше. Заметьте, что обратная совместимость между разными основными "
+"версиями не гарантируется: к примеру, в следующих выпусках могут "
+"потребоваться дополнительные опорные процедуры."
+
+#: brin.xml:567(para)
+msgid ""
+"To write an operator class for a data type that implements a totally ordered "
+"set, it is possible to use the minmax support procedures alongside the "
+"corresponding operators, as shown in <xref linkend=\"brin-extensibility-"
+"minmax-table\"/>. All operator class members (procedures and operators) are "
+"mandatory."
+msgstr ""
+"При написании класса операторов для типа данных, представляющего полностью "
+"упорядоченное множество, можно использовать опорные процедуры minmax вместе "
+"с соответствующими операторами, как показано в <xref remap=\"6\" linkend="
+"\"brin-extensibility-minmax-table\"/>. Все члены класса операторов "
+"(процедуры и операторы) являются обязательными."
+
+#: brin.xml:576(title)
+msgid "Procedure and Support Numbers for Minmax Operator Classes"
+msgstr "Номера стратегий и опорных процедур для классов операторов Minmax"
+
+#: brin.xml:580(entry) brin.xml:641(entry)
+msgid "Operator class member"
+msgstr "Член класса операторов"
+
+#: brin.xml:581(entry) brin.xml:642(entry)
+msgid "Object"
+msgstr "Объект"
+
+#: brin.xml:586(entry) brin.xml:648(entry)
+msgid "Support Procedure 1"
+msgstr "Опорная процедура 1"
+
+#: brin.xml:587(entry)
+msgid "internal function <function>brin_minmax_opcinfo()</function>"
+msgstr "внутренняя функция <function>brin_minmax_opcinfo()</function>"
+
+#: brin.xml:590(entry) brin.xml:653(entry)
+msgid "Support Procedure 2"
+msgstr "Опорная процедура 2"
+
+#: brin.xml:591(entry)
+msgid "internal function <function>brin_minmax_add_value()</function>"
+msgstr "внутренняя функция <function>brin_minmax_add_value()</function>"
+
+#: brin.xml:594(entry) brin.xml:658(entry)
+msgid "Support Procedure 3"
+msgstr "Опорная процедура 3"
+
+#: brin.xml:595(entry)
+msgid "internal function <function>brin_minmax_consistent()</function>"
+msgstr "внутренняя функция <function>brin_minmax_consistent()</function>"
+
+#: brin.xml:598(entry) brin.xml:663(entry)
+msgid "Support Procedure 4"
+msgstr "Опорная процедура 4"
+
+#: brin.xml:599(entry)
+msgid "internal function <function>brin_minmax_union()</function>"
+msgstr "внутренняя функция <function>brin_minmax_union()</function>"
+
+#: brin.xml:602(entry) brin.xml:688(entry) brin.xml:710(entry)
+#: brin.xml:760(entry) brin.xml:765(entry)
+msgid "Operator Strategy 1"
+msgstr "Стратегия оператора 1"
+
+#: brin.xml:603(entry) brin.xml:749(entry)
+msgid "operator less-than"
+msgstr "оператор меньше"
+
+#: brin.xml:606(entry) brin.xml:693(entry) brin.xml:705(entry)
+msgid "Operator Strategy 2"
+msgstr "Стратегия оператора 2"
+
+#: brin.xml:607(entry) brin.xml:754(entry)
+msgid "operator less-than-or-equal-to"
+msgstr "оператор меньше-или-равно"
+
+#: brin.xml:610(entry) brin.xml:698(entry) brin.xml:725(entry)
+msgid "Operator Strategy 3"
+msgstr "Стратегия оператора 3"
+
+#: brin.xml:611(entry)
+msgid "operator equal-to"
+msgstr "оператор равно"
+
+#: brin.xml:614(entry) brin.xml:690(entry) brin.xml:703(entry)
+#: brin.xml:750(entry) brin.xml:755(entry)
+msgid "Operator Strategy 4"
+msgstr "Стратегия оператора 4"
+
+#: brin.xml:615(entry) brin.xml:764(entry)
+msgid "operator greater-than-or-equal-to"
+msgstr "оператор больше-или-равно"
+
+#: brin.xml:618(entry) brin.xml:695(entry) brin.xml:708(entry)
+msgid "Operator Strategy 5"
+msgstr "Стратегия оператора 5"
+
+#: brin.xml:619(entry) brin.xml:759(entry)
+msgid "operator greater-than"
+msgstr "оператор больше"
+
+#: brin.xml:625(para)
+msgid ""
+"To write an operator class for a complex datatype which has values included "
+"within another type, it's possible to use the inclusion support procedures "
+"alongside the corresponding operators, as shown in <xref linkend=\"brin-"
+"extensibility-inclusion-table\"/>. It requires only a single additional "
+"function, which can be written in any language. More functions can be "
+"defined for additional functionality. All operators are optional. Some "
+"operators require other operators, as shown as dependencies on the table."
+msgstr ""
+"При написании класса операторов для сложного типа данных, значения которого "
+"включаются в другой тип, можно использовать опорные процедуры inclusion "
+"вместе с соответствующими операторами, как показано в <xref remap=\"6\" "
+"linkend=\"brin-extensibility-inclusion-table\"/>. Для этого требуется одна "
+"дополнительная функция, которую можно написать на любом языке. Для "
+"расширенной функциональности можно определить другие функции. Все операторы "
+"являются необязательными. Некоторые из них требует наличия других, что "
+"показано в таблице как зависимости."
+
+#: brin.xml:637(title)
+msgid "Procedure and Support Numbers for Inclusion Operator Classes"
+msgstr "Номера стратегий и опорных процедур для классов операторов Inclusion"
+
+#: brin.xml:643(entry)
+msgid "Dependency"
+msgstr "Зависимость"
+
+#: brin.xml:649(entry)
+msgid "internal function <function>brin_inclusion_opcinfo()</function>"
+msgstr "внутренняя функция <function>brin_inclusion_opcinfo()</function>"
+
+#: brin.xml:654(entry)
+msgid "internal function <function>brin_inclusion_add_value()</function>"
+msgstr "внутренняя функция <function>brin_inclusion_add_value()</function>"
+
+#: brin.xml:659(entry)
+msgid "internal function <function>brin_inclusion_consistent()</function>"
+msgstr "внутренняя функция <function>brin_inclusion_consistent()</function>"
+
+#: brin.xml:664(entry)
+msgid "internal function <function>brin_inclusion_union()</function>"
+msgstr "внутренняя функция <function>brin_inclusion_union()</function>"
+
+#: brin.xml:668(entry)
+msgid "Support Procedure 11"
+msgstr "Опорная процедура 11"
+
+#: brin.xml:669(entry)
+msgid "function to merge two elements"
+msgstr "функция для слияния двух элементов"
+
+#: brin.xml:673(entry)
+msgid "Support Procedure 12"
+msgstr "Опорная процедура 12"
+
+#: brin.xml:674(entry)
+msgid "optional function to check whether two elements are mergeable"
+msgstr "необязательная функция для проверки возможности слияния двух элементов"
+
+#: brin.xml:678(entry)
+msgid "Support Procedure 13"
+msgstr "Опорная процедура 13"
+
+#: brin.xml:679(entry)
+msgid "optional function to check if an element is contained within another"
+msgstr ""
+"необязательная функция для проверки, содержится ли один элемент в другом"
+
+#: brin.xml:683(entry)
+msgid "Support Procedure 14"
+msgstr "Опорная процедура 14"
+
+#: brin.xml:684(entry)
+msgid "optional function to check whether an element is empty"
+msgstr "необязательная функция для проверки, является ли элемент пустым"
+
+#: brin.xml:689(entry)
+msgid "operator left-of"
+msgstr "оператор левее"
+
+#: brin.xml:694(entry) brin.xml:709(entry)
+msgid "operator does-not-extend-to-the-right-of"
+msgstr "оператор не-простирается-правее"
+
+#: brin.xml:699(entry)
+msgid "operator overlaps"
+msgstr "оператор перекрывается"
+
+#: brin.xml:704(entry)
+msgid "operator right-of"
+msgstr "оператор правее"
+
+#: brin.xml:713(entry)
+msgid "Operator Strategy 6, 18"
+msgstr "Стратегия оператора 6, 18"
+
+#: brin.xml:714(entry)
+msgid "operator same-as-or-equal-to"
+msgstr "оператор то-же-или-равно"
+
+#: brin.xml:715(entry)
+msgid "Operator Strategy 7"
+msgstr "Стратегия оператора 7"
+
+#: brin.xml:718(entry)
+msgid "Operator Strategy 7, 13, 16, 24, 25"
+msgstr "Стратегия оператора 7, 13, 16, 24, 25"
+
+#: brin.xml:719(entry)
+msgid "operator contains-or-equal-to"
+msgstr "оператор содержит-или-равно"
+
+#: brin.xml:723(entry)
+msgid "Operator Strategy 8, 14, 26, 27"
+msgstr "Стратегия оператора 8, 14, 26, 27"
+
+#: brin.xml:724(entry)
+msgid "operator is-contained-by-or-equal-to"
+msgstr "оператор содержится-в-или-равно"
+
+#: brin.xml:728(entry) brin.xml:740(entry)
+msgid "Operator Strategy 9"
+msgstr "Стратегия оператора 9"
+
+#: brin.xml:729(entry)
+msgid "operator does-not-extend-above"
+msgstr "оператор не-простирается-выше"
+
+#: brin.xml:730(entry) brin.xml:738(entry)
+msgid "Operator Strategy 11"
+msgstr "Стратегия оператора 11"
+
+#: brin.xml:733(entry) brin.xml:745(entry)
+msgid "Operator Strategy 10"
+msgstr "Стратегия оператора 10"
+
+#: brin.xml:734(entry)
+msgid "operator is-below"
+msgstr "оператор ниже"
+
+#: brin.xml:735(entry) brin.xml:743(entry)
+msgid "Operator Strategy 12"
+msgstr "Стратегия оператора 12"
+
+#: brin.xml:739(entry)
+msgid "operator is-above"
+msgstr "оператор выше"
+
+#: brin.xml:744(entry)
+msgid "operator does-not-extend-below"
+msgstr "оператор не-простирается-ниже"
+
+#: brin.xml:748(entry)
+msgid "Operator Strategy 20"
+msgstr "Стратегия оператора 20"
+
+#: brin.xml:753(entry)
+msgid "Operator Strategy 21"
+msgstr "Стратегия оператора 21"
+
+#: brin.xml:758(entry)
+msgid "Operator Strategy 22"
+msgstr "Стратегия оператора 22"
+
+#: brin.xml:763(entry)
+msgid "Operator Strategy 23"
+msgstr "Стратегия оператора 23"
+
+#: brin.xml:771(para)
+msgid ""
+"Support procedure numbers 1-10 are reserved for the BRIN internal functions, "
+"so the SQL level functions start with number 11. Support function number 11 "
+"is the main function required to build the index. It should accept two "
+"arguments with the same datatype as the opclass, and return the union of "
+"them. The inclusion opclass can store union values with different datatypes "
+"if it is defined with the <literal>STORAGE</literal> parameter. The return "
+"value of the union function should match the <literal>STORAGE</literal> "
+"datatype."
+msgstr ""
+"Номера опорных процедур 1-10 зарезервированы для внутренних функций BRIN, "
+"так что функции уровня SQL начинаются с номера 11. Опорная функция номер 11 "
+"является основной, необходимой для построения индекса. Она должна принимать "
+"два аргумента того же типа данных, что и целевой тип класса, и возвращать их "
+"объединение. Класс операторов inclusion может сохранять значения объединения "
+"в различных типах данных, в зависимости от параметра <literal>STORAGE</"
+"literal>. Возвращаемое значение функции объединения должно соответствовать "
+"типу данных <literal>STORAGE</literal>."
+
+#: brin.xml:782(para)
+msgid ""
+"Support procedure numbers 12 and 14 are provided to support irregularities "
+"of built-in datatypes. Procedure number 12 is used to support network "
+"addresses from different families which are not mergeable. Procedure number "
+"14 is used to support empty ranges. Procedure number 13 is an optional but "
+"recommended one, which allows the new value to be checked before it is "
+"passed to the union function. As the BRIN framework can shortcut some "
+"operations when the union is not changed, using this function can improve "
+"index performance."
+msgstr ""
+"Опорные процедуры под номерами 12 и 14 предоставляются для поддержки "
+"нерегулярностей встроенных типов данных. Процедура номер 12 применяется для "
+"поддержки работы с сетевыми адресами из различных семейств, которые нельзя "
+"объединять. Процедура номер 14 применяется для поддержки зон с пустыми "
+"значениями. Процедура номер 13 является необязательной, но рекомендуемой; "
+"она проверяет новое значение, прежде чем оно будет передано функции "
+"объединения. Так как инфраструктура BRIN может соптимизировать некоторые "
+"операции, когда объединение не меняется, то применяя эту функцию, можно "
+"увеличить быстродействие индекса."
+
+#: brin.xml:794(para)
+msgid ""
+"Both minmax and inclusion opclasses support cross-datatype operators, though "
+"with these the dependencies become more complicated. The minmax opclass "
+"requires a full set of operators to be defined with both arguments having "
+"the same datatype. It allows additional datatypes to be supported by "
+"defining extra sets of operators. Inclusion opclass operator strategies are "
+"dependent on another operator strategy as shown in <xref linkend=\"brin-"
+"extensibility-inclusion-table\"/>, or the same operator strategy as "
+"themselves. They require the dependency operator to be defined with the "
+"<literal>STORAGE</literal> datatype as the left-hand-side argument and the "
+"other supported datatype to be the right-hand-side argument of the supported "
+"operator. See <literal>float4_minmax_ops</literal> as an example of minmax, "
+"and <literal>box_inclusion_ops</literal> as an example of inclusion."
+msgstr ""
+"И minmax, и inclusion поддерживают операторы с разными типами, хотя с ними "
+"зависимости становятся более сложными. Класс minmax требует, чтобы для двух "
+"аргументов одного типа определялся полный набор операторов. Это позволяет "
+"поддерживать дополнительные типы данных, определяя дополнительные наборы "
+"операторов. Стратегии операторов класса inclusion могут зависеть от других "
+"стратегий, как показано в <xref remap=\"6\" linkend=\"brin-extensibility-"
+"inclusion-table\"/>, или от своих собственных стратегий. Для них требуется, "
+"чтобы был определён необходимый оператор с типом данных <literal>STORAGE</"
+"literal> для левого аргумента и другим поддерживаемым типом для правого "
+"аргумента реализуемого оператора. См. определение "
+"<literal>float4_minmax_ops</literal> в качестве примера для minmax и "
+"<literal>box_inclusion_ops</literal> в качестве примера для inclusion."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: brin.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
