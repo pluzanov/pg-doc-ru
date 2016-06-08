@@ -1,0 +1,427 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/delete.xml:8(indexterm)
+msgid "<primary>DELETE</primary>"
+msgstr "<primary>DELETE</primary>"
+
+#: ref/delete.xml:13(refentrytitle)
+msgctxt "refentrytitle"
+msgid "DELETE"
+msgstr "DELETE"
+
+#: ref/delete.xml:14(manvolnum)
+msgid "7"
+msgstr "7"
+
+#: ref/delete.xml:15(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#: ref/delete.xml:19(refname)
+msgctxt "refname"
+msgid "DELETE"
+msgstr "DELETE"
+
+#: ref/delete.xml:20(refpurpose)
+msgid "delete rows of a table"
+msgstr "удалить записи таблицы"
+
+#: ref/delete.xml:24(replaceable) ref/delete.xml:80(replaceable)
+msgid "with_query"
+msgstr "запрос_WITH"
+
+#: ref/delete.xml:25(replaceable) ref/delete.xml:92(replaceable)
+msgid "table_name"
+msgstr "table_name"
+
+#: ref/delete.xml:25(replaceable) ref/delete.xml:107(replaceable)
+msgid "alias"
+msgstr "псевдоним"
+
+#: ref/delete.xml:26(replaceable) ref/delete.xml:120(replaceable)
+msgid "using_list"
+msgstr "список_USING"
+
+#: ref/delete.xml:27(replaceable) ref/delete.xml:136(replaceable)
+msgid "condition"
+msgstr "условие"
+
+#: ref/delete.xml:27(replaceable) ref/delete.xml:147(replaceable)
+msgid "cursor_name"
+msgstr "имя_курсора"
+
+#: ref/delete.xml:28(replaceable) ref/delete.xml:164(replaceable)
+msgid "output_expression"
+msgstr "выражение_результата"
+
+#: ref/delete.xml:28(replaceable) ref/delete.xml:177(replaceable)
+msgid "output_name"
+msgstr "имя_результата"
+
+#: ref/delete.xml:24(synopsis)
+#, no-wrap
+msgid ""
+"[ WITH [ RECURSIVE ] <placeholder-1/> [, ...] ]\n"
+"DELETE FROM [ ONLY ] <placeholder-2/> [ * ] [ [ AS ] <placeholder-3/> ]\n"
+"    [ USING <placeholder-4/> ]\n"
+"    [ WHERE <placeholder-5/> | WHERE CURRENT OF <placeholder-6/> ]\n"
+"    [ RETURNING * | <placeholder-7/> [ [ AS ] <placeholder-8/> ] [, ...] ]"
+msgstr ""
+"[ WITH [ RECURSIVE ] <placeholder-1/> [, ...] ]\n"
+"DELETE FROM [ ONLY ] <placeholder-2/> [ * ] [ [ AS ] <placeholder-3/> ]\n"
+"    [ USING <placeholder-4/> ]\n"
+"    [ WHERE <placeholder-5/> | WHERE CURRENT OF <placeholder-6/> ]\n"
+"    [ RETURNING * | <placeholder-7/> [ [ AS ] <placeholder-8/> ] [, ...] ]"
+
+#: ref/delete.xml:32(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/delete.xml:34(para)
+msgid ""
+"<command>DELETE</command> deletes rows that satisfy the <literal>WHERE</"
+"literal> clause from the specified table. If the <literal>WHERE</literal> "
+"clause is absent, the effect is to delete all rows in the table. The result "
+"is a valid, but empty table."
+msgstr ""
+"Команда <command>DELETE</command> удаляет из указанной таблицы строки, "
+"удовлетворяющие условию <literal>WHERE</literal>. Если предложение "
+"<literal>WHERE</literal> отсутствует, она удаляет из таблицы все строки, в "
+"результате будет получена рабочая, но пустая таблица."
+
+#: ref/delete.xml:42(para)
+msgid ""
+"<xref linkend=\"sql-truncate\"/> is a <productname>PostgreSQL</productname> "
+"extension that provides a faster mechanism to remove all rows from a table."
+msgstr ""
+"<xref linkend=\"sql-truncate\"/> — расширение <productname>PostgreSQL</"
+"productname>, реализующее более быстрый механизм удаления всех строк из "
+"таблицы."
+
+#: ref/delete.xml:49(para)
+msgid ""
+"There are two ways to delete rows in a table using information contained in "
+"other tables in the database: using sub-selects, or specifying additional "
+"tables in the <literal>USING</literal> clause. Which technique is more "
+"appropriate depends on the specific circumstances."
+msgstr ""
+"Удалить строки в таблице, используя информацию из других таблиц в базе "
+"данных, можно двумя способами: применяя вложенные запросы или указав "
+"дополнительные таблицы в предложении <literal>USING</literal>. Выбор "
+"предпочитаемого варианта зависит от конкретных обстоятельств."
+
+#: ref/delete.xml:57(para)
+msgid ""
+"The optional <literal>RETURNING</literal> clause causes <command>DELETE</"
+"command> to compute and return value(s) based on each row actually deleted. "
+"Any expression using the table's columns, and/or columns of other tables "
+"mentioned in <literal>USING</literal>, can be computed. The syntax of the "
+"<literal>RETURNING</literal> list is identical to that of the output list of "
+"<command>SELECT</command>."
+msgstr ""
+"Предложение <literal>RETURNING</literal> указывает, что команда "
+"<command>DELETE</command> должна вычислить и возвратить значения для каждой "
+"фактически удалённой строки. Вычислить в нём можно любое выражение со "
+"столбцами целевой таблицы и/или столбцами других таблиц, упомянутых в "
+"<literal>USING</literal>. Список <literal>RETURNING</literal> имеет тот же "
+"синтаксис, что и список результатов <command>SELECT</command>."
+
+#: ref/delete.xml:66(para)
+msgid ""
+"You must have the <literal>DELETE</literal> privilege on the table to delete "
+"from it, as well as the <literal>SELECT</literal> privilege for any table in "
+"the <literal>USING</literal> clause or whose values are read in the "
+"<replaceable class=\"parameter\">condition</replaceable>."
+msgstr ""
+"Чтобы удалять данные из таблицы, необходимо иметь право <literal>DELETE</"
+"literal> для неё, а также право <literal>SELECT</literal> для всех таблиц, "
+"перечисленных в предложении <literal>USING</literal>, и таблиц, данные "
+"которых считываются в <replaceable class=\"parameter\">условии</replaceable>."
+
+#: ref/delete.xml:76(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#: ref/delete.xml:82(para)
+msgid ""
+"The <literal>WITH</literal> clause allows you to specify one or more "
+"subqueries that can be referenced by name in the <command>DELETE</command> "
+"query. See <xref linkend=\"queries-with\"/> and <xref linkend=\"sql-select\"/"
+"> for details."
+msgstr ""
+"Предложение <literal>WITH</literal> позволяет задать один или несколько "
+"подзапросов, на которые затем можно ссылаться по имени в запросе "
+"<command>DELETE</command>. Подробнее об этом см. <xref remap=\"4\" linkend="
+"\"queries-with\"/> и <xref remap=\"4\" linkend=\"sql-select\"/>."
+
+#: ref/delete.xml:94(para)
+msgid ""
+"The name (optionally schema-qualified) of the table to delete rows from. If "
+"<literal>ONLY</literal> is specified before the table name, matching rows "
+"are deleted from the named table only. If <literal>ONLY</literal> is not "
+"specified, matching rows are also deleted from any tables inheriting from "
+"the named table. Optionally, <literal>*</literal> can be specified after the "
+"table name to explicitly indicate that descendant tables are included."
+msgstr ""
+"Имя (возможно, дополненное схемой) таблицы, из которой будут удалены строки. "
+"Если перед именем таблицы добавлено <literal>ONLY</literal>, соответствующие "
+"строки удаляются только из указанной таблицы. Без <literal>ONLY</literal> "
+"строки будут также удалены из всех таблиц, унаследованных от указанной. При "
+"желании, после имени таблицы можно указать <literal>*</literal>, чтобы явно "
+"обозначить, что операция затрагивает все дочерние таблицы."
+
+#: ref/delete.xml:109(para)
+msgid ""
+"A substitute name for the target table. When an alias is provided, it "
+"completely hides the actual name of the table. For example, given "
+"<literal>DELETE FROM foo AS f</literal>, the remainder of the "
+"<command>DELETE</command> statement must refer to this table as <literal>f</"
+"literal> not <literal>foo</literal>."
+msgstr ""
+"Альтернативное имя целевой таблицы. Когда указывается это имя, оно полностью "
+"скрывает фактическое имя таблицы. Например, в запросе <literal>DELETE FROM "
+"foo AS f</literal> дополнительные компоненты оператора <command>DELETE</"
+"command> должны обращаться к целевой таблице по имени <literal>f</literal>, "
+"а не <literal>foo</literal>."
+
+#: ref/delete.xml:122(para)
+#, fuzzy
+msgid ""
+"A list of table expressions, allowing columns from other tables to appear in "
+"the <literal>WHERE</literal> condition. This is similar to the list of "
+"tables that can be specified in the <xref linkend=\"sql-from\" endterm=\"sql-"
+"from-title\"/> of a <command>SELECT</command> statement; for example, an "
+"alias for the table name can be specified. Do not repeat the target table in "
+"the <replaceable class=\"parameter\">using_list</replaceable>, unless you "
+"wish to set up a self-join."
+msgstr ""
+"Список табличных выражений, позволяющий добавлять в условие <literal>WHERE</"
+"literal> столбцы из других таблиц. Он подобен списку таблиц, который можно "
+"задать в предложении <xref endterm=\"sql-from-title\" linkend=\"sql-from\"/> "
+"оператора <command>SELECT</command>; например, в нём можно определить "
+"псевдоним для таблицы. Целевую таблицу повторять в <replaceable class="
+"\"parameter\">списке_USING</replaceable> нужно, только если требуется "
+"определить замкнутое соединение."
+
+#: ref/delete.xml:138(para)
+msgid ""
+"An expression that returns a value of type <type>boolean</type>. Only rows "
+"for which this expression returns <literal>true</literal> will be deleted."
+msgstr ""
+"Выражение, возвращающее значение типа <type>boolean</type>. Удалены будут "
+"только те строки, для которых это выражение возвращает <literal>true</"
+"literal>."
+
+#: ref/delete.xml:149(para)
+msgid ""
+"The name of the cursor to use in a <literal>WHERE CURRENT OF</literal> "
+"condition. The row to be deleted is the one most recently fetched from this "
+"cursor. The cursor must be a non-grouping query on the <command>DELETE</"
+"command>'s target table. Note that <literal>WHERE CURRENT OF</literal> "
+"cannot be specified together with a Boolean condition. See <xref linkend="
+"\"sql-declare\"/> for more information about using cursors with "
+"<literal>WHERE CURRENT OF</literal>."
+msgstr ""
+"Имя курсора, который будет использоваться в условии <literal>WHERE CURRENT "
+"OF</literal>. С таким условием будет удалена строка, выбранная из этого "
+"курсора последней. Курсор должен образовываться запросом, не применяющим "
+"группировку, к целевой таблице команды <command>DELETE</command>. Заметьте, "
+"что <literal>WHERE CURRENT OF</literal> нельзя задать вместе с булевским "
+"условием. За дополнительными сведениями об использовании курсоров с "
+"<literal>WHERE CURRENT OF</literal> обратитесь к <xref remap=\"3\" linkend="
+"\"sql-declare\"/>."
+
+#: ref/delete.xml:166(para)
+msgid ""
+"An expression to be computed and returned by the <command>DELETE</command> "
+"command after each row is deleted. The expression can use any column names "
+"of the table named by <replaceable class=\"parameter\">table_name</"
+"replaceable> or table(s) listed in <literal>USING</literal>. Write "
+"<literal>*</literal> to return all columns."
+msgstr ""
+"Выражение, которое будет вычисляться и возвращаться командой "
+"<command>DELETE</command> после удаления каждой строки. В этом выражении "
+"можно использовать имена любых столбцов таблицы <replaceable class="
+"\"parameter\">имя_таблицы</replaceable> или таблиц, перечисленных в списке "
+"<literal>USING</literal>. Чтобы получить все столбцы, достаточно написать "
+"<literal>*</literal>."
+
+#: ref/delete.xml:179(para)
+msgid "A name to use for a returned column."
+msgstr "Имя, назначаемое возвращаемому столбцу."
+
+#: ref/delete.xml:188(title)
+msgid "Outputs"
+msgstr "Выводимая информация"
+
+#: ref/delete.xml:190(para)
+msgid ""
+"On successful completion, a <command>DELETE</command> command returns a "
+"command tag of the form <screen>DELETE <replaceable class=\"parameter"
+"\">count</replaceable></screen> The <replaceable class=\"parameter\">count</"
+"replaceable> is the number of rows deleted. Note that the number may be less "
+"than the number of rows that matched the <replaceable class=\"parameter"
+"\">condition</replaceable> when deletes were suppressed by a <literal>BEFORE "
+"DELETE</literal> trigger. If <replaceable class=\"parameter\">count</"
+"replaceable> is 0, no rows were deleted by the query (this is not considered "
+"an error)."
+msgstr ""
+"В случае успешного завершения, <command>DELETE</command> возвращает метку "
+"команды в виде <screen>DELETE <replaceable class=\"parameter\">число</"
+"replaceable></screen> Здесь <replaceable class=\"parameter\">число</"
+"replaceable> — количество удалённых строк. Заметьте, что это число может "
+"быть меньше числа строк, соответствующих <replaceable class=\"parameter"
+"\">условию</replaceable>, если удаления были подавлены триггером "
+"<literal>BEFORE DELETE</literal>. Если <replaceable class=\"parameter"
+"\">число</replaceable> равно 0, это означает, что запрос не удалил ни одной "
+"строки (это не считается ошибкой)."
+
+#: ref/delete.xml:203(para)
+msgid ""
+"If the <command>DELETE</command> command contains a <literal>RETURNING</"
+"literal> clause, the result will be similar to that of a <command>SELECT</"
+"command> statement containing the columns and values defined in the "
+"<literal>RETURNING</literal> list, computed over the row(s) deleted by the "
+"command."
+msgstr ""
+"Если команда <command>DELETE</command> содержит предложение "
+"<literal>RETURNING</literal>, её результат будет похож на результат "
+"оператора <command>SELECT</command> (с теми же столбцами и значениями, что "
+"содержатся в списке <literal>RETURNING</literal>), полученный для строк, "
+"удалённых этой командой."
+
+#: ref/delete.xml:213(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/delete.xml:220(programlisting)
+#, no-wrap
+msgid ""
+"DELETE FROM films USING producers\n"
+"  WHERE producer_id = producers.id AND producers.name = 'foo';"
+msgstr ""
+"DELETE FROM films USING producers\n"
+"  WHERE producer_id = producers.id AND producers.name = 'foo';"
+
+#: ref/delete.xml:226(programlisting)
+#, no-wrap
+msgid ""
+"DELETE FROM films\n"
+"  WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');"
+msgstr ""
+"DELETE FROM films\n"
+"  WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');"
+
+#: ref/delete.xml:215(para)
+msgid ""
+"<productname>PostgreSQL</productname> lets you reference columns of other "
+"tables in the <literal>WHERE</literal> condition by specifying the other "
+"tables in the <literal>USING</literal> clause. For example, to delete all "
+"films produced by a given producer, one can do: <placeholder-1/> What is "
+"essentially happening here is a join between <structname>films</structname> "
+"and <structname>producers</structname>, with all successfully joined "
+"<structname>films</structname> rows being marked for deletion. This syntax "
+"is not standard. A more standard way to do it is: <placeholder-2/> In some "
+"cases the join style is easier to write or faster to execute than the sub-"
+"select style."
+msgstr ""
+"<productname>PostgreSQL</productname> позволяет ссылаться на столбцы других "
+"таблиц в условии <literal>WHERE</literal>, когда эти таблицы перечисляются в "
+"предложении <literal>USING</literal>. Например, удалить все фильмы "
+"определённого продюсера можно так: <placeholder-1/> По сути в этом запросе "
+"выполняется соединение таблиц <structname>films</structname> и "
+"<structname>producers</structname>, и все успешно включённые в соединение "
+"строки в <structname>films</structname> помечаются для удаления. Этот "
+"синтаксис не соответствует стандарту. Следуя стандарту, эту задачу можно "
+"решить так: <placeholder-2/> В ряде случаев запрос в стиле соединения легче "
+"написать и он может работать быстрее, чем в стиле вложенного запроса."
+
+#: ref/delete.xml:234(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/delete.xml:238(programlisting)
+#, no-wrap
+msgid "DELETE FROM films WHERE kind &lt;&gt; 'Musical';"
+msgstr "DELETE FROM films WHERE kind &lt;&gt; 'Musical';"
+
+#: ref/delete.xml:236(para)
+msgid "Delete all films but musicals: <placeholder-1/>"
+msgstr "Удаление всех фильмов, кроме мюзиклов: <placeholder-1/>"
+
+#: ref/delete.xml:243(programlisting)
+#, no-wrap
+msgid "DELETE FROM films;"
+msgstr "DELETE FROM films;"
+
+#: ref/delete.xml:241(para)
+msgid "Clear the table <literal>films</literal>: <placeholder-1/>"
+msgstr "Очистка таблицы <literal>films</literal>: <placeholder-1/>"
+
+#: ref/delete.xml:248(programlisting)
+#, no-wrap
+msgid "DELETE FROM tasks WHERE status = 'DONE' RETURNING *;"
+msgstr "DELETE FROM tasks WHERE status = 'DONE' RETURNING *;"
+
+#: ref/delete.xml:246(para)
+msgid ""
+"Delete completed tasks, returning full details of the deleted rows: "
+"<placeholder-1/>"
+msgstr ""
+"Удаление завершённых задач с получением всех данных удалённых строк: "
+"<placeholder-1/>"
+
+#: ref/delete.xml:254(programlisting)
+#, no-wrap
+msgid "DELETE FROM tasks WHERE CURRENT OF c_tasks;"
+msgstr "DELETE FROM tasks WHERE CURRENT OF c_tasks;"
+
+#: ref/delete.xml:251(para)
+msgid ""
+"Delete the row of <structname>tasks</structname> on which the cursor "
+"<literal>c_tasks</literal> is currently positioned: <placeholder-1/>"
+msgstr ""
+"Удаление из <structname>tasks</structname> строки, на которой в текущий "
+"момент располагается курсор <literal>c_tasks</literal>: <placeholder-1/>"
+
+#: ref/delete.xml:258(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#: ref/delete.xml:260(para)
+msgid ""
+"This command conforms to the <acronym>SQL</acronym> standard, except that "
+"the <literal>USING</literal> and <literal>RETURNING</literal> clauses are "
+"<productname>PostgreSQL</productname> extensions, as is the ability to use "
+"<literal>WITH</literal> with <command>DELETE</command>."
+msgstr ""
+"Эта команда соответствует стандарту <acronym>SQL</acronym>, но предложения "
+"<literal>USING</literal> и <literal>RETURNING</literal> являются "
+"расширениями <productname>PostgreSQL</productname>, как и возможность "
+"использовать <literal>WITH</literal> с <command>DELETE</command>."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/delete.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

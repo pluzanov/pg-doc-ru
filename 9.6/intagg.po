@@ -1,0 +1,209 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: intagg.xml:5(title)
+msgid "intagg"
+msgstr "intagg"
+
+#: intagg.xml:7(indexterm)
+msgid "<primary>intagg</primary>"
+msgstr "<primary>intagg</primary>"
+
+#: intagg.xml:11(para)
+msgid ""
+"The <filename>intagg</filename> module provides an integer aggregator and an "
+"enumerator. <filename>intagg</filename> is now obsolete, because there are "
+"built-in functions that provide a superset of its capabilities. However, the "
+"module is still provided as a compatibility wrapper around the built-in "
+"functions."
+msgstr ""
+"Модуль <filename>intagg</filename> предоставляет агрегатор и нумератор целых "
+"чисел. На данный момент имеются встроенные функции, предлагающие более "
+"широкие возможности, поэтому <filename>intagg</filename> считается "
+"устаревшим. Однако этот модуль продолжает существовать для обратной "
+"совместимости, теперь как набор обёрток встроенных функций."
+
+#: intagg.xml:20(title)
+msgid "Functions"
+msgstr "Функции"
+
+#: intagg.xml:22(indexterm)
+msgid "<primary>int_array_aggregate</primary>"
+msgstr "<primary>int_array_aggregate</primary>"
+
+#: intagg.xml:26(indexterm)
+msgid "<primary>array_agg</primary>"
+msgstr "<primary>array_agg</primary>"
+
+#: intagg.xml:30(para)
+msgid ""
+"The aggregator is an aggregate function "
+"<function>int_array_aggregate(integer)</function> that produces an integer "
+"array containing exactly the integers it is fed. This is a wrapper around "
+"<function>array_agg</function>, which does the same thing for any array type."
+msgstr ""
+"Агрегатор реализуется функцией <function>int_array_aggregate(integer)</"
+"function>, которая выдаёт массив целых чисел, содержащий в точности те "
+"числа, что переданы ей. Это обёртка встроенной функции <function>array_agg</"
+"function>, которая делает то же самое для массива любого типа."
+
+#: intagg.xml:39(indexterm)
+msgid "<primary>int_array_enum</primary>"
+msgstr "<primary>int_array_enum</primary>"
+
+#: intagg.xml:43(para)
+msgid ""
+"The enumerator is a function <function>int_array_enum(integer[])</function> "
+"that returns <type>setof integer</type>. It is essentially the reverse "
+"operation of the aggregator: given an array of integers, expand it into a "
+"set of rows. This is a wrapper around <function>unnest</function>, which "
+"does the same thing for any array type."
+msgstr ""
+"Нумератор реализуется функцией <function>int_array_enum(integer[])</"
+"function>, которая возвращает набор целых (<type>setof integer</type>). По "
+"сути его действие обратно действие агрегатора: получив массив целых, он "
+"разворачивает его в набор строк. Это оболочка функции <function>unnest</"
+"function>, которая делает то же самое для массива любого типа."
+
+#: intagg.xml:55(title)
+msgid "Sample Uses"
+msgstr "Примеры использования"
+
+#: intagg.xml:61(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE left (id INT PRIMARY KEY, ...);\n"
+"CREATE TABLE right (id INT PRIMARY KEY, ...);\n"
+"CREATE TABLE one_to_many(left INT REFERENCES left, right INT REFERENCES right);"
+msgstr ""
+"CREATE TABLE left (id INT PRIMARY KEY, ...);\n"
+"CREATE TABLE right (id INT PRIMARY KEY, ...);\n"
+"CREATE TABLE one_to_many(left INT REFERENCES left, right INT REFERENCES right);"
+
+#: intagg.xml:67(programlisting)
+#, no-wrap
+msgid ""
+"SELECT right.* from right JOIN one_to_many ON (right.id = one_to_many.right)\n"
+"  WHERE one_to_many.left = <replaceable>item</replaceable>;"
+msgstr ""
+"SELECT right.* from right JOIN one_to_many ON (right.id = one_to_many.right)\n"
+"  WHERE one_to_many.left = <replaceable>item</replaceable>;"
+
+#: intagg.xml:57(para)
+msgid ""
+"Many database systems have the notion of a one to many table. Such a table "
+"usually sits between two indexed tables, for example: <placeholder-1/> It is "
+"typically used like this: <placeholder-2/> This will return all the items in "
+"the right hand table for an entry in the left hand table. This is a very "
+"common construct in SQL."
+msgstr ""
+"Во многих СУБД есть понятие таблицы соотношений &laquo;один ко "
+"многим&raquo;. Такая таблица обычно находится между двумя индексированными "
+"таблицами, например: <placeholder-1/> Как правило, она используется так: "
+"<placeholder-2/> Этот запрос вернёт все элементы из таблицы справа для "
+"записи в таблице слева. Это очень распространённая конструкция в SQL."
+
+#: intagg.xml:83(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE summary AS\n"
+"  SELECT left, int_array_aggregate(right) AS right\n"
+"  FROM one_to_many\n"
+"  GROUP BY left;"
+msgstr ""
+"CREATE TABLE summary AS\n"
+"  SELECT left, int_array_aggregate(right) AS right\n"
+"  FROM one_to_many\n"
+"  GROUP BY left;"
+
+#: intagg.xml:92(programlisting)
+#, no-wrap
+msgid "SELECT left, int_array_enum(right) FROM summary WHERE left = <replaceable>item</replaceable>;"
+msgstr "SELECT left, int_array_enum(right) FROM summary WHERE left = <replaceable>элемент</replaceable>;"
+
+#: intagg.xml:97(programlisting)
+#, no-wrap
+msgid "SELECT left, right FROM one_to_many WHERE left = <replaceable>item</replaceable>;"
+msgstr "SELECT left, right FROM one_to_many WHERE left = <replaceable>элемент</replaceable>;"
+
+#: intagg.xml:74(para)
+msgid ""
+"Now, this methodology can be cumbersome with a very large number of entries "
+"in the <structname>one_to_many</structname> table. Often, a join like this "
+"would result in an index scan and a fetch for each right hand entry in the "
+"table for a particular left hand entry. If you have a very dynamic system, "
+"there is not much you can do. However, if you have some data which is fairly "
+"static, you can create a summary table with the aggregator. <placeholder-1/> "
+"This will create a table with one row per left item, and an array of right "
+"items. Now this is pretty useless without some way of using the array; "
+"that's why there is an array enumerator. You can do <placeholder-2/> The "
+"above query using <function>int_array_enum</function> produces the same "
+"results as <placeholder-3/> The difference is that the query against the "
+"summary table has to get only one row from the table, whereas the direct "
+"query against <structname>one_to_many</structname> must index scan and fetch "
+"a row for each entry."
+msgstr ""
+"Однако этот подход может вызывать затруднения с очень большим количеством "
+"записей в таблице <structname>one_to_many</structname>. Часто такое "
+"соединение влечёт сканирование индекса и выборку каждой записи в таблице "
+"справа для конкретного элемента слева. Если у вас динамическая система, с "
+"этим ничего не поделать. Но если какое-то множество данных довольно "
+"статическое, вы можете создать сводную таблицу, применив агрегатор. "
+"<placeholder-1/> Эта команда создаст таблицу, содержащую одну строку для "
+"каждого элемента слева с массивом элементов справа. Она малополезна, пока не "
+"найден подходящий способ использования этого массива; именно для этого и "
+"нужен нумератор массива. Вы можете выполнить: <placeholder-2/> Приведённый "
+"выше запрос с вызовом <function>int_array_enum</function> выдаёт те же "
+"результаты, что и <placeholder-3/> Отличие состоит в том, что запрос к "
+"сводной таблице должен выдать только одну строку таблицы, тогда как "
+"непосредственный запрос к <structname>one_to_many</structname> потребует "
+"сканирования индекса и выборки строки для каждой записи."
+
+#: intagg.xml:109(programlisting)
+#, no-wrap
+msgid ""
+"SELECT right, count(right) FROM\n"
+"  ( SELECT left, int_array_enum(right) AS right\n"
+"    FROM summary JOIN (SELECT left FROM left_table WHERE left = <replaceable>item</replaceable>) AS lefts\n"
+"         ON (summary.left = lefts.left)\n"
+"  ) AS list\n"
+"  GROUP BY right\n"
+"  ORDER BY count DESC;"
+msgstr ""
+"SELECT right, count(right) FROM\n"
+"  ( SELECT left, int_array_enum(right) AS right\n"
+"    FROM summary JOIN (SELECT left FROM left_table WHERE left = <replaceable>элемент</replaceable>) AS lefts\n"
+"         ON (summary.left = lefts.left)\n"
+"  ) AS list\n"
+"  GROUP BY right\n"
+"  ORDER BY count DESC;"
+
+#: intagg.xml:104(para)
+msgid ""
+"On one system, an <command>EXPLAIN</command> showed a query with a cost of "
+"8488 was reduced to a cost of 329. The original query was a join involving "
+"the <structname>one_to_many</structname> table, which was replaced by: "
+"<placeholder-1/>"
+msgstr ""
+"На тестовом компьютере команда <command>EXPLAIN</command> показала, что "
+"стоимость запроса снизилась с 8488 до 329. Исходный запрос выполнял "
+"соединение с таблицей <structname>one_to_many</structname> и был заменён на: "
+"<placeholder-1/>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: intagg.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

@@ -1,0 +1,197 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: pgfreespacemap.xml:5(title)
+msgid "pg_freespacemap"
+msgstr "pg_freespacemap"
+
+#: pgfreespacemap.xml:7(indexterm)
+msgid "<primary>pg_freespacemap</primary>"
+msgstr "<primary>pg_freespacemap</primary>"
+
+#: pgfreespacemap.xml:11(para)
+msgid ""
+"The <filename>pg_freespacemap</filename> module provides a means for "
+"examining the free space map (FSM). It provides a function called "
+"<function>pg_freespace</function>, or two overloaded functions, to be "
+"precise. The functions show the value recorded in the free space map for a "
+"given page, or for all pages in the relation."
+msgstr ""
+"Модуль <filename>pg_freespacemap</filename> предоставляет средства для "
+"исследования карты свободного пространства (FSM). В нём реализована функция "
+"<function>pg_freespace</function>, точнее, две перегруженных функции. Эти "
+"функции показывают значение, записанное в карте свободного пространства для "
+"данной страницы, либо для всех страниц отношения."
+
+#: pgfreespacemap.xml:19(para)
+msgid ""
+"By default public access is revoked from the functions, just in case there "
+"are security issues lurking."
+msgstr ""
+"По умолчанию, роли public на всякий случай, во избежание угрозы "
+"безопасности, запрещён доступ к этим функциям."
+
+#: pgfreespacemap.xml:25(title)
+msgid "Functions"
+msgstr "Функции"
+
+#: pgfreespacemap.xml:30(function)
+msgid "pg_freespace(rel regclass IN, blkno bigint IN) returns int2"
+msgstr "pg_freespace(rel regclass IN, blkno bigint IN) returns int2"
+
+#: pgfreespacemap.xml:31(indexterm)
+msgid "<primary>pg_freespace</primary>"
+msgstr "<primary>pg_freespace</primary>"
+
+#: pgfreespacemap.xml:37(para)
+msgid ""
+"Returns the amount of free space on the page of the relation, specified by "
+"<literal>blkno</literal>, according to the FSM."
+msgstr ""
+"Возвращает объём свободного пространства на странице для отношения, "
+"заданного параметром <literal>blkno</literal>, согласно FSM."
+
+#: pgfreespacemap.xml:47(function)
+msgid "pg_freespace(rel regclass IN, blkno OUT bigint, avail OUT int2)"
+msgstr "pg_freespace(rel regclass IN, blkno OUT bigint, avail OUT int2)"
+
+#: pgfreespacemap.xml:51(para)
+msgid ""
+"Displays the amount of free space on each page of the relation, according to "
+"the FSM. A set of <literal>(blkno bigint, avail int2)</literal> tuples is "
+"returned, one tuple for each page in the relation."
+msgstr ""
+"Выдаёт объём свободного пространства на каждой странице отношения, согласно "
+"FSM. Возвращается набор кортежей <literal>(blkno bigint, avail int2)</"
+"literal>, по одному кортежу для каждой страницы в отношении."
+
+#: pgfreespacemap.xml:60(para)
+msgid ""
+"The values stored in the free space map are not exact. They're rounded to "
+"precision of 1/256th of <symbol>BLCKSZ</symbol> (32 bytes with default "
+"<symbol>BLCKSZ</symbol>), and they're not kept fully up-to-date as tuples "
+"are inserted and updated."
+msgstr ""
+"Значения, хранимые в карте свободного пространства, не являются точными. Они "
+"округляются до 1/256 величины <symbol>BLCKSZ</symbol> (до 32 байт со "
+"значением <symbol>BLCKSZ</symbol> по умолчанию) и не поддерживаются в "
+"актуальном состоянии при каждом добавлении и изменении кортежей."
+
+#: pgfreespacemap.xml:66(para)
+msgid ""
+"For indexes, what is tracked is entirely-unused pages, rather than free "
+"space within pages. Therefore, the values are not meaningful, just whether a "
+"page is full or empty."
+msgstr ""
+"Для индексов отслеживаются полностью неиспользованные страницы, а не "
+"свободное пространство в страницах. Таким образом, эти значения отражают "
+"только то, что страница занята или свободна."
+
+#: pgfreespacemap.xml:73(para)
+msgid ""
+"The interface was changed in version 8.4, to reflect the new FSM "
+"implementation introduced in the same version."
+msgstr ""
+"Интерфейс был изменён в версии 8.4, в соответствии с нововведениями "
+"реализации FSM, которые появились в этой версии."
+
+#: pgfreespacemap.xml:81(title)
+msgid "Sample Output"
+msgstr "Пример вывода"
+
+#: pgfreespacemap.xml:83(screen)
+#, no-wrap
+msgid ""
+"postgres=# SELECT * FROM pg_freespace('foo');\n"
+" blkno | avail \n"
+"-------+-------\n"
+"     0 |     0\n"
+"     1 |     0\n"
+"     2 |     0\n"
+"     3 |    32\n"
+"     4 |   704\n"
+"     5 |   704\n"
+"     6 |   704\n"
+"     7 |  1216\n"
+"     8 |   704\n"
+"     9 |   704\n"
+"    10 |   704\n"
+"    11 |   704\n"
+"    12 |   704\n"
+"    13 |   704\n"
+"    14 |   704\n"
+"    15 |   704\n"
+"    16 |   704\n"
+"    17 |   704\n"
+"    18 |   704\n"
+"    19 |  3648\n"
+"(20 rows)\n"
+"\n"
+"postgres=# SELECT * FROM pg_freespace('foo', 7);\n"
+" pg_freespace \n"
+"--------------\n"
+"         1216\n"
+"(1 row)"
+msgstr ""
+"postgres=# SELECT * FROM pg_freespace('foo');\n"
+" blkno | avail \n"
+"-------+-------\n"
+"     0 |     0\n"
+"     1 |     0\n"
+"     2 |     0\n"
+"     3 |    32\n"
+"     4 |   704\n"
+"     5 |   704\n"
+"     6 |   704\n"
+"     7 |  1216\n"
+"     8 |   704\n"
+"     9 |   704\n"
+"    10 |   704\n"
+"    11 |   704\n"
+"    12 |   704\n"
+"    13 |   704\n"
+"    14 |   704\n"
+"    15 |   704\n"
+"    16 |   704\n"
+"    17 |   704\n"
+"    18 |   704\n"
+"    19 |  3648\n"
+"(20 rows)\n"
+"\n"
+"postgres=# SELECT * FROM pg_freespace('foo', 7);\n"
+" pg_freespace \n"
+"--------------\n"
+"         1216\n"
+"(1 row)"
+
+#: pgfreespacemap.xml:116(title)
+msgid "Author"
+msgstr "Автор"
+
+#: pgfreespacemap.xml:118(para)
+msgid ""
+"Original version by Mark Kirkwood <email>markir@paradise.net.nz</email>. "
+"Rewritten in version 8.4 to suit new FSM implementation by Heikki "
+"Linnakangas <email>heikki@enterprisedb.com</email>"
+msgstr ""
+"Исходную версию разработал Марк Кирквуд <email>markir@paradise.net.nz</"
+"email>. Для версии 8.4 с новой реализацией FSM код адаптировал Хейкки "
+"Линнакангас <email>heikki@enterprisedb.com</email>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: pgfreespacemap.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

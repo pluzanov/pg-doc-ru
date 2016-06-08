@@ -1,0 +1,4113 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: installation.xml:12(title)
+#, fuzzy
+msgid ""
+"<phrase condition=\"standalone\"><productname>PostgreSQL</productname></"
+"phrase> Installation from Source Code"
+msgstr ""
+"<link linkend=\"postgres\"><productname>PostgreSQL</productname></link>"
+
+#: installation.xml:15(indexterm)
+msgid "<primary>installation</primary>"
+msgstr "<primary>установка</primary>"
+
+#: installation.xml:19(para)
+#, fuzzy
+msgid ""
+"This <phrase condition=\"standalone\">document</phrase>\n"
+"  <phrase condition=\"default\">chapter</phrase> describes the installation "
+"of <productname>PostgreSQL</productname> using the source code distribution. "
+"(If you are installing a pre-packaged distribution, such as an RPM or Debian "
+"package, ignore this <phrase condition=\"standalone\">document</phrase>\n"
+"  <phrase condition=\"default\">chapter</phrase> and read the packager's "
+"instructions instead.)"
+msgstr ""
+"В этой главе описывается установка <productname>PostgreSQL</productname> из "
+"дистрибутивного пакета исходного кода. (Если вы устанавливаете собранный "
+"двоичный пакет, например RPM или Debian, вам нужно прочитать инструкции по "
+"установке пакета, а не эту главу.)"
+
+#: installation.xml:31(title)
+msgid "Short Version"
+msgstr "Краткий вариант"
+
+#: installation.xml:33(para)
+#, fuzzy
+msgid ""
+"<synopsis>./configure\n"
+"make\n"
+"su\n"
+"make install\n"
+"adduser postgres\n"
+"mkdir /usr/local/pgsql/data\n"
+"chown postgres /usr/local/pgsql/data\n"
+"su - postgres\n"
+"/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data\n"
+"/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data &gt;logfile 2&gt;"
+"&amp;1 &amp;\n"
+"/usr/local/pgsql/bin/createdb test\n"
+"/usr/local/pgsql/bin/psql test</synopsis> The long version is the rest of "
+"this <phrase condition=\"standalone\">document.</phrase>\n"
+"   <phrase condition=\"default\">chapter.</phrase>"
+msgstr ""
+"<synopsis>./configure\n"
+"make\n"
+"su\n"
+"make install\n"
+"adduser postgres\n"
+"mkdir /usr/local/pgsql/data\n"
+"chown postgres /usr/local/pgsql/data\n"
+"su - postgres\n"
+"/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data\n"
+"/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data &gt;logfile 2&gt;"
+"&amp;1 &amp;\n"
+"/usr/local/pgsql/bin/createdb test\n"
+"/usr/local/pgsql/bin/psql test</synopsis> Развёрнутый вариант представлен в "
+"продолжении этой главы."
+
+#: installation.xml:54(title)
+msgid "Requirements"
+msgstr "Требования"
+
+#: installation.xml:56(para)
+msgid ""
+"In general, a modern Unix-compatible platform should be able to run "
+"<productname>PostgreSQL</productname>. The platforms that had received "
+"specific testing at the time of release are listed in <xref linkend="
+"\"supported-platforms\"/> below. In the <filename>doc</filename> "
+"subdirectory of the distribution there are several platform-specific "
+"<acronym>FAQ</acronym> documents you might wish to consult if you are having "
+"trouble."
+msgstr ""
+"В принципе, запустить <productname>PostgreSQL</productname> должно быть "
+"возможно на любой современной Unix-совместимой платформе. Платформы, "
+"прошедшие специальную проверку на совместимость к моменту выпуска версии, "
+"перечислены далее в <xref remap=\"6\" linkend=\"supported-platforms\"/>. В "
+"подкаталоге <filename>doc</filename> дистрибутива <productname>PostgreSQL</"
+"productname> вы можете найти несколько документов <acronym>FAQ</acronym> по "
+"разным платформам, к которым следует обратиться в случае затруднений."
+
+#: installation.xml:73(indexterm)
+msgid "<primary>make</primary>"
+msgstr "<primary>make</primary>"
+
+#: installation.xml:72(para)
+msgid ""
+"<placeholder-1/>\n"
+"\n"
+"      <acronym>GNU</acronym> <application>make</application> version 3.80 or "
+"newer is required; other <application>make</application> programs or older "
+"<acronym>GNU</acronym> <application>make</application> versions will "
+"<emphasis>not</emphasis> work. (<acronym>GNU</acronym> <application>make</"
+"application> is sometimes installed under the name <filename>gmake</"
+"filename>.) To test for <acronym>GNU</acronym>\n"
+"      <application>make</application> enter: <screen><userinput>make --"
+"version</userinput></screen>"
+msgstr ""
+"<placeholder-1/>\n"
+"\n"
+"      Требуется <acronym>GNU</acronym> <application>make</application> "
+"версии 3.80 или новее; другие программы <application>make</application> или "
+"ранние версии <acronym>GNU</acronym> <application>make</application> "
+"работать <emphasis>не</emphasis> будут. (Иногда <acronym>GNU</acronym> "
+"<application>make</application> устанавливается под именем <filename>gmake</"
+"filename>.) Чтобы проверить наличие и версию <acronym>GNU</acronym> "
+"<application>make</application>, введите: <screen><userinput>make --version</"
+"userinput></screen>"
+
+#: installation.xml:87(para)
+msgid ""
+"You need an <acronym>ISO</acronym>/<acronym>ANSI</acronym> C compiler (at "
+"least C89-compliant). Recent versions of <productname>GCC</productname> are "
+"recommended, but <productname>PostgreSQL</productname> is known to build "
+"using a wide variety of compilers from different vendors."
+msgstr ""
+"Вам потребуется компилятор C, соответствующий <acronym>ISO</acronym>/"
+"<acronym>ANSI</acronym> (как минимум, совместимый с C89). Рекомендуется "
+"использовать последние версии <productname>GCC</productname>, но известно, "
+"что <productname>PostgreSQL</productname> собирается самыми разными "
+"компиляторами и других производителей."
+
+#: installation.xml:97(para)
+msgid ""
+"<application>tar</application> is required to unpack the source "
+"distribution, in addition to either <application>gzip</application> or "
+"<application>bzip2</application>."
+msgstr ""
+"Для распаковки пакета исходного кода необходим <application>tar</"
+"application>, а также <application>gzip</application> или "
+"<application>bzip2</application>."
+
+#: installation.xml:106(indexterm)
+msgid "<primary>readline</primary>"
+msgstr "<primary>readline</primary>"
+
+#: installation.xml:109(indexterm)
+msgid "<primary>libedit</primary>"
+msgstr "<primary>libedit</primary>"
+
+#: installation.xml:105(para)
+msgid ""
+"<placeholder-1/>\n"
+"      <placeholder-2/> The <acronym>GNU</acronym> <productname>Readline</"
+"productname> library is used by default. It allows <application>psql</"
+"application> (the PostgreSQL command line SQL interpreter) to remember each "
+"command you type, and allows you to use arrow keys to recall and edit "
+"previous commands. This is very helpful and is strongly recommended. If you "
+"don't want to use it then you must specify the <option>--without-readline</"
+"option> option to <filename>configure</filename>. As an alternative, you can "
+"often use the BSD-licensed <filename>libedit</filename> library, originally "
+"developed on <productname>NetBSD</productname>. The <filename>libedit</"
+"filename> library is GNU <productname>Readline</productname>-compatible and "
+"is used if <filename>libreadline</filename> is not found, or if <option>--"
+"with-libedit-preferred</option> is used as an option to <filename>configure</"
+"filename>. If you are using a package-based Linux distribution, be aware "
+"that you need both the <literal>readline</literal> and <literal>readline-"
+"devel</literal> packages, if those are separate in your distribution."
+msgstr ""
+"<placeholder-1/>\n"
+"      <placeholder-2/> По умолчанию при сборке используется библиотека "
+"<acronym>GNU</acronym> <productname>Readline</productname>. Она позволяет "
+"запоминать все вводимые команды в <application>psql</application> (SQL-"
+"интерпретатор командной строки для PostgreSQL) и затем, пользуясь клавишами-"
+"стрелками, возвращаться к ним и редактировать их. Это очень удобно и мы "
+"настоятельно рекомендуем пользоваться этим. Если вы не желаете использовать "
+"эту возможность, вы должны добавить указание <option>--without-readline</"
+"option> для <filename>configure</filename>. В качестве альтернативы часто "
+"можно использовать библиотеку <filename>libedit</filename> с лицензией BSD, "
+"изначально разработанную для <productname>NetBSD</productname>. Библиотека "
+"<filename>libedit</filename> совместима с GNU <productname>Readline</"
+"productname> и подключается, если <filename>libreadline</filename> не "
+"найдена, или когда <filename>configure</filename> передаётся указание "
+"<option>--with-libedit-preferred</option>. Если вы используете систему на "
+"базе Linux с пакетами, учтите, что вам потребуются два пакета: "
+"<literal>readline</literal> и <literal>readline-devel</literal>, если в "
+"вашем дистрибутиве они разделены."
+
+#: installation.xml:136(indexterm) installation.xml:1136(indexterm)
+msgid "<primary>zlib</primary>"
+msgstr "<primary>zlib</primary>"
+
+#: installation.xml:135(para)
+msgid ""
+"<placeholder-1/> The <productname>zlib</productname> compression library is "
+"used by default. If you don't want to use it then you must specify the "
+"<option>--without-zlib</option> option to <filename>configure</filename>. "
+"Using this option disables support for compressed archives in "
+"<application>pg_dump</application> and <application>pg_restore</application>."
+msgstr ""
+"<placeholder-1/> По умолчанию для сжатия данных используется библиотека "
+"<productname>zlib</productname>. Если вы не хотите её использовать, вы "
+"должны передать <filename>configure</filename> указание <option>--without-"
+"zlib</option>. Это указание отключает поддержку сжатых архивов в "
+"<application>pg_dump</application> и <application>pg_restore</application>."
+
+#: installation.xml:66(para)
+msgid ""
+"The following software packages are required for building "
+"<productname>PostgreSQL</productname>: <placeholder-1/>"
+msgstr ""
+"Для сборки <productname>PostgreSQL</productname> требуются следующие "
+"программные пакеты: <placeholder-1/>"
+
+#: installation.xml:164(indexterm)
+msgid "<primary>libperl</primary>"
+msgstr "<primary>libperl</primary>"
+
+#: installation.xml:158(para)
+msgid ""
+"To build the server programming language <application>PL/Perl</application> "
+"you need a full <productname>Perl</productname> installation, including the "
+"<filename>libperl</filename> library and the header files. Since "
+"<application>PL/Perl</application> will be a shared library, the "
+"<placeholder-1/>\n"
+"      <filename>libperl</filename> library must be a shared library also on "
+"most platforms. This appears to be the default in recent <productname>Perl</"
+"productname> versions, but it was not in earlier versions, and in any case "
+"it is the choice of whomever installed Perl at your site. "
+"<filename>configure</filename> will fail if building <application>PL/Perl</"
+"application> is selected but it cannot find a shared <filename>libperl</"
+"filename>. In that case, you will have to rebuild and install "
+"<productname>Perl</productname> manually to be able to build <application>PL/"
+"Perl</application>. During the configuration process for <productname>Perl</"
+"productname>, request a shared library."
+msgstr ""
+"Чтобы собрать поддержку языка программирования <application>PL/Perl</"
+"application>, вам потребуется полная инсталляция <productname>Perl</"
+"productname>, включая библиотеку <filename>libperl</filename> и заголовочные "
+"файлы. Так как <application>PL/Perl</application> будет разделяемой "
+"библиотекой, библиотека <placeholder-1/><filename>libperl</filename> тоже "
+"должна быть разделяемой для большинства платформ. В последних версиях "
+"<productname>Perl</productname> это вариант по умолчанию, но в ранних "
+"версиях это было не так, и в любом случае это выбирает тот, кто "
+"устанавливает Perl в вашей системе. Скрипт <filename>configure</filename> "
+"выдаст ошибку, если не сможет найти разделяемую <filename>libperl</"
+"filename>, когда выбрана сборка <application>PL/Perl</application>. В этом "
+"случае, чтобы собрать <application>PL/Perl</application>, вам придётся "
+"пересобрать и переустановить <productname>Perl</productname>. В процессе "
+"конфигурирования <productname>Perl</productname> выберите сборку разделяемой "
+"библиотеки."
+
+#: installation.xml:178(para)
+msgid ""
+"If you intend to make more than incidental use of <application>PL/Perl</"
+"application>, you should ensure that the <productname>Perl</productname> "
+"installation was built with the <literal>usemultiplicity</literal> option "
+"enabled (<literal>perl -V</literal> will show whether this is the case)."
+msgstr ""
+"Если вы планируете отвести <application>PL/Perl</application> не "
+"второстепенную роль, следует убедиться в том, что инсталляция "
+"<productname>Perl</productname> была собрана с флагом "
+"<literal>usemultiplicity</literal> (так ли это, может показать команда "
+"<literal>perl -V</literal>)."
+
+#: installation.xml:188(para)
+#, fuzzy
+msgid ""
+"To build the <application>PL/Python</application> server programming "
+"language, you need a <productname>Python</productname> installation with the "
+"header files and the <application>distutils</application> module. The "
+"minimum required version is <productname>Python</productname> 2.3. (To work "
+"with function arguments of type <type>numeric</type>, a 2.3.x installation "
+"must include the separately-available <filename>cdecimal</filename> module; "
+"note the <application>PL/Python</application> regression tests will not pass "
+"if that is missing.) <productname>Python 3</productname> is supported if "
+"it's version 3.1 or later; but see <phrase condition=\"standalone\">the "
+"<application>PL/Python</application> documentation</phrase>\n"
+"      <phrase condition=\"default\"><xref linkend=\"plpython-python23\"/></"
+"phrase> when using Python 3."
+msgstr ""
+"Чтобы собрать сервер с поддержкой языка программирования <application>PL/"
+"Python</application>, вам потребуется инсталляция <productname>Python</"
+"productname> с заголовочными файлами и модулем <application>distutils</"
+"application>. Версия <productname>Python</productname> должна быть не меньше "
+"2.3. (Чтобы работать с аргументами функций типа <type>numeric</type>, в "
+"инсталляции 2.3.x должен быть включён отдельно устанавливаемый модуль "
+"<filename>cdecimal</filename>; заметьте, что регрессионные тесты "
+"<application>PL/Python</application> не будут пройдены, если он "
+"отсутствует.) <productname>Python 3</productname> поддерживается, начиная с "
+"версии 3.1, но используя Python 3, следует учитывать написанное в <xref "
+"remap=\"6\" linkend=\"plpython-python23\"/>."
+
+#: installation.xml:207(indexterm)
+msgid "<primary>libpython</primary>"
+msgstr "<primary>libpython</primary>"
+
+#: installation.xml:205(para)
+msgid ""
+"Since <application>PL/Python</application> will be a shared library, the "
+"<placeholder-1/>\n"
+"      <filename>libpython</filename> library must be a shared library also "
+"on most platforms. This is not the case in a default <productname>Python</"
+"productname> installation built from source, but a shared library is "
+"available in many operating system distributions. <filename>configure</"
+"filename> will fail if building <application>PL/Python</application> is "
+"selected but it cannot find a shared <filename>libpython</filename>. That "
+"might mean that you either have to install additional packages or rebuild "
+"(part of) your <productname>Python</productname> installation to provide "
+"this shared library. When building from source, run <productname>Python</"
+"productname>'s configure with the <literal>--enable-shared</literal> flag."
+msgstr ""
+"Так как <application>PL/Python</application> будет разделяемой библиотекой, "
+"библиотека <placeholder-1/><filename>libpython</filename> тоже должна быть "
+"разделяемой для большинства платформ. По умолчанию при сборке инсталляции "
+"<productname>Python</productname> из пакета исходного кода это не так, но во "
+"многих дистрибутивах имеется нужная разделяемая библиотека. Скрипт "
+"<filename>configure</filename> выдаст ошибку, если не сможет найти "
+"разделяемую <filename>libpython</filename>, когда выбрана сборка "
+"<application>PL/Python</application>. Это может означать, что вам нужно либо "
+"установить дополнительные пакеты, либо пересобрать (частично) вашу "
+"инсталляцию <productname>Python</productname>, чтобы получить эту "
+"библиотеку. При сборке <productname>Python</productname> из исходного кода "
+"выполните configure с флагом <literal>--enable-shared</literal>."
+
+#: installation.xml:223(para)
+#, fuzzy
+msgid ""
+"To build the <application>PL/Tcl</application> procedural language, you of "
+"course need a <productname>Tcl</productname> installation. The minimum "
+"required version is <productname>Tcl</productname> 8.4."
+msgstr ""
+"Чтобы собрать поддержку процедурного языка <application>PL/Tcl</"
+"application>, вам конечно потребуется инсталляция <productname>Tcl</"
+"productname>. Если вы используете <productname>Tcl</productname> до версии "
+"8.4, убедитесь в том, что она собрана без поддержки многопоточности."
+
+#: installation.xml:232(para)
+msgid ""
+"To enable Native Language Support (<acronym>NLS</acronym>), that is, the "
+"ability to display a program's messages in a language other than English, "
+"you need an implementation of the <application>Gettext</application> "
+"<acronym>API</acronym>. Some operating systems have this built-in (e.g., "
+"<systemitem class=\"osname\">Linux</systemitem>, <systemitem class=\"osname"
+"\">NetBSD</systemitem>, <systemitem class=\"osname\">Solaris</systemitem>), "
+"for other systems you can download an add-on package from <ulink url="
+"\"http://www.gnu.org/software/gettext/\"/>. If you are using the "
+"<application>Gettext</application> implementation in the <acronym>GNU</"
+"acronym> C library then you will additionally need the <productname>GNU "
+"Gettext</productname> package for some utility programs. For any of the "
+"other implementations you will not need it."
+msgstr ""
+"Чтобы включить поддержку национальных языков (<acronym>NLS</acronym>, Native "
+"Language Support), то есть возможность выводить сообщения программы не "
+"только на английском языке, вам потребуется реализация <acronym>API</"
+"acronym> <application>Gettext</application>. В некоторых системах эта "
+"реализация встроена (например, в <systemitem class=\"osname\">Linux</"
+"systemitem>, <systemitem class=\"osname\">NetBSD</systemitem>, <systemitem "
+"class=\"osname\">Solaris</systemitem>), а для других вы можете получить "
+"дополнительный пакет по адресу <ulink url=\"http://www.gnu.org/software/"
+"gettext/\"/>. Если вы используете реализацию <application>Gettext</"
+"application> в библиотеке <acronym>GNU</acronym>, вам понадобится ещё пакет "
+"<productname>GNU Gettext</productname> для некоторых утилит. Для любых "
+"других реализаций он не требуется."
+
+#: installation.xml:251(para)
+msgid ""
+"You need <application>Kerberos</application>, <productname>OpenSSL</"
+"productname>, <productname>OpenLDAP</productname>, and/or <application>PAM</"
+"application>, if you want to support authentication or encryption using "
+"those services."
+msgstr ""
+"Вам могут понадобиться пакеты <application>Kerberos</application>, "
+"<productname>OpenSSL</productname>, <productname>OpenLDAP</productname> и/"
+"или <application>PAM</application>, если вам нужна поддержка аутентификации "
+"или шифрования, которую они обеспечивают."
+
+#: installation.xml:260(para)
+#, fuzzy
+msgid ""
+"To build the <productname>PostgreSQL</productname> documentation, there is a "
+"separate set of requirements; see <phrase condition=\"default\"><xref "
+"linkend=\"docguide-toolsets\"/>.</phrase>\n"
+"      <phrase condition=\"standalone\">the main documentation's appendix on "
+"documentation.</phrase>"
+msgstr ""
+"Для сборки документации <productname>PostgreSQL</productname> предъявляется "
+"отдельный набор требований; см. <xref remap=\"4\" linkend=\"docguide-toolsets"
+"\"/>."
+
+#: installation.xml:151(para)
+msgid ""
+"The following packages are optional. They are not required in the default "
+"configuration, but they are needed when certain build options are enabled, "
+"as explained below: <placeholder-1/>"
+msgstr ""
+"Следующие пакеты не являются обязательными. Они не требуются в стандартной "
+"конфигурации, но они необходимы для определённых вариантов сборки, описанных "
+"ниже: <placeholder-1/>"
+
+#: installation.xml:279(indexterm)
+msgid "<primary>flex</primary>"
+msgstr "<primary>flex</primary>"
+
+#: installation.xml:282(indexterm)
+msgid "<primary>lex</primary>"
+msgstr "<primary>lex</primary>"
+
+#: installation.xml:285(indexterm)
+msgid "<primary>bison</primary>"
+msgstr "<primary>bison</primary>"
+
+#: installation.xml:288(indexterm)
+msgid "<primary>yacc</primary>"
+msgstr "<primary>yacc</primary>"
+
+#: installation.xml:278(para)
+msgid ""
+"<placeholder-1/>\n"
+"      <placeholder-2/>\n"
+"      <placeholder-3/>\n"
+"      <placeholder-4/> GNU <application>Flex</application> and "
+"<application>Bison</application> are needed to build from a Git checkout, or "
+"if you changed the actual scanner and parser definition files. If you need "
+"them, be sure to get <application>Flex</application> 2.5.31 or later and "
+"<application>Bison</application> 1.875 or later. Other <application>lex</"
+"application> and <application>yacc</application> programs cannot be used."
+msgstr ""
+"<placeholder-1/>\n"
+"      <placeholder-2/>\n"
+"      <placeholder-3/>\n"
+"      <placeholder-4/> GNU <application>Flex</application> и "
+"<application>Bison</application> потребуются для сборки из содержимого Git "
+"или если вы меняете собственно файлы определений анализа и разбора. Если они "
+"вам понадобятся, то версия <application>Flex</application> должна быть не "
+"меньше 2.5.31, а <application>Bison</application> — не меньше 1.875. Другие "
+"программы <application>lex</application> и <application>yacc</application> "
+"работать не будут."
+
+#: installation.xml:302(indexterm)
+msgid "<primary>perl</primary>"
+msgstr "<primary>perl</primary>"
+
+#: installation.xml:301(para)
+msgid ""
+"<placeholder-1/>\n"
+"\n"
+"      <application>Perl</application> 5.8 or later is needed to build from a "
+"Git checkout, or if you changed the input files for any of the build steps "
+"that use Perl scripts. If building on Windows you will need "
+"<application>Perl</application> in any case. <application>Perl</application> "
+"is also required to run some test suites."
+msgstr ""
+"<placeholder-1/>\n"
+"\n"
+"      <application>Perl</application> 5.8 или новее потребуется для сборки "
+"из содержимого Git, либо если вы меняете исходные файлы этапов сборки, "
+"построенных на скриптах Perl. Если вы выполняете сборку в Windows, вам "
+"потребуется <application>Perl</application> в любом случае. "
+"<application>Perl</application> также требуется для выполнения некоторых "
+"комплектов тестов."
+
+#: installation.xml:271(para)
+msgid ""
+"If you are building from a <productname>Git</productname> tree instead of "
+"using a released source package, or if you want to do server development, "
+"you also need the following packages: <placeholder-1/>"
+msgstr ""
+"Если вы хотите скомпилировать код из дерева <productname>Git</productname>, "
+"а не из специального пакета исходного кода, либо вы хотите работать с этим "
+"кодом, вам также понадобятся следующие пакеты: <placeholder-1/>"
+
+#: installation.xml:316(para)
+msgid ""
+"If you need to get a <acronym>GNU</acronym> package, you can find it at your "
+"local <acronym>GNU</acronym> mirror site (see <ulink url=\"http://www.gnu."
+"org/order/ftp.html\"/> for a list) or at <ulink url=\"ftp://ftp.gnu.org/gnu/"
+"\"/>."
+msgstr ""
+"Если вам понадобится какой-либо пакет <acronym>GNU</acronym>, вы можете "
+"найти его на вашем локальном зеркале <acronym>GNU</acronym> (список зеркал: "
+"<ulink url=\"http://www.gnu.org/order/ftp.html\"/>) или на сайте <ulink url="
+"\"ftp://ftp.gnu.org/gnu/\"/>."
+
+#: installation.xml:324(para)
+msgid ""
+"Also check that you have sufficient disk space. You will need about 100 MB "
+"for the source tree during compilation and about 20 MB for the installation "
+"directory. An empty database cluster takes about 35 MB; databases take about "
+"five times the amount of space that a flat text file with the same data "
+"would take. If you are going to run the regression tests you will "
+"temporarily need up to an extra 150 MB. Use the <command>df</command> "
+"command to check free disk space."
+msgstr ""
+"Также проверьте, достаточно ли места на диске. Вам потребуется около 100 Мб "
+"для исходного кода в процессе компиляции и около 20 Мб для каталога "
+"инсталляции. Пустой кластер баз данных занимает около 35 Мб; базы данных "
+"занимают примерно в пять раз больше места, чем те же данные в обычном "
+"текстовом файле. Если вы планируете запускать регрессионные тесты, вам может "
+"временно понадобиться ещё около 150 Мб. Проверить наличие свободного места "
+"можно с помощью команды <command>df</command>."
+
+#: installation.xml:337(title)
+msgid "Getting The Source"
+msgstr "Получение исходного кода"
+
+#: installation.xml:339(para)
+#, fuzzy
+msgid ""
+"The <productname>PostgreSQL</productname> &version; sources can be obtained "
+"from the download section of our website: <ulink url=\"http://www.postgresql."
+"org/download/\"/>. You should get a file named <filename>postgresql-"
+"&version;.tar.gz</filename> or <filename>postgresql-&version;.tar.bz2</"
+"filename>. After you have obtained the file, unpack it: "
+"<screen><userinput>gunzip postgresql-&version;.tar.gz</userinput>\n"
+"<userinput>tar xf postgresql-&version;.tar</userinput></screen> (Use "
+"<command>bunzip2</command> instead of <command>gunzip</command> if you have "
+"the <filename>.bz2</filename> file.) This will create a directory "
+"<filename>postgresql-&version;</filename> under the current directory with "
+"the <productname>PostgreSQL</productname> sources. Change into that "
+"directory for the rest of the installation procedure."
+msgstr ""
+"Исходные коды <productname>PostgreSQL</productname> 9.5.3 можно загрузить из "
+"соответствующего раздела нашего сайта: <ulink url=\"http://www.postgresql."
+"org/download/\"/>. Вам следует выбрать файл <filename>postgresql-9.5.3.tar."
+"gz</filename> или <filename>postgresql-9.5.3.tar.bz2</filename>. Получив "
+"этот файл, распакуйте его: <screen><userinput>gunzip postgresql-9.5.3.tar."
+"gz</userinput>\n"
+"<userinput>tar xf postgresql-9.5.3.tar</userinput></screen> (Если вы выбрали "
+"файл <filename>.bz2</filename>, используйте <command>bunzip2</command> "
+"вместо <command>gunzip</command>.) При этом в текущем каталоге будет создан "
+"подкаталог <filename>postgresql-9.5.3</filename> с исходными кодами "
+"<productname>PostgreSQL</productname>. Перейдите в этот подкаталог для "
+"продолжения процедуры установки."
+
+#: installation.xml:357(para)
+msgid ""
+"You can also get the source directly from the version control repository, "
+"see <xref linkend=\"sourcerepo\"/>."
+msgstr ""
+"Вы также можете получить исходный код непосредственно из репозитория системы "
+"управления версиями (см. <xref remap=\"4\" linkend=\"sourcerepo\"/>)."
+
+#: installation.xml:364(title)
+msgid "Installation Procedure"
+msgstr "Процедура установки"
+
+#: installation.xml:369(title)
+msgid "Configuration"
+msgstr "Конфигурирование"
+
+#: installation.xml:371(indexterm)
+msgid "<primary>configure</primary>"
+msgstr "<primary>configure</primary>"
+
+#: installation.xml:388(indexterm)
+msgid "<primary>VPATH</primary>"
+msgstr "<primary>VPATH</primary>"
+
+#: installation.xml:375(para)
+msgid ""
+"The first step of the installation procedure is to configure the source tree "
+"for your system and choose the options you would like. This is done by "
+"running the <filename>configure</filename> script. For a default "
+"installation simply enter: <screen><userinput>./configure</userinput></"
+"screen> This script will run a number of tests to determine values for "
+"various system dependent variables and detect any quirks of your operating "
+"system, and finally will create several files in the build tree to record "
+"what it found. You can also run <filename>configure</filename> in a "
+"directory outside the source tree, if you want to keep the build directory "
+"separate. This procedure is also called a <placeholder-1/><firstterm>VPATH</"
+"firstterm> build. Here's how: <screen><userinput>mkdir build_dir</"
+"userinput>\n"
+"<userinput>cd build_dir</userinput>\n"
+"<userinput>/path/to/source/tree/configure [options go here]</userinput>\n"
+"<userinput>make</userinput></screen>"
+msgstr ""
+"На первом шаге установки требуется сконфигурировать дерево установки для "
+"вашей системы и выбрать желаемые параметры сборки. Для этого нужно запустить "
+"скрипт <filename>configure</filename>. Чтобы выполнить стандартную сборку, "
+"просто введите: <screen><userinput>./configure</userinput></screen> Этот "
+"скрипт проведёт несколько проверок с целью определить значения для различных "
+"переменных, зависящих от системы, и выявить любые странности вашей ОС, а "
+"затем создаст несколько файлов в дереве сборки, в которых отразит полученные "
+"результаты. Вы также можете выполнить <filename>configure</filename> вне "
+"дерева исходного кода, если хотите сохранить каталог сборки отдельно. Эта "
+"процедура также называется сборкой с <placeholder-1/><firstterm>VPATH</"
+"firstterm>. Выполняется она так: <screen><userinput>mkdir build_dir</"
+"userinput>\n"
+"<userinput>cd build_dir</userinput>\n"
+"<userinput>/путь/к/каталогу/исходного/кода/configure [параметры]</"
+"userinput>\n"
+"<userinput>make</userinput></screen>"
+
+#: installation.xml:396(para)
+msgid ""
+"The default configuration will build the server and utilities, as well as "
+"all client applications and interfaces that require only a C compiler. All "
+"files will be installed under <filename>/usr/local/pgsql</filename> by "
+"default."
+msgstr ""
+"В стандартной конфигурации собираются сервер и утилиты, а также клиентские "
+"приложения и интерфейсы, которым требуется только компилятор C. Все файлы по "
+"умолчанию устанавливаются в <filename>/usr/local/pgsql</filename>."
+
+#: installation.xml:410(replaceable)
+msgid "PREFIX"
+msgstr "ПРЕФИКС"
+
+#: installation.xml:410(option)
+msgid "--prefix=<placeholder-1/>"
+msgstr "--prefix=<placeholder-1/>"
+
+#: installation.xml:412(para)
+msgid ""
+"Install all files under the directory <replaceable>PREFIX</replaceable> "
+"instead of <filename>/usr/local/pgsql</filename>. The actual files will be "
+"installed into various subdirectories; no files will ever be installed "
+"directly into the <replaceable>PREFIX</replaceable> directory."
+msgstr ""
+"Разместить все файлы внутри каталога <replaceable>ПРЕФИКС</replaceable>, а "
+"не в <filename>/usr/local/pgsql</filename>. Собственно файлы будут "
+"установлены в различные подкаталоги этого каталога; в самом каталоге "
+"<replaceable>ПРЕФИКС</replaceable> никакие файлы не размещаются."
+
+#: installation.xml:420(para)
+msgid ""
+"If you have special needs, you can also customize the individual "
+"subdirectories with the following options. However, if you leave these with "
+"their defaults, the installation will be relocatable, meaning you can move "
+"the directory after installation. (The <literal>man</literal> and "
+"<literal>doc</literal> locations are not affected by this.)"
+msgstr ""
+"Если у вас есть особые требования, вы также можете изменить отдельные "
+"подкаталоги, определив следующие параметры. Однако, если вы оставите для них "
+"значения по умолчанию, инсталляция будет перемещаемой, то есть вы сможете "
+"переместить каталог после установки. (Это не распространяется на каталоги "
+"<literal>man</literal> и <literal>doc</literal>.)"
+
+#: installation.xml:429(para)
+msgid ""
+"For relocatable installs, you might want to use <filename>configure</"
+"filename>'s <literal>--disable-rpath</literal> option. Also, you will need "
+"to tell the operating system how to find the shared libraries."
+msgstr ""
+"Для перемещаемых инсталляций можно передать <filename>configure</filename> "
+"указание <literal>--disable-rpath</literal>. Кроме того, вы должны будете "
+"сказать операционной системе, как найти разделяемые библиотеки."
+
+#: installation.xml:439(replaceable)
+msgid "EXEC-PREFIX"
+msgstr "ИСП-ПРЕФИКС"
+
+#: installation.xml:439(option)
+msgid "--exec-prefix=<placeholder-1/>"
+msgstr "--exec-prefix=<placeholder-1/>"
+
+#: installation.xml:441(para)
+msgid ""
+"You can install architecture-dependent files under a different prefix, "
+"<replaceable>EXEC-PREFIX</replaceable>, than what <replaceable>PREFIX</"
+"replaceable> was set to. This can be useful to share architecture-"
+"independent files between hosts. If you omit this, then <replaceable>EXEC-"
+"PREFIX</replaceable> is set equal to <replaceable>PREFIX</replaceable> and "
+"both architecture-dependent and independent files will be installed under "
+"the same tree, which is probably what you want."
+msgstr ""
+"Вы можете установить архитектурно-зависимые файлы в размещение с другим "
+"префиксом, <replaceable>ИСП-ПРЕФИКС</replaceable>, отличным от "
+"<replaceable>ПРЕФИКС</replaceable>. Это бывает полезно для совместного "
+"использования таких файлов несколькими системами. По умолчанию "
+"<replaceable>ИСП-ПРЕФИКС</replaceable> считается равным "
+"<replaceable>ПРЕФИКС</replaceable> и все файлы, архитектурно-зависимые и "
+"независимые, устанавливаются в одно дерево каталогов, что вам скорее всего и "
+"нужно."
+
+#: installation.xml:455(replaceable) installation.xml:466(replaceable)
+#: installation.xml:476(replaceable) installation.xml:487(replaceable)
+#: installation.xml:497(replaceable) installation.xml:509(replaceable)
+#: installation.xml:521(replaceable) installation.xml:532(replaceable)
+#: installation.xml:544(replaceable) installation.xml:556(replaceable)
+#: installation.xml:711(replaceable) installation.xml:1093(replaceable)
+msgid "DIRECTORY"
+msgstr "КАТАЛОГ"
+
+#: installation.xml:455(option)
+msgid "--bindir=<placeholder-1/>"
+msgstr "--bindir=<placeholder-1/>"
+
+#: installation.xml:457(para)
+msgid ""
+"Specifies the directory for executable programs. The default is "
+"<filename><replaceable>EXEC-PREFIX</replaceable>/bin</filename>, which "
+"normally means <filename>/usr/local/pgsql/bin</filename>."
+msgstr ""
+"Задаёт каталог для исполняемых двоичных программ. По умолчанию это "
+"<filename><replaceable>ИСП-ПРЕФИКС</replaceable>/bin</filename>, что обычно "
+"означает <filename>/usr/local/pgsql/bin</filename>."
+
+#: installation.xml:466(option)
+msgid "--sysconfdir=<placeholder-1/>"
+msgstr "--sysconfdir=<placeholder-1/>"
+
+#: installation.xml:468(para)
+msgid ""
+"Sets the directory for various configuration files, "
+"<filename><replaceable>PREFIX</replaceable>/etc</filename> by default."
+msgstr ""
+"Задаёт каталог для различных файлов конфигурации, "
+"<filename><replaceable>ПРЕФИКС</replaceable>/etc</filename> по умолчанию."
+
+#: installation.xml:476(option)
+msgid "--libdir=<placeholder-1/>"
+msgstr "--libdir=<placeholder-1/>"
+
+#: installation.xml:478(para)
+msgid ""
+"Sets the location to install libraries and dynamically loadable modules. The "
+"default is <filename><replaceable>EXEC-PREFIX</replaceable>/lib</filename>."
+msgstr ""
+"Задаёт каталог для установки библиотек и динамически загружаемых модулей. "
+"Значение по умолчанию — <filename><replaceable>ИСП-ПРЕФИКС</replaceable>/"
+"lib</filename>."
+
+#: installation.xml:487(option)
+msgid "--includedir=<placeholder-1/>"
+msgstr "--includedir=<placeholder-1/>"
+
+#: installation.xml:489(para)
+msgid ""
+"Sets the directory for installing C and C++ header files. The default is "
+"<filename><replaceable>PREFIX</replaceable>/include</filename>."
+msgstr ""
+"Задаёт каталог для установки заголовочных файлов C и C++. Значение по "
+"умолчанию — <filename><replaceable>ПРЕФИКС</replaceable>/include</filename>."
+
+#: installation.xml:497(option)
+msgid "--datarootdir=<placeholder-1/>"
+msgstr "--datarootdir=<placeholder-1/>"
+
+#: installation.xml:499(para)
+msgid ""
+"Sets the root directory for various types of read-only data files. This only "
+"sets the default for some of the following options. The default is "
+"<filename><replaceable>PREFIX</replaceable>/share</filename>."
+msgstr ""
+"Задаёт корневой каталог для разного рода статических файлов. Этот параметр "
+"определяет только базу для некоторых из следующих параметров. Значение по "
+"умолчанию — <filename><replaceable>ПРЕФИКС</replaceable>/share</filename>."
+
+#: installation.xml:509(option)
+msgid "--datadir=<placeholder-1/>"
+msgstr "--datadir=<placeholder-1/>"
+
+#: installation.xml:511(para)
+msgid ""
+"Sets the directory for read-only data files used by the installed programs. "
+"The default is <filename><replaceable>DATAROOTDIR</replaceable></filename>. "
+"Note that this has nothing to do with where your database files will be "
+"placed."
+msgstr ""
+"Задаёт каталог для статических файлов данных, используемых установленными "
+"программами. Значение по умолчанию — <filename><replaceable>DATAROOTDIR</"
+"replaceable></filename>. Заметьте, что это совсем не тот каталог, в котором "
+"будут размещены файлы базы данных."
+
+#: installation.xml:521(option)
+msgid "--localedir=<placeholder-1/>"
+msgstr "--localedir=<placeholder-1/>"
+
+#: installation.xml:523(para)
+msgid ""
+"Sets the directory for installing locale data, in particular message "
+"translation catalog files. The default is "
+"<filename><replaceable>DATAROOTDIR</replaceable>/locale</filename>."
+msgstr ""
+"Задаёт каталог для установки данных локализации, в частности, каталогов "
+"перевода сообщений. Значение по умолчанию — "
+"<filename><replaceable>DATAROOTDIR</replaceable>/locale</filename>."
+
+#: installation.xml:532(option)
+msgid "--mandir=<placeholder-1/>"
+msgstr "--mandir=<placeholder-1/>"
+
+#: installation.xml:534(para)
+msgid ""
+"The man pages that come with <productname>PostgreSQL</productname> will be "
+"installed under this directory, in their respective "
+"<filename>man<replaceable>x</replaceable></filename> subdirectories. The "
+"default is <filename><replaceable>DATAROOTDIR</replaceable>/man</filename>."
+msgstr ""
+"Страницы man, поставляемые в составе <productname>PostgreSQL</productname>, "
+"будут установлены в этот каталог, в соответствующие подкаталоги "
+"<filename>man<replaceable>x</replaceable></filename>. Значение по умолчанию "
+"— <filename><replaceable>DATAROOTDIR</replaceable>/man</filename>."
+
+#: installation.xml:544(option)
+msgid "--docdir=<placeholder-1/>"
+msgstr "--docdir=<placeholder-1/>"
+
+#: installation.xml:546(para)
+msgid ""
+"Sets the root directory for installing documentation files, except "
+"<quote>man</quote> pages. This only sets the default for the following "
+"options. The default value for this option is "
+"<filename><replaceable>DATAROOTDIR</replaceable>/doc/postgresql</filename>."
+msgstr ""
+"Задаёт корневой каталог для установки файлов документации, кроме страниц "
+"<quote>man</quote>. Этот параметр только определяет базу для следующих "
+"параметров. Значение по умолчанию — <filename><replaceable>DATAROOTDIR</"
+"replaceable>/doc/postgresql</filename>."
+
+#: installation.xml:556(option)
+msgid "--htmldir=<placeholder-1/>"
+msgstr "--htmldir=<placeholder-1/>"
+
+#: installation.xml:558(para)
+msgid ""
+"The HTML-formatted documentation for <productname>PostgreSQL</productname> "
+"will be installed under this directory. The default is "
+"<filename><replaceable>DATAROOTDIR</replaceable></filename>."
+msgstr ""
+"В этот каталог будет помещена документация <productname>PostgreSQL</"
+"productname> в формате HTML. Значение по умолчанию — "
+"<filename><replaceable>DATAROOTDIR</replaceable></filename>."
+
+#: installation.xml:569(para)
+msgid ""
+"Care has been taken to make it possible to install <productname>PostgreSQL</"
+"productname> into shared installation locations (such as <filename>/usr/"
+"local/include</filename>) without interfering with the namespace of the rest "
+"of the system. First, the string <quote><literal>/postgresql</literal></"
+"quote> is automatically appended to <varname>datadir</varname>, "
+"<varname>sysconfdir</varname>, and <varname>docdir</varname>, unless the "
+"fully expanded directory name already contains the string "
+"<quote><literal>postgres</literal></quote> or <quote><literal>pgsql</"
+"literal></quote>. For example, if you choose <filename>/usr/local</filename> "
+"as prefix, the documentation will be installed in <filename>/usr/local/doc/"
+"postgresql</filename>, but if the prefix is <filename>/opt/postgres</"
+"filename>, then it will be in <filename>/opt/postgres/doc</filename>. The "
+"public C header files of the client interfaces are installed into "
+"<varname>includedir</varname> and are namespace-clean. The internal header "
+"files and the server header files are installed into private directories "
+"under <varname>includedir</varname>. See the documentation of each interface "
+"for information about how to access its header files. Finally, a private "
+"subdirectory will also be created, if appropriate, under <varname>libdir</"
+"varname> for dynamically loadable modules."
+msgstr ""
+"Чтобы <productname>PostgreSQL</productname> можно было установить в "
+"стандартные системные размещения (например, в <filename>/usr/local/include</"
+"filename>), не затрагивая пространство имён остальной системы, приняты "
+"определённые меры. Во-первых, к путям <varname>datadir</varname>, "
+"<varname>sysconfdir</varname> и <varname>docdir</varname> автоматически "
+"добавляется строка <quote><literal>/postgresql</literal></quote>, если "
+"только полный развёрнутый путь каталога уже не содержит строку "
+"<quote><literal>postgres</literal></quote> или <quote><literal>pgsql</"
+"literal></quote>. Так, если вы выберете в качестве префикса <filename>/usr/"
+"local</filename>, документация будет установлена в <filename>/usr/local/doc/"
+"postgresql</filename>, но с префиксом <filename>/opt/postgres</filename> она "
+"будет помещена в <filename>/opt/postgres/doc</filename>. Внешние "
+"заголовочные файлы C для клиентских интерфейсов устанавливаются в "
+"<varname>includedir</varname>, не загрязняя пространство имён. Внутренние и "
+"серверные заголовочные файлы устанавливаются в частные подкаталоги внутри "
+"<varname>includedir</varname>. Чтобы узнать, как обращаться к заголовочным "
+"файлам того или иного интерфейса, обратитесь к документации этого "
+"интерфейса. Наконец, для динамически загружаемых модулей, если требуется, "
+"будет также создан частный подкаталог внутри <varname>libdir</varname>."
+
+#: installation.xml:403(para)
+msgid ""
+"You can customize the build and installation process by supplying one or "
+"more of the following command line options to <filename>configure</"
+"filename>: <placeholder-1/>\n"
+"\n"
+"     <placeholder-2/>"
+msgstr ""
+"Вы можете настроить процесс сборки и установки, передав <filename>configure</"
+"filename> один или несколько следующих параметров командной строки: "
+"<placeholder-1/>\n"
+"\n"
+"     <placeholder-2/>"
+
+#: installation.xml:599(replaceable)
+msgid "STRING"
+msgstr "СТРОКА"
+
+#: installation.xml:599(option)
+msgid "--with-extra-version=<placeholder-1/>"
+msgstr "--with-extra-version=<placeholder-1/>"
+
+#: installation.xml:601(para)
+msgid ""
+"Append <replaceable>STRING</replaceable> to the PostgreSQL version number. "
+"You can use this, for example, to mark binaries built from unreleased Git "
+"snapshots or containing custom patches with an extra version string such as "
+"a <command>git describe</command> identifier or a distribution package "
+"release number."
+msgstr ""
+"Заданная <replaceable>СТРОКА</replaceable> добавляется к номеру версии "
+"PostgreSQL. Это можно использовать, например, чтобы двоичные файлы, "
+"собранные из промежуточных снимков Git или кода с дополнительными правками, "
+"отличались от стандартных дополнительной строкой в версии, например, "
+"содержащей идентификатор <command>git describe</command> или номер выпуска "
+"дистрибутивного пакета."
+
+#: installation.xml:612(replaceable) installation.xml:630(replaceable)
+msgid "DIRECTORIES"
+msgstr "КАТАЛОГИ"
+
+#: installation.xml:612(option)
+msgid "--with-includes=<placeholder-1/>"
+msgstr "--with-includes=<placeholder-1/>"
+
+#: installation.xml:614(para)
+msgid ""
+"<replaceable>DIRECTORIES</replaceable> is a colon-separated list of "
+"directories that will be added to the list the compiler searches for header "
+"files. If you have optional packages (such as GNU <application>Readline</"
+"application>) installed in a non-standard location, you have to use this "
+"option and probably also the corresponding <option>--with-libraries</option> "
+"option."
+msgstr ""
+"Значение <replaceable>КАТАЛОГИ</replaceable> представляет список каталогов "
+"через двоеточие, которые будут просмотрены компилятором при поиске "
+"заголовочных файлов. Если дополнительные пакеты (например, GNU "
+"<application>Readline</application>) установлены у вас в нестандартное "
+"расположение, вам придётся использовать этот параметр и, возможно, также "
+"добавить соответствующий параметр <option>--with-libraries</option>."
+
+#: installation.xml:623(para)
+msgid ""
+"Example: <literal>--with-includes=/opt/gnu/include:/usr/sup/include</"
+"literal>."
+msgstr ""
+"Пример: <literal>--with-includes=/opt/gnu/include:/usr/sup/include</literal>."
+
+#: installation.xml:630(option)
+msgid "--with-libraries=<placeholder-1/>"
+msgstr "--with-libraries=<placeholder-1/>"
+
+#: installation.xml:632(para)
+msgid ""
+"<replaceable>DIRECTORIES</replaceable> is a colon-separated list of "
+"directories to search for libraries. You will probably have to use this "
+"option (and the corresponding <option>--with-includes</option> option) if "
+"you have packages installed in non-standard locations."
+msgstr ""
+"Значение <replaceable>КАТАЛОГИ</replaceable> представляет список каталогов "
+"через двоеточие, в котором следует искать библиотеки. Возможно, вам "
+"потребуется использовать этот параметр (и соответствующий <option>--with-"
+"includes</option>), если какие-то пакеты установлены у вас в нестандартное "
+"размещение."
+
+#: installation.xml:639(para)
+msgid "Example: <literal>--with-libraries=/opt/gnu/lib:/usr/sup/lib</literal>."
+msgstr "Пример: <literal>--with-libraries=/opt/gnu/lib:/usr/sup/lib</literal>."
+
+#: installation.xml:646(replaceable)
+msgid "LANGUAGES"
+msgstr "ЯЗЫКИ"
+
+#: installation.xml:646(optional)
+msgid "=<placeholder-1/>"
+msgstr "=<placeholder-1/>"
+
+#: installation.xml:646(option)
+msgid "--enable-nls<placeholder-1/>"
+msgstr "--enable-nls<placeholder-1/>"
+
+#: installation.xml:648(para)
+msgid ""
+"Enables Native Language Support (<acronym>NLS</acronym>), that is, the "
+"ability to display a program's messages in a language other than English. "
+"<replaceable>LANGUAGES</replaceable> is an optional space-separated list of "
+"codes of the languages that you want supported, for example <literal>--"
+"enable-nls='de fr'</literal>. (The intersection between your list and the "
+"set of actually provided translations will be computed automatically.) If "
+"you do not specify a list, then all available translations are installed."
+msgstr ""
+"Включает поддержку национальных языков (<acronym>NLS</acronym>, Native "
+"Language Support), то есть возможность выводить сообщения программы не "
+"только на английском языке. Значение <replaceable>ЯЗЫКИ</replaceable> "
+"представляет необязательный список кодов языков через пробел, поддержка "
+"которых вам нужна, например: <literal>--enable-nls='de fr ru'</literal>. "
+"(Пересечение заданного вами списка и множества действительно доступных "
+"переводов будет вычислено автоматически.) Если список не задаётся, "
+"устанавливаются все доступные переводы."
+
+#: installation.xml:661(para)
+msgid ""
+"To use this option, you will need an implementation of the "
+"<application>Gettext</application> API; see above."
+msgstr ""
+"Для использования этой возможности вам потребуется реализация API "
+"<application>Gettext</application>; см. выше."
+
+#: installation.xml:669(replaceable)
+#, fuzzy
+msgid "NUMBER"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"НОМЕР\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"NUMBER"
+
+#: installation.xml:669(option)
+msgid "--with-pgport=<placeholder-1/>"
+msgstr "--with-pgport=<placeholder-1/>"
+
+#: installation.xml:671(para)
+msgid ""
+"Set <replaceable>NUMBER</replaceable> as the default port number for server "
+"and clients. The default is 5432. The port can always be changed later on, "
+"but if you specify it here then both server and clients will have the same "
+"default compiled in, which can be very convenient. Usually the only good "
+"reason to select a non-default value is if you intend to run multiple "
+"<productname>PostgreSQL</productname> servers on the same machine."
+msgstr ""
+"Задаёт <replaceable>НОМЕР</replaceable> порта по умолчанию для сервера и "
+"клиентов. Стандартное значение — 5432. Этот порт всегда можно изменить "
+"позже, но если вы укажете другой номер здесь, и сервер, и клиенты будут "
+"скомпилированы с одним значением, что очень удобно. Обычно менять это "
+"значение имеет смысл, только если вы намерены запускать в одной системе "
+"несколько серверов <productname>PostgreSQL</productname>."
+
+#: installation.xml:684(option)
+msgid "--with-perl"
+msgstr "--with-perl"
+
+#: installation.xml:686(para)
+msgid "Build the <application>PL/Perl</application> server-side language."
+msgstr ""
+"Включает поддержку языка <application>PL/Perl</application> на стороне "
+"сервера."
+
+#: installation.xml:693(option)
+msgid "--with-python"
+msgstr "--with-python"
+
+#: installation.xml:695(para)
+msgid "Build the <application>PL/Python</application> server-side language."
+msgstr ""
+"Включает поддержку языка <application>PL/Python</application> на стороне "
+"сервера."
+
+#: installation.xml:702(option)
+msgid "--with-tcl"
+msgstr "--with-tcl"
+
+#: installation.xml:704(para)
+msgid "Build the <application>PL/Tcl</application> server-side language."
+msgstr ""
+"Включает поддержку языка <application>PL/Tcl</application> на стороне "
+"сервера."
+
+#: installation.xml:711(option)
+msgid "--with-tclconfig=<placeholder-1/>"
+msgstr "--with-tclconfig=<placeholder-1/>"
+
+#: installation.xml:713(para)
+msgid ""
+"Tcl installs the file <filename>tclConfig.sh</filename>, which contains "
+"configuration information needed to build modules interfacing to Tcl. This "
+"file is normally found automatically at a well-known location, but if you "
+"want to use a different version of Tcl you can specify the directory in "
+"which to look for it."
+msgstr ""
+"Tcl устанавливает файл <filename>tclConfig.sh</filename>, содержащий "
+"конфигурационные данные, необходимые для сборки модулей, взаимодействующих с "
+"Tcl. Этот файл обычно находится автоматически в известном размещении, но "
+"если вы хотите использовать другую версию Tcl, вы должны указать каталог, "
+"где искать этот файл."
+
+#: installation.xml:725(option)
+msgid "--with-gssapi"
+msgstr "--with-gssapi"
+
+#: installation.xml:727(para)
+msgid ""
+"Build with support for GSSAPI authentication. On many systems, the GSSAPI "
+"(usually a part of the Kerberos installation) system is not installed in a "
+"location that is searched by default (e.g., <filename>/usr/include</"
+"filename>, <filename>/usr/lib</filename>), so you must use the options "
+"<option>--with-includes</option> and <option>--with-libraries</option> in "
+"addition to this option. <filename>configure</filename> will check for the "
+"required header files and libraries to make sure that your GSSAPI "
+"installation is sufficient before proceeding."
+msgstr ""
+"Включает поддержку аутентификации GSSAPI. На многих платформах подсистема "
+"GSSAPI (обычно входящая в состав Kerberos) устанавливается не в то "
+"размещение, которое просматривается по умолчанию (например, <filename>/usr/"
+"include</filename>, <filename>/usr/lib</filename>), так что помимо этого "
+"параметра вам придётся задать параметры <option>--with-includes</option> и "
+"<option>--with-libraries</option>. Скрипт <filename>configure</filename> "
+"проверит наличие необходимых заголовочных файлов и библиотек, чтобы "
+"убедиться в целостности инсталляции GSSAPI, прежде чем продолжить."
+
+#: installation.xml:742(replaceable)
+#, fuzzy
+msgid "NAME"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"ИМЯ\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"NAME"
+
+#: installation.xml:742(option)
+msgid "--with-krb-srvnam=<placeholder-1/>"
+msgstr "--with-krb-srvnam=<placeholder-1/>"
+
+#: installation.xml:744(para)
+msgid ""
+"The default name of the Kerberos service principal used by GSSAPI. "
+"<literal>postgres</literal> is the default. There's usually no reason to "
+"change this unless you have a Windows environment, in which case it must be "
+"set to upper case <literal>POSTGRES</literal>."
+msgstr ""
+"Задаёт имя по умолчанию для субъекта-службы Kerberos, используемое GSSAPI "
+"(по умолчанию это <literal>postgres</literal>). Обычно менять его имеет "
+"смысл только в среде Windows, где оно должно быть задано в верхнем регистре "
+"(<literal>POSTGRES</literal>)."
+
+#: installation.xml:756(option)
+msgid "--with-openssl"
+msgstr "--with-openssl"
+
+#: installation.xml:757(indexterm)
+msgid "<primary>OpenSSL</primary><seealso>SSL</seealso>"
+msgstr "<primary>OpenSSL</primary><seealso>SSL</seealso>"
+
+#: installation.xml:762(para)
+msgid ""
+"Build with support for <acronym>SSL</acronym> (encrypted) connections. This "
+"requires the <productname>OpenSSL</productname> package to be installed. "
+"<filename>configure</filename> will check for the required header files and "
+"libraries to make sure that your <productname>OpenSSL</productname> "
+"installation is sufficient before proceeding."
+msgstr ""
+"Включает поддержку соединений <acronym>SSL</acronym> (зашифрованных). Для "
+"этого необходимо установить пакет <productname>OpenSSL</productname>. Скрипт "
+"<filename>configure</filename> проверит наличие необходимых заголовочных "
+"файлов и библиотек, чтобы убедиться в целостности инсталляции "
+"<productname>OpenSSL</productname>, прежде чем продолжить."
+
+#: installation.xml:774(option)
+msgid "--with-pam"
+msgstr "--with-pam"
+
+#: installation.xml:777(indexterm)
+msgid "<primary>PAM</primary>"
+msgstr "<primary>PAM</primary>"
+
+#: installation.xml:776(para)
+msgid ""
+"Build with <acronym>PAM</acronym><placeholder-1/> (Pluggable Authentication "
+"Modules) support."
+msgstr ""
+"Включает поддержку <acronym>PAM</acronym><placeholder-1/> (Pluggable "
+"Authentication Modules, подключаемых модулей аутентификации)."
+
+#: installation.xml:784(option)
+#, fuzzy
+msgid "--with-bsd-auth"
+msgstr "--with-ldap"
+
+#: installation.xml:786(para)
+msgid ""
+"Build with BSD Authentication support. (The BSD Authentication framework is "
+"currently only available on OpenBSD.)"
+msgstr ""
+
+#: installation.xml:795(option)
+msgid "--with-ldap"
+msgstr "--with-ldap"
+
+#: installation.xml:798(indexterm)
+msgid "<primary>LDAP</primary>"
+msgstr "<primary>LDAP</primary>"
+
+#: installation.xml:797(para)
+#, fuzzy
+msgid ""
+"Build with <acronym>LDAP</acronym><placeholder-1/> support for "
+"authentication and connection parameter lookup (see <phrase condition="
+"\"standalone\">the documentation about client authentication and libpq</"
+"phrase><phrase condition=\"default\"><xref linkend=\"libpq-ldap\"/> and "
+"<xref linkend=\"auth-ldap\"/></phrase> for more information). On Unix, this "
+"requires the <productname>OpenLDAP</productname> package to be installed. On "
+"Windows, the default <productname>WinLDAP</productname> library is used. "
+"<filename>configure</filename> will check for the required header files and "
+"libraries to make sure that your <productname>OpenLDAP</productname> "
+"installation is sufficient before proceeding."
+msgstr ""
+"Включает поддержку <acronym>LDAP</acronym><placeholder-1/> для проверки "
+"подлинности и получения параметров соединения (за дополнительными сведениями "
+"обратитесь к <xref remap=\"3\" linkend=\"libpq-ldap\"/> и <xref remap=\"3\" "
+"linkend=\"auth-ldap\"/>). В Unix для этого нужно установить пакет "
+"<productname>OpenLDAP</productname>. В Windows используется стандартная "
+"библиотека <productname>WinLDAP</productname>. Скрипт <filename>configure</"
+"filename> проверит наличие необходимых заголовочных файлов и библиотек, "
+"чтобы убедиться в целостности инсталляции <productname>OpenLDAP</"
+"productname>, прежде чем продолжить."
+
+#: installation.xml:814(option)
+#, fuzzy
+msgid "--with-systemd"
+msgstr "--system"
+
+#: installation.xml:818(indexterm)
+#, fuzzy
+msgid "<primary>systemd</primary>"
+msgstr "<primary>setseed</primary>"
+
+#: installation.xml:816(para)
+msgid ""
+"Build with support for <application>systemd</application><placeholder-1/> "
+"service notifications. This improves integration if the server binary is "
+"started under <application>systemd</application> but has no impact "
+"otherwise<phrase condition=\"default\">; see <xref linkend=\"server-start\"/"
+"> for more information</phrase>. <application>libsystemd</application> and "
+"the associated header files need to be installed to be able to use this "
+"option."
+msgstr ""
+
+#: installation.xml:830(option)
+msgid "--without-readline"
+msgstr "--without-readline"
+
+#: installation.xml:832(para)
+msgid ""
+"Prevents use of the <application>Readline</application> library (and "
+"<application>libedit</application> as well). This option disables command-"
+"line editing and history in <application>psql</application>, so it is not "
+"recommended."
+msgstr ""
+"Запрещает использование библиотеки <application>Readline</application> (а "
+"также <application>libedit</application>). При этом отключается "
+"редактирование командной строки и история в <application>psql</application>, "
+"так что этот вариант не рекомендуется."
+
+#: installation.xml:842(option)
+msgid "--with-libedit-preferred"
+msgstr "--with-libedit-preferred"
+
+#: installation.xml:844(para)
+msgid ""
+"Favors the use of the BSD-licensed <application>libedit</application> "
+"library rather than GPL-licensed <application>Readline</application>. This "
+"option is significant only if you have both libraries installed; the default "
+"in that case is to use <application>Readline</application>."
+msgstr ""
+"Отдаёт предпочтение библиотеке <application>libedit</application> с "
+"лицензией BSD, а не <application>Readline</application> (GPL). Этот параметр "
+"имеет значение, только если установлены обе библиотеки; по умолчанию в этом "
+"случае используется <application>Readline</application>."
+
+#: installation.xml:854(option)
+msgid "--with-bonjour"
+msgstr "--with-bonjour"
+
+#: installation.xml:856(para)
+msgid ""
+"Build with Bonjour support. This requires Bonjour support in your operating "
+"system. Recommended on OS X."
+msgstr ""
+"Включает поддержку Bonjour. Для этого Bonjour должен поддерживаться самой "
+"операционной системой. Рекомендуется для OS X."
+
+#: installation.xml:864(replaceable)
+#, fuzzy
+msgid "LIBRARY"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"БИБЛИОТЕКА\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"LIBRARY"
+
+#: installation.xml:864(option)
+msgid "--with-uuid=<placeholder-1/>"
+msgstr "--with-uuid=<placeholder-1/>"
+
+#: installation.xml:870(indexterm)
+msgid "<primary>UUID</primary>"
+msgstr "<primary>UUID</primary>"
+
+#: installation.xml:866(para)
+#, fuzzy
+msgid ""
+"Build the <phrase condition=\"standalone\">uuid-ossp</phrase>\n"
+"         <phrase condition=\"default\"><xref linkend=\"uuid-ossp\"/></"
+"phrase> module (which provides functions to generate UUIDs), using the "
+"specified UUID library.<placeholder-1/>\n"
+"         <replaceable>LIBRARY</replaceable> must be one of:"
+msgstr ""
+"Собрать модуль <xref linkend=\"uuid-ossp\"/> (предоставляющий функции для "
+"генерирования UUID), используя заданную библиотеку UUID.<placeholder-1/>\n"
+"         <replaceable>БИБЛИОТЕКА</replaceable> может быть следующей:"
+
+#: installation.xml:875(para)
+msgid ""
+"<option>bsd</option> to use the UUID functions found in FreeBSD, NetBSD, and "
+"some other BSD-derived systems"
+msgstr ""
+"<option>bsd</option>, чтобы использовались функции получения UUID, имеющиеся "
+"во FreeBSD, NetBSD и некоторых других системах на базе BSD"
+
+#: installation.xml:881(para)
+msgid ""
+"<option>e2fs</option> to use the UUID library created by the "
+"<literal>e2fsprogs</literal> project; this library is present in most Linux "
+"systems and in OS X, and can be obtained for other platforms as well"
+msgstr ""
+"<option>e2fs</option>, чтобы использовалась библиотека получения UUID, "
+"созданная в рамках проекта <literal>e2fsprogs</literal>; эта библиотека "
+"присутствует в большинстве систем Linux и OS X, также её можно найти и для "
+"других платформ."
+
+#: installation.xml:889(para)
+msgid ""
+"<option>ossp</option> to use the <ulink url=\"http://www.ossp.org/pkg/lib/"
+"uuid/\">OSSP UUID library</ulink>"
+msgstr ""
+"<option>ossp</option>, чтобы использовалась библиотека <ulink url=\"http://"
+"www.ossp.org/pkg/lib/uuid/\">OSSP UUID</ulink>"
+
+#: installation.xml:899(option)
+msgid "--with-ossp-uuid"
+msgstr "--with-ossp-uuid"
+
+#: installation.xml:901(para)
+msgid "Obsolete equivalent of <literal>--with-uuid=ossp</literal>."
+msgstr "Устаревший вариант указания <literal>--with-uuid=ossp</literal>."
+
+#: installation.xml:908(option)
+msgid "--with-libxml"
+msgstr "--with-libxml"
+
+#: installation.xml:910(para)
+msgid ""
+"Build with libxml (enables SQL/XML support). Libxml version 2.6.23 or later "
+"is required for this feature."
+msgstr ""
+"Собрать с libxml (включает поддержку SQL/XML). Для этого требуется libxml "
+"версии 2.6.23 или новее."
+
+#: installation.xml:915(para)
+msgid ""
+"Libxml installs a program <command>xml2-config</command> that can be used to "
+"detect the required compiler and linker options. PostgreSQL will use it "
+"automatically if found. To specify a libxml installation at an unusual "
+"location, you can either set the environment variable <envar>XML2_CONFIG</"
+"envar> to point to the <command>xml2-config</command> program belonging to "
+"the installation, or use the options <option>--with-includes</option> and "
+"<option>--with-libraries</option>."
+msgstr ""
+"В составе libxml устанавливается программа <command>xml2-config</command>, с "
+"помощью которой можно получить требуемые параметры компилятора и "
+"компоновщика. PostgreSQL будет использовать её автоматически, если найдёт. "
+"Чтобы указать нестандартное размещение libxml, вы можете воспользоваться "
+"переменной окружения <envar>XML2_CONFIG</envar> и указать в ней путь к "
+"программе <command>xml2-config</command> нужной инсталляции, либо задать "
+"параметры <option>--with-includes</option> и <option>--with-libraries</"
+"option>."
+
+#: installation.xml:931(option)
+msgid "--with-libxslt"
+msgstr "--with-libxslt"
+
+#: installation.xml:933(para)
+#, fuzzy
+msgid ""
+"Use libxslt when building the <phrase condition=\"standalone\">xml2</"
+"phrase>\n"
+"         <phrase condition=\"default\"><xref linkend=\"xml2\"/></phrase> "
+"module. <application>xml2</application> relies on this library to perform "
+"XSL transformations of XML."
+msgstr ""
+"Использовать libxslt при сборке модуля <xref linkend=\"xml2\"/>. Библиотека "
+"<application>xml2</application> задействует её для выполнения XSL-"
+"преобразований XML."
+
+#: installation.xml:944(option)
+msgid "--disable-integer-datetimes"
+msgstr "--disable-integer-datetimes"
+
+#: installation.xml:946(para)
+#, fuzzy
+msgid ""
+"Disable support for 64-bit integer storage for timestamps and intervals, and "
+"store datetime values as floating-point numbers instead. Floating-point "
+"datetime storage was the default in <productname>PostgreSQL</productname> "
+"releases prior to 8.4, but it is now deprecated, because it does not support "
+"microsecond precision for the full range of <type>timestamp</type> values. "
+"However, integer-based datetime storage requires a 64-bit integer type. "
+"Therefore, this option can be used when no such type is available, or for "
+"compatibility with applications written for prior versions of "
+"<productname>PostgreSQL</productname>. See <phrase condition=\"standalone"
+"\">the documentation about datetime datatypes</phrase>\n"
+"         <phrase condition=\"default\"><xref linkend=\"datatype-datetime\"/"
+"></phrase> for more information."
+msgstr ""
+"Отключает применение 64-битных целых для хранения времени и интервалов, "
+"чтобы значения даты/времени хранились в виде чисел с плавающей точкой. Числа "
+"с плавающей точкой применялись для хранения дат/времени по умолчанию в "
+"<productname>PostgreSQL</productname> до версии 8.4, но сейчас этот вариант "
+"считается устаревшим, так как с ним не поддерживается точность до "
+"микросекунд во всём диапазоне значений <type>timestamp</type>. Однако для "
+"хранения таких значений в целочисленном виде требуется поддержка "
+"целочисленного 64-битного типа. Поэтому прежний вариант может "
+"использоваться, когда такой тип не поддерживается или для совместимости с "
+"приложениями, написанными для предыдущих версий <productname>PostgreSQL</"
+"productname>. За дополнительными сведениями обратитесь к <xref remap=\"3\" "
+"linkend=\"datatype-datetime\"/>."
+
+#: installation.xml:966(option)
+msgid "--disable-float4-byval"
+msgstr "--disable-float4-byval"
+
+#: installation.xml:968(para)
+msgid ""
+"Disable passing float4 values <quote>by value</quote>, causing them to be "
+"passed <quote>by reference</quote> instead. This option costs performance, "
+"but may be needed for compatibility with old user-defined functions that are "
+"written in C and use the <quote>version 0</quote> calling convention. A "
+"better long-term solution is to update any such functions to use the "
+"<quote>version 1</quote> calling convention."
+msgstr ""
+"Запрещает передачу типа float4 <quote>по значению</quote>, чтобы он "
+"передавался <quote>по ссылке</quote>. Это снижает быстродействие, но может "
+"быть необходимо для совместимости со старыми пользовательскими функциями на "
+"языке C, которые используют соглашение о вызовах <quote>версии 0</quote>. В "
+"качестве более долгосрочного решения лучше модернизировать такие функции, "
+"чтобы они использовали соглашение <quote>версии 1</quote>."
+
+#: installation.xml:981(option)
+msgid "--disable-float8-byval"
+msgstr "--disable-float8-byval"
+
+#: installation.xml:983(para)
+msgid ""
+"Disable passing float8 values <quote>by value</quote>, causing them to be "
+"passed <quote>by reference</quote> instead. This option costs performance, "
+"but may be needed for compatibility with old user-defined functions that are "
+"written in C and use the <quote>version 0</quote> calling convention. A "
+"better long-term solution is to update any such functions to use the "
+"<quote>version 1</quote> calling convention. Note that this option affects "
+"not only float8, but also int8 and some related types such as timestamp. On "
+"32-bit platforms, <option>--disable-float8-byval</option> is the default and "
+"it is not allowed to select <option>--enable-float8-byval</option>."
+msgstr ""
+"Запрещает передачу типа float8 <quote>по значению</quote>, чтобы он "
+"передавался <quote>по ссылке</quote>. Это снижает быстродействие, но может "
+"быть необходимо для совместимости со старыми пользовательскими функциями на "
+"языке C, которые используют соглашение о вызовах <quote>версии 0</quote>. В "
+"качестве более долгосрочного решения лучше модернизировать такие функции, "
+"чтобы они использовали соглашение <quote>версии 1</quote>. Заметьте, что "
+"этот параметр влияет не только на float8, но и на int8, а также некоторые "
+"другие типы, например timestamp. На 32-битных платформах параметр <option>--"
+"disable-float8-byval</option> действует по умолчанию и задать <option>--"
+"enable-float8-byval</option> нельзя."
+
+#: installation.xml:1000(replaceable) installation.xml:1037(replaceable)
+msgid "SEGSIZE"
+msgstr "РАЗМЕР_СЕГМЕНТА"
+
+#: installation.xml:1000(option)
+msgid "--with-segsize=<placeholder-1/>"
+msgstr "--with-segsize=<placeholder-1/>"
+
+#: installation.xml:1002(para)
+msgid ""
+"Set the <firstterm>segment size</firstterm>, in gigabytes. Large tables are "
+"divided into multiple operating-system files, each of size equal to the "
+"segment size. This avoids problems with file size limits that exist on many "
+"platforms. The default segment size, 1 gigabyte, is safe on all supported "
+"platforms. If your operating system has <quote>largefile</quote> support "
+"(which most do, nowadays), you can use a larger segment size. This can be "
+"helpful to reduce the number of file descriptors consumed when working with "
+"very large tables. But be careful not to select a value larger than is "
+"supported by your platform and the file systems you intend to use. Other "
+"tools you might wish to use, such as <application>tar</application>, could "
+"also set limits on the usable file size. It is recommended, though not "
+"absolutely required, that this value be a power of 2. Note that changing "
+"this value requires an initdb."
+msgstr ""
+"Задаёт <firstterm>размер сегмента</firstterm> (в гигабайтах). Сервер делит "
+"большие таблицы на несколько файлов в файловой системе, ограничивая размер "
+"каждого данным размером сегмента. Это позволяет обойти ограничения на размер "
+"файлов, существующие на многих платформах. Размер сегмента по умолчанию, 1 "
+"гигабайт, безопасен для всех поддерживаемых платформ. Если же ваша "
+"операционная система поддерживает <quote>большие файлы</quote> (а сегодня "
+"это поддерживают почти все), вы можете установить больший размер сегмента. "
+"Это позволит уменьшить число файловых дескрипторов, используемых при работе "
+"с очень большими таблицами. Но будьте осторожны, чтобы выбранное значение не "
+"превысило максимум, поддерживаемый вашей платформой и файловыми системами, "
+"которые вы будете применять. Возможно, допустимый размер файла будет "
+"ограничиваться и другими утилитами, которые вы захотите использовать, "
+"например <application>tar</application>. Рекомендуется, хотя и не требуется, "
+"чтобы это значение было степенью 2. Заметьте, что при изменении значения "
+"требуется выполнить initdb."
+
+#: installation.xml:1023(replaceable) installation.xml:1051(replaceable)
+msgid "BLOCKSIZE"
+msgstr "РАЗМЕР_БЛОКА"
+
+#: installation.xml:1023(option)
+msgid "--with-blocksize=<placeholder-1/>"
+msgstr "--with-blocksize=<placeholder-1/>"
+
+#: installation.xml:1025(para)
+msgid ""
+"Set the <firstterm>block size</firstterm>, in kilobytes. This is the unit of "
+"storage and I/O within tables. The default, 8 kilobytes, is suitable for "
+"most situations; but other values may be useful in special cases. The value "
+"must be a power of 2 between 1 and 32 (kilobytes). Note that changing this "
+"value requires an initdb."
+msgstr ""
+"Задаёт <firstterm>размер блока</firstterm> (в килобайтах). Эта величина "
+"будет единицей хранения и ввода/вывода данных таблиц. Значение по умолчанию, "
+"8 килобайт, достаточно универсально; но в особых случаях может быть оправдан "
+"другой размер блока. Это значение должно быть степенью 2 от 1 до 32 (в "
+"килобайтах). Заметьте, что при изменении значения требуется выполнить initdb."
+
+#: installation.xml:1037(option)
+msgid "--with-wal-segsize=<placeholder-1/>"
+msgstr "--with-wal-segsize=<placeholder-1/>"
+
+#: installation.xml:1039(para)
+msgid ""
+"Set the <firstterm>WAL segment size</firstterm>, in megabytes. This is the "
+"size of each individual file in the WAL log. It may be useful to adjust this "
+"size to control the granularity of WAL log shipping. The default size is 16 "
+"megabytes. The value must be a power of 2 between 1 and 64 (megabytes). Note "
+"that changing this value requires an initdb."
+msgstr ""
+"Задаёт <firstterm>размер сегмента WAL</firstterm> (в мегабайтах). Эта "
+"величина определяет размер каждого отдельного файла журнала WAL. Изменять "
+"этот размер бывает полезно для оптимизации фрагментации при трансляции "
+"журналов. Значение по умолчанию — 16 мегабайт. Значение должно задаваться "
+"степенью 2 от 1 до 64 (в мегабайтах). Заметьте, что при изменении значения "
+"требуется выполнить initdb."
+
+#: installation.xml:1051(option)
+msgid "--with-wal-blocksize=<placeholder-1/>"
+msgstr "--with-wal-blocksize=<placeholder-1/>"
+
+#: installation.xml:1053(para)
+msgid ""
+"Set the <firstterm>WAL block size</firstterm>, in kilobytes. This is the "
+"unit of storage and I/O within the WAL log. The default, 8 kilobytes, is "
+"suitable for most situations; but other values may be useful in special "
+"cases. The value must be a power of 2 between 1 and 64 (kilobytes). Note "
+"that changing this value requires an initdb."
+msgstr ""
+"Задаёт <firstterm>размер блока WAL</firstterm> (в килобайтах) Эта величина "
+"будет единицей хранения и ввода/вывода записей WAL. Значение по умолчанию, 8 "
+"килобайт, достаточно универсально; но в особых случаях может быть оправдан "
+"другой размер блока. Это значение должно быть степенью 2 от 1 до 64 (в "
+"килобайтах). Заметьте, что при изменении значения требуется выполнить initdb."
+
+#: installation.xml:1065(option)
+msgid "--disable-spinlocks"
+msgstr "--disable-spinlocks"
+
+#: installation.xml:1067(para)
+msgid ""
+"Allow the build to succeed even if <productname>PostgreSQL</productname> has "
+"no CPU spinlock support for the platform. The lack of spinlock support will "
+"result in poor performance; therefore, this option should only be used if "
+"the build aborts and informs you that the platform lacks spinlock support. "
+"If this option is required to build <productname>PostgreSQL</productname> on "
+"your platform, please report the problem to the <productname>PostgreSQL</"
+"productname> developers."
+msgstr ""
+"Позволяет провести сборку, если <productname>PostgreSQL</productname> не "
+"может воспользоваться циклическими блокировками CPU на данной платформе. "
+"Отсутствие таких блокировок приводит к снижению производительности, поэтому "
+"использовать этот вариант следует, только если сборка прерывается и выдаётся "
+"сообщение, что ваша платформа эти блокировки не поддерживает. Если вы не "
+"можете собрать <productname>PostgreSQL</productname> на вашей платформе без "
+"этого указания, сообщите о данной проблеме разработчикам "
+"<productname>PostgreSQL</productname>."
+
+#: installation.xml:1081(option)
+msgid "--disable-thread-safety"
+msgstr "--disable-thread-safety"
+
+#: installation.xml:1083(para)
+msgid ""
+"Disable the thread-safety of client libraries. This prevents concurrent "
+"threads in <application>libpq</application> and <application>ECPG</"
+"application> programs from safely controlling their private connection "
+"handles."
+msgstr ""
+"Отключает потокобезопасное поведение клиентских библиотек. При этом "
+"параллельные потоки программ на базе <application>libpq</application> и "
+"<application>ECPG</application> не будут безопасно контролировать "
+"собственные дескрипторы соединений."
+
+#: installation.xml:1093(option)
+msgid "--with-system-tzdata=<placeholder-1/>"
+msgstr "--with-system-tzdata=<placeholder-1/>"
+
+#: installation.xml:1094(indexterm)
+msgid "<primary>time zone data</primary>"
+msgstr "<primary>данные часовых поясов</primary>"
+
+#: installation.xml:1099(para)
+msgid ""
+"<productname>PostgreSQL</productname> includes its own time zone database, "
+"which it requires for date and time operations. This time zone database is "
+"in fact compatible with the IANA time zone database provided by many "
+"operating systems such as FreeBSD, Linux, and Solaris, so it would be "
+"redundant to install it again. When this option is used, the system-supplied "
+"time zone database in <replaceable>DIRECTORY</replaceable> is used instead "
+"of the one included in the PostgreSQL source distribution. "
+"<replaceable>DIRECTORY</replaceable> must be specified as an absolute path. "
+"<filename>/usr/share/zoneinfo</filename> is a likely directory on some "
+"operating systems. Note that the installation routine will not detect "
+"mismatching or erroneous time zone data. If you use this option, you are "
+"advised to run the regression tests to verify that the time zone data you "
+"have pointed to works correctly with <productname>PostgreSQL</productname>."
+msgstr ""
+"В <productname>PostgreSQL</productname> включена собственная база данных "
+"часовых поясов, необходимая для операций с датой и временем. На самом деле "
+"эта база данных совместима с базой часовых поясов IANA, поставляемой в "
+"составе многих операционных систем FreeBSD, Linux, Solaris, поэтому "
+"устанавливать её дополнительно может быть излишне. С этим параметром вместо "
+"базы данных, включённой в пакет исходного кода PostgreSQL, будет "
+"использоваться системная база данных часовых поясов, находящаяся в заданном "
+"<replaceable>КАТАЛОГЕ</replaceable>. <replaceable>КАТАЛОГ</replaceable> "
+"должен задаваться абсолютным путём (в ряде операционных систем принят путь "
+"<filename>/usr/share/zoneinfo</filename>). Заметьте, что процедура установки "
+"не будет проверять несоответствия или ошибки в данных часовых поясов. "
+"Поэтому, используя этот параметр, рекомендуется выполнить регрессионные "
+"тесты, чтобы убедиться, что выбранная вами база данных часовых поясов "
+"работает корректно с <productname>PostgreSQL</productname>."
+
+#: installation.xml:1117(indexterm)
+msgid "<primary>cross compilation</primary>"
+msgstr "<primary>кросс-компиляция</primary>"
+
+#: installation.xml:1119(para)
+msgid ""
+"This option is mainly aimed at binary package distributors who know their "
+"target operating system well. The main advantage of using this option is "
+"that the PostgreSQL package won't need to be upgraded whenever any of the "
+"many local daylight-saving time rules change. Another advantage is that "
+"PostgreSQL can be cross-compiled more straightforwardly if the time zone "
+"database files do not need to be built during the installation."
+msgstr ""
+"Этот параметр в основном предназначен для тех, кто собирает двоичные пакеты "
+"для дистрибутивов и хорошо знает свою операционную систему. Основной плюс от "
+"использования системных данных в том, что пакет PostgreSQL не придётся "
+"обновлять при изменениях местных определений часовых поясов. Ещё один плюс "
+"заключается в упрощении кросс-компиляции, так как при инсталляции не "
+"требуется собирать базу данных часовых поясов."
+
+#: installation.xml:1133(option)
+msgid "--without-zlib"
+msgstr "--without-zlib"
+
+#: installation.xml:1135(para)
+msgid ""
+"<placeholder-1/> Prevents use of the <application>Zlib</application> "
+"library. This disables support for compressed archives in "
+"<application>pg_dump</application> and <application>pg_restore</"
+"application>. This option is only intended for those rare systems where this "
+"library is not available."
+msgstr ""
+"<placeholder-1/> Запрещает использование библиотеки <application>Zlib</"
+"application>. При этом отключается поддержка сжатых архивов утилитами "
+"<application>pg_dump</application> и <application>pg_restore</application>. "
+"Этот параметр предназначен только для тех редких систем, в которых нет этой "
+"библиотеки."
+
+#: installation.xml:1149(option)
+msgid "--enable-debug"
+msgstr "--enable-debug"
+
+#: installation.xml:1151(para)
+msgid ""
+"Compiles all programs and libraries with debugging symbols. This means that "
+"you can run the programs in a debugger to analyze problems. This enlarges "
+"the size of the installed executables considerably, and on non-GCC compilers "
+"it usually also disables compiler optimization, causing slowdowns. However, "
+"having the symbols available is extremely helpful for dealing with any "
+"problems that might arise. Currently, this option is recommended for "
+"production installations only if you use GCC. But you should always have it "
+"on if you are doing development work or running a beta version."
+msgstr ""
+"Включает компиляцию всех программ и библиотек с отладочными символами. Это "
+"значит, что вы сможете запускать программы в отладчике для анализа проблем. "
+"При такой компиляции размер установленных исполняемых файлов значительно "
+"увеличивается, а компиляторы, кроме GCC, обычно отключают оптимизацию, что "
+"снижает быстродействие. Однако, наличие отладочных символов очень полезно "
+"при решении возможных проблем любой сложности. В настоящее время "
+"рекомендуется использовать этот параметр для производственной среды, только "
+"если применяется компилятор GCC. Но если вы занимаетесь разработкой или "
+"испытываете бета-версию, его следует использовать всегда."
+
+#: installation.xml:1167(option)
+msgid "--enable-coverage"
+msgstr "--enable-coverage"
+
+#: installation.xml:1169(para)
+#, fuzzy
+msgid ""
+"If using GCC, all programs and libraries are compiled with code coverage "
+"testing instrumentation. When run, they generate files in the build "
+"directory with code coverage metrics. <phrase condition=\"default\">See "
+"<xref linkend=\"regress-coverage\"/> for more information.</phrase> This "
+"option is for use only with GCC and when doing development work."
+msgstr ""
+"При использовании GCC все программы и библиотеки компилируются с "
+"инструментарием, оценивающим покрытие кода тестами. В этом случае в каталоге "
+"сборки будут сформированы файлы с метриками покрытия кода. За "
+"дополнительными сведениями обратитесь к <xref remap=\"3\" linkend=\"regress-"
+"coverage\"/>. Этот параметр предназначен только для GCC и только для тех, "
+"кто занимается разработкой."
+
+#: installation.xml:1182(option)
+msgid "--enable-profiling"
+msgstr "--enable-profiling"
+
+#: installation.xml:1184(para)
+msgid ""
+"If using GCC, all programs and libraries are compiled so they can be "
+"profiled. On backend exit, a subdirectory will be created that contains the "
+"<filename>gmon.out</filename> file for use in profiling. This option is for "
+"use only with GCC and when doing development work."
+msgstr ""
+"При использовании GCC все программы и библиотеки компилируются так, чтобы их "
+"можно было профилировать. В результате по завершении серверного процесса "
+"будет создаваться подкаталог с файлом <filename>gmon.out</filename> для "
+"профилирования. Этот параметр предназначен только для GCC и только для тех, "
+"кто занимается разработкой."
+
+#: installation.xml:1194(option)
+msgid "--enable-cassert"
+msgstr "--enable-cassert"
+
+#: installation.xml:1196(para)
+msgid ""
+"Enables <firstterm>assertion</firstterm> checks in the server, which test "
+"for many <quote>cannot happen</quote> conditions. This is invaluable for "
+"code development purposes, but the tests can slow down the server "
+"significantly. Also, having the tests turned on won't necessarily enhance "
+"the stability of your server! The assertion checks are not categorized for "
+"severity, and so what might be a relatively harmless bug will still lead to "
+"server restarts if it triggers an assertion failure. This option is not "
+"recommended for production use, but you should have it on for development "
+"work or when running a beta version."
+msgstr ""
+"Включает для сервера проверочные <firstterm>утверждения</firstterm>, "
+"проверяющие множество условий, которые <quote>не должны происходить</quote>. "
+"Это бесценно в процессе разработке кода, но эти проверки могут значительно "
+"замедлить работу сервера. Кроме того, включение этих проверок не обязательно "
+"увеличит стабильность вашего сервера! Проверочные утверждения не "
+"категоризируются по важности, поэтому относительно безвредная ошибка может "
+"привести к перезапуску сервера, если утверждение не выполнится. Применять "
+"это следует, только если вы занимаетесь разработкой или испытываете бета-"
+"версию, но не в производственной среде."
+
+#: installation.xml:1213(option)
+msgid "--enable-depend"
+msgstr "--enable-depend"
+
+#: installation.xml:1215(para)
+msgid ""
+"Enables automatic dependency tracking. With this option, the makefiles are "
+"set up so that all affected object files will be rebuilt when any header "
+"file is changed. This is useful if you are doing development work, but is "
+"just wasted overhead if you intend only to compile once and install. At "
+"present, this option only works with GCC."
+msgstr ""
+"Включает автоматическое отслеживание зависимостей. С этим параметром скрипты "
+"Makefile настраиваются так, чтобы при изменении любого заголовочного файла "
+"пересобирались все зависимые объектные файлы. Это полезно в процессе "
+"разработки, но если вам нужно только скомпилировать и установить сервер, это "
+"будет лишней тратой времени. В настоящее время это работает только с GCC."
+
+#: installation.xml:1227(option)
+msgid "--enable-dtrace"
+msgstr "--enable-dtrace"
+
+#: installation.xml:1230(indexterm)
+msgid "<primary>DTrace</primary>"
+msgstr "<primary>DTrace</primary>"
+
+#: installation.xml:1229(para)
+#, fuzzy
+msgid ""
+"<placeholder-1/> Compiles <productname>PostgreSQL</productname> with support "
+"for the dynamic tracing tool DTrace. <phrase condition=\"default\">See <xref "
+"linkend=\"dynamic-trace\"/> for more information.</phrase>"
+msgstr ""
+"<placeholder-1/> Включает при компиляции <productname>PostgreSQL</"
+"productname> поддержку средства динамической трассировки DTrace. За "
+"дополнительными сведениями обратитесь к <xref remap=\"3\" linkend=\"dynamic-"
+"trace\"/>."
+
+#: installation.xml:1239(para)
+msgid ""
+"To point to the <command>dtrace</command> program, the environment variable "
+"<envar>DTRACE</envar> can be set. This will often be necessary because "
+"<command>dtrace</command> is typically installed under <filename>/usr/sbin</"
+"filename>, which might not be in the path."
+msgstr ""
+"Задать расположение программы <command>dtrace</command> можно в переменной "
+"окружения <envar>DTRACE</envar>. Часто это необходимо, потому что "
+"<command>dtrace</command> обычно устанавливается в каталог <filename>/usr/"
+"sbin</filename>, который может отсутствовать в пути поиска."
+
+#: installation.xml:1247(para)
+msgid ""
+"Extra command-line options for the <command>dtrace</command> program can be "
+"specified in the environment variable <envar>DTRACEFLAGS</envar>. On "
+"Solaris, to include DTrace support in a 64-bit binary, you must specify "
+"<literal>DTRACEFLAGS=\"-64\"</literal> to configure. For example, using the "
+"GCC compiler: <screen>./configure CC='gcc -m64' --enable-dtrace "
+"DTRACEFLAGS='-64' ...</screen> Using Sun's compiler: <screen>./configure "
+"CC='/opt/SUNWspro/bin/cc -xtarget=native64' --enable-dtrace "
+"DTRACEFLAGS='-64' ...</screen>"
+msgstr ""
+"Дополнительные параметры командной строки для <command>dtrace</command> "
+"можно задать в переменной окружения <envar>DTRACEFLAGS</envar>. В Solaris, "
+"чтобы включить поддержку DTrace для 64-битной сборки, необходимо передать "
+"configure параметр <literal>DTRACEFLAGS=\"-64\"</literal>. Например, с "
+"компилятором GCC: <screen>./configure CC='gcc -m64' --enable-dtrace "
+"DTRACEFLAGS='-64' ...</screen> С компилятором Sun: <screen>./configure CC='/"
+"opt/SUNWspro/bin/cc -xtarget=native64' --enable-dtrace DTRACEFLAGS='-64' ..."
+"</screen>"
+
+#: installation.xml:1262(option)
+msgid "--enable-tap-tests"
+msgstr "--enable-tap-tests"
+
+#: installation.xml:1264(para)
+#, fuzzy
+msgid ""
+"Enable tests using the Perl TAP tools. This requires a Perl installation and "
+"the Perl module <literal>IPC::Run</literal>. <phrase condition=\"default"
+"\">See <xref linkend=\"regress-tap\"/> for more information.</phrase>"
+msgstr ""
+"Включает тесты по технологии Perl TAP. Для этого у вас должен быть "
+"установлен Perl и модуль <literal>IPC::Run</literal>. За дополнительными "
+"сведениями обратитесь к <xref remap=\"3\" linkend=\"regress-tap\"/>."
+
+#: installation.xml:1274(para)
+msgid ""
+"If you prefer a C compiler different from the one <filename>configure</"
+"filename> picks, you can set the environment variable <envar>CC</envar> to "
+"the program of your choice. By default, <filename>configure</filename> will "
+"pick <filename>gcc</filename> if available, else the platform's default "
+"(usually <filename>cc</filename>). Similarly, you can override the default "
+"compiler flags if needed with the <envar>CFLAGS</envar> variable."
+msgstr ""
+"Если вы предпочитаете компилятор C, отличный от выбираемого скриптом "
+"<filename>configure</filename>, укажите его в переменной <envar>CC</envar>. "
+"По умолчанию <filename>configure</filename> выбирает <filename>gcc</"
+"filename> (если он находится) или стандартный компилятор платформы (обычно "
+"<filename>cc</filename>). Подобным образом, при необходимости можно "
+"переопределить флаги компилятора по умолчанию с помощью переменной "
+"<envar>CFLAGS</envar>."
+
+#: installation.xml:1284(para)
+msgid ""
+"You can specify environment variables on the <filename>configure</filename> "
+"command line, for example: <screen><userinput>./configure CC=/opt/bin/gcc "
+"CFLAGS='-O2 -pipe'</userinput></screen>"
+msgstr ""
+"Вы можете задать переменные окружения в командной строке "
+"<filename>configure</filename>, например, так: <screen><userinput>./"
+"configure CC=/opt/bin/gcc CFLAGS='-O2 -pipe'</userinput></screen>"
+
+#: installation.xml:1296(envar)
+msgid "BISON"
+msgstr "BISON"
+
+#: installation.xml:1298(para)
+msgid "Bison program"
+msgstr "Программа Bison"
+
+#: installation.xml:1305(envar)
+msgid "CC"
+msgstr "CC"
+
+#: installation.xml:1307(para)
+msgid "C compiler"
+msgstr "компилятор C"
+
+#: installation.xml:1314(envar)
+msgid "CFLAGS"
+msgstr "CFLAGS"
+
+#: installation.xml:1316(para)
+msgid "options to pass to the C compiler"
+msgstr "параметры, передаваемые компилятору C"
+
+#: installation.xml:1323(envar)
+msgid "CPP"
+msgstr "CPP"
+
+#: installation.xml:1325(para)
+msgid "C preprocessor"
+msgstr "препроцессор C"
+
+#: installation.xml:1332(envar)
+msgid "CPPFLAGS"
+msgstr "CPPFLAGS"
+
+#: installation.xml:1334(para)
+msgid "options to pass to the C preprocessor"
+msgstr "параметры, передаваемые препроцессору C"
+
+#: installation.xml:1341(envar)
+msgid "DTRACE"
+msgstr "DTRACE"
+
+#: installation.xml:1343(para)
+msgid "location of the <command>dtrace</command> program"
+msgstr "расположение программы <command>dtrace</command>"
+
+#: installation.xml:1350(envar)
+msgid "DTRACEFLAGS"
+msgstr "DTRACEFLAGS"
+
+#: installation.xml:1352(para)
+msgid "options to pass to the <command>dtrace</command> program"
+msgstr "параметры, передаваемые программе <command>dtrace</command>"
+
+#: installation.xml:1359(envar)
+msgid "FLEX"
+msgstr "FLEX"
+
+#: installation.xml:1361(para)
+msgid "Flex program"
+msgstr "программа Flex"
+
+#: installation.xml:1368(envar)
+msgid "LDFLAGS"
+msgstr "LDFLAGS"
+
+#: installation.xml:1370(para)
+msgid "options to use when linking either executables or shared libraries"
+msgstr ""
+"параметры, которые должны использоваться при компоновке исполняемых программ "
+"или разделяемых библиотек"
+
+#: installation.xml:1377(envar)
+msgid "LDFLAGS_EX"
+msgstr "LDFLAGS_EX"
+
+#: installation.xml:1379(para)
+msgid "additional options for linking executables only"
+msgstr "дополнительные параметры для компоновки только исполняемых программ"
+
+#: installation.xml:1386(envar)
+msgid "LDFLAGS_SL"
+msgstr "LDFLAGS_SL"
+
+#: installation.xml:1388(para)
+msgid "additional options for linking shared libraries only"
+msgstr "дополнительные параметры для компоновки только разделяемых библиотек"
+
+#: installation.xml:1395(envar)
+msgid "MSGFMT"
+msgstr "MSGFMT"
+
+#: installation.xml:1397(para)
+msgid "<command>msgfmt</command> program for native language support"
+msgstr ""
+"расположение программы <command>msgfmt</command> для поддержки национальных "
+"языков"
+
+#: installation.xml:1404(envar)
+msgid "PERL"
+msgstr "PERL"
+
+#: installation.xml:1406(para)
+msgid ""
+"Full path to the Perl interpreter. This will be used to determine the "
+"dependencies for building PL/Perl."
+msgstr ""
+"Полный путь к интерпретатору Perl. Он нужен для определения зависимостей при "
+"сборке PL/Perl."
+
+#: installation.xml:1414(envar)
+msgid "PYTHON"
+msgstr "PYTHON"
+
+#: installation.xml:1416(para)
+#, fuzzy
+msgid ""
+"Full path to the Python interpreter. This will be used to determine the "
+"dependencies for building PL/Python. Also, whether Python 2 or 3 is "
+"specified here (or otherwise implicitly chosen) determines which variant of "
+"the PL/Python language becomes available. See <phrase condition=\"standalone"
+"\">the <application>PL/Python</application> documentation</phrase>\n"
+"         <phrase condition=\"default\"><xref linkend=\"plpython-python23\"/"
+"></phrase> for more information."
+msgstr ""
+"Полный путь к интерпретатору Python. Он нужен для определения зависимостей "
+"при сборке PL/Python. Кроме того, в зависимости от того, какой Python, 2 или "
+"3, выбран здесь (или неявно как-то ещё), определяется вариация языка PL/"
+"Python, которая будет доступна. За дополнительными сведениями обратитесь к "
+"<xref remap=\"3\" linkend=\"plpython-python23\"/>."
+
+#: installation.xml:1431(envar)
+msgid "TCLSH"
+msgstr "TCLSH"
+
+#: installation.xml:1433(para)
+msgid ""
+"Full path to the Tcl interpreter. This will be used to determine the "
+"dependencies for building PL/Tcl, and it will be substituted into Tcl "
+"scripts."
+msgstr ""
+"Полный путь к интерпретатору Tcl. Он нужен для определения зависимостей при "
+"сборке PL/Tcl и будет подставляться в скрипты Tcl."
+
+#: installation.xml:1442(envar)
+msgid "XML2_CONFIG"
+msgstr "XML2_CONFIG"
+
+#: installation.xml:1444(para)
+msgid ""
+"<command>xml2-config</command> program used to locate the libxml "
+"installation."
+msgstr ""
+"Программа <command>xml2-config</command> помогает найти инсталляцию libxml."
+
+#: installation.xml:1290(para)
+msgid ""
+"Here is a list of the significant variables that can be set in this manner: "
+"<placeholder-1/>"
+msgstr ""
+"Ниже приведён список значимых переменных, которые можно установить таким "
+"образом: <placeholder-1/>"
+
+#: installation.xml:1454(para)
+msgid ""
+"When developing code inside the server, it is recommended to use the "
+"configure options <option>--enable-cassert</option> (which turns on many run-"
+"time error checks) and <option>--enable-debug</option> (which improves the "
+"usefulness of debugging tools)."
+msgstr ""
+"Разрабатывая внутренний код сервера, рекомендуется использовать указания "
+"configure <option>--enable-cassert</option> (которое включает множество "
+"проверок во время выполнения) и <option>--enable-debug</option> (которое "
+"упрощает использование средств отладки)."
+
+#: installation.xml:1461(para)
+msgid ""
+"If using GCC, it is best to build with an optimization level of at least "
+"<option>-O1</option>, because using no optimization (<option>-O0</option>) "
+"disables some important compiler warnings (such as the use of uninitialized "
+"variables). However, non-zero optimization levels can complicate debugging "
+"because stepping through compiled code will usually not match up one-to-one "
+"with source code lines. If you get confused while trying to debug optimized "
+"code, recompile the specific files of interest with <option>-O0</option>. An "
+"easy way to do this is by passing an option to <application>make</"
+"application>: <command>make PROFILE=-O0 file.o</command>."
+msgstr ""
+"Используя GCC, лучше выполнять сборку с уровнем оптимизации не ниже <option>-"
+"O1</option>, так как без оптимизации (<option>-O0</option>) отключаются "
+"некоторые важные предупреждения компилятора (например, об использовании "
+"неинициализированных переменных). Однако оптимизация ненулевого уровня может "
+"затруднить отладку, так как при пошаговом выполнении скомпилированный код "
+"обычно не соответствует в точности строкам исходного кода. При возникновении "
+"сложностей с отладкой оптимизированного кода, перекомпилируйте интересующие "
+"вас файлы с ключом <option>-O0</option>. Это можно сделать, просто передав "
+"соответствующий параметр <application>make</application>: <command>make "
+"PROFILE=-O0 file.o</command>."
+
+#: installation.xml:1477(title)
+msgid "Build"
+msgstr "Сборка"
+
+#: installation.xml:1479(para)
+msgid ""
+"To start the build, type: <screen><userinput>make</userinput></screen> "
+"(Remember to use <acronym>GNU</acronym> <application>make</application>.) "
+"The build will take a few minutes depending on your hardware. The last line "
+"displayed should be: <screen>All of PostgreSQL is successfully made. Ready "
+"to install.</screen>"
+msgstr ""
+"Чтобы запустить сборку, введите: <screen><userinput>make</userinput></"
+"screen> (Помните, что нужно использовать <acronym>GNU</acronym> "
+"<application>make</application>.) Сборка займёт несколько минут, в "
+"зависимости от мощности вашего компьютера. В конце должно появиться "
+"сообщение: <screen>All of PostgreSQL is successfully made. Ready to install."
+"</screen> (Весь PostgreSQL собран успешно и готов к установке.)"
+
+#: installation.xml:1488(para)
+msgid ""
+"If you want to build everything that can be built, including the "
+"documentation (HTML and man pages), and the additional modules "
+"(<filename>contrib</filename>), type instead: <screen><userinput>make world</"
+"userinput></screen> The last line displayed should be: <screen>PostgreSQL, "
+"contrib and HTML documentation successfully made. Ready to install.</screen>"
+msgstr ""
+"Если вы хотите собрать всё, что может быть собрано, включая документацию "
+"(страницы HTML и man) и дополнительные модули (<filename>contrib</"
+"filename>), введите: <screen><userinput>make world</userinput></screen> В "
+"конце должно появиться сообщение: <screen>PostgreSQL, contrib and HTML "
+"documentation successfully made. Ready to install.</screen> (PostgreSQL, "
+"contrib и HTML-документация собраны успешно и готовы к установке.)"
+
+#: installation.xml:1499(title)
+msgid "Regression Tests"
+msgstr "Регрессионные тесты"
+
+#: installation.xml:1501(indexterm)
+msgid "<primary>regression test</primary>"
+msgstr "<primary>регрессионный тест</primary>"
+
+#: installation.xml:1505(para)
+#, fuzzy
+msgid ""
+"If you want to test the newly built server before you install it, you can "
+"run the regression tests at this point. The regression tests are a test "
+"suite to verify that <productname>PostgreSQL</productname> runs on your "
+"machine in the way the developers expected it to. Type: "
+"<screen><userinput>make check</userinput></screen> (This won't work as root; "
+"do it as an unprivileged user.) <phrase condition=\"standalone\">The file "
+"<filename>src/test/regress/README</filename> and the documentation contain</"
+"phrase>\n"
+"    <phrase condition=\"default\"><xref linkend=\"regress\"/> contains</"
+"phrase> detailed information about interpreting the test results. You can "
+"repeat this test at any later time by issuing the same command."
+msgstr ""
+"Если вы хотите протестировать только что собранный сервер, прежде чем "
+"устанавливать его, на этом этапе вы можете запустить регрессионные тесты. "
+"Регрессионные тесты — это комплектов тестов, проверяющих, что "
+"<productname>PostgreSQL</productname> работает на вашем компьютере так, как "
+"задумано разработчиками. Введите: <screen><userinput>make check</userinput></"
+"screen> (Это должен выполнять обычный пользователь, не root.) В <xref remap="
+"\"6\" linkend=\"regress\"/> вы можете подробно узнать, как прочитать "
+"результаты проверки. Вы можете повторить эту проверку позже в любой момент, "
+"выполнив ту же команду."
+
+#: installation.xml:1523(title)
+msgid "Installing the Files"
+msgstr "Установка файлов"
+
+#: installation.xml:1526(para)
+#, fuzzy
+msgid ""
+"If you are upgrading an existing system be sure to read <phrase condition="
+"\"standalone\">the documentation,</phrase>\n"
+"     <phrase condition=\"default\"><xref linkend=\"upgrading\"/></phrase> "
+"which has instructions about upgrading a cluster."
+msgstr ""
+"Если вы обновляете существующую систему, обязательно прочитайте инструкции "
+"по обновлению кластера, приведённые в <xref remap=\"4\" linkend=\"upgrading"
+"\"/>."
+
+#: installation.xml:1535(para)
+msgid ""
+"To install <productname>PostgreSQL</productname> enter: "
+"<screen><userinput>make install</userinput></screen> This will install files "
+"into the directories that were specified in <xref linkend=\"configure\"/>. "
+"Make sure that you have appropriate permissions to write into that area. "
+"Normally you need to do this step as root. Alternatively, you can create the "
+"target directories in advance and arrange for appropriate permissions to be "
+"granted."
+msgstr ""
+"Чтобы установить <productname>PostgreSQL</productname>, введите: "
+"<screen><userinput>make install</userinput></screen> При этом файлы будут "
+"установлены в каталоги, заданные в <xref remap=\"6\" linkend=\"configure\"/"
+">. Убедитесь в том, что у вас есть соответствующие разрешения для записи "
+"туда. Обычно это действие нужно выполнять от имени root. Также возможно "
+"заранее создать целевые каталоги и дать требуемый доступ к ним."
+
+#: installation.xml:1546(para)
+msgid ""
+"To install the documentation (HTML and man pages), enter: "
+"<screen><userinput>make install-docs</userinput></screen>"
+msgstr ""
+"Чтобы установить документацию (HTML и страницы man), введите: "
+"<screen><userinput>make install-docs</userinput></screen>"
+
+#: installation.xml:1551(para)
+msgid ""
+"If you built the world above, type instead: <screen><userinput>make install-"
+"world</userinput></screen> This also installs the documentation."
+msgstr ""
+"Если вы собирали цель world, введите вместо этого: <screen><userinput>make "
+"install-world</userinput></screen> При этом также будет установлена "
+"документация."
+
+#: installation.xml:1557(para)
+msgid ""
+"You can use <literal>make install-strip</literal> instead of <literal>make "
+"install</literal> to strip the executable files and libraries as they are "
+"installed. This will save some space. If you built with debugging support, "
+"stripping will effectively remove the debugging support, so it should only "
+"be done if debugging is no longer needed. <literal>install-strip</literal> "
+"tries to do a reasonable job saving space, but it does not have perfect "
+"knowledge of how to strip every unneeded byte from an executable file, so if "
+"you want to save all the disk space you possibly can, you will have to do "
+"manual work."
+msgstr ""
+"Вы можете запустить <literal>make install-strip</literal> вместо "
+"<literal>make install</literal>, чтобы убрать лишнее из устанавливаемых "
+"исполняемых файлов и библиотек. Это позволит сэкономить немного места. Если "
+"вы выполняете сборку для отладки, при этом фактически вырежется поддержка "
+"отладки, поэтому этот вариант подходит только если отладка больше не "
+"планируется. Процедура <literal>install-strip</literal> пытается "
+"оптимизировать объём разумными способами, но не рассчитывайте, что она "
+"способна удалить каждый ненужный байт из исполняемого файла. Если вы хотите "
+"освободить как можно больше места, вам придётся проделать это вручную."
+
+#: installation.xml:1570(para)
+msgid ""
+"The standard installation provides all the header files needed for client "
+"application development as well as for server-side program development, such "
+"as custom functions or data types written in C. (Prior to "
+"<productname>PostgreSQL</productname> 8.0, a separate <literal>make install-"
+"all-headers</literal> command was needed for the latter, but this step has "
+"been folded into the standard install.)"
+msgstr ""
+"При стандартной установке в систему устанавливаются все заголовочные файлы "
+"для разработки клиентских приложений, а также программ на стороне сервера, в "
+"частности, собственных функций или типов данных, реализованных на C. (До "
+"<productname>PostgreSQL</productname> 8.0 для этого требовалось выполнить "
+"<literal>make install-all-headers</literal>, но сейчас это включено в "
+"стандартную установку.)"
+
+#: installation.xml:1580(title)
+msgid "Client-only installation:"
+msgstr "Установка только клиентской части:"
+
+#: installation.xml:1581(para)
+msgid ""
+"If you want to install only the client applications and interface libraries, "
+"then you can use these commands: <screen><userinput>make -C src/bin install</"
+"userinput>\n"
+"<userinput>make -C src/include install</userinput>\n"
+"<userinput>make -C src/interfaces install</userinput>\n"
+"<userinput>make -C doc install</userinput></screen>\n"
+"    <filename>src/bin</filename> has a few binaries for server-only use, but "
+"they are small."
+msgstr ""
+"Если вы хотите установить только клиентские приложения и интерфейсные "
+"библиотеки, можно выполнить эти команды: <screen><userinput>make -C src/bin "
+"install</userinput>\n"
+"<userinput>make -C src/include install</userinput>\n"
+"<userinput>make -C src/interfaces install</userinput>\n"
+"<userinput>make -C doc install</userinput></screen>\n"
+"В <filename>src/bin</filename> есть несколько программ, применимых только на "
+"сервере, но они очень малы."
+
+#: installation.xml:1596(title)
+msgid "Uninstallation:"
+msgstr "Удаление:"
+
+#: installation.xml:1597(para)
+msgid ""
+"To undo the installation use the command <command>make uninstall</command>. "
+"However, this will not remove any created directories."
+msgstr ""
+"Чтобы отменить установку, воспользуйтесь командой <command>make uninstall</"
+"command>. Однако созданные каталоги при этом удалены не будут."
+
+#: installation.xml:1604(title)
+msgid "Cleaning:"
+msgstr "Очистка:"
+
+#: installation.xml:1606(para)
+msgid ""
+"After the installation you can free disk space by removing the built files "
+"from the source tree with the command <command>make clean</command>. This "
+"will preserve the files made by the <command>configure</command> program, so "
+"that you can rebuild everything with <command>make</command> later on. To "
+"reset the source tree to the state in which it was distributed, use "
+"<command>make distclean</command>. If you are going to build for several "
+"platforms within the same source tree you must do this and re-configure for "
+"each platform. (Alternatively, use a separate build tree for each platform, "
+"so that the source tree remains unmodified.)"
+msgstr ""
+"После установки вы можете освободить место на диске, удалив файлы сборки из "
+"дерева исходного кода, выполнив <command>make clean</command>. При этом "
+"файлы, созданные программой <command>configure</command>, будут сохранены, "
+"так что позже вы сможете пересобрать всё заново, выполнив <command>make</"
+"command>. Чтобы сбросить дерево исходного кода к состоянию, в котором оно "
+"распространяется, выполните <command>make distclean</command>. Если вы "
+"намерены выполнять сборку одного дерева исходного кода для нескольких "
+"платформ, вам придётся делать это и переконфигурировать сборочную среду для "
+"каждой. (Также можно использовать отдельное дерево сборки для каждой "
+"платформы, чтобы дерево исходного кода оставалось неизменным.)"
+
+#: installation.xml:1620(para)
+msgid ""
+"If you perform a build and then discover that your <command>configure</"
+"command> options were wrong, or if you change anything that "
+"<command>configure</command> investigates (for example, software upgrades), "
+"then it's a good idea to do <command>make distclean</command> before "
+"reconfiguring and rebuilding. Without this, your changes in configuration "
+"choices might not propagate everywhere they need to."
+msgstr ""
+"Если в процессе сборки вы обнаружите, что заданные вами параметры "
+"<command>configure</command> оказались ошибочными, либо вы изменили что-то, "
+"от чего зависит работа <command>configure</command> (например, обновили "
+"пакеты), стоит выполнить <command>make distclean</command>, прежде чем "
+"переконфигурировать и пересобирать всё заново. Если этого не сделать, ваши "
+"изменения в конфигурации могут распространиться не везде, где они важны."
+
+#: installation.xml:1631(title)
+msgid "Post-Installation Setup"
+msgstr "Действия после установки"
+
+#: installation.xml:1634(title)
+msgid "Shared Libraries"
+msgstr "Разделяемые библиотеки"
+
+#: installation.xml:1636(indexterm)
+msgid "<primary>shared library</primary>"
+msgstr "<primary>разделяемая библиотека</primary>"
+
+#: installation.xml:1640(para)
+msgid ""
+"On some systems with shared libraries you need to tell the system how to "
+"find the newly installed shared libraries. The systems on which this is "
+"<emphasis>not</emphasis> necessary include <systemitem class=\"osname"
+"\">FreeBSD</systemitem>, <systemitem class=\"osname\">HP-UX</systemitem>, "
+"<systemitem class=\"osname\">Linux</systemitem>, <systemitem class=\"osname"
+"\">NetBSD</systemitem>, <systemitem class=\"osname\">OpenBSD</systemitem>, "
+"and <systemitem class=\"osname\">Solaris</systemitem>."
+msgstr ""
+"В некоторых системах с разделяемыми библиотеками необходимо указать системе, "
+"как найти недавно установленные разделяемые библиотеки. К числу систем, где "
+"это <emphasis>не</emphasis> требуется, относятся <systemitem class=\"osname"
+"\">FreeBSD</systemitem>, <systemitem class=\"osname\">HP-UX</systemitem>, "
+"<systemitem class=\"osname\">Linux</systemitem>, <systemitem class=\"osname"
+"\">NetBSD</systemitem>, <systemitem class=\"osname\">OpenBSD</systemitem> и "
+"<systemitem class=\"osname\">Solaris</systemitem>."
+
+#: installation.xml:1658(programlisting)
+#, no-wrap
+msgid ""
+"LD_LIBRARY_PATH=/usr/local/pgsql/lib\n"
+"export LD_LIBRARY_PATH"
+msgstr ""
+"LD_LIBRARY_PATH=/usr/local/pgsql/lib\n"
+"export LD_LIBRARY_PATH"
+
+#: installation.xml:1661(programlisting)
+#, no-wrap
+msgid "setenv LD_LIBRARY_PATH /usr/local/pgsql/lib"
+msgstr "setenv LD_LIBRARY_PATH /usr/local/pgsql/lib"
+
+#: installation.xml:1653(para)
+msgid ""
+"The method to set the shared library search path varies between platforms, "
+"but the most widely-used method is to set the environment variable "
+"<envar>LD_LIBRARY_PATH</envar> like so: In Bourne shells (<command>sh</"
+"command>, <command>ksh</command>, <command>bash</command>, <command>zsh</"
+"command>): <placeholder-1/> or in <command>csh</command> or <command>tcsh</"
+"command>: <placeholder-2/> Replace <literal>/usr/local/pgsql/lib</literal> "
+"with whatever you set <option><literal>--libdir</literal></option> to in "
+"<xref linkend=\"configure\"/>. You should put these commands into a shell "
+"start-up file such as <filename>/etc/profile</filename> or <filename>~/."
+"bash_profile</filename>. Some good information about the caveats associated "
+"with this method can be found at <ulink url=\"http://xahlee.org/"
+"UnixResource_dir/_/ldpath.html\"/>."
+msgstr ""
+"Путь поиска разделяемых библиотек на разных платформах может устанавливаться "
+"по-разному, но наиболее распространённый способ — установить переменную "
+"окружения <envar>LD_LIBRARY_PATH</envar>, например так: в оболочках Bourne "
+"(<command>sh</command>, <command>ksh</command>, <command>bash</command>, "
+"<command>zsh</command>): <placeholder-1/> или в <command>csh</command>, "
+"<command>tcsh</command>: <placeholder-2/> Замените <literal>/usr/local/pgsql/"
+"lib</literal> значением, переданным <xref linkend=\"configure\"/> в "
+"<option><literal>--libdir</literal></option>. Эти команды следует поместить "
+"в стартовый файл оболочки, например, в <filename>/etc/profile</filename> или "
+"<filename>~/.bash_profile</filename>. Полезные предостережения об "
+"использовании этого метода приведены на странице <ulink url=\"http://xahlee."
+"org/UnixResource_dir/_/ldpath.html\"/>."
+
+#: installation.xml:1671(para)
+msgid ""
+"On some systems it might be preferable to set the environment variable "
+"<envar>LD_RUN_PATH</envar> <emphasis>before</emphasis> building."
+msgstr ""
+"В некоторых системах предпочтительнее установить переменную окружения "
+"<envar>LD_RUN_PATH</envar> <emphasis>до</emphasis> сборки."
+
+#: installation.xml:1677(para)
+msgid ""
+"On <systemitem class=\"osname\">Cygwin</systemitem>, put the library "
+"directory in the <envar>PATH</envar> or move the <filename>.dll</filename> "
+"files into the <filename>bin</filename> directory."
+msgstr ""
+"В <systemitem class=\"osname\">Cygwin</systemitem> добавьте каталог с "
+"библиотеками в <envar>PATH</envar> или переместите файлы <filename>.dll</"
+"filename> в каталог <filename>bin</filename>."
+
+#: installation.xml:1684(para)
+msgid ""
+"If in doubt, refer to the manual pages of your system (perhaps <command>ld."
+"so</command> or <command>rld</command>). If you later get a message like: "
+"<screen>psql: error in loading shared libraries\n"
+"libpq.so.2.1: cannot open shared object file: No such file or directory</"
+"screen> then this step was necessary. Simply take care of it then."
+msgstr ""
+"В случае сомнений обратитесь к страницам руководства по вашей системе "
+"(возможно, к справке по <command>ld.so</command> или <command>rld</"
+"command>). Если вы позже получаете сообщение: <screen>psql: error in loading "
+"shared libraries\n"
+"libpq.so.2.1: cannot open shared object file: No such file or directory</"
+"screen> (psql: ошибка при загрузке разделяемых библиотек\n"
+"libpq.so.2.1: не удалось открыть разделяемый объектный файл: Нет такого "
+"файла или каталога), значит этот шаг был необходим. Тогда вам просто нужно "
+"вернуться к нему."
+
+#: installation.xml:1694(indexterm)
+msgid "<primary>ldconfig</primary>"
+msgstr "<primary>ldconfig</primary>"
+
+#: installation.xml:1699(programlisting)
+#, no-wrap
+msgid "/sbin/ldconfig /usr/local/pgsql/lib"
+msgstr "/sbin/ldconfig /usr/local/pgsql/lib"
+
+#: installation.xml:1706(programlisting)
+#, no-wrap
+msgid "/sbin/ldconfig -m /usr/local/pgsql/lib"
+msgstr "/sbin/ldconfig -m /usr/local/pgsql/lib"
+
+#: installation.xml:1693(para)
+msgid ""
+"<placeholder-1/> If you are on <systemitem class=\"osname\">Linux</"
+"systemitem> and you have root access, you can run: <placeholder-2/> (or "
+"equivalent directory) after installation to enable the run-time linker to "
+"find the shared libraries faster. Refer to the manual page of "
+"<command>ldconfig</command> for more information. On <systemitem class="
+"\"osname\">FreeBSD</systemitem>, <systemitem class=\"osname\">NetBSD</"
+"systemitem>, and <systemitem class=\"osname\">OpenBSD</systemitem> the "
+"command is: <placeholder-3/> instead. Other systems are not known to have an "
+"equivalent command."
+msgstr ""
+"<placeholder-1/> Если вы используете <systemitem class=\"osname\">Linux</"
+"systemitem> и имеете права root, вы можете запустить: <placeholder-2/> "
+"(возможно, с другим каталогом) после установки, чтобы механизм связывания во "
+"время выполнения мог найти разделяемые библиотеки быстрее. За "
+"дополнительными сведениями обратитесь к странице руководства по "
+"<command>ldconfig</command>. Во <systemitem class=\"osname\">FreeBSD</"
+"systemitem>, <systemitem class=\"osname\">NetBSD</systemitem> и <systemitem "
+"class=\"osname\">OpenBSD</systemitem> команда будет такой: <placeholder-3/> "
+"В других системах подобной команды может не быть."
+
+#: installation.xml:1713(title)
+msgid "Environment Variables"
+msgstr "Переменные окружения"
+
+#: installation.xml:1715(indexterm)
+msgid "<primary><envar>PATH</envar></primary>"
+msgstr "<primary><envar>PATH</envar></primary>"
+
+#: installation.xml:1719(para)
+msgid ""
+"If you installed into <filename>/usr/local/pgsql</filename> or some other "
+"location that is not searched for programs by default, you should add "
+"<filename>/usr/local/pgsql/bin</filename> (or whatever you set "
+"<option><literal>--bindir</literal></option> to in <xref linkend=\"configure"
+"\"/>) into your <envar>PATH</envar>. Strictly speaking, this is not "
+"necessary, but it will make the use of <productname>PostgreSQL</productname> "
+"much more convenient."
+msgstr ""
+"Если целевым каталогом был выбран <filename>/usr/local/pgsql</filename> или "
+"какой-то другой, по умолчанию отсутствующий в пути поиска, вам следует "
+"добавить <filename>/usr/local/pgsql/bin</filename> (или другой путь, "
+"переданный <xref linkend=\"configure\"/> в указании <option><literal>--"
+"bindir</literal></option>) в вашу переменную <envar>PATH</envar>. Строго "
+"говоря, это не обязательно, но при этом использовать "
+"<productname>PostgreSQL</productname> будет гораздо удобнее."
+
+#: installation.xml:1733(programlisting)
+#, no-wrap
+msgid ""
+"PATH=/usr/local/pgsql/bin:$PATH\n"
+"export PATH"
+msgstr ""
+"PATH=/usr/local/pgsql/bin:$PATH\n"
+"export PATH"
+
+#: installation.xml:1736(programlisting)
+#, no-wrap
+msgid "set path = ( /usr/local/pgsql/bin $path )"
+msgstr "set path = ( /usr/local/pgsql/bin $path )"
+
+#: installation.xml:1729(para)
+msgid ""
+"To do this, add the following to your shell start-up file, such as "
+"<filename>~/.bash_profile</filename> (or <filename>/etc/profile</filename>, "
+"if you want it to affect all users): <placeholder-1/> If you are using "
+"<command>csh</command> or <command>tcsh</command>, then use this command: "
+"<placeholder-2/>"
+msgstr ""
+"Для этого добавьте в ваш скрипт запуска оболочки, например <filename>~/."
+"bash_profile</filename> (или в <filename>/etc/profile</filename>, если это "
+"нужно всем пользователям): <placeholder-1/> Для оболочек <command>csh</"
+"command> или <command>tcsh</command> команда должна быть такой: "
+"<placeholder-2/>"
+
+#: installation.xml:1740(indexterm)
+msgid "<primary><envar>MANPATH</envar></primary>"
+msgstr "<primary><envar>MANPATH</envar></primary>"
+
+#: installation.xml:1747(programlisting)
+#, no-wrap
+msgid ""
+"MANPATH=/usr/local/pgsql/share/man:$MANPATH\n"
+"export MANPATH"
+msgstr ""
+"MANPATH=/usr/local/pgsql/share/man:$MANPATH\n"
+"export MANPATH"
+
+#: installation.xml:1739(para)
+msgid ""
+"<placeholder-1/> To enable your system to find the <application>man</"
+"application> documentation, you need to add lines like the following to a "
+"shell start-up file unless you installed into a location that is searched by "
+"default: <placeholder-2/>"
+msgstr ""
+"<placeholder-1/> Чтобы ваша система могла найти документацию "
+"<application>man</application>, вам нужно добавить в скрипт запуска оболочки "
+"примерно следующие строки, если только она не установлена в размещение, "
+"просматриваемое по умолчанию: <placeholder-2/>"
+
+#: installation.xml:1751(para)
+msgid ""
+"The environment variables <envar>PGHOST</envar> and <envar>PGPORT</envar> "
+"specify to client applications the host and port of the database server, "
+"overriding the compiled-in defaults. If you are going to run client "
+"applications remotely then it is convenient if every user that plans to use "
+"the database sets <envar>PGHOST</envar>. This is not required, however; the "
+"settings can be communicated via command line options to most client "
+"programs."
+msgstr ""
+"Переменные окружения <envar>PGHOST</envar> и <envar>PGPORT</envar> задают "
+"для клиентских приложений адрес компьютера и порт сервера базы данных, "
+"переопределяя стандартные значения. Если планируется запускать клиентские "
+"приложения удалённо, пользователям, которые будут использовать определённый "
+"сервер, будет удобно, если они установят <envar>PGHOST</envar>. Однако это "
+"не обязательно, так как большинство клиентских программ могут принять эти "
+"параметры через аргументы командной строки."
+
+#: installation.xml:1765(title)
+msgid "Getting Started"
+msgstr "Начало"
+
+#: installation.xml:1767(para)
+msgid ""
+"The following is a quick summary of how to get <productname>PostgreSQL</"
+"productname> up and running once installed. The main documentation contains "
+"more information."
+msgstr ""
+
+#: installation.xml:1774(para)
+msgid ""
+"Create a user account for the <productname>PostgreSQL</productname> server. "
+"This is the user the server will run as. For production use you should "
+"create a separate, unprivileged account (<quote>postgres</quote> is commonly "
+"used). If you do not have root access or just want to play around, your own "
+"user account is enough, but running the server as root is a security risk "
+"and will not work. <screen><userinput>adduser postgres</userinput></screen>"
+msgstr ""
+
+#: installation.xml:1787(para)
+msgid ""
+"Create a database installation with the <command>initdb</command> command. "
+"To run <command>initdb</command> you must be logged in to your "
+"<productname>PostgreSQL</productname> server account. It will not work as "
+"root. <screen>root# <userinput>mkdir /usr/local/pgsql/data</userinput>\n"
+"root# <userinput>chown postgres /usr/local/pgsql/data</userinput>\n"
+"root# <userinput>su - postgres</userinput>\n"
+"postgres$ <userinput>/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data</"
+"userinput></screen>"
+msgstr ""
+
+#: installation.xml:1798(para)
+msgid ""
+"The <option>-D</option> option specifies the location where the data will be "
+"stored. You can use any path you want, it does not have to be under the "
+"installation directory. Just make sure that the server account can write to "
+"the directory (or create it, if it doesn't already exist) before starting "
+"<command>initdb</command>, as illustrated here."
+msgstr ""
+
+#: installation.xml:1809(para)
+msgid ""
+"At this point, if you did not use the <command>initdb</command> <literal>-A</"
+"literal> option, you might want to modify <filename>pg_hba.conf</filename> "
+"to control local access to the server before you start it. The default is to "
+"trust all local users."
+msgstr ""
+
+#: installation.xml:1822(programlisting)
+#, no-wrap
+msgid "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
+msgstr "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
+
+#: installation.xml:1825(programlisting)
+#, no-wrap
+msgid ""
+"nohup /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data \\\n"
+"    &lt;/dev/null &gt;&gt;server.log 2&gt;&amp;1 &lt;/dev/null &amp;"
+msgstr ""
+
+#: installation.xml:1818(para)
+msgid ""
+"The previous <command>initdb</command> step should have told you how to "
+"start up the database server. Do so now. The command should look something "
+"like: <placeholder-1/> This will start the server in the foreground. To put "
+"the server in the background use something like: <placeholder-2/>"
+msgstr ""
+
+#: installation.xml:1831(programlisting)
+#, no-wrap
+msgid "kill `cat /usr/local/pgsql/data/postmaster.pid`"
+msgstr ""
+
+#: installation.xml:1829(para)
+#, fuzzy
+msgid ""
+"To stop a server running in the background you can type: <placeholder-1/>"
+msgstr "Протестировать этот словарь можно так: <placeholder-1/>"
+
+#: installation.xml:1836(para)
+msgid ""
+"Create a database: <screen><userinput>createdb testdb</userinput></screen> "
+"Then enter: <screen><userinput>psql testdb</userinput></screen> to connect "
+"to that database. At the prompt you can enter SQL commands and start "
+"experimenting."
+msgstr ""
+
+#: installation.xml:1849(title)
+#, fuzzy
+msgid "What Now?"
+msgstr "Что протоколировать"
+
+#: installation.xml:1854(para)
+msgid ""
+"The <productname>PostgreSQL</productname> distribution contains a "
+"comprehensive documentation set, which you should read sometime. After "
+"installation, the documentation can be accessed by pointing your browser to "
+"<filename>/usr/local/pgsql/doc/html/index.html</filename>, unless you "
+"changed the installation directories."
+msgstr ""
+
+#: installation.xml:1863(para)
+msgid ""
+"The first few chapters of the main documentation are the Tutorial, which "
+"should be your first reading if you are completely new to <acronym>SQL</"
+"acronym> databases. If you are familiar with database concepts then you want "
+"to proceed with part on server administration, which contains information "
+"about how to set up the database server, database users, and authentication."
+msgstr ""
+
+#: installation.xml:1874(para)
+msgid ""
+"Usually, you will want to modify your computer so that it will automatically "
+"start the database server whenever it boots. Some suggestions for this are "
+"in the documentation."
+msgstr ""
+
+#: installation.xml:1882(para)
+msgid ""
+"Run the regression tests against the installed server (using <command>make "
+"installcheck</command>). If you didn't run the tests before installation, "
+"you should definitely do it now. This is also explained in the documentation."
+msgstr ""
+
+#: installation.xml:1891(para)
+msgid ""
+"By default, <productname>PostgreSQL</productname> is configured to run on "
+"minimal hardware. This allows it to start up with almost any hardware "
+"configuration. The default configuration is, however, not designed for "
+"optimum performance. To achieve optimum performance, several server "
+"parameters must be adjusted, the two most common being "
+"<varname>shared_buffers</varname> and <varname>work_mem</varname>. Other "
+"parameters mentioned in the documentation also affect performance."
+msgstr ""
+
+#: installation.xml:1909(title)
+msgid "Supported Platforms"
+msgstr "Поддерживаемые платформы"
+
+#: installation.xml:1911(para)
+msgid ""
+"A platform (that is, a CPU architecture and operating system combination) is "
+"considered supported by the <productname>PostgreSQL</productname> "
+"development community if the code contains provisions to work on that "
+"platform and it has recently been verified to build and pass its regression "
+"tests on that platform. Currently, most testing of platform compatibility is "
+"done automatically by test machines in the <ulink url=\"http://buildfarm."
+"postgresql.org/\">PostgreSQL Build Farm</ulink>. If you are interested in "
+"using <productname>PostgreSQL</productname> on a platform that is not "
+"represented in the build farm, but on which the code works or can be made to "
+"work, you are strongly encouraged to set up a build farm member machine so "
+"that continued compatibility can be assured."
+msgstr ""
+"Платформа (то есть комбинация архитектуры процессора и операционной системы) "
+"считается поддерживаемой сообществом разработчиков <productname>PostgreSQL</"
+"productname>, если код адаптирован для работы на этой платформе, и он в "
+"настоящее время успешно собирается и проходит регрессионные тесты на ней. В "
+"настоящее время тестирование совместимости в основном выполняется "
+"автоматически в <ulink url=\"http://buildfarm.postgresql.org/\">Ферме сборки "
+"PostgreSQL</ulink>. Если вы заинтересованы в использовании "
+"<productname>PostgreSQL</productname> на платформе, ещё не представленной в "
+"ферме сборки, но уверены, что код на ней работает или может работать, мы "
+"очень хотели бы, чтобы вы включили в ферму сборки свой компьютер с этой "
+"платформой для постоянной гарантии совместимости."
+
+#: installation.xml:1925(para)
+msgid ""
+"In general, <productname>PostgreSQL</productname> can be expected to work on "
+"these CPU architectures: x86, x86_64, IA64, PowerPC, PowerPC 64, S/390, "
+"S/390x, Sparc, Sparc 64, ARM, MIPS, MIPSEL, M68K, and PA-RISC. Code support "
+"exists for M32R and VAX, but these architectures are not known to have been "
+"tested recently. It is often possible to build on an unsupported CPU type by "
+"configuring with <option>--disable-spinlocks</option>, but performance will "
+"be poor."
+msgstr ""
+"Вообще следует ожидать, что <productname>PostgreSQL</productname> будет "
+"работать на процессорах следующих архитектур: x86, x86_64, IA64, PowerPC, "
+"PowerPC 64, S/390, S/390x, Sparc, Sparc 64, ARM, MIPS, MIPSEL, M68K и PA-"
+"RISC. Есть также код для поддержки M32R и VAX, но неизвестно, проверялась ли "
+"его работа в последнее время. Часто сервер можно собрать для "
+"неподдерживаемого типа процессора, сконфигурировав сборку с указанием "
+"<option>--disable-spinlocks</option>, но производительность при этом будет "
+"неудовлетворительной."
+
+#: installation.xml:1935(para)
+msgid ""
+"<productname>PostgreSQL</productname> can be expected to work on these "
+"operating systems: Linux (all recent distributions), Windows (Win2000 SP4 "
+"and later), FreeBSD, OpenBSD, NetBSD, OS X, AIX, HP/UX, Solaris, and "
+"UnixWare. Other Unix-like systems may also work but are not currently being "
+"tested. In most cases, all CPU architectures supported by a given operating "
+"system will work. Look in the <xref linkend=\"installation-platform-notes\"/"
+"> below to see if there is information specific to your operating system, "
+"particularly if using an older system."
+msgstr ""
+"Также следует ожидать, что сервер <productname>PostgreSQL</productname> "
+"будет работать в следующих операционных системах: Linux (все последние "
+"дистрибутивы), Windows (Win2000 SP4 и новее), FreeBSD, OpenBSD, NetBSD, OS "
+"X, AIX, HP/UX, Solaris и UnixWare. Возможна также работа в других Unix-"
+"подобных системах, но в настоящее время она не проверяется. При этом в "
+"большинстве случаев он будет работать на процессорах всех архитектур, "
+"поддерживаемых данной операционной системой. Перейдите к <xref remap=\"3\" "
+"linkend=\"installation-platform-notes\"/> и проверьте, нет ли там замечаний, "
+"относящихся именно к вашей операционной системе, особенно, если вы "
+"используете не самую новую систему."
+
+#: installation.xml:1947(para)
+msgid ""
+"If you have installation problems on a platform that is known to be "
+"supported according to recent build farm results, please report it to "
+"<email>pgsql-bugs@postgresql.org</email>. If you are interested in porting "
+"<productname>PostgreSQL</productname> to a new platform, <email>pgsql-"
+"hackers@postgresql.org</email> is the appropriate place to discuss that."
+msgstr ""
+"Если вы столкнулись с проблемами установки на платформе, которая считается "
+"поддерживаемой согласно последним результатам сборки в нашей ферме, "
+"пожалуйста, сообщите о них по адресу <email>pgsql-bugs@postgresql.org</"
+"email>. Если вы заинтересованы в переносе <productname>PostgreSQL</"
+"productname> на новую платформу, обсудить это можно в рассылке <email>pgsql-"
+"hackers@postgresql.org</email>."
+
+#: installation.xml:1958(title)
+msgid "Platform-specific Notes"
+msgstr "Замечания по отдельным платформам"
+
+#: installation.xml:1960(para)
+#, fuzzy
+msgid ""
+"This section documents additional platform-specific issues regarding the "
+"installation and setup of PostgreSQL. Be sure to read the installation "
+"instructions, and in particular <xref linkend=\"install-requirements\"/> as "
+"well. Also, check <phrase condition=\"standalone\">the file <filename>src/"
+"test/regress/README</filename> and the documentation</phrase>\n"
+"   <phrase condition=\"default\"><xref linkend=\"regress\"/></phrase> "
+"regarding the interpretation of regression test results."
+msgstr ""
+"В этом разделе приведены дополнительные замечания по отдельным платформам, "
+"связанные с установкой и подготовкой к работе PostgreSQL. Обязательно "
+"изучите ещё инструкции по установке, и в частности <xref remap=\"4\" linkend="
+"\"install-requirements\"/>. Также обратитесь к <xref remap=\"3\" linkend="
+"\"regress\"/>, где рассказывается, как прочитать результаты регрессионных "
+"тестов."
+
+#: installation.xml:1971(para)
+msgid ""
+"Platforms that are not covered here have no known platform-specific "
+"installation issues."
+msgstr ""
+"Если какие-то платформы здесь не упоминаются, значит каких-либо известных "
+"особенностей установки в них нет."
+
+#: installation.xml:1977(title)
+msgid "AIX"
+msgstr "AIX"
+
+#: installation.xml:1979(indexterm)
+msgid "<primary>AIX</primary><secondary>installation on</secondary>"
+msgstr "<primary>AIX</primary><secondary>установка в</secondary>"
+
+#: installation.xml:1983(para)
+msgid ""
+"PostgreSQL works on AIX, but getting it installed properly can be "
+"challenging. AIX versions from 4.3.3 to 6.1 are considered supported. You "
+"can use GCC or the native IBM compiler <command>xlc</command>. In general, "
+"using recent versions of AIX and PostgreSQL helps. Check the build farm for "
+"up to date information about which versions of AIX are known to work."
+msgstr ""
+"PostgreSQL работает в AIX, но установить его правильно может быть непростой "
+"задачей. Поддерживаемыми считаются версии AIX с 4.3.3 до 6.1. Для сборки вы "
+"можете применить GCC или собственный компилятор IBM <command>xlc</command>. "
+"Вообще говоря, полезно использовать последние версии AIX и PostgreSQL. "
+"Получить актуальную информацию о версиях AIX, работа в которых проверена на "
+"данный момент, можно на сайте фермы сборки."
+
+#: installation.xml:1992(para)
+msgid "The minimum recommended fix levels for supported AIX versions are:"
+msgstr ""
+"Минимальные рекомендуемые уровни исправлений для поддерживаемых версий AIX:"
+
+#: installation.xml:1998(term)
+msgid "AIX 4.3.3"
+msgstr "AIX 4.3.3"
+
+#: installation.xml:1999(para)
+msgid "Maintenance Level 11 + post ML11 bundle"
+msgstr "Эксплуатационный уровень (ML) 11 + пакет исправлений после ML11"
+
+#: installation.xml:2003(term)
+msgid "AIX 5.1"
+msgstr "AIX 5.1"
+
+#: installation.xml:2004(para)
+msgid "Maintenance Level 9 + post ML9 bundle"
+msgstr "Эксплуатационный уровень (ML) 9 + пакет исправлений после ML9"
+
+#: installation.xml:2008(term)
+msgid "AIX 5.2"
+msgstr "AIX 5.2"
+
+#: installation.xml:2009(para)
+msgid "Technology Level 10 Service Pack 3"
+msgstr "Технологический уровень (TL) 10, Пакет обновлений (SP) 3"
+
+#: installation.xml:2013(term)
+msgid "AIX 5.3"
+msgstr "AIX 5.3"
+
+#: installation.xml:2014(para)
+msgid "Technology Level 7"
+msgstr "Технологический уровень (TL) 7"
+
+#: installation.xml:2018(term)
+msgid "AIX 6.1"
+msgstr "AIX 6.1"
+
+#: installation.xml:2019(para)
+msgid "Base Level"
+msgstr "Базовый уровень"
+
+#: installation.xml:2023(para)
+msgid ""
+"To check your current fix level, use <command>oslevel -r</command> in AIX "
+"4.3.3 to AIX 5.2 ML 7, or <command>oslevel -s</command> in later versions."
+msgstr ""
+"Чтобы проверить ваш текущий уровень исправлений, выполните <command>oslevel -"
+"r</command> в AIX версии с 4.3.3 по 5.2 ML 7, либо <command>oslevel -s</"
+"command> в более поздних версиях."
+
+#: installation.xml:2029(para)
+msgid ""
+"Use the following <command>configure</command> flags in addition to your own "
+"if you have installed Readline or libz in <literal>/usr/local</literal>: "
+"<literal>--with-includes=/usr/local/include --with-libraries=/usr/local/lib</"
+"literal>."
+msgstr ""
+"Если Readline или libz у вас установлены не в <literal>/usr/local</literal>, "
+"передайте <command>configure</command> следующие ключи в дополнение к вашим: "
+"<literal>--with-includes=/usr/local/include --with-libraries=/usr/local/lib</"
+"literal>."
+
+#: installation.xml:2038(title)
+msgid "GCC Issues"
+msgstr "Особенности использования GCC"
+
+#: installation.xml:2040(para)
+msgid ""
+"On AIX 5.3, there have been some problems getting PostgreSQL to compile and "
+"run using GCC."
+msgstr ""
+"В AIX 5.3 наблюдались проблемы с компиляцией и запуском PostgreSQL с "
+"использованием GCC."
+
+#: installation.xml:2045(para)
+msgid ""
+"You will want to use a version of GCC subsequent to 3.3.2, particularly if "
+"you use a prepackaged version. We had good success with 4.0.1. Problems with "
+"earlier versions seem to have more to do with the way IBM packaged GCC than "
+"with actual issues with GCC, so that if you compile GCC yourself, you might "
+"well have success with an earlier version of GCC."
+msgstr ""
+"Для успешной сборки вам потребуется GCC версии новее 3.3.2, особенно, если "
+"вы используете версию из системного пакета. Мы добивались успеха с 4.0.1. "
+"Проблемы с предыдущими версиями, судя по всему, были связаны больше с тем, "
+"как IBM упаковала GCC, а не собственно с GCC, поэтому если вы скомпилируете "
+"GCC самостоятельно, положительный исход возможен и с ранней версией GCC."
+
+#: installation.xml:2056(title)
+msgid "Unix-Domain Sockets Broken"
+msgstr "Неработающие доменные сокеты Unix"
+
+#: installation.xml:2058(para)
+msgid ""
+"AIX 5.3 has a problem where <structname>sockaddr_storage</structname> is not "
+"defined to be large enough. In version 5.3, IBM increased the size of "
+"<structname>sockaddr_un</structname>, the address structure for Unix-domain "
+"sockets, but did not correspondingly increase the size of "
+"<structname>sockaddr_storage</structname>. The result of this is that "
+"attempts to use Unix-domain sockets with PostgreSQL lead to libpq "
+"overflowing the data structure. TCP/IP connections work OK, but not Unix-"
+"domain sockets, which prevents the regression tests from working."
+msgstr ""
+"В AIX 5.3 была проблема с размером структуры <structname>sockaddr_storage</"
+"structname>. В версии 5.3 IBM увеличила размер <structname>sockaddr_un</"
+"structname>, структуры адреса для доменных сокетов Unix, но не увеличила "
+"соответственно размер <structname>sockaddr_storage</structname>. В итоге при "
+"попытке PostgreSQL использовать доменные сокеты Unix происходило "
+"переполнение этой структуры в libpq. Подключение через TCP/IP "
+"устанавливается корректно, а через доменные сокеты Unix — нет, и в "
+"результате регрессионные тесты не проходят."
+
+#: installation.xml:2071(para)
+msgid ""
+"The problem was reported to IBM, and is recorded as bug report PMR29657. If "
+"you upgrade to maintenance level 5300-03 or later, that will include this "
+"fix. A quick workaround is to alter <symbol>_SS_MAXSIZE</symbol> to 1025 in "
+"<filename>/usr/include/sys/socket.h</filename>. In either case, recompile "
+"PostgreSQL once you have the corrected header file."
+msgstr ""
+"Об этой проблеме было сообщено IBM, она зафиксирована в отчёте об ошибке "
+"PMR29657. Если вы обновите систему до эксплуатационного уровня 5300-03 или "
+"новее, она получит соответствующее исправление. В качестве временного "
+"решения можно присвоить <symbol>_SS_MAXSIZE</symbol> значение 1025 в "
+"<filename>/usr/include/sys/socket.h</filename>. В любом случае, после "
+"исправления этого заголовочного файла перекомпилируйте PostgreSQL."
+
+#: installation.xml:2082(title)
+msgid "Internet Address Issues"
+msgstr "Проблемы с сетевыми адресами"
+
+#: installation.xml:2084(para)
+msgid ""
+"PostgreSQL relies on the system's <function>getaddrinfo</function> function "
+"to parse IP addresses in <varname>listen_addresses</varname>, "
+"<filename>pg_hba.conf</filename>, etc. Older versions of AIX have assorted "
+"bugs in this function. If you have problems related to these settings, "
+"updating to the appropriate AIX fix level shown above should take care of it."
+msgstr ""
+"PostgreSQL пользуется системной функцией <function>getaddrinfo</function> "
+"для разбора IP-адресов, указанных в параметре <varname>listen_addresses</"
+"varname>, файле <filename>pg_hba.conf</filename> и т. д. В старых версиях "
+"AIX эта функция работала некорректно. Если вы столкнулись с проблемами в "
+"этой области, обновление до уровня исправлений AIX, обозначенного выше, "
+"должно решить их."
+
+#. http://archives.postgresql.org/message-id/6064jt6cfm.fsf_-_@dba2.int.libertyrms.com
+#: installation.xml:2095(para)
+msgid "One user reports:"
+msgstr "Один пользователь сообщает:"
+
+#: installation.xml:2099(para)
+msgid ""
+"When implementing PostgreSQL version 8.1 on AIX 5.3, we periodically ran "
+"into problems where the statistics collector would <quote>mysteriously</"
+"quote> not come up successfully. This appears to be the result of unexpected "
+"behavior in the IPv6 implementation. It looks like PostgreSQL and IPv6 do "
+"not play very well together on AIX 5.3."
+msgstr ""
+"Используя PostgreSQL версии 8.1 в AIX 5.3, мы периодически сталкивались с "
+"тем, что сборщик статистики <quote>загадочным образом</quote> не "
+"запускается. Кажется, это результат незапланированного поведения реализации "
+"IPv6. Похоже, что PostgreSQL и IPv6 не дружат в AIX 5.3."
+
+#: installation.xml:2112(para)
+msgid ""
+"Delete the IPv6 address for localhost: <screen>(as root)\n"
+"# ifconfig lo0 inet6 ::1/0 delete</screen>"
+msgstr ""
+"Удалите адрес IPv6 для localhost: <screen>(от имени root)\n"
+"# ifconfig lo0 inet6 ::1/0 delete</screen>"
+
+#: installation.xml:2125(programlisting)
+#, no-wrap
+msgid "hosts=local,bind"
+msgstr "hosts=local,bind"
+
+#: installation.xml:2127(programlisting)
+#, no-wrap
+msgid "hosts=local4,bind4"
+msgstr "hosts=local4,bind4"
+
+#: installation.xml:2120(para)
+msgid ""
+"Remove IPv6 from net services. The file <filename>/etc/netsvc.conf</"
+"filename> on AIX is roughly equivalent to <filename>/etc/nsswitch.conf</"
+"filename> on Solaris/Linux. The default, on AIX, is thus: <placeholder-1/> "
+"Replace this with: <placeholder-2/> to deactivate searching for IPv6 "
+"addresses."
+msgstr ""
+"Удалите IPv6 из сетевых сервисов. Файл <filename>/etc/netsvc.conf</filename> "
+"в AIX примерно соответствует файлу <filename>/etc/nsswitch.conf</filename> в "
+"Solaris/Linux. По умолчанию в AIX он выглядит так: <placeholder-1/> Чтобы "
+"отключить поиск адресов IPv6, замените его содержимое следующим: "
+"<placeholder-2/>"
+
+#: installation.xml:2108(para)
+msgid ""
+"Any of the following actions <quote>fix</quote> the problem. <placeholder-1/>"
+msgstr ""
+"Для <quote>решения</quote> проблемы можно выполнить одно из следующих "
+"действий. <placeholder-1/>"
+
+#: installation.xml:2135(para)
+msgid ""
+"This is really a workaround for problems relating to immaturity of IPv6 "
+"support, which improved visibly during the course of AIX 5.3 releases. It "
+"has worked with AIX version 5.3, but does not represent an elegant solution "
+"to the problem. It has been reported that this workaround is not only "
+"unnecessary, but causes problems on AIX 6.1, where IPv6 support has become "
+"more mature."
+msgstr ""
+"К этим временным решениям приходилось прибегать из-за проблем, связанных с "
+"сырой реализацией IPv6, которая заметно улучшилась в последующих выпусках "
+"AIX 5.3. Эти решения работали в AIX версии 5.3, но они конечно далеки от "
+"идеальных. Кроме того, сообщалось, что они не только не требуются, но и "
+"приводят к другим проблемам в AIX 6.1, где поддержка IPv6 стала более зрелой."
+
+#: installation.xml:2148(title)
+msgid "Memory Management"
+msgstr "Управление памятью"
+
+#. http://archives.postgresql.org/message-id/603bgqmpl9.fsf@dba2.int.libertyrms.com
+#: installation.xml:2151(para)
+msgid ""
+"AIX can be somewhat peculiar with regards to the way it does memory "
+"management. You can have a server with many multiples of gigabytes of RAM "
+"free, but still get out of memory or address space errors when running "
+"applications. One example is <command>createlang</command> failing with "
+"unusual errors. For example, running as the owner of the PostgreSQL "
+"installation: <screen>-bash-3.00$ createlang plperl template1\n"
+"createlang: language installation failed: ERROR:  could not load library \"/"
+"opt/dbs/pgsql748/lib/plperl.so\": A memory address is not in the address "
+"space for the process.</screen> Running as a non-owner in the group "
+"possessing the PostgreSQL installation: <screen>-bash-3.00$ createlang "
+"plperl template1\n"
+"createlang: language installation failed: ERROR:  could not load library \"/"
+"opt/dbs/pgsql748/lib/plperl.so\": Bad address</screen> Another example is "
+"out of memory errors in the PostgreSQL server logs, with every memory "
+"allocation near or greater than 256 MB failing."
+msgstr ""
+"Иногда управление памятью в AIX может работать несколько странно. В системе "
+"может быть свободно несколько гигабайт ОЗУ, но при запуске приложений всё "
+"равно возможны ошибки, связанные с адресным пространством или нехваткой "
+"памяти. Например, необычную ошибку может выдать команда <command>createlang</"
+"command>. При запуске от имени владельца инсталляции PostgreSQL: <screen>-"
+"bash-3.00$ createlang plperl template1\n"
+"createlang: language installation failed: ERROR:  could not load library \"/"
+"opt/dbs/pgsql748/lib/plperl.so\": A memory address is not in the address "
+"space for the process.</screen> (createlang: установить язык не удалось: "
+"ОШИБКА: не удалось загрузить библиотеку \"/opt/dbs/pgsql748/lib/plperl.so\": "
+"Адрес памяти находится не в адресном пространстве процесса.) При запуске от "
+"имени не владельца, а члена группы-владельца инсталляции PostgreSQL: "
+"<screen>-bash-3.00$ createlang plperl template1\n"
+"createlang: language installation failed: ERROR:  could not load library \"/"
+"opt/dbs/pgsql748/lib/plperl.so\": Bad address</screen> (createlang: "
+"установить язык не удалось: ОШИБКА: не удалось загрузить библиотеку \"/opt/"
+"dbs/pgsql748/lib/plperl.so\": Неверный адрес) Также сообщения о нехватке "
+"памяти могут появляться в журнале PostgreSQL при попытке выделить блок "
+"памяти размером около 256 МиБ или больше."
+
+#: installation.xml:2169(para)
+msgid ""
+"The overall cause of all these problems is the default bittedness and memory "
+"model used by the server process. By default, all binaries built on AIX are "
+"32-bit. This does not depend upon hardware type or kernel in use. These 32-"
+"bit processes are limited to 4 GB of memory laid out in 256 MB segments "
+"using one of a few models. The default allows for less than 256 MB in the "
+"heap as it shares a single segment with the stack."
+msgstr ""
+"Общая причина всех этих проблем связана с битностью и моделью памяти "
+"серверного процесса. По умолчанию все исполняемые файлы для AIX собираются "
+"как 32-битные, вне зависимости от того, какой тип оборудования или ядра "
+"используется. Такие 32-битные процессы ограничиваются общим пространством в "
+"4 ГиБ, разделённым на сегменты по 256 МиБ, по одной из нескольких моделей. "
+"По умолчанию в куче можно выделить меньше 256 МиБ, так как она разделяет "
+"один сегмент со стеком."
+
+#: installation.xml:2179(para)
+msgid ""
+"In the case of the <command>createlang</command> example, above, check your "
+"umask and the permissions of the binaries in your PostgreSQL installation. "
+"The binaries involved in that example were 32-bit and installed as mode 750 "
+"instead of 755. Due to the permissions being set in this fashion, only the "
+"owner or a member of the possessing group can load the library. Since it "
+"isn't world-readable, the loader places the object into the process' heap "
+"instead of the shared library segments where it would otherwise be placed."
+msgstr ""
+"В ситуации с показанным выше примером <command>createlang</command>, "
+"проверьте umask и разрешения, назначенные для двоичных файлов в вашей "
+"инсталляции PostgreSQL. Задействованные в данном примере двоичные файлы были "
+"32-битными и установились с режимом 750 вместо 755. Из-за таких разрешений "
+"только владелец или член группы-владельца могли загрузить требуемую "
+"библиотеку. Так как она недоступна для чтения всеми, загрузчик помещал этот "
+"объект в область кучи процесса, а не в сегменты разделяемых библиотек, где "
+"он должен находиться."
+
+#: installation.xml:2191(para)
+msgid ""
+"The <quote>ideal</quote> solution for this is to use a 64-bit build of "
+"PostgreSQL, but that is not always practical, because systems with 32-bit "
+"processors can build, but not run, 64-bit binaries."
+msgstr ""
+"В <quote>идеале</quote> эту проблему можно решить, если использовать 64-"
+"битную сборку PostgreSQL, но это не всегда практично, так как с 32-битным "
+"процессором нельзя будет запустить 64-битный код (можно только собрать)."
+
+#: installation.xml:2198(para)
+msgid ""
+"If a 32-bit binary is desired, set <symbol>LDR_CNTRL</symbol> to "
+"<literal>MAXDATA=0x<replaceable>n</replaceable>0000000</literal>, where 1 "
+"&lt;= n &lt;= 8, before starting the PostgreSQL server, and try different "
+"values and <filename>postgresql.conf</filename> settings to find a "
+"configuration that works satisfactorily. This use of <symbol>LDR_CNTRL</"
+"symbol> tells AIX that you want the server to have <symbol>MAXDATA</symbol> "
+"bytes set aside for the heap, allocated in 256 MB segments. When you find a "
+"workable configuration, <command>ldedit</command> can be used to modify the "
+"binaries so that they default to using the desired heap size. PostgreSQL can "
+"also be rebuilt, passing <literal>configure LDFLAGS=\"-Wl,-"
+"bmaxdata:0x<replaceable>n</replaceable>0000000\"</literal> to achieve the "
+"same effect."
+msgstr ""
+"При желании использовать 32-битную версию сервера установите в "
+"<symbol>LDR_CNTRL</symbol> значение <literal>MAXDATA=0x<replaceable>n</"
+"replaceable>0000000</literal>, где 1 &lt;= n &lt;= 8, до запуска PostgreSQL, "
+"и попробуйте подобрать подходящее значение и параметры <filename>postgresql."
+"conf</filename>. Переменная окружения <symbol>LDR_CNTRL</symbol> говорит "
+"AIX, что вы хотите, чтобы сервер получил <symbol>MAXDATA</symbol> байт для "
+"области кучи, в сегментах по 256 МиБ. Подобрав рабочее значение, можно "
+"воспользоваться <command>ldedit</command> и модифицировать двоичные файлы, "
+"чтобы они использовали такой размер кучи по умолчанию. Тот же эффект можно "
+"получить, пересобрав PostgreSQL с указанием <literal>configure LDFLAGS=\"-"
+"Wl,-bmaxdata:0x<replaceable>n</replaceable>0000000\"</literal>."
+
+#: installation.xml:2215(para)
+msgid ""
+"For a 64-bit build, set <envar>OBJECT_MODE</envar> to 64 and pass "
+"<literal>CC=\"gcc -maix64\"</literal> and <literal>LDFLAGS=\"-Wl,-bbigtoc\"</"
+"literal> to <command>configure</command>. (Options for <command>xlc</"
+"command> might differ.) If you omit the export of <envar>OBJECT_MODE</"
+"envar>, your build may fail with linker errors. When <envar>OBJECT_MODE</"
+"envar> is set, it tells AIX's build utilities such as <command>ar</command>, "
+"<command>as</command>, and <command>ld</command> what type of objects to "
+"default to handling."
+msgstr ""
+"Для 64-битной сборки определите переменную <envar>OBJECT_MODE</envar> со "
+"значением 64 и передайте <command>configure</command> указания <literal>CC="
+"\"gcc -maix64\"</literal> и <literal>LDFLAGS=\"-Wl,-bbigtoc\"</literal>. "
+"(Для <command>xlc</command> параметры могут быть другими.) Если нужное "
+"значение <envar>OBJECT_MODE</envar> не будет экспортировано, при сборке "
+"могут произойти ошибки на стадии компоновки. Когда переменная "
+"<envar>OBJECT_MODE</envar> установлена, она говорит сборочным утилитам AIX, "
+"таким как <command>ar</command>, <command>as</command> и <command>ld</"
+"command>, какие типы объектов обрабатывать по умолчанию."
+
+#: installation.xml:2227(para)
+msgid ""
+"By default, overcommit of paging space can happen. While we have not seen "
+"this occur, AIX will kill processes when it runs out of memory and the "
+"overcommit is accessed. The closest to this that we have seen is fork "
+"failing because the system decided that there was not enough memory for "
+"another process. Like many other parts of AIX, the paging space allocation "
+"method and out-of-memory kill is configurable on a system- or process-wide "
+"basis if this becomes a problem."
+msgstr ""
+"По умолчанию система может чрезмерно выделять память в пространстве "
+"подкачки. Хотя нам не приходилось с этим сталкиваться, AIX уничтожает "
+"процессы при попытке обращения к чрезмерно выделенной памяти, когда её "
+"фактически не хватает. Наиболее близкое, что мы наблюдали, была ошибка "
+"порождения процесса из-за того, что система решала, что для него не хватает "
+"памяти. Как и многие другие компоненты AIX, механизмы распределения "
+"пространства подкачки и уничтожения процессов при нехватке памяти можно "
+"настроить на уровне системы или процесса, если возникают подобные проблемы."
+
+#: installation.xml:2239(title)
+msgid "References and Resources"
+msgstr "Ссылки и ресурсы"
+
+#: installation.xml:2243(title)
+msgid ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
+"aix.doc/aixprggd/genprogc/lrg_prg_support.htm\">Large Program Support</ulink>"
+msgstr ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
+"aix.doc/aixprggd/genprogc/lrg_prg_support.htm\">Large Program Support</ulink>"
+
+#: installation.xml:2246(title) installation.xml:2255(title)
+msgid ""
+"AIX Documentation: General Programming Concepts: Writing and Debugging "
+"Programs"
+msgstr ""
+"Документация AIX: Общие концепции программирования: Написание и отладка "
+"программ"
+
+#: installation.xml:2252(title)
+msgid ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
+"aix.doc/aixprggd/genprogc/address_space.htm\">Program Address Space "
+"Overview</ulink>"
+msgstr ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
+"aix.doc/aixprggd/genprogc/address_space.htm\">Program Address Space "
+"Overview</ulink>"
+
+#: installation.xml:2261(title)
+msgid ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/resmgmt2.htm\">Performance Overview of the "
+"Virtual Memory Manager (VMM)</ulink>"
+msgstr ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/resmgmt2.htm\">Performance Overview of the "
+"Virtual Memory Manager (VMM)</ulink>"
+
+#: installation.xml:2264(title) installation.xml:2273(title)
+#: installation.xml:2282(title)
+msgid "AIX Documentation: Performance Management Guide"
+msgstr "Документация AIX: Руководство по управлению производительностью"
+
+#: installation.xml:2270(title)
+msgid ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/memperf7.htm\">Page Space Allocation</ulink>"
+msgstr ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/memperf7.htm\">Page Space Allocation</ulink>"
+
+#: installation.xml:2279(title)
+msgid ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/memperf6.htm\">Paging-space thresholds tuning</"
+"ulink>"
+msgstr ""
+"<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
+"ibm.aix.doc/aixbman/prftungd/memperf6.htm\">Paging-space thresholds tuning</"
+"ulink>"
+
+#: installation.xml:2287(title)
+msgid ""
+"<ulink url=\"http://www.redbooks.ibm.com/abstracts/sg245674.html?Open"
+"\">Developing and Porting C and C++ Applications on AIX</ulink>"
+msgstr ""
+"<ulink url=\"http://www.redbooks.ibm.com/abstracts/sg245674.html?Open"
+"\">Developing and Porting C and C++ Applications on AIX</ulink>"
+
+#: installation.xml:2289(publishername)
+msgid "IBM Redbook"
+msgstr "Красная книга IBM"
+
+#: installation.xml:2297(title)
+msgid "Cygwin"
+msgstr "Cygwin"
+
+#: installation.xml:2299(indexterm)
+msgid "<primary>Cygwin</primary><secondary>installation on</secondary>"
+msgstr "<primary>Cygwin</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2303(para)
+#, fuzzy
+msgid ""
+"PostgreSQL can be built using Cygwin, a Linux-like environment for Windows, "
+"but that method is inferior to the native Windows build <phrase condition="
+"\"default\">(see <xref linkend=\"install-windows\"/>)</phrase> and running a "
+"server under Cygwin is no longer recommended."
+msgstr ""
+"PostgreSQL можно собрать с применением Cygwin, Linux-подобной среды для "
+"Windows, но сейчас этому методу предпочитается обычная сборка в Windows (см. "
+"<xref remap=\"4\" linkend=\"install-windows\"/>), и запускать сервер в среде "
+"Cygwin более не рекомендуется."
+
+#: installation.xml:2318(para)
+msgid ""
+"Set your path to use the Cygwin bin directory before the Windows utilities. "
+"This will help prevent problems with compilation."
+msgstr ""
+"Настройте путь поиска так, чтобы каталог bin в Cygwin стоял перед каталогами "
+"утилит Windows. Это поможет избавиться от проблем при компиляции."
+
+#: installation.xml:2326(para)
+msgid ""
+"The <command>adduser</command> command is not supported; use the appropriate "
+"user management application on Windows NT, 2000, or XP. Otherwise, skip this "
+"step."
+msgstr ""
+"Команда <command>adduser</command> не поддерживается; воспользуйтесь "
+"соответствующим средством управления пользователями для Windows NT, 2000 или "
+"XP. Либо просто пропустите этот шаг."
+
+#: installation.xml:2334(para)
+msgid ""
+"The <command>su</command> command is not supported; use ssh to simulate su "
+"on Windows NT, 2000, or XP. Otherwise, skip this step."
+msgstr ""
+"Команда <command>su</command> не поддерживается; для эмуляции su в Windows "
+"NT, 2000 или XP воспользуйтесь ssh. Либо пропустите этот шаг."
+
+#: installation.xml:2342(para)
+msgid "OpenSSL is not supported."
+msgstr "OpenSSL не поддерживается."
+
+#: installation.xml:2348(para)
+msgid ""
+"Start <command>cygserver</command> for shared memory support. To do this, "
+"enter the command <literal>/usr/sbin/cygserver &amp;</literal>. This program "
+"needs to be running anytime you start the PostgreSQL server or initialize a "
+"database cluster (<command>initdb</command>). The default "
+"<command>cygserver</command> configuration may need to be changed (e.g., "
+"increase <symbol>SEMMNS</symbol>) to prevent PostgreSQL from failing due to "
+"a lack of system resources."
+msgstr ""
+"Запустите <command>cygserver</command> для поддержки разделяемой памяти. Для "
+"этого введите команду <literal>/usr/sbin/cygserver &amp;</literal>. Эта "
+"программа должна работать всегда при запуске сервера PostgreSQL или "
+"инициализации кластера баз данных (<command>initdb</command>). Возможно, вам "
+"придётся настроить конфигурацию <command>cygserver</command> (например, "
+"увеличить <symbol>SEMMNS</symbol>), чтобы PostgreSQL мог получить требуемые "
+"системные ресурсы."
+
+#: installation.xml:2361(para)
+msgid ""
+"Building might fail on some systems where a locale other than C is in use. "
+"To fix this, set the locale to C by doing <command>export LANG=C.utf8</"
+"command> before building, and then setting it back to the previous setting, "
+"after you have installed PostgreSQL."
+msgstr ""
+"Сборка может завершиться ошибкой в некоторых системах, где используется "
+"локаль, отличная от C. Чтобы исправить это, выберите локаль C, выполнив "
+"<command>export LANG=C.utf8</command> до сборки, а затем восстановите "
+"предыдущее значение после установки PostgreSQL."
+
+#: installation.xml:2378(programlisting)
+#, no-wrap
+msgid "make MAX_CONNECTIONS=5 check"
+msgstr "make MAX_CONNECTIONS=5 check"
+
+#: installation.xml:2371(para)
+msgid ""
+"The parallel regression tests (<literal>make check</literal>) can generate "
+"spurious regression test failures due to overflowing the <function>listen()</"
+"function> backlog queue which causes connection refused errors or hangs. You "
+"can limit the number of connections using the make variable "
+"<varname>MAX_CONNECTIONS</varname> thus: <placeholder-1/> (On some systems "
+"you can have up to about 10 simultaneous connections)."
+msgstr ""
+"Параллельные регрессионные тесты (<literal>make check</literal>) могут "
+"выдавать ложные ошибки тестирования при переполнении очереди "
+"<function>listen()</function>, из-за чего подключения могут не "
+"устанавливаться или зависать. Вы можете ограничить число подключений, "
+"определив переменную make <varname>MAX_CONNECTIONS</varname> так: "
+"<placeholder-1/> (В некоторых системах поддерживается до 10 одновременных "
+"подключений)."
+
+#: installation.xml:2310(para)
+msgid ""
+"When building from source, proceed according to the normal installation "
+"procedure (i.e., <literal>./configure; make</literal>; etc.), noting the "
+"following-Cygwin specific differences: <placeholder-1/>"
+msgstr ""
+"Выполняя сборку, следуйте обычной процедуре установки (т. е., <literal>./"
+"configure; make</literal>; и т. д.), с учётом следующих особенностей Cygwin: "
+"<placeholder-1/>"
+
+#: installation.xml:2386(para)
+msgid ""
+"It is possible to install <command>cygserver</command> and the PostgreSQL "
+"server as Windows NT services. For information on how to do this, please "
+"refer to the <filename>README</filename> document included with the "
+"PostgreSQL binary package on Cygwin. It is installed in the directory "
+"<filename>/usr/share/doc/Cygwin</filename>."
+msgstr ""
+"Сервер PostgreSQL и <command>cygserver</command> можно запустить в виде "
+"служб Windows NT. Как это сделать, рассказывается в описании "
+"<filename>README</filename>, включённом в двоичный пакет PostgreSQL для "
+"Cygwin. Оно устанавливается в каталог <filename>/usr/share/doc/Cygwin</"
+"filename>."
+
+#: installation.xml:2397(title)
+msgid "HP-UX"
+msgstr "HP-UX"
+
+#: installation.xml:2399(indexterm)
+msgid "<primary>HP-UX</primary><secondary>installation on</secondary>"
+msgstr "<primary>HP-UX</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2403(para)
+msgid ""
+"PostgreSQL 7.3+ should work on Series 700/800 PA-RISC machines running HP-UX "
+"10.X or 11.X, given appropriate system patch levels and build tools. At "
+"least one developer routinely tests on HP-UX 10.20, and we have reports of "
+"successful installations on HP-UX 11.00 and 11.11."
+msgstr ""
+"PostgreSQL 7.3+ должен работать на машинах Series 700/800 PA-RISC под "
+"управлением HP-UX 10.X или 11.X, с подходящими уровнями системных "
+"исправлений и средствами сборки. Как минимум один разработчик регулярно "
+"тестирует сборку в HP-UX 10.20, и мы получали сообщения об успешных "
+"установках в HP-UX 11.00 и 11.11."
+
+#: installation.xml:2411(para)
+#, fuzzy
+msgid ""
+"Aside from the PostgreSQL source distribution, you will need GNU make (HP's "
+"make will not do), and either GCC or HP's full ANSI C compiler. If you "
+"intend to build from Git sources rather than a distribution tarball, you "
+"will also need Flex (GNU lex) and Bison (GNU yacc). We also recommend making "
+"sure you are fairly up-to-date on HP patches. At a minimum, if you are "
+"building 64 bit binaries on HP-UX 11.11 you may need PHSS_30966 (11.11) or a "
+"successor patch otherwise <command>initdb</command> may hang: "
+"<literallayout>\n"
+"PHSS_30966  s700_800 ld(1) and linker tools cumulative patch\n"
+"</literallayout> On general principles you should be current on libc and ld/"
+"dld patches, as well as compiler patches if you are using HP's C compiler. "
+"See HP's support sites such as <ulink url=\"http://itrc.hp.com\"/> and "
+"<ulink url=\"ftp://us-ffs.external.hp.com/\"/> for free copies of their "
+"latest patches."
+msgstr ""
+"Помимо пакета исходного кода PostgreSQL, вам потребуется GNU make (HP make "
+"не подойдёт) и GCC или полный компилятор ANSI C от HP. Если вы намерены "
+"выполнить сборку не из дистрибутивного пакета исходного кода, а из Git, вам "
+"также потребуется Flex (GNU lex) и Bison (GNU yacc). Мы также рекомендуем "
+"убедиться, что у вас установлены довольно свежие исправления HP. Для сборки "
+"64-битного кода в HP-UX 11.11 вам потребуется PHSS_30966 (11.11) или более "
+"новое исправление, без него <command>initdb</command> может зависать: "
+"<literallayout class=\"normal\">PHSS_30966  s700_800 Накопительное "
+"исправление ld(1) и утилит компоновки.</literallayout> Как правило, для "
+"сборки нужно иметь текущие исправления libc и ld/dld, а также компилятора "
+"(если вы используете компилятор HP). Получить эти исправления можно на "
+"сайтах поддержки HP <ulink url=\"http://itrc.hp.com\"/> и <ulink url=\"ftp://"
+"us-ffs.external.hp.com/\"/>."
+
+#: installation.xml:2432(para)
+msgid ""
+"If you are building on a PA-RISC 2.0 machine and want to have 64-bit "
+"binaries using GCC, you must use GCC 64-bit version. GCC binaries for HP-UX "
+"PA-RISC and Itanium are available from <ulink url=\"http://www.hp.com/go/gcc"
+"\"/>. Don't forget to get and install binutils at the same time."
+msgstr ""
+"Если вы проводите сборку на машине PA-RISC 2.0 и хотите получить 64-битный "
+"исполняемый код, вы должны использовать 64-битную версию GCC. "
+"Скомпилированный GCC для HP-UX PA-RISC и Itanium доступен по адресу <ulink "
+"url=\"http://www.hp.com/go/gcc\"/>. Не забудьте также загрузить и установить "
+"binutils."
+
+#: installation.xml:2440(para)
+msgid ""
+"If you are building on a PA-RISC 2.0 machine and want the compiled binaries "
+"to run on PA-RISC 1.1 machines you will need to specify <option>+DAportable</"
+"option> in <envar>CFLAGS</envar>."
+msgstr ""
+"Если вы проводите сборку на машине PA-RISC 2.0 и хотите, чтобы "
+"скомпилированный код запускался на машинах PA-RISC 1.1, также потребуется "
+"указать <option>+DAportable</option> в <envar>CFLAGS</envar>."
+
+#: installation.xml:2446(para)
+#, fuzzy
+msgid ""
+"If you are building on a HP-UX Itanium machine, you will need the latest HP "
+"ANSI C compiler with its dependent patch or successor patches: "
+"<literallayout>\n"
+"PHSS_30848  s700_800 HP C Compiler (A.05.57)\n"
+"PHSS_30849  s700_800 u2comp/be/plugin library Patch\n"
+"</literallayout>"
+msgstr ""
+"Если вы проводите сборку на машине HP-UX Itanium, вам потребуется последний "
+"компилятор ANSI C от HP с соответствующим исправлением или более новыми: "
+"<literallayout class=\"normal\">PHSS_30848  s700_800 Компилятор HP С "
+"(A.05.57)\n"
+"PHSS_30849  s700_800 Исправление библиотеки u2comp/be/plugin</literallayout>"
+
+#: installation.xml:2460(programlisting)
+#, no-wrap
+msgid "./configure CC=cc"
+msgstr "./configure CC=cc"
+
+#: installation.xml:2462(programlisting)
+#, no-wrap
+msgid "./configure CC=gcc"
+msgstr "./configure CC=gcc"
+
+#: installation.xml:2456(para)
+msgid ""
+"If you have both HP's C compiler and GCC's, then you might want to "
+"explicitly select the compiler to use when you run <command>configure</"
+"command>: <placeholder-1/> for HP's C compiler, or <placeholder-2/> for GCC. "
+"If you omit this setting, then configure will pick <command>gcc</command> if "
+"it has a choice."
+msgstr ""
+"Если вы используете компилятор HP C и GCC, может потребоваться явно выбрать "
+"предпочитаемый компилятор при запуске <command>configure</command>: "
+"<placeholder-1/> для использования компилятора C от HP, либо <placeholder-2/"
+"> для выбора GCC. При отсутствии явного указания configure выберет "
+"<command>gcc</command>, если есть такая возможность."
+
+#: installation.xml:2467(para)
+msgid ""
+"The default install target location is <filename>/usr/local/pgsql</"
+"filename>, which you might want to change to something under <filename>/opt</"
+"filename>. If so, use the <option>--prefix</option> switch to "
+"<command>configure</command>."
+msgstr ""
+"По умолчанию целевой каталог установки — <filename>/usr/local/pgsql</"
+"filename>, но вы, возможно, захотите его изменить на другой, внутри "
+"<filename>/opt</filename>. В этом случае передайте его <command>configure</"
+"command> с ключом <option>--prefix</option>."
+
+#: installation.xml:2475(para)
+msgid ""
+"In the regression tests, there might be some low-order-digit differences in "
+"the geometry tests, which vary depending on which compiler and math library "
+"versions you use. Any other error is cause for suspicion."
+msgstr ""
+"В регрессионных тестах возможны отклонения при геометрических проверках, в "
+"наименее значащих цифрах, в зависимости от применяемого компилятора и "
+"математической библиотеки. Любые другие ошибки заслуживают внимания."
+
+#: installation.xml:2484(title)
+msgid "MinGW/Native Windows"
+msgstr "MinGW/Собственная сборка Windows"
+
+#: installation.xml:2486(indexterm)
+msgid "<primary>MinGW</primary><secondary>installation on</secondary>"
+msgstr "<primary>MinGW</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2490(para)
+#, fuzzy
+msgid ""
+"PostgreSQL for Windows can be built using MinGW, a Unix-like build "
+"environment for Microsoft operating systems, or using Microsoft's "
+"<productname>Visual C++</productname> compiler suite. The MinGW build "
+"variant uses the normal build system described in this chapter; the Visual C+"
+"+ build works completely differently and is described in <phrase condition="
+"\"standalone\">the documentation</phrase><phrase condition=\"default\"><xref "
+"linkend=\"install-windows\"/></phrase>. It is a fully native build and uses "
+"no additional software like MinGW. A ready-made installer is available on "
+"the main PostgreSQL web site."
+msgstr ""
+"PostgreSQL для Windows можно собрать с использованием MinGW, Unix-подобной "
+"среды сборки для операционных систем Microsoft, либо используя набор средств "
+"разработки Microsoft <productname>Visual C++</productname>. При "
+"использовании MinGW применяется обычная система сборки, описанная в этой "
+"главе; сборка Visual C++ выполняется по-другому, как описано в <xref remap="
+"\"6\" linkend=\"install-windows\"/>. Это полностью естественная сборка для "
+"Windows, для которой не требуется дополнительное ПО вроде MinGW. Готовый "
+"инсталлятор для Windows можно найти на сайте PostgreSQL."
+
+#: installation.xml:2503(para)
+msgid ""
+"The native Windows port requires a 32 or 64-bit version of Windows 2000 or "
+"later. Earlier operating systems do not have sufficient infrastructure (but "
+"Cygwin may be used on those). MinGW, the Unix-like build tools, and MSYS, a "
+"collection of Unix tools required to run shell scripts like "
+"<command>configure</command>, can be downloaded from <ulink url=\"http://www."
+"mingw.org/\"/>. Neither is required to run the resulting binaries; they are "
+"needed only for creating the binaries."
+msgstr ""
+"PostgreSQL, портированный в Windows, будет работать в 32- или 64-битной "
+"версии Windows 2000 или новее. В предыдущих операционных системах нет "
+"достаточной инфраструктуры (но там можно использовать Cygwin). MinGW, Unix-"
+"подобные средства сборки, и MSYS, набор утилит Unix, требуемых для "
+"исполнения скриптов типа <command>configure</command>, можно загрузить с "
+"сайта <ulink url=\"http://www.mingw.org/\"/>. Эти дополнительные программы "
+"нужны только для сборки, для запуска полученных исполняемых файлов они не "
+"требуются."
+
+#: installation.xml:2515(para)
+msgid ""
+"To build 64 bit binaries using MinGW, install the 64 bit tool set from "
+"<ulink url=\"http://mingw-w64.sourceforge.net/\"/>, put its bin directory in "
+"the <envar>PATH</envar>, and run <command>configure</command> with the "
+"<command>--host=x86_64-w64-mingw32</command> option."
+msgstr ""
+"Чтобы собрать 64-битную версию с использованием MinGW, установите набор 64-"
+"битных утилит с <ulink url=\"http://mingw-w64.sourceforge.net/\"/>, добавьте "
+"путь к его каталогу bin в <envar>PATH</envar> и запустите "
+"<command>configure</command> с параметром <command>--host=x86_64-w64-"
+"mingw32</command>."
+
+#: installation.xml:2523(para)
+msgid ""
+"After you have everything installed, it is suggested that you run "
+"<application>psql</application> under <command>CMD.EXE</command>, as the "
+"MSYS console has buffering issues."
+msgstr ""
+"Когда вы всё установите, запускать <application>psql</application> "
+"предлагается из <command>CMD.EXE</command>, так как в консоли MSYS есть "
+"проблемы с буферизацией."
+
+#: installation.xml:2531(title)
+msgid "Collecting Crash Dumps on Windows"
+msgstr "Сбор аварийных дампов в Windows"
+
+#: installation.xml:2533(para)
+msgid ""
+"If PostgreSQL on Windows crashes, it has the ability to generate "
+"<productname>minidumps</productname> that can be used to track down the "
+"cause for the crash, similar to core dumps on Unix. These dumps can be read "
+"using the <productname>Windows Debugger Tools</productname> or using "
+"<productname>Visual Studio</productname>. To enable the generation of dumps "
+"on Windows, create a subdirectory named <filename>crashdumps</filename> "
+"inside the cluster data directory. The dumps will then be written into this "
+"directory with a unique name based on the identifier of the crashing process "
+"and the current time of the crash."
+msgstr ""
+"В случае аварии PostgreSQL в Windows он может сгенерировать минидамп памяти, "
+"который помогает выяснить причину аварии, подобно дампам памяти в Unix. "
+"Проанализировать эти дампы можно, используя <productname>Windows Debugger "
+"Tools</productname> (Средства отладки Windows) или <productname>Visual "
+"Studio</productname>. Чтобы в Windows получить дамп в случае аварии, "
+"создайте подкаталог <filename>crashdumps</filename> в каталоге данных "
+"кластера. Дампы будут записываться в этот каталог с уникальным именем, "
+"составленным из идентификатора процесса, давшего сбой, и времени сбоя."
+
+#: installation.xml:2548(title)
+msgid "SCO OpenServer and SCO UnixWare"
+msgstr "SCO OpenServer и SCO UnixWare"
+
+#: installation.xml:2550(indexterm)
+msgid "<primary>SCO</primary><secondary>installation on</secondary>"
+msgstr "<primary>SCO</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2554(indexterm)
+msgid "<primary>UnixWare</primary><secondary>installation on</secondary>"
+msgstr "<primary>UnixWare</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2558(para)
+msgid ""
+"PostgreSQL can be built on SCO UnixWare 7 and SCO OpenServer 5. On "
+"OpenServer, you can use either the OpenServer Development Kit or the "
+"Universal Development Kit. However, some tweaking may be needed, as "
+"described below."
+msgstr ""
+"PostgreSQL можно собрать в SCO UnixWare 7 и SCO OpenServer 5. В OpenServer "
+"для сборки можно использовать либо Инструменты разработки OpenServer "
+"(OpenServer Development Kit), либо Универсальные средства разработки "
+"(Universal Development Kit). Возможно, при этом потребуется выполнить "
+"дополнительные действия, как описано ниже."
+
+#: installation.xml:2566(title)
+msgid "Skunkware"
+msgstr "Skunkware"
+
+#: installation.xml:2568(para)
+msgid ""
+"You should locate your copy of the SCO Skunkware CD. The Skunkware CD is "
+"included with UnixWare 7 and current versions of OpenServer 5. Skunkware "
+"includes ready-to-install versions of many popular programs that are "
+"available on the Internet. For example, gzip, gunzip, GNU Make, Flex, and "
+"Bison are all included. For UnixWare 7.1, this CD is now labeled \"Open "
+"License Software Supplement\". If you do not have this CD, the software on "
+"it is available from <ulink url=\"http://www.sco.com/skunkware/\"/>."
+msgstr ""
+"Вы должны найти свою копию SCO Skunkware CD. Skunkware CD поставлялся с "
+"UnixWare 7 и текущими версиями OpenServer 5. В набор Skunkware входят "
+"готовые к установке версии многих популярных программ, доступных в "
+"Интернете. В частности, в него входят gzip, gunzip, GNU Make, Flex и Bison. "
+"Для UnixWare 7.1 этот CD называется \"Open License Software Supplement"
+"\" (Дополнительное ПО с открытыми лицензиями). Если у вас нет такого CD, это "
+"ПО можно найти на сайте <ulink url=\"http://www.sco.com/skunkware/\"/>."
+
+#: installation.xml:2580(para)
+msgid ""
+"Skunkware has different versions for UnixWare and OpenServer. Make sure you "
+"install the correct version for your operating system, except as noted below."
+msgstr ""
+"Версии Skunkware для UnixWare и OpenServer различаются. Убедитесь, что вы "
+"устанавливаете правильную версию для вашей ОС, но учтите следующие замечания."
+
+#: installation.xml:2586(para)
+msgid ""
+"On UnixWare 7.1.3 and beyond, the GCC compiler is included on the UDK CD as "
+"is GNU Make."
+msgstr ""
+"В UnixWare 7.1.3 и новее компилятор GCC поставляется на UDK CD, вместе с GNU "
+"Make."
+
+#: installation.xml:2593(title)
+msgid "GNU Make"
+msgstr "GNU Make"
+
+#: installation.xml:2595(para)
+msgid ""
+"You need to use the GNU Make program, which is on the Skunkware CD. By "
+"default, it installs as <filename>/usr/local/bin/make</filename>."
+msgstr ""
+"Вам потребуется программа GNU Make, которая находится на Skunkware CD. По "
+"умолчанию она устанавливается в <filename>/usr/local/bin/make</filename>."
+
+#: installation.xml:2601(para)
+msgid ""
+"As of UnixWare 7.1.3 and above, the GNU Make program is the OSTK portion of "
+"the UDK CD, and is in <filename>/usr/gnu/bin/gmake</filename>."
+msgstr ""
+"В UnixWare 7.1.3 и новее программа GNU Make включена в раздел OSTK диска UDK "
+"и устанавливается в <filename>/usr/gnu/bin/gmake</filename>."
+
+#: installation.xml:2609(title)
+msgid "Readline"
+msgstr "Readline"
+
+#: installation.xml:2611(para)
+msgid ""
+"The Readline library is on the Skunkware CD. But it is not included on the "
+"UnixWare 7.1 Skunkware CD. If you have the UnixWare 7.0.0 or 7.0.1 Skunkware "
+"CDs, you can install it from there. Otherwise, try <ulink url=\"http://www."
+"sco.com/skunkware/\"/>."
+msgstr ""
+"Библиотека Readline поставляется на Skunkware CD, но она не включена в "
+"Skunkware CD для UnixWare 7.1. Если у вас есть Skunkware CD для UnixWare "
+"7.0.0 или 7.0.1, вы можете установить её с этого диска. В противном случае, "
+"обратитесь к <ulink url=\"http://www.sco.com/skunkware/\"/>."
+
+#: installation.xml:2625(programlisting)
+#, no-wrap
+msgid "./configure --with-libraries=/usr/local/lib --with-includes=/usr/local/include"
+msgstr "./configure --with-libraries=/usr/local/lib --with-includes=/usr/local/include"
+
+#: installation.xml:2619(para)
+msgid ""
+"By default, Readline installs into <filename>/usr/local/lib</filename> and "
+"<filename>/usr/local/include</filename>. However, the PostgreSQL "
+"<command>configure</command> program will not find it there without help. If "
+"you installed Readline, then use the following options to "
+"<command>configure</command>: <placeholder-1/>"
+msgstr ""
+"По умолчанию Readline устанавливается в <filename>/usr/local/lib</filename> "
+"и <filename>/usr/local/include</filename>. Однако <command>configure</"
+"command> для PostgreSQL не сможет найти её там без дополнительной помощи. "
+"Поэтому, если вы установили Readline, передайте <command>configure</command> "
+"следующие параметры: <placeholder-1/>"
+
+#: installation.xml:2630(title)
+msgid "Using the UDK on OpenServer"
+msgstr "Использование UDK в OpenServer"
+
+#: installation.xml:2636(programlisting)
+#, no-wrap
+msgid "./configure --with-libraries=/udk/usr/lib --with-includes=/udk/usr/include"
+msgstr "./configure --with-libraries=/udk/usr/lib --with-includes=/udk/usr/include"
+
+#: installation.xml:2638(programlisting)
+#, no-wrap
+msgid "./configure --with-libraries=\"/udk/usr/lib /usr/local/lib\" --with-includes=\"/udk/usr/include /usr/local/include\""
+msgstr "./configure --with-libraries=\"/udk/usr/lib /usr/local/lib\" --with-includes=\"/udk/usr/include /usr/local/include\""
+
+#: installation.xml:2632(para)
+msgid ""
+"If you are using the new Universal Development Kit (UDK) compiler on "
+"OpenServer, you need to specify the locations of the UDK libraries: "
+"<placeholder-1/> Putting these together with the Readline options from "
+"above: <placeholder-2/>"
+msgstr ""
+"Если вы используете новый компилятор из Универсальных средств разработки "
+"(UDK, Universal Development Kit) в OpenServer, вам потребуется задать "
+"размещение библиотек UDK: <placeholder-1/> Совместите эти параметры с "
+"заданными выше для Readline: <placeholder-2/>"
+
+#: installation.xml:2643(title)
+msgid "Reading the PostgreSQL Man Pages"
+msgstr "Получение справки man по PostgreSQL"
+
+#: installation.xml:2652(programlisting)
+#, no-wrap
+msgid "MANPATH=/usr/lib/scohelp/%L/man:/usr/dt/man:/usr/man:/usr/share/man:scohelp:/usr/local/man:/usr/local/pgsql/share/man"
+msgstr "MANPATH=/usr/lib/scohelp/%L/man:/usr/dt/man:/usr/man:/usr/share/man:scohelp:/usr/local/man:/usr/local/pgsql/share/man"
+
+#: installation.xml:2645(para)
+msgid ""
+"By default, the PostgreSQL man pages are installed into <filename>/usr/local/"
+"pgsql/share/man</filename>. By default, UnixWare does not look there for man "
+"pages. To be able to read them you need to modify the <varname>MANPATH</"
+"varname> variable in <filename>/etc/default/man</filename>, for example: "
+"<placeholder-1/>"
+msgstr ""
+"По умолчанию страницы man для PostgreSQL устанавливаются в <filename>/usr/"
+"local/pgsql/share/man</filename>. Но UnixWare по умолчанию не ищет там эти "
+"страницы. Чтобы вы могли обращаться к ним, потребуется изменить переменную "
+"<varname>MANPATH</varname> в <filename>/etc/default/man</filename>, например "
+"так: <placeholder-1/>"
+
+#: installation.xml:2655(para)
+msgid ""
+"On OpenServer, some extra research needs to be invested to make the man "
+"pages usable, because the man system is a bit different from other "
+"platforms. Currently, PostgreSQL will not install them at all."
+msgstr ""
+"В OpenServer необходимо провести дополнительные исследования, чтобы справкой "
+"man можно было пользоваться, потому что в этой системе man работает немного "
+"не так, как в других. В настоящее время PostgreSQL просто не устанавливает "
+"справочные страницы в ней."
+
+#: installation.xml:2664(title)
+msgid "C99 Issues with the 7.1.1b Feature Supplement"
+msgstr "Проблемы C99 с функциональным дополнением 7.1.1b"
+
+#: installation.xml:2666(para)
+msgid ""
+"For compilers earlier than the one released with OpenUNIX 8.0.0 (UnixWare "
+"7.1.2), including the 7.1.1b Feature Supplement, you may need to specify "
+"<option>-Xb</option> in <varname>CFLAGS</varname> or the <varname>CC</"
+"varname> environment variable. The indication of this is an error in "
+"compiling <filename>tuplesort.c</filename> referencing inline functions. "
+"Apparently there was a change in the 7.1.2(8.0.0) compiler and beyond."
+msgstr ""
+"Для компиляторов, более ранних, чем выпущенный с OpenUNIX 8.0.0 (UnixWare "
+"7.1.2), в том числе с функциональным дополнением 7.1.1b, может потребоваться "
+"указать <option>-Xb</option> в переменной окружения <varname>CC</varname> "
+"или <varname>CFLAGS</varname>. Признаком этой проблемы будет ошибка при "
+"компиляции <filename>tuplesort.c</filename> в коде, ссылающемся на "
+"встроенные функции. Судя по всему, соответствующее исправление включено в "
+"компилятор версии 7.1.2(8.0.0) и новее."
+
+#: installation.xml:2679(title)
+msgid "Threading on UnixWare"
+msgstr "Многопоточность в UnixWare"
+
+#: installation.xml:2681(para)
+msgid ""
+"For threading, you<emphasis>must</emphasis> use <option>-Kpthread</option> "
+"on <emphasis>all</emphasis> libpq-using programs. libpq uses "
+"<function>pthread_*</function> calls, which are only available with the "
+"<option>-Kpthread</option>/<option>-Kthread</option> flag."
+msgstr ""
+"Для использования многопоточности вы <emphasis>должны</emphasis> добавлять "
+"указание <option>-Kpthread</option> при компиляции <emphasis>всех</emphasis> "
+"программ на базе libpq. Библиотека libpq вызывает функции "
+"<function>pthread_*</function>, которые доступны только при компиляции с "
+"флагом <option>-Kpthread</option>/<option>-Kthread</option>."
+
+#: installation.xml:2692(title)
+msgid "Solaris"
+msgstr "Solaris"
+
+#: installation.xml:2694(indexterm)
+msgid "<primary>Solaris</primary><secondary>installation on</secondary>"
+msgstr "<primary>Solaris</primary><secondary>установка в</secondary>"
+
+#: installation.xml:2698(para)
+msgid ""
+"PostgreSQL is well-supported on Solaris. The more up to date your operating "
+"system, the fewer issues you will experience; details below."
+msgstr ""
+"PostgreSQL хорошо поддерживается в Solaris. Чем новее операционная система, "
+"тем меньше затруднений будет; подробнее об этом ниже."
+
+#: installation.xml:2705(title)
+msgid "Required Tools"
+msgstr "Требуемые инструменты"
+
+#: installation.xml:2707(para)
+msgid ""
+"You can build with either GCC or Sun's compiler suite. For better code "
+"optimization, Sun's compiler is strongly recommended on the SPARC "
+"architecture. We have heard reports of problems when using GCC 2.95.1; GCC "
+"2.95.3 or later is recommended. If you are using Sun's compiler, be careful "
+"not to select <filename>/usr/ucb/cc</filename>; use <filename>/opt/SUNWspro/"
+"bin/cc</filename>."
+msgstr ""
+"Вы можете выполнить сборку с GCC или с набором компиляторов Sun. Для лучшей "
+"оптимизации кода на архитектуре SPARC настоятельно рекомендуется "
+"использовать компилятор Sun. Мы слышали о проблемах с GCC 2.95.1, поэтому "
+"рекомендуется использовать GCC 2.95.3 или новее. Если вы решили применить "
+"компилятор Sun, не выберите по ошибке <filename>/usr/ucb/cc</filename>; "
+"правильный путь — <filename>/opt/SUNWspro/bin/cc</filename>."
+
+#: installation.xml:2717(para)
+msgid ""
+"You can download Sun Studio from <ulink url=\"http://www.oracle.com/"
+"technetwork/server-storage/solarisstudio/downloads/\"/>. Many of GNU tools "
+"are integrated into Solaris 10, or they are present on the Solaris companion "
+"CD. If you like packages for older version of Solaris, you can find these "
+"tools at <ulink url=\"http://www.sunfreeware.com\"/>. If you prefer sources, "
+"look at <ulink url=\"http://www.gnu.org/order/ftp.html\"/>."
+msgstr ""
+"Sun Studio вы можете загрузить с сайта <ulink url=\"http://www.oracle.com/"
+"technetwork/server-storage/solarisstudio/downloads/\"/>. Средства GNU по "
+"большей части интегрированы в Solaris 10, либо представлены на сопутствующем "
+"CD. Если вам нужны пакеты для старых версий Solaris, вы можете найти их на "
+"сайте <ulink url=\"http://www.sunfreeware.com\"/>. Если вы предпочитаете "
+"исходный код, обратитесь к <ulink url=\"http://www.gnu.org/order/ftp.html\"/"
+">."
+
+#: installation.xml:2731(title)
+msgid "Problems with OpenSSL"
+msgstr "Проблемы с OpenSSL"
+
+#: installation.xml:2737(filename)
+msgid "src/backend/libpq/crypt.c"
+msgstr "src/backend/libpq/crypt.c"
+
+#: installation.xml:2738(filename)
+msgid "src/backend/libpq/password.c"
+msgstr "src/backend/libpq/password.c"
+
+#: installation.xml:2739(filename)
+msgid "src/interfaces/libpq/fe-auth.c"
+msgstr "src/interfaces/libpq/fe-auth.c"
+
+#: installation.xml:2740(filename)
+msgid "src/interfaces/libpq/fe-connect.c"
+msgstr "src/interfaces/libpq/fe-connect.c"
+
+#: installation.xml:2733(para)
+msgid ""
+"When you build PostgreSQL with OpenSSL support you might get compilation "
+"errors in the following files: <placeholder-1/> This is because of a "
+"namespace conflict between the standard <filename>/usr/include/crypt.h</"
+"filename> header and the header files provided by OpenSSL."
+msgstr ""
+"Собирая PostgreSQL с поддержкой OpenSSL, вы можете получить ошибки "
+"компиляции в следующих файлах: <placeholder-1/> Это вызвано конфликтом имён "
+"между стандартным <filename>/usr/include/crypt.h</filename> и заголовочными "
+"файлами в составе OpenSSL."
+
+#: installation.xml:2748(para)
+msgid ""
+"Upgrading your OpenSSL installation to version 0.9.6a fixes this problem. "
+"Solaris 9 and above has a newer version of OpenSSL."
+msgstr ""
+"Эту проблему можно решить, обновив инсталляцию OpenSSL до версии 0.9.6a. "
+"Solaris 9 и новее уже включает обновлённую версию OpenSSL."
+
+#: installation.xml:2755(title)
+msgid "configure Complains About a Failed Test Program"
+msgstr "Процедура configure сообщает о сбое тестовой программы"
+
+#: installation.xml:2764(programlisting)
+#, no-wrap
+msgid "configure ... LDFLAGS=\"-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib\""
+msgstr "configure ... LDFLAGS=\"-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib\""
+
+#: installation.xml:2757(para)
+msgid ""
+"If <command>configure</command> complains about a failed test program, this "
+"is probably a case of the run-time linker being unable to find some library, "
+"probably libz, libreadline or some other non-standard library such as "
+"libssl. To point it to the right location, set the <envar>LDFLAGS</envar> "
+"environment variable on the <command>configure</command> command line, e.g., "
+"<placeholder-1/> See the <citerefentry><refentrytitle>ld</"
+"refentrytitle><manvolnum>1</manvolnum></citerefentry> man page for more "
+"information."
+msgstr ""
+"Если <command>configure</command> сообщает о сбое тестовой программы, это "
+"может быть вызвано тем, что при связывании во время выполнения не удаётся "
+"найти некоторую библиотеку, вероятно, libz, libreadline или какую-то другую "
+"нестандартную, например, libssl. Чтобы указать правильное размещение "
+"библиотеки, задайте переменную окружения <envar>LDFLAGS</envar> в командной "
+"строке <command>configure</command>, например так: <placeholder-1/> За "
+"дополнительными сведениями обратитесь к странице man "
+"<citerefentry><refentrytitle>ld</refentrytitle><manvolnum>1</manvolnum></"
+"citerefentry>."
+
+#: installation.xml:2772(title)
+msgid "64-bit Build Sometimes Crashes"
+msgstr "Периодические сбои 64-битной сборки"
+
+#: installation.xml:2783(programlisting)
+#, no-wrap
+msgid "LIBOBJS ="
+msgstr "LIBOBJS ="
+
+#: installation.xml:2785(programlisting)
+#, no-wrap
+msgid "LIBOBJS = snprintf.o"
+msgstr "LIBOBJS = snprintf.o"
+
+#: installation.xml:2774(para)
+msgid ""
+"On Solaris 7 and older, the 64-bit version of libc has a buggy "
+"<function>vsnprintf</function> routine, which leads to erratic core dumps in "
+"PostgreSQL. The simplest known workaround is to force PostgreSQL to use its "
+"own version of <function>vsnprintf</function> rather than the library copy. "
+"To do this, after you run <command>configure</command> edit a file produced "
+"by <command>configure</command>: In <filename>src/Makefile.global</"
+"filename>, change the line <placeholder-1/> to read <placeholder-2/> (There "
+"might be other files already listed in this variable. Order does not "
+"matter.) Then build as usual."
+msgstr ""
+"В Solaris 7 и старее 64-битная версия libc содержала бракованную функцию "
+"<function>vsnprintf</function>, которая могла вызывать непредсказуемые сбои "
+"PostgreSQL. Самое простое известное решение — сделать, чтобы PostgreSQL "
+"использовал собственную версию <function>vsnprintf</function> вместо "
+"библиотечной версии. Для этого, выполнив <command>configure</command>, "
+"отредактируйте полученный в результате <command>configure</command> файл. В "
+"<filename>src/Makefile.global</filename> поменяйте строку <placeholder-1/> "
+"на такую <placeholder-2/> (В этой переменной уже также могут быть "
+"перечислены и другие файлы.) Затем продолжите сборку как обычно."
+
+#: installation.xml:2792(title)
+msgid "Compiling for Optimal Performance"
+msgstr "Компиляция для максимальной производительности"
+
+#: installation.xml:2794(para)
+msgid ""
+"On the SPARC architecture, Sun Studio is strongly recommended for "
+"compilation. Try using the <option>-xO5</option> optimization flag to "
+"generate significantly faster binaries. Do not use any flags that modify "
+"behavior of floating-point operations and <varname>errno</varname> "
+"processing (e.g., <option>-fast</option>). These flags could raise some "
+"nonstandard PostgreSQL behavior for example in the date/time computing."
+msgstr ""
+"Для архитектуры SPARC настоятельно рекомендуется проводить компиляцию с "
+"использованием Sun Studio. Добавив флаг <option>-xO5</option>, вы можете "
+"получить исполняемый код, который будет работать значительно быстрее. Но не "
+"добавляйте никакие флаги, влияющие на вычисления с плавающей точкой или "
+"обработку <varname>errno</varname> (например, <option>-fast</option>). С "
+"такими флагами PostgreSQL может вести себя нестандартно, например, выполняя "
+"операции с датами/временем."
+
+#: installation.xml:2805(para)
+msgid ""
+"If you do not have a reason to use 64-bit binaries on SPARC, prefer the 32-"
+"bit version. The 64-bit operations are slower and 64-bit binaries are slower "
+"than the 32-bit variants. And on other hand, 32-bit code on the AMD64 CPU "
+"family is not native, and that is why 32-bit code is significant slower on "
+"this CPU family."
+msgstr ""
+"Если у вас нет причины использовать 64-битные программы в архитектуре SPARC, "
+"собирайте 32-битную версию, так как 64-битные операции, а значит и 64-битные "
+"программы, выполняются медленнее 32-битных. С другой стороны, 32-битный код "
+"для процессоров семейства AMD64 не является &laquo;родным&raquo;, поэтому на "
+"таких процессорах значительно медленнее работает 32-битный код."
+
+#: installation.xml:2816(title)
+msgid "Using DTrace for Tracing PostgreSQL"
+msgstr "Применение DTrace для трассировки PostgreSQL"
+
+#: installation.xml:2818(para)
+#, fuzzy
+msgid ""
+"Yes, using DTrace is possible. See <phrase condition=\"standalone\">the "
+"documentation</phrase>\n"
+"     <phrase condition=\"default\"><xref linkend=\"dynamic-trace\"/></"
+"phrase> for further information. You can also find more information in this "
+"article: <ulink url=\"https://blogs.oracle.com/robertlor/entry/"
+"user_level_dtrace_probes_in\"/>."
+msgstr ""
+"Да, вы можете использовать DTrace. За дополнительными сведениями обратитесь "
+"к <xref remap=\"3\" linkend=\"dynamic-trace\"/>. Другую полезную информацию "
+"можно найти в этой статье: <ulink url=\"https://blogs.oracle.com/robertlor/"
+"entry/user_level_dtrace_probes_in\"/>."
+
+#: installation.xml:2826(para)
+msgid ""
+"If you see the linking of the <command>postgres</command> executable abort "
+"with an error message like: <screen>Undefined                       first "
+"referenced\n"
+" symbol                             in file\n"
+"AbortTransaction                    utils/probes.o\n"
+"CommitTransaction                   utils/probes.o\n"
+"ld: fatal: Symbol referencing errors. No output written to postgres\n"
+"collect2: ld returned 1 exit status\n"
+"make: *** [postgres] Error 1</screen> your DTrace installation is too old to "
+"handle probes in static functions. You need Solaris 10u4 or newer."
+msgstr ""
+"Если компоновка исполняемого файла <command>postgres</command> прерывается с "
+"таким сообщением об ошибке: <screen>Undefined                       first "
+"referenced\n"
+" symbol                             in file\n"
+"AbortTransaction                    utils/probes.o\n"
+"CommitTransaction                   utils/probes.o\n"
+"ld: fatal: Symbol referencing errors. No output written to postgres\n"
+"collect2: ld returned 1 exit status\n"
+"make: *** [postgres] Error 1</screen> Это означает, что ваша инсталляция "
+"DTrace слишком стара и неспособна работать с пробами в статических функциях. "
+"В этом случае вам нужна версия Solaris 10u4 или новее."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: installation.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

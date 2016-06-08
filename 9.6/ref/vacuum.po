@@ -1,0 +1,445 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/vacuum.xml:8(indexterm)
+msgid "<primary>VACUUM</primary>"
+msgstr "<primary>VACUUM</primary>"
+
+#: ref/vacuum.xml:13(refentrytitle)
+msgctxt "refentrytitle"
+msgid "VACUUM"
+msgstr "VACUUM"
+
+#: ref/vacuum.xml:14(manvolnum)
+msgid "7"
+msgstr "7"
+
+#: ref/vacuum.xml:15(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#: ref/vacuum.xml:19(refname)
+msgctxt "refname"
+msgid "VACUUM"
+msgstr "VACUUM"
+
+#: ref/vacuum.xml:20(refpurpose)
+msgid "garbage-collect and optionally analyze a database"
+msgstr "провести сборку мусора и, возможно, проанализировать базу данных"
+
+#: ref/vacuum.xml:24(replaceable) ref/vacuum.xml:25(replaceable)
+#: ref/vacuum.xml:26(replaceable) ref/vacuum.xml:132(replaceable)
+msgid "table_name"
+msgstr "table_name"
+
+#: ref/vacuum.xml:24(replaceable) ref/vacuum.xml:26(replaceable)
+#: ref/vacuum.xml:142(replaceable)
+#, fuzzy
+msgid "column_name"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"column_name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"column_name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"имя_столбца"
+
+#: ref/vacuum.xml:24(synopsis)
+#, no-wrap
+msgid ""
+"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
+"VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] [ <placeholder-3/> ]\n"
+"VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] ANALYZE [ <placeholder-4/> [ (<placeholder-5/> [, ...] ) ] ]"
+msgstr ""
+"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
+"VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] [ <placeholder-3/> ]\n"
+"VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] ANALYZE [ <placeholder-4/> [ (<placeholder-5/> [, ...] ) ] ]"
+
+#: ref/vacuum.xml:30(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/vacuum.xml:32(para)
+msgid ""
+"<command>VACUUM</command> reclaims storage occupied by dead tuples. In "
+"normal <productname>PostgreSQL</productname> operation, tuples that are "
+"deleted or obsoleted by an update are not physically removed from their "
+"table; they remain present until a <command>VACUUM</command> is done. "
+"Therefore it's necessary to do <command>VACUUM</command> periodically, "
+"especially on frequently-updated tables."
+msgstr ""
+"<command>VACUUM</command> высвобождает пространство, занимаемое &laquo;"
+"мёртвыми&raquo; кортежами. При обычных операциях <productname>PostgreSQL</"
+"productname> кортежи, удалённые или устаревшие в результате обновления, "
+"физически не удаляются из таблицы; они сохраняются в ней, пока не будет "
+"выполнена команда <command>VACUUM</command>. Таким образом, периодически "
+"необходимо выполнять <command>VACUUM</command>, особенно для часто "
+"изменяемых таблиц."
+
+#: ref/vacuum.xml:41(para)
+msgid ""
+"With no parameter, <command>VACUUM</command> processes every table in the "
+"current database that the current user has permission to vacuum. With a "
+"parameter, <command>VACUUM</command> processes only that table."
+msgstr ""
+"Без параметра команда <command>VACUUM</command> обрабатывает все таблицы в "
+"текущей базе данных, которые может очистить текущий пользователь. Если в "
+"параметре передаётся имя таблицы, <command>VACUUM</command> обрабатывает "
+"только эту таблицу."
+
+#: ref/vacuum.xml:47(para)
+msgid ""
+"<command>VACUUM ANALYZE</command> performs a <command>VACUUM</command> and "
+"then an <command>ANALYZE</command> for each selected table. This is a handy "
+"combination form for routine maintenance scripts. See <xref linkend=\"sql-"
+"analyze\"/> for more details about its processing."
+msgstr ""
+"<command>VACUUM ANALYZE</command> выполняет очистку (<command>VACUUM</"
+"command>), а затем анализ (<command>ANALYZE</command>) всех указанных "
+"таблиц. Это удобная комбинация для регулярного обслуживания БД. За "
+"дополнительной информацией об анализе обратитесь к описанию <xref linkend="
+"\"sql-analyze\"/>."
+
+#: ref/vacuum.xml:55(para)
+msgid ""
+"Plain <command>VACUUM</command> (without <literal>FULL</literal>) simply "
+"reclaims space and makes it available for re-use. This form of the command "
+"can operate in parallel with normal reading and writing of the table, as an "
+"exclusive lock is not obtained. However, extra space is not returned to the "
+"operating system (in most cases); it's just kept available for re-use within "
+"the same table. <command>VACUUM FULL</command> rewrites the entire contents "
+"of the table into a new disk file with no extra space, allowing unused space "
+"to be returned to the operating system. This form is much slower and "
+"requires an exclusive lock on each table while it is being processed."
+msgstr ""
+"Простая команда <command>VACUUM</command> (без <literal>FULL</literal>) "
+"только высвобождает пространство и делает его доступным для повторного "
+"использования. Эта форма команды может работать параллельно с обычными "
+"операциями чтения и записи таблицы, так она не требует исключительной "
+"блокировки. Однако освобождённое место не возвращается операционной системе "
+"(в большинстве случаев); оно просто остаётся доступным для размещения данных "
+"этой же таблицы. <command>VACUUM FULL</command> переписывает всё содержимое "
+"таблицы в новый файл на диске, не содержащий ничего лишнего, что позволяет "
+"возвратить неиспользованное пространство операционной системе. Эта форма "
+"работает намного медленнее и запрашивает исключительную блокировку для "
+"каждой обрабатываемой таблицы."
+
+#: ref/vacuum.xml:68(para)
+msgid ""
+"When the option list is surrounded by parentheses, the options can be "
+"written in any order. Without parentheses, options must be specified in "
+"exactly the order shown above. The parenthesized syntax was added in "
+"<productname>PostgreSQL</productname> 9.0; the unparenthesized syntax is "
+"deprecated."
+msgstr ""
+"Когда список параметров заключается в скобки, параметры могут быть записаны "
+"в любом порядке. Без скобок параметры должны указываться именно в том "
+"порядке, который показан выше. Синтаксис со скобками появился в "
+"<productname>PostgreSQL</productname> 9.0; вариант записи без скобок "
+"считается устаревшим."
+
+#: ref/vacuum.xml:79(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#: ref/vacuum.xml:83(literal)
+msgid "FULL"
+msgstr "FULL"
+
+#: ref/vacuum.xml:85(para)
+msgid ""
+"Selects <quote>full</quote> vacuum, which can reclaim more space, but takes "
+"much longer and exclusively locks the table. This method also requires extra "
+"disk space, since it writes a new copy of the table and doesn't release the "
+"old copy until the operation is complete. Usually this should only be used "
+"when a significant amount of space needs to be reclaimed from within the "
+"table."
+msgstr ""
+"Выбирает режим <quote>полной</quote> очистки, который может освободить "
+"больше пространства, но выполняется гораздо дольше и запрашивает "
+"исключительную блокировку таблицы. Этот режим также требует дополнительное "
+"место на диске, так как он записывает новую копию таблицы и не освобождает "
+"старую до завершения операции. Обычно это следует использовать, только когда "
+"требуется высвободить значительный объём пространства, выделенного таблице."
+
+#: ref/vacuum.xml:97(literal)
+msgid "FREEZE"
+msgstr "FREEZE"
+
+#: ref/vacuum.xml:99(para)
+msgid ""
+"Selects aggressive <quote>freezing</quote> of tuples. Specifying "
+"<literal>FREEZE</literal> is equivalent to performing <command>VACUUM</"
+"command> with the <xref linkend=\"guc-vacuum-freeze-min-age\"/> and <xref "
+"linkend=\"guc-vacuum-freeze-table-age\"/> parameters set to zero. Aggressive "
+"freezing is always performed when the table is rewritten, so this option is "
+"redundant when <literal>FULL</literal> is specified."
+msgstr ""
+"Выбирает агрессивную <quote>заморозку</quote> кортежей. Добавление указания "
+"<literal>FREEZE</literal> равносильно выполнению команды <command>VACUUM</"
+"command> с параметрами <xref linkend=\"guc-vacuum-freeze-min-age\"/> и <xref "
+"linkend=\"guc-vacuum-freeze-table-age\"/>, равными нулю. Агрессивная "
+"заморозка всегда выполняется при перезаписи таблицы, поэтому в режиме "
+"<literal>FULL</literal> это указание избыточно."
+
+#: ref/vacuum.xml:113(literal)
+msgid "VERBOSE"
+msgstr "VERBOSE"
+
+#: ref/vacuum.xml:115(para)
+msgid "Prints a detailed vacuum activity report for each table."
+msgstr "Выводит подробный отчёт об очистке для каждой таблицы."
+
+#: ref/vacuum.xml:122(literal)
+msgid "ANALYZE"
+msgstr "ANALYZE"
+
+#: ref/vacuum.xml:124(para)
+msgid ""
+"Updates statistics used by the planner to determine the most efficient way "
+"to execute a query."
+msgstr ""
+"Обновляет статистику, которую использует планировщик для выбора наиболее "
+"эффективного способа выполнения запроса."
+
+#: ref/vacuum.xml:134(para)
+msgid ""
+"The name (optionally schema-qualified) of a specific table to vacuum. "
+"Defaults to all tables in the current database."
+msgstr ""
+"Имя (возможно, дополненное схемой) определённой таблицы, подлежащей очистке. "
+"По умолчанию очищаются все таблицы в текущей базе данных."
+
+#: ref/vacuum.xml:144(para)
+msgid ""
+"The name of a specific column to analyze. Defaults to all columns. If a "
+"column list is specified, <literal>ANALYZE</literal> is implied."
+msgstr ""
+"Имя столбца, подлежащего анализу. По умолчанию анализируются все столбцы. "
+"Если указан список столбцов, подразумевается операция <literal>ANALYZE</"
+"literal>."
+
+#: ref/vacuum.xml:154(title)
+msgid "Outputs"
+msgstr "Выводимая информация"
+
+#: ref/vacuum.xml:156(para)
+msgid ""
+"When <literal>VERBOSE</literal> is specified, <command>VACUUM</command> "
+"emits progress messages to indicate which table is currently being "
+"processed. Various statistics about the tables are printed as well."
+msgstr ""
+"С указанием <literal>VERBOSE</literal> команда <command>VACUUM</command> "
+"выдаёт сообщения о процессе очистки, отмечая текущую обрабатываемую таблицу. "
+"Также она выводит различные статистические сведения о таблицах."
+
+#: ref/vacuum.xml:164(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/vacuum.xml:166(para)
+msgid ""
+"To vacuum a table, one must ordinarily be the table's owner or a superuser. "
+"However, database owners are allowed to vacuum all tables in their "
+"databases, except shared catalogs. (The restriction for shared catalogs "
+"means that a true database-wide <command>VACUUM</command> can only be "
+"performed by a superuser.) <command>VACUUM</command> will skip over any "
+"tables that the calling user does not have permission to vacuum."
+msgstr ""
+"Чтобы очистить таблицу, обычно нужно быть владельцем этой таблицы или "
+"суперпользователем. Однако владельцам баз данных также разрешено сжимать все "
+"таблицы в своих базах, за исключением общих каталогов. (Ограничение в "
+"отношении общих каталогов означает, что настоящую глобальную команду "
+"<command>VACUUM</command> может выполнить только суперпользователь.) "
+"<command>VACUUM</command> при обработке пропускает все таблицы, на очистку "
+"которых текущий пользователь не имеет прав."
+
+#: ref/vacuum.xml:176(para)
+msgid ""
+"<command>VACUUM</command> cannot be executed inside a transaction block."
+msgstr "<command>VACUUM</command> нельзя выполнять внутри блока транзакции."
+
+#: ref/vacuum.xml:180(para)
+msgid ""
+"For tables with <acronym>GIN</acronym> indexes, <command>VACUUM</command> "
+"(in any form) also completes any pending index insertions, by moving pending "
+"index entries to the appropriate places in the main <acronym>GIN</acronym> "
+"index structure. See <xref linkend=\"gin-fast-update\"/> for details."
+msgstr ""
+"Для таблиц с индексами <acronym>GIN</acronym>, <command>VACUUM</command> (в "
+"любой форме) также завершает все ожидающие операции добавления в индекс, "
+"перемещая записи индекса из очереди в соответствующие места в основной "
+"структуре индекса <acronym>GIN</acronym>. За подробностями обратитесь к "
+"<xref remap=\"3\" linkend=\"gin-fast-update\"/>."
+
+#: ref/vacuum.xml:187(para)
+msgid ""
+"We recommend that active production databases be vacuumed frequently (at "
+"least nightly), in order to remove dead rows. After adding or deleting a "
+"large number of rows, it might be a good idea to issue a <command>VACUUM "
+"ANALYZE</command> command for the affected table. This will update the "
+"system catalogs with the results of all recent changes, and allow the "
+"<productname>PostgreSQL</productname> query planner to make better choices "
+"in planning queries."
+msgstr ""
+"Мы рекомендуем очищать активные производственные базы данных достаточно "
+"часто (как минимум, каждую ночь), чтобы избавляться от &laquo;мёртвых&raquo; "
+"строк. После добавления или удаления большого числа строк может быть хорошей "
+"идеей выполнить команду <command>VACUUM ANALYZE</command> для каждой "
+"затронутой таблицы. При этом результаты всех последних изменений будут "
+"отражены в системных каталогах, что позволит планировщику запросов "
+"<productname>PostgreSQL</productname> принимать более эффективные решения "
+"при планировании."
+
+#: ref/vacuum.xml:199(para)
+msgid ""
+"The <option>FULL</option> option is not recommended for routine use, but "
+"might be useful in special cases. An example is when you have deleted or "
+"updated most of the rows in a table and would like the table to physically "
+"shrink to occupy less disk space and allow faster table scans. "
+"<command>VACUUM FULL</command> will usually shrink the table more than a "
+"plain <command>VACUUM</command> would."
+msgstr ""
+"Режим <option>FULL</option> не рекомендуется для обычного применения, но в "
+"некоторых случаях он бывает полезен. Например, когда были удалены или "
+"изменены почти все строки таблицы, может возникнуть желание физически сжать "
+"её, чтобы освободить место на диске и ускорить сканирование этой таблицы. "
+"Чаще всего <command>VACUUM FULL</command> сжимает таблицу более эффективно, "
+"чем обычный <command>VACUUM</command>."
+
+#: ref/vacuum.xml:208(para)
+msgid ""
+"<command>VACUUM</command> causes a substantial increase in I/O traffic, "
+"which might cause poor performance for other active sessions. Therefore, it "
+"is sometimes advisable to use the cost-based vacuum delay feature. See <xref "
+"linkend=\"runtime-config-resource-vacuum-cost\"/> for details."
+msgstr ""
+"<command>VACUUM</command> создаёт значительную нагрузку на подсистему ввода/"
+"вывода, что может отрицательно сказаться на производительности других "
+"активных сеансов. Поэтому иногда полезно использовать возможность задержки "
+"очистки с учётом её стоимости. За подробностями обратитесь к <xref remap="
+"\"3\" linkend=\"runtime-config-resource-vacuum-cost\"/>."
+
+#: ref/vacuum.xml:215(para)
+msgid ""
+"<productname>PostgreSQL</productname> includes an <quote>autovacuum</quote> "
+"facility which can automate routine vacuum maintenance. For more information "
+"about automatic and manual vacuuming, see <xref linkend=\"routine-vacuuming"
+"\"/>."
+msgstr ""
+"<productname>PostgreSQL</productname> включает средство <quote>автоочистки</"
+"quote>, которое позволяет автоматизировать регулярную очистку. Чтобы узнать "
+"больше об автоматической и ручной очистке, обратитесь к <xref remap=\"3\" "
+"linkend=\"routine-vacuuming\"/>."
+
+#: ref/vacuum.xml:224(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/vacuum.xml:230(programlisting)
+#, no-wrap
+msgid ""
+"regression=# VACUUM (VERBOSE, ANALYZE) onek;\n"
+"INFO:  vacuuming \"public.onek\"\n"
+"INFO:  index \"onek_unique1\" now contains 1000 tuples in 14 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.08u sec elapsed 0.18 sec.\n"
+"INFO:  index \"onek_unique2\" now contains 1000 tuples in 16 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.00s/0.07u sec elapsed 0.23 sec.\n"
+"INFO:  index \"onek_hundred\" now contains 1000 tuples in 13 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.08u sec elapsed 0.17 sec.\n"
+"INFO:  index \"onek_stringu1\" now contains 1000 tuples in 48 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.09u sec elapsed 0.59 sec.\n"
+"INFO:  \"onek\": removed 3000 tuples in 108 pages\n"
+"DETAIL:  CPU 0.01s/0.06u sec elapsed 0.07 sec.\n"
+"INFO:  \"onek\": found 3000 removable, 1000 nonremovable tuples in 143 pages\n"
+"DETAIL:  0 dead tuples cannot be removed yet.\n"
+"There were 0 unused item pointers.\n"
+"Skipped 0 pages due to buffer pins.\n"
+"0 pages are entirely empty.\n"
+"CPU 0.07s/0.39u sec elapsed 1.56 sec.\n"
+"INFO:  analyzing \"public.onek\"\n"
+"INFO:  \"onek\": 36 pages, 1000 rows sampled, 1000 estimated total rows\n"
+"VACUUM"
+msgstr ""
+"regression=# VACUUM (VERBOSE, ANALYZE) onek;\n"
+"INFO:  vacuuming \"public.onek\"\n"
+"INFO:  index \"onek_unique1\" now contains 1000 tuples in 14 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.08u sec elapsed 0.18 sec.\n"
+"INFO:  index \"onek_unique2\" now contains 1000 tuples in 16 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.00s/0.07u sec elapsed 0.23 sec.\n"
+"INFO:  index \"onek_hundred\" now contains 1000 tuples in 13 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.08u sec elapsed 0.17 sec.\n"
+"INFO:  index \"onek_stringu1\" now contains 1000 tuples in 48 pages\n"
+"DETAIL:  3000 index tuples were removed.\n"
+"0 index pages have been deleted, 0 are currently reusable.\n"
+"CPU 0.01s/0.09u sec elapsed 0.59 sec.\n"
+"INFO:  \"onek\": removed 3000 tuples in 108 pages\n"
+"DETAIL:  CPU 0.01s/0.06u sec elapsed 0.07 sec.\n"
+"INFO:  \"onek\": found 3000 removable, 1000 nonremovable tuples in 143 pages\n"
+"DETAIL:  0 dead tuples cannot be removed yet.\n"
+"There were 0 unused item pointers.\n"
+"Skipped 0 pages due to buffer pins.\n"
+"0 pages are entirely empty.\n"
+"CPU 0.07s/0.39u sec elapsed 1.56 sec.\n"
+"INFO:  analyzing \"public.onek\"\n"
+"INFO:  \"onek\": 36 pages, 1000 rows sampled, 1000 estimated total rows\n"
+"VACUUM"
+
+#: ref/vacuum.xml:226(para)
+msgid ""
+"The following is an example from running <command>VACUUM</command> on a "
+"table in the regression database: <placeholder-1/>"
+msgstr ""
+"Ниже показан пример выполнения команды <command>VACUUM</command> для таблицы "
+"из базы данных regression: <placeholder-1/>"
+
+#: ref/vacuum.xml:262(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#: ref/vacuum.xml:264(para)
+msgid "There is no <command>VACUUM</command> statement in the SQL standard."
+msgstr "Оператор <command>VACUUM</command> отсутствует в стандарте SQL."
+
+#: ref/vacuum.xml:270(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/vacuum.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

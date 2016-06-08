@@ -1,0 +1,2176 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: pgcrypto.xml:5(title)
+msgid "pgcrypto"
+msgstr "pgcrypto"
+
+#: pgcrypto.xml:7(indexterm)
+msgid "<primary>pgcrypto</primary>"
+msgstr "<primary>pgcrypto</primary>"
+
+#: pgcrypto.xml:11(indexterm)
+msgid ""
+"<primary>encryption</primary><secondary>for specific columns</secondary>"
+msgstr "<primary>шифрование</primary><secondary>избранных столбцов</secondary>"
+
+#: pgcrypto.xml:15(para)
+msgid ""
+"The <filename>pgcrypto</filename> module provides cryptographic functions "
+"for <productname>PostgreSQL</productname>."
+msgstr ""
+"Модуль <filename>pgcrypto</filename> предоставляет криптографические функции "
+"для <productname>PostgreSQL</productname>."
+
+#: pgcrypto.xml:21(title)
+msgid "General Hashing Functions"
+msgstr "Стандартные функции хеширования"
+
+#: pgcrypto.xml:24(function)
+msgid "digest()"
+msgstr "digest()"
+
+#: pgcrypto.xml:26(indexterm)
+msgid "<primary>digest</primary>"
+msgstr "<primary>digest</primary>"
+
+#: pgcrypto.xml:30(synopsis)
+#, no-wrap
+msgid ""
+"digest(data text, type text) returns bytea\n"
+"digest(data bytea, type text) returns bytea"
+msgstr ""
+"digest(data text, type text) returns bytea\n"
+"digest(data bytea, type text) returns bytea"
+
+#: pgcrypto.xml:33(para)
+msgid ""
+"Computes a binary hash of the given <parameter>data</parameter>. "
+"<parameter>type</parameter> is the algorithm to use. Standard algorithms are "
+"<literal>md5</literal>, <literal>sha1</literal>, <literal>sha224</literal>, "
+"<literal>sha256</literal>, <literal>sha384</literal> and <literal>sha512</"
+"literal>. If <filename>pgcrypto</filename> was built with OpenSSL, more "
+"algorithms are available, as detailed in <xref linkend=\"pgcrypto-with-"
+"without-openssl\"/>."
+msgstr ""
+"Вычисляет двоичный хеш данных (<parameter>data</parameter>). Параметр "
+"<parameter>type</parameter> выбирает используемый алгоритм. Поддерживаются "
+"стандартные алгоритмы: <literal>md5</literal>, <literal>sha1</literal>, "
+"<literal>sha224</literal>, <literal>sha256</literal>, <literal>sha384</"
+"literal> и <literal>sha512</literal>. Если модуль <filename>pgcrypto</"
+"filename> собирался с OpenSSL, становятся доступны и другие алгоритмы, как "
+"описано в <xref remap=\"6\" linkend=\"pgcrypto-with-without-openssl\"/>."
+
+#: pgcrypto.xml:47(programlisting)
+#, no-wrap
+msgid ""
+"CREATE OR REPLACE FUNCTION sha1(bytea) returns text AS $$\n"
+"    SELECT encode(digest($1, 'sha1'), 'hex')\n"
+"$$ LANGUAGE SQL STRICT IMMUTABLE;"
+msgstr ""
+"CREATE OR REPLACE FUNCTION sha1(bytea) returns text AS $$\n"
+"    SELECT encode(digest($1, 'sha1'), 'hex')\n"
+"$$ LANGUAGE SQL STRICT IMMUTABLE;"
+
+#: pgcrypto.xml:44(para)
+msgid ""
+"If you want the digest as a hexadecimal string, use <function>encode()</"
+"function> on the result. For example: <placeholder-1/>"
+msgstr ""
+"Если вы хотите получить дайджест в виде шестнадцатеричной строки, примените "
+"<function>encode()</function> к результату. Например: <placeholder-1/>"
+
+#: pgcrypto.xml:54(function)
+msgid "hmac()"
+msgstr "hmac()"
+
+#: pgcrypto.xml:56(indexterm)
+msgid "<primary>hmac</primary>"
+msgstr "<primary>hmac</primary>"
+
+#: pgcrypto.xml:60(synopsis)
+#, no-wrap
+msgid ""
+"hmac(data text, key text, type text) returns bytea\n"
+"hmac(data bytea, key text, type text) returns bytea"
+msgstr ""
+"hmac(data text, key text, type text) returns bytea\n"
+"hmac(data bytea, key text, type text) returns bytea"
+
+#: pgcrypto.xml:63(para)
+msgid ""
+"Calculates hashed MAC for <parameter>data</parameter> with key "
+"<parameter>key</parameter>. <parameter>type</parameter> is the same as in "
+"<function>digest()</function>."
+msgstr ""
+"Вычисляет имитовставку на основе хеша для данных <parameter>data</parameter> "
+"с ключом <parameter>key</parameter>. Параметр <parameter>type</parameter> "
+"имеет то же значение, что и для <function>digest()</function>."
+
+#: pgcrypto.xml:68(para)
+msgid ""
+"This is similar to <function>digest()</function> but the hash can only be "
+"recalculated knowing the key. This prevents the scenario of someone altering "
+"data and also changing the hash to match."
+msgstr ""
+"Эта функция похожа на <function>digest()</function>, но вычислить хеш с ней "
+"можно, только зная ключ. Это защищает от сценария подмены данных и хеша "
+"вместе с ними."
+
+#: pgcrypto.xml:74(para)
+msgid ""
+"If the key is larger than the hash block size it will first be hashed and "
+"the result will be used as key."
+msgstr ""
+"Если размер ключа больше размера блока хеша, он сначала хешируется, а затем "
+"используется в качестве ключа хеширования данных."
+
+#: pgcrypto.xml:82(title)
+msgid "Password Hashing Functions"
+msgstr "Функции хеширования пароля"
+
+#: pgcrypto.xml:84(para)
+msgid ""
+"The functions <function>crypt()</function> and <function>gen_salt()</"
+"function> are specifically designed for hashing passwords. "
+"<function>crypt()</function> does the hashing and <function>gen_salt()</"
+"function> prepares algorithm parameters for it."
+msgstr ""
+"Функции <function>crypt()</function> и <function>gen_salt()</function> "
+"разработаны специально для хеширования паролей. Функция <function>crypt()</"
+"function> выполняет хеширование, а <function>gen_salt()</function> "
+"подготавливает параметры алгоритма для неё."
+
+#: pgcrypto.xml:91(para)
+msgid ""
+"The algorithms in <function>crypt()</function> differ from the usual MD5 or "
+"SHA1 hashing algorithms in the following respects:"
+msgstr ""
+"Алгоритмы в <function>crypt()</function> отличаются от обычных алгоритмов "
+"хеширования MD5 и SHA1 в следующих аспектах:"
+
+#: pgcrypto.xml:98(para)
+msgid ""
+"They are slow. As the amount of data is so small, this is the only way to "
+"make brute-forcing passwords hard."
+msgstr ""
+"Они медленные. Так как объём данных невелик, это единственный способ "
+"усложнить перебор паролей."
+
+#: pgcrypto.xml:104(para)
+msgid ""
+"They use a random value, called the <firstterm>salt</firstterm>, so that "
+"users having the same password will have different encrypted passwords. This "
+"is also an additional defense against reversing the algorithm."
+msgstr ""
+"Они используют случайное значение, называемое <firstterm>солью</firstterm>, "
+"чтобы у пользователей с одинаковыми паролями зашифрованные пароли "
+"оказывались разными. Это также обеспечивает дополнительную защиту от "
+"получения обратного алгоритма."
+
+#: pgcrypto.xml:111(para)
+msgid ""
+"They include the algorithm type in the result, so passwords hashed with "
+"different algorithms can co-exist."
+msgstr ""
+"Они включают в результат тип алгоритма, что допускает сосуществование "
+"паролей, хешированных разными алгоритмами."
+
+#: pgcrypto.xml:117(para)
+msgid ""
+"Some of them are adaptive &mdash; that means when computers get faster, you "
+"can tune the algorithm to be slower, without introducing incompatibility "
+"with existing passwords."
+msgstr ""
+"Некоторые из них являются адаптируемыми &mdash; то есть с ростом "
+"производительности компьютеров эти алгоритмы можно настроить так, чтобы они "
+"стали медленнее, при этом сохраняя совместимость с существующими паролями."
+
+#: pgcrypto.xml:125(para)
+msgid ""
+"<xref linkend=\"pgcrypto-crypt-algorithms\"/> lists the algorithms supported "
+"by the <function>crypt()</function> function."
+msgstr ""
+"В <xref remap=\"6\" linkend=\"pgcrypto-crypt-algorithms\"/> перечислены "
+"алгоритмы, поддерживаемые функцией <function>crypt()</function>."
+
+#: pgcrypto.xml:131(title)
+msgid "Supported Algorithms for <function>crypt()</function>"
+msgstr "Алгоритмы, которые поддерживает <function>crypt()</function>"
+
+#: pgcrypto.xml:135(entry) pgcrypto.xml:244(entry) pgcrypto.xml:297(entry)
+#: pgcrypto.xml:1334(entry)
+msgid "Algorithm"
+msgstr "Алгоритм"
+
+#: pgcrypto.xml:136(entry)
+msgid "Max Password Length"
+msgstr "Макс. длина пароля"
+
+#: pgcrypto.xml:137(entry)
+msgid "Adaptive?"
+msgstr "Адаптивный?"
+
+#: pgcrypto.xml:138(entry)
+msgid "Salt Bits"
+msgstr "Размер соли (бит)"
+
+#: pgcrypto.xml:139(entry)
+msgid "Output Length"
+msgstr "Размер результата"
+
+#: pgcrypto.xml:140(entry)
+msgid "Description"
+msgstr "Описание"
+
+#: pgcrypto.xml:145(literal) pgcrypto.xml:258(literal)
+msgid "bf"
+msgstr "bf"
+
+#: pgcrypto.xml:146(entry)
+msgid "72"
+msgstr "72"
+
+#: pgcrypto.xml:147(entry) pgcrypto.xml:163(entry) pgcrypto.xml:1128(entry)
+#: pgcrypto.xml:1129(entry) pgcrypto.xml:1133(entry) pgcrypto.xml:1134(entry)
+#: pgcrypto.xml:1138(entry) pgcrypto.xml:1148(entry) pgcrypto.xml:1149(entry)
+#: pgcrypto.xml:1153(entry) pgcrypto.xml:1159(entry) pgcrypto.xml:1163(entry)
+#: pgcrypto.xml:1164(entry) pgcrypto.xml:1168(entry) pgcrypto.xml:1169(entry)
+#: pgcrypto.xml:1173(entry) pgcrypto.xml:1174(entry)
+msgid "yes"
+msgstr "да"
+
+#: pgcrypto.xml:148(entry)
+msgid "128"
+msgstr "128"
+
+#: pgcrypto.xml:149(entry)
+msgid "60"
+msgstr "60"
+
+#: pgcrypto.xml:150(entry)
+msgid "Blowfish-based, variant 2a"
+msgstr "На базе Blowfish, вариация 2a"
+
+#: pgcrypto.xml:153(literal)
+msgid "md5"
+msgstr "md5"
+
+#: pgcrypto.xml:154(entry)
+msgid "unlimited"
+msgstr "без ограничений"
+
+#: pgcrypto.xml:155(entry) pgcrypto.xml:171(entry) pgcrypto.xml:1143(entry)
+#: pgcrypto.xml:1158(entry)
+msgid "no"
+msgstr "нет"
+
+#: pgcrypto.xml:156(entry)
+msgid "48"
+msgstr "48"
+
+#: pgcrypto.xml:157(entry)
+msgid "34"
+msgstr "34"
+
+#: pgcrypto.xml:158(entry)
+msgid "MD5-based crypt"
+msgstr "crypt на базе MD5"
+
+#: pgcrypto.xml:161(literal) pgcrypto.xml:252(literal)
+msgid "xdes"
+msgstr "xdes"
+
+#: pgcrypto.xml:162(entry) pgcrypto.xml:170(entry)
+msgid "8"
+msgstr "8"
+
+#: pgcrypto.xml:164(entry)
+msgid "24"
+msgstr "24"
+
+#: pgcrypto.xml:165(entry)
+msgid "20"
+msgstr "20"
+
+#: pgcrypto.xml:166(entry)
+msgid "Extended DES"
+msgstr "Расширенный DES"
+
+#: pgcrypto.xml:169(literal)
+msgid "des"
+msgstr "des"
+
+#: pgcrypto.xml:172(entry)
+msgid "12"
+msgstr "12"
+
+#: pgcrypto.xml:173(entry)
+msgid "13"
+msgstr "13"
+
+#: pgcrypto.xml:174(entry)
+msgid "Original UNIX crypt"
+msgstr "Изначальный crypt из UNIX"
+
+#: pgcrypto.xml:181(function)
+msgid "crypt()"
+msgstr "crypt()"
+
+#: pgcrypto.xml:183(indexterm)
+msgid "<primary>crypt</primary>"
+msgstr "<primary>crypt</primary>"
+
+#: pgcrypto.xml:187(synopsis)
+#, no-wrap
+msgid "crypt(password text, salt text) returns text"
+msgstr "crypt(password text, salt text) returns text"
+
+#: pgcrypto.xml:189(para)
+msgid ""
+"Calculates a crypt(3)-style hash of <parameter>password</parameter>. When "
+"storing a new password, you need to use <function>gen_salt()</function> to "
+"generate a new <parameter>salt</parameter> value. To check a password, pass "
+"the stored hash value as <parameter>salt</parameter>, and test whether the "
+"result matches the stored value."
+msgstr ""
+"Вычисляет хеш пароля (<parameter>password</parameter>) в стиле crypt(3). Для "
+"сохранения нового пароля необходимо вызвать <function>gen_salt()</function>, "
+"чтобы сгенерировать новое значение соли (<parameter>salt</parameter>). Для "
+"проверки пароля нужно передать сохранённое значение хеша в параметре "
+"<parameter>salt</parameter> и проверить, соответствует ли результат "
+"сохранённому значению."
+
+#: pgcrypto.xml:198(programlisting)
+#, no-wrap
+msgid "UPDATE ... SET pswhash = crypt('new password', gen_salt('md5'));"
+msgstr "UPDATE ... SET pswhash = crypt('new password', gen_salt('md5'));"
+
+#: pgcrypto.xml:196(para)
+msgid "Example of setting a new password: <placeholder-1/>"
+msgstr "Пример установки нового пароля: <placeholder-1/>"
+
+#: pgcrypto.xml:202(programlisting)
+#, no-wrap
+msgid "SELECT (pswhash = crypt('entered password', pswhash)) AS pswmatch FROM ... ;"
+msgstr "SELECT (pswhash = crypt('entered password', pswhash)) AS pswmatch FROM ... ;"
+
+#: pgcrypto.xml:200(para)
+msgid ""
+"Example of authentication: <placeholder-1/> This returns <literal>true</"
+"literal> if the entered password is correct."
+msgstr ""
+"Пример проверки пароля: <placeholder-1/> Этот запрос возвращает "
+"<literal>true</literal>, если введённый пароль правильный."
+
+#: pgcrypto.xml:208(function)
+msgid "gen_salt()"
+msgstr "gen_salt()"
+
+#: pgcrypto.xml:210(indexterm)
+msgid "<primary>gen_salt</primary>"
+msgstr "<primary>gen_salt</primary>"
+
+#: pgcrypto.xml:214(synopsis)
+#, no-wrap
+msgid "gen_salt(type text [, iter_count integer ]) returns text"
+msgstr "gen_salt(type text [, iter_count integer ]) returns text"
+
+#: pgcrypto.xml:216(para)
+msgid ""
+"Generates a new random salt string for use in <function>crypt()</function>. "
+"The salt string also tells <function>crypt()</function> which algorithm to "
+"use."
+msgstr ""
+"Вычисляет новое случайное значение соли для функции <function>crypt()</"
+"function>. Строка соли также говорит <function>crypt()</function>, какой "
+"алгоритм использовать."
+
+#: pgcrypto.xml:221(para)
+msgid ""
+"The <parameter>type</parameter> parameter specifies the hashing algorithm. "
+"The accepted types are: <literal>des</literal>, <literal>xdes</literal>, "
+"<literal>md5</literal> and <literal>bf</literal>."
+msgstr ""
+"Параметр <parameter>type</parameter> задаёт алгоритм хеширования. "
+"Принимаются следующие варианты: <literal>des</literal>, <literal>xdes</"
+"literal>, <literal>md5</literal> и <literal>bf</literal>."
+
+#: pgcrypto.xml:227(para)
+msgid ""
+"The <parameter>iter_count</parameter> parameter lets the user specify the "
+"iteration count, for algorithms that have one. The higher the count, the "
+"more time it takes to hash the password and therefore the more time to break "
+"it. Although with too high a count the time to calculate a hash may be "
+"several years &mdash; which is somewhat impractical. If the "
+"<parameter>iter_count</parameter> parameter is omitted, the default "
+"iteration count is used. Allowed values for <parameter>iter_count</"
+"parameter> depend on the algorithm and are shown in <xref linkend=\"pgcrypto-"
+"icfc-table\"/>."
+msgstr ""
+"Параметр <parameter>iter_count</parameter> позволяет пользователю указать "
+"счётчик итераций для алгоритма, который его принимает. Чем больше это число, "
+"тем больше времени уйдёт на вычисление хеша пароля, а значит, тем больше "
+"времени понадобится, чтобы взломать его. Хотя со слишком большим значением "
+"время вычисления хеша может вырасти до нескольких лет &mdash; это вряд ли "
+"практично. Когда параметр <parameter>iter_count</parameter> опускается, "
+"применяется количество итераций по умолчанию. Множество допустимых значений "
+"для <parameter>iter_count</parameter> зависит от алгоритма, как показано в "
+"<xref remap=\"6\" linkend=\"pgcrypto-icfc-table\"/>."
+
+#: pgcrypto.xml:240(title)
+msgid "Iteration Counts for <function>crypt()</function>"
+msgstr "Счётчики итераций для <function>crypt()</function>"
+
+#: pgcrypto.xml:245(entry)
+msgid "Default"
+msgstr "По умолчанию"
+
+#: pgcrypto.xml:246(entry)
+msgid "Min"
+msgstr "Мин."
+
+#: pgcrypto.xml:247(entry)
+msgid "Max"
+msgstr "Макс."
+
+#: pgcrypto.xml:253(entry)
+msgid "725"
+msgstr "725"
+
+#: pgcrypto.xml:254(entry) pgcrypto.xml:359(entry)
+msgid "1"
+msgstr "1"
+
+#: pgcrypto.xml:255(entry)
+msgid "16777215"
+msgstr "16777215"
+
+#: pgcrypto.xml:259(entry)
+msgid "6"
+msgstr "6"
+
+#: pgcrypto.xml:260(entry) pgcrypto.xml:352(entry)
+msgid "4"
+msgstr "4"
+
+#: pgcrypto.xml:261(entry)
+msgid "31"
+msgstr "31"
+
+#: pgcrypto.xml:267(para)
+msgid ""
+"For <literal>xdes</literal> there is an additional limitation that the "
+"iteration count must be an odd number."
+msgstr ""
+"Для <literal>xdes</literal> есть дополнительное ограничение: счётчик "
+"итераций должен быть нечётным."
+
+#: pgcrypto.xml:272(para)
+msgid ""
+"To pick an appropriate iteration count, consider that the original DES crypt "
+"was designed to have the speed of 4 hashes per second on the hardware of "
+"that time. Slower than 4 hashes per second would probably dampen usability. "
+"Faster than 100 hashes per second is probably too fast."
+msgstr ""
+"При выборе подходящего числа итераций учтите, что оригинальный алгоритм DES "
+"crypt был рассчитан так, чтобы выдавать 4 хеша в секунду на компьютерах того "
+"времени. Если за секунду будет вычисляться меньше 4 хешей, скорее всего, "
+"возникнут определённые неудобства при пользовании. С другой стороны, "
+"скорость больше, чем 100 хешей в секунду, вероятно, будет слишком высокой."
+
+#: pgcrypto.xml:280(para)
+msgid ""
+"<xref linkend=\"pgcrypto-hash-speed-table\"/> gives an overview of the "
+"relative slowness of different hashing algorithms. The table shows how much "
+"time it would take to try all combinations of characters in an 8-character "
+"password, assuming that the password contains either only lower case "
+"letters, or upper- and lower-case letters and numbers. In the <literal>crypt-"
+"bf</literal> entries, the number after a slash is the <parameter>iter_count</"
+"parameter> parameter of <function>gen_salt</function>."
+msgstr ""
+"В <xref remap=\"6\" linkend=\"pgcrypto-hash-speed-table\"/> дана сводка "
+"относительной скорости различных алгоритмов хеширования. В таблице показано, "
+"сколько времени уйдёт на перебор всех комбинацией символов в "
+"восьмисимвольном пароле, в предположении, что пароль содержит только буквы в "
+"нижнем регистре, либо буквы в верхнем и нижнем регистре, а также цифры. В "
+"строках <literal>crypt-bf</literal> числа после косой черты показывают "
+"значение параметра <parameter>iter_count</parameter> функции "
+"<function>gen_salt</function>."
+
+#: pgcrypto.xml:293(title)
+msgid "Hash Algorithm Speeds"
+msgstr "Скорости алгоритмов хеширования"
+
+#: pgcrypto.xml:298(entry)
+msgid "Hashes/sec"
+msgstr "Хешей/сек."
+
+#: pgcrypto.xml:299(entry)
+msgid "For <literal>[a-z]</literal>"
+msgstr "Для <literal>[a-z]</literal>"
+
+#: pgcrypto.xml:300(entry)
+msgid "For <literal>[A-Za-z0-9]</literal>"
+msgstr "Для <literal>[A-Za-z0-9]</literal>"
+
+#: pgcrypto.xml:301(entry)
+msgid "Duration relative to <literal>md5 hash</literal>"
+msgstr "Длительность относительно <literal>md5</literal>"
+
+#: pgcrypto.xml:306(literal)
+msgid "crypt-bf/8"
+msgstr "crypt-bf/8"
+
+#: pgcrypto.xml:307(entry)
+msgid "1792"
+msgstr "1792"
+
+#: pgcrypto.xml:308(entry)
+msgid "4 years"
+msgstr "4 года"
+
+#: pgcrypto.xml:309(entry)
+msgid "3927 years"
+msgstr "3927 лет"
+
+#: pgcrypto.xml:310(entry)
+msgid "100k"
+msgstr "100k"
+
+#: pgcrypto.xml:313(literal)
+msgid "crypt-bf/7"
+msgstr "crypt-bf/7"
+
+#: pgcrypto.xml:314(entry)
+msgid "3648"
+msgstr "3648"
+
+#: pgcrypto.xml:315(entry)
+msgid "2 years"
+msgstr "2 года"
+
+#: pgcrypto.xml:316(entry)
+msgid "1929 years"
+msgstr "1929 лет"
+
+#: pgcrypto.xml:317(entry)
+msgid "50k"
+msgstr "50k"
+
+#: pgcrypto.xml:320(literal)
+msgid "crypt-bf/6"
+msgstr "crypt-bf/6"
+
+#: pgcrypto.xml:321(entry)
+msgid "7168"
+msgstr "7168"
+
+#: pgcrypto.xml:322(entry)
+msgid "1 year"
+msgstr "1 год"
+
+#: pgcrypto.xml:323(entry)
+msgid "982 years"
+msgstr "982 лет"
+
+#: pgcrypto.xml:324(entry)
+msgid "25k"
+msgstr "25k"
+
+#: pgcrypto.xml:327(literal)
+msgid "crypt-bf/5"
+msgstr "crypt-bf/5"
+
+#: pgcrypto.xml:328(entry)
+msgid "13504"
+msgstr "13504"
+
+#: pgcrypto.xml:329(entry)
+msgid "188 days"
+msgstr "188 дней"
+
+#: pgcrypto.xml:330(entry)
+msgid "521 years"
+msgstr "521 лет"
+
+#: pgcrypto.xml:331(entry)
+msgid "12.5k"
+msgstr "12.5k"
+
+#: pgcrypto.xml:334(literal)
+msgid "crypt-md5"
+msgstr "crypt-md5"
+
+#: pgcrypto.xml:335(entry)
+msgid "171584"
+msgstr "171584"
+
+#: pgcrypto.xml:336(entry)
+msgid "15 days"
+msgstr "15 дней"
+
+#: pgcrypto.xml:337(entry)
+msgid "41 years"
+msgstr "41 год"
+
+#: pgcrypto.xml:338(entry)
+msgid "1k"
+msgstr "1k"
+
+#: pgcrypto.xml:341(literal)
+msgid "crypt-des"
+msgstr "crypt-des"
+
+#: pgcrypto.xml:342(entry)
+msgid "23221568"
+msgstr "23221568"
+
+#: pgcrypto.xml:343(entry)
+msgid "157.5 minutes"
+msgstr "157.5 минут"
+
+#: pgcrypto.xml:344(entry)
+msgid "108 days"
+msgstr "108 дней"
+
+#: pgcrypto.xml:345(entry)
+msgid "7"
+msgstr "7"
+
+#: pgcrypto.xml:348(literal)
+msgid "sha1"
+msgstr "sha1"
+
+#: pgcrypto.xml:349(entry)
+msgid "37774272"
+msgstr "37774272"
+
+#: pgcrypto.xml:350(entry)
+msgid "90 minutes"
+msgstr "90 минут"
+
+#: pgcrypto.xml:351(entry)
+msgid "68 days"
+msgstr "68 дней"
+
+#: pgcrypto.xml:355(entry)
+msgid "<literal>md5</literal> (hash)"
+msgstr "<literal>md5</literal> (хеш)"
+
+#: pgcrypto.xml:356(entry)
+msgid "150085504"
+msgstr "150085504"
+
+#: pgcrypto.xml:357(entry)
+msgid "22.5 minutes"
+msgstr "22.5 минут"
+
+#: pgcrypto.xml:358(entry)
+msgid "17 days"
+msgstr "17 дней"
+
+#: pgcrypto.xml:365(para) pgcrypto.xml:1180(para)
+msgid "Notes:"
+msgstr "Замечания:"
+
+#: pgcrypto.xml:371(para)
+msgid "The machine used is an Intel Mobile Core i3."
+msgstr "Для расчётов использовался процессор Intel Mobile Core i3."
+
+#: pgcrypto.xml:376(para)
+msgid ""
+"<literal>crypt-des</literal> and <literal>crypt-md5</literal> algorithm "
+"numbers are taken from John the Ripper v1.6.38 <literal>-test</literal> "
+"output."
+msgstr ""
+"Показатели алгоритмов <literal>crypt-des</literal> и <literal>crypt-md5</"
+"literal> взяты из вывода теста программы John the Ripper v1.6.38."
+
+#: pgcrypto.xml:382(para)
+msgid "<literal>md5 hash</literal> numbers are from mdcrack 1.2."
+msgstr "Показатели <literal>md5</literal> получены программой mdcrack 1.2."
+
+#: pgcrypto.xml:387(para)
+msgid "<literal>sha1</literal> numbers are from lcrack-20031130-beta."
+msgstr ""
+"Показатели <literal>sha1</literal> получены программой lcrack-20031130-beta."
+
+#: pgcrypto.xml:392(para)
+msgid ""
+"<literal>crypt-bf</literal> numbers are taken using a simple program that "
+"loops over 1000 8-character passwords. That way I can show the speed with "
+"different numbers of iterations. For reference: <literal>john -test</"
+"literal> shows 213 loops/sec for <literal>crypt-bf/5</literal>. (The very "
+"small difference in results is in accordance with the fact that the "
+"<literal>crypt-bf</literal> implementation in <filename>pgcrypto</filename> "
+"is the same one used in John the Ripper.)"
+msgstr ""
+"Показатели <literal>crypt-bf</literal> получены простой программой, "
+"обрабатывающей в цикле 1000 паролей из 8-символов. Таким способом можно "
+"показать скорость с разным числом итераций. Для справки: <literal>john -"
+"test</literal> показывает 13532 циклов/с для <literal>crypt-bf/5</literal>. "
+"(Это очень небольшое различие в результатах согласуется с тем фактом, что "
+"реализация <literal>crypt-bf</literal> в <filename>pgcrypto</filename> не "
+"отличается от применяемой в программе John the Ripper.)"
+
+#: pgcrypto.xml:405(para)
+msgid ""
+"Note that <quote>try all combinations</quote> is not a realistic exercise. "
+"Usually password cracking is done with the help of dictionaries, which "
+"contain both regular words and various mutations of them. So, even somewhat "
+"word-like passwords could be cracked much faster than the above numbers "
+"suggest, while a 6-character non-word-like password may escape cracking. Or "
+"not."
+msgstr ""
+"Заметьте, что вариант <quote>перепробовать все комбинации</quote> не вполне "
+"реалистичен. Обычно перебор паролей производится с применением словарей, "
+"которые содержат и обычные слова, и их различные видоизменения. Поэтому даже "
+"похожие на слова пароли обычно можно подобрать быстрее, чем за указанное "
+"время, тогда как 6-символьный несловесный пароль может избежать взлома. А "
+"может и не избежать."
+
+#: pgcrypto.xml:417(title)
+msgid "PGP Encryption Functions"
+msgstr "Функции шифрования на базе PGP"
+
+#: pgcrypto.xml:419(para)
+msgid ""
+"The functions here implement the encryption part of the OpenPGP (RFC 4880) "
+"standard. Supported are both symmetric-key and public-key encryption."
+msgstr ""
+"Функции, описанные здесь, реализуют часть стандарта OpenPGP (RFC 4880), "
+"относящуюся к шифрованию. Они поддерживают шифрование как с симметричным, "
+"так и с закрытым ключом."
+
+#: pgcrypto.xml:424(para)
+msgid ""
+"An encrypted PGP message consists of 2 parts, or <firstterm>packets</"
+"firstterm>:"
+msgstr ""
+"Зашифрованное PGP сообщение состоит из 2 частей или <firstterm>пакетов</"
+"firstterm>:"
+
+#: pgcrypto.xml:429(para)
+msgid ""
+"Packet containing a session key &mdash; either symmetric-key or public-key "
+"encrypted."
+msgstr ""
+"Пакет, содержащий сеансовый ключ &mdash; либо симметричный, либо открытый (в "
+"зашифрованном виде)."
+
+#: pgcrypto.xml:435(para)
+msgid "Packet containing data encrypted with the session key."
+msgstr "Пакет, содержащий данные, зашифрованные сеансовым ключом."
+
+#: pgcrypto.xml:441(para)
+msgid "When encrypting with a symmetric key (i.e., a password):"
+msgstr "При шифровании с симметричным ключом (то есть, паролем):"
+
+#: pgcrypto.xml:446(para)
+msgid ""
+"The given password is hashed using a String2Key (S2K) algorithm. This is "
+"rather similar to <function>crypt()</function> algorithms &mdash; "
+"purposefully slow and with random salt &mdash; but it produces a full-length "
+"binary key."
+msgstr ""
+"Заданный пароль хешируется по алгоритму String2Key (S2K). Этот алгоритм "
+"подобен алгоритмам <function>crypt()</function> &mdash; специально замедлен "
+"и добавляет случайную соль &mdash; но на выход выдаёт двоичный ключ полной "
+"длины."
+
+#: pgcrypto.xml:454(para)
+msgid ""
+"If a separate session key is requested, a new random key will be generated. "
+"Otherwise the S2K key will be used directly as the session key."
+msgstr ""
+"Если требуется отдельный сеансовый ключ, генерируется новый случайный ключ. "
+"В противном случае в качестве сеансового будет использоваться "
+"непосредственно ключ S2K."
+
+#: pgcrypto.xml:461(para)
+msgid ""
+"If the S2K key is to be used directly, then only S2K settings will be put "
+"into the session key packet. Otherwise the session key will be encrypted "
+"with the S2K key and put into the session key packet."
+msgstr ""
+"Когда используется непосредственно ключ S2K, в пакет сеансового ключа "
+"помещаются только параметры S2K. В противном случае сеансовый ключ шифруется "
+"ключом S2K и результат помещается в пакет сеансового ключа."
+
+#: pgcrypto.xml:469(para)
+msgid "When encrypting with a public key:"
+msgstr "При шифровании с открытым ключом:"
+
+#: pgcrypto.xml:474(para)
+msgid "A new random session key is generated."
+msgstr "Генерируется новый случайный сеансовый ключ."
+
+#: pgcrypto.xml:479(para)
+msgid ""
+"It is encrypted using the public key and put into the session key packet."
+msgstr ""
+"Он зашифровывается открытым ключом и помещается в пакет сеансового ключа."
+
+#: pgcrypto.xml:485(para)
+msgid "In either case the data to be encrypted is processed as follows:"
+msgstr ""
+"В любом случае данные, которые должны быть зашифрованы, обрабатываются так:"
+
+#: pgcrypto.xml:490(para)
+msgid ""
+"Optional data-manipulation: compression, conversion to UTF-8, and/or "
+"conversion of line-endings."
+msgstr ""
+"Необязательная подготовка данных: сжатие, перекодировка в UTF-8 и/или "
+"преобразование концов строк."
+
+#: pgcrypto.xml:496(para)
+msgid ""
+"The data is prefixed with a block of random bytes. This is equivalent to "
+"using a random IV."
+msgstr ""
+"Перед данными добавляется блок случайных байт. Это равносильно использованию "
+"случайного вектора инициализации."
+
+#: pgcrypto.xml:502(para)
+msgid "An SHA1 hash of the random prefix and data is appended."
+msgstr "В конце добавляется хеш SHA1 случайного префикса и данных."
+
+#: pgcrypto.xml:507(para)
+msgid ""
+"All this is encrypted with the session key and placed in the data packet."
+msgstr "Всё это шифруется сеансовым ключом и помещается в пакет данных."
+
+#: pgcrypto.xml:514(function)
+msgid "pgp_sym_encrypt()"
+msgstr "pgp_sym_encrypt()"
+
+#: pgcrypto.xml:516(indexterm)
+msgid "<primary>pgp_sym_encrypt</primary>"
+msgstr "<primary>pgp_sym_encrypt</primary>"
+
+#: pgcrypto.xml:520(indexterm)
+msgid "<primary>pgp_sym_encrypt_bytea</primary>"
+msgstr "<primary>pgp_sym_encrypt_bytea</primary>"
+
+#: pgcrypto.xml:524(synopsis)
+#, no-wrap
+msgid ""
+"pgp_sym_encrypt(data text, psw text [, options text ]) returns bytea\n"
+"pgp_sym_encrypt_bytea(data bytea, psw text [, options text ]) returns bytea"
+msgstr ""
+"pgp_sym_encrypt(data text, psw text [, options text ]) returns bytea\n"
+"pgp_sym_encrypt_bytea(data bytea, psw text [, options text ]) returns bytea"
+
+#: pgcrypto.xml:526(para)
+msgid ""
+"Encrypt <parameter>data</parameter> with a symmetric PGP key <parameter>psw</"
+"parameter>. The <parameter>options</parameter> parameter can contain option "
+"settings, as described below."
+msgstr ""
+"Шифрует данные (<parameter>data</parameter>) симметричным ключом PGP "
+"<parameter>psw</parameter>. В <parameter>options</parameter> могут "
+"передаваться криптографические параметры, описанные ниже."
+
+#: pgcrypto.xml:534(function)
+msgid "pgp_sym_decrypt()"
+msgstr "pgp_sym_decrypt()"
+
+#: pgcrypto.xml:536(indexterm)
+msgid "<primary>pgp_sym_decrypt</primary>"
+msgstr "<primary>pgp_sym_decrypt</primary>"
+
+#: pgcrypto.xml:540(indexterm)
+msgid "<primary>pgp_sym_decrypt_bytea</primary>"
+msgstr "<primary>pgp_sym_decrypt_bytea</primary>"
+
+#: pgcrypto.xml:544(synopsis)
+#, no-wrap
+msgid ""
+"pgp_sym_decrypt(msg bytea, psw text [, options text ]) returns text\n"
+"pgp_sym_decrypt_bytea(msg bytea, psw text [, options text ]) returns bytea"
+msgstr ""
+"pgp_sym_decrypt(msg bytea, psw text [, options text ]) returns text\n"
+"pgp_sym_decrypt_bytea(msg bytea, psw text [, options text ]) returns bytea"
+
+#: pgcrypto.xml:546(para)
+msgid "Decrypt a symmetric-key-encrypted PGP message."
+msgstr "Расшифровывает сообщение, зашифрованное симметричным ключом PGP."
+
+#: pgcrypto.xml:549(para)
+msgid ""
+"Decrypting <type>bytea</type> data with <function>pgp_sym_decrypt</function> "
+"is disallowed. This is to avoid outputting invalid character data. "
+"Decrypting originally textual data with <function>pgp_sym_decrypt_bytea</"
+"function> is fine."
+msgstr ""
+"Расшифровывать данные <type>bytea</type> функцией <function>pgp_sym_decrypt</"
+"function> запрещено. Это ограничение введено, чтобы не допустить вывода "
+"некорректных символьных данных. Расшифровывать изначально текстовые данные с "
+"помощью <function>pgp_sym_decrypt_bytea</function> можно без ограничений."
+
+#: pgcrypto.xml:554(para) pgcrypto.xml:577(para) pgcrypto.xml:608(para)
+msgid ""
+"The <parameter>options</parameter> parameter can contain option settings, as "
+"described below."
+msgstr ""
+"Аргумент <parameter>options</parameter> может содержать криптографические "
+"параметры, описанные ниже."
+
+#: pgcrypto.xml:561(function)
+msgid "pgp_pub_encrypt()"
+msgstr "pgp_pub_encrypt()"
+
+#: pgcrypto.xml:563(indexterm)
+msgid "<primary>pgp_pub_encrypt</primary>"
+msgstr "<primary>pgp_pub_encrypt</primary>"
+
+#: pgcrypto.xml:567(indexterm)
+msgid "<primary>pgp_pub_encrypt_bytea</primary>"
+msgstr "<primary>pgp_pub_encrypt_bytea</primary>"
+
+#: pgcrypto.xml:571(synopsis)
+#, no-wrap
+msgid ""
+"pgp_pub_encrypt(data text, key bytea [, options text ]) returns bytea\n"
+"pgp_pub_encrypt_bytea(data bytea, key bytea [, options text ]) returns bytea"
+msgstr ""
+"pgp_pub_encrypt(data text, key bytea [, options text ]) returns bytea\n"
+"pgp_pub_encrypt_bytea(data bytea, key bytea [, options text ]) returns bytea"
+
+#: pgcrypto.xml:573(para)
+msgid ""
+"Encrypt <parameter>data</parameter> with a public PGP key <parameter>key</"
+"parameter>. Giving this function a secret key will produce an error."
+msgstr ""
+"Зашифровывает данные (<parameter>data</parameter>) открытым ключом PGP "
+"(<parameter>key</parameter>). Если передать этой функции закрытый ключ, она "
+"выдаст ошибку."
+
+#: pgcrypto.xml:584(function)
+msgid "pgp_pub_decrypt()"
+msgstr "pgp_pub_decrypt()"
+
+#: pgcrypto.xml:586(indexterm)
+msgid "<primary>pgp_pub_decrypt</primary>"
+msgstr "<primary>pgp_pub_decrypt</primary>"
+
+#: pgcrypto.xml:590(indexterm)
+msgid "<primary>pgp_pub_decrypt_bytea</primary>"
+msgstr "<primary>pgp_pub_decrypt_bytea</primary>"
+
+#: pgcrypto.xml:594(synopsis)
+#, no-wrap
+msgid ""
+"pgp_pub_decrypt(msg bytea, key bytea [, psw text [, options text ]]) returns text\n"
+"pgp_pub_decrypt_bytea(msg bytea, key bytea [, psw text [, options text ]]) returns bytea"
+msgstr ""
+"pgp_pub_decrypt(msg bytea, key bytea [, psw text [, options text ]]) returns text\n"
+"pgp_pub_decrypt_bytea(msg bytea, key bytea [, psw text [, options text ]]) returns bytea"
+
+#: pgcrypto.xml:596(para)
+msgid ""
+"Decrypt a public-key-encrypted message. <parameter>key</parameter> must be "
+"the secret key corresponding to the public key that was used to encrypt. If "
+"the secret key is password-protected, you must give the password in "
+"<parameter>psw</parameter>. If there is no password, but you want to specify "
+"options, you need to give an empty password."
+msgstr ""
+"Расшифровывает сообщение, зашифрованное открытым ключом. В <parameter>key</"
+"parameter> должен передаваться закрытый ключ, соответствующий открытому "
+"ключу, применяющемуся при шифровании. Если секретный ключ защищён паролем, "
+"этот пароль нужно передать в параметре <parameter>psw</parameter>. Если "
+"пароля нет, но необходимо передать криптографические параметры, вы должны "
+"передать пустой пароль."
+
+#: pgcrypto.xml:603(para)
+msgid ""
+"Decrypting <type>bytea</type> data with <function>pgp_pub_decrypt</function> "
+"is disallowed. This is to avoid outputting invalid character data. "
+"Decrypting originally textual data with <function>pgp_pub_decrypt_bytea</"
+"function> is fine."
+msgstr ""
+"Расшифровывать данные <type>bytea</type> функцией <function>pgp_pub_decrypt</"
+"function> запрещено. Это ограничение введено, чтобы не допустить вывода "
+"недопустимых символьных данных. Расшифровывать изначально текстовые данные с "
+"помощью <function>pgp_pub_decrypt_bytea</function> можно без ограничений."
+
+#: pgcrypto.xml:615(function)
+msgid "pgp_key_id()"
+msgstr "pgp_key_id()"
+
+#: pgcrypto.xml:617(indexterm)
+msgid "<primary>pgp_key_id</primary>"
+msgstr "<primary>pgp_key_id</primary>"
+
+#: pgcrypto.xml:621(synopsis)
+#, no-wrap
+msgid "pgp_key_id(bytea) returns text"
+msgstr "pgp_key_id(bytea) returns text"
+
+#: pgcrypto.xml:622(para)
+msgid ""
+"<function>pgp_key_id</function> extracts the key ID of a PGP public or "
+"secret key. Or it gives the key ID that was used for encrypting the data, if "
+"given an encrypted message."
+msgstr ""
+"<function>pgp_key_id</function> извлекает идентификатор ключа из открытого "
+"или закрытого ключа PGP. Она также может выдать идентификатор ключа, которым "
+"были зашифрованы данные, если ей передаётся зашифрованное сообщение."
+
+#: pgcrypto.xml:627(para)
+msgid "It can return 2 special key IDs:"
+msgstr "Она может выдать два специальных идентификатора ключа:"
+
+#: pgcrypto.xml:633(literal)
+msgid "SYMKEY"
+msgstr "SYMKEY"
+
+#: pgcrypto.xml:635(para)
+msgid "The message is encrypted with a symmetric key."
+msgstr "Сообщение зашифровано симметричным ключом."
+
+#: pgcrypto.xml:641(literal)
+msgid "ANYKEY"
+msgstr "ANYKEY"
+
+#: pgcrypto.xml:643(para)
+msgid ""
+"The message is public-key encrypted, but the key ID has been removed. That "
+"means you will need to try all your secret keys on it to see which one "
+"decrypts it. <filename>pgcrypto</filename> itself does not produce such "
+"messages."
+msgstr ""
+"Сообщение зашифровано открытом ключом, но идентификатор ключа был удалён. "
+"Это означает, что вам надо будет перепробовать ключи, чтобы подобрать "
+"подходящий. Сама библиотека <filename>pgcrypto</filename> не генерирует "
+"такие сообщения."
+
+#: pgcrypto.xml:651(para)
+msgid ""
+"Note that different keys may have the same ID. This is rare but a normal "
+"event. The client application should then try to decrypt with each one, to "
+"see which fits &mdash; like handling <literal>ANYKEY</literal>."
+msgstr ""
+"Заметьте, что разные ключи могут иметь одинаковый идентификатор. Это редкое, "
+"но не невероятное явление. В таком случае клиентское приложение должно "
+"пытаться расшифровать данные с каждым ключом, пока не найдёт подходящий "
+"&mdash; примерно так же, как и с <literal>ANYKEY</literal>."
+
+#: pgcrypto.xml:659(title)
+msgid "<function>armor()</function>, <function>dearmor()</function>"
+msgstr "<function>armor()</function>, <function>dearmor()</function>"
+
+#: pgcrypto.xml:661(indexterm)
+msgid "<primary>armor</primary>"
+msgstr "<primary>armor</primary>"
+
+#: pgcrypto.xml:665(indexterm)
+msgid "<primary>dearmor</primary>"
+msgstr "<primary>dearmor</primary>"
+
+#: pgcrypto.xml:669(synopsis)
+#, no-wrap
+msgid ""
+"armor(data bytea [ , keys text[], values text[] ]) returns text\n"
+"dearmor(data text) returns bytea"
+msgstr ""
+"armor(data bytea [ , keys text[], values text[] ]) returns text\n"
+"dearmor(data text) returns bytea"
+
+#: pgcrypto.xml:671(para)
+msgid ""
+"These functions wrap/unwrap binary data into PGP ASCII-armor format, which "
+"is basically Base64 with CRC and additional formatting."
+msgstr ""
+"Эти функции переводят двоичные данные в/из формата PGP &laquo;ASCII "
+"Armor&raquo;, по сути представляющий собой кодировку Base64 с контрольными "
+"суммами и дополнительным форматированием."
+
+#: pgcrypto.xml:676(para)
+msgid ""
+"If the <parameter>keys</parameter> and <parameter>values</parameter> arrays "
+"are specified, an <firstterm>armor header</firstterm> is added to the "
+"armored format for each key/value pair. Both arrays must be single-"
+"dimensional, and they must be of the same length. The keys and values cannot "
+"contain any non-ASCII characters."
+msgstr ""
+"Если задаются массивы <parameter>keys</parameter> и <parameter>values</"
+"parameter>, для каждой пары ключ/значения в формат Armor добавляется "
+"<firstterm>заголовок Armor</firstterm>. Оба массива должны быть одномерными "
+"и иметь одинаковую длину. Задаваемые ключи и значения могут содержать только "
+"символы ASCII."
+
+#: pgcrypto.xml:686(function)
+msgid "pgp_armor_headers"
+msgstr "pgp_armor_headers"
+
+#: pgcrypto.xml:688(indexterm)
+msgid "<primary>pgp_armor_headers</primary>"
+msgstr "<primary>pgp_armor_headers</primary>"
+
+#: pgcrypto.xml:692(synopsis)
+#, no-wrap
+msgid "pgp_armor_headers(data text, key out text, value out text) returns setof record"
+msgstr "pgp_armor_headers(data text, key out text, value out text) returns setof record"
+
+#: pgcrypto.xml:693(para)
+msgid ""
+"<function>pgp_armor_headers()</function> extracts the armor headers from "
+"<parameter>data</parameter>. The return value is a set of rows with two "
+"columns, key and value. If the keys or values contain any non-ASCII "
+"characters, they are treated as UTF-8."
+msgstr ""
+"Функция <function>pgp_armor_headers()</function> извлекает заголовки Armor "
+"из параметра <parameter>data</parameter>. Она возвращает набор строк с двумя "
+"столбцами, key и value. Если в ключах или значениях оказываются символы не "
+"ASCII, они воспринимаются как UTF-8."
+
+#: pgcrypto.xml:702(title)
+msgid "Options for PGP Functions"
+msgstr "Параметры функций PGP"
+
+#: pgcrypto.xml:708(programlisting)
+#, no-wrap
+msgid "pgp_sym_encrypt(data, psw, 'compress-algo=1, cipher-algo=aes256')"
+msgstr "pgp_sym_encrypt(data, psw, 'compress-algo=1, cipher-algo=aes256')"
+
+#: pgcrypto.xml:704(para)
+msgid ""
+"Options are named to be similar to GnuPG. An option's value should be given "
+"after an equal sign; separate options from each other with commas. For "
+"example: <placeholder-1/>"
+msgstr ""
+"Имена параметров подобны принятым в GnuPG. Значение параметра должно "
+"задаваться после знака равно; друг от друга параметры отделяются запятыми. "
+"Например: <placeholder-1/>"
+
+#: pgcrypto.xml:711(para)
+msgid ""
+"All of the options except <literal>convert-crlf</literal> apply only to "
+"encrypt functions. Decrypt functions get the parameters from the PGP data."
+msgstr ""
+"Все эти параметры, кроме <literal>convert-crlf</literal>, применяются только "
+"к функциям шифрования. Функции расшифровывания получают параметры из данных "
+"PGP."
+
+#: pgcrypto.xml:717(para)
+msgid ""
+"The most interesting options are probably <literal>compress-algo</literal> "
+"and <literal>unicode-mode</literal>. The rest should have reasonable "
+"defaults."
+msgstr ""
+"Вероятно, самые интересные параметры — это <literal>compress-algo</literal> "
+"и <literal>unicode-mode</literal>. Остальные должны иметь достаточно "
+"адекватные значения по умолчанию."
+
+#: pgcrypto.xml:724(title)
+msgid "cipher-algo"
+msgstr "cipher-algo"
+
+#: pgcrypto.xml:726(para)
+msgid "Which cipher algorithm to use."
+msgstr "Выбирает алгоритм шифрования."
+
+#: pgcrypto.xml:730(literal)
+msgid "3des"
+msgstr "3des"
+
+#: pgcrypto.xml:730(literal)
+msgid "cast5"
+msgstr "cast5"
+
+#: pgcrypto.xml:729(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: bf, aes128, aes192, aes256 (OpenSSL-only: <placeholder-1/>, <placeholder-2/>)\n"
+"Default: aes128\n"
+"Applies to: pgp_sym_encrypt, pgp_pub_encrypt\n"
+msgstr ""
+"Значения: bf, aes128, aes192, aes256 (только OpenSSL: <placeholder-1/>, <placeholder-2/>)\n"
+"По умолчанию: aes128\n"
+"Применим к: pgp_sym_encrypt, pgp_pub_encrypt"
+
+#: pgcrypto.xml:737(title)
+msgid "compress-algo"
+msgstr "compress-algo"
+
+#: pgcrypto.xml:739(para)
+msgid ""
+"Which compression algorithm to use. Only available if "
+"<productname>PostgreSQL</productname> was built with zlib."
+msgstr ""
+"Выбирает алгоритм сжатия. Принимается, только если <productname>PostgreSQL</"
+"productname> собран с zlib."
+
+#: pgcrypto.xml:743(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values:\n"
+"  0 - no compression\n"
+"  1 - ZIP compression\n"
+"  2 - ZLIB compression (= ZIP plus meta-data and block CRCs)\n"
+"Default: 0\n"
+"Applies to: pgp_sym_encrypt, pgp_pub_encrypt\n"
+msgstr ""
+"Значения:\n"
+"  0 — без сжатия\n"
+"  1 — сжатие ZIP\n"
+"  2 — сжатие ZLIB (= ZIP плюс метаданные и CRC блоков)\n"
+"По умолчанию: 0\n"
+"Применим к: pgp_sym_encrypt, pgp_pub_encrypt"
+
+#: pgcrypto.xml:754(title)
+msgid "compress-level"
+msgstr "compress-level"
+
+#: pgcrypto.xml:756(para)
+msgid ""
+"How much to compress. Higher levels compress smaller but are slower. 0 "
+"disables compression."
+msgstr ""
+"Определяет уровень сжатия. Чем больше уровень, тем меньшего объёма "
+"результат, но длительнее процесс. Значение 0 отключает сжатие."
+
+#: pgcrypto.xml:760(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: 0, 1-9\n"
+"Default: 6\n"
+"Applies to: pgp_sym_encrypt, pgp_pub_encrypt\n"
+msgstr ""
+"Значения: 0, 1-9\n"
+"По умолчанию: 6\n"
+"Применим к: pgp_sym_encrypt, pgp_pub_encrypt"
+
+#: pgcrypto.xml:768(title)
+msgid "convert-crlf"
+msgstr "convert-crlf"
+
+#: pgcrypto.xml:770(para)
+msgid ""
+"Whether to convert <literal>\\n</literal> into <literal>\\r\\n</literal> "
+"when encrypting and <literal>\\r\\n</literal> to <literal>\\n</literal> when "
+"decrypting. RFC 4880 specifies that text data should be stored using "
+"<literal>\\r\\n</literal> line-feeds. Use this to get fully RFC-compliant "
+"behavior."
+msgstr ""
+"Определяет, преобразовывать ли <literal>\\n</literal> в <literal>\\r\\n</"
+"literal> при шифровании и <literal>\\r\\n</literal> в <literal>\\n</literal> "
+"при дешифровании. В RFC 4880 требуется, чтобы текстовые данные хранились с "
+"переводами строк в виде <literal>\\r\\n</literal>. Воспользуйтесь этим "
+"параметром, чтобы поведение полностью соответствовало RFC."
+
+#: pgcrypto.xml:777(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: 0, 1\n"
+"Default: 0\n"
+"Applies to: pgp_sym_encrypt, pgp_pub_encrypt, pgp_sym_decrypt, pgp_pub_decrypt\n"
+msgstr ""
+"Значения: 0, 1\n"
+"По умолчанию: 0\n"
+"Применим к: pgp_sym_encrypt, pgp_pub_encrypt, pgp_sym_decrypt, pgp_pub_decrypt"
+
+#: pgcrypto.xml:785(title)
+msgid "disable-mdc"
+msgstr "disable-mdc"
+
+#: pgcrypto.xml:787(para)
+msgid ""
+"Do not protect data with SHA-1. The only good reason to use this option is "
+"to achieve compatibility with ancient PGP products, predating the addition "
+"of SHA-1 protected packets to RFC 4880. Recent gnupg.org and pgp.com "
+"software supports it fine."
+msgstr ""
+"Не защищать данные хешем SHA-1. Единственная разумная причина использовать "
+"этот параметр — добиться совместимости с древними программами PGP, вышедшими "
+"до того, как в RFC 4880 была предусмотрена защита пакетов с SHA-1. Все "
+"последние реализации с gnupg.org и pgp.com прекрасно поддерживают это."
+
+#: pgcrypto.xml:793(literallayout) pgcrypto.xml:879(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: 0, 1\n"
+"Default: 0\n"
+"Applies to: pgp_sym_encrypt, pgp_pub_encrypt\n"
+msgstr ""
+"Значения: 0, 1\n"
+"По умолчанию: 0\n"
+"Применим к: pgp_sym_encrypt, pgp_pub_encrypt"
+
+#: pgcrypto.xml:801(title)
+msgid "sess-key"
+msgstr "sess-key"
+
+#: pgcrypto.xml:803(para)
+msgid ""
+"Use separate session key. Public-key encryption always uses a separate "
+"session key; this option is for symmetric-key encryption, which by default "
+"uses the S2K key directly."
+msgstr ""
+"Использовать отдельный сеансовый ключ. Для шифрования с открытым ключом "
+"всегда используется отдельный сеансовый ключ; этот параметр предназначен для "
+"шифрования с симметричным ключом, которое по умолчанию использует "
+"непосредственно ключ S2K."
+
+#: pgcrypto.xml:808(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: 0, 1\n"
+"Default: 0\n"
+"Applies to: pgp_sym_encrypt\n"
+msgstr ""
+"Значения: 0, 1\n"
+"По умолчанию: 0\n"
+"Применим к: pgp_sym_encrypt"
+
+#: pgcrypto.xml:816(title)
+msgid "s2k-mode"
+msgstr "s2k-mode"
+
+#: pgcrypto.xml:818(para)
+msgid "Which S2K algorithm to use."
+msgstr "Режим алгоритма S2K."
+
+#: pgcrypto.xml:821(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values:\n"
+"  0 - Without salt.  Dangerous!\n"
+"  1 - With salt but with fixed iteration count.\n"
+"  3 - Variable iteration count.\n"
+"Default: 3\n"
+"Applies to: pgp_sym_encrypt\n"
+msgstr ""
+"Значения:\n"
+"  0 — Без соли. Опасно!\n"
+"  1 — С солью, но с фиксированным числом итераций.\n"
+"  3 — С переменным числом итераций.\n"
+"По умолчанию: 3\n"
+"Применим к: pgp_sym_encrypt"
+
+#: pgcrypto.xml:832(title)
+#, fuzzy
+msgid "s2k-count"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"count\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"число"
+
+#: pgcrypto.xml:834(para)
+msgid ""
+"The number of iterations of the S2K algorithm to use. It must be a value "
+"between 1024 and 65011712, inclusive."
+msgstr ""
+
+#: pgcrypto.xml:838(literallayout)
+#, no-wrap
+msgid ""
+"\n"
+"Default: A random value bewteen 65536 and 253952\n"
+"Applies to: pgp_sym_encrypt, only with s2k-mode=3\n"
+msgstr ""
+
+#: pgcrypto.xml:845(title)
+msgid "s2k-digest-algo"
+msgstr "s2k-digest-algo"
+
+#: pgcrypto.xml:847(para)
+msgid "Which digest algorithm to use in S2K calculation."
+msgstr ""
+"Выбирает алгоритм хеширования, который будет использоваться для вычисления "
+"S2K."
+
+#: pgcrypto.xml:850(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: md5, sha1\n"
+"Default: sha1\n"
+"Applies to: pgp_sym_encrypt\n"
+msgstr ""
+"Значения: md5, sha1\n"
+"По умолчанию: sha1\n"
+"Применим к: pgp_sym_encrypt"
+
+#: pgcrypto.xml:858(title)
+msgid "s2k-cipher-algo"
+msgstr "s2k-cipher-algo"
+
+#: pgcrypto.xml:860(para)
+msgid "Which cipher to use for encrypting separate session key."
+msgstr ""
+"Выбирает шифр, который будет использоваться для шифрования отдельного "
+"сеансового ключа."
+
+#: pgcrypto.xml:863(literallayout)
+#, fuzzy, no-wrap
+msgid ""
+"\n"
+"Values: bf, aes, aes128, aes192, aes256\n"
+"Default: use cipher-algo\n"
+"Applies to: pgp_sym_encrypt\n"
+msgstr ""
+"Значения: bf, aes, aes128, aes192, aes256\n"
+"По умолчанию: используется cipher-algo\n"
+"Применим к: pgp_sym_encrypt"
+
+#: pgcrypto.xml:871(title)
+msgid "unicode-mode"
+msgstr "unicode-mode"
+
+#: pgcrypto.xml:873(para)
+msgid ""
+"Whether to convert textual data from database internal encoding to UTF-8 and "
+"back. If your database already is UTF-8, no conversion will be done, but the "
+"message will be tagged as UTF-8. Without this option it will not be."
+msgstr ""
+"Определяет, преобразовывать ли текстовые данные из внутренней кодировки базы "
+"данных в UTF-8 и обратно. Если кодировка базы уже UTF-8, перекодировка не "
+"производится, но сообщение помечается как UTF-8. Без данного параметра этого "
+"не происходит."
+
+#: pgcrypto.xml:888(title)
+msgid "Generating PGP Keys with GnuPG"
+msgstr "Формирование ключей PGP с применением GnuPG"
+
+#: pgcrypto.xml:892(programlisting)
+#, no-wrap
+msgid "gpg --gen-key"
+msgstr "gpg --gen-key"
+
+#: pgcrypto.xml:890(para)
+msgid "To generate a new key: <placeholder-1/>"
+msgstr "Формирование нового ключа: <placeholder-1/>"
+
+#: pgcrypto.xml:894(para)
+msgid "The preferred key type is <quote>DSA and Elgamal</quote>."
+msgstr "Предпочитаемый тип ключей: <quote>DSA and Elgamal</quote>."
+
+#: pgcrypto.xml:897(para)
+msgid ""
+"For RSA encryption you must create either DSA or RSA sign-only key as master "
+"and then add an RSA encryption subkey with <literal>gpg --edit-key</literal>."
+msgstr ""
+"Для шифрования RSA вы должны создать главный ключ либо DSA, либо RSA только "
+"для подписания, а затем добавить подключ для шифрования, выполнив команду "
+"<literal>gpg --edit-key</literal>."
+
+#: pgcrypto.xml:904(programlisting)
+#, no-wrap
+msgid "gpg --list-secret-keys"
+msgstr "gpg --list-secret-keys"
+
+#: pgcrypto.xml:902(para)
+msgid "To list keys: <placeholder-1/>"
+msgstr "Просмотр списка ключей: <placeholder-1/>"
+
+#: pgcrypto.xml:908(programlisting)
+#, no-wrap
+msgid "gpg -a --export KEYID &gt; public.key"
+msgstr "gpg -a --export KEYID &gt; public.key"
+
+#: pgcrypto.xml:906(para)
+msgid "To export a public key in ASCII-armor format: <placeholder-1/>"
+msgstr ""
+"Экспорт открытого ключа в формате &laquo;ASCII Armor&raquo;: <placeholder-1/>"
+
+#: pgcrypto.xml:912(programlisting)
+#, no-wrap
+msgid "gpg -a --export-secret-keys KEYID &gt; secret.key"
+msgstr "gpg -a --export-secret-keys KEYID &gt; secret.key"
+
+#: pgcrypto.xml:910(para)
+msgid "To export a secret key in ASCII-armor format: <placeholder-1/>"
+msgstr ""
+"Экспорт закрытого ключа в формате &laquo;ASCII Armor&raquo;: <placeholder-1/>"
+
+#: pgcrypto.xml:914(para)
+msgid ""
+"You need to use <function>dearmor()</function> on these keys before giving "
+"them to the PGP functions. Or if you can handle binary data, you can drop "
+"<literal>-a</literal> from the command."
+msgstr ""
+"Прежде чем передавать эти ключи функциям PGP, вы должны применить функцию "
+"<function>dearmor()</function> к этим ключам. Либо, если вы можете "
+"обработать двоичные данные, уберите <literal>-a</literal> из команды."
+
+#: pgcrypto.xml:919(para)
+msgid ""
+"For more details see <literal>man gpg</literal>, <ulink url=\"http://www."
+"gnupg.org/gph/en/manual.html\">The GNU Privacy Handbook</ulink> and other "
+"documentation on <ulink url=\"http://www.gnupg.org\"/>."
+msgstr ""
+"Дополнительную информацию вы можете получить в руководстве <literal>man gpg</"
+"literal>, <ulink url=\"http://www.gnupg.org/gph/en/manual.html\">The GNU "
+"Privacy Handbook</ulink> (Руководство GNU по обеспечению конфиденциальности) "
+"и другой документации на сайте <ulink url=\"http://www.gnupg.org\"/>."
+
+#: pgcrypto.xml:928(title)
+msgid "Limitations of PGP Code"
+msgstr "Ограничения кода PGP"
+
+#: pgcrypto.xml:932(para)
+msgid ""
+"No support for signing. That also means that it is not checked whether the "
+"encryption subkey belongs to the master key."
+msgstr ""
+"Не поддерживается подписывание. Это также означает, что принадлежность "
+"подключа шифрования главному ключу не проверяется."
+
+#: pgcrypto.xml:938(para)
+msgid ""
+"No support for encryption key as master key. As such practice is generally "
+"discouraged, this should not be a problem."
+msgstr ""
+"Не поддерживается использование ключа шифрования в качестве главного ключа. "
+"Так как подобная практика обычно не приветствуется, это не должно быть "
+"проблемой."
+
+#: pgcrypto.xml:944(para)
+msgid ""
+"No support for several subkeys. This may seem like a problem, as this is "
+"common practice. On the other hand, you should not use your regular GPG/PGP "
+"keys with <filename>pgcrypto</filename>, but create new ones, as the usage "
+"scenario is rather different."
+msgstr ""
+"Нет поддержки нескольких подключей. Это может представляться проблемой, так "
+"как такие ключи не редкость. С другой стороны, вы всё равно не должны "
+"использовать обычные ключи GPG/PGP с <filename>pgcrypto</filename>, а должны "
+"создать новые, учитывая, что это другой сценарий использования."
+
+#: pgcrypto.xml:956(title)
+msgid "Raw Encryption Functions"
+msgstr "Низкоуровневые функции шифрования"
+
+#: pgcrypto.xml:958(para)
+msgid ""
+"These functions only run a cipher over data; they don't have any advanced "
+"features of PGP encryption. Therefore they have some major problems:"
+msgstr ""
+"Эти функции выполняют только шифрование данных; они не предоставляют "
+"расширенные возможности шифрования PGP. Таким образом, с ними связаны "
+"следующие проблемы:"
+
+#: pgcrypto.xml:964(para)
+msgid "They use user key directly as cipher key."
+msgstr ""
+"Они используют ключ пользователя непосредственно в качестве ключа шифрования."
+
+#: pgcrypto.xml:969(para)
+msgid ""
+"They don't provide any integrity checking, to see if the encrypted data was "
+"modified."
+msgstr ""
+"Они не обеспечивают проверку целостности, которая должна выявлять "
+"модификацию зашифрованных данных."
+
+#: pgcrypto.xml:975(para)
+msgid ""
+"They expect that users manage all encryption parameters themselves, even IV."
+msgstr ""
+"Они рассчитаны на то, что пользователи будут управлять всеми параметрами "
+"шифрования самостоятельно, даже вектором инициализации."
+
+#: pgcrypto.xml:981(para)
+msgid "They don't handle text."
+msgstr "Они не рассчитаны на текст."
+
+#: pgcrypto.xml:986(para)
+msgid ""
+"So, with the introduction of PGP encryption, usage of raw encryption "
+"functions is discouraged."
+msgstr ""
+"Поэтому с появлением поддержки шифрования PGP использовать низкоуровневые "
+"функции шифрования не рекомендуется."
+
+#: pgcrypto.xml:991(indexterm)
+msgid "<primary>encrypt</primary>"
+msgstr "<primary>encrypt</primary>"
+
+#: pgcrypto.xml:995(indexterm)
+msgid "<primary>decrypt</primary>"
+msgstr "<primary>decrypt</primary>"
+
+#: pgcrypto.xml:999(indexterm)
+msgid "<primary>encrypt_iv</primary>"
+msgstr "<primary>encrypt_iv</primary>"
+
+#: pgcrypto.xml:1003(indexterm)
+msgid "<primary>decrypt_iv</primary>"
+msgstr "<primary>decrypt_iv</primary>"
+
+#: pgcrypto.xml:1007(synopsis)
+#, no-wrap
+msgid ""
+"encrypt(data bytea, key bytea, type text) returns bytea\n"
+"decrypt(data bytea, key bytea, type text) returns bytea\n"
+"\n"
+"encrypt_iv(data bytea, key bytea, iv bytea, type text) returns bytea\n"
+"decrypt_iv(data bytea, key bytea, iv bytea, type text) returns bytea"
+msgstr ""
+"encrypt(data bytea, key bytea, type text) returns bytea\n"
+"decrypt(data bytea, key bytea, type text) returns bytea\n"
+"\n"
+"encrypt_iv(data bytea, key bytea, iv bytea, type text) returns bytea\n"
+"decrypt_iv(data bytea, key bytea, iv bytea, type text) returns bytea"
+
+#: pgcrypto.xml:1022(para)
+msgid "<literal>bf</literal> &mdash; Blowfish"
+msgstr "<literal>bf</literal> &mdash; Blowfish"
+
+#: pgcrypto.xml:1023(para)
+msgid "<literal>aes</literal> &mdash; AES (Rijndael-128)"
+msgstr "<literal>aes</literal> &mdash; AES (Rijndael-128)"
+
+#: pgcrypto.xml:1028(para)
+msgid "<literal>cbc</literal> &mdash; next block depends on previous (default)"
+msgstr ""
+"<literal>cbc</literal> &mdash; следующий блок зависит от предыдущего (по "
+"умолчанию)"
+
+#: pgcrypto.xml:1033(para)
+msgid ""
+"<literal>ecb</literal> &mdash; each block is encrypted separately (for "
+"testing only)"
+msgstr ""
+"<literal>ecb</literal> &mdash; каждый блок шифруется отдельно (только для "
+"тестирования)"
+
+#: pgcrypto.xml:1042(para)
+msgid "<literal>pkcs</literal> &mdash; data may be any length (default)"
+msgstr ""
+"<literal>pkcs</literal> &mdash; данные могут быть любой длины (по умолчанию)"
+
+#: pgcrypto.xml:1047(para)
+msgid ""
+"<literal>none</literal> &mdash; data must be multiple of cipher block size"
+msgstr ""
+"<literal>none</literal> &mdash; размер данных должен быть кратен размеру "
+"блока шифра"
+
+#: pgcrypto.xml:1013(para)
+msgid ""
+"Encrypt/decrypt data using the cipher method specified by <parameter>type</"
+"parameter>. The syntax of the <parameter>type</parameter> string is: "
+"<synopsis><replaceable>algorithm</replaceable> <optional> <literal>-</"
+"literal> <replaceable>mode</replaceable> </optional> <optional> <literal>/"
+"pad:</literal> <replaceable>padding</replaceable> </optional></synopsis> "
+"where <replaceable>algorithm</replaceable> is one of: <placeholder-1/> and "
+"<replaceable>mode</replaceable> is one of: <placeholder-2/> and "
+"<replaceable>padding</replaceable> is one of: <placeholder-3/>"
+msgstr ""
+"Эти функции зашифровывают/расшифровывают данные, применяя метод шифрования, "
+"заданный параметром <parameter>type</parameter>. Строка <parameter>type</"
+"parameter> имеет следующий формат: <synopsis><replaceable>алгоритм</"
+"replaceable> <optional> <literal>-</literal> <replaceable>режим</"
+"replaceable> </optional> <optional> <literal>/pad:</literal> "
+"<replaceable>дозаполнение</replaceable> </optional></synopsis> где "
+"допустимый <replaceable>алгоритм</replaceable>: <placeholder-1/> допустимый "
+"<replaceable>режим</replaceable>: <placeholder-2/> и допустимое "
+"<replaceable>дозаполнение</replaceable>: <placeholder-3/>"
+
+#: pgcrypto.xml:1055(programlisting)
+#, no-wrap
+msgid ""
+"encrypt(data, 'fooz', 'bf')\n"
+"encrypt(data, 'fooz', 'bf-cbc/pad:pkcs')"
+msgstr ""
+"encrypt(data, 'fooz', 'bf')\n"
+"encrypt(data, 'fooz', 'bf-cbc/pad:pkcs')"
+
+#: pgcrypto.xml:1053(para)
+msgid "So, for example, these are equivalent: <placeholder-1/>"
+msgstr "Так что, например, эти вызовы равнозначны: <placeholder-1/>"
+
+#: pgcrypto.xml:1058(para)
+msgid ""
+"In <function>encrypt_iv</function> and <function>decrypt_iv</function>, the "
+"<parameter>iv</parameter> parameter is the initial value for the CBC mode; "
+"it is ignored for ECB. It is clipped or padded with zeroes if not exactly "
+"block size. It defaults to all zeroes in the functions without this "
+"parameter."
+msgstr ""
+"Для функций <function>encrypt_iv</function> и <function>decrypt_iv</"
+"function> параметр <parameter>iv</parameter> задаёт начальное значение для "
+"режима CBC; для ECB он игнорируется. Оно обрезается или дополняется нулями, "
+"если его размер не равен ровно размеру блока. В функциях без этого параметра "
+"оно по умолчанию заполняется нулями."
+
+#: pgcrypto.xml:1068(title)
+msgid "Random-Data Functions"
+msgstr "Функции получения случайных данных"
+
+#: pgcrypto.xml:1070(indexterm)
+msgid "<primary>gen_random_bytes</primary>"
+msgstr "<primary>gen_random_bytes</primary>"
+
+#: pgcrypto.xml:1074(synopsis)
+#, no-wrap
+msgid "gen_random_bytes(count integer) returns bytea"
+msgstr "gen_random_bytes(count integer) returns bytea"
+
+#: pgcrypto.xml:1075(para)
+msgid ""
+"Returns <parameter>count</parameter> cryptographically strong random bytes. "
+"At most 1024 bytes can be extracted at a time. This is to avoid draining the "
+"randomness generator pool."
+msgstr ""
+"Возвращает криптографически стойкие случайные байты в количестве "
+"<parameter>count</parameter>. За один вызов можно получить максимум 1024 "
+"байт. Это ограничение предотвращает исчерпание пула энтропии."
+
+#: pgcrypto.xml:1081(indexterm)
+msgid "<primary>gen_random_uuid</primary>"
+msgstr "<primary>gen_random_uuid</primary>"
+
+#: pgcrypto.xml:1085(synopsis)
+#, no-wrap
+msgid "gen_random_uuid() returns uuid"
+msgstr "gen_random_uuid() returns uuid"
+
+#: pgcrypto.xml:1086(para)
+msgid "Returns a version 4 (random) UUID."
+msgstr "Возвращает UUID версии 4 (случайный)."
+
+#: pgcrypto.xml:1092(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: pgcrypto.xml:1095(title)
+msgid "Configuration"
+msgstr "Конфигурирование"
+
+#: pgcrypto.xml:1097(para)
+msgid ""
+"<filename>pgcrypto</filename> configures itself according to the findings of "
+"the main PostgreSQL <literal>configure</literal> script. The options that "
+"affect it are <literal>--with-zlib</literal> and <literal>--with-openssl</"
+"literal>."
+msgstr ""
+"Модуль <filename>pgcrypto</filename> настраивается согласно установкам, "
+"полученным в главном скрипте <literal>configure</literal> PostgreSQL. На его "
+"конфигурацию влияют аргументы <literal>--with-zlib</literal> и <literal>--"
+"with-openssl</literal>."
+
+#: pgcrypto.xml:1104(para)
+msgid ""
+"When compiled with zlib, PGP encryption functions are able to compress data "
+"before encrypting."
+msgstr ""
+"При компиляции с zlib шифрующие функции PGP могут сжимать данные перед "
+"шифрованием."
+
+#: pgcrypto.xml:1109(para)
+msgid ""
+"When compiled with OpenSSL, there will be more algorithms available. Also "
+"public-key encryption functions will be faster as OpenSSL has more optimized "
+"BIGNUM functions."
+msgstr ""
+"При компиляции с OpenSSL будут доступны дополнительные алгоритмы. Кроме "
+"того, функции шифрования с открытым ключом будут быстрее, так как OpenSSL "
+"содержит оптимизированные функции для работы с большими числами (BIGNUM)."
+
+#: pgcrypto.xml:1116(title)
+msgid "Summary of Functionality with and without OpenSSL"
+msgstr "Обзор функциональности с и без OpenSSL"
+
+#: pgcrypto.xml:1120(entry)
+msgid "Functionality"
+msgstr "Функциональность"
+
+#: pgcrypto.xml:1121(entry)
+msgid "Built-in"
+msgstr "Встроенная"
+
+#: pgcrypto.xml:1122(entry)
+msgid "With OpenSSL"
+msgstr "С OpenSSL"
+
+#: pgcrypto.xml:1127(entry)
+msgid "MD5"
+msgstr "MD5"
+
+#: pgcrypto.xml:1132(entry)
+msgid "SHA1"
+msgstr "SHA1"
+
+#: pgcrypto.xml:1137(entry)
+msgid "SHA224/256/384/512"
+msgstr "SHA224/256/384/512"
+
+#: pgcrypto.xml:1139(entry)
+msgid "yes (Note 1)"
+msgstr "да (Примечание 1)"
+
+#: pgcrypto.xml:1142(entry)
+msgid "Other digest algorithms"
+msgstr "Другие алгоритмы кеширования"
+
+#: pgcrypto.xml:1144(entry)
+msgid "yes (Note 2)"
+msgstr "да (Примечание 2)"
+
+#: pgcrypto.xml:1147(entry)
+msgid "Blowfish"
+msgstr "Blowfish"
+
+#: pgcrypto.xml:1152(entry)
+msgid "AES"
+msgstr "AES"
+
+#: pgcrypto.xml:1154(entry)
+msgid "yes (Note 3)"
+msgstr "да (Примечание 3)"
+
+#: pgcrypto.xml:1157(entry)
+msgid "DES/3DES/CAST5"
+msgstr "DES/3DES/CAST5"
+
+#: pgcrypto.xml:1162(entry)
+msgid "Raw encryption"
+msgstr "Низкоуровневое шифрование"
+
+#: pgcrypto.xml:1167(entry)
+msgid "PGP Symmetric encryption"
+msgstr "Симметричное шифрование PGP"
+
+#: pgcrypto.xml:1172(entry)
+msgid "PGP Public-Key encryption"
+msgstr "Шифрование PGP с открытым ключом"
+
+#: pgcrypto.xml:1186(para)
+msgid ""
+"SHA2 algorithms were added to OpenSSL in version 0.9.8. For older versions, "
+"<filename>pgcrypto</filename> will use built-in code."
+msgstr ""
+"Алгоритмы SHA2 были добавлены в OpenSSL в версии 0.9.8. С более старыми "
+"версиями <filename>pgcrypto</filename> использует встроенный код."
+
+#: pgcrypto.xml:1192(para)
+msgid ""
+"Any digest algorithm OpenSSL supports is automatically picked up. This is "
+"not possible with ciphers, which need to be supported explicitly."
+msgstr ""
+"Автоматически выбирается любой алгоритм кеширования, который поддерживает "
+"OpenSSL. Это невозможно с шифрами, они должны поддерживаться явно."
+
+#: pgcrypto.xml:1199(para)
+msgid ""
+"AES is included in OpenSSL since version 0.9.7. For older versions, "
+"<filename>pgcrypto</filename> will use built-in code."
+msgstr ""
+"AES включён в OpenSSL, начиная с версии 0.9.7. С более старыми версиями "
+"<filename>pgcrypto</filename> использует встроенный код."
+
+#: pgcrypto.xml:1208(title)
+msgid "NULL Handling"
+msgstr "Обработка NULL"
+
+#: pgcrypto.xml:1210(para)
+msgid ""
+"As is standard in SQL, all functions return NULL, if any of the arguments "
+"are NULL. This may create security risks on careless usage."
+msgstr ""
+"Как и положено по стандарту SQL, все эти функции возвращают NULL, если один "
+"из аргументов — NULL. Это может угрожать безопасности при неаккуратном "
+"использовании."
+
+#: pgcrypto.xml:1217(title)
+msgid "Security Limitations"
+msgstr "Ограничения безопасности"
+
+#: pgcrypto.xml:1219(para)
+msgid ""
+"All <filename>pgcrypto</filename> functions run inside the database server. "
+"That means that all the data and passwords move between <filename>pgcrypto</"
+"filename> and client applications in clear text. Thus you must:"
+msgstr ""
+"Все функции <filename>pgcrypto</filename> выполняются внутри сервера баз "
+"данных. Это означает, что все данные и пароли передаются между функциями "
+"<filename>pgcrypto</filename> и клиентскими приложениями открытым текстом. "
+"Поэтому вы должны:"
+
+#: pgcrypto.xml:1228(para)
+msgid "Connect locally or use SSL connections."
+msgstr "Подключаться локально или использовать подключения SSL."
+
+#: pgcrypto.xml:1231(para)
+msgid "Trust both system and database administrator."
+msgstr "Доверять и системе, и администратору баз данных."
+
+#: pgcrypto.xml:1235(para)
+msgid "If you cannot, then better do crypto inside client application."
+msgstr ""
+"Если это невозможно, лучше произвести шифрование в клиентском приложении."
+
+#: pgcrypto.xml:1239(para)
+msgid ""
+"The implementation does not resist <ulink url=\"http://en.wikipedia.org/wiki/"
+"Side-channel_attack\">side-channel attacks</ulink>. For example, the time "
+"required for a <filename>pgcrypto</filename> decryption function to complete "
+"varies among ciphertexts of a given size."
+msgstr ""
+"Эта реализация не противостоит <ulink url=\"http://en.wikipedia.org/wiki/"
+"Side-channel_attack\">атакам по сторонним каналам</ulink>. Например, время, "
+"требующееся для выполнения функции дешифрования <filename>pgcrypto</"
+"filename>, будет разным для разного шифротекста заданного размера."
+
+#: pgcrypto.xml:1249(title)
+msgid "Useful Reading"
+msgstr "Полезное чтение"
+
+#: pgcrypto.xml:1253(para)
+msgid "<ulink url=\"http://www.gnupg.org/gph/en/manual.html\"/>"
+msgstr "<ulink url=\"http://www.gnupg.org/gph/en/manual.html\"/>"
+
+#: pgcrypto.xml:1254(para)
+msgid "The GNU Privacy Handbook."
+msgstr ""
+"The GNU Privacy Handbook (Руководство GNU по обеспечению конфиденциальности)"
+
+#: pgcrypto.xml:1257(para)
+msgid "<ulink url=\"http://www.openwall.com/crypt/\"/>"
+msgstr "<ulink url=\"http://www.openwall.com/crypt/\"/>"
+
+#: pgcrypto.xml:1258(para)
+msgid "Describes the crypt-blowfish algorithm."
+msgstr "Описывает алгоритм crypt-blowfish."
+
+#: pgcrypto.xml:1261(para)
+msgid ""
+"<ulink url=\"http://www.stack.nl/~galactus/remailers/passphrase-faq.html\"/>"
+msgstr ""
+"<ulink url=\"http://www.stack.nl/~galactus/remailers/passphrase-faq.html\"/>"
+
+#: pgcrypto.xml:1264(para)
+msgid "How to choose a good password."
+msgstr "Как выбрать хороший пароль."
+
+#: pgcrypto.xml:1267(para)
+msgid "<ulink url=\"http://world.std.com/~reinhold/diceware.html\"/>"
+msgstr "<ulink url=\"http://world.std.com/~reinhold/diceware.html\"/>"
+
+#: pgcrypto.xml:1268(para)
+msgid "Interesting idea for picking passwords."
+msgstr "Интересный способ выбора пароля."
+
+#: pgcrypto.xml:1271(para)
+msgid ""
+"<ulink url=\"http://www.interhack.net/people/cmcurtin/snake-oil-faq.html\"/>"
+msgstr ""
+"<ulink url=\"http://www.interhack.net/people/cmcurtin/snake-oil-faq.html\"/>"
+
+#: pgcrypto.xml:1274(para)
+msgid "Describes good and bad cryptography."
+msgstr "Описывает хорошую и плохую криптографию."
+
+#: pgcrypto.xml:1280(title)
+msgid "Technical References"
+msgstr "Техническая информация"
+
+#: pgcrypto.xml:1284(para)
+msgid "<ulink url=\"http://www.ietf.org/rfc/rfc4880.txt\"/>"
+msgstr "<ulink url=\"http://www.ietf.org/rfc/rfc4880.txt\"/>"
+
+#: pgcrypto.xml:1285(para)
+msgid "OpenPGP message format."
+msgstr "Формат сообщений OpenPGP."
+
+#: pgcrypto.xml:1288(para)
+msgid "<ulink url=\"http://www.ietf.org/rfc/rfc1321.txt\"/>"
+msgstr "<ulink url=\"http://www.ietf.org/rfc/rfc1321.txt\"/>"
+
+#: pgcrypto.xml:1289(para)
+msgid "The MD5 Message-Digest Algorithm."
+msgstr "Алгоритм вычисления дайджеста сообщения MD5."
+
+#: pgcrypto.xml:1292(para)
+msgid "<ulink url=\"http://www.ietf.org/rfc/rfc2104.txt\"/>"
+msgstr "<ulink url=\"http://www.ietf.org/rfc/rfc2104.txt\"/>"
+
+#: pgcrypto.xml:1293(para)
+msgid "HMAC: Keyed-Hashing for Message Authentication."
+msgstr "HMAC: Хеширование по ключу для аутентификации сообщений."
+
+#: pgcrypto.xml:1296(para)
+msgid "<ulink url=\"http://www.usenix.org/events/usenix99/provos.html\"/>"
+msgstr "<ulink url=\"http://www.usenix.org/events/usenix99/provos.html\"/>"
+
+#: pgcrypto.xml:1299(para)
+msgid "Comparison of crypt-des, crypt-md5 and bcrypt algorithms."
+msgstr "Сравнение алгоритмов crypt-des, crypt-md5 и bcrypt."
+
+#: pgcrypto.xml:1302(para)
+msgid "<ulink url=\"http://en.wikipedia.org/wiki/Fortuna_(PRNG)\"/>"
+msgstr "<ulink url=\"http://en.wikipedia.org/wiki/Fortuna_(PRNG)\"/>"
+
+#: pgcrypto.xml:1305(para)
+msgid "Description of Fortuna CSPRNG."
+msgstr "Описание Fortuna CSPRNG."
+
+#: pgcrypto.xml:1308(para)
+msgid "<ulink url=\"http://jlcooke.ca/random/\"/>"
+msgstr "<ulink url=\"http://jlcooke.ca/random/\"/>"
+
+#: pgcrypto.xml:1309(para)
+msgid ""
+"Jean-Luc Cooke Fortuna-based <filename>/dev/random</filename> driver for "
+"Linux."
+msgstr ""
+"Драйвер <filename>/dev/random</filename> для Linux на базе Fortuna, "
+"написанный Жан-Люком Куком."
+
+#: pgcrypto.xml:1312(para)
+msgid "<ulink url=\"http://research.cyber.ee/~lipmaa/crypto/\"/>"
+msgstr "<ulink url=\"http://research.cyber.ee/~lipmaa/crypto/\"/>"
+
+#: pgcrypto.xml:1313(para)
+msgid "Collection of cryptology pointers."
+msgstr "Коллекция ссылок по криптологии."
+
+#: pgcrypto.xml:1320(title)
+msgctxt "title"
+msgid "Author"
+msgstr "Автор"
+
+#: pgcrypto.xml:1322(para)
+msgid "Marko Kreen <email>markokr@gmail.com</email>"
+msgstr "Марко Крин <email>markokr@gmail.com</email>"
+
+#: pgcrypto.xml:1326(para)
+msgid "<filename>pgcrypto</filename> uses code from the following sources:"
+msgstr ""
+"Модуль <filename>pgcrypto</filename> заимствует код из следующих источников:"
+
+#: pgcrypto.xml:1335(entry)
+msgctxt "entry"
+msgid "Author"
+msgstr "Автор"
+
+#: pgcrypto.xml:1336(entry)
+msgid "Source origin"
+msgstr "Источник исходного кода"
+
+#: pgcrypto.xml:1341(entry)
+msgid "DES crypt"
+msgstr "Шифрование DES"
+
+#: pgcrypto.xml:1342(entry)
+msgid "David Burren and others"
+msgstr "Дэвид Буррен и другие"
+
+#: pgcrypto.xml:1343(entry) pgcrypto.xml:1348(entry)
+msgid "FreeBSD libcrypt"
+msgstr "FreeBSD, libcrypt"
+
+#: pgcrypto.xml:1346(entry)
+msgid "MD5 crypt"
+msgstr "Хеширование MD5"
+
+#: pgcrypto.xml:1347(entry)
+msgid "Poul-Henning Kamp"
+msgstr "Пол-Хеннинг Камп"
+
+#: pgcrypto.xml:1351(entry)
+msgid "Blowfish crypt"
+msgstr "Шифрование Blowfish"
+
+#: pgcrypto.xml:1352(entry)
+msgid "Solar Designer"
+msgstr "Solar Designer"
+
+#: pgcrypto.xml:1353(entry)
+msgid "www.openwall.com"
+msgstr "www.openwall.com"
+
+#: pgcrypto.xml:1356(entry)
+msgid "Blowfish cipher"
+msgstr "Шифр Blowfish"
+
+#: pgcrypto.xml:1357(entry)
+msgid "Simon Tatham"
+msgstr "Саймон Тэтем"
+
+#: pgcrypto.xml:1358(entry)
+msgid "PuTTY"
+msgstr "PuTTY"
+
+#: pgcrypto.xml:1361(entry)
+msgid "Rijndael cipher"
+msgstr "Шифр Rijndael"
+
+#: pgcrypto.xml:1362(entry)
+msgid "Brian Gladman"
+msgstr "Брайан Глэдмен"
+
+#: pgcrypto.xml:1363(entry) pgcrypto.xml:1373(entry)
+msgid "OpenBSD sys/crypto"
+msgstr "OpenBSD, sys/crypto"
+
+#: pgcrypto.xml:1366(entry)
+msgid "MD5 hash and SHA1"
+msgstr "Хеш MD5 и SHA1"
+
+#: pgcrypto.xml:1367(entry)
+msgid "WIDE Project"
+msgstr "Проект WIDE"
+
+#: pgcrypto.xml:1368(entry)
+msgid "KAME kame/sys/crypto"
+msgstr "KAME, kame/sys/crypto"
+
+#: pgcrypto.xml:1371(entry)
+msgid "SHA256/384/512"
+msgstr "SHA256/384/512"
+
+#: pgcrypto.xml:1372(entry)
+msgid "Aaron D. Gifford"
+msgstr "Аарон Д. Гиффорд"
+
+#: pgcrypto.xml:1376(entry)
+msgid "BIGNUM math"
+msgstr "Математика BIGNUM"
+
+#: pgcrypto.xml:1377(entry)
+msgid "Michael J. Fromberger"
+msgstr "Майкл Дж. Фромбергер"
+
+#: pgcrypto.xml:1378(entry)
+msgid "dartmouth.edu/~sting/sw/imath"
+msgstr "dartmouth.edu/~sting/sw/imath"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: pgcrypto.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

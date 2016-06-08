@@ -1,0 +1,231 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ref/refresh_materialized_view.xml:8(indexterm)
+msgid "<primary>REFRESH MATERIALIZED VIEW</primary>"
+msgstr "<primary>REFRESH MATERIALIZED VIEW</primary>"
+
+#: ref/refresh_materialized_view.xml:13(refentrytitle)
+msgctxt "refentrytitle"
+msgid "REFRESH MATERIALIZED VIEW"
+msgstr "REFRESH MATERIALIZED VIEW"
+
+#: ref/refresh_materialized_view.xml:14(manvolnum)
+msgid "7"
+msgstr "7"
+
+#: ref/refresh_materialized_view.xml:15(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#: ref/refresh_materialized_view.xml:19(refname)
+msgctxt "refname"
+msgid "REFRESH MATERIALIZED VIEW"
+msgstr "REFRESH MATERIALIZED VIEW"
+
+#: ref/refresh_materialized_view.xml:20(refpurpose)
+msgid "replace the contents of a materialized view"
+msgstr "заменить содержимое материализованного представления"
+
+#: ref/refresh_materialized_view.xml:24(replaceable)
+#: ref/refresh_materialized_view.xml:79(replaceable)
+#, fuzzy
+msgid "name"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"имя\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"name"
+
+#: ref/refresh_materialized_view.xml:24(synopsis)
+#, no-wrap
+msgid ""
+"REFRESH MATERIALIZED VIEW [ CONCURRENTLY ] <placeholder-1/>\n"
+"    [ WITH [ NO ] DATA ]"
+msgstr ""
+"REFRESH MATERIALIZED VIEW [ CONCURRENTLY ] <placeholder-1/>\n"
+"    [ WITH [ NO ] DATA ]"
+
+#: ref/refresh_materialized_view.xml:29(title)
+msgid "Description"
+msgstr "Описание"
+
+#: ref/refresh_materialized_view.xml:31(para)
+msgid ""
+"<command>REFRESH MATERIALIZED VIEW</command> completely replaces the "
+"contents of a materialized view. The old contents are discarded. If "
+"<literal>WITH DATA</literal> is specified (or defaults) the backing query is "
+"executed to provide the new data, and the materialized view is left in a "
+"scannable state. If <literal>WITH NO DATA</literal> is specified no new data "
+"is generated and the materialized view is left in an unscannable state."
+msgstr ""
+"<command>REFRESH MATERIALIZED VIEW</command> полностью заменяет содержимое "
+"материализованного представления. Старое содержимое при этом аннулируется. "
+"Если добавлено указание <literal>WITH DATA</literal> (или нет никакого), "
+"нижележащий запрос выполняется и выдаёт новые данные, так что "
+"материализованное представление остаётся в сканируемом состоянии. Если "
+"указано <literal>WITH NO DATA</literal>, новые данные не выдаются и "
+"представление оказывается в несканируемом состоянии."
+
+#: ref/refresh_materialized_view.xml:40(para)
+msgid ""
+"<literal>CONCURRENTLY</literal> and <literal>WITH NO DATA</literal> may not "
+"be specified together."
+msgstr ""
+"Указать <literal>CONCURRENTLY</literal> вместе с <literal>WITH NO DATA</"
+"literal> нельзя."
+
+#: ref/refresh_materialized_view.xml:47(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#: ref/refresh_materialized_view.xml:51(literal)
+msgid "CONCURRENTLY"
+msgstr "CONCURRENTLY"
+
+#: ref/refresh_materialized_view.xml:53(para)
+msgid ""
+"Refresh the materialized view without locking out concurrent selects on the "
+"materialized view. Without this option a refresh which affects a lot of rows "
+"will tend to use fewer resources and complete more quickly, but could block "
+"other connections which are trying to read from the materialized view. This "
+"option may be faster in cases where a small number of rows are affected."
+msgstr ""
+"Обновить материализованное представление, не блокируя параллельные выборки "
+"из него. Без данного параметра обновление, затрагивающее много строк, обычно "
+"задействует меньше ресурсов и выполнится быстрее, но может препятствовать "
+"чтению этого материализованного представления другими сеансами. При этом "
+"данный режим может быть быстрее при небольшом количестве строк."
+
+#: ref/refresh_materialized_view.xml:61(para)
+msgid ""
+"This option is only allowed if there is at least one <literal>UNIQUE</"
+"literal> index on the materialized view which uses only column names and "
+"includes all rows; that is, it must not index on any expressions nor include "
+"a <literal>WHERE</literal> clause."
+msgstr ""
+"Данный параметр допускается, только если в материализованном представлении "
+"есть хотя бы один индекс <literal>UNIQUE</literal>, построенный только по "
+"именам столбцов и включающий все строки; то есть, в нём не должно быть "
+"выражений и предложения <literal>WHERE</literal>."
+
+#: ref/refresh_materialized_view.xml:67(para)
+msgid ""
+"This option may not be used when the materialized view is not already "
+"populated."
+msgstr ""
+"Этот параметр нельзя использовать, когда материализованное представление ещё "
+"не наполнено."
+
+#: ref/refresh_materialized_view.xml:71(para)
+msgid ""
+"Even with this option only one <literal>REFRESH</literal> at a time may run "
+"against any one materialized view."
+msgstr ""
+"Даже с этим параметром в один момент времени допускается только одно "
+"обновление (<literal>REFRESH</literal>) материализованного представления."
+
+#: ref/refresh_materialized_view.xml:81(para)
+msgid ""
+"The name (optionally schema-qualified) of the materialized view to refresh."
+msgstr ""
+"Имя (возможно, дополненное схемой) материализованного представления, "
+"подлежащего обновлению."
+
+#: ref/refresh_materialized_view.xml:91(title)
+#, fuzzy
+msgid "Notes"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Примечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"Замечания"
+
+#: ref/refresh_materialized_view.xml:93(para)
+msgid ""
+"While the default index for future <xref linkend=\"sql-cluster\"/> "
+"operations is retained, <command>REFRESH MATERIALIZED VIEW</command> does "
+"not order the generated rows based on this property. If you want the data to "
+"be ordered upon generation, you must use an <literal>ORDER BY</literal> "
+"clause in the backing query."
+msgstr ""
+"Тогда как индекс по умолчанию для операций <xref linkend=\"sql-cluster\"/> "
+"команда <command>REFRESH MATERIALIZED VIEW</command> сохраняет, она не "
+"упорядочивает генерируемые строки по нему. Если генерируемые данные "
+"необходимо упорядочить, в определяющем запросе нужно явно указать "
+"<literal>ORDER BY</literal>."
+
+#: ref/refresh_materialized_view.xml:104(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#: ref/refresh_materialized_view.xml:110(programlisting)
+#, no-wrap
+msgid "REFRESH MATERIALIZED VIEW order_summary;"
+msgstr "REFRESH MATERIALIZED VIEW order_summary;"
+
+#: ref/refresh_materialized_view.xml:106(para)
+msgid ""
+"This command will replace the contents of the materialized view called "
+"<literal>order_summary</literal> using the query from the materialized "
+"view's definition, and leave it in a scannable state: <placeholder-1/>"
+msgstr ""
+"Эта команда заменяет содержимое материализованного представления "
+"<literal>order_summary</literal>, используя запрос из определения "
+"материализованного представления, и оставляет его в сканируемом состоянии: "
+"<placeholder-1/>"
+
+#: ref/refresh_materialized_view.xml:117(programlisting)
+#, no-wrap
+msgid "REFRESH MATERIALIZED VIEW annual_statistics_basis WITH NO DATA;"
+msgstr "REFRESH MATERIALIZED VIEW annual_statistics_basis WITH NO DATA;"
+
+#: ref/refresh_materialized_view.xml:113(para)
+msgid ""
+"This command will free storage associated with the materialized view "
+"<literal>annual_statistics_basis</literal> and leave it in an unscannable "
+"state: <placeholder-1/>"
+msgstr ""
+"Эта команда освобождает пространство, связанное с материализованным "
+"представлением <literal>annual_statistics_basis</literal>, и оставляет это "
+"представление в несканируемом состоянии: <placeholder-1/>"
+
+#: ref/refresh_materialized_view.xml:121(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#: ref/refresh_materialized_view.xml:123(para)
+msgid ""
+"<command>REFRESH MATERIALIZED VIEW</command> is a <productname>PostgreSQL</"
+"productname> extension."
+msgstr ""
+"<command>REFRESH MATERIALIZED VIEW</command> — расширение "
+"<productname>PostgreSQL</productname>."
+
+#: ref/refresh_materialized_view.xml:130(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ref/refresh_materialized_view.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

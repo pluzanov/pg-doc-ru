@@ -1,0 +1,719 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: pgtrgm.xml:5(title)
+msgid "pg_trgm"
+msgstr "pg_trgm"
+
+#: pgtrgm.xml:7(indexterm)
+msgid "<primary>pg_trgm</primary>"
+msgstr "<primary>pg_trgm</primary>"
+
+#: pgtrgm.xml:11(para)
+msgid ""
+"The <filename>pg_trgm</filename> module provides functions and operators for "
+"determining the similarity of alphanumeric text based on trigram matching, "
+"as well as index operator classes that support fast searching for similar "
+"strings."
+msgstr ""
+"Модуль <filename>pg_trgm</filename> предоставляет функции и операторы для "
+"определения схожести алфавитно-цифровых строк на основе триграмм, а также "
+"классы операторов индексов, поддерживающие быстрый поиск схожих строк."
+
+#: pgtrgm.xml:20(title)
+msgid "Trigram (or Trigraph) Concepts"
+msgstr "Понятия, связанные с триграммами (или триграфами)"
+
+#: pgtrgm.xml:22(para)
+msgid ""
+"A trigram is a group of three consecutive characters taken from a string. We "
+"can measure the similarity of two strings by counting the number of trigrams "
+"they share. This simple idea turns out to be very effective for measuring "
+"the similarity of words in many natural languages."
+msgstr ""
+"Триграмма — это группа трёх последовательных символов, взятых из строки. Мы "
+"можем измерить схожесть двух строк, подсчитав число триграмм, которые есть в "
+"обеих. Эта простая идея оказывается очень эффективной для измерения схожести "
+"слов на многих естественных языках."
+
+#: pgtrgm.xml:31(para)
+msgid ""
+"<filename>pg_trgm</filename> ignores non-word characters (non-alphanumerics) "
+"when extracting trigrams from a string. Each word is considered to have two "
+"spaces prefixed and one space suffixed when determining the set of trigrams "
+"contained in the string. For example, the set of trigrams in the string "
+"<quote><literal>cat</literal></quote> is <quote><literal> c</literal></"
+"quote>, <quote><literal> ca</literal></quote>, <quote><literal>cat</"
+"literal></quote>, and <quote><literal>at </literal></quote>. The set of "
+"trigrams in the string <quote><literal>foo|bar</literal></quote> is "
+"<quote><literal> f</literal></quote>, <quote><literal> fo</literal></quote>, "
+"<quote><literal>foo</literal></quote>, <quote><literal>oo </literal></"
+"quote>, <quote><literal> b</literal></quote>, <quote><literal> ba</literal></"
+"quote>, <quote><literal>bar</literal></quote>, and <quote><literal>ar </"
+"literal></quote>."
+msgstr ""
+"<filename>pg_trgm</filename>, извлекая триграммы из строк, игнорирует "
+"символы, не относящиеся к словам (не алфавитно-цифровые). При выделении "
+"триграмм, содержащихся в строке, считается, что перед каждым словом "
+"находятся два пробела, а после — один пробел. Например, из строки "
+"<quote><literal>cat</literal></quote> выделяется набор триграмм: "
+"<quote><literal> c</literal></quote>, <quote><literal> ca</literal></quote>, "
+"<quote><literal>cat</literal></quote> и <quote><literal>at </literal></"
+"quote>. Из строки <quote><literal>foo|bar</literal></quote> выделяются "
+"триграммы: <quote><literal> f</literal></quote>, <quote><literal> fo</"
+"literal></quote>, <quote><literal>foo</literal></quote>, <quote><literal>oo "
+"</literal></quote>, <quote><literal> b</literal></quote>, <quote><literal> "
+"ba</literal></quote>, <quote><literal>bar</literal></quote> и "
+"<quote><literal>ar </literal></quote>."
+
+#: pgtrgm.xml:58(title)
+msgid "Functions and Operators"
+msgstr "Функции и операторы"
+
+#: pgtrgm.xml:60(para)
+msgid ""
+"The functions provided by the <filename>pg_trgm</filename> module are shown "
+"in <xref linkend=\"pgtrgm-func-table\"/>, the operators in <xref linkend="
+"\"pgtrgm-op-table\"/>."
+msgstr ""
+"Реализованные в модуле <filename>pg_trgm</filename> функции перечислены в "
+"<xref remap=\"6\" linkend=\"pgtrgm-func-table\"/>, а операторы — в <xref "
+"remap=\"6\" linkend=\"pgtrgm-op-table\"/>."
+
+#: pgtrgm.xml:67(title)
+msgid "<filename>pg_trgm</filename> Functions"
+msgstr "Функции <filename>pg_trgm</filename>"
+
+#: pgtrgm.xml:71(entry)
+msgid "Function"
+msgstr "Функция"
+
+#: pgtrgm.xml:72(entry) pgtrgm.xml:141(entry)
+msgid "Returns"
+msgstr "Возвращает"
+
+#: pgtrgm.xml:73(entry) pgtrgm.xml:142(entry)
+msgid "Description"
+msgstr "Описание"
+
+#: pgtrgm.xml:79(function)
+msgid "similarity(text, text)"
+msgstr "similarity(text, text)"
+
+#: pgtrgm.xml:79(indexterm)
+msgid "<primary>similarity</primary>"
+msgstr "<primary>similarity</primary>"
+
+#: pgtrgm.xml:80(type) pgtrgm.xml:101(type) pgtrgm.xml:113(type)
+#: pgtrgm.xml:124(type) pgtrgm.xml:175(type) pgtrgm.xml:185(type)
+#: pgtrgm.xml:195(type)
+msgid "real"
+msgstr "real"
+
+#: pgtrgm.xml:81(entry)
+msgid ""
+"Returns a number that indicates how similar the two arguments are. The range "
+"of the result is zero (indicating that the two strings are completely "
+"dissimilar) to one (indicating that the two strings are identical)."
+msgstr ""
+"Возвращает число, показывающее, насколько близки два аргумента. Диапазон "
+"результатов — от нуля (это значение указывает, что две строки полностью "
+"различны) до одного (это значение указывает, что две строки идентичны)."
+
+#: pgtrgm.xml:89(function)
+msgid "show_trgm(text)"
+msgstr "show_trgm(text)"
+
+#: pgtrgm.xml:89(indexterm)
+msgid "<primary>show_trgm</primary>"
+msgstr "<primary>show_trgm</primary>"
+
+#: pgtrgm.xml:90(type)
+msgid "text[]"
+msgstr "text[]"
+
+#: pgtrgm.xml:91(entry)
+msgid ""
+"Returns an array of all the trigrams in the given string. (In practice this "
+"is seldom useful except for debugging.)"
+msgstr ""
+"Возвращает массив всех триграмм в заданной строке. (На практике это редко "
+"бывает полезно, кроме как для отладки.)"
+
+#: pgtrgm.xml:98(function)
+#, fuzzy
+msgid "word_similarity(text, text)"
+msgstr "similarity(text, text)"
+
+#: pgtrgm.xml:99(indexterm)
+#, fuzzy
+msgid "<primary>word_similarity</primary>"
+msgstr "<primary>similarity</primary>"
+
+#: pgtrgm.xml:102(entry)
+#, fuzzy
+msgid ""
+"Returns a number that indicates how similar the first string to the most "
+"similar word of the second string. The function searches in the second "
+"string a most similar word not a most similar substring. The range of the "
+"result is zero (indicating that the two strings are completely dissimilar) "
+"to one (indicating that the first string is identical to one of the word of "
+"the second string)."
+msgstr ""
+"Возвращает число, показывающее, насколько близки два аргумента. Диапазон "
+"результатов — от нуля (это значение указывает, что две строки полностью "
+"различны) до одного (это значение указывает, что две строки идентичны)."
+
+#: pgtrgm.xml:112(function)
+msgid "show_limit()"
+msgstr "show_limit()"
+
+#: pgtrgm.xml:112(indexterm)
+msgid "<primary>show_limit</primary>"
+msgstr "<primary>show_limit</primary>"
+
+#: pgtrgm.xml:114(entry)
+#, fuzzy
+msgid ""
+"Returns the current similarity threshold used by the <literal>%</literal> "
+"operator. This sets the minimum similarity between two words for them to be "
+"considered similar enough to be misspellings of each other, for example "
+"(<emphasis>deprecated</emphasis>)."
+msgstr ""
+"Возвращает текущий порог схожести, который использует оператор <literal>%</"
+"literal>. Это значение задаёт минимальную схожесть между двумя словами, при "
+"которой они считаются настолько близкими, что одно может быть, например, "
+"ошибочным написанием другого."
+
+#: pgtrgm.xml:123(function)
+msgid "set_limit(real)"
+msgstr "set_limit(real)"
+
+#: pgtrgm.xml:123(indexterm)
+msgid "<primary>set_limit</primary>"
+msgstr "<primary>set_limit</primary>"
+
+#: pgtrgm.xml:125(entry)
+#, fuzzy
+msgid ""
+"Sets the current similarity threshold that is used by the <literal>%</"
+"literal> operator. The threshold must be between 0 and 1 (default is 0.3). "
+"Returns the same value passed in (<emphasis>deprecated</emphasis>)."
+msgstr ""
+"Задаёт текущий порог схожести, который использует оператор <literal>%</"
+"literal>. Это значение должно быть в диапазоне от 0 до 1 (по умолчанию 0.3). "
+"Возвращает то же значение, что было передано на вход."
+
+#: pgtrgm.xml:136(title)
+msgid "<filename>pg_trgm</filename> Operators"
+msgstr "Операторы <filename>pg_trgm</filename>"
+
+#: pgtrgm.xml:140(entry)
+msgid "Operator"
+msgstr "Оператор"
+
+#: pgtrgm.xml:148(type) pgtrgm.xml:157(type) pgtrgm.xml:167(type)
+#: pgtrgm.xml:174(type) pgtrgm.xml:183(type) pgtrgm.xml:193(type)
+#, fuzzy
+msgid "text"
+msgstr ""
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"текст\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text\n"
+"#-#-#-#-#  -  #-#-#-#-#\n"
+"text"
+
+#: pgtrgm.xml:148(literal)
+msgid "%"
+msgstr "%"
+
+#: pgtrgm.xml:149(type) pgtrgm.xml:158(type) pgtrgm.xml:168(type)
+msgid "boolean"
+msgstr "boolean"
+
+#: pgtrgm.xml:150(entry)
+#, fuzzy
+msgid ""
+"Returns <literal>true</literal> if its arguments have a similarity that is "
+"greater than the current similarity threshold set by <varname>pg_trgm."
+"similarity_threshold</varname>."
+msgstr ""
+"Возвращает <literal>true</literal>, если схожесть аргументов выше текущего "
+"порога, заданного функцией <function>set_limit</function>."
+
+#: pgtrgm.xml:157(literal)
+#, fuzzy
+msgid "&lt;%"
+msgstr "&lt;"
+
+#: pgtrgm.xml:159(entry)
+#, fuzzy
+msgid ""
+"Returns <literal>true</literal> if its first argument has the similar word "
+"in the second argument and they have a similarity that is greater than the "
+"current word similarity threshold set by <varname>pg_trgm."
+"word_similarity_threshold</varname> parameter."
+msgstr ""
+"Возвращает <literal>true</literal>, если схожесть аргументов выше текущего "
+"порога, заданного функцией <function>set_limit</function>."
+
+#: pgtrgm.xml:167(literal)
+msgid "%&gt;"
+msgstr "%&gt;"
+
+#: pgtrgm.xml:169(entry)
+#, fuzzy
+msgid "Commutator of the <literal>&lt;%</literal> operator."
+msgstr "Необязательное ключевое слово <literal>AS</literal>"
+
+#: pgtrgm.xml:174(literal)
+msgid "&lt;-&gt;"
+msgstr "&lt;-&gt;"
+
+#: pgtrgm.xml:176(entry)
+msgid ""
+"Returns the <quote>distance</quote> between the arguments, that is one minus "
+"the <function>similarity()</function> value."
+msgstr ""
+"Возвращает <quote>расстояние</quote> между аргументами, то есть один минус "
+"значение <function>similarity()</function>."
+
+#: pgtrgm.xml:183(literal)
+#, fuzzy
+msgid "&lt;&lt;-&gt;"
+msgstr "&lt;-&gt;"
+
+#: pgtrgm.xml:186(entry)
+#, fuzzy
+msgid ""
+"Returns the <quote>distance</quote> between the arguments, that is one minus "
+"the <function>word_similarity()</function> value."
+msgstr ""
+"Возвращает <quote>расстояние</quote> между аргументами, то есть один минус "
+"значение <function>similarity()</function>."
+
+#: pgtrgm.xml:193(literal)
+#, fuzzy
+msgid "&lt;-&gt;&gt;"
+msgstr "&lt;-&gt;"
+
+#: pgtrgm.xml:196(entry)
+#, fuzzy
+msgid "Commutator of the <literal>&lt;&lt;-&gt;</literal> operator."
+msgstr "<literal>&lt;&gt;</literal> или <literal>!=</literal>"
+
+#: pgtrgm.xml:206(title)
+msgid "GUC Parameters"
+msgstr "Параметры GUC"
+
+#: pgtrgm.xml:212(indexterm)
+#, fuzzy
+msgid ""
+"<primary><varname>pg_trgm.similarity_threshold</varname> configuration "
+"parameter</primary>"
+msgstr ""
+"<primary>параметр конфигурации <varname>geqo_threshold</varname></primary>"
+
+#: pgtrgm.xml:210(term)
+#, fuzzy
+msgid ""
+"<varname>pg_trgm.similarity_threshold</varname> (<type>real</type>) "
+"<placeholder-1/>"
+msgstr ""
+"<varname>geqo_threshold</varname> (<type>integer</type>) <placeholder-1/>"
+
+#: pgtrgm.xml:217(para)
+#, fuzzy
+msgid ""
+"Sets the current similarity threshold that is used by the <literal>%</"
+"literal> operator. The threshold must be between 0 and 1 (default is 0.3)."
+msgstr ""
+"Задаёт текущий порог схожести, который использует оператор <literal>%</"
+"literal>. Это значение должно быть в диапазоне от 0 до 1 (по умолчанию 0.3). "
+"Возвращает то же значение, что было передано на вход."
+
+#: pgtrgm.xml:226(indexterm)
+#, fuzzy
+msgid ""
+"<primary><varname>pg_trgm.word_similarity_threshold</varname> configuration "
+"parameter </primary>"
+msgstr ""
+"<primary>параметр конфигурации <varname>geqo_threshold</varname></primary>"
+
+#: pgtrgm.xml:224(term)
+#, fuzzy
+msgid ""
+"<varname>pg_trgm.word_similarity_threshold</varname> (<type>real</type>) "
+"<placeholder-1/>"
+msgstr ""
+"<varname>geqo_threshold</varname> (<type>integer</type>) <placeholder-1/>"
+
+#: pgtrgm.xml:233(para)
+#, fuzzy
+msgid ""
+"Sets the current word similarity threshold that is used by <literal>&lt;%</"
+"literal> and <literal>%&gt;</literal> operators. The threshold must be "
+"between 0 and 1 (default is 0.6)."
+msgstr ""
+"Задаёт текущий порог схожести, который использует оператор <literal>%</"
+"literal>. Это значение должно быть в диапазоне от 0 до 1 (по умолчанию 0.3). "
+"Возвращает то же значение, что было передано на вход."
+
+#: pgtrgm.xml:244(title)
+msgid "Index Support"
+msgstr "Поддержка индексов"
+
+#: pgtrgm.xml:246(para)
+msgid ""
+"The <filename>pg_trgm</filename> module provides GiST and GIN index operator "
+"classes that allow you to create an index over a text column for the purpose "
+"of very fast similarity searches. These index types support the above-"
+"described similarity operators, and additionally support trigram-based index "
+"searches for <literal>LIKE</literal>, <literal>ILIKE</literal>, <literal>~</"
+"literal> and <literal>~*</literal> queries. (These indexes do not support "
+"equality nor simple comparison operators, so you may need a regular B-tree "
+"index too.)"
+msgstr ""
+"Модуль <filename>pg_trgm</filename> предоставляет классы операторов индексов "
+"GiST и GIN, позволяющие создавать индекс по текстовым столбцам для очень "
+"быстрого поиска по критерию схожести. Эти типы индексов поддерживают "
+"вышеописанные операторы схожести и дополнительно поддерживают поиск на "
+"основе триграмм для запросов с <literal>LIKE</literal>, <literal>ILIKE</"
+"literal>, <literal>~</literal> и <literal>~*</literal>. (Эти индексы не "
+"поддерживают простые операторы сравнения и равенства, так что вам может "
+"понадобиться и обычный индекс-B-дерево.)"
+
+#: pgtrgm.xml:260(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE test_trgm (t text);\n"
+"CREATE INDEX trgm_idx ON test_trgm USING GIST (t gist_trgm_ops);"
+msgstr ""
+"CREATE TABLE test_trgm (t text);\n"
+"CREATE INDEX trgm_idx ON test_trgm USING GIST (t gist_trgm_ops);"
+
+#: pgtrgm.xml:263(programlisting)
+#, no-wrap
+msgid "CREATE INDEX trgm_idx ON test_trgm USING GIN (t gin_trgm_ops);"
+msgstr "CREATE INDEX trgm_idx ON test_trgm USING GIN (t gin_trgm_ops);"
+
+#: pgtrgm.xml:257(para)
+msgid "Example: <placeholder-1/> or <placeholder-2/>"
+msgstr "Пример: <placeholder-1/> или <placeholder-2/>"
+
+#: pgtrgm.xml:269(programlisting)
+#, no-wrap
+msgid ""
+"SELECT t, similarity(t, '<replaceable>word</replaceable>') AS sml\n"
+"  FROM test_trgm\n"
+"  WHERE t % '<replaceable>word</replaceable>'\n"
+"  ORDER BY sml DESC, t;"
+msgstr ""
+"SELECT t, similarity(t, '<replaceable>word</replaceable>') AS sml\n"
+"  FROM test_trgm\n"
+"  WHERE t % '<replaceable>word</replaceable>'\n"
+"  ORDER BY sml DESC, t;"
+
+#: pgtrgm.xml:266(para)
+msgid ""
+"At this point, you will have an index on the <structfield>t</structfield> "
+"column that you can use for similarity searching. A typical query is "
+"<placeholder-1/> This will return all values in the text column that are "
+"sufficiently similar to <replaceable>word</replaceable>, sorted from best "
+"match to worst. The index will be used to make this a fast operation even "
+"over very large data sets."
+msgstr ""
+"На этот момент у вас будет индекс по столбцу <structfield>t</structfield>, "
+"используя который можно осуществлять поиск по схожести. Пример типичного "
+"запроса: <placeholder-1/> Он выдаст все значения в текстовом столбце, "
+"которые достаточно схожи со словом <replaceable>word</replaceable>, в "
+"порядке сортировки от наиболее к наименее схожим. Благодаря использованию "
+"индекса, эта операция будет быстрой даже с очень большими наборами данных."
+
+#: pgtrgm.xml:281(programlisting)
+#, no-wrap
+msgid ""
+"SELECT t, t &lt;-&gt; '<replaceable>word</replaceable>' AS dist\n"
+"  FROM test_trgm\n"
+"  ORDER BY dist LIMIT 10;"
+msgstr ""
+"SELECT t, t &lt;-&gt; '<replaceable>word</replaceable>' AS dist\n"
+"  FROM test_trgm\n"
+"  ORDER BY dist LIMIT 10;"
+
+#: pgtrgm.xml:279(para)
+msgid ""
+"A variant of the above query is <placeholder-1/> This can be implemented "
+"quite efficiently by GiST indexes, but not by GIN indexes. It will usually "
+"beat the first formulation when only a small number of the closest matches "
+"is wanted."
+msgstr ""
+"Другой вариант предыдущего запроса: <placeholder-1/> Он может быть довольно "
+"эффективно выполнен с применением индексов GiST, а не GIN. Обычно он "
+"выигрышнее первого варианта только когда требуется получить небольшое "
+"количество близких совпадений."
+
+#: pgtrgm.xml:292(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT t, word_similarity('<replaceable>word</replaceable>', t) AS sml\n"
+"  FROM test_trgm\n"
+"  WHERE '<replaceable>word</replaceable>' &lt;% t\n"
+"  ORDER BY sml DESC, t;"
+msgstr ""
+"SELECT t, similarity(t, '<replaceable>word</replaceable>') AS sml\n"
+"  FROM test_trgm\n"
+"  WHERE t % '<replaceable>word</replaceable>'\n"
+"  ORDER BY sml DESC, t;"
+
+#: pgtrgm.xml:289(para)
+#, fuzzy
+msgid ""
+"Also you can use an index on the <structfield>t</structfield> column for "
+"word similarity. For example: <placeholder-1/> This will return all values "
+"in the text column that have a word which sufficiently similar to "
+"<replaceable>word</replaceable>, sorted from best match to worst. The index "
+"will be used to make this a fast operation even over very large data sets."
+msgstr ""
+"На этот момент у вас будет индекс по столбцу <structfield>t</structfield>, "
+"используя который можно осуществлять поиск по схожести. Пример типичного "
+"запроса: <placeholder-1/> Он выдаст все значения в текстовом столбце, "
+"которые достаточно схожи со словом <replaceable>word</replaceable>, в "
+"порядке сортировки от наиболее к наименее схожим. Благодаря использованию "
+"индекса, эта операция будет быстрой даже с очень большими наборами данных."
+
+#: pgtrgm.xml:304(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT t, '<replaceable>word</replaceable>' &lt;&lt;-&gt; t AS dist\n"
+"  FROM test_trgm\n"
+"  ORDER BY dist LIMIT 10;"
+msgstr ""
+"SELECT t, t &lt;-&gt; '<replaceable>word</replaceable>' AS dist\n"
+"  FROM test_trgm\n"
+"  ORDER BY dist LIMIT 10;"
+
+#: pgtrgm.xml:302(para)
+#, fuzzy
+msgid ""
+"A variant of the above query is <placeholder-1/> This can be implemented "
+"quite efficiently by GiST indexes, but not by GIN indexes."
+msgstr ""
+"Другой вариант предыдущего запроса: <placeholder-1/> Он может быть довольно "
+"эффективно выполнен с применением индексов GiST, а не GIN. Обычно он "
+"выигрышнее первого варианта только когда требуется получить небольшое "
+"количество близких совпадений."
+
+#: pgtrgm.xml:315(programlisting)
+#, no-wrap
+msgid "SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';"
+msgstr "SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';"
+
+#: pgtrgm.xml:312(para)
+msgid ""
+"Beginning in <productname>PostgreSQL</productname> 9.1, these index types "
+"also support index searches for <literal>LIKE</literal> and <literal>ILIKE</"
+"literal>, for example <placeholder-1/> The index search works by extracting "
+"trigrams from the search string and then looking these up in the index. The "
+"more trigrams in the search string, the more effective the index search is. "
+"Unlike B-tree based searches, the search string need not be left-anchored."
+msgstr ""
+"Начиная с <productname>PostgreSQL</productname> 9.1, эти типы индексов также "
+"поддерживают поиск с операторами <literal>LIKE</literal> и <literal>ILIKE</"
+"literal>, например: <placeholder-1/> При таком поиске по индексу сначала из "
+"искомой строки извлекаются триграммы, а затем они ищутся в индексе. Чем "
+"больше триграмм оказывается в искомой строке, тем более эффективным будет "
+"поиск по индексу. В отличие от поиска по B-дереву, искомая строка не должна "
+"привязываться к левому краю."
+
+#: pgtrgm.xml:326(programlisting)
+#, no-wrap
+msgid "SELECT * FROM test_trgm WHERE t ~ '(foo|bar)';"
+msgstr "SELECT * FROM test_trgm WHERE t ~ '(foo|bar)';"
+
+#: pgtrgm.xml:322(para)
+msgid ""
+"Beginning in <productname>PostgreSQL</productname> 9.3, these index types "
+"also support index searches for regular-expression matches (<literal>~</"
+"literal> and <literal>~*</literal> operators), for example <placeholder-1/> "
+"The index search works by extracting trigrams from the regular expression "
+"and then looking these up in the index. The more trigrams that can be "
+"extracted from the regular expression, the more effective the index search "
+"is. Unlike B-tree based searches, the search string need not be left-"
+"anchored."
+msgstr ""
+"Начиная с <productname>PostgreSQL</productname> 9.3, индексы этих типов "
+"также поддерживают поиск по регулярным выражениям (операторы <literal>~</"
+"literal> и <literal>~*</literal>), например: <placeholder-1/> При таком "
+"поиске из регулярного выражения извлекаются триграммы, а затем они ищутся в "
+"индексе. Чем больше триграмм удаётся извлечь из регулярного выражения, тем "
+"более эффективным будет поиск по индексу. В отличие от поиска по B-дереву, "
+"искомая строка не должна привязываться к левому краю."
+
+#: pgtrgm.xml:334(para)
+msgid ""
+"For both <literal>LIKE</literal> and regular-expression searches, keep in "
+"mind that a pattern with no extractable trigrams will degenerate to a full-"
+"index scan."
+msgstr ""
+"Относительно поиска по регулярному выражению или с <literal>LIKE</literal>, "
+"имейте в виду, что при отсутствии триграмм в искомом шаблоне поиск сводится "
+"к полному сканирования индекса."
+
+#: pgtrgm.xml:340(para)
+msgid ""
+"The choice between GiST and GIN indexing depends on the relative performance "
+"characteristics of GiST and GIN, which are discussed elsewhere. As a rule of "
+"thumb, a GIN index is faster to search than a GiST index, but slower to "
+"build or update; so GIN is better suited for static data and GiST for often-"
+"updated data."
+msgstr ""
+"Выбор между индексами GiST и GIN зависит от относительных характеристик "
+"производительности GiST и GIN, которые здесь не рассматриваются. Как "
+"правило, индекс GIN быстрее индекса GiST при поиске, но строится или "
+"обновляется он медленнее; поэтому GIN лучше подходит для статических, а GiST "
+"для часто изменяемых данных."
+
+#: pgtrgm.xml:350(title)
+msgid "Text Search Integration"
+msgstr "Интеграция с текстовым поиском"
+
+#: pgtrgm.xml:352(para)
+msgid ""
+"Trigram matching is a very useful tool when used in conjunction with a full "
+"text index. In particular it can help to recognize misspelled input words "
+"that will not be matched directly by the full text search mechanism."
+msgstr ""
+"Сопоставление триграмм — очень полезный приём в сочетании с применением "
+"полнотекстового индекса. В частности это может помочь найти слова, "
+"написанные неправильно, которые не будут находиться непосредственно "
+"механизмом полнотекстового поиска."
+
+#: pgtrgm.xml:363(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE words AS SELECT word FROM\n"
+"        ts_stat('SELECT to_tsvector(''simple'', bodytext) FROM documents');"
+msgstr ""
+"CREATE TABLE words AS SELECT word FROM\n"
+"        ts_stat('SELECT to_tsvector(''simple'', bodytext) FROM documents');"
+
+#: pgtrgm.xml:359(para)
+msgid ""
+"The first step is to generate an auxiliary table containing all the unique "
+"words in the documents: <placeholder-1/> where <structname>documents</"
+"structname> is a table that has a text field <structfield>bodytext</"
+"structfield> that we wish to search. The reason for using the "
+"<literal>simple</literal> configuration with the <function>to_tsvector</"
+"function> function, instead of using a language-specific configuration, is "
+"that we want a list of the original (unstemmed) words."
+msgstr ""
+"В первую очередь нужно построить дополнительную таблицу, содержащую все "
+"уникальные слова в документе: <placeholder-1/> Здесь <structname>documents</"
+"structname> — это таблица с текстовым полем <structfield>bodytext</"
+"structfield>, по которому мы будем выполнять поиск. Конфигурация "
+"<literal>simple</literal> используется с функцией <function>to_tsvector</"
+"function> вместо конфигурации для определённого языка по той причине, что "
+"нам нужен список исходных (необработанных стеммером) слов."
+
+#: pgtrgm.xml:376(programlisting)
+#, no-wrap
+msgid "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
+msgstr "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
+
+#: pgtrgm.xml:373(para)
+msgid ""
+"Next, create a trigram index on the word column: <placeholder-1/> Now, a "
+"<command>SELECT</command> query similar to the previous example can be used "
+"to suggest spellings for misspelled words in user search terms. A useful "
+"extra test is to require that the selected words are also of similar length "
+"to the misspelled word."
+msgstr ""
+"Затем нужно создать индекс триграмм по столбцу со словами: <placeholder-1/> "
+"Теперь мы можем использовать запрос <command>SELECT</command>, подобный "
+"показанному в предыдущем примере, и предлагать варианты исправлений слов, "
+"введённых пользователем с ошибками. Кроме того, может быть полезно "
+"дополнительно проверить, что выбранные слова также имеют длину, примерно "
+"равную длине ошибочных слов."
+
+#: pgtrgm.xml:385(para)
+msgid ""
+"Since the <structname>words</structname> table has been generated as a "
+"separate, static table, it will need to be periodically regenerated so that "
+"it remains reasonably up-to-date with the document collection. Keeping it "
+"exactly current is usually unnecessary."
+msgstr ""
+"Так как таблица <structname>words</structname> была сформирована как "
+"отдельная статическая таблица, её нужно периодически обновлять, чтобы она "
+"достаточно хорошо соответствовала набору документов. Постоянно поддерживать "
+"её в полностью актуальном состоянии обычно не требуется."
+
+#: pgtrgm.xml:395(title)
+msgid "References"
+msgstr "Ссылки"
+
+#: pgtrgm.xml:397(para)
+msgid ""
+"GiST Development Site <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
+"gist/\"/>"
+msgstr ""
+"Сайт разработки GiST <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
+"gist/\"/>"
+
+#: pgtrgm.xml:401(para)
+msgid ""
+"Tsearch2 Development Site <ulink url=\"http://www.sai.msu.su/~megera/"
+"postgres/gist/tsearch/V2/\"/>"
+msgstr ""
+"Сайт разработки Tsearch2 <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
+"gist/tsearch/V2/\"/>"
+
+#: pgtrgm.xml:408(title)
+msgid "Authors"
+msgstr "Авторы"
+
+#: pgtrgm.xml:410(para)
+msgid ""
+"Oleg Bartunov <email>oleg@sai.msu.su</email>, Moscow, Moscow University, "
+"Russia"
+msgstr ""
+"Олег Бартунов <email>oleg@sai.msu.su</email>, Москва, Московский "
+"Государственный Университет, Россия"
+
+#: pgtrgm.xml:413(para)
+msgid ""
+"Teodor Sigaev <email>teodor@sigaev.ru</email>, Moscow, Delta-Soft Ltd.,Russia"
+msgstr ""
+"Фёдор Сигаев <email>teodor@sigaev.ru</email>, Москва, ООО &laquo;Дельта-"
+"Софт&raquo;, Россия"
+
+#: pgtrgm.xml:416(para)
+msgid "Documentation: Christopher Kings-Lynne"
+msgstr "Документация: Кристофер Кингс-Линн"
+
+#: pgtrgm.xml:419(para)
+msgid "This module is sponsored by Delta-Soft Ltd., Moscow, Russia."
+msgstr ""
+"Разработку этого модуля спонсировало ООО &laquo;Дельта-Софт&raquo;, г. "
+"Москва, Россия."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: pgtrgm.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

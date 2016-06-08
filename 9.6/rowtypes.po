@@ -1,0 +1,538 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: rowtypes.xml:5(title)
+msgid "Composite Types"
+msgstr "Составные типы"
+
+#: rowtypes.xml:7(indexterm)
+msgid "<primary>composite type</primary>"
+msgstr "<primary>составной тип</primary>"
+
+#: rowtypes.xml:11(indexterm)
+msgid "<primary>row type</primary>"
+msgstr "<primary>тип табличной строки</primary>"
+
+#: rowtypes.xml:15(para)
+msgid ""
+"A <firstterm>composite type</firstterm> represents the structure of a row or "
+"record; it is essentially just a list of field names and their data types. "
+"<productname>PostgreSQL</productname> allows composite types to be used in "
+"many of the same ways that simple types can be used. For example, a column "
+"of a table can be declared to be of a composite type."
+msgstr ""
+"<firstterm>Составной тип</firstterm> представляет структуру табличной строки "
+"или записи; по сути это просто список имён полей и соответствующих типов "
+"данных. <productname>PostgreSQL</productname> позволяет использовать "
+"составные типы во многом так же, как и простые типы. Например, в определении "
+"таблицы можно объявить столбец составного типа."
+
+#: rowtypes.xml:24(title)
+msgid "Declaration of Composite Types"
+msgstr "Объявление составных типов"
+
+#: rowtypes.xml:28(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TYPE complex AS (\n"
+"    r       double precision,\n"
+"    i       double precision\n"
+");\n"
+"\n"
+"CREATE TYPE inventory_item AS (\n"
+"    name            text,\n"
+"    supplier_id     integer,\n"
+"    price           numeric\n"
+");"
+msgstr ""
+"CREATE TYPE complex AS (\n"
+"    r       double precision,\n"
+"    i       double precision\n"
+");\n"
+"\n"
+"CREATE TYPE inventory_item AS (\n"
+"    name            text,\n"
+"    supplier_id     integer,\n"
+"    price           numeric\n"
+");"
+
+#: rowtypes.xml:26(para)
+msgid ""
+"Here are two simple examples of defining composite types: <placeholder-1/> "
+"The syntax is comparable to <command>CREATE TABLE</command>, except that "
+"only field names and types can be specified; no constraints (such as "
+"<literal>NOT NULL</literal>) can presently be included. Note that the "
+"<literal>AS</literal> keyword is essential; without it, the system will "
+"think a different kind of <command>CREATE TYPE</command> command is meant, "
+"and you will get odd syntax errors."
+msgstr ""
+"Ниже приведены два простых примера определения составных типов: "
+"<placeholder-1/> Синтаксис очень похож на <command>CREATE TABLE</command>, "
+"за исключением того, что он допускает только названия полей и их типы, какие-"
+"либо ограничения (такие как <literal>NOT NULL</literal>) в настоящее время "
+"не поддерживаются. Заметьте, что ключевое слово <literal>AS</literal> здесь "
+"имеет значение; без него система будет считать, что подразумевается другой "
+"тип команды <command>CREATE TYPE</command>, и выдаст неожиданную "
+"синтаксическую ошибку."
+
+#: rowtypes.xml:49(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE on_hand (\n"
+"    item      inventory_item,\n"
+"    count     integer\n"
+");\n"
+"\n"
+"INSERT INTO on_hand VALUES (ROW('fuzzy dice', 42, 1.99), 1000);"
+msgstr ""
+"CREATE TABLE on_hand (\n"
+"    item      inventory_item,\n"
+"    count     integer\n"
+");\n"
+"\n"
+"INSERT INTO on_hand VALUES (ROW('fuzzy dice', 42, 1.99), 1000);"
+
+#: rowtypes.xml:58(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION price_extension(inventory_item, integer) RETURNS numeric\n"
+"AS 'SELECT $1.price * $2' LANGUAGE SQL;\n"
+"\n"
+"SELECT price_extension(item, 10) FROM on_hand;"
+msgstr ""
+"CREATE FUNCTION price_extension(inventory_item, integer) RETURNS numeric\n"
+"AS 'SELECT $1.price * $2' LANGUAGE SQL;\n"
+"\n"
+"SELECT price_extension(item, 10) FROM on_hand;"
+
+#: rowtypes.xml:46(para)
+msgid ""
+"Having defined the types, we can use them to create tables: <placeholder-1/> "
+"or functions: <placeholder-2/>"
+msgstr ""
+"Определив такие типы, мы можем использовать их в таблицах: <placeholder-1/> "
+"или функциях: <placeholder-2/>"
+
+#: rowtypes.xml:69(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE inventory_item (\n"
+"    name            text,\n"
+"    supplier_id     integer REFERENCES suppliers,\n"
+"    price           numeric CHECK (price &gt; 0)\n"
+");"
+msgstr ""
+"CREATE TABLE inventory_item (\n"
+"    name            text,\n"
+"    supplier_id     integer REFERENCES suppliers,\n"
+"    price           numeric CHECK (price &gt; 0)\n"
+");"
+
+#: rowtypes.xml:65(para)
+msgid ""
+"Whenever you create a table, a composite type is also automatically created, "
+"with the same name as the table, to represent the table's row type. For "
+"example, had we said: <placeholder-1/> then the same "
+"<literal>inventory_item</literal> composite type shown above would come into "
+"being as a byproduct, and could be used just as above. Note however an "
+"important restriction of the current implementation: since no constraints "
+"are associated with a composite type, the constraints shown in the table "
+"definition <emphasis>do not apply</emphasis> to values of the composite type "
+"outside the table. (A partial workaround is to use domain types as members "
+"of composite types.)"
+msgstr ""
+"Всякий раз, когда создаётся таблица, вместе с ней автоматически создаётся "
+"составной тип, представляющий тип строки таблицы, именем которого будет имя "
+"таблицы. Например, при выполнении команды: <placeholder-1/> будет создан "
+"составной тип <literal>inventory_item</literal>, в точности соответствующий "
+"тому, что был показан выше, и использовать его можно так же. Заметьте, что в "
+"текущей реализации есть один недостаток: так как с составным типом не могут "
+"быть связаны ограничения, описанные в определении таблицы ограничения "
+"<emphasis>не применяются</emphasis> к значениям составного типа вне таблицы. "
+"(В некоторой степени это можно обойти, используя в составных типах домены.)"
+
+#: rowtypes.xml:86(title)
+msgid "Composite Value Input"
+msgstr "Ввод значения составного типа"
+
+#: rowtypes.xml:88(indexterm)
+msgid "<primary>composite type</primary><secondary>constant</secondary>"
+msgstr "<primary>составной тип</primary><secondary>константа</secondary>"
+
+#: rowtypes.xml:100(programlisting)
+#, no-wrap
+msgid "'(\"fuzzy dice\",42,1.99)'"
+msgstr "'(\"fuzzy dice\",42,1.99)'"
+
+#: rowtypes.xml:105(programlisting)
+#, no-wrap
+msgid "'(\"fuzzy dice\",42,)'"
+msgstr "'(\"fuzzy dice\",42,)'"
+
+#: rowtypes.xml:107(programlisting)
+#, no-wrap
+msgid "'(\"\",42,)'"
+msgstr "'(\"\",42,)'"
+
+#: rowtypes.xml:92(para)
+msgid ""
+"To write a composite value as a literal constant, enclose the field values "
+"within parentheses and separate them by commas. You can put double quotes "
+"around any field value, and must do so if it contains commas or parentheses. "
+"(More details appear below.) Thus, the general format of a composite "
+"constant is the following: <synopsis>'( <replaceable>val1</replaceable> , "
+"<replaceable>val2</replaceable> , ... )'</synopsis> An example is: "
+"<placeholder-1/> which would be a valid value of the "
+"<literal>inventory_item</literal> type defined above. To make a field be "
+"NULL, write no characters at all in its position in the list. For example, "
+"this constant specifies a NULL third field: <placeholder-2/> If you want an "
+"empty string rather than NULL, write double quotes: <placeholder-3/> Here "
+"the first field is a non-NULL empty string, the third is NULL."
+msgstr ""
+"Чтобы записать значение составного типа в виде текстовой константы, его поля "
+"нужно заключить в круглые скобки и разделить их запятыми. Значение любого "
+"поля можно заключить в кавычки, а если оно содержит запятые или скобки, это "
+"делать обязательно. (Подробности описаны ниже.) Таким образом, в общем виде "
+"константа составного типа записывается так: "
+"<synopsis>'( <replaceable>значение1</replaceable> , <replaceable>значение2</"
+"replaceable> , ... )'</synopsis> Например, эта запись: <placeholder-1/> "
+"будет допустимой для описанного выше типа <literal>inventory_item</literal>. "
+"Чтобы присвоить NULL одному из полей, в соответствующем месте в списке нужно "
+"оставить пустое место. Например, эта константа задаёт значение для третьего "
+"поля: <placeholder-2/> Если же вместо NULL требуется вставить пустую строку, "
+"нужно записать пару кавычек: <placeholder-3/> Здесь в первом поле окажется "
+"пустая строка, а в третьем &mdash; NULL."
+
+#: rowtypes.xml:111(para)
+msgid ""
+"(These constants are actually only a special case of the generic type "
+"constants discussed in <xref linkend=\"sql-syntax-constants-generic\"/>. The "
+"constant is initially treated as a string and passed to the composite-type "
+"input conversion routine. An explicit type specification might be necessary.)"
+msgstr ""
+"(Такого рода константы массивов на самом деле представляют собой всего лишь "
+"частный случай констант, описанных в <xref remap=\"6\" linkend=\"sql-syntax-"
+"constants-generic\"/>. Константа изначально воспринимается как строка и "
+"передаётся процедуре преобразования составного типа. При этом может "
+"потребоваться явно указать целевой тип.)"
+
+#: rowtypes.xml:125(programlisting)
+#, no-wrap
+msgid ""
+"ROW('fuzzy dice', 42, 1.99)\n"
+"ROW('', 42, NULL)"
+msgstr ""
+"ROW('fuzzy dice', 42, 1.99)\n"
+"ROW('', 42, NULL)"
+
+#: rowtypes.xml:129(programlisting)
+#, no-wrap
+msgid ""
+"('fuzzy dice', 42, 1.99)\n"
+"('', 42, NULL)"
+msgstr ""
+"('fuzzy dice', 42, 1.99)\n"
+"('', 42, NULL)"
+
+#: rowtypes.xml:119(para)
+msgid ""
+"The <literal>ROW</literal> expression syntax can also be used to construct "
+"composite values. In most cases this is considerably simpler to use than the "
+"string-literal syntax since you don't have to worry about multiple layers of "
+"quoting. We already used this method above: <placeholder-1/> The ROW keyword "
+"is actually optional as long as you have more than one field in the "
+"expression, so these can simplify to: <placeholder-2/> The <literal>ROW</"
+"literal> expression syntax is discussed in more detail in <xref linkend="
+"\"sql-syntax-row-constructors\"/>."
+msgstr ""
+"Значения составных типов также можно конструировать, используя синтаксис "
+"выражения <literal>ROW</literal>. В большинстве случае это значительно "
+"проще, чем записывать значения в строке, так как при этом не нужно "
+"беспокоиться о вложенности кавычек. Мы уже обсуждали этот метод ранее: "
+"<placeholder-1/> Ключевое слово ROW на самом деле может быть необязательным, "
+"если в выражении определяются несколько полей, так что эту запись можно "
+"упростить до: <placeholder-2/> Синтаксис выражения <literal>ROW</literal> "
+"более подробно рассматривается в <xref remap=\"6\" linkend=\"sql-syntax-row-"
+"constructors\"/>."
+
+#: rowtypes.xml:137(title)
+msgid "Accessing Composite Types"
+msgstr "Обращение к составным типам"
+
+#: rowtypes.xml:147(programlisting)
+#, no-wrap
+msgid "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
+msgstr "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
+
+#: rowtypes.xml:153(programlisting)
+#, no-wrap
+msgid "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
+msgstr "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
+
+#: rowtypes.xml:158(programlisting)
+#, no-wrap
+msgid "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
+msgstr "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
+
+#: rowtypes.xml:139(para)
+msgid ""
+"To access a field of a composite column, one writes a dot and the field "
+"name, much like selecting a field from a table name. In fact, it's so much "
+"like selecting from a table name that you often have to use parentheses to "
+"keep from confusing the parser. For example, you might try to select some "
+"subfields from our <literal>on_hand</literal> example table with something "
+"like: <placeholder-1/> This will not work since the name <literal>item</"
+"literal> is taken to be a table name, not a column name of <literal>on_hand</"
+"literal>, per SQL syntax rules. You must write it like this: <placeholder-2/"
+"> or if you need to use the table name as well (for instance in a multitable "
+"query), like this: <placeholder-3/> Now the parenthesized object is "
+"correctly interpreted as a reference to the <literal>item</literal> column, "
+"and then the subfield can be selected from it."
+msgstr ""
+"Чтобы обратиться к полю столбца составного типа, после имени столбца нужно "
+"добавить точку и имя поля, подобно тому, как указывается столбец после имени "
+"таблицы. На самом деле, эти обращения неотличимы, так что часто бывает "
+"необходимо использовать скобки, чтобы команда была разобрана правильно. "
+"Например, можно попытаться выбрать поле столбца из тестовой таблицы "
+"<literal>on_hand</literal> таким образом: <placeholder-1/> Но это не будет "
+"работать, так как согласно правилам SQL имя <literal>item</literal> здесь "
+"воспринимается как имя таблицы, а не столбца в таблице <literal>on_hand</"
+"literal>. Поэтому этот запрос нужно переписать так: <placeholder-2/> либо "
+"указать также и имя таблицы (например, в запросе с многими таблицами), "
+"примерно так: <placeholder-3/> В результате объект в скобках будет правильно "
+"интерпретирован как ссылка на столбец <literal>item</literal>, из которого "
+"выбирается поле."
+
+#: rowtypes.xml:169(programlisting)
+#, no-wrap
+msgid "SELECT (my_func(...)).field FROM ..."
+msgstr "SELECT (my_func(...)).field FROM ..."
+
+#: rowtypes.xml:164(para)
+msgid ""
+"Similar syntactic issues apply whenever you select a field from a composite "
+"value. For instance, to select just one field from the result of a function "
+"that returns a composite value, you'd need to write something like: "
+"<placeholder-1/> Without the extra parentheses, this will generate a syntax "
+"error."
+msgstr ""
+"При выборке поля из значения составного типа также возможны подобные "
+"синтаксические казусы. Например, чтобы выбрать одно поле из результата "
+"функции, возвращающей составное значение, потребуется написать что-то "
+"подобное: <placeholder-1/> Без дополнительных скобок в этом запросе "
+"произойдёт синтаксическая ошибка."
+
+#: rowtypes.xml:176(title)
+msgid "Modifying Composite Types"
+msgstr "Изменение составных типов"
+
+#: rowtypes.xml:183(programlisting)
+#, no-wrap
+msgid ""
+"INSERT INTO mytab (complex_col) VALUES((1.1,2.2));\n"
+"\n"
+"UPDATE mytab SET complex_col = ROW(1.1,2.2) WHERE ...;"
+msgstr ""
+"INSERT INTO mytab (complex_col) VALUES((1.1,2.2));\n"
+"\n"
+"UPDATE mytab SET complex_col = ROW(1.1,2.2) WHERE ...;"
+
+#: rowtypes.xml:178(para)
+msgid ""
+"Here are some examples of the proper syntax for inserting and updating "
+"composite columns. First, inserting or updating a whole column: "
+"<placeholder-1/> The first example omits <literal>ROW</literal>, the second "
+"uses it; we could have done it either way."
+msgstr ""
+"Ниже приведены примеры правильных команд добавления и изменения значений "
+"составных столбцов. Первые команды иллюстрируют добавление или изменение "
+"всего столбца: <placeholder-1/> В первом примере опущено ключевое слово "
+"<literal>ROW</literal>, а во втором оно есть; присутствовать или "
+"отсутствовать оно может в обоих случаях."
+
+#: rowtypes.xml:194(programlisting)
+#, no-wrap
+msgid "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
+msgstr "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
+
+#: rowtypes.xml:191(para)
+msgid ""
+"We can update an individual subfield of a composite column: <placeholder-1/> "
+"Notice here that we don't need to (and indeed cannot) put parentheses around "
+"the column name appearing just after <literal>SET</literal>, but we do need "
+"parentheses when referencing the same column in the expression to the right "
+"of the equal sign."
+msgstr ""
+"Мы можем изменить также отдельное поле составного столбца: <placeholder-1/> "
+"Заметьте, что при этом не нужно (и на самом деле даже нельзя) заключать в "
+"скобки имя столбца, следующее сразу за предложением <literal>SET</literal>, "
+"но в ссылке на тот же столбец в выражении, находящемся по правую сторону "
+"знака равенства, скобки обязательны."
+
+#: rowtypes.xml:205(programlisting)
+#, no-wrap
+msgid "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
+msgstr "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
+
+#: rowtypes.xml:202(para)
+msgid ""
+"And we can specify subfields as targets for <command>INSERT</command>, too: "
+"<placeholder-1/> Had we not supplied values for all the subfields of the "
+"column, the remaining subfields would have been filled with null values."
+msgstr ""
+"И мы также можем указать поля в качестве цели команды <command>INSERT</"
+"command>: <placeholder-1/> Если при этом мы не укажем значения для всех "
+"полей столбца, оставшиеся поля будут заполнены значениями NULL."
+
+#: rowtypes.xml:213(title)
+msgid "Composite Type Input and Output Syntax"
+msgstr "Синтаксис вводимых и выводимых значений составного типа"
+
+#: rowtypes.xml:225(programlisting)
+#, no-wrap
+msgid "'(  42)'"
+msgstr "'(  42)'"
+
+#: rowtypes.xml:215(para)
+msgid ""
+"The external text representation of a composite value consists of items that "
+"are interpreted according to the I/O conversion rules for the individual "
+"field types, plus decoration that indicates the composite structure. The "
+"decoration consists of parentheses (<literal>(</literal> and <literal>)</"
+"literal>) around the whole value, plus commas (<literal>,</literal>) between "
+"adjacent items. Whitespace outside the parentheses is ignored, but within "
+"the parentheses it is considered part of the field value, and might or might "
+"not be significant depending on the input conversion rules for the field "
+"data type. For example, in: <placeholder-1/> the whitespace will be ignored "
+"if the field type is integer, but not if it is text."
+msgstr ""
+"Внешнее текстовое представление составного значения состоит из записи "
+"элементов, интерпретируемых по правилам ввода/вывода для соответствующих "
+"типов полей, и оформления структуры составного типа. Оформление состоит из "
+"круглых скобок (<literal>(</literal> и <literal>)</literal>) окружающих всё "
+"значение, и запятых (<literal>,</literal>) между его элементами. Пробельные "
+"символы вне скобок игнорируются, но внутри они считаются частью "
+"соответствующего элемента и могут учитываться или не учитываться в "
+"зависимости от правил преобразования вводимых данных для типа этого "
+"элемента. Например, в записи: <placeholder-1/> пробелы будут игнорироваться, "
+"если соответствующее поле имеет целочисленный тип, но не текстовый."
+
+#: rowtypes.xml:230(para)
+msgid ""
+"As shown previously, when writing a composite value you can write double "
+"quotes around any individual field value. You <emphasis>must</emphasis> do "
+"so if the field value would otherwise confuse the composite-value parser. In "
+"particular, fields containing parentheses, commas, double quotes, or "
+"backslashes must be double-quoted. To put a double quote or backslash in a "
+"quoted composite field value, precede it with a backslash. (Also, a pair of "
+"double quotes within a double-quoted field value is taken to represent a "
+"double quote character, analogously to the rules for single quotes in SQL "
+"literal strings.) Alternatively, you can avoid quoting and use backslash-"
+"escaping to protect all data characters that would otherwise be taken as "
+"composite syntax."
+msgstr ""
+"Как было показано ранее, записывая составное значение, любой его элемент "
+"можно заключить в кавычки. Это <emphasis>нужно</emphasis> делать, если при "
+"разборе этого значения без кавычек возможна неоднозначность. Например, в "
+"кавычки нужно заключать элементы, содержащие скобки, кавычки, запятую или "
+"обратную косую черту. Чтобы включить в поле составного значения, заключённое "
+"в кавычки, такие символы, как кавычки или обратная косая черта, перед ними "
+"нужно добавить обратную косую черту. (Кроме того, продублированные кавычки в "
+"значении поля, заключённого в кавычки, воспринимаются как одинарные, подобно "
+"апострофам в строках SQL.) С другой стороны, можно обойтись без кавычек, "
+"защитив все символы в данных, которые могут быть восприняты как часть "
+"синтаксиса составного значения, с помощью спецпоследовательностей."
+
+#: rowtypes.xml:245(para)
+msgid ""
+"A completely empty field value (no characters at all between the commas or "
+"parentheses) represents a NULL. To write a value that is an empty string "
+"rather than NULL, write <literal>\"\"</literal>."
+msgstr ""
+"Значение NULL в этой записи представляется пустым местом (когда между "
+"запятыми или скобками нет никаких символов). Чтобы ввести именно пустую "
+"строку, а не NULL, нужно написать <literal>\"\"</literal>."
+
+#: rowtypes.xml:251(para)
+msgid ""
+"The composite output routine will put double quotes around field values if "
+"they are empty strings or contain parentheses, commas, double quotes, "
+"backslashes, or white space. (Doing so for white space is not essential, but "
+"aids legibility.) Double quotes and backslashes embedded in field values "
+"will be doubled."
+msgstr ""
+"Функция вывода составного значения заключает значения полей в кавычки, если "
+"они представляют собой пустые строки, либо содержат скобки, запятые, кавычки "
+"или обратную косую черту, либо состоят из одних пробелов. (В последнем "
+"случае можно обойтись без кавычек, но они добавляются для удобочитаемости.) "
+"Кавычки и обратная косая черта, заключённые в значения полей, при выводе "
+"дублируются."
+
+#: rowtypes.xml:267(programlisting)
+#, no-wrap
+msgid "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
+msgstr "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
+
+#: rowtypes.xml:260(para)
+msgid ""
+"Remember that what you write in an SQL command will first be interpreted as "
+"a string literal, and then as a composite. This doubles the number of "
+"backslashes you need (assuming escape string syntax is used). For example, "
+"to insert a <type>text</type> field containing a double quote and a "
+"backslash in a composite value, you'd need to write: <placeholder-1/> The "
+"string-literal processor removes one level of backslashes, so that what "
+"arrives at the composite-value parser looks like <literal>(\"\\\"\\\\\")</"
+"literal>. In turn, the string fed to the <type>text</type> data type's input "
+"routine becomes <literal>\"\\</literal>. (If we were working with a data "
+"type whose input routine also treated backslashes specially, <type>bytea</"
+"type> for example, we might need as many as eight backslashes in the command "
+"to get one backslash into the stored composite field.) Dollar quoting (see "
+"<xref linkend=\"sql-syntax-dollar-quoting\"/>) can be used to avoid the need "
+"to double backslashes."
+msgstr ""
+"Помните, что написанная SQL-команда прежде всего интерпретируется как "
+"текстовая строка, а затем как составное значение. Вследствие этого число "
+"символов обратной косой черты удваивается (если используются "
+"спецпоследовательности). Например, чтобы ввести в поле составного столбца "
+"значение типа <type>text</type> с обратной косой чертой и кавычками, команду "
+"нужно будет записать так: <placeholder-1/> Сначала обработчик "
+"спецпоследовательностей удаляет один уровень обратной косой черты, так что "
+"анализатор составного значения получает на вход <literal>(\"\\\"\\\\\")</"
+"literal>. В свою очередь, он передаёт эту строку процедуре ввода значения "
+"типа <type>text</type>, где она преобразуются в <literal>\"\\</literal>. "
+"(Если бы мы работали с типом данных, процедура ввода которого также "
+"интерпретирует обратную косую черту особым образом, например <type>bytea</"
+"type>, нам могло бы понадобиться уже восемь таких символов, чтобы сохранить "
+"этот символ в поле составного значения.) Во избежание такого дублирования "
+"спецсимволов строки можно заключать в доллары (см. <xref remap=\"4\" linkend="
+"\"sql-syntax-dollar-quoting\"/>)."
+
+#: rowtypes.xml:282(para)
+msgid ""
+"The <literal>ROW</literal> constructor syntax is usually easier to work with "
+"than the composite-literal syntax when writing composite values in SQL "
+"commands. In <literal>ROW</literal>, individual field values are written the "
+"same way they would be written when not members of a composite."
+msgstr ""
+"Записывать составные значения в командах SQL часто бывает удобнее с помощью "
+"конструктора <literal>ROW</literal>. В <literal>ROW</literal> отдельные "
+"значения элементов записываются так же, как если бы они не были членами "
+"составного выражения."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: rowtypes.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

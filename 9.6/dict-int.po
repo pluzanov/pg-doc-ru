@@ -1,0 +1,137 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: dict-int.xml:5(title)
+msgid "dict_int"
+msgstr "dict_int"
+
+#: dict-int.xml:7(indexterm)
+msgid "<primary>dict_int</primary>"
+msgstr "<primary>dict_int</primary>"
+
+#: dict-int.xml:11(para)
+msgid ""
+"<filename>dict_int</filename> is an example of an add-on dictionary template "
+"for full-text search. The motivation for this example dictionary is to "
+"control the indexing of integers (signed and unsigned), allowing such "
+"numbers to be indexed while preventing excessive growth in the number of "
+"unique words, which greatly affects the performance of searching."
+msgstr ""
+"Модуль <filename>dict_int</filename> представляет собой пример "
+"дополнительного шаблона словаря для полнотекстового поиска. Этот словарь был "
+"создан для управляемой индексации целых чисел (со знаком и без); он "
+"позволяет индексировать такие числа и при этом избежать чрезмерного "
+"разрастания списка уникальных слов, и тем самым значительно увеличивает "
+"скорость поиска."
+
+#: dict-int.xml:20(title)
+msgid "Configuration"
+msgstr "Конфигурирование"
+
+#: dict-int.xml:22(para)
+msgid "The dictionary accepts two options:"
+msgstr "Этот словарь принимает два параметра:"
+
+#: dict-int.xml:28(para)
+msgid ""
+"The <literal>maxlen</literal> parameter specifies the maximum number of "
+"digits allowed in an integer word. The default value is 6."
+msgstr ""
+"Параметр <literal>maxlen</literal> задаёт максимальное число цифр, из "
+"которого может состоять целое число. Значение по умолчанию — 6."
+
+#: dict-int.xml:34(para)
+msgid ""
+"The <literal>rejectlong</literal> parameter specifies whether an overlength "
+"integer should be truncated or ignored. If <literal>rejectlong</literal> is "
+"<literal>false</literal> (the default), the dictionary returns the first "
+"<literal>maxlen</literal> digits of the integer. If <literal>rejectlong</"
+"literal> is <literal>true</literal>, the dictionary treats an overlength "
+"integer as a stop word, so that it will not be indexed. Note that this also "
+"means that such an integer cannot be searched for."
+msgstr ""
+"Параметр <literal>rejectlong</literal> определяет, должны ли чрезмерно "
+"длинные числа усекаться или игнорироваться. Если <literal>rejectlong</"
+"literal> имеет значение <literal>false</literal> (по умолчанию), этот "
+"словарь возвращает первые <literal>maxlen</literal> цифр целого числа. Если "
+"<literal>rejectlong</literal> равен <literal>true</literal>, чрезмерное "
+"длинное целое воспринимается как стоп-слово, и в результате не "
+"индексируется. Заметьте, это означает, что такое целое нельзя будет найти."
+
+#: dict-int.xml:48(title)
+msgid "Usage"
+msgstr "Использование"
+
+#: dict-int.xml:56(programlisting)
+#, no-wrap
+msgid ""
+"mydb# ALTER TEXT SEARCH DICTIONARY intdict (MAXLEN = 4, REJECTLONG = true);\n"
+"ALTER TEXT SEARCH DICTIONARY"
+msgstr ""
+"mydb# ALTER TEXT SEARCH DICTIONARY intdict (MAXLEN = 4, REJECTLONG = true);\n"
+"ALTER TEXT SEARCH DICTIONARY"
+
+#: dict-int.xml:50(para)
+msgid ""
+"Installing the <literal>dict_int</literal> extension creates a text search "
+"template <literal>intdict_template</literal> and a dictionary "
+"<literal>intdict</literal> based on it, with the default parameters. You can "
+"alter the parameters, for example <placeholder-1/> or create new "
+"dictionaries based on the template."
+msgstr ""
+"При установке расширения <literal>dict_int</literal> в базе создаётся шаблон "
+"текстового поиска <literal>intdict_template</literal> и словарь "
+"<literal>intdict</literal> на его базе, с параметрами по умолчанию. Вы "
+"можете изменить параметры словаря, например так: <placeholder-1/> или "
+"создать новые словари на базе этого шаблона."
+
+#: dict-int.xml:65(programlisting)
+#, no-wrap
+msgid ""
+"mydb# select ts_lexize('intdict', '12345678');\n"
+" ts_lexize\n"
+"-----------\n"
+" {123456}"
+msgstr ""
+"mydb# select ts_lexize('intdict', '12345678');\n"
+" ts_lexize\n"
+"-----------\n"
+" {123456}"
+
+#: dict-int.xml:74(programlisting)
+#, no-wrap
+msgid ""
+"ALTER TEXT SEARCH CONFIGURATION english\n"
+"    ALTER MAPPING FOR int, uint WITH intdict;"
+msgstr ""
+"ALTER TEXT SEARCH CONFIGURATION english\n"
+"    ALTER MAPPING FOR int, uint WITH intdict;"
+
+#: dict-int.xml:62(para)
+msgid ""
+"To test the dictionary, you can try <placeholder-1/> but real-world usage "
+"will involve including it in a text search configuration as described in "
+"<xref linkend=\"textsearch\"/>. That might look like this: <placeholder-2/>"
+msgstr ""
+"Протестировать этот словарь можно так: <placeholder-1/> Но для практического "
+"применения его нужно включить в конфигурацию текстового поиска, как описано "
+"в <xref remap=\"6\" linkend=\"textsearch\"/>. Это может выглядеть примерно "
+"так: <placeholder-2/>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: dict-int.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
