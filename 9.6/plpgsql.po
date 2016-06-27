@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:40+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -876,11 +876,12 @@ msgstr ""
 "$$ LANGUAGE plpgsql;"
 
 #: plpgsql.xml:505(para)
+#, fuzzy
 msgid ""
-"The same effect can be had by declaring one or more output parameters as "
-"polymorphic types. In this case the special <literal>$0</literal> parameter "
-"is not used; the output parameters themselves serve the same purpose. For "
-"example: <placeholder-1/>"
+"The same effect can be obtained by declaring one or more output parameters "
+"as polymorphic types. In this case the special <literal>$0</literal> "
+"parameter is not used; the output parameters themselves serve the same "
+"purpose. For example: <placeholder-1/>"
 msgstr ""
 "Такой же эффект получается при объявлении одного или нескольких выходных "
 "параметров полиморфного типа. При этом <literal>$0</literal> не создаётся; "
@@ -8176,10 +8177,20 @@ msgstr ""
 
 #: plpgsql.xml:4596(para)
 msgid ""
+"Data type names often need translation. For example, in Oracle string values "
+"are commonly declared as being of type <type>varchar2</type>, which is a non-"
+"SQL-standard type. In <productname>PostgreSQL</productname>, use type "
+"<type>varchar</type> or <type>text</type> instead. Similarly, replace type "
+"<type>number</type> with <type>numeric</type>, or use some other numeric "
+"data type if there's a more appropriate one."
+msgstr ""
+
+#: plpgsql.xml:4607(para)
+msgid ""
 "Instead of packages, use schemas to organize your functions into groups."
 msgstr "Для группировки функций вместо пакетов используются схемы."
 
-#: plpgsql.xml:4603(para)
+#: plpgsql.xml:4614(para)
 msgid ""
 "Since there are no packages, there are no package-level variables either. "
 "This is somewhat annoying. You can keep per-session state in temporary "
@@ -8188,7 +8199,7 @@ msgstr ""
 "Так как пакетов нет, нет и пакетных переменных. Это несколько раздражает. "
 "Вместо этого можно хранить состояние каждого сеанса во временных таблицах."
 
-#: plpgsql.xml:4611(para)
+#: plpgsql.xml:4622(para)
 msgid ""
 "Integer <command>FOR</command> loops with <literal>REVERSE</literal> work "
 "differently: <application>PL/SQL</application> counts down from the second "
@@ -8205,7 +8216,7 @@ msgstr ""
 "печально, но вряд ли будет изменено. (См. <xref remap=\"4\" linkend="
 "\"plpgsql-integer-for\"/>.)"
 
-#: plpgsql.xml:4623(para)
+#: plpgsql.xml:4634(para)
 msgid ""
 "<command>FOR</command> loops over queries (other than cursors) also work "
 "differently: the target variable(s) must have been declared, whereas "
@@ -8218,7 +8229,7 @@ msgstr ""
 "<application>PL/SQL</application> она объявляется неявно. Преимущество в "
 "том, что значения переменных доступны и после выхода из цикла."
 
-#: plpgsql.xml:4633(para)
+#: plpgsql.xml:4644(para)
 msgid ""
 "There are various notational differences for the use of cursor variables."
 msgstr ""
@@ -8240,11 +8251,11 @@ msgstr ""
 "<application>PL/SQL</application> в <application>PL/pgSQL</application>, "
 "следующие: <placeholder-1/>"
 
-#: plpgsql.xml:4643(title)
+#: plpgsql.xml:4654(title)
 msgid "Porting Examples"
 msgstr "Примеры портирования"
 
-#: plpgsql.xml:4645(para)
+#: plpgsql.xml:4656(para)
 msgid ""
 "<xref linkend=\"pgsql-porting-ex1\"/> shows how to port a simple function "
 "from <application>PL/SQL</application> to <application>PL/pgSQL</"
@@ -8254,7 +8265,7 @@ msgstr ""
 "функцию из <application>PL/SQL</application> в <application>PL/pgSQL</"
 "application>."
 
-#: plpgsql.xml:4651(title)
+#: plpgsql.xml:4662(title)
 msgid ""
 "Porting a Simple Function from <application>PL/SQL</application> to "
 "<application>PL/pgSQL</application>"
@@ -8262,12 +8273,12 @@ msgstr ""
 "Портирование простой функции из <application>PL/SQL</application> в "
 "<application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4655(programlisting)
-#, no-wrap
+#: plpgsql.xml:4666(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar,\n"
-"                                                  v_version varchar)\n"
-"RETURN varchar IS\n"
+"CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar2,\n"
+"                                                  v_version varchar2)\n"
+"RETURN varchar2 IS\n"
 "BEGIN\n"
 "    IF v_version IS NULL THEN\n"
 "        RETURN v_name;\n"
@@ -8289,7 +8300,7 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:4653(para)
+#: plpgsql.xml:4664(para)
 msgid ""
 "Here is an <productname>Oracle</productname> <application>PL/SQL</"
 "application> function: <placeholder-1/>"
@@ -8297,7 +8308,15 @@ msgstr ""
 "Функция <productname>Oracle</productname> <application>PL/SQL</application>: "
 "<placeholder-1/>"
 
-#: plpgsql.xml:4674(para)
+#: plpgsql.xml:4685(para)
+msgid ""
+"The type name <type>varchar2</type> has to be changed to <type>varchar</"
+"type> or <type>text</type>. In the examples in this section, we'll use "
+"<type>varchar</type>, but <type>text</type> is often a better choice if you "
+"do not need specific string length limits."
+msgstr ""
+
+#: plpgsql.xml:4694(para)
 msgid ""
 "The <literal>RETURN</literal> key word in the function prototype (not the "
 "function body) becomes <literal>RETURNS</literal> in "
@@ -8312,7 +8331,7 @@ msgstr ""
 "literal>, и нужно добавить предложение <literal>LANGUAGE</literal>, потому "
 "что <application>PL/pgSQL</application> — не единственный возможный язык."
 
-#: plpgsql.xml:4686(para)
+#: plpgsql.xml:4706(para)
 msgid ""
 "In <productname>PostgreSQL</productname>, the function body is considered to "
 "be a string literal, so you need to use quote marks or dollar quotes around "
@@ -8323,7 +8342,7 @@ msgstr ""
 "поэтому нужно использовать кавычки или знаки доллара. Это заменяет "
 "завершающий <literal>/</literal> в подходе Oracle."
 
-#: plpgsql.xml:4695(para)
+#: plpgsql.xml:4715(para)
 msgid ""
 "The <literal>show errors</literal> command does not exist in "
 "<productname>PostgreSQL</productname>, and is not needed since errors are "
@@ -8333,7 +8352,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> и не требуется, так как ошибки будут "
 "выводиться автоматически."
 
-#: plpgsql.xml:4668(para)
+#: plpgsql.xml:4679(para)
 msgid ""
 "Let's go through this function and see the differences compared to "
 "<application>PL/pgSQL</application>: <placeholder-1/>"
@@ -8341,7 +8360,7 @@ msgstr ""
 "Пройдемся по этой функции и посмотрим различия по сравнению с "
 "<application>PL/pgSQL</application>: <placeholder-1/>"
 
-#: plpgsql.xml:4708(programlisting)
+#: plpgsql.xml:4728(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar,\n"
@@ -8366,7 +8385,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4704(para)
+#: plpgsql.xml:4724(para)
 msgid ""
 "This is how this function would look when ported to <productname>PostgreSQL</"
 "productname>: <placeholder-1/>"
@@ -8374,7 +8393,7 @@ msgstr ""
 "Вот как эта функция будет выглядеть после портирования в "
 "<productname>PostgreSQL</productname>: <placeholder-1/>"
 
-#: plpgsql.xml:4721(para)
+#: plpgsql.xml:4741(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex2\"/> shows how to port a function that "
 "creates another function and how to handle the ensuing quoting problems."
@@ -8382,7 +8401,7 @@ msgstr ""
 "<xref linkend=\"plpgsql-porting-ex2\"/> показывает, как портировать функцию, "
 "которая создаёт другую функцию, и как обрабатывать проблемы с кавычками."
 
-#: plpgsql.xml:4728(title)
+#: plpgsql.xml:4748(title)
 msgid ""
 "Porting a Function that Creates Another Function from <application>PL/SQL</"
 "application> to <application>PL/pgSQL</application>"
@@ -8390,7 +8409,7 @@ msgstr ""
 "Портирование функции, создающей другую функцию, из <application>PL/SQL</"
 "application> в <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4730(para)
+#: plpgsql.xml:4750(para)
 msgid ""
 "The following procedure grabs rows from a <command>SELECT</command> "
 "statement and builds a large function with the results in <literal>IF</"
@@ -8400,8 +8419,8 @@ msgstr ""
 "большую функцию, в целях эффективности возвращающую результат в операторах "
 "<literal>IF</literal>."
 
-#: plpgsql.xml:4739(programlisting)
-#, no-wrap
+#: plpgsql.xml:4759(programlisting)
+#, fuzzy, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_update_referrer_type_proc IS\n"
 "    CURSOR referrer_keys IS\n"
@@ -8409,8 +8428,8 @@ msgid ""
 "        ORDER BY try_order;\n"
 "    func_cmd VARCHAR(4000);\n"
 "BEGIN\n"
-"    func_cmd := 'CREATE OR REPLACE FUNCTION cs_find_referrer_type(v_host IN VARCHAR,\n"
-"                 v_domain IN VARCHAR, v_url IN VARCHAR) RETURN VARCHAR IS BEGIN';\n"
+"    func_cmd := 'CREATE OR REPLACE FUNCTION cs_find_referrer_type(v_host IN VARCHAR2,\n"
+"                 v_domain IN VARCHAR2, v_url IN VARCHAR2) RETURN VARCHAR2 IS BEGIN';\n"
 "\n"
 "    FOR referrer_key IN referrer_keys LOOP\n"
 "        func_cmd := func_cmd ||\n"
@@ -8451,11 +8470,11 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:4737(para) plpgsql.xml:4834(para)
+#: plpgsql.xml:4757(para) plpgsql.xml:4854(para)
 msgid "This is the Oracle version: <placeholder-1/>"
 msgstr "Версия Oracle: <placeholder-1/>"
 
-#: plpgsql.xml:4766(programlisting)
+#: plpgsql.xml:4786(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_update_referrer_type_proc() RETURNS void AS $func$\n"
@@ -8522,7 +8541,7 @@ msgstr ""
 "END;\n"
 "$func$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4764(para)
+#: plpgsql.xml:4784(para)
 msgid ""
 "Here is how this function would end up in <productname>PostgreSQL</"
 "productname>: <placeholder-1/> Notice how the body of the function is built "
@@ -8555,7 +8574,7 @@ msgstr ""
 "structfield> или <structfield>referrer_key.referrer_type</structfield> "
 "содержат кавычки."
 
-#: plpgsql.xml:4812(para)
+#: plpgsql.xml:4832(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex3\"/> shows how to port a function with "
 "<literal>OUT</literal> parameters and string manipulation. "
@@ -8573,7 +8592,7 @@ msgstr ""
 "<function>instr</function> на <application>PL/pgSQL</application>, которая "
 "может быть полезна вам при портировании ваших функций."
 
-#: plpgsql.xml:4825(title)
+#: plpgsql.xml:4845(title)
 msgid ""
 "Porting a Procedure With String Manipulation and <literal>OUT</literal> "
 "Parameters from <application>PL/SQL</application> to <application>PL/pgSQL</"
@@ -8583,7 +8602,7 @@ msgstr ""
 "application> процедуры, которая манипулирует строками и содержит "
 "<literal>OUT</literal> параметры"
 
-#: plpgsql.xml:4829(para)
+#: plpgsql.xml:4849(para)
 msgid ""
 "The following <productname>Oracle</productname> PL/SQL procedure is used to "
 "parse a URL and return several elements (host, path, and query)."
@@ -8591,14 +8610,14 @@ msgstr ""
 "Следующая процедура на языке <productname>Oracle</productname> PL/SQL "
 "разбирает URL и возвращает составляющие его элементы (сервер, путь и запрос)."
 
-#: plpgsql.xml:4836(programlisting)
-#, no-wrap
+#: plpgsql.xml:4856(programlisting)
+#, fuzzy, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_parse_url(\n"
-"    v_url IN VARCHAR,\n"
-"    v_host OUT VARCHAR,  -- This will be passed back\n"
-"    v_path OUT VARCHAR,  -- This one too\n"
-"    v_query OUT VARCHAR) -- And this one\n"
+"    v_url IN VARCHAR2,\n"
+"    v_host OUT VARCHAR2,  -- This will be passed back\n"
+"    v_path OUT VARCHAR2,  -- This one too\n"
+"    v_query OUT VARCHAR2) -- And this one\n"
 "IS\n"
 "    a_pos1 INTEGER;\n"
 "    a_pos2 INTEGER;\n"
@@ -8670,7 +8689,7 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:4877(programlisting)
+#: plpgsql.xml:4897(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_parse_url(\n"
@@ -8749,12 +8768,12 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4916(programlisting)
+#: plpgsql.xml:4936(programlisting)
 #, no-wrap
 msgid "SELECT * FROM cs_parse_url('http://foobar.com/query.cgi?baz');"
 msgstr "SELECT * FROM cs_parse_url('http://foobar.com/query.cgi?baz');"
 
-#: plpgsql.xml:4875(para)
+#: plpgsql.xml:4895(para)
 msgid ""
 "Here is a possible translation into <application>PL/pgSQL</application>: "
 "<placeholder-1/> This function could be used like this: <placeholder-2/>"
@@ -8762,7 +8781,7 @@ msgstr ""
 "Вот возможная трансляция в <application>PL/pgSQL</application>: "
 "<placeholder-1/> Эту функцию можно использовать так: <placeholder-2/>"
 
-#: plpgsql.xml:4920(para)
+#: plpgsql.xml:4940(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex4\"/> shows how to port a procedure that "
 "uses numerous features that are specific to Oracle."
@@ -8771,7 +8790,7 @@ msgstr ""
 "процедуру, использующую большое количество специфических для Oracle "
 "возможностей."
 
-#: plpgsql.xml:4926(title)
+#: plpgsql.xml:4946(title)
 msgid ""
 "Porting a Procedure from <application>PL/SQL</application> to "
 "<application>PL/pgSQL</application>"
@@ -8779,7 +8798,7 @@ msgstr ""
 "Портирование процедуры из <application>PL/SQL</application> в "
 "<application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4931(programlisting)
+#: plpgsql.xml:4951(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_create_job(v_job_id IN INTEGER) IS\n"
@@ -8836,11 +8855,11 @@ msgstr ""
 "/\n"
 "show errors"
 
-#: plpgsql.xml:4928(para)
+#: plpgsql.xml:4948(para)
 msgid "The Oracle version: <placeholder-1/>"
 msgstr "Версия Oracle: <placeholder-1/>"
 
-#: plpgsql.xml:4966(para)
+#: plpgsql.xml:4986(para)
 msgid ""
 "There is no <literal>PRAGMA</literal> statement in <productname>PostgreSQL</"
 "productname>."
@@ -8848,7 +8867,7 @@ msgstr ""
 "В <productname>PostgreSQL</productname> нет оператора <literal>PRAGMA</"
 "literal>."
 
-#: plpgsql.xml:4972(para)
+#: plpgsql.xml:4992(para)
 msgid ""
 "If you do a <command>LOCK TABLE</command> in <application>PL/pgSQL</"
 "application>, the lock will not be released until the calling transaction is "
@@ -8858,7 +8877,7 @@ msgstr ""
 "application>, блокировка не будет снята, пока не завершится вызывающая "
 "транзакция."
 
-#: plpgsql.xml:4980(para)
+#: plpgsql.xml:5000(para)
 msgid ""
 "You cannot issue <command>COMMIT</command> in a <application>PL/pgSQL</"
 "application> function. The function is running within some outer transaction "
@@ -8874,7 +8893,7 @@ msgstr ""
 "необходимости, потому что блокировка, полученная командой <command>LOCK "
 "TABLE</command>, будет снята при вызове ошибки."
 
-#: plpgsql.xml:4959(para)
+#: plpgsql.xml:4979(para)
 msgid ""
 "Procedures like this can easily be converted into <productname>PostgreSQL</"
 "productname> functions returning <type>void</type>. This procedure in "
@@ -8885,7 +8904,7 @@ msgstr ""
 "productname>, возвращающие <type>void</type>. На примере этой процедуры "
 "можно научиться следующему: <placeholder-1/>"
 
-#: plpgsql.xml:4996(programlisting)
+#: plpgsql.xml:5016(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_create_job(v_job_id integer) RETURNS void AS $$\n"
@@ -8936,7 +8955,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:5022(para)
+#: plpgsql.xml:5042(para)
 msgid ""
 "The syntax of <literal>RAISE</literal> is considerably different from "
 "Oracle's statement, although the basic case <literal>RAISE</literal>\n"
@@ -8947,7 +8966,7 @@ msgstr ""
 "основной вариант <literal>RAISE</literal> <replaceable class=\"parameter"
 "\">exception_name</replaceable> работает похоже."
 
-#: plpgsql.xml:5030(para)
+#: plpgsql.xml:5050(para)
 msgid ""
 "The exception names supported by <application>PL/pgSQL</application> are "
 "different from Oracle's. The set of built-in exception names is much larger "
@@ -8962,7 +8981,7 @@ msgstr ""
 "вместо этого можно вызывать ошибку с заданным пользователем значением "
 "SQLSTATE."
 
-#: plpgsql.xml:4993(para)
+#: plpgsql.xml:5013(para)
 msgid ""
 "This is how we could port this procedure to <application>PL/pgSQL</"
 "application>: <placeholder-1/>\n"
@@ -8983,11 +9002,11 @@ msgstr ""
 "прервётся (например из-за ошибки), произойдёт откат всех действий, "
 "выполненных в этой процедуре."
 
-#: plpgsql.xml:5050(title)
+#: plpgsql.xml:5070(title)
 msgid "Other Things to Watch For"
 msgstr "На что ещё обратить внимание"
 
-#: plpgsql.xml:5052(para)
+#: plpgsql.xml:5072(para)
 msgid ""
 "This section explains a few other things to watch for when porting Oracle "
 "<application>PL/SQL</application> functions to <productname>PostgreSQL</"
@@ -8997,11 +9016,11 @@ msgstr ""
 "обращать внимание при портировании функций из Oracle <application>PL/SQL</"
 "application> в <productname>PostgreSQL</productname>."
 
-#: plpgsql.xml:5059(title)
+#: plpgsql.xml:5079(title)
 msgid "Implicit Rollback after Exceptions"
 msgstr "Неявный откат изменений после возникновения исключения"
 
-#: plpgsql.xml:5067(programlisting)
+#: plpgsql.xml:5087(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN\n"
@@ -9028,7 +9047,7 @@ msgstr ""
 "        ... здесь код ...\n"
 "END;"
 
-#: plpgsql.xml:5061(para)
+#: plpgsql.xml:5081(para)
 msgid ""
 "In <application>PL/pgSQL</application>, when an exception is caught by an "
 "<literal>EXCEPTION</literal> clause, all database changes since the block's "
@@ -9051,11 +9070,11 @@ msgstr ""
 "command> и <command>ROLLBACK TO</command> используются по-другому, то "
 "придётся подумать."
 
-#: plpgsql.xml:5089(command)
+#: plpgsql.xml:5109(command)
 msgid "EXECUTE"
 msgstr "EXECUTE"
 
-#: plpgsql.xml:5091(para)
+#: plpgsql.xml:5111(para)
 msgid ""
 "The <application>PL/pgSQL</application> version of <command>EXECUTE</"
 "command> works similarly to the <application>PL/SQL</application> version, "
@@ -9073,11 +9092,11 @@ msgstr ""
 "конструкции типа <literal>EXECUTE 'SELECT * FROM $1';</literal> будут "
 "работать ненадёжно."
 
-#: plpgsql.xml:5104(title)
+#: plpgsql.xml:5124(title)
 msgid "Optimizing <application>PL/pgSQL</application> Functions"
 msgstr "Оптимизация функций на <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:5106(para)
+#: plpgsql.xml:5126(para)
 msgid ""
 "<productname>PostgreSQL</productname> gives you two function creation "
 "modifiers to optimize execution: <quote>volatility</quote> (whether the "
@@ -9093,7 +9112,7 @@ msgstr ""
 "хотя бы один из аргументов NULL). Для получения подробной информации "
 "обратитесь к справочной странице <xref linkend=\"sql-createfunction\"/>."
 
-#: plpgsql.xml:5121(programlisting)
+#: plpgsql.xml:5141(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION foo(...) RETURNS integer AS $$\n"
@@ -9104,7 +9123,7 @@ msgstr ""
 "...\n"
 "$$ LANGUAGE plpgsql STRICT IMMUTABLE;"
 
-#: plpgsql.xml:5116(para)
+#: plpgsql.xml:5136(para)
 msgid ""
 "When making use of these optimization attributes, your <command>CREATE "
 "FUNCTION</command> statement might look something like this: <placeholder-1/>"
@@ -9112,11 +9131,11 @@ msgstr ""
 "При использовании этих атрибутов оптимизации оператор <command>CREATE "
 "FUNCTION</command> может выглядеть примерно так: <placeholder-1/>"
 
-#: plpgsql.xml:5129(title)
+#: plpgsql.xml:5149(title)
 msgid "Appendix"
 msgstr "Приложение"
 
-#: plpgsql.xml:5131(para)
+#: plpgsql.xml:5151(para)
 msgid ""
 "This section contains the code for a set of Oracle-compatible "
 "<function>instr</function> functions that you can use to simplify your "
@@ -9125,11 +9144,11 @@ msgstr ""
 "Этот раздел содержит код для совместимых с Oracle функций <function>instr</"
 "function>, которые можно использовать для упрощения портирования."
 
-#: plpgsql.xml:5137(indexterm)
+#: plpgsql.xml:5157(indexterm)
 msgid "<primary><function>instr</function> function</primary>"
 msgstr "<primary>функция <function>instr</function></primary>"
 
-#: plpgsql.xml:5141(programlisting)
+#: plpgsql.xml:5161(programlisting)
 #, no-wrap
 msgid ""
 "--\n"

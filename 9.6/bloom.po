@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:39+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -25,45 +25,48 @@ msgstr "<primary>lo</primary>"
 
 #: bloom.xml:11(para)
 msgid ""
-"<literal>bloom</literal> is a module which implements an index access "
-"method. It comes as an example of custom access methods and generic WAL "
-"records usage. But it is also useful in itself."
+"<literal>bloom</literal> provides an index access method based on <ulink url="
+"\"http://en.wikipedia.org/wiki/Bloom_filter\">Bloom filters</ulink>."
 msgstr ""
 
-#: bloom.xml:18(title)
-msgid "Introduction"
-msgstr "Введение"
-
-#: bloom.xml:20(para)
+#: bloom.xml:16(para)
 msgid ""
-"The implementation of a <ulink url=\"http://en.wikipedia.org/wiki/"
-"Bloom_filter\">Bloom filter</ulink> allows fast exclusion of non-candidate "
-"tuples via signatures. Since a signature is a lossy representation of all "
-"indexed attributes, search results must be rechecked using heap information. "
-"The user can specify signature length (in uint16, default is 5) and the "
-"number of bits, which can be set per attribute (1 &lt; colN &lt; 2048)."
+"A Bloom filter is a space-efficient data structure that is used to test "
+"whether an element is a member of a set. In the case of an index access "
+"method, it allows fast exclusion of non-matching tuples via signatures whose "
+"size is determined at index creation."
 msgstr ""
 
-#: bloom.xml:30(para)
+#: bloom.xml:23(para)
 msgid ""
-"This index is useful if a table has many attributes and queries include "
-"arbitrary combinations of them. A traditional <literal>btree</literal> index "
-"is faster than a bloom index, but it can require many indexes to support all "
-"possible queries where one needs only a single bloom index. A Bloom index "
-"supports only equality comparison. Since it's a signature file, and not a "
-"tree, it always must be read fully, but sequentially, so that index search "
-"performance is constant and doesn't depend on a query."
+"A signature is a lossy representation of the indexed attribute(s), and as "
+"such is prone to reporting false positives; that is, it may be reported that "
+"an element is in the set, when it is not. So index search results must "
+"always be rechecked using the actual attribute values from the heap entry. "
+"Larger signatures reduce the odds of a false positive and thus reduce the "
+"number of useless heap visits, but of course also make the index larger and "
+"hence slower to scan."
 msgstr ""
 
-#: bloom.xml:42(title)
+#: bloom.xml:33(para)
+msgid ""
+"This type of index is most useful when a table has many attributes and "
+"queries test arbitrary combinations of them. A traditional btree index is "
+"faster than a bloom index, but it can require many btree indexes to support "
+"all possible queries where one needs only a single bloom index. Note however "
+"that bloom indexes only support equality queries, whereas btree indexes can "
+"also perform inequality and range searches."
+msgstr ""
+
+#: bloom.xml:43(title)
 msgid "Parameters"
 msgstr "Параметры"
 
-#: bloom.xml:44(para)
+#: bloom.xml:45(para)
 #, fuzzy
 msgid ""
-"<literal>bloom</literal> indexes accept the following parameters in the "
-"<literal>WITH</literal> clause."
+"A <literal>bloom</literal> index accepts the following parameters in its "
+"<literal>WITH</literal> clause:"
 msgstr ""
 "Предложение <literal>USER</literal> является устаревшим написанием "
 "предложения <literal>ROLE</literal>."
@@ -80,82 +83,94 @@ msgstr ""
 "length"
 
 #: bloom.xml:54(para)
-msgid "Length of signature in uint16 type values"
+msgid ""
+"Length of each signature (index entry) in bits. The default is <literal>80</"
+"literal> bits and maximum is <literal>4096</literal>."
 msgstr ""
 
-#: bloom.xml:62(literal)
-msgid "col1 &mdash; col16"
+#: bloom.xml:63(literal)
+msgid "col1 &mdash; col32"
 msgstr ""
 
-#: bloom.xml:64(para)
-#, fuzzy
-msgid "Number of bits for corresponding column"
-msgstr "Имя нового или существующего столбца."
+#: bloom.xml:65(para)
+msgid ""
+"Number of bits generated for each index column. Each parameter's name refers "
+"to the number of the index column that it controls. The default is "
+"<literal>2</literal> bits and maximum is <literal>4095</literal>. Parameters "
+"for index columns not actually used are ignored."
+msgstr ""
 
-#: bloom.xml:73(title)
+#: bloom.xml:77(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: bloom.xml:75(para)
-msgid "An example of an index definition is given below."
+#: bloom.xml:79(para)
+msgid "This is an example of creating a bloom index:"
 msgstr ""
 
-#: bloom.xml:79(programlisting)
+#: bloom.xml:83(programlisting)
 #, no-wrap
 msgid ""
-"CREATE INDEX bloomidx ON tbloom(i1,i2,i3) \n"
-"       WITH (length=5, col1=2, col2=2, col3=4);"
+"CREATE INDEX bloomidx ON tbloom USING bloom (i1,i2,i3)\n"
+"       WITH (length=80, col1=2, col2=2, col3=4);"
 msgstr ""
 
-#: bloom.xml:82(para)
+#: bloom.xml:86(para)
 msgid ""
-"Here, we created a bloom index with a signature length of 80 bits, and "
-"attributes i1 and i2 mapped to 2 bits, and attribute i3 to 4 bits."
+"The index is created with a signature length of 80 bits, with attributes i1 "
+"and i2 mapped to 2 bits, and attribute i3 mapped to 4 bits. We could have "
+"omitted the <literal>length</literal>, <literal>col1</literal>, and "
+"<literal>col2</literal> specifications since those have the default values."
 msgstr ""
 
-#: bloom.xml:87(para)
-#, fuzzy
-msgid "Here is a fuller example of index definition and usage:"
-msgstr "Пример его использования:"
+#: bloom.xml:93(para)
+msgid ""
+"Here is a more complete example of bloom index definition and usage, as well "
+"as a comparison with equivalent btree indexes. The bloom index is "
+"considerably smaller than the btree index, and can perform better."
+msgstr ""
 
-#: bloom.xml:91(programlisting)
+#: bloom.xml:99(programlisting)
 #, no-wrap
 msgid ""
-"CREATE TABLE tbloom AS\n"
-"SELECT\n"
-"    random()::int as i1,\n"
-"    random()::int as i2,\n"
-"    random()::int as i3,\n"
-"    random()::int as i4,\n"
-"    random()::int as i5,\n"
-"    random()::int as i6,\n"
-"    random()::int as i7,\n"
-"    random()::int as i8,\n"
-"    random()::int as i9,\n"
-"    random()::int as i10,\n"
-"    random()::int as i11,\n"
-"    random()::int as i12,\n"
-"    random()::int as i13\n"
-"FROM\n"
-"    generate_series(1,1000);\n"
-"CREATE INDEX bloomidx ON tbloom USING\n"
-"             bloom (i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12);\n"
-"SELECT pg_relation_size('bloomidx');\n"
-"CREATE index btree_idx ON tbloom(i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12);\n"
-"SELECT pg_relation_size('btree_idx');"
+"=# CREATE TABLE tbloom AS\n"
+"   SELECT\n"
+"     (random() * 1000000)::int as i1,\n"
+"     (random() * 1000000)::int as i2,\n"
+"     (random() * 1000000)::int as i3,\n"
+"     (random() * 1000000)::int as i4,\n"
+"     (random() * 1000000)::int as i5,\n"
+"     (random() * 1000000)::int as i6\n"
+"   FROM\n"
+"  generate_series(1,10000000);\n"
+"SELECT 10000000\n"
+"=# CREATE INDEX bloomidx ON tbloom USING bloom (i1, i2, i3, i4, i5, i6);\n"
+"CREATE INDEX\n"
+"=# SELECT pg_size_pretty(pg_relation_size('bloomidx'));\n"
+" pg_size_pretty\n"
+"----------------\n"
+" 153 MB\n"
+"(1 row)\n"
+"=# CREATE index btreeidx ON tbloom (i1, i2, i3, i4, i5, i6);\n"
+"CREATE INDEX\n"
+"=# SELECT pg_size_pretty(pg_relation_size('btreeidx'));\n"
+" pg_size_pretty\n"
+"----------------\n"
+" 387 MB\n"
+"(1 row)"
 msgstr ""
 
-#: bloom.xml:114(programlisting)
+#: bloom.xml:127(programlisting)
 #, fuzzy, no-wrap
 msgid ""
-"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 20 AND i10 = 15;\n"
-"                                                   QUERY PLAN\n"
-"-----------------------------------------------------------------------------------------------------------------\n"
-" Bitmap Heap Scan on tbloom  (cost=1.50..5.52 rows=1 width=52) (actual time=0.057..0.057 rows=0 loops=1)\n"
-"   Recheck Cond: ((i2 = 20) AND (i10 = 15))\n"
-"   -&gt;  Bitmap Index Scan on bloomidx  (cost=0.00..1.50 rows=1 width=0) (actual time=0.041..0.041 rows=9 loops=1)\n"
-"         Index Cond: ((i2 = 20) AND (i10 = 15))\n"
-" Total runtime: 0.081 ms\n"
+"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 898732 AND i5 = 123451;\n"
+"                                                 QUERY PLAN\n"
+"------------------------------------------------------------------------------------------------------------\n"
+" Seq Scan on tbloom  (cost=0.00..213694.08 rows=1 width=24) (actual time=1445.438..1445.438 rows=0 loops=1)\n"
+"   Filter: ((i2 = 898732) AND (i5 = 123451))\n"
+"   Rows Removed by Filter: 10000000\n"
+" Planning time: 0.177 ms\n"
+" Execution time: 1445.473 ms\n"
 "(5 rows)"
 msgstr ""
 "PREPARE query(int, int) AS SELECT sum(bar) FROM test\n"
@@ -174,55 +189,146 @@ msgstr ""
 " Execution time: 0.225 ms\n"
 "(6 rows)"
 
-#: bloom.xml:124(para)
-msgid "Seqscan is slow."
+#: bloom.xml:125(para)
+msgid ""
+"A sequential scan over this large table takes a long time: <placeholder-1/>"
 msgstr ""
 
-#: bloom.xml:128(programlisting)
-#, no-wrap
+#: bloom.xml:141(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"=# SET enable_bitmapscan = off;\n"
-"=# SET enable_indexscan = off;\n"
-"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 20 AND i10 = 15;\n"
-"                                            QUERY PLAN\n"
-"--------------------------------------------------------------------------------------------------\n"
-" Seq Scan on tbloom  (cost=0.00..25.00 rows=1 width=52) (actual time=0.162..0.162 rows=0 loops=1)\n"
-"   Filter: ((i2 = 20) AND (i10 = 15))\n"
-" Total runtime: 0.181 ms\n"
-"(3 rows)"
+"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 898732 AND i5 = 123451;\n"
+"                                                           QUERY PLAN\n"
+"--------------------------------------------------------------------------------------------------------------------------------\n"
+" Index Only Scan using btreeidx on tbloom  (cost=0.56..298311.96 rows=1 width=24) (actual time=445.709..445.709 rows=0 loops=1)\n"
+"   Index Cond: ((i2 = 898732) AND (i5 = 123451))\n"
+"   Heap Fetches: 0\n"
+" Planning time: 0.193 ms\n"
+" Execution time: 445.770 ms\n"
+"(5 rows)"
 msgstr ""
+"PREPARE query(int, int) AS SELECT sum(bar) FROM test\n"
+"    WHERE id &gt; $1 AND id &lt; $2\n"
+"    GROUP BY foo;\n"
+"\n"
+"EXPLAIN ANALYZE EXECUTE query(100, 200);\n"
+"\n"
+"                                                       QUERY PLAN                                                       \n"
+"------------------------------------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=9.54..9.54 rows=1 width=8) (actual time=0.156..0.161 rows=11 loops=1)\n"
+"   Group Key: foo\n"
+"   -&gt;  Index Scan using test_pkey on test  (cost=0.29..9.29 rows=50 width=8) (actual time=0.039..0.091 rows=99 loops=1)\n"
+"         Index Cond: ((id &gt; $1) AND (id &lt; $2))\n"
+" Planning time: 0.197 ms\n"
+" Execution time: 0.225 ms\n"
+"(6 rows)"
 
 #: bloom.xml:138(para)
-msgid "A btree index will be not used for this query."
-msgstr ""
-
-#: bloom.xml:142(programlisting)
-#, no-wrap
 msgid ""
-"=# DROP INDEX bloomidx;\n"
-"=# CREATE INDEX btree_idx ON tbloom(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12);\n"
-"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 20 AND i10 = 15;\n"
-"                                            QUERY PLAN\n"
-"--------------------------------------------------------------------------------------------------\n"
-" Seq Scan on tbloom (cost=0.00..25.00 rows=1 width=52) (actual time=0.210..0.210 rows=0 loops=1)\n"
-"   Filter: ((i2 = 20) AND (i10 = 15))\n"
-" Total runtime: 0.250 ms\n"
-"(3 rows)"
+"So the planner will usually select an index scan if possible. With a btree "
+"index, we get results like this: <placeholder-1/>"
 msgstr ""
 
-#: bloom.xml:154(title)
-msgid "Opclass interface"
-msgstr ""
-
-#: bloom.xml:156(para)
+#: bloom.xml:154(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"The Bloom opclass interface is simple. It requires 1 supporting function: a "
-"hash function for the indexing datatype. It provides 1 search operator: the "
-"equality operator. The example below shows <literal>opclass</literal> "
-"definition for <literal>text</literal> datatype."
+"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 898732 AND i5 = 123451;\n"
+"                                                        QUERY PLAN\n"
+"---------------------------------------------------------------------------------------------------------------------------\n"
+" Bitmap Heap Scan on tbloom  (cost=178435.39..178439.41 rows=1 width=24) (actual time=76.698..76.698 rows=0 loops=1)\n"
+"   Recheck Cond: ((i2 = 898732) AND (i5 = 123451))\n"
+"   Rows Removed by Index Recheck: 2439\n"
+"   Heap Blocks: exact=2408\n"
+"   -&gt;  Bitmap Index Scan on bloomidx  (cost=0.00..178435.39 rows=1 width=0) (actual time=72.455..72.455 rows=2439 loops=1)\n"
+"         Index Cond: ((i2 = 898732) AND (i5 = 123451))\n"
+" Planning time: 0.475 ms\n"
+" Execution time: 76.778 ms\n"
+"(8 rows)"
+msgstr ""
+"PREPARE query(int, int) AS SELECT sum(bar) FROM test\n"
+"    WHERE id &gt; $1 AND id &lt; $2\n"
+"    GROUP BY foo;\n"
+"\n"
+"EXPLAIN ANALYZE EXECUTE query(100, 200);\n"
+"\n"
+"                                                       QUERY PLAN                                                       \n"
+"------------------------------------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=9.54..9.54 rows=1 width=8) (actual time=0.156..0.161 rows=11 loops=1)\n"
+"   Group Key: foo\n"
+"   -&gt;  Index Scan using test_pkey on test  (cost=0.29..9.29 rows=50 width=8) (actual time=0.039..0.091 rows=99 loops=1)\n"
+"         Index Cond: ((id &gt; $1) AND (id &lt; $2))\n"
+" Planning time: 0.197 ms\n"
+" Execution time: 0.225 ms\n"
+"(6 rows)"
+
+#: bloom.xml:152(para)
+msgid ""
+"Bloom is better than btree in handling this type of search: <placeholder-1/> "
+"Note the relatively large number of false positives: 2439 rows were selected "
+"to be visited in the heap, but none actually matched the query. We could "
+"reduce that by specifying a larger signature length. In this example, "
+"creating the index with <literal>length=200</literal> reduced the number of "
+"false positives to 55; but it doubled the index size (to 306 MB) and ended "
+"up being slower for this query (125 ms overall)."
 msgstr ""
 
-#: bloom.xml:163(programlisting)
+#: bloom.xml:179(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"=# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 898732 AND i5 = 123451;\n"
+"                                                          QUERY PLAN\n"
+"------------------------------------------------------------------------------------------------------------------------------\n"
+" Bitmap Heap Scan on tbloom  (cost=9.29..13.30 rows=1 width=24) (actual time=0.148..0.148 rows=0 loops=1)\n"
+"   Recheck Cond: ((i5 = 123451) AND (i2 = 898732))\n"
+"   -&gt;  BitmapAnd  (cost=9.29..9.29 rows=1 width=0) (actual time=0.145..0.145 rows=0 loops=1)\n"
+"         -&gt;  Bitmap Index Scan on tbloom_i5_idx  (cost=0.00..4.52 rows=11 width=0) (actual time=0.089..0.089 rows=10 loops=1)\n"
+"               Index Cond: (i5 = 123451)\n"
+"         -&gt;  Bitmap Index Scan on tbloom_i2_idx  (cost=0.00..4.52 rows=11 width=0) (actual time=0.048..0.048 rows=8 loops=1)\n"
+"               Index Cond: (i2 = 898732)\n"
+" Planning time: 2.049 ms\n"
+" Execution time: 0.280 ms\n"
+"(9 rows)"
+msgstr ""
+"PREPARE query(int, int) AS SELECT sum(bar) FROM test\n"
+"    WHERE id &gt; $1 AND id &lt; $2\n"
+"    GROUP BY foo;\n"
+"\n"
+"EXPLAIN ANALYZE EXECUTE query(100, 200);\n"
+"\n"
+"                                                       QUERY PLAN                                                       \n"
+"------------------------------------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=9.54..9.54 rows=1 width=8) (actual time=0.156..0.161 rows=11 loops=1)\n"
+"   Group Key: foo\n"
+"   -&gt;  Index Scan using test_pkey on test  (cost=0.29..9.29 rows=50 width=8) (actual time=0.039..0.091 rows=99 loops=1)\n"
+"         Index Cond: ((id &gt; $1) AND (id &lt; $2))\n"
+" Planning time: 0.197 ms\n"
+" Execution time: 0.225 ms\n"
+"(6 rows)"
+
+#: bloom.xml:174(para)
+msgid ""
+"Now, the main problem with the btree search is that btree is inefficient "
+"when the search conditions do not constrain the leading index column(s). A "
+"better strategy for btree is to create a separate index on each column. Then "
+"the planner will choose something like this: <placeholder-1/> Although this "
+"query runs much faster than with either of the single indexes, we pay a "
+"large penalty in index size. Each of the single-column btree indexes "
+"occupies 214 MB, so the total space needed is over 1.2GB, more than 8 times "
+"the space used by the bloom index."
+msgstr ""
+
+#: bloom.xml:200(title)
+msgid "Operator Class Interface"
+msgstr ""
+
+#: bloom.xml:202(para)
+msgid ""
+"An operator class for bloom indexes requires only a hash function for the "
+"indexed datatype and an equality operator for searching. This example shows "
+"the opclass definition for the <type>text</type> data type:"
+msgstr ""
+
+#: bloom.xml:208(programlisting)
 #, fuzzy, no-wrap
 msgid ""
 "CREATE OPERATOR CLASS text_ops\n"
@@ -235,29 +341,29 @@ msgstr ""
 "        ...\n"
 "        STORAGE box;"
 
-#: bloom.xml:170(title)
+#: bloom.xml:215(title)
 #, fuzzy
-msgid "Limitation"
+msgid "Limitations"
 msgstr "Ограничения"
 
-#: bloom.xml:175(para)
+#: bloom.xml:219(para)
 msgid ""
-"For now, only opclasses for <literal>int4</literal>, <literal>text</literal> "
-"come with the module. However, users may define more of them."
+"Only operator classes for <type>int4</type> and <type>text</type> are "
+"included with the module."
 msgstr ""
 
-#: bloom.xml:182(para)
+#: bloom.xml:226(para)
 msgid ""
-"Only the <literal>=</literal> operator is supported for search at the "
-"moment. But it's possible to add support for arrays with contains and "
-"intersection operations in the future."
+"Only the <literal>=</literal> operator is supported for search. But it is "
+"possible to add support for arrays with union and intersection operations in "
+"the future."
 msgstr ""
 
-#: bloom.xml:193(title)
+#: bloom.xml:237(title)
 msgid "Authors"
 msgstr "Авторы"
 
-#: bloom.xml:195(para)
+#: bloom.xml:239(para)
 #, fuzzy
 msgid ""
 "Teodor Sigaev <email>teodor@postgrespro.ru</email>, Postgres Professional, "
@@ -266,13 +372,13 @@ msgstr ""
 "Фёдор Сигаев <email>teodor@sigaev.ru</email>, Москва, ООО &laquo;Дельта-"
 "Софт&raquo;, Россия"
 
-#: bloom.xml:200(para)
+#: bloom.xml:244(para)
 msgid ""
 "Alexander Korotkov <email>a.korotkov@postgrespro.ru</email>, Postgres "
 "Professional, Moscow, Russia"
 msgstr ""
 
-#: bloom.xml:205(para)
+#: bloom.xml:249(para)
 #, fuzzy
 msgid ""
 "Oleg Bartunov <email>obartunov@postgrespro.ru</email>, Postgres "
@@ -285,3 +391,14 @@ msgstr ""
 #: bloom.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid "Introduction"
+#~ msgstr "Введение"
+
+#, fuzzy
+#~ msgid "Number of bits for corresponding column"
+#~ msgstr "Имя нового или существующего столбца."
+
+#, fuzzy
+#~ msgid "Here is a fuller example of index definition and usage:"
+#~ msgstr "Пример его использования:"

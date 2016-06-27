@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"POT-Creation-Date: 2016-06-27 17:41+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -150,14 +150,15 @@ msgstr ""
 "deallocate\"/>."
 
 #: ref/prepare.xml:70(para)
+#, fuzzy
 msgid ""
-"Prepared statements have the largest performance advantage when a single "
-"session is being used to execute a large number of similar statements. The "
-"performance difference will be particularly significant if the statements "
-"are complex to plan or rewrite, for example, if the query involves a join of "
-"many tables or requires the application of several rules. If the statement "
-"is relatively simple to plan and rewrite but relatively expensive to "
-"execute, the performance advantage of prepared statements will be less "
+"Prepared statements potentially have the largest performance advantage when "
+"a single session is being used to execute a large number of similar "
+"statements. The performance difference will be particularly significant if "
+"the statements are complex to plan or rewrite, e.g. if the query involves a "
+"join of many tables or requires the application of several rules. If the "
+"statement is relatively simple to plan and rewrite but relatively expensive "
+"to execute, the performance advantage of prepared statements will be less "
 "noticeable."
 msgstr ""
 "Подготовленные операторы дают наибольший выигрыш в производительности, когда "
@@ -218,30 +219,41 @@ msgstr ""
 
 #: ref/prepare.xml:127(para)
 msgid ""
-"If a prepared statement is executed enough times, the server may eventually "
-"decide to save and re-use a generic plan rather than re-planning each time. "
-"This will occur immediately if the prepared statement has no parameters; "
-"otherwise it occurs only if the generic plan appears to be not much more "
-"expensive than a plan that depends on specific parameter values. Typically, "
-"a generic plan will be selected only if the query's performance is estimated "
-"to be fairly insensitive to the specific parameter values supplied."
+"Prepared statements can use generic plans rather than re-planning with each "
+"set of supplied <command>EXECUTE</command> values. This occurs immediately "
+"for prepared statements with no parameters; otherwise it occurs only after "
+"five or more executions produce plans whose estimated cost average "
+"(including planning overhead) is more expensive than the generic plan cost "
+"estimate. Once a generic plan is chosen, it is used for the remaining "
+"lifetime of the prepared statement. Using <command>EXECUTE</command> values "
+"which are rare in columns with many duplicates can generate custom plans "
+"that are so much cheaper than the generic plan, even after adding planning "
+"overhead, that the generic plan might never be used."
 msgstr ""
-"Если подготовленный оператор выполняется много раз, сервер может в итоге "
-"решить сохранить и повторно использовать общий план, и не строить план "
-"каждый раз заново. Это происходит при первом же выполнении, если "
-"подготовленный оператор не имеет параметров; в противном случае, только если "
-"общий план окажется ненамного дороже, чем план, зависящий от конкретных "
-"значений. Обычно общий план выбирается, только если производительность "
-"запроса, предположительно, практически не зависит от передаваемых значений "
-"параметров."
 
-#: ref/prepare.xml:138(para)
+#: ref/prepare.xml:141(para)
+msgid ""
+"A generic plan assumes that each value supplied to <command>EXECUTE</"
+"command> is one of the column's distinct values and that column values are "
+"uniformly distributed. For example, if statistics record three distinct "
+"column values, a generic plan assumes a column equality comparison will "
+"match 33% of processed rows. Column statistics also allow generic plans to "
+"accurately compute the selectivity of unique columns. Comparisons on non-"
+"uniformly-distributed columns and specification of non-existent values "
+"affects the average plan cost, and hence if and when a generic plan is "
+"chosen."
+msgstr ""
+
+#: ref/prepare.xml:153(para)
+#, fuzzy
 msgid ""
 "To examine the query plan <productname>PostgreSQL</productname> is using for "
-"a prepared statement, use <xref linkend=\"sql-explain\"/>. If a generic plan "
-"is in use, it will contain parameter symbols <literal>$<replaceable>n</"
-"replaceable></literal>, while a custom plan will have the current actual "
-"parameter values substituted into it."
+"a prepared statement, use <xref linkend=\"sql-explain\"/>, e.g. "
+"<command>EXPLAIN EXECUTE</command>. If a generic plan is in use, it will "
+"contain parameter symbols <literal>$<replaceable>n</replaceable></literal>, "
+"while a custom plan will have the supplied parameter values substituted into "
+"it. The row estimates in the generic plan reflect the selectivity computed "
+"for the parameters."
 msgstr ""
 "Узнать, какой план выполнения выбирает <productname>PostgreSQL</productname> "
 "для подготовленного оператора, можно, воспользовавшись командой <xref "
@@ -249,7 +261,7 @@ msgstr ""
 "символы параметров <literal>$<replaceable>n</replaceable></literal>, тогда "
 "как в настраиваемом плане будут подставлены фактические значения параметров."
 
-#: ref/prepare.xml:146(para)
+#: ref/prepare.xml:164(para)
 msgid ""
 "For more information on query planning and the statistics collected by "
 "<productname>PostgreSQL</productname> for that purpose, see the <xref "
@@ -259,7 +271,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> для этих целей, можно узнать в "
 "документации <xref linkend=\"sql-analyze\"/>."
 
-#: ref/prepare.xml:153(para)
+#: ref/prepare.xml:171(para)
 msgid ""
 "Although the main point of a prepared statement is to avoid repeated parse "
 "analysis and planning of the statement, <productname>PostgreSQL</"
@@ -301,7 +313,7 @@ msgstr ""
 "пересмотр произойдёт в результате других изменений, при последующем "
 "выполнении запроса будет задействована новая таблица."
 
-#: ref/prepare.xml:175(para)
+#: ref/prepare.xml:193(para)
 msgid ""
 "You can see all prepared statements available in the session by querying the "
 "<link linkend=\"view-pg-prepared-statements"
@@ -311,11 +323,11 @@ msgstr ""
 "обратившись к системному представлению <link linkend=\"view-pg-prepared-"
 "statements\"><structname>pg_prepared_statements</structname></link>."
 
-#: ref/prepare.xml:183(title)
+#: ref/prepare.xml:201(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/prepare.xml:187(programlisting)
+#: ref/prepare.xml:205(programlisting)
 #, no-wrap
 msgid ""
 "PREPARE fooplan (int, text, bool, numeric) AS\n"
@@ -326,7 +338,7 @@ msgstr ""
 "    INSERT INTO foo VALUES($1, $2, $3, $4);\n"
 "EXECUTE fooplan(1, 'Hunter Valley', 't', 200.00);"
 
-#: ref/prepare.xml:184(para)
+#: ref/prepare.xml:202(para)
 msgid ""
 "Create a prepared statement for an <command>INSERT</command> statement, and "
 "then execute it: <placeholder-1/>"
@@ -334,7 +346,7 @@ msgstr ""
 "Создание подготовленного оператора для команды <command>INSERT</command>, "
 "который затем выполняется: <placeholder-1/>"
 
-#: ref/prepare.xml:195(programlisting)
+#: ref/prepare.xml:213(programlisting)
 #, no-wrap
 msgid ""
 "PREPARE usrrptplan (int) AS\n"
@@ -347,7 +359,7 @@ msgstr ""
 "    AND l.date = $2;\n"
 "EXECUTE usrrptplan(1, current_date);"
 
-#: ref/prepare.xml:192(para)
+#: ref/prepare.xml:210(para)
 msgid ""
 "Create a prepared statement for a <command>SELECT</command> statement, and "
 "then execute it: <placeholder-1/> Note that the data type of the second "
@@ -359,11 +371,11 @@ msgstr ""
 "параметра не указывается, так что он выводится из контекста, в котором "
 "используется <literal>$2</literal>."
 
-#: ref/prepare.xml:205(title)
+#: ref/prepare.xml:223(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/prepare.xml:207(para)
+#: ref/prepare.xml:225(para)
 msgid ""
 "The SQL standard includes a <command>PREPARE</command> statement, but it is "
 "only for use in embedded SQL. This version of the <command>PREPARE</command> "
@@ -373,7 +385,7 @@ msgstr ""
 "только для применения во встраиваемом SQL. Эта версия оператора "
 "<command>PREPARE</command> имеет также несколько другой синтаксис."
 
-#: ref/prepare.xml:216(title)
+#: ref/prepare.xml:234(title)
 msgid "See Also"
 msgstr "См. также"
 
@@ -381,3 +393,22 @@ msgstr "См. также"
 #: ref/prepare.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "If a prepared statement is executed enough times, the server may "
+#~ "eventually decide to save and re-use a generic plan rather than re-"
+#~ "planning each time. This will occur immediately if the prepared statement "
+#~ "has no parameters; otherwise it occurs only if the generic plan appears "
+#~ "to be not much more expensive than a plan that depends on specific "
+#~ "parameter values. Typically, a generic plan will be selected only if the "
+#~ "query's performance is estimated to be fairly insensitive to the specific "
+#~ "parameter values supplied."
+#~ msgstr ""
+#~ "Если подготовленный оператор выполняется много раз, сервер может в итоге "
+#~ "решить сохранить и повторно использовать общий план, и не строить план "
+#~ "каждый раз заново. Это происходит при первом же выполнении, если "
+#~ "подготовленный оператор не имеет параметров; в противном случае, только "
+#~ "если общий план окажется ненамного дороже, чем план, зависящий от "
+#~ "конкретных значений. Обычно общий план выбирается, только если "
+#~ "производительность запроса, предположительно, практически не зависит от "
+#~ "передаваемых значений параметров."

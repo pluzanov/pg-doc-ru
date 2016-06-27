@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:40+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -28,111 +28,152 @@ msgstr "<primary>Карта видимости</primary>"
 #, fuzzy
 msgid ""
 "The <filename>pg_visibility</filename> module provides a means for examining "
-"the visibility map (VM) and page-level visibility information."
+"the visibility map (VM) and page-level visibility information. It also "
+"provides functions to check the integrity of the visibility map and to force "
+"it to be rebuilt."
 msgstr ""
 "Модуль <filename>pg_buffercache</filename> даёт возможность понять, что "
 "происходит в общем кеше буферов в реальном времени."
 
-#: pgvisibility.xml:16(para)
+#: pgvisibility.xml:18(para)
 msgid ""
-"These routines return information about three different bits. The all-"
-"visible bit in the visibility map indicates that every tuple on a given page "
-"of a relation is visible to every current transaction. The all-frozen bit in "
-"the visibility map indicates that every tuple on the page is frozen; that "
-"is, no future vacuum will need to modify the page until such time as a tuple "
-"is inserted, updated, deleted, or locked on that page. The page-level "
-"<literal>PD_ALL_VISIBLE</literal> bit has the same meaning as the all-"
-"visible bit in the visibility map, but is stored within the data page itself "
-"rather than a separate data structure. These will normally agree, but the "
-"page-level bit can sometimes be set while the visibility map bit is clear "
-"after a crash recovery; or they can disagree because of a change which "
-"occurs after <literal>pg_visibility</literal> examines the visibility map "
-"and before it examines the data page."
+"Three different bits are used to store information about page-level "
+"visibility. The all-visible bit in the visibility map indicates that every "
+"tuple on a given page of a relation is visible to every current transaction. "
+"The all-frozen bit in the visibility map indicates that every tuple on the "
+"page is frozen; that is, no future vacuum will need to modify the page until "
+"such time as a tuple is inserted, updated, deleted, or locked on that page. "
+"The page-level <literal>PD_ALL_VISIBLE</literal> bit has the same meaning as "
+"the all-visible bit in the visibility map, but is stored within the data "
+"page itself rather than a separate data structure. These will normally "
+"agree, but the page-level bit can sometimes be set while the visibility map "
+"bit is clear after a crash recovery; or they can disagree because of a "
+"change which occurs after <literal>pg_visibility</literal> examines the "
+"visibility map and before it examines the data page. Any event which causes "
+"data corruption can also cause these bits to disagree."
 msgstr ""
 
-#: pgvisibility.xml:32(para)
+#: pgvisibility.xml:35(para)
 msgid ""
-"Functions which display information about <literal>PG_ALL_VISIBLE</literal> "
+"Functions which display information about <literal>PD_ALL_VISIBLE</literal> "
 "are much more costly than those which only consult the visibility map, "
 "because they must read the relation's data blocks rather than only the (much "
-"smaller) visibility map."
+"smaller) visibility map. Functions that check the relation's data blocks are "
+"similarly expensive."
 msgstr ""
 
-#: pgvisibility.xml:40(title)
+#: pgvisibility.xml:44(title)
 msgid "Functions"
 msgstr "Функции"
 
-#: pgvisibility.xml:44(function)
+#: pgvisibility.xml:48(function)
 msgid ""
 "pg_visibility_map(regclass, blkno bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean) returns record"
 msgstr ""
 
-#: pgvisibility.xml:46(para)
+#: pgvisibility.xml:50(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for the "
 "given block of the given relation."
 msgstr ""
 
-#: pgvisibility.xml:54(function)
+#: pgvisibility.xml:58(function)
 msgid ""
 "pg_visibility(regclass, blkno bigint, all_visible OUT boolean, all_frozen "
 "OUT boolean, pd_all_visible OUT boolean) returns record"
 msgstr ""
 
-#: pgvisibility.xml:56(para)
+#: pgvisibility.xml:60(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for the "
 "given block of the given relation, plus the <literal>PD_ALL_VISIBILE</"
 "literal> bit for that block."
 msgstr ""
 
-#: pgvisibility.xml:65(function)
+#: pgvisibility.xml:69(function)
 msgid ""
 "pg_visibility_map(regclass, blkno OUT bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean) returns record"
 msgstr ""
 
-#: pgvisibility.xml:67(para)
+#: pgvisibility.xml:71(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for each "
 "block the given relation."
 msgstr ""
 
-#: pgvisibility.xml:75(function)
+#: pgvisibility.xml:79(function)
 msgid ""
 "pg_visibility(regclass, blkno OUT bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean, pd_all_visible OUT boolean) returns record"
 msgstr ""
 
-#: pgvisibility.xml:78(para)
+#: pgvisibility.xml:82(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for each "
 "block the given relation, plus the <literal>PD_ALL_VISIBLE</literal> bit for "
 "each block."
 msgstr ""
 
-#: pgvisibility.xml:87(function)
+#: pgvisibility.xml:91(function)
 msgid ""
 "pg_visibility_map_summary(regclass, all_visible OUT bigint, all_frozen OUT "
 "bigint) returns record"
 msgstr ""
 
-#: pgvisibility.xml:90(para)
+#: pgvisibility.xml:94(para)
 msgid ""
 "Returns the number of all-visible pages and the number of all-frozen pages "
 "in the relation according to the visibility map."
 msgstr ""
 
-#: pgvisibility.xml:98(para)
+#: pgvisibility.xml:102(function)
+msgid "pg_check_frozen(regclass, t_ctid OUT tid) returns setof tid"
+msgstr ""
+
+#: pgvisibility.xml:105(para)
+msgid ""
+"Returns the TIDs of non-frozen tuples present in pages marked all-frozen in "
+"the visibility map. If this function returns a non-empty set of TIDs, the "
+"database is corrupt."
+msgstr ""
+
+#: pgvisibility.xml:114(function)
+msgid "pg_check_visible(regclass, t_ctid OUT tid) returns setof tid"
+msgstr ""
+
+#: pgvisibility.xml:117(para)
+msgid ""
+"Returns the TIDs of tuples which are not all-visible despite the fact that "
+"the pages which contain them are marked as all-visible in the visibility "
+"map. If this function returns a non-empty set of TIDs, the database is "
+"corrupt."
+msgstr ""
+
+#: pgvisibility.xml:127(function)
+msgid "pg_truncate_visibility_map(regclass) returns void"
+msgstr ""
+
+#: pgvisibility.xml:130(para)
+msgid ""
+"Truncates the visibility map for the given relation. This function is only "
+"expected to be useful if you suspect that the visibility map for the "
+"indicated relation is corrupt and wish to rebuild it. The first "
+"<command>VACUUM</command> executed on the given relation after this function "
+"is executed will scan every page in the relation and rebuild the visibility "
+"map."
+msgstr ""
+
+#: pgvisibility.xml:142(para)
 msgid "By default, these functions are not publicly executable."
 msgstr ""
 
-#: pgvisibility.xml:104(title)
+#: pgvisibility.xml:148(title)
 msgid "Author"
 msgstr "Автор"
 
-#: pgvisibility.xml:106(para)
+#: pgvisibility.xml:150(para)
 msgid "Robert Haas <email>rhaas@postgresql.org</email>"
 msgstr "Роберт Хаас <email>rhaas@postgresql.org</email>"
 
