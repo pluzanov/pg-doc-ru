@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"POT-Creation-Date: 2016-06-27 17:41+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -41,30 +41,23 @@ msgid "garbage-collect and optionally analyze a database"
 msgstr "провести сборку мусора и, возможно, проанализировать базу данных"
 
 #: ref/vacuum.xml:24(replaceable) ref/vacuum.xml:25(replaceable)
-#: ref/vacuum.xml:26(replaceable) ref/vacuum.xml:132(replaceable)
+#: ref/vacuum.xml:26(replaceable) ref/vacuum.xml:151(replaceable)
 msgid "table_name"
-msgstr "table_name"
+msgstr "имя_таблицы"
 
 #: ref/vacuum.xml:24(replaceable) ref/vacuum.xml:26(replaceable)
-#: ref/vacuum.xml:142(replaceable)
-#, fuzzy
+#: ref/vacuum.xml:161(replaceable)
 msgid "column_name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"column_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"column_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя_столбца"
+msgstr "имя_столбца"
 
 #: ref/vacuum.xml:24(synopsis)
 #, no-wrap
 msgid ""
-"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
+"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE | DISABLE_PAGE_SKIPPING } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
 "VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] [ <placeholder-3/> ]\n"
 "VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] ANALYZE [ <placeholder-4/> [ (<placeholder-5/> [, ...] ) ] ]"
 msgstr ""
-"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
+"VACUUM [ ( { FULL | FREEZE | VERBOSE | ANALYZE | DISABLE_PAGE_SKIPPING } [, ...] ) ] [ <placeholder-1/> [ (<placeholder-2/> [, ...] ) ] ]\n"
 "VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] [ <placeholder-3/> ]\n"
 "VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] ANALYZE [ <placeholder-4/> [ (<placeholder-5/> [, ...] ) ] ]"
 
@@ -215,7 +208,35 @@ msgstr ""
 "Обновляет статистику, которую использует планировщик для выбора наиболее "
 "эффективного способа выполнения запроса."
 
+#: ref/vacuum.xml:132(literal)
+msgid "DISABLE_PAGE_SKIPPING"
+msgstr "DISABLE_PAGE_SKIPPING"
+
 #: ref/vacuum.xml:134(para)
+msgid ""
+"Normally, <command>VACUUM</command> will skip pages based on the <link "
+"linkend=\"vacuum-for-visibility-map\">visibility map</link>. Pages where all "
+"tuples are known to be frozen can always be skipped, and those where all "
+"tuples are known to be visible to all transactions may be skipped except "
+"when performing an aggressive vacuum. Furthermore, except when performing an "
+"aggressive vacuum, some pages may be skipped in order to avoid waiting for "
+"other sessions to finish using them. This option disables all page-skipping "
+"behavior, and is intended to be used only the contents of the visibility map "
+"are thought to be suspect, which should happen only if there is a hardware "
+"or software issue causing database corruption."
+msgstr ""
+"Обычно <command>VACUUM</command> пропускает страницы, учитывая <link linkend="
+"\"vacuum-for-visibility-map\">карту видимости</link>. Страницы, на которых, "
+"судя по карте, все кортежи заморожены, можно пропускать всегда, а страницы, "
+"в которых все кортежи видны всем транзакциям, могут обрабатываться только "
+"при агрессивной очистке. Более того, за исключением агрессивной очистки, "
+"некоторые страницы можно пропускать, чтобы не ждать, пока другие сеансы "
+"закончат их использовать. Этот параметр отключает пропуск страниц и "
+"рассчитан для использования только когда целостность карты видимости "
+"вызывает подозрения, что возможно при аппаратных или программных сбоях, "
+"приводящих к разрушению БД."
+
+#: ref/vacuum.xml:153(para)
 msgid ""
 "The name (optionally schema-qualified) of a specific table to vacuum. "
 "Defaults to all tables in the current database."
@@ -223,7 +244,7 @@ msgstr ""
 "Имя (возможно, дополненное схемой) определённой таблицы, подлежащей очистке. "
 "По умолчанию очищаются все таблицы в текущей базе данных."
 
-#: ref/vacuum.xml:144(para)
+#: ref/vacuum.xml:163(para)
 msgid ""
 "The name of a specific column to analyze. Defaults to all columns. If a "
 "column list is specified, <literal>ANALYZE</literal> is implied."
@@ -232,11 +253,11 @@ msgstr ""
 "Если указан список столбцов, подразумевается операция <literal>ANALYZE</"
 "literal>."
 
-#: ref/vacuum.xml:154(title)
+#: ref/vacuum.xml:173(title)
 msgid "Outputs"
 msgstr "Выводимая информация"
 
-#: ref/vacuum.xml:156(para)
+#: ref/vacuum.xml:175(para)
 msgid ""
 "When <literal>VERBOSE</literal> is specified, <command>VACUUM</command> "
 "emits progress messages to indicate which table is currently being "
@@ -246,18 +267,11 @@ msgstr ""
 "выдаёт сообщения о процессе очистки, отмечая текущую обрабатываемую таблицу. "
 "Также она выводит различные статистические сведения о таблицах."
 
-#: ref/vacuum.xml:164(title)
-#, fuzzy
+#: ref/vacuum.xml:183(title)
 msgid "Notes"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Примечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания"
+msgstr "Замечания"
 
-#: ref/vacuum.xml:166(para)
+#: ref/vacuum.xml:185(para)
 msgid ""
 "To vacuum a table, one must ordinarily be the table's owner or a superuser. "
 "However, database owners are allowed to vacuum all tables in their "
@@ -274,12 +288,12 @@ msgstr ""
 "<command>VACUUM</command> при обработке пропускает все таблицы, на очистку "
 "которых текущий пользователь не имеет прав."
 
-#: ref/vacuum.xml:176(para)
+#: ref/vacuum.xml:195(para)
 msgid ""
 "<command>VACUUM</command> cannot be executed inside a transaction block."
 msgstr "<command>VACUUM</command> нельзя выполнять внутри блока транзакции."
 
-#: ref/vacuum.xml:180(para)
+#: ref/vacuum.xml:199(para)
 msgid ""
 "For tables with <acronym>GIN</acronym> indexes, <command>VACUUM</command> "
 "(in any form) also completes any pending index insertions, by moving pending "
@@ -292,7 +306,7 @@ msgstr ""
 "структуре индекса <acronym>GIN</acronym>. За подробностями обратитесь к "
 "<xref remap=\"3\" linkend=\"gin-fast-update\"/>."
 
-#: ref/vacuum.xml:187(para)
+#: ref/vacuum.xml:206(para)
 msgid ""
 "We recommend that active production databases be vacuumed frequently (at "
 "least nightly), in order to remove dead rows. After adding or deleting a "
@@ -311,7 +325,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> принимать более эффективные решения "
 "при планировании."
 
-#: ref/vacuum.xml:199(para)
+#: ref/vacuum.xml:218(para)
 msgid ""
 "The <option>FULL</option> option is not recommended for routine use, but "
 "might be useful in special cases. An example is when you have deleted or "
@@ -327,7 +341,7 @@ msgstr ""
 "Чаще всего <command>VACUUM FULL</command> сжимает таблицу более эффективно, "
 "чем обычный <command>VACUUM</command>."
 
-#: ref/vacuum.xml:208(para)
+#: ref/vacuum.xml:227(para)
 msgid ""
 "<command>VACUUM</command> causes a substantial increase in I/O traffic, "
 "which might cause poor performance for other active sessions. Therefore, it "
@@ -340,7 +354,7 @@ msgstr ""
 "очистки с учётом её стоимости. За подробностями обратитесь к <xref remap="
 "\"3\" linkend=\"runtime-config-resource-vacuum-cost\"/>."
 
-#: ref/vacuum.xml:215(para)
+#: ref/vacuum.xml:234(para)
 msgid ""
 "<productname>PostgreSQL</productname> includes an <quote>autovacuum</quote> "
 "facility which can automate routine vacuum maintenance. For more information "
@@ -352,11 +366,11 @@ msgstr ""
 "больше об автоматической и ручной очистке, обратитесь к <xref remap=\"3\" "
 "linkend=\"routine-vacuuming\"/>."
 
-#: ref/vacuum.xml:224(title)
+#: ref/vacuum.xml:243(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/vacuum.xml:230(programlisting)
+#: ref/vacuum.xml:249(programlisting)
 #, no-wrap
 msgid ""
 "regression=# VACUUM (VERBOSE, ANALYZE) onek;\n"
@@ -419,7 +433,7 @@ msgstr ""
 "INFO:  \"onek\": 36 pages, 1000 rows sampled, 1000 estimated total rows\n"
 "VACUUM"
 
-#: ref/vacuum.xml:226(para)
+#: ref/vacuum.xml:245(para)
 msgid ""
 "The following is an example from running <command>VACUUM</command> on a "
 "table in the regression database: <placeholder-1/>"
@@ -427,15 +441,15 @@ msgstr ""
 "Ниже показан пример выполнения команды <command>VACUUM</command> для таблицы "
 "из базы данных regression: <placeholder-1/>"
 
-#: ref/vacuum.xml:262(title)
+#: ref/vacuum.xml:281(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/vacuum.xml:264(para)
+#: ref/vacuum.xml:283(para)
 msgid "There is no <command>VACUUM</command> statement in the SQL standard."
 msgstr "Оператор <command>VACUUM</command> отсутствует в стандарте SQL."
 
-#: ref/vacuum.xml:270(title)
+#: ref/vacuum.xml:289(title)
 msgid "See Also"
 msgstr "См. также"
 

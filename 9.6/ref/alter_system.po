@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"POT-Creation-Date: 2016-06-27 17:41+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -41,18 +41,13 @@ msgid "change a server configuration parameter"
 msgstr "изменить параметр конфигурации сервера"
 
 #: ref/alter_system.xml:24(replaceable) ref/alter_system.xml:26(replaceable)
-#: ref/alter_system.xml:66(replaceable)
+#: ref/alter_system.xml:68(replaceable)
 msgid "configuration_parameter"
 msgstr "параметр_конфигурации"
 
-#: ref/alter_system.xml:24(replaceable) ref/alter_system.xml:76(replaceable)
-#, fuzzy
+#: ref/alter_system.xml:24(replaceable) ref/alter_system.xml:78(replaceable)
 msgid "value"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"value\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"значение"
+msgstr "значение"
 
 #: ref/alter_system.xml:24(synopsis)
 #, no-wrap
@@ -99,16 +94,22 @@ msgstr ""
 #: ref/alter_system.xml:47(para)
 msgid ""
 "Values set with <command>ALTER SYSTEM</command> will be effective after the "
-"next server configuration reload (<systemitem>SIGHUP</systemitem> or "
-"<literal>pg_ctl reload</literal>), or after the next server restart in the "
-"case of parameters that can only be changed at server start."
+"next server configuration reload, or after the next server restart in the "
+"case of parameters that can only be changed at server start. A server "
+"configuration reload can be commanded by calling the SQL function "
+"<function>pg_reload_conf()</function>, running <literal>pg_ctl reload</"
+"literal>, or sending a <systemitem>SIGHUP</systemitem> signal to the main "
+"server process."
 msgstr ""
 "Значения, установленные командой <command>ALTER SYSTEM</command>, вступают в "
-"силу только после следующей перезагрузки сервера (<systemitem>SIGHUP</"
-"systemitem> или <literal>pg_ctl reload</literal>), либо после следующего "
-"перезапуска, если эти параметры устанавливаются только при запуске сервера."
+"силу после следующей перезагрузки конфигурации сервера либо после "
+"перезапуска сервера (если это параметры, воспринимаемые только при запуске). "
+"Перезагрузить конфигурацию сервера можно, вызвав SQL-функцию "
+"<function>pg_reload_conf()</function>, выполнив <literal>pg_ctl reload</"
+"literal> или отправив сигнал <systemitem>SIGHUP</systemitem> главному "
+"серверному процессу."
 
-#: ref/alter_system.xml:54(para)
+#: ref/alter_system.xml:56(para)
 msgid ""
 "Only superusers can use <command>ALTER SYSTEM</command>. Also, since this "
 "command acts directly on the file system and cannot be rolled back, it is "
@@ -118,11 +119,11 @@ msgstr ""
 "так как эта команда работает непосредственно с файловой системой и не может "
 "быть отменена, её нельзя поместить в блок транзакции или функцию."
 
-#: ref/alter_system.xml:62(title)
+#: ref/alter_system.xml:64(title)
 msgid "Parameters"
 msgstr "Параметры"
 
-#: ref/alter_system.xml:68(para)
+#: ref/alter_system.xml:70(para)
 msgid ""
 "Name of a settable configuration parameter. Available parameters are "
 "documented in <xref linkend=\"runtime-config\"/>."
@@ -130,7 +131,7 @@ msgstr ""
 "Имя устанавливаемого параметра конфигурации. Список доступных параметров "
 "приведён в <xref remap=\"6\" linkend=\"runtime-config\"/>."
 
-#: ref/alter_system.xml:78(para)
+#: ref/alter_system.xml:80(para)
 msgid ""
 "New value of the parameter. Values can be specified as string constants, "
 "identifiers, numbers, or comma-separated lists of these, as appropriate for "
@@ -144,18 +145,11 @@ msgstr ""
 "<literal>DEFAULT</literal>, параметр и его значение удаляется из "
 "<filename>postgresql.auto.conf</filename>."
 
-#: ref/alter_system.xml:91(title)
-#, fuzzy
+#: ref/alter_system.xml:93(title)
 msgid "Notes"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Примечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания"
+msgstr "Замечания"
 
-#: ref/alter_system.xml:93(para)
+#: ref/alter_system.xml:95(para)
 msgid ""
 "This command can't be used to set <xref linkend=\"guc-data-directory\"/>, "
 "nor parameters that are not allowed in <filename>postgresql.conf</filename> "
@@ -166,34 +160,34 @@ msgstr ""
 "filename> (например, <link linkend=\"runtime-config-preset"
 "\">предустановленные параметры</link>)."
 
-#: ref/alter_system.xml:99(para)
+#: ref/alter_system.xml:101(para)
 msgid ""
 "See <xref linkend=\"config-setting\"/> for other ways to set the parameters."
 msgstr ""
 "Другие способы настройки параметров описаны в <xref remap=\"6\" linkend="
 "\"config-setting\"/>."
 
-#: ref/alter_system.xml:105(title)
+#: ref/alter_system.xml:107(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/alter_system.xml:109(programlisting)
-#, fuzzy, no-wrap
+#: ref/alter_system.xml:111(programlisting)
+#, no-wrap
 msgid "ALTER SYSTEM SET wal_level = replica;"
-msgstr "ALTER SYSTEM RESET wal_level;"
+msgstr "ALTER SYSTEM SET wal_level = replica;"
 
-#: ref/alter_system.xml:107(para)
+#: ref/alter_system.xml:109(para)
 msgid "Set the <literal>wal_level</literal>: <placeholder-1/>"
 msgstr ""
 "Установка уровня ведения журнала транзакций (<literal>wal_level</literal>): "
 "<placeholder-1/>"
 
-#: ref/alter_system.xml:115(programlisting)
+#: ref/alter_system.xml:117(programlisting)
 #, no-wrap
 msgid "ALTER SYSTEM RESET wal_level;"
 msgstr "ALTER SYSTEM RESET wal_level;"
 
-#: ref/alter_system.xml:112(para)
+#: ref/alter_system.xml:114(para)
 msgid ""
 "Undo that, restoring whatever setting was effective in <filename>postgresql."
 "conf</filename>: <placeholder-1/>"
@@ -201,11 +195,11 @@ msgstr ""
 "Отмена изменения, восстановление значения, заданного в <filename>postgresql."
 "conf</filename>: <placeholder-1/>"
 
-#: ref/alter_system.xml:120(title)
+#: ref/alter_system.xml:122(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/alter_system.xml:122(para)
+#: ref/alter_system.xml:124(para)
 msgid ""
 "The <command>ALTER SYSTEM</command> statement is a <productname>PostgreSQL</"
 "productname> extension."
@@ -213,7 +207,7 @@ msgstr ""
 "Оператор <command>ALTER SYSTEM</command> является расширением "
 "<productname>PostgreSQL</productname>."
 
-#: ref/alter_system.xml:129(title)
+#: ref/alter_system.xml:131(title)
 msgid "See Also"
 msgstr "См. также"
 
@@ -221,3 +215,15 @@ msgstr "См. также"
 #: ref/alter_system.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "Values set with <command>ALTER SYSTEM</command> will be effective after "
+#~ "the next server configuration reload (<systemitem>SIGHUP</systemitem> or "
+#~ "<literal>pg_ctl reload</literal>), or after the next server restart in "
+#~ "the case of parameters that can only be changed at server start."
+#~ msgstr ""
+#~ "Значения, установленные командой <command>ALTER SYSTEM</command>, "
+#~ "вступают в силу только после следующей перезагрузки сервера "
+#~ "(<systemitem>SIGHUP</systemitem> или <literal>pg_ctl reload</literal>), "
+#~ "либо после следующего перезапуска, если эти параметры устанавливаются "
+#~ "только при запуске сервера."

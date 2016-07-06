@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"POT-Creation-Date: 2016-06-27 17:41+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -68,26 +68,16 @@ msgstr "--target-pgdata"
 #: ref/pg_rewind.xml:32(replaceable) ref/pg_rewind.xml:34(replaceable)
 #: ref/pg_rewind.xml:110(replaceable) ref/pg_rewind.xml:111(replaceable)
 #: ref/pg_rewind.xml:122(replaceable)
-#, fuzzy
 msgid "directory"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"каталог\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"directory"
+msgstr "каталог"
 
 #: ref/pg_rewind.xml:34(option) ref/pg_rewind.xml:122(option)
 msgid "--source-pgdata=<placeholder-1/>"
 msgstr "--source-pgdata=<placeholder-1/>"
 
 #: ref/pg_rewind.xml:35(replaceable) ref/pg_rewind.xml:133(replaceable)
-#, fuzzy
 msgid "connstr"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"строка подключения\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"connstr"
+msgstr "строка_подключения"
 
 #: ref/pg_rewind.xml:35(option) ref/pg_rewind.xml:133(option)
 msgid "--source-server=<placeholder-1/>"
@@ -131,7 +121,6 @@ msgstr ""
 "невелик."
 
 #: ref/pg_rewind.xml:61(para)
-#, fuzzy
 msgid ""
 "<application>pg_rewind</application> examines the timeline histories of the "
 "source and target clusters to determine the point where they diverged, and "
@@ -151,13 +140,17 @@ msgstr ""
 "Утилита <application>pg_rewind</application> изучает историю линий времени "
 "исходного и целевого кластеров с целью найти точку, в которой они разошлись, "
 "и ожидает найти журналы WAL в каталоге <filename>pg_xlog</filename> целевого "
-"кластера вплоть до точки расхождения. В типичном сценарии отработки отказа, "
-"когда целевой кластер отключается вскоре после расхождения, это не проблема, "
-"но если целевой кластер проработал долгое время после расхождения, старые "
-"файлы WAL могут быть уже удалены. В этом случае их можно вручную скопировать "
-"из архива WAL в каталог <filename>pg_xlog</filename>. Автоматическая "
-"загрузка недостающих файлов из архива WAL в настоящее время не "
-"поддерживается."
+"кластера вплоть до точки расхождения. Точка расхождения может быть найдена "
+"на целевой или исходной линии времени либо в их общем предке. В типичном "
+"сценарии отработки отказа, когда целевой кластер отключается вскоре после "
+"расхождения, это не проблема, но если целевой кластер проработал долгое "
+"время после расхождения, старые файлы WAL могут быть уже удалены. В этом "
+"случае их можно вручную скопировать из архива WAL в каталог "
+"<filename>pg_xlog</filename>. Автоматическая загрузка недостающих файлов из "
+"архива WAL в настоящее время не поддерживается. Сценарии использования "
+"<application>pg_rewind</application> не ограничиваются отработкой отказа. "
+"Например, резервный сервер может быть повышен, выполнить несколько операций "
+"записи, а затем вновь понижен до резервного."
 
 #: ref/pg_rewind.xml:78(para)
 msgid ""
@@ -198,13 +191,8 @@ msgstr ""
 "linkend=\"guc-full-page-writes\"/>. По умолчанию он включён."
 
 #: ref/pg_rewind.xml:102(title)
-#, fuzzy
 msgid "Options"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Параметры\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Аргументы"
+msgstr "Параметры"
 
 #: ref/pg_rewind.xml:110(option)
 msgid "-D <placeholder-1/>"
@@ -227,25 +215,26 @@ msgstr ""
 #: ref/pg_rewind.xml:124(para)
 msgid ""
 "Specifies path to the data directory of the source server, to synchronize "
-"the target with. When <option>--source-pgdata</option> is used, the source "
-"server must be cleanly shut down."
+"the target with. This option requires the source server to be cleanly shut "
+"down."
 msgstr ""
 "Задаёт путь к каталогу данных исходного сервера, с которым будет "
-"синхронизироваться целевой. Когда используется ключ <option>--source-pgdata</"
-"option>, исходный сервер должен быть остановлен штатным образом."
+"синхронизироваться целевой. Для применения этого ключа исходный сервер "
+"должен быть остановлен штатным образом."
 
 #: ref/pg_rewind.xml:135(para)
 msgid ""
 "Specifies a libpq connection string to connect to the source "
 "<productname>PostgreSQL</productname> server to synchronize the target with. "
 "The connection must be a normal (non-replication) connection with superuser "
-"access. The server must be up and running, and must not be in recovery mode."
+"access. This option requires the server to be running and not in recovery "
+"mode."
 msgstr ""
 "Задаёт строку подключения libpq для подключения к исходному серверу "
 "<productname>PostgreSQL</productname>, с которым будет синхронизирован "
 "целевой. Подключение должно устанавливаться как обычное (не реплицирующее) с "
-"правами суперпользователя. Сервер должен быть запущен и работать в обычном "
-"режиме, не в режиме восстановления."
+"правами суперпользователя. Для применения этого параметра сервер должен быть "
+"запущен и работать не в режиме восстановления."
 
 #: ref/pg_rewind.xml:146(option)
 msgid "-n"
@@ -336,15 +325,8 @@ msgstr ""
 "envars\"/>)."
 
 #: ref/pg_rewind.xml:203(title)
-#, fuzzy
 msgid "Notes"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Примечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания"
+msgstr "Замечания"
 
 #: ref/pg_rewind.xml:206(title)
 msgid "How it works"

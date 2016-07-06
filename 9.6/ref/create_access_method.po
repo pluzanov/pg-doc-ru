@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:31+0300\n"
+"POT-Creation-Date: 2016-06-27 17:41+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -15,15 +15,13 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: ref/create_access_method.xml:8(indexterm)
-#, fuzzy
 msgid "<primary>CREATE ACCESS METHOD</primary>"
-msgstr "<primary>CREATE CAST</primary>"
+msgstr "<primary>CREATE ACCESS METHOD</primary>"
 
 #: ref/create_access_method.xml:13(refentrytitle)
-#, fuzzy
 msgctxt "refentrytitle"
 msgid "CREATE ACCESS METHOD"
-msgstr "CREATE CAST"
+msgstr "CREATE ACCESS METHOD"
 
 #: ref/create_access_method.xml:14(manvolnum)
 msgid "7"
@@ -34,35 +32,23 @@ msgid "SQL - Language Statements"
 msgstr "Операторы языка SQL"
 
 #: ref/create_access_method.xml:19(refname)
-#, fuzzy
 msgctxt "refname"
 msgid "CREATE ACCESS METHOD"
-msgstr "CREATE CAST"
+msgstr "CREATE ACCESS METHOD"
 
 #: ref/create_access_method.xml:20(refpurpose)
-#, fuzzy
 msgid "define a new access method"
-msgstr "создать приведение"
+msgstr "создать новый метод доступа"
 
 #: ref/create_access_method.xml:24(replaceable)
 #: ref/create_access_method.xml:50(replaceable)
-#, fuzzy
 msgid "name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name"
+msgstr "имя"
 
 #: ref/create_access_method.xml:25(replaceable)
-#, fuzzy
 msgctxt "replaceable"
 msgid "access_method_type"
-msgstr "операторы методов доступа"
+msgstr "тип_метода_доступа"
 
 #: ref/create_access_method.xml:26(replaceable)
 #: ref/create_access_method.xml:69(replaceable)
@@ -70,65 +56,59 @@ msgid "handler_function"
 msgstr "функция_обработчик"
 
 #: ref/create_access_method.xml:24(synopsis)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE ACCESS METHOD <placeholder-1/>\n"
 "    TYPE <placeholder-2/>\n"
 "    HANDLER <placeholder-3/>"
 msgstr ""
-"CREATE TEXT SEARCH TEMPLATE <placeholder-1/> (\n"
-"    [ INIT = <placeholder-2/> , ]\n"
-"    LEXIZE = <placeholder-3/>\n"
-")"
+"CREATE ACCESS METHOD <placeholder-1/>\n"
+"    TYPE <placeholder-2/>\n"
+"    HANDLER <placeholder-3/>"
 
 #: ref/create_access_method.xml:30(title)
 msgid "Description"
 msgstr "Описание"
 
 #: ref/create_access_method.xml:32(para)
-#, fuzzy
 msgid "<command>CREATE ACCESS METHOD</command> creates a new access method."
 msgstr ""
-"Команда <command>CREATE DATABASE</command> создаёт базу данных "
-"<productname>PostgreSQL</productname>."
+"Команда <command>CREATE ACCESS METHOD</command> создаёт новый метод доступа."
 
 #: ref/create_access_method.xml:36(para)
-#, fuzzy
 msgid "The access method name must be unique within the database."
-msgstr "Имя сервера должно быть уникальным в базе данных."
+msgstr "Имя метода доступа должно быть уникальным в базе данных."
 
 #: ref/create_access_method.xml:40(para)
-#, fuzzy
 msgid "Only superusers can define new access methods."
-msgstr "Создавать событийные триггеры могут только суперпользователи."
+msgstr "Определять новые методы доступа могут только суперпользователи."
 
 #: ref/create_access_method.xml:46(title)
 msgid "Parameters"
 msgstr "Параметры"
 
 #: ref/create_access_method.xml:52(para)
-#, fuzzy
 msgid "The name of the access method to be created."
-msgstr "Имя создаваемого курсора."
+msgstr "Имя создаваемого метода доступа."
 
 #: ref/create_access_method.xml:59(literal)
-#, fuzzy
 msgctxt "literal"
 msgid "access_method_type"
-msgstr "операторы методов доступа"
+msgstr "тип_метода_доступа"
 
 #: ref/create_access_method.xml:61(para)
 msgid ""
 "This clause specifies type of access method to define. Only <literal>INDEX</"
 "literal> is supported at present."
 msgstr ""
+"Это предложение задаёт тип создаваемого метода доступа. В настоящее время "
+"поддерживается только <literal>INDEX</literal>."
 
 #: ref/create_access_method.xml:69(literal)
 msgid "HANDLER <placeholder-1/>"
 msgstr "HANDLER <placeholder-1/>"
 
 #: ref/create_access_method.xml:71(para)
-#, fuzzy
 msgid ""
 "<replaceable class=\"parameter\">handler_function</replaceable> is the name "
 "of a previously registered function that will be called to retrieve the "
@@ -140,16 +120,17 @@ msgid ""
 msgstr ""
 "В аргументе <replaceable class=\"parameter\">функция_обработчик</"
 "replaceable> указывается имя ранее зарегистрированной функции, которая будет "
-"вызываться для получения функций, реализующих обращения к сторонним "
-"таблицам. Функция-обработчик не принимает аргументы и возвращает результат "
-"типа <type>fdw_handler</type>."
+"вызываться для получения структуры, содержащей требующиеся для ядра "
+"параметры и функции метода доступа. Функция-обработчик должна принимать один "
+"аргумент типа <type>internal</type>, а её тип возврата зависит от типа "
+"метода доступа; для методов доступа типа <literal>INDEX</literal> это должен "
+"быть <type>index_am_handler</type>."
 
 #: ref/create_access_method.xml:80(para)
-#, fuzzy
 msgid "See <xref linkend=\"index-api\"/> for index access methods API."
 msgstr ""
-"Примеры использования можно найти в <xref remap=\"6\" linkend="
-"\"logicaldecoding-example\"/>."
+"API методов доступа индекса описан в <xref remap=\"6\" linkend=\"index-api\"/"
+">."
 
 #: ref/create_access_method.xml:89(title)
 msgid "Examples"
@@ -158,28 +139,26 @@ msgstr "Примеры"
 #: ref/create_access_method.xml:94(programlisting)
 #, no-wrap
 msgid "CREATE ACCESS METHOD heptree TYPE INDEX HANDLER heptree_handler;"
-msgstr ""
+msgstr "CREATE ACCESS METHOD heptree TYPE INDEX HANDLER heptree_handler;"
 
 #: ref/create_access_method.xml:91(para)
-#, fuzzy
 msgid ""
 "Create an access method <literal>heptree</literal> with handler function "
 "<literal>heptree_handler</literal>: <placeholder-1/>"
 msgstr ""
-"Создание обёртки сторонних данных <literal>file</literal> с функцией-"
-"обработчиком <literal>file_fdw_handler</literal>: <placeholder-1/>"
+"Создание метода доступа <literal>heptree</literal> с функцией-обработчиком "
+"<literal>heptree_handler</literal>: <placeholder-1/>"
 
 #: ref/create_access_method.xml:99(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
 #: ref/create_access_method.xml:101(para)
-#, fuzzy
 msgid ""
 "<command>CREATE ACCESS METHOD</command> is a <productname>PostgreSQL</"
 "productname> extension."
 msgstr ""
-"<command>CREATE TABLESPACE</command> является расширением "
+"<command>CREATE ACCESS METHOD</command> является расширением "
 "<productname>PostgreSQL</productname>."
 
 #: ref/create_access_method.xml:108(title)

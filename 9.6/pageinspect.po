@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:40+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -127,7 +127,6 @@ msgid "<primary>heap_page_items</primary>"
 msgstr "<primary>heap_page_items</primary>"
 
 #: pageinspect.xml:93(para)
-#, fuzzy
 msgid ""
 "<function>heap_page_items</function> shows all line pointers on a heap page. "
 "For those line pointers that are in use, tuple headers as well as tuple raw "
@@ -159,11 +158,12 @@ msgid ""
 "tuple_data_split(rel_oid, t_data bytea, t_infomask integer, t_infomask2 "
 "integer, t_bits text [, do_detoast bool]) returns bytea[]"
 msgstr ""
+"tuple_data_split(rel_oid, t_data bytea, t_infomask integer, t_infomask2 "
+"integer, t_bits text [, do_detoast bool]) returns bytea[]"
 
 #: pageinspect.xml:114(indexterm)
-#, fuzzy
 msgid "<primary>tuple_data_split</primary>"
-msgstr "<primary>изменение</primary>"
+msgstr "<primary>tuple_data_split</primary>"
 
 #: pageinspect.xml:119(para)
 msgid ""
@@ -174,23 +174,33 @@ msgid ""
 "function should be called with the same arguments as the return attributes "
 "of <function>heap_page_items</function>."
 msgstr ""
+"Функция <function>tuple_data_split</function> разделяет данные кортежей на "
+"атрибуты так, как это происходит внутри сервера. <screen>test=# SELECT "
+"tuple_data_split('pg_class'::regclass, t_data, t_infomask, t_infomask2, "
+"t_bits) FROM heap_page_items(get_raw_page('pg_class', 0));</screen> В "
+"качестве аргументов этой функции должны передаваться атрибуты, возвращаемые "
+"функцией <function>heap_page_items</function>."
 
 #: pageinspect.xml:126(para)
 msgid ""
 "If <parameter>do_detoast</parameter> is <literal>true</literal>, attribute "
 "that will be detoasted as needed. Default value is <literal>false</literal>."
 msgstr ""
+"Если параметр <parameter>do_detoast</parameter> равен <literal>true</"
+"literal>, полученные атрибуты будут распакованы по мере необходимости. Если "
+"он не задан, подразумевается <literal>false</literal>."
 
 #: pageinspect.xml:136(function)
 msgid ""
 "heap_page_item_attrs(rel_oid, t_data bytea, [, do_detoast bool]) returns "
 "bytea[]"
 msgstr ""
+"heap_page_item_attrs(rel_oid, t_data bytea, [, do_detoast bool]) returns "
+"bytea[]"
 
 #: pageinspect.xml:137(indexterm)
-#, fuzzy
 msgid "<primary>heap_page_item_attrs</primary>"
-msgstr "<primary>heap_page_items</primary>"
+msgstr "<primary>heap_page_item_attrs</primary>"
 
 #: pageinspect.xml:142(para)
 msgid ""
@@ -200,21 +210,23 @@ msgid ""
 "<parameter>do_detoast</parameter> which is <literal>false</literal> by "
 "default."
 msgstr ""
+"Функция <function>heap_page_item_attrs</function> похожа на "
+"<function>heap_page_items</function>, но возвращает неструктурированное "
+"содержимое кортежа в виде массива атрибутов, которые могут быть распакованы, "
+"если установлен флаг <parameter>do_detoast</parameter> (по умолчанию они не "
+"распаковываются)."
 
 #: pageinspect.xml:149(para)
-#, fuzzy
 msgid ""
 "A heap page image obtained with <function>get_raw_page</function> should be "
 "passed as argument. For example: <screen>test=# SELECT * FROM "
 "heap_page_item_attrs(get_raw_page('pg_class', 0), 'pg_class'::regclass);</"
 "screen>"
 msgstr ""
-"В качестве аргумента ей нужно передать образ страницы кучи, полученный в "
-"результате вызова <function>get_raw_page</function>. Например: "
-"<screen>test=# SELECT * FROM heap_page_items(get_raw_page('pg_class', 0));</"
-"screen> Описание возвращаемых полей можно найти в <filename>src/include/"
-"storage/itemid.h</filename> и <filename>src/include/access/htup_details.h</"
-"filename>."
+"В качестве аргумента ей должен передаваться образ страницы, выданный "
+"функцией <function>get_raw_page</function>. Например: <screen>test=# SELECT "
+"* FROM heap_page_item_attrs(get_raw_page('pg_class', 0), 'pg_class'::"
+"regclass);</screen>"
 
 #: pageinspect.xml:159(function)
 msgid "bt_metap(relname text) returns record"

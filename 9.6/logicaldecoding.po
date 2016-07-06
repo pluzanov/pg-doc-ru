@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:40+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -105,7 +105,7 @@ msgstr ""
 "следующем примере, это <literal>postgres</literal>) как суперпользователь."
 
 #: logicaldecoding.xml:58(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "postgres=# -- Create a slot named 'regression_slot' using the output plugin 'test_decoding'\n"
 "postgres=# SELECT * FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');\n"
@@ -202,10 +202,10 @@ msgstr ""
 " regression_slot | 0/16B1970\n"
 "(1 row)\n"
 "\n"
-"postgres=# SELECT slot_name, plugin, slot_type, database, active, restart_lsn FROM pg_replication_slots;\n"
-"    slot_name    |    plugin     | slot_type | database | active | restart_lsn\n"
-"-----------------+---------------+-----------+----------+--------+-------------\n"
-" regression_slot | test_decoding | logical   | postgres | f      | 0/16A4408\n"
+"postgres=# SELECT slot_name, plugin, slot_type, database, active, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;\n"
+"    slot_name    |    plugin     | slot_type | database | active | restart_lsn | confirmed_flush_lsn\n"
+"-----------------+---------------+-----------+----------+--------+-------------+-----------------\n"
+" regression_slot | test_decoding | logical   | postgres | f      | 0/16A4408   | 0/16A4440\n"
 "(1 row)\n"
 "\n"
 "postgres=# -- Пока никакие изменения не видны\n"
@@ -248,7 +248,7 @@ msgstr ""
 "\n"
 "postgres=# INSERT INTO data(data) VALUES('3');\n"
 "\n"
-"postgres=# -- Вы также можете заглянуть вперёд в потоке изменений, не считывая эти изменения\n"
+"postgres=# -- Также можно заглянуть вперёд в потоке изменений, не считывая эти изменения\n"
 "postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL);\n"
 " location  | xid |                     data\n"
 "-----------+-----+-----------------------------------------------\n"
@@ -302,7 +302,7 @@ msgstr ""
 "достаточно большим и позволило установить дополнительное подключение."
 
 #: logicaldecoding.xml:156(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "$ pg_recvlogical -d postgres --slot test --create-slot\n"
 "$ pg_recvlogical -d postgres --slot test --start -f -\n"
@@ -317,13 +317,13 @@ msgid ""
 msgstr ""
 "$ pg_recvlogical -d postgres --slot test --create-slot\n"
 "$ pg_recvlogical -d postgres --slot test --start -f -\n"
-"<keycombo action=\"simul\" moreinfo=\"none\"><keycap>Control</keycap><keycap>Z</keycap></keycombo>\n"
+"<keycombo action=\"simul\"><keycap>Control</keycap><keycap>Z</keycap></keycombo>\n"
 "$ psql -d postgres -c \"INSERT INTO data(data) VALUES('4');\"\n"
 "$ fg\n"
 "BEGIN 693\n"
 "table public.data: INSERT: id[integer]:4 data[text]:'4'\n"
 "COMMIT 693\n"
-"<keycombo action=\"simul\" moreinfo=\"none\"><keycap>Control</keycap><keycap>C</keycap></keycombo>\n"
+"<keycombo action=\"simul\"><keycap>Control</keycap><keycap>C</keycap></keycombo>\n"
 "$ pg_recvlogical -d postgres --slot test --drop-slot"
 
 #: logicaldecoding.xml:169(title)
@@ -485,15 +485,8 @@ msgstr "Интерфейс протокола потоковой реплика�
 
 #: logicaldecoding.xml:279(replaceable) logicaldecoding.xml:283(replaceable)
 #: logicaldecoding.xml:287(replaceable)
-#, fuzzy
 msgid "slot_name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"slot_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя_слота\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"slot_name"
+msgstr "имя_слота"
 
 #: logicaldecoding.xml:279(replaceable)
 msgid "output_plugin"
@@ -602,7 +595,7 @@ msgid "<primary>_PG_output_plugin_init</primary>"
 msgstr "<primary>_PG_output_plugin_init</primary>"
 
 #: logicaldecoding.xml:355(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef struct OutputPluginCallbacks\n"
 "{\n"
@@ -623,6 +616,7 @@ msgstr ""
 "    LogicalDecodeBeginCB begin_cb;\n"
 "    LogicalDecodeChangeCB change_cb;\n"
 "    LogicalDecodeCommitCB commit_cb;\n"
+"    LogicalDecodeMessageCB message_cb;\n"
 "    LogicalDecodeFilterByOriginCB filter_by_origin_cb;\n"
 "    LogicalDecodeShutdownCB shutdown_cb;\n"
 "} OutputPluginCallbacks;\n"
@@ -1031,12 +1025,11 @@ msgstr ""
 "обработчика гораздо более эффективна."
 
 #: logicaldecoding.xml:586(title)
-#, fuzzy
 msgid "Generic Message Callback"
-msgstr "Обработчик изменения"
+msgstr "Обработчик произвольных сообщений"
 
 #: logicaldecoding.xml:591(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeMessageCB) (\n"
 "    struct LogicalDecodingContext *,\n"
@@ -1048,11 +1041,14 @@ msgid ""
 "    const char *message\n"
 ");"
 msgstr ""
-"typedef void (*LogicalDecodeChangeCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
+"typedef void (*LogicalDecodeMessageCB) (\n"
+"    struct LogicalDecodingContext *,\n"
 "    ReorderBufferTXN *txn,\n"
-"    Relation relation,\n"
-"    ReorderBufferChange *change\n"
+"    XLogRecPtr message_lsn,\n"
+"    bool transactional,\n"
+"    const char *prefix,\n"
+"    Size message_size,\n"
+"    const char *message\n"
 ");"
 
 #: logicaldecoding.xml:588(para)
@@ -1070,6 +1066,19 @@ msgid ""
 "the current plugin. And finally the <parameter>message</parameter> parameter "
 "holds the actual message of <parameter>message_size</parameter> size."
 msgstr ""
+"Необязательный обработчик <function>message_cb</function> вызывается при "
+"получении сообщения логического декодирования. <placeholder-1/> Параметр "
+"<parameter>txn</parameter> содержит метаинформацию о транзакции, включая "
+"время её фиксации и её XID. Заметьте, однако, что в нём может передаваться "
+"NULL, когда сообщение нетранзакционное и транзакции, в которой было выдано "
+"сообщение, ещё не назначен XID. В параметре <parameter>lsn</parameter> "
+"отмечается позиция сообщения в WAL. Параметр <parameter>transactional</"
+"parameter> показывает, было ли сообщение передано как транзакционное. В "
+"параметре <parameter>prefix</parameter> передаётся некоторый префикс "
+"(завершающийся нулём), по которому текущий модуль может выделять "
+"интересующие его сообщения. И наконец, параметр <parameter>message</"
+"parameter> содержит само сообщение размером <parameter>message_size</"
+"parameter> байт."
 
 #: logicaldecoding.xml:612(para)
 msgid ""
@@ -1077,6 +1086,9 @@ msgid ""
 "considers interesting is unique. Using name of the extension or the output "
 "plugin itself is often a good choice."
 msgstr ""
+"Необходимо дополнительно позаботиться о том, чтобы префикс, определяющий "
+"интересующие модуль вывода сообщения, был уникальным. Удачным выбором обычно "
+"будет имя расширения или самого модуля вывода."
 
 #: logicaldecoding.xml:622(title)
 msgid "Functions for Producing Output"

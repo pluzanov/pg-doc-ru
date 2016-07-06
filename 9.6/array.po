@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-08 13:30+0300\n"
+"POT-Creation-Date: 2016-06-27 17:39+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -471,7 +471,7 @@ msgstr ""
 "literal>."
 
 #: array.xml:255(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT schedule[:2][2:] FROM sal_emp WHERE name = 'Bill';\n"
 "\n"
@@ -487,11 +487,18 @@ msgid ""
 " {{meeting},{training}}\n"
 "(1 row)"
 msgstr ""
-"SELECT schedule[1:2][2] FROM sal_emp WHERE name = 'Bill';\n"
+"SELECT schedule[:2][2:] FROM sal_emp WHERE name = 'Bill';\n"
 "\n"
-"                 schedule\n"
-"-------------------------------------------\n"
-" {{meeting,lunch},{training,presentation}}\n"
+"        schedule\n"
+"------------------------\n"
+" {{lunch},{presentation}}\n"
+"(1 row)\n"
+"\n"
+"SELECT schedule[:][1:1] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{meeting},{training}}\n"
 "(1 row)"
 
 #: array.xml:249(para)
@@ -501,6 +508,10 @@ msgid ""
 "bound is replaced by the lower or upper limit of the array's subscripts. For "
 "example: <placeholder-1/>"
 msgstr ""
+"Значения <replaceable>нижняя-граница</replaceable> и/или "
+"<replaceable>верхняя-граница</replaceable> в указании среза можно опустить; "
+"опущенная граница заменяется нижним или верхним пределом индексов массива. "
+"Например: <placeholder-1/>"
 
 #: array.xml:270(para)
 msgid ""
@@ -687,7 +698,6 @@ msgstr ""
 "    WHERE name = 'Carol';"
 
 #: array.xml:347(para)
-#, fuzzy
 msgid ""
 "An array value can be replaced completely: <placeholder-1/> or using the "
 "<literal>ARRAY</literal> expression syntax: <placeholder-2/> An array can "
@@ -699,7 +709,11 @@ msgid ""
 msgstr ""
 "Значение массива можно заменить полностью так: <placeholder-1/> или "
 "используя синтаксис <literal>ARRAY</literal>: <placeholder-2/> Также можно "
-"изменить один элемент массива: <placeholder-3/> или срез: <placeholder-4/>"
+"изменить один элемент массива: <placeholder-3/> или срез: <placeholder-4/> "
+"При этом в указании среза может быть опущена <replaceable>нижняя-граница</"
+"replaceable> и/или <replaceable>верхняя-граница</replaceable>, но только для "
+"массива, отличного от NULL, и имеющего ненулевую размерность (иначе "
+"неизвестно, какие граничные значения должны подставляться вместо опущенных)."
 
 #: array.xml:374(para)
 msgid ""
