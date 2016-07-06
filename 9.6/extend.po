@@ -507,6 +507,15 @@ msgid ""
 "to set the privileges on the objects to what they were at the time the dump "
 "was taken."
 msgstr ""
+"Скрипт расширения может устанавливать права доступа для объектов, являющихся "
+"частью расширения, выполняя команды <command>GRANT</command> и "
+"<command>REVOKE</command>. Окончательный набор прав для каждого объекта "
+"(если они заданы) будет сохранён в системном каталоге <link linkend="
+"\"catalog-pg-init-privs\"><structname>pg_init_privs</structname></link>. При "
+"использовании <application>pg_dump</application> в выгружаемый скрипт будет "
+"выведена команда <command>CREATE EXTENSION</command> с последующими "
+"операторами <command>GRANT</command> и <command>REVOKE</command>, которые "
+"установят права, имевшие место в момент выгрузки."
 
 #: extend.xml:351(para)
 msgid ""
@@ -516,6 +525,12 @@ msgid ""
 "been created. All RLS policies and security labels on extension objects will "
 "be included in dumps created by <application>pg_dump</application>."
 msgstr ""
+"<productname>PostgreSQL</productname> в настоящее время не поддерживает "
+"скрипты расширений, выполняющие операторы <command>CREATE POLICY</command> "
+"или <command>SECURITY LABEL</command>. Ожидается, что такие команды будут "
+"выполняться после того, как расширение будет создано. Выгружая данные, "
+"<application>pg_dump</application> будет также включать в вывод все политики "
+"RLS и метки безопасности."
 
 #: extend.xml:359(para)
 msgid ""
@@ -1036,7 +1051,7 @@ msgid "<primary>pg_extension_config_dump</primary>"
 msgstr "<primary>pg_extension_config_dump</primary>"
 
 #: extend.xml:701(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE TABLE my_config (key text, value text);\n"
 "CREATE SEQUENCE my_config_seq;\n"
@@ -1045,11 +1060,12 @@ msgid ""
 "SELECT pg_catalog.pg_extension_config_dump('my_config_seq', '');"
 msgstr ""
 "CREATE TABLE my_config (key text, value text);\n"
+"CREATE SEQUENCE my_config_seq;\n"
 "\n"
-"SELECT pg_catalog.pg_extension_config_dump('my_config', '');"
+"SELECT pg_catalog.pg_extension_config_dump('my_config', '');\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config_seq', '');"
 
 #: extend.xml:694(para)
-#, fuzzy
 msgid ""
 "To solve this problem, an extension's script file can mark a table or a "
 "sequence it has created as a configuration relation, which will cause "
@@ -1061,12 +1077,14 @@ msgid ""
 "type> or <type>bigserial</type> columns can be marked as well."
 msgstr ""
 "Чтобы решить эту проблему, скрипт расширения может пометить созданную им "
-"таблицу как конфигурационную, в результате чего <application>pg_dump</"
-"application> включит в выгружаемые данные содержимое таблицы (но не её "
-"определение). Для этого нужно вызвать функцию "
-"<function>pg_extension_config_dump(regclass, text)</function> после создания "
-"таблицы, например так: <placeholder-1/> Так можно пометить любое число "
-"таблиц."
+"таблицу или последовательность как конфигурационное отношение, в результате "
+"чего <application>pg_dump</application> включит в выгружаемые данные "
+"содержимое (но не определение) этой таблицы или последовательности. Для "
+"этого нужно вызвать функцию <function>pg_extension_config_dump(regclass, "
+"text)</function> после создания таблицы или последовательности, например "
+"так: <placeholder-1/> Так можно пометить любое число таблиц или "
+"последовательностей, в том числе последовательности, связанные со столбцами "
+"<type>serial</type> или <type>bigserial</type>."
 
 #: extend.xml:720(programlisting)
 #, no-wrap
@@ -1108,6 +1126,8 @@ msgid ""
 "For sequences, the second argument of <function>pg_extension_config_dump</"
 "function> has no effect."
 msgstr ""
+"Для последовательностей второй аргумент функции "
+"<function>pg_extension_config_dump</function> не имеет значения."
 
 #: extend.xml:732(para)
 msgid ""
@@ -1160,6 +1180,10 @@ msgid ""
 "columns need to be directly marked to dump their state. Marking their parent "
 "relation is not enough for this purpose."
 msgstr ""
+"Последовательности, связанные со столбцами <type>serial</type> или "
+"<type>bigserial</type>, не обязательно помечать непосредственно, чтобы их "
+"состояние было сохранено. Для этой цели достаточно пометить только их "
+"родительское отношение."
 
 #: extend.xml:765(title)
 msgid "Extension Updates"

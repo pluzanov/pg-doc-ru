@@ -42,17 +42,8 @@ msgstr "создать функцию"
 
 #: ref/create_function.xml:24(replaceable)
 #: ref/create_function.xml:109(replaceable)
-#, fuzzy
 msgid "name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"name"
+msgstr "имя"
 
 #: ref/create_function.xml:24(replaceable)
 #: ref/create_function.xml:119(replaceable)
@@ -81,15 +72,8 @@ msgstr "тип_результата"
 
 #: ref/create_function.xml:26(replaceable)
 #: ref/create_function.xml:227(replaceable)
-#, fuzzy
 msgid "column_name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"column_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"column_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя_столбца"
+msgstr "имя_столбца"
 
 #: ref/create_function.xml:26(replaceable)
 #: ref/create_function.xml:240(replaceable)
@@ -103,13 +87,8 @@ msgstr "имя_языка"
 
 #: ref/create_function.xml:28(replaceable)
 #: ref/create_function.xml:265(replaceable)
-#, fuzzy
 msgid "type_name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"type_name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"имя_типа"
+msgstr "имя_типа"
 
 #: ref/create_function.xml:34(replaceable)
 #: ref/create_function.xml:452(replaceable)
@@ -128,23 +107,13 @@ msgstr "параметр_конфигурации"
 
 #: ref/create_function.xml:36(replaceable)
 #: ref/create_function.xml:482(replaceable)
-#, fuzzy
 msgid "value"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"value\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"значение"
+msgstr "значение"
 
 #: ref/create_function.xml:37(replaceable)
 #: ref/create_function.xml:513(replaceable)
-#, fuzzy
 msgid "definition"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"определение\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"definition"
+msgstr "определение"
 
 #: ref/create_function.xml:38(replaceable)
 #: ref/create_function.xml:534(replaceable)
@@ -162,7 +131,7 @@ msgid "attribute"
 msgstr "атрибут"
 
 #: ref/create_function.xml:23(synopsis)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE [ OR REPLACE ] FUNCTION\n"
 "    <placeholder-1/> ( [ [ <placeholder-2/> ] [ <placeholder-3/> ] <placeholder-4/> [ { DEFAULT | = } <placeholder-5/> ] [, ...] ] )\n"
@@ -193,6 +162,7 @@ msgstr ""
 "    | IMMUTABLE | STABLE | VOLATILE | [ NOT ] LEAKPROOF\n"
 "    | CALLED ON NULL INPUT | RETURNS NULL ON NULL INPUT | STRICT\n"
 "    | [ EXTERNAL ] SECURITY INVOKER | [ EXTERNAL ] SECURITY DEFINER\n"
+"    | PARALLEL { UNSAFE | RESTRICTED | SAFE }\n"
 "    | COST <placeholder-11/>\n"
 "    | ROWS <placeholder-12/>\n"
 "    | SET <placeholder-13/> { TO <placeholder-14/> | = <placeholder-15/> | FROM CURRENT }\n"
@@ -722,7 +692,7 @@ msgstr ""
 
 #: ref/create_function.xml:415(literal)
 msgid "PARALLEL"
-msgstr ""
+msgstr "PARALLEL"
 
 #: ref/create_function.xml:418(para)
 msgid ""
@@ -734,6 +704,13 @@ msgid ""
 "leader. <literal>PARALLEL SAFE</literal> indicates that the function is safe "
 "to run in parallel mode without restriction."
 msgstr ""
+"Указание <literal>PARALLEL UNSAFE</literal> означает, что эту функцию нельзя "
+"выполнять в параллельном режиме и присутствие такой функции в операторе SQL "
+"приводит к выбору последовательного плана выполнения. Это характеристика "
+"функции по умолчанию. Указание <literal>PARALLEL RESTRICTED</literal> "
+"означает, что функцию можно выполнять в параллельном режиме, но только в "
+"ведущем процессе группы. <literal>PARALLEL SAFE</literal> показывает, что "
+"функция безопасна для выполнения в параллельном режиме без ограничений."
 
 #: ref/create_function.xml:428(para)
 msgid ""
@@ -755,6 +732,25 @@ msgid ""
 "other function. If in doubt, functions should be labeled as <literal>UNSAFE</"
 "literal>, which is the default."
 msgstr ""
+"Функции должны помечаться как небезопасные для параллельного выполнения, "
+"если они изменяют состояние базы данных, вносят изменения в транзакции, "
+"например, используя подтранзакции, обращаются к последовательностям или "
+"пытаются сохранять параметры (например, используя <literal>setval</"
+"literal>). Ограниченно параллельными должны помечаться функции, которые "
+"обращаются к временным таблицам, состоянию клиентского подключения, "
+"курсорам, подготовленным операторам или разнообразному состоянию "
+"обслуживающего процесса, которое система не может синхронизировать в "
+"параллельном режиме (например, <literal>setseed</literal> может выполнять "
+"только ведущий процесс группы, так как изменения, внесённые другим "
+"процессом, не передаются ведущему). Вообще, если функция помечена как "
+"безопасная, тогда как она является ограниченной или небезопасной, либо если "
+"она помечена как ограниченно безопасная, не являясь безопасной, при попытке "
+"вызвать её в параллельном запросе она может выдавать ошибки или неверные "
+"результаты. Функции на языке C при неправильной пометке теоретически могут "
+"проявлять полностью неопределённое поведение, так как система никак не может "
+"защититься от произвольного кода на C, но чаще все они будут вести себя не "
+"хуже, чем любая другая функция. В случае сомнений функцию следует помечать "
+"как небезопасную (<literal>UNSAFE</literal>), что и имеет место по умолчанию."
 
 #: ref/create_function.xml:455(para)
 msgid ""
@@ -995,15 +991,8 @@ msgstr ""
 "ошибкой из-за неоднозначности в выборе вызываемой функции."
 
 #: ref/create_function.xml:638(title)
-#, fuzzy
 msgid "Notes"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Примечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания"
+msgstr "Замечания"
 
 #: ref/create_function.xml:640(para)
 msgid ""
@@ -1188,7 +1177,6 @@ msgid "<primary>pg_temp</primary><secondary>securing functions</secondary>"
 msgstr "<primary>pg_temp</primary><secondary>защищённые функции</secondary>"
 
 #: ref/create_function.xml:731(para)
-#, fuzzy
 msgid ""
 "Because a <literal>SECURITY DEFINER</literal> function is executed with the "
 "privileges of the user that created it, care is needed to ensure that the "

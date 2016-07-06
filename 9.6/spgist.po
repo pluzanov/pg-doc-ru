@@ -115,15 +115,8 @@ msgid "Built-in <acronym>SP-GiST</acronym> Operator Classes"
 msgstr "Встроенные классы операторов <acronym>SP-GiST</acronym>"
 
 #: spgist.xml:70(entry)
-#, fuzzy
 msgid "Name"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Имя\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Name\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Название"
+msgstr "Имя"
 
 #: spgist.xml:71(entry)
 msgid "Indexed Data Type"
@@ -233,17 +226,8 @@ msgid "text_ops"
 msgstr "text_ops"
 
 #: spgist.xml:135(type)
-#, fuzzy
 msgid "text"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"text\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"текст\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"text\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"text"
+msgstr "text"
 
 #: spgist.xml:137(literal)
 msgid "&lt;"
@@ -422,13 +406,8 @@ msgid "The five user-defined methods are:"
 msgstr "Пользователь должен определить следующие пять методов:"
 
 #: spgist.xml:240(function)
-#, fuzzy
 msgid "config"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"конфигурация\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"config"
+msgstr "config"
 
 #: spgist.xml:242(para)
 msgid ""
@@ -983,7 +962,7 @@ msgid "CREATE FUNCTION my_inner_consistent(internal, internal) RETURNS void ..."
 msgstr "CREATE FUNCTION my_inner_consistent(internal, internal) RETURNS void ..."
 
 #: spgist.xml:542(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef struct spgInnerConsistentIn\n"
 "{\n"
@@ -1020,7 +999,9 @@ msgstr ""
 "    int         nkeys;          /* длина массива */\n"
 "\n"
 "    Datum       reconstructedValue;     /* значение, восстановленное для родителя */\n"
-"    int         level;          /* текущий уровень (отсчитывая от нуля) */\n"
+"    void       *traversalValue; /* переходящее значение, специфичное для класса операторов */\n"
+"    MemoryContext traversalMemoryContext;\n"
+"    int         level;          /* текущий уровень (отсчитывается от нуля) */\n"
 "    bool        returnData;     /* нужно ли возвращать исходные данные? */\n"
 "\n"
 "    /* Данные из текущего внутреннего кортежа */\n"
@@ -1037,10 +1018,11 @@ msgstr ""
 "    int        *nodeNumbers;    /* их номера в массиве узлов */\n"
 "    int        *levelAdds;      /* шаги увеличения уровня для этих узлов */\n"
 "    Datum      *reconstructedValues;    /* связанные восстановленные значения */\n"
+"    void      **traversalValues;        /* переходящие значения, специфичные для класса операторов */\n"
+"\n"
 "} spgInnerConsistentOut;"
 
 #: spgist.xml:534(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -1113,10 +1095,13 @@ msgstr ""
 "<structfield>prefixDatum</structfield> находится его значение. В "
 "<structfield>nNodes</structfield> задаётся число дочерних узлов, "
 "содержащихся во внутреннем кортеже, а в <structfield>nodeLabels</"
-"structfield> — массив их меток, либо NULL, если они не имеют меток."
+"structfield> — массив их меток, либо NULL, если они не имеют меток. В "
+"<structfield>traversalValue</structfield> передаётся указатель на данные, "
+"которые получает функция <function>inner_consistent</function>, вызываемая "
+"для дочерних узлов после вызова внешней <function>inner_consistent</"
+"function> для родительских узлов."
 
 #: spgist.xml:607(para)
-#, fuzzy
 msgid ""
 "<structfield>nNodes</structfield> must be set to the number of child nodes "
 "that need to be visited by the search, and <structfield>nodeNumbers</"
@@ -1152,7 +1137,14 @@ msgstr ""
 "равным NULL. Заметьте, что функция <function>inner_consistent</function> "
 "сама должна выделять память, используя palloc, для массивов "
 "<structfield>nodeNumbers</structfield>, <structfield>levelAdds</structfield> "
-"и <structfield>reconstructedValues</structfield>."
+"и <structfield>reconstructedValues</structfield>. Иногда возникает "
+"необходимость накапливать некоторую информацию при перемещении от "
+"родительского к дочернему узлу. В этом случае в массиве "
+"<structfield>traversalValues</structfield> сохраняется указатель на "
+"специфические данные, которые требуется накапливать для каждого дочернего "
+"узла. Память для массива <structfield>traversalValues</structfield> следует "
+"выделять в обычном контексте, но каждый элемент его нужно размещать в "
+"<structfield>traversalMemoryContext</structfield>."
 
 #: spgist.xml:636(function)
 msgid "leaf_consistent"
@@ -1168,7 +1160,7 @@ msgid "CREATE FUNCTION my_leaf_consistent(internal, internal) RETURNS bool ..."
 msgstr "CREATE FUNCTION my_leaf_consistent(internal, internal) RETURNS bool ..."
 
 #: spgist.xml:649(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef struct spgLeafConsistentIn\n"
 "{\n"
@@ -1194,6 +1186,7 @@ msgstr ""
 "    ScanKey     scankeys;       /* массив операторов и искомых значений */\n"
 "    int         nkeys;          /* длина массива */\n"
 "\n"
+"    void       *traversalValue; /* переходящее значение, специфичное для класса операторов */\n"
 "    Datum       reconstructedValue;     /* значение, восстановленное для родителя */\n"
 "    int         level;          /* текущий уровень (отсчитывая от нуля) */\n"
 "    bool        returnData;     /* нужно ли возвращать исходные данные? */\n"
@@ -1204,7 +1197,7 @@ msgstr ""
 "typedef struct spgLeafConsistentOut\n"
 "{\n"
 "    Datum       leafValue;      /* восстановленные исходные данные, при наличии */\n"
-"    bool        recheck;        /* true, если оператор нужно перепроверить*/\n"
+"    bool        recheck;        /* true, если оператор нужно перепроверить */\n"
 "} spgLeafConsistentOut;"
 
 #: spgist.xml:642(para)

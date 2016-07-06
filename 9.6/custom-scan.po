@@ -138,7 +138,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: custom-scan.xml:66(para)
-#, fuzzy
 msgid ""
 "<structfield>path</structfield> must be initialized as for any other path, "
 "including the row-count estimate, start and total cost, and sort ordering "
@@ -176,9 +175,11 @@ msgstr ""
 "Сохранять их нужно в форме, которую может принять <literal>nodeToString</"
 "literal>, чтобы отладочные процедуры, пытающиеся вывести нестандартный путь, "
 "работали ожидаемым образом. Поле <structfield>methods</structfield> должно "
-"указывать на (обычно статически размещённый) объект, реализующий требуемые "
-"методы нестандартного пути (на данный момент это два метода, подробнее "
-"описанные ниже)."
+"указывать на объект (обычно статически размещённый), реализующий требуемые "
+"методы нестандартного пути (на данный момент это один метод). В этом объекте "
+"также должны быть инициализированы поля <structfield>LibraryName</"
+"structfield> и <structfield>SymbolName</structfield>, чтобы динамический "
+"загрузчик мог разрешить их и загрузить таблицу методов."
 
 #: custom-scan.xml:93(programlisting)
 #, no-wrap
@@ -574,14 +575,13 @@ msgstr ""
 "установлен флаг <literal>CUSTOMPATH_SUPPORT_MARK_RESTORE</literal>."
 
 #: custom-scan.xml:279(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Size (*EstimateDSMCustomScan) (CustomScanState *node,\n"
 "                               ParallelContext *pcxt);"
 msgstr ""
-"void (*BeginCustomScan) (CustomScanState *node,\n"
-"                         EState *estate,\n"
-"                         int eflags);"
+"Size (*EstimateDSMCustomScan) (CustomScanState *node,\n"
+"                               ParallelContext *pcxt);"
 
 #: custom-scan.xml:278(para)
 msgid ""
@@ -591,17 +591,23 @@ msgid ""
 "bytes. This callback is optional, and need only be supplied if this custom "
 "scan provider supports parallel execution."
 msgstr ""
+"<placeholder-1/> Оценивает объём динамической разделяемой памяти, которая "
+"потребуется для параллельной операции. Это значение может превышать объём, "
+"который будет занят фактически, но не должно быть меньше. Возвращаемое "
+"значение задаётся в байтах. Этот обработчик не является обязательным и "
+"должен устанавливаться, только если провайдер нестандартного сканирования "
+"поддерживает параллельное выполнение."
 
 #: custom-scan.xml:289(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "void (*InitializeDSMCustomScan) (CustomScanState *node,\n"
 "                                 ParallelContext *pcxt,\n"
 "                                 void *coordinate);"
 msgstr ""
-"void (*ExplainCustomScan) (CustomScanState *node,\n"
-"                           List *ancestors,\n"
-"                           ExplainState *es);"
+"void (*InitializeDSMCustomScan) (CustomScanState *node,\n"
+"                                 ParallelContext *pcxt,\n"
+"                                 void *coordinate);"
 
 #: custom-scan.xml:288(para)
 msgid ""
@@ -612,17 +618,23 @@ msgid ""
 "need only be supplied if this custom scan provider supports parallel "
 "execution."
 msgstr ""
+"<placeholder-1/> Инициализирует динамическую разделяемую память, которая "
+"потребуется для параллельной операции; <literal>coordinate</literal> "
+"указывает на выделяемый размер, равный возвращаемому значению "
+"<function>EstimateDSMCustomScan</function>. Этот обработчик является "
+"необязательным и должен устанавливаться, только если провайдер "
+"нестандартного сканирования поддерживает параллельное выполнение."
 
 #: custom-scan.xml:300(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "void (*InitializeWorkerCustomScan) (CustomScanState *node,\n"
 "                                    shm_toc *toc,\n"
 "                                    void *coordinate);"
 msgstr ""
-"void (*ExplainCustomScan) (CustomScanState *node,\n"
-"                           List *ancestors,\n"
-"                           ExplainState *es);"
+"void (*InitializeWorkerCustomScan) (CustomScanState *node,\n"
+"                                    shm_toc *toc,\n"
+"                                    void *coordinate);"
 
 #: custom-scan.xml:299(para)
 msgid ""
@@ -631,6 +643,11 @@ msgid ""
 "literal>. This callback is optional, and needs only be supplied if this "
 "custom path supports parallel execution."
 msgstr ""
+"<placeholder-1/> Инициализирует собственное состояние параллельного "
+"исполнителя на основе общего состояния, заданного ведущим исполнителем при "
+"вызове <literal>InitializeDSMCustomScan</literal>. Этот обработчик является "
+"необязательным и должен устанавливаться, только если провайдер "
+"нестандартного сканирования поддерживает параллельное выполнение."
 
 #: custom-scan.xml:310(programlisting)
 #, no-wrap

@@ -71,7 +71,7 @@ msgstr "-D"
 
 #: ref/pg_resetxlog.xml:29(replaceable)
 msgid "datadir"
-msgstr "datadir"
+msgstr "каталог_данных"
 
 #: ref/pg_resetxlog.xml:34(title)
 msgid "Description"
@@ -148,19 +148,17 @@ msgstr ""
 "так как это может привести к ещё более печальным последствиям."
 
 #: ref/pg_resetxlog.xml:77(title)
-#, fuzzy
 msgid "Options"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Параметры\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Аргументы"
+msgstr "Параметры"
 
 #: ref/pg_resetxlog.xml:83(para)
 msgid ""
 "Force <command>pg_resetxlog</command> to proceed even if it cannot determine "
 "valid data for <filename>pg_control</filename>, as explained above."
 msgstr ""
+"Принудительно выполнять <command>pg_resetxlog</command>, даже если не "
+"удаётся получить приемлемые данные из <filename>pg_control</filename>, как "
+"описано выше."
 
 #: ref/pg_resetxlog.xml:93(para)
 msgid ""
@@ -208,24 +206,29 @@ msgid ""
 "take numeric arguments, hexadecimal values can be specified by using the "
 "prefix <literal>0x</literal>."
 msgstr ""
+"Следующие параметры необходимы, только когда <command>pg_resetxlog</command> "
+"не может определить подходящие значения, прочитав <filename>pg_control</"
+"filename>. Безопасные значения можно определить, как описано ниже. Для "
+"значений, принимающих числовые аргументы, можно задать шестнадцатеричные "
+"значения, добавив префикс <literal>0x</literal>."
 
 #: ref/pg_resetxlog.xml:127(term)
-#, fuzzy
 msgid ""
 "<option>-c</option> <replaceable class=\"parameter\">xid</replaceable>,"
 "<replaceable class=\"parameter\">xid</replaceable>"
 msgstr ""
-"pg_restore -d <replaceable class=\"parameter\">имя_базы</replaceable> "
-"<replaceable class=\"parameter\">имя_файла</replaceable>"
+"<option>-c</option> <replaceable class=\"parameter\">xid</replaceable>,"
+"<replaceable class=\"parameter\">xid</replaceable>"
 
 #: ref/pg_resetxlog.xml:129(para)
 msgid ""
 "Manually set the oldest and newest transaction IDs for which the commit time "
 "can be retrieved."
 msgstr ""
+"Вручную задать идентификаторы старейшей и новейшей транзакций, для которых "
+"можно получить время фиксации."
 
 #: ref/pg_resetxlog.xml:134(para)
-#, fuzzy
 msgid ""
 "A safe value for the oldest transaction ID for which the commit time can be "
 "retrieved (first part) can be determined by looking for the numerically "
@@ -236,14 +239,13 @@ msgid ""
 "file names are in hexadecimal."
 msgstr ""
 "Безопасное значение идентификатора старейшей транзакции, для которой можно "
-"получить время фиксации (первая часть <option>-c</option>), можно "
-"определить, найдя наименьшее в числовом виде имя файла в каталоге "
-"<filename>pg_commit_ts</filename> внутри каталога данных. Безопасное "
-"значение идентификатора новейшей транзакции, для которой можно получить "
-"время фиксации (вторая часть <option>-c</option>), можно определить, найдя, "
-"напротив, наибольшее в числовом виде имя файла в том же каталоге. Числа в "
-"именах этих файлов, как и предыдущих, представлены в шестнадцатеричном "
-"формате."
+"получить время фиксации (первый компонент), можно определить, найдя "
+"наименьшее в числовом виде имя файла в каталоге <filename>pg_commit_ts</"
+"filename> внутри каталога данных. Безопасное значение идентификатора "
+"новейшей транзакции, для которой можно получить время фиксации (второй "
+"компонент), можно определить, найдя, напротив, наибольшее в числовом виде "
+"имя файла в том же каталоге. Числа в именах этих файлов представлены в "
+"шестнадцатеричном формате."
 
 #: ref/pg_resetxlog.xml:148(option)
 msgid "-e"
@@ -255,7 +257,7 @@ msgstr "xid_epoch"
 
 #: ref/pg_resetxlog.xml:150(para)
 msgid "Manually set the next transaction ID's epoch."
-msgstr ""
+msgstr "Вручную задать эпоху в ID следующей транзакции."
 
 #: ref/pg_resetxlog.xml:154(para)
 msgid ""
@@ -285,10 +287,9 @@ msgstr "xlogfile"
 
 #: ref/pg_resetxlog.xml:170(para)
 msgid "Manually set the WAL starting address."
-msgstr ""
+msgstr "Вручную задать начальный адрес WAL."
 
 #: ref/pg_resetxlog.xml:174(para)
-#, fuzzy
 msgid ""
 "The WAL starting address should be larger than any WAL segment file name "
 "currently existing in the directory <filename>pg_xlog</filename> under the "
@@ -298,14 +299,13 @@ msgid ""
 "the largest entry in <filename>pg_xlog</filename>, use <literal>-l "
 "00000001000000320000004B</literal> or higher."
 msgstr ""
-"Начальный адрес журнала WAL (<option>-l</option>) должен превышать "
-"наибольшее значение сегмента в имени файла, расположенного в каталоге "
-"<filename>pg_xlog</filename>. Имена также представлены в шестнадцатеричном "
-"формате и состоят из трёх частей. Первая из них это <quote>ID временного "
-"интервала</quote> (обычно оставляют неизменным), например, если "
-"<filename>00000001000000320000004A</filename> имеет наибольшее значение в "
-"<filename>pg_xlog</filename>, то можно использовать <literal>-l "
-"00000001000000320000004B</literal>, либо выше."
+"Начальный адрес журнала WAL должен превышать наибольшее значение сегмента в "
+"имени файла, расположенного в каталоге <filename>pg_xlog</filename>. Эти "
+"имена тоже представлены в шестнадцатеричном формате и состоят из трёх "
+"частей. Первая из них — <quote>ID линии времени</quote> и её обычно не "
+"следует менять. Например, если <filename>00000001000000320000004A</filename> "
+"— наибольшее значение в <filename>pg_xlog</filename>, нужно указать "
+"<literal>-l 00000001000000320000004B</literal> или большее число."
 
 #: ref/pg_resetxlog.xml:185(para)
 msgid ""
@@ -326,20 +326,18 @@ msgstr ""
 "полной потере данных в <filename>pg_xlog</filename>."
 
 #: ref/pg_resetxlog.xml:199(term)
-#, fuzzy
 msgid ""
 "<option>-m</option> <replaceable class=\"parameter\">mxid</replaceable>,"
 "<replaceable class=\"parameter\">mxid</replaceable>"
 msgstr ""
-"pg_restore -d <replaceable class=\"parameter\">имя_базы</replaceable> "
-"<replaceable class=\"parameter\">имя_файла</replaceable>"
+"<option>-m</option> <replaceable class=\"parameter\">mxid</replaceable>,"
+"<replaceable class=\"parameter\">mxid</replaceable>"
 
 #: ref/pg_resetxlog.xml:201(para)
 msgid "Manually set the next and oldest multitransaction ID."
-msgstr ""
+msgstr "Вручную задать ID следующей и старейшей мультитранзакции."
 
 #: ref/pg_resetxlog.xml:205(para)
-#, fuzzy
 msgid ""
 "A safe value for the next multitransaction ID (first part) can be determined "
 "by looking for the numerically largest file name in the directory "
@@ -352,15 +350,14 @@ msgid ""
 "append four zeroes."
 msgstr ""
 "Безопасное значение следующего идентификатора мультитранзакции (первый "
-"аргумент параметра <option>-m</option>) можно вычислить, найдя наибольшее "
-"числовое значение среди имён файлов, расположенных в каталоге "
-"<filename>pg_multixact/offsets</filename>. К найденному значению необходимо "
-"прибавить один, затем умножить на 65536. Для вычисления же наиболее старшего "
-"ID мультитранзакции (второй аргумент параметра <option>-m</option>), "
-"необходимо найти наименьшее числовое значение среди тех же файлов, и "
-"умножить его на 65536. Как было описано ранее, имена представлены в "
-"шестнадцатеричном формате, поэтому значения аргументов лучше указывать в нём "
-"же, приписав четыре замыкающих нуля."
+"компонент) можно вычислить, найдя наибольшее числовое значение среди имён "
+"файлов, расположенных в каталоге <filename>pg_multixact/offsets</filename>. "
+"К найденному значению необходимо прибавить один, затем умножить на 65536 "
+"(0x10000). Для вычисления безопасного значения ID старейшей мультитранзакции "
+"(второй компонент <option>-m</option>) необходимо найти наименьшее числовое "
+"значение среди тех же файлов, и умножить его на 65536. Имена файлов "
+"представляются в шестнадцатеричном формате, так что значения проще указывать "
+"в нём же, добавив в конце четыре нуля."
 
 #: ref/pg_resetxlog.xml:220(option)
 msgid "-o"
@@ -372,7 +369,7 @@ msgstr "oid"
 
 #: ref/pg_resetxlog.xml:222(para)
 msgid "Manually set the next OID."
-msgstr ""
+msgstr "Вручную задать следующий OID."
 
 #: ref/pg_resetxlog.xml:226(para)
 msgid ""
@@ -393,10 +390,9 @@ msgstr "mxoff"
 
 #: ref/pg_resetxlog.xml:237(para)
 msgid "Manually set the next multitransaction offset."
-msgstr ""
+msgstr "Вручную задать смещение следующей мультитранзакции."
 
 #: ref/pg_resetxlog.xml:241(para)
-#, fuzzy
 msgid ""
 "A safe value can be determined by looking for the numerically largest file "
 "name in the directory <filename>pg_multixact/members</filename> under the "
@@ -404,12 +400,11 @@ msgid ""
 "names are in hexadecimal. There is no simple recipe such as the ones for "
 "other options of appending zeroes."
 msgstr ""
-"Чтобы определить безопасное значение следующего смещения (<option>-O</"
-"option>), необходимо найти наибольшее числовое значение в имени файла в "
-"каталоге <filename>pg_multixact/members</filename>, прибавить один, а затем "
-"умножить на 52352. Имена файлов также представлены в шестнадцатеричном "
-"формате, однако не существует однозначного решения в добавлении замыкающих "
-"нулей, аналогично ранее описанным."
+"Безопасное значение можно определить, найдя наибольшее числовое значение в "
+"имени файла в каталоге <filename>pg_multixact/members</filename>, прибавив "
+"один и умножив результат на 52352 (0xCC80). Имена файлов представлены в "
+"шестнадцатеричном формате. Простого рецепта с прибавлением нулей в конце, "
+"как для других параметров, в данном случае нет."
 
 #: ref/pg_resetxlog.xml:252(option)
 msgid "-x"
@@ -420,12 +415,10 @@ msgid "xid"
 msgstr "xid"
 
 #: ref/pg_resetxlog.xml:254(para)
-#, fuzzy
 msgid "Manually set the next transaction ID."
-msgstr "прервать текущую транзакцию"
+msgstr "Вручную задать ID следующей транзакции."
 
 #: ref/pg_resetxlog.xml:258(para)
-#, fuzzy
 msgid ""
 "A safe value can be determined by looking for the numerically largest file "
 "name in the directory <filename>pg_clog</filename> under the data directory, "
@@ -435,25 +428,18 @@ msgid ""
 "entry in <filename>pg_clog</filename>, <literal>-x 0x1200000</literal> will "
 "work (five trailing zeroes provide the proper multiplier)."
 msgstr ""
-"Чтобы определить следующее безопасное значение идентификатора транзакции "
-"(<option>-x</option>), необходимо в каталоге <filename>pg_clog</filename> "
-"найти файл, имя которого представляет наибольшее числовое значение, добавить "
-"к нему один и затем умножить на 1048576. Имена файлов представлены в "
-"шестнадцатеричном формате, и значение параметра проще указывать в нём же. "
-"Например, если в <filename>pg_clog</filename> найден файл <filename>0011</"
-"filename>, будет корректным значение <literal>-x 0x1200000</literal> (пять "
-"замыкающих нулей представляют требуемый множитель)."
+"Безопасное значение можно определить, найдя наибольшее числовое значение в "
+"имени файла в подкаталоге <filename>pg_clog</filename> каталога данных, "
+"прибавив один и умножив результат на 1048576 (0x100000). Заметьте, что имена "
+"файлов представлены в шестнадцатеричном формате. Значение этого параметра "
+"обычно также проще задавать в шестнадцатеричном виде. Например, если "
+"<filename>0011</filename> — наибольшее значение в <filename>pg_clog</"
+"filename>, подходящим значением будет <literal>-x 0x1200000</literal> "
+"(нужный множитель дают пять последних нулей)."
 
 #: ref/pg_resetxlog.xml:274(title)
-#, fuzzy
 msgid "Notes"
-msgstr ""
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Примечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания\n"
-"#-#-#-#-#  -  #-#-#-#-#\n"
-"Замечания"
+msgstr "Замечания"
 
 #: ref/pg_resetxlog.xml:276(para)
 msgid ""
