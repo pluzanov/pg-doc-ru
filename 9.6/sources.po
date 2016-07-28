@@ -596,22 +596,22 @@ msgid ""
 "the current statement already."
 msgstr ""
 "<function>errhidestmt(bool hide_stmt)</function> может быть вызвана для "
-"подавления вывода подстроки <literal>STATEMENT:</literal> в журнал главного "
-"процесса. Обычно это уместно, когда само сообщение включает текст текущего "
-"оператора."
+"подавления вывода поля <literal>ОПЕРАТОР:</literal> (<literal>STATEMENT:</"
+"literal>) в журнал сервера. Обычно это уместно, когда само сообщение "
+"включает текст текущего оператора."
 
 #: sources.xml:348(para)
-#, fuzzy
 msgid ""
 "<function>errhidecontext(bool hide_ctx)</function> can be called to specify "
 "suppression of the <literal>CONTEXT:</literal> portion of a message in the "
 "postmaster log. This should only be used for verbose debugging messages "
 "where the repeated inclusion of context would bloat the log volume too much."
 msgstr ""
-"<function>errhidestmt(bool hide_stmt)</function> может быть вызвана для "
-"подавления вывода подстроки <literal>STATEMENT:</literal> в журнал главного "
-"процесса. Обычно это уместно, когда само сообщение включает текст текущего "
-"оператора."
+"<function>errhidecontext(bool hide_ctx)</function> может быть вызвана для "
+"подавления вывода поля <literal>КОНТЕКСТ:</literal> (<literal>CONTEXT:</"
+"literal>) в журнал сервера. Это следует использовать только для подробных "
+"отладочных сообщений, в которых одна и та же информация о контексте, "
+"выводимая в журнал, будет только чрезмерно замусоривать его."
 
 #: sources.xml:143(para)
 msgid ""
@@ -1356,14 +1356,12 @@ msgstr ""
 "излишне не усложнять жизнь переводчикам."
 
 #: sources.xml:833(title)
-#, fuzzy
 msgid "Miscellaneous Coding Conventions"
-msgstr "Функции разного назначения"
+msgstr "Различные соглашения по оформлению кода"
 
 #: sources.xml:836(title)
-#, fuzzy
 msgid "C Standard"
-msgstr "Национальный стандарт"
+msgstr "Стандарт C"
 
 #: sources.xml:837(para)
 msgid ""
@@ -1373,6 +1371,12 @@ msgid ""
 "dependent pieces. Features from later revision of the C standard or compiler "
 "specific features can be used, if a fallback is provided."
 msgstr ""
+"Код в <productname>PostgreSQL</productname> должен использовать только те "
+"возможности языка, что описаны в стандарте C89. Это означает, что код "
+"postgres должен успешно компилироваться компилятором, поддерживающим C89, "
+"возможно, за исключением нескольких платформозависимых мест. Возможности "
+"более поздних ревизий стандарта C или специфические особенности компилятора "
+"могут использоваться, только если предусмотрен и вариант компиляции без них."
 
 #: sources.xml:845(para)
 msgid ""
@@ -1382,16 +1386,21 @@ msgid ""
 "functions without inline, and to using a C89 compatible replacement that "
 "performs the same checks, but emits rather cryptic messages."
 msgstr ""
+"Например, в настоящее время используются конструкции <literal>static inline</"
+"literal> и <literal>_StaticAssert()</literal>, хотя они относятся к более "
+"новым ревизиям стандарта C. Но если они недоступны, мы соответственно "
+"переходим к определению функций без inline, и к использованию альтернативы, "
+"которая совместима с C89 и выполняет те же проверки, но выдаёт довольно "
+"непонятные сообщения."
 
 #: sources.xml:856(title)
-#, fuzzy
 msgid "Function-Like Macros and Inline Functions"
-msgstr "Функция является оконной"
+msgstr "Внедрённые функции и макросы, подобные функциям"
 
 #: sources.xml:862(programlisting)
 #, no-wrap
 msgid "#define Max(x, y)       ((x) &gt; (y) ? (x) : (y))"
-msgstr ""
+msgstr "#define Max(x, y)       ((x) &gt; (y) ? (x) : (y))"
 
 #: sources.xml:857(para)
 msgid ""
@@ -1402,6 +1411,13 @@ msgid ""
 "macros, or at least easier. For example because expressions of various types "
 "need to be passed to the macro."
 msgstr ""
+"Допускается использование и макросов с аргументами, и функций "
+"<literal>static inline</literal>. Последний вариант предпочтительнее, если "
+"возникает риск множественного вычисления выражений в макросе, как например в "
+"случае с <placeholder-1/> или когда макрос может быть слишком объёмным. В "
+"других случаях использовать макросы — единственный, или как минимум более "
+"простой вариант. Например, может быть полезна возможность передавать макросу "
+"выражения различных типов."
 
 #: sources.xml:872(programlisting)
 #, no-wrap
@@ -1417,6 +1433,16 @@ msgid ""
 "}\n"
 "#endif   /* FRONTEND */"
 msgstr ""
+"#ifndef FRONTEND\n"
+"static inline MemoryContext\n"
+"MemoryContextSwitchTo(MemoryContext context)\n"
+"{\n"
+"    MemoryContext old = CurrentMemoryContext;\n"
+"\n"
+"    CurrentMemoryContext = context;\n"
+"    return old;\n"
+"}\n"
+"#endif   /* FRONTEND */"
 
 #: sources.xml:867(para)
 msgid ""
@@ -1429,11 +1455,18 @@ msgid ""
 "emit references to symbols contained in inline functions even if the "
 "function is not used."
 msgstr ""
+"Когда определение внедрённой функции обращается к символам (переменным, "
+"функциям), доступным только в серверном коде, такая функция не должна быть "
+"видна при включении в клиентский код. <placeholder-1/> В этом примере "
+"вызывается функция <literal>CurrentMemoryContext</literal>, существующая "
+"только на стороне сервера, и поэтому функция скрыта директивой "
+"<literal>#ifndef FRONTEND</literal>. Это правило введено, потому что "
+"некоторые компиляторы генерируют указатели на символы, фигурирующие во "
+"внедрённых функциях, даже когда эти функции не используются."
 
 #: sources.xml:891(title)
-#, fuzzy
 msgid "Writing Signal Handlers"
-msgstr "Написание обёртки сторонних данных"
+msgstr "Написание обработчиков сигналов"
 
 #: sources.xml:892(para)
 msgid ""
@@ -1444,6 +1477,13 @@ msgid ""
 "happens if a signal handler tries to acquire a lock that's already held in "
 "the interrupted code."
 msgstr ""
+"Чтобы код мог выполняться внутри обработчика сигналов, его нужно написать "
+"очень аккуратно. Фундаментальная сложность состоит в том, что обработчик "
+"сигнала может прервать код в любой момент, если он не отключён. Если код "
+"внутри обработчика сигнала использует то же состояние, что и внешний "
+"основной код, это может привести к хаосу. В качестве примера представьте, "
+"что произойдёт, если обработчик сигнала попытается получить ту же "
+"блокировку, которой уже владеет прерванный код."
 
 #: sources.xml:901(para)
 msgid ""
@@ -1452,6 +1492,12 @@ msgid ""
 "<literal>volatile sig_atomic_t</literal>. A few functions in postgres are "
 "also deemed signal safe, importantly <literal>SetLatch()</literal>."
 msgstr ""
+"Если не предпринимать специальных мер, код в обработчиках сигналов может "
+"вызывать только безопасные с точки зрения асинхронных сигналов функции (как "
+"это определяется в POSIX) и обращаться к переменным типа <literal>volatile "
+"sig_atomic_t</literal>. Также безопасными для обработчиков сигналов "
+"считаются несколько функций в postgres, в том числе, что важно, "
+"<literal>SetLatch()</literal>."
 
 #: sources.xml:913(programlisting)
 #, no-wrap
@@ -1467,6 +1513,16 @@ msgid ""
 "    errno = save_errno;\n"
 "}"
 msgstr ""
+"static void\n"
+"handle_sighup(SIGNAL_ARGS)\n"
+"{\n"
+"    int         save_errno = errno;\n"
+"\n"
+"    got_SIGHUP = true;\n"
+"    SetLatch(MyLatch);\n"
+"\n"
+"    errno = save_errno;\n"
+"}"
 
 #: sources.xml:908(para)
 msgid ""
@@ -1477,6 +1533,12 @@ msgid ""
 "<literal>SetLatch()</literal> might change it. If that were not done "
 "interrupted code that's currently inspecting errno might see the wrong value."
 msgstr ""
+"В большинстве случаев обработчики событий должны только сообщить о "
+"поступлении сигнала и пробудить код снаружи обработчика, используя защёлку. "
+"Например, обработчик может быть таким: <placeholder-1/>\n"
+"Переменная <literal>errno</literal> сохраняется и восстанавливается, так как "
+"её может изменить <literal>SetLatch()</literal>. Если этого не сделать, "
+"прерванный код, считывая errno, мог бы получить некорректное значение."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: sources.xml:0(None)

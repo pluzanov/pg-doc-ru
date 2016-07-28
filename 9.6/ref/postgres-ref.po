@@ -792,6 +792,9 @@ msgid ""
 "The following options only apply to the single-user mode (see <xref linkend="
 "\"app-postgres-single-user\" endterm=\"app-postgres-single-user-title\"/>)."
 msgstr ""
+"Следующие параметры применимы только для однопользовательского режима (см. "
+"<xref remap=\"4\" linkend=\"app-postgres-single-user\" endterm=\"app-"
+"postgres-single-user-title\"/>)."
 
 #: ref/postgres-ref.xml:540(option)
 msgid "--single"
@@ -825,6 +828,8 @@ msgstr "-E"
 #: ref/postgres-ref.xml:563(para)
 msgid "Echo all commands to standard output before executing them."
 msgstr ""
+"Выводить все команды в устройство стандартного вывода прежде чем выполнять "
+"их."
 
 #: ref/postgres-ref.xml:570(option)
 msgid "-j"
@@ -835,6 +840,8 @@ msgid ""
 "Use semicolon followed by two newlines, rather than just newline, as the "
 "command entry terminator."
 msgstr ""
+"Считать признаком окончания ввода команды точку с запятой с двумя переводами "
+"строки, а не один перевод строки."
 
 #: ref/postgres-ref.xml:580(option)
 msgid "-r"
@@ -1066,9 +1073,8 @@ msgstr ""
 "предоставлен обходной путь, если ошибка так и не будет устранена."
 
 #: ref/postgres-ref.xml:754(title)
-#, fuzzy
 msgid "Single-User Mode"
-msgstr "Параметры для однопользовательского режима"
+msgstr "Однопользовательский режим"
 
 #: ref/postgres-ref.xml:756(para)
 msgid ""
@@ -1087,7 +1093,6 @@ msgstr ""
 "envar>. Также замените имя базы данных на необходимое."
 
 #: ref/postgres-ref.xml:764(para)
-#, fuzzy
 msgid ""
 "Normally, the single-user mode server treats newline as the command entry "
 "terminator; there is no intelligence about semicolons, as there is in "
@@ -1096,11 +1101,13 @@ msgid ""
 "The backslash and adjacent newline are both dropped from the input command. "
 "Note that this will happen even when within a string literal or comment."
 msgstr ""
-"Обычно символ перевода каретки в однопользовательском режиме трактуется как "
-"завершение ввода команды. При этом точка с запятой подобным образом не "
-"обрабатывается, как это делается в <application>psql</application>. Для того "
-"чтобы ввести много-строчную команду, необходимо добавить обратный слэш перед "
-"каждой новой строкой."
+"Обычно перевод строки в однопользовательском режиме сервер воспринимает как "
+"завершение ввода команды; точка с запятой не имеет для него такого значения, "
+"как для <application>psql</application>. Поэтому, чтобы ввести команду, "
+"занимающую несколько строк, необходимо добавлять в конце каждой строки, "
+"кроме последней, обратную косую черту. Обратная косая черта и следующий за "
+"ней символ перевода строки автоматически убираются из вводимой команды. "
+"Заметьте, что это происходит даже внутри строковой константы или комментария."
 
 #: ref/postgres-ref.xml:774(para)
 msgid ""
@@ -1111,6 +1118,14 @@ msgid ""
 "there is no intelligence about such a sequence appearing within a string "
 "literal or comment."
 msgstr ""
+"Но если применить аргумент командной строки <option>-j</option>, одиночный "
+"символ перевода строки не будет завершать ввод команды; это будет делать "
+"последовательность &laquo;точка с запятой, перевод строки, перевод "
+"строки&raquo;. То есть для завершения команды нужно ввести точку с запятой, "
+"и сразу за ней пустую строку. Просто точка с запятой, дополненная переводом "
+"строки, в этом режиме не имеет специального значения. Внутри строковых "
+"констант и комментариев такая завершающая последовательность воспринимается "
+"в том же ключе."
 
 #: ref/postgres-ref.xml:783(para)
 msgid ""
@@ -1119,9 +1134,12 @@ msgid ""
 "When you do type a command entry terminator, the multiple statements you've "
 "entered will be executed as a single transaction."
 msgstr ""
+"Вне зависимости от режима ввода, символ точки с запятой, введённый не прямо "
+"перед или в составе последовательности завершения команды, воспринимается "
+"как разделитель команд. После ввода завершающей последовательности введённые "
+"с разделителями несколько операторов будут выполняться в одной транзакции."
 
 #: ref/postgres-ref.xml:790(para)
-#, fuzzy
 msgid ""
 "To quit the session, type <acronym>EOF</acronym> (<keycombo action=\"simul"
 "\"><keycap>Control</keycap><keycap>D</keycap></keycombo>, usually). If "
@@ -1129,22 +1147,24 @@ msgid ""
 "<acronym>EOF</acronym> will be taken as a command entry terminator, and "
 "another <acronym>EOF</acronym> will be needed to exit."
 msgstr ""
-"Для завершения сессии, введите <acronym>EOF</acronym> (обычно <keycombo "
-"action=\"simul\" moreinfo=\"none\"><keycap>Control</keycap><keycap>D</"
-"keycap></keycombo>). Если использовался флаг <option>-j</option>, то для "
-"выхода необходимо ввести <acronym>EOF</acronym> дважды."
+"Для завершения сеанса введите символ конца файла (<acronym>EOF</acronym>, "
+"обычно это сочетание <keycombo action=\"simul\"><keycap>Control</"
+"keycap><keycap>D</keycap></keycombo>). Если вы вводили текст после окончания "
+"ввода последней команды, символ <acronym>EOF</acronym> будет воспринят как "
+"символ завершения команды, и для выхода потребуется ещё один <acronym>EOF</"
+"acronym>."
 
 #: ref/postgres-ref.xml:798(para)
-#, fuzzy
 msgid ""
 "Note that the single-user mode server does not provide sophisticated line-"
 "editing features (no command history, for example). Single-user mode also "
 "does not do any background processing, such as automatic checkpoints or "
 "replication."
 msgstr ""
-"Одно-пользовательский режим не предоставляет особых средств работы с "
-"командной строкой, например, нет истории выполнявшихся команд. Также нет "
-"никакой фоновой обработки, например, автоматических контрольных точек."
+"Заметьте, что однопользовательский режим не предоставляет особых "
+"возможностей для редактирования команд (например, нет истории команд). Также "
+"в однопользовательском режиме не производятся никакие фоновые действия, "
+"например, не выполняются автоматические контрольные точки или репликация."
 
 #: ref/postgres-ref.xml:807(title)
 msgid "Examples"

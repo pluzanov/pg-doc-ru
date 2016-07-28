@@ -663,6 +663,12 @@ msgid ""
 "<placeholder-2/> Using <literal>Type=notify</literal> requires that the "
 "server binary was built with <literal>configure --with-systemd</literal>."
 msgstr ""
+"Используя <application>systemd</application>, вы можете применить следующий "
+"файл описания службы (например, <filename>/etc/systemd/system/postgresql."
+"service</filename>):<placeholder-1/>\n"
+"<placeholder-2/> Для использования <literal>Type=notify</literal> требуется, "
+"чтобы сервер был скомпилирован с указанием <literal>configure --with-"
+"systemd</literal>."
 
 #: runtime.xml:376(para)
 msgid ""
@@ -673,6 +679,13 @@ msgid ""
 "crash recovery at startup could take much longer to become ready. The "
 "suggested value of 0 disables the timeout logic."
 msgstr ""
+"Особого внимания заслуживает значение таймаута. На момент написания этой "
+"документации по умолчанию в <application>systemd</application> принят "
+"таймаут 90 секунд, так что процесс, не сообщивший о своей готовности за это "
+"время, будет уничтожен. Но серверу <productname>PostgreSQL</productname> при "
+"запуске может потребоваться выполнить восстановление после сбоя, так что "
+"переход в состояние готовности может занять гораздо больше времени. "
+"Предлагаемое значение 0 отключает логику таймаута."
 
 #: runtime.xml:393(indexterm)
 msgid "<primary>NetBSD</primary><secondary>start script</secondary>"
@@ -2191,7 +2204,6 @@ msgid "sysctl -w vm.overcommit_memory=2"
 msgstr "sysctl -w vm.overcommit_memory=2"
 
 #: runtime.xml:1270(para)
-#, fuzzy
 msgid ""
 "On Linux 2.6 and later, it is possible to modify the kernel's behavior so "
 "that it will not <quote>overcommit</quote> memory. Although this setting "
@@ -2214,8 +2226,8 @@ msgstr ""
 "воспользовавшись <command>sysctl</command>: <placeholder-1/> либо поместив "
 "соответствующую запись в <filename>/etc/sysctl.conf</filename>. Возможно, вы "
 "также захотите изменить связанный параметр <varname>vm.overcommit_ratio</"
-"varname>. За подробностями обратитесь к документации ядра "
-"<filename>Documentation/vm/overcommit-accounting</filename>."
+"varname>. За подробностями обратитесь к документации ядра <ulink url="
+"\"https://www.kernel.org/doc/Documentation/vm/overcommit-accounting\"/>."
 
 #: runtime.xml:1291(programlisting)
 #, no-wrap
@@ -2408,7 +2420,6 @@ msgstr ""
 "достаточного количества огромных страниц."
 
 #: runtime.xml:1381(para)
-#, fuzzy
 msgid ""
 "For a detailed description of the <productname>Linux</productname> huge "
 "pages feature have a look at <ulink url=\"https://www.kernel.org/doc/"
@@ -2416,8 +2427,7 @@ msgid ""
 msgstr ""
 "Более подробно о механизме огромных страниц в <productname>Linux</"
 "productname> можно узнать в документации ядра: <ulink url=\"https://www."
-"kernel.org/doc/Documentation/vm/hugetlbpage.txt\">https://www.kernel.org/doc/"
-"Documentation/vm/hugetlbpage.txt</ulink>."
+"kernel.org/doc/Documentation/vm/hugetlbpage.txt\"/>."
 
 #: runtime.xml:1392(title)
 msgid "Shutting Down the Server"
@@ -2813,7 +2823,6 @@ msgstr ""
 "userinput></screen>"
 
 #: runtime.xml:1653(para)
-#, fuzzy
 msgid ""
 "To make the backup, you can use the <application>pg_dumpall</application> "
 "command from the version you are currently running; see <xref linkend="
@@ -2830,10 +2839,10 @@ msgstr ""
 "<application>pg_dumpall</application> от текущей версии сервера; за "
 "подробностями обратитесь к <xref remap=\"3\" linkend=\"backup-dump-all\"/>. "
 "Однако для лучшего результата стоит попробовать <application>pg_dumpall</"
-"application> из <productname>PostgreSQL</productname> 9.5.3, так как в эту "
-"версию вошли исправления ошибок и усовершенствования, по сравнению с "
+"application> из <productname>PostgreSQL</productname> &version;, так как в "
+"эту версию вошли исправления ошибок и усовершенствования, по сравнению с "
 "предыдущими версиями. Хотя этот совет может показаться абсурдным, ведь новая "
-"версия ещё не установлена, всё же стоит последовать ему, если вы планируете "
+"версия ещё не установлена, ему стоит последовать, если вы планируете "
 "установить новую версию рядом со старой. В этом случае вы сможете выполнить "
 "установку как обычно, а перенести данные позже. Это также сократит время "
 "обновления."
@@ -2876,7 +2885,6 @@ msgstr ""
 "чтобы относительные пути в нём не изменились.)"
 
 #: runtime.xml:1698(para)
-#, fuzzy
 msgid ""
 "Install the new version of <productname>PostgreSQL</productname> as outlined "
 "in <phrase condition=\"standalone\">the next section.</phrase>\n"
@@ -2884,7 +2892,9 @@ msgid ""
 "phrase>"
 msgstr ""
 "Установите новую версию <productname>PostgreSQL</productname> как описано в "
-"<xref remap=\"6\" linkend=\"install-procedure\"/>."
+"<phrase condition=\"standalone\">следующем разделе.</phrase>\n"
+"      <phrase condition=\"default\"><xref remap=\"6\" linkend=\"install-"
+"procedure\"/>.</phrase>"
 
 #: runtime.xml:1710(userinput)
 #, no-wrap
@@ -3374,7 +3384,6 @@ msgstr ""
 "причинам использовать шифры NULL не рекомендуется."
 
 #: runtime.xml:2039(para)
-#, fuzzy
 msgid ""
 "To start in <acronym>SSL</acronym> mode, files containing the server "
 "certificate and private key must exist. By default, these files are expected "
@@ -3388,12 +3397,7 @@ msgstr ""
 "файлы <filename>server.crt</filename> и <filename>server.key</filename>, "
 "соответственно, расположенные в каталоге данных, но можно использовать и "
 "другие имена и местоположения файлов, задав их в конфигурационных параметрах "
-"<xref linkend=\"guc-ssl-cert-file\"/> и <xref linkend=\"guc-ssl-key-file\"/"
-">. В Unix-подобных системах к файлу <filename>server.key</filename> должен "
-"быть запрещён любой доступ группы и всех остальных; чтобы установить такое "
-"ограничение, выполните <command>chmod 0600 server.key</command>. Если "
-"закрытый ключ защищён паролем, сервер запросит пароль и не запустится, пока "
-"этот пароль не будет введён."
+"<xref linkend=\"guc-ssl-cert-file\"/> и <xref linkend=\"guc-ssl-key-file\"/>."
 
 #: runtime.xml:2048(para)
 msgid ""
@@ -3406,12 +3410,23 @@ msgid ""
 "<productname>PostgreSQL</productname> server runs should then be made a "
 "member of the group that has access to those certificate and key files."
 msgstr ""
+"В Unix-подобных системах к файлу <filename>server.key</filename> должен быть "
+"запрещён любой доступ группы и всех остальных; чтобы установить такое "
+"ограничение, выполните <command>chmod 0600 server.key</command>. Возможен и "
+"другой вариант, когда этим файлом владеет root, а группа имеет доступ на "
+"чтение (то есть, маска разрешений <literal>0640</literal>). Данный вариант "
+"предназначен для систем, в которых файлами сертификатов и ключей управляет "
+"сама операционная система. В этом случае пользователь, запускающий сервер "
+"<productname>PostgreSQL</productname>, должен быть членом группы, имеющей "
+"доступ к указанным файлам сертификата и ключа."
 
 #: runtime.xml:2059(para)
 msgid ""
 "If the private key is protected with a passphrase, the server will prompt "
 "for the passphrase and will not start until it has been entered."
 msgstr ""
+"Если закрытый ключ защищён паролем, сервер запросит пароль и не запустится, "
+"пока этот пароль не будет введён."
 
 #: runtime.xml:2065(para)
 msgid ""

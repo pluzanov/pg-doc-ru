@@ -964,6 +964,10 @@ msgid ""
 "precision</type> types round ties to the nearest even number. For example: "
 "<placeholder-1/>"
 msgstr ""
+"При округлении значений тип <type>numeric</type> выдаёт число, большее по "
+"модулю, тогда как (на большинстве платформ) типы <type>real</type> и "
+"<type>double precision</type> выдают ближайшее чётное число. Например: "
+"<placeholder-1/>"
 
 #: datatype.xml:629(title)
 msgid "Floating-Point Types"
@@ -1086,7 +1090,6 @@ msgid "<primary>not a number</primary><secondary>double precision</secondary>"
 msgstr "<primary>не число</primary><secondary>double precision</secondary>"
 
 #: datatype.xml:721(para)
-#, fuzzy
 msgid ""
 "In addition to ordinary numeric values, the floating-point types have "
 "several special values: <literallayout>\n"
@@ -1103,17 +1106,18 @@ msgid ""
 "manner."
 msgstr ""
 "В дополнение к обычным числовым значениям типы с плавающей точкой могут "
-"содержать следующие специальные значения: <literallayout class=\"normal"
-"\"><literal>Infinity</literal>\n"
+"содержать следующие специальные значения: <literallayout>\n"
+"<literal>Infinity</literal>\n"
 "<literal>-Infinity</literal>\n"
-"<literal>NaN</literal></literallayout> Они представляют особые значения, "
-"описанные в IEEE 754, соответственно: <quote>бесконечность</quote>, "
-"<quote>минус бесконечность</quote> и <quote>не число</quote>. (Но "
-"компьютерах, где арифметика с плавающей точкой не соответствует стандарту "
-"IEEE 754, эти значения, вероятно, не будут работать должным образом.) "
-"Записывая эти значения в виде констант в команде SQL, их нужно заключать в "
-"апострофы, например так: <literal>UPDATE table SET x = 'Infinity'</literal>. "
-"Регистр символов в этих строках не важен."
+"<literal>NaN</literal>\n"
+"</literallayout> Они представляют особые значения, описанные в IEEE 754, "
+"соответственно <quote>бесконечность</quote>, <quote>минус бесконечность</"
+"quote> и <quote>не число</quote>. (На компьютерах, где арифметика с "
+"плавающей точкой не соответствует стандарту IEEE 754, эти значения, "
+"вероятно, не будут работать должным образом.) Записывая эти значения в виде "
+"констант в команде SQL, их нужно заключать в апострофы, например так: "
+"<literal>UPDATE table SET x = 'Infinity'</literal>. Регистр символов в этих "
+"строках не важен."
 
 #: datatype.xml:740(para)
 msgid ""
@@ -1628,7 +1632,6 @@ msgstr ""
 "не задавайте какое-либо большое максимальное значение.)"
 
 #: datatype.xml:1104(para)
-#, fuzzy
 msgid ""
 "There is no performance difference among these three types, apart from "
 "increased storage space when using the blank-padded type, and a few extra "
@@ -1670,7 +1673,7 @@ msgid "Using the Character Types"
 msgstr "Использование символьных типов"
 
 #: datatype.xml:1131(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE TABLE test1 (a character(4));\n"
 "INSERT INTO test1 VALUES ('ok');\n"
@@ -1699,9 +1702,11 @@ msgstr ""
 "CREATE TABLE test1 (a character(4));\n"
 "INSERT INTO test1 VALUES ('ok');\n"
 "SELECT a, char_length(a) FROM test1; -- <co id=\"co.datatype-char\"></co>\n"
-"<computeroutput>  a   | char_length\n"
+"<computeroutput>\n"
+"  a   | char_length\n"
 "------+-------------\n"
-" ok   |           2</computeroutput>\n"
+" ok   |           2\n"
+"</computeroutput>\n"
 "\n"
 "CREATE TABLE test2 (b varchar(5));\n"
 "INSERT INTO test2 VALUES ('ok');\n"
@@ -1710,11 +1715,13 @@ msgstr ""
 "<computeroutput>ОШИБКА:  значение не умещается в тип character varying(5)</computeroutput>\n"
 "INSERT INTO test2 VALUES ('too long'::varchar(5)); -- явное усечение\n"
 "SELECT b, char_length(b) FROM test2;\n"
-"<computeroutput>   b   | char_length\n"
+"<computeroutput>\n"
+"   b   | char_length\n"
 "-------+-------------\n"
 " ok    |           2\n"
 " good  |           5\n"
-" too l |           5</computeroutput>"
+" too l |           5\n"
+"</computeroutput>"
 
 #: datatype.xml:1156(para)
 msgid ""
@@ -2416,7 +2423,6 @@ msgstr ""
 "хранении в числе с плавающей точкой."
 
 #: datatype.xml:1648(para)
-#, fuzzy
 msgid ""
 "The <type>interval</type> type has an additional option, which is to "
 "restrict the set of stored fields by writing one of these phrases: "
@@ -2440,8 +2446,8 @@ msgid ""
 "applies only to the seconds."
 msgstr ""
 "Тип <type>interval</type> дополнительно позволяет ограничить набор "
-"сохраняемых полей следующими фразами: <literallayout class=\"monospaced"
-"\">YEAR\n"
+"сохраняемых поле следующими фразами: <literallayout class=\"monospaced\">\n"
+"YEAR\n"
 "MONTH\n"
 "DAY\n"
 "HOUR\n"
@@ -2453,10 +2459,11 @@ msgstr ""
 "DAY TO SECOND\n"
 "HOUR TO MINUTE\n"
 "HOUR TO SECOND\n"
-"MINUTE TO SECOND</literallayout> Заметьте, что если указаны и "
-"<replaceable>поля</replaceable>, и точность <replaceable>p</replaceable>, "
-"указание <replaceable>полей</replaceable> должно включать <literal>SECOND</"
-"literal>, так как точность применима только к секундам."
+"MINUTE TO SECOND\n"
+"</literallayout> Заметьте, что если указаны и <replaceable>поля</"
+"replaceable>, и точность <replaceable>p</replaceable>, указание "
+"<replaceable>поля</replaceable> должно включать <literal>SECOND</literal>, "
+"так как точность применима только к секундам."
 
 #: datatype.xml:1672(para)
 msgid ""
@@ -5438,7 +5445,7 @@ msgid "Using the Bit String Types"
 msgstr "Использование битовых строк"
 
 #: datatype.xml:3666(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE TABLE test (a BIT(3), b BIT VARYING(5));\n"
 "INSERT INTO test VALUES (B'101', B'00');\n"
@@ -5458,13 +5465,17 @@ msgstr ""
 "CREATE TABLE test (a BIT(3), b BIT VARYING(5));\n"
 "INSERT INTO test VALUES (B'101', B'00');\n"
 "INSERT INTO test VALUES (B'10', B'101');\n"
-"<computeroutput>ОШИБКА:  длина битовой строки (2) не соответствует типу bit(3)</computeroutput>\n"
+"<computeroutput>\n"
+"ОШИБКА:  длина битовой строки (2) не соответствует типу bit(3)\n"
+"</computeroutput>\n"
 "INSERT INTO test VALUES (B'10'::bit(3), B'101');\n"
 "SELECT * FROM test;\n"
-"<computeroutput>  a  |  b\n"
+"<computeroutput>\n"
+"  a  |  b\n"
 "-----+-----\n"
 " 101 | 00\n"
-" 100 | 101</computeroutput>"
+" 100 | 101\n"
+"</computeroutput>"
 
 #: datatype.xml:3682(para)
 msgid ""
@@ -5692,7 +5703,6 @@ msgid "<primary>tsquery (data type)</primary>"
 msgstr "<primary>tsquery (тип данных)</primary>"
 
 #: datatype.xml:3817(para)
-#, fuzzy
 msgid ""
 "A <type>tsquery</type> value stores lexemes that are to be searched for, and "
 "can combine them using the Boolean operators <literal>&amp;</literal> (AND), "
@@ -5704,12 +5714,15 @@ msgid ""
 "searched for. <literal>&lt;-&gt;</literal> is equivalent to "
 "<literal>&lt;1&gt;</literal>."
 msgstr ""
-"Значение <type>tsquery</type> содержит искомые лексемы, объединённые "
+"Значение <type>tsquery</type> содержит искомые лексемы, объединяемые "
 "логическими операторами <literal>&amp;</literal> (И), <literal>|</literal> "
-"(ИЛИ) и <literal>!</literal> (НЕ). Для группировки операторов могут "
-"использоваться скобки: <placeholder-1/> Без скобок эти операторы имеют "
-"разные приоритеты, в порядке убывания: <literal>!</literal>, <literal>&amp;</"
-"literal> и <literal>|</literal>."
+"(ИЛИ) и <literal>!</literal> (НЕ), а также оператором поиска фраз "
+"<literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ). Также допускается вариация "
+"оператора ПРЕДШЕСТВУЕТ вида <literal>&lt;<replaceable>N</replaceable>&gt;</"
+"literal>, где <replaceable>N</replaceable> — целочисленная константа, "
+"задающая максимальное расстояние между двумя искомыми лексемами. Запись "
+"оператора <literal>&lt;-&gt;</literal> равнозначна <literal>&lt;1&gt;</"
+"literal>."
 
 #: datatype.xml:3832(programlisting)
 #, no-wrap
@@ -5745,19 +5758,16 @@ msgstr ""
 " 'fat' &amp; 'rat' &amp; !'cat'"
 
 #: datatype.xml:3829(para)
-#, fuzzy
 msgid ""
 "Parentheses can be used to enforce grouping of the operators: <placeholder-1/"
 "> In the absence of parentheses, <literal>!</literal> (NOT) binds most "
 "tightly, and <literal>&amp;</literal> (AND) and <literal>&lt;-&gt;</literal> "
 "(FOLLOWED BY) both bind more tightly than <literal>|</literal> (OR)."
 msgstr ""
-"Значение <type>tsquery</type> содержит искомые лексемы, объединённые "
-"логическими операторами <literal>&amp;</literal> (И), <literal>|</literal> "
-"(ИЛИ) и <literal>!</literal> (НЕ). Для группировки операторов могут "
-"использоваться скобки: <placeholder-1/> Без скобок эти операторы имеют "
-"разные приоритеты, в порядке убывания: <literal>!</literal>, <literal>&amp;</"
-"literal> и <literal>|</literal>."
+"Для группировки операторов могут использоваться скобки: <placeholder-1/> Без "
+"скобок эти операторы имеют разные приоритеты, в порядке убывания: <literal>!"
+"</literal> (НЕ), затем пара <literal>&amp;</literal> (И) и <literal>&lt;-&gt;"
+"</literal> (ПРЕДШЕСТВУЕТ), и наконец, <literal>|</literal> (ИЛИ)."
 
 #: datatype.xml:3857(programlisting)
 #, no-wrap
@@ -6811,9 +6821,8 @@ msgid "<primary>fdw_handler</primary>"
 msgstr "<primary>fdw_handler</primary>"
 
 #: datatype.xml:4506(indexterm)
-#, fuzzy
 msgid "<primary>index_am_handler</primary>"
-msgstr "<primary>tsm_handler</primary>"
+msgstr "<primary>index_am_handler</primary>"
 
 #: datatype.xml:4510(indexterm)
 msgid "<primary>tsm_handler</primary>"
@@ -6967,18 +6976,16 @@ msgstr ""
 "<type>fdw_handler</type>."
 
 #: datatype.xml:4609(type)
-#, fuzzy
 msgid "index_am_handler"
-msgstr "обработчик_внедрённого_кода"
+msgstr "index_am_handler"
 
 #: datatype.xml:4610(entry)
-#, fuzzy
 msgid ""
 "An index access method handler is declared to return <type>index_am_handler</"
 "type>."
 msgstr ""
-"Обработчик метода выборки из таблицы объявляется как возвращающий тип "
-"<type>tsm_handler</type>."
+"Обработчик метода доступа индекса объявляется как возвращающий тип "
+"<type>index_am_handler</type>."
 
 #: datatype.xml:4614(type)
 msgid "tsm_handler"

@@ -423,7 +423,6 @@ msgstr ""
 " f"
 
 #: textsearch.xml:258(para)
-#, fuzzy
 msgid ""
 "As the above example suggests, a <type>tsquery</type> is not just raw text, "
 "any more than a <type>tsvector</type> is. A <type>tsquery</type> contains "
@@ -444,19 +443,20 @@ msgstr ""
 "Как можно догадаться из этого примера, <type>tsquery</type> &mdash; это не "
 "просто текст, как и <type>tsvector</type>. Значение типа <type>tsquery</"
 "type> содержит искомые слова, это должны быть уже нормализованные лексемы, "
-"возможно объединённые в выражение операторами AND, OR и NOT. (Подробнее об "
-"этом см. <xref remap=\"4\" linkend=\"datatype-textsearch\"/>.) Вы можете "
-"воспользоваться функциями <function>to_tsquery</function> и "
-"<function>plainto_tsquery</function>, которые могут преобразовать заданный "
-"пользователем текст в значение <type>tsquery</type>, например, нормализуя "
-"слова в этом тексте. Функция <function>to_tsvector</function> подобным "
-"образом может разобрать и нормализовать текстовое содержимое документа. Так "
-"что запрос с поиском соответствия на практике выглядит скорее так: "
-"<placeholder-1/> Заметьте, что соответствие не будет обнаружено, если запрос "
-"записан как <placeholder-2/>так как слово <literal>rats</literal> не "
-"нормализовано. Элементами <type>tsvector</type> должны быть лексемы, "
-"предположительно уже нормализованные, так что <literal>rats</literal> "
-"считается не соответствующим <literal>rat</literal>."
+"возможно объединённые в выражение операторами И, ИЛИ, НЕ и ПРЕДШЕСТВУЕТ. "
+"(Подробнее об этом см. <xref remap=\"4\" linkend=\"datatype-tsquery\"/>.) Вы "
+"можете воспользоваться функциями <function>to_tsquery</function>, "
+"<function>plainto_tsquery</function> и <function>phraseto_tsquery</"
+"function>, которые могут преобразовать заданный пользователем текст в "
+"значение <type>tsquery</type>, прежде всего нормализуя слова в этом тексте. "
+"Функция <function>to_tsvector</function> подобным образом может разобрать и "
+"нормализовать текстовое содержимое документа. Так что запрос с поиском "
+"соответствия на практике выглядит скорее так: <placeholder-1/> Заметьте, что "
+"соответствие не будет обнаружено, если запрос записан как <placeholder-2/> "
+"так как слово <literal>rats</literal> не будет нормализовано. Элементами "
+"<type>tsvector</type> являются лексемы, предположительно уже "
+"нормализованные, так что <literal>rats</literal> считается не "
+"соответствующим <literal>rat</literal>."
 
 #: textsearch.xml:295(programlisting)
 #, no-wrap
@@ -507,6 +507,14 @@ msgid ""
 "order to have a match. Parentheses can be used to control nesting of these "
 "operators."
 msgstr ""
+"В значении <type>tsquery</type> оператор <literal>&amp;</literal> (И) "
+"указывает, что оба его операнда должны присутствовать в документе, чтобы он "
+"удовлетворял запросу. Подобным образом, оператор <literal>|</literal> (ИЛИ) "
+"указывает, что в документе должен присутствовать минимум один из его "
+"операндов, тогда как оператор <literal>!</literal> (НЕ) указывает, что его "
+"операнд <emphasis>не</emphasis> должен присутствовать, чтобы условие "
+"удовлетворялось. Порядком сочетания этих операторов можно управлять, "
+"применяя скобки."
 
 #: textsearch.xml:325(programlisting)
 #, no-wrap
@@ -521,9 +529,18 @@ msgid ""
 "----------\n"
 " f"
 msgstr ""
+"SELECT to_tsvector('fatal error') @@ to_tsquery('fatal &lt;-&gt; error');\n"
+" ?column? \n"
+"----------\n"
+" t\n"
+"\n"
+"SELECT to_tsvector('error is not fatal') @@ to_tsquery('fatal &lt;-&gt; error');\n"
+" ?column? \n"
+"----------\n"
+" f"
 
 #: textsearch.xml:345(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT phraseto_tsquery('cats ate rats');\n"
 "       phraseto_tsquery        \n"
@@ -535,10 +552,15 @@ msgid ""
 "-------------------------------\n"
 " ( 'cat' &lt;-&gt; 'ate' ) &lt;2&gt; 'rat'"
 msgstr ""
-"SELECT to_tsquery('Fat:ab &amp; Cats');\n"
-"    to_tsquery    \n"
-"------------------\n"
-" 'fat':AB &amp; 'cat'"
+"SELECT phraseto_tsquery('cats ate rats');\n"
+"       phraseto_tsquery        \n"
+"-------------------------------\n"
+" ( 'cat' &lt;-&gt; 'ate' ) &lt;-&gt; 'rat'\n"
+"\n"
+"SELECT phraseto_tsquery('the cats ate the rats');\n"
+"       phraseto_tsquery        \n"
+"-------------------------------\n"
+" ( 'cat' &lt;-&gt; 'ate' ) &lt;2&gt; 'rat'"
 
 #: textsearch.xml:319(para)
 msgid ""
@@ -556,6 +578,19 @@ msgid ""
 "literal> that can match a multi-word phrase when some of the words are stop "
 "words. For example: <placeholder-2/>"
 msgstr ""
+"Фразовый поиск возможен с использованием оператора <literal>&lt;-&gt;</"
+"literal> (ПРЕДШЕСТВУЕТ) типа <type>tsquery</type>, который находит "
+"соответствие, только если его операнды расположены рядом и в заданном "
+"порядке. Например: <placeholder-1/> Более общая версия оператора "
+"ПРЕДШЕСТВУЕТ имеет вид <literal>&lt;<replaceable>N</replaceable>&gt;</"
+"literal>, где <replaceable>N</replaceable> — целое число, устанавливающее "
+"расстояние между позициями найденных лексем. Запись <literal>&lt;1&gt;</"
+"literal> равнозначна <literal>&lt;-&gt;</literal>, тогда как "
+"<literal>&lt;2&gt;</literal> допускает существование ровно одной лексемы "
+"между этими лексемами и т. д. Функция <literal>phraseto_tsquery</literal> "
+"задействует этот оператор для конструирования <literal>tsquery</literal>, "
+"который может содержать многословную фразу, включающую в себя стоп-слова. "
+"Например: <placeholder-2/>"
 
 #: textsearch.xml:358(title)
 msgid "Configurations"
@@ -1214,7 +1249,6 @@ msgid "Parsing Queries"
 msgstr "Разбор запросов"
 
 #: textsearch.xml:724(para)
-#, fuzzy
 msgid ""
 "<productname>PostgreSQL</productname> provides the functions "
 "<function>to_tsquery</function>, <function>plainto_tsquery</function>, and "
@@ -1224,12 +1258,12 @@ msgid ""
 "<function>phraseto_tsquery</function>, but it is less forgiving about its "
 "input."
 msgstr ""
-"Для преобразования запросов в тип <type>tsquery</type> в "
-"<productname>PostgreSQL</productname> реализованы функции "
-"<function>to_tsquery</function> и <function>plainto_tsquery</function>. "
-"Функция <function>to_tsquery</function> более мощная, чем "
-"<function>plainto_tsquery</function>, но и более требовательная к входным "
-"данным."
+"<productname>PostgreSQL</productname> предоставляет функции "
+"<function>to_tsquery</function>, <function>plainto_tsquery</function> и "
+"<function>phraseto_tsquery</function> для приведения запроса к типу данных "
+"<type>tsquery</type>. Функция <function>to_tsquery</function> даёт больше "
+"возможностей, чем <function>plainto_tsquery</function> и "
+"<function>phraseto_tsquery</function>, но более строга к входному запросу."
 
 #: textsearch.xml:736(indexterm)
 msgid "<primary>to_tsquery</primary>"
@@ -1256,7 +1290,6 @@ msgid "to_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <p
 msgstr "to_tsquery(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">текст_запроса</replaceable> <type>text</type>) возвращает <type>tsquery</type>"
 
 #: textsearch.xml:742(para)
-#, fuzzy
 msgid ""
 "<function>to_tsquery</function> creates a <type>tsquery</type> value from "
 "<replaceable>querytext</replaceable>, which must consist of single tokens "
@@ -1289,12 +1322,13 @@ msgid ""
 msgstr ""
 "<function>to_tsquery</function> создаёт значение <type>tsquery</type> из "
 "<replaceable>текста_запроса</replaceable>, который может состоять из простых "
-"фрагментов, разделённых логическими операторами <literal>&amp;</literal> "
-"(AND), <literal>|</literal> (OR) и <literal>!</literal> (NOT). Эти операторы "
-"могут быть заключены в скобки. Другими словами, входное значение для "
+"фрагментов, разделённых логическими операторами <type>tsquery</type>: "
+"<literal>&amp;</literal> (И), <literal>|</literal> (ИЛИ), <literal>!</"
+"literal> (НЕ) и <literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ), возможно, "
+"сгруппированных скобками. Другими словами, входное значение для "
 "<function>to_tsquery</function> должно уже соответствовать общим правилам "
 "для значений <type>tsquery</type>, описанным в <xref remap=\"6\" linkend="
-"\"datatype-textsearch\"/>. Различие их состоит в том, что во вводимом в "
+"\"datatype-tsquery\"/>. Различие их состоит в том, что во вводимом в "
 "<type>tsquery</type> значении фрагменты воспринимаются буквально, тогда как "
 "<function>to_tsquery</function> нормализует фрагменты, приводя их к "
 "лексемам, используя явно указанную или подразумеваемую конфигурацию, и "
@@ -1303,8 +1337,8 @@ msgstr ""
 "  to_tsquery   \n"
 "---------------\n"
 " 'fat' &amp; 'rat'</screen> Как и при вводе значения <type>tsquery</type>, "
-"для каждой лексемы можно задать вес, чтобы при поиске можно было выбрать из "
-"<type>tsvector</type> только лексемы с заданными весами. Например: "
+"для каждой лексемы можно задать вес(а), чтобы при поиске можно было выбрать "
+"из <type>tsvector</type> только лексемы с заданными весами. Например: "
 "<screen>SELECT to_tsquery('english', 'Fat | Rats:AB');\n"
 "    to_tsquery    \n"
 "------------------\n"
@@ -1317,7 +1351,6 @@ msgstr ""
 "любому слову в <type>tsvector</type>, начинающемуся с данной подстроки."
 
 #: textsearch.xml:782(para)
-#, fuzzy
 msgid ""
 "<function>to_tsquery</function> can also accept single-quoted phrases. This "
 "is primarily useful when the configuration includes a thesaurus dictionary "
@@ -1334,12 +1367,12 @@ msgstr ""
 "Это полезно в основном когда конфигурация включает тезаурус, который может "
 "обрабатывать такие фразы. В показанном ниже примере предполагается, что "
 "тезаурус содержит правило <literal>supernovae stars : sn</literal>: "
-"<screen>SELECT to_tsquery(' ''supernovae stars'' &amp; !crab');\n"
+"<screen>SELECT to_tsquery('''supernovae stars'' &amp; !crab');\n"
 "  to_tsquery\n"
 "---------------\n"
 " 'sn' &amp; !'crab'</screen> Если убрать эти апострофы, "
 "<function>to_tsquery</function> не примет фрагменты, не разделённые "
-"операторами AND и OR, и выдаст синтаксическую ошибку."
+"операторами И, ИЛИ и ПРЕДШЕСТВУЕТ, и выдаст синтаксическую ошибку."
 
 #: textsearch.xml:799(indexterm)
 msgid "<primary>plainto_tsquery</primary>"
@@ -1351,7 +1384,6 @@ msgid "plainto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) retur
 msgstr "plainto_tsquery(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">текст_запроса</replaceable> <type>text</type>) возвращает <type>tsquery</type>"
 
 #: textsearch.xml:805(para)
-#, fuzzy
 msgid ""
 "<function>plainto_tsquery</function> transforms the unformatted text "
 "<replaceable>querytext</replaceable> to a <type>tsquery</type> value. The "
@@ -1363,10 +1395,9 @@ msgstr ""
 "<replaceable>текст_запроса</replaceable> в значение <type>tsquery</type>. "
 "Текст разбирается и нормализуется подобно тому, как это делает "
 "<function>to_tsvector</function>, а затем между оставшимися словами "
-"вставляются логические операторы <literal>&amp;</literal> (AND)."
+"вставляются операторы <literal>&amp;</literal> (И) типа <type>tsquery</type>."
 
 #: textsearch.xml:813(para)
-#, fuzzy
 msgid ""
 "Example: <screen>SELECT plainto_tsquery('english', 'The Fat Rats');\n"
 " plainto_tsquery \n"
@@ -1384,23 +1415,22 @@ msgstr ""
 " plainto_tsquery \n"
 "-----------------\n"
 " 'fat' &amp; 'rat'</screen> Заметьте, что <function>plainto_tsquery</"
-"function> не распознаёт во входной строке логические операторы, метки весов "
-"или обозначения префиксов: <screen>SELECT plainto_tsquery('english', 'The "
-"Fat &amp; Rats:C');\n"
+"function> не распознает во входной строке операторы <type>tsquery</type>, "
+"метки весов или обозначения префиксов: <screen>SELECT "
+"plainto_tsquery('english', 'The Fat &amp; Rats:C');\n"
 "   plainto_tsquery   \n"
 "---------------------\n"
 " 'fat' &amp; 'rat' &amp; 'c'</screen> В данном случае все знаки пунктуации "
 "были отброшены как символы-разделители."
 
 #: textsearch.xml:833(indexterm)
-#, fuzzy
 msgid "<primary>phraseto_tsquery</primary>"
-msgstr "<primary>to_tsquery</primary>"
+msgstr "<primary>phraseto_tsquery</primary>"
 
 #: textsearch.xml:837(synopsis)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "phraseto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
-msgstr "to_tsquery(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">текст_запроса</replaceable> <type>text</type>) возвращает <type>tsquery</type>"
+msgstr "phraseto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 
 #: textsearch.xml:839(para)
 msgid ""
@@ -1414,9 +1444,18 @@ msgid ""
 "searching for exact lexeme sequences, since the FOLLOWED BY operators check "
 "lexeme order not just the presence of all the lexemes."
 msgstr ""
+"<function>phraseto_tsquery</function> ведёт себя подобно "
+"<function>plainto_tsquery</function>, за исключением того, что она вставляет "
+"между оставшимися словами оператор <literal>&lt;-&gt;</literal> "
+"(ПРЕДШЕСТВУЕТ) вместо оператора <literal>&amp;</literal> (И). Кроме того, "
+"стоп-слова не просто отбрасываются, а подсчитываются, и вместо операторов "
+"<literal>&lt;-&gt;</literal> используются операторы <literal>&lt;"
+"<replaceable>N</replaceable>&gt;</literal> с подсчитанным числом. Эта "
+"функция полезна при поиске точных последовательностей лексем, так как "
+"операторы ПРЕДШЕСТВУЕТ проверяют не только наличие всех лексем, но и их "
+"порядок."
 
 #: textsearch.xml:851(para)
-#, fuzzy
 msgid ""
 "Example: <screen>SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
 " phraseto_tsquery\n"
@@ -1429,17 +1468,17 @@ msgid ""
 "-----------------------------\n"
 " ( 'fat' &lt;-&gt; 'rat' ) &lt;-&gt; 'c'</screen>"
 msgstr ""
-"Пример: <screen>SELECT plainto_tsquery('english', 'The Fat Rats');\n"
-" plainto_tsquery \n"
-"-----------------\n"
-" 'fat' &amp; 'rat'</screen> Заметьте, что <function>plainto_tsquery</"
-"function> не распознаёт во входной строке логические операторы, метки весов "
-"или обозначения префиксов: <screen>SELECT plainto_tsquery('english', 'The "
-"Fat &amp; Rats:C');\n"
-"   plainto_tsquery   \n"
-"---------------------\n"
-" 'fat' &amp; 'rat' &amp; 'c'</screen> В данном случае все знаки пунктуации "
-"были отброшены как символы-разделители."
+"Пример: <screen>SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
+" phraseto_tsquery\n"
+"------------------\n"
+" 'fat' &lt;-&gt; 'rat'</screen> Как и <function>plainto_tsquery</function>, "
+"функция <function>phraseto_tsquery</function> не распознаёт во входной "
+"строке операторы типа <type>tsquery</type>, метки весов или обозначения "
+"префиксов: <screen>SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:"
+"C');\n"
+"      phraseto_tsquery\n"
+"-----------------------------\n"
+" ( 'fat' &lt;-&gt; 'rat' ) &lt;-&gt; 'c'</screen>"
 
 #: textsearch.xml:873(title)
 msgid "Ranking Search Results"
@@ -2165,15 +2204,20 @@ msgid ""
 "<type>tsquery</type> operator effectively degenerates to a simple "
 "<literal>&amp;</literal> (AND) test."
 msgstr ""
+"Возвращает вектор с теми же лексемами, что и в данном, но без информации о "
+"позиции и весе. Очищенный вектор обычно оказывается намного меньше "
+"исходного, но при этом и менее полезным. С очищенными векторами хуже "
+"работает ранжирование, а оператор <literal>&lt;-&gt;</literal> "
+"(ПРЕДШЕСТВУЕТ) <type>tsquery</type> по сути деградирует до простой проверки "
+"<literal>&amp;</literal> (И)."
 
 #: textsearch.xml:1356(para)
-#, fuzzy
 msgid ""
 "A full list of <type>tsvector</type>-related functions is available in <xref "
 "linkend=\"textsearch-functions-table\"/>."
 msgstr ""
-"Набор операторов сравнения включает обычные операторы, перечисленные в "
-"таблице <xref remap=\"6\" linkend=\"functions-comparison-table\"/>."
+"Полный список связанных с <type>tsvector</type> функций приведён в <xref "
+"remap=\"6\" linkend=\"textsearch-functions-table\"/>."
 
 #: textsearch.xml:1364(title)
 msgid "Manipulating Queries"
@@ -2214,9 +2258,8 @@ msgid "Returns the negation (NOT) of the given query."
 msgstr "Возвращает логическое отрицание (NOT) данного запроса."
 
 #: textsearch.xml:1421(literal)
-#, fuzzy
 msgid "<placeholder-1/> &lt;-&gt; <placeholder-2/>"
-msgstr "<placeholder-1/> &amp;&amp; <placeholder-2/>"
+msgstr "<placeholder-1/> &lt;-&gt; <placeholder-2/>"
 
 #: textsearch.xml:1425(para)
 msgid ""
@@ -2229,11 +2272,18 @@ msgid ""
 "-----------------------------------\n"
 " 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'</screen>"
 msgstr ""
+"Возвращает запрос, который ищет соответствие первому данному запросу, за "
+"которым следует соответствие второму данному запросу, с применением "
+"оператора <literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ) типа <type>tsquery</"
+"type>. Например: <screen>SELECT to_tsquery('fat') &lt;-&gt; to_tsquery('cat "
+"| rat');\n"
+"             ?column?\n"
+"-----------------------------------\n"
+" 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'</screen>"
 
 #: textsearch.xml:1443(indexterm)
-#, fuzzy
 msgid "<primary>tsquery_phrase</primary>"
-msgstr "<primary>ts_parse</primary>"
+msgstr "<primary>tsquery_phrase</primary>"
 
 #: textsearch.xml:1447(replaceable)
 msgid "query1"
@@ -2269,6 +2319,15 @@ msgid ""
 "------------------\n"
 " 'fat' &lt;10&gt; 'cat'</screen>"
 msgstr ""
+"Возвращает запрос, который ищет соответствие первому данному запросу, за "
+"которым следует соответствие второму данному запросу (число лексем между "
+"ними задаётся параметром <replaceable>расстояние</replaceable>), с "
+"применением оператора <literal>&lt;<replaceable>N</replaceable>&gt;</"
+"literal> типа <type>tsquery</type>. Например: <screen>SELECT "
+"tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10);\n"
+"  tsquery_phrase\n"
+"------------------\n"
+" 'fat' &lt;10&gt; 'cat'</screen>"
 
 #: textsearch.xml:1470(indexterm)
 msgid "<primary>numnode</primary>"
@@ -4296,11 +4355,12 @@ msgstr ""
 "services.openoffice.org/wiki/Dictionaries\">OpenOffice Wiki</ulink>."
 
 #: textsearch.xml:2631(para)
-#, fuzzy
 msgid ""
 "To create an <application>Ispell</application> dictionary perform these "
 "steps:"
-msgstr "Словарь <application>Ispell</application>"
+msgstr ""
+"Чтобы создать словарь <application>Ispell</application>, выполните следующие "
+"действия:"
 
 #: textsearch.xml:2643(programlisting)
 #, no-wrap
@@ -4308,6 +4368,8 @@ msgid ""
 "iconv -f ISO_8859-1 -t UTF-8 -o nn_no.affix nn_NO.aff\n"
 "iconv -f ISO_8859-1 -t UTF-8 -o nn_no.dict nn_NO.dic"
 msgstr ""
+"iconv -f ISO_8859-1 -t UTF-8 -o nn_no.affix nn_NO.aff\n"
+"iconv -f ISO_8859-1 -t UTF-8 -o nn_no.dict nn_NO.dic"
 
 #: textsearch.xml:2636(para)
 msgid ""
@@ -4319,13 +4381,20 @@ msgid ""
 "convert characters to the UTF-8 encoding with commands (for example, for "
 "norwegian language dictionary): <placeholder-1/>"
 msgstr ""
+"загрузите файлы конфигурации словаря. Пакет с дополнительным словарём "
+"<productname>OpenOffice</productname> имеет расширение <filename>.oxt</"
+"filename>. Из него необходимо извлечь файлы <filename>.aff</filename> и "
+"<filename>.dic</filename>, и сменить их расширения на <filename>.affix</"
+"filename> и <filename>.dict</filename>, соответственно. Для некоторых файлов "
+"словарей также необходимо преобразовать символы в кодировку UTF-8 с помощью, "
+"например, таких команд (для норвежского языка): <placeholder-1/>"
 
 #: textsearch.xml:2648(para)
 msgid "copy files to the <filename>$SHAREDIR/tsearch_data</filename> directory"
-msgstr ""
+msgstr "скопируйте файлы в каталог <filename>$SHAREDIR/tsearch_data</filename>"
 
 #: textsearch.xml:2655(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY english_hunspell (\n"
 "    TEMPLATE = ispell,\n"
@@ -4333,17 +4402,15 @@ msgid ""
 "    AffFile = en_us,\n"
 "    Stopwords = english);"
 msgstr ""
-"CREATE TEXT SEARCH DICTIONARY english_ispell (\n"
+"CREATE TEXT SEARCH DICTIONARY english_hunspell (\n"
 "    TEMPLATE = ispell,\n"
-"    DictFile = english,\n"
-"    AffFile = english,\n"
-"    StopWords = english\n"
-");"
+"    DictFile = en_us,\n"
+"    AffFile = en_us,\n"
+"    Stopwords = english);"
 
 #: textsearch.xml:2653(para)
-#, fuzzy
 msgid "load files into PostgreSQL with the following command: <placeholder-1/>"
-msgstr "Эта функция возвращает следующие значения: <placeholder-1/>"
+msgstr "загрузите эти файлы в PostgreSQL следующей командой: <placeholder-1/>"
 
 #: textsearch.xml:2664(para)
 msgid ""
@@ -4384,15 +4451,23 @@ msgid ""
 "    [AEIOU]Y    &gt;   EST     # As in gray &gt; grayest\n"
 "    [^EY]       &gt;   EST     # As in small &gt; smallest"
 msgstr ""
+"prefixes\n"
+"flag *A:\n"
+"    .           &gt;   RE      # As in enter &gt; reenter\n"
+"suffixes\n"
+"flag T:\n"
+"    E           &gt;   ST      # As in late &gt; latest\n"
+"    [^AEIOU]Y   &gt;   -Y,IEST # As in dirty &gt; dirtiest\n"
+"    [AEIOU]Y    &gt;   EST     # As in gray &gt; grayest\n"
+"    [^EY]       &gt;   EST     # As in small &gt; smallest"
 
 #: textsearch.xml:2678(para)
-#, fuzzy
 msgid ""
 "The <filename>.affix</filename> file of <application>Ispell</application> "
 "has the following structure: <placeholder-1/>"
 msgstr ""
-"Ограничения <application>pg_restore</application> описаны ниже. "
-"<placeholder-1/>"
+"Файл <filename>.affix</filename> для <application>Ispell</application> имеет "
+"такую структуру: <placeholder-1/>"
 
 #: textsearch.xml:2693(programlisting)
 #, no-wrap
@@ -4402,42 +4477,40 @@ msgid ""
 "large/PRTY\n"
 "lark/MRS"
 msgstr ""
+"lapse/ADGRS\n"
+"lard/DGRS\n"
+"large/PRTY\n"
+"lark/MRS"
 
 #: textsearch.xml:2691(para)
-#, fuzzy
 msgid ""
 "And the <filename>.dict</filename> file has the following structure: "
 "<placeholder-1/>"
-msgstr "Функция должна иметь следующую сигнатуру: <placeholder-1/>"
+msgstr "А файл <filename>.dict</filename> — такую: <placeholder-1/>"
 
 #: textsearch.xml:2701(programlisting)
 #, no-wrap
 msgid "basic_form/affix_class_name"
-msgstr ""
+msgstr "basic_form/affix_class_name"
 
 #: textsearch.xml:2699(para)
-#, fuzzy
 msgid "Format of the <filename>.dict</filename> file is: <placeholder-1/>"
-msgstr ""
-"Таким образом, файл <filename>postgres.bki</filename> должен иметь следующую "
-"структуру: <placeholder-1/>"
+msgstr "Формат файла <filename>.dict</filename> следующий: <placeholder-1/>"
 
 #: textsearch.xml:2707(programlisting)
 #, no-wrap
 msgid "condition &gt; [-stripping_letters,] adding_affix"
-msgstr ""
+msgstr "условие &gt; [-отсекаемые_буквы,] добавляемый_аффикс"
 
 #: textsearch.xml:2704(para)
-#, fuzzy
 msgid ""
 "In the <filename>.affix</filename> file every affix flag is described in the "
 "following format: <placeholder-1/>"
 msgstr ""
-"Где жадный или не жадный характер RE определяется по следующим правилам: "
-"<placeholder-1/>"
+"В файле <filename>.affix</filename> каждый флаг аффиксов описывается в "
+"следующем формате: <placeholder-1/>"
 
 #: textsearch.xml:2710(para)
-#, fuzzy
 msgid ""
 "Here, condition has a format similar to the format of regular expressions. "
 "It can use groupings <literal>[...]</literal> and <literal>[^...]</literal>. "
@@ -4448,12 +4521,14 @@ msgid ""
 "that the last letter is neither <literal>\"e\"</literal> nor <literal>\"y\"</"
 "literal>."
 msgstr ""
-"Когда <literal>TYPE</literal> равно <literal>9</literal>, "
-"<literal>DATETIME_INTERVAL_CODE</literal> содержит значение <literal>1</"
-"literal> для <literal>DATE</literal>, <literal>2</literal> для "
-"<literal>TIME</literal>, <literal>3</literal> для <literal>TIMESTAMP</"
-"literal>, <literal>4</literal> для <literal>TIME WITH TIME ZONE</literal>, "
-"либо <literal>5</literal> для <literal>TIMESTAMP WITH TIME ZONE</literal>."
+"Здесь условие записывается в формате, подобном формату регулярных выражений. "
+"В нём возможно описать группы <literal>[...]</literal> и <literal>[^...]</"
+"literal>. Например, запись <literal>[AEIOU]Y</literal> означает, что "
+"последняя буква слова — <literal>\"y\"</literal>, а предпоследней может быть "
+"<literal>\"a\"</literal>, <literal>\"e\"</literal>, <literal>\"i\"</"
+"literal>, <literal>\"o\"</literal> или <literal>\"u\"</literal>. Запись "
+"<literal>[^EY]</literal> означает, что последняя буква не <literal>\"e\"</"
+"literal> и не <literal>\"y\"</literal>."
 
 #: textsearch.xml:2727(programlisting)
 #, no-wrap
@@ -4499,6 +4574,13 @@ msgid ""
 "SFX T   0     est        [aeiou]y\n"
 "SFX T   0     est        [^ey]"
 msgstr ""
+"PFX A Y 1\n"
+"PFX A   0     re         .\n"
+"SFX T N 4\n"
+"SFX T   0     st         e\n"
+"SFX T   y     iest       [^aeiou]y\n"
+"SFX T   0     est        [aeiou]y\n"
+"SFX T   0     est        [^ey]"
 
 #: textsearch.xml:2737(para)
 msgid ""
@@ -4507,37 +4589,42 @@ msgid ""
 "<application>Hunspell</application> has the following structure: "
 "<placeholder-1/>"
 msgstr ""
+"Формат <application>MySpell</application> представляет собой подмножество "
+"формата <application>Hunspell</application>. Файл <filename>.affix</"
+"filename> словаря <application>Hunspell</application> имеет следующую "
+"структуру: <placeholder-1/>"
 
 #: textsearch.xml:2750(para)
 msgid ""
 "The first line of an affix class is the header. Fields of an affix rules are "
 "listed after the header:"
 msgstr ""
+"Первая строка класса аффиксов &mdash; заголовок. Поля правил аффиксов "
+"указываются после заголовка:"
 
 #: textsearch.xml:2756(para)
-#, fuzzy
 msgid "parameter name (PFX or SFX)"
-msgstr "parameter_name"
+msgstr "имя параметра (PFX или SFX)"
 
 #: textsearch.xml:2761(para)
-#, fuzzy
 msgid "flag (name of the affix class)"
-msgstr "Новое имя класса операторов."
+msgstr "флаг (имя класса аффиксов)"
 
 #: textsearch.xml:2766(para)
 msgid ""
 "stripping characters from beginning (at prefix) or end (at suffix) of the "
 "word"
 msgstr ""
+"отсекаемые символы в начале (в префиксе) или в конце (в суффиксе) слова"
 
 #: textsearch.xml:2772(para)
 msgid "adding affix"
-msgstr ""
+msgstr "добавляемый аффикс"
 
 #: textsearch.xml:2777(para)
 msgid ""
 "condition that has a format similar to the format of regular expressions."
-msgstr ""
+msgstr "условие в формате, подобном регулярным выражениям."
 
 #: textsearch.xml:2786(programlisting)
 #, no-wrap
@@ -4547,12 +4634,18 @@ msgid ""
 "large/RSPMYT\n"
 "largehearted"
 msgstr ""
+"larder/M\n"
+"lardy/RT\n"
+"large/RSPMYT\n"
+"largehearted"
 
 #: textsearch.xml:2783(para)
 msgid ""
 "The <filename>.dict</filename> file looks like the <filename>.dict</"
 "filename> file of <application>Ispell</application>: <placeholder-1/>"
 msgstr ""
+"Файл <filename>.dict</filename> подобен файлу <filename>.dict</filename> "
+"словаря <application>Ispell</application>: <placeholder-1/>"
 
 #: textsearch.xml:2793(para)
 msgid ""
@@ -5956,6 +6049,8 @@ msgid ""
 "literal> (FOLLOWED BY) <type>tsquery</type> operator cannot be more than "
 "16,384"
 msgstr ""
+"Расстояние в операторе <literal>&lt;<replaceable>N</replaceable>&gt;</"
+"literal> (ПРЕДШЕСТВУЕТ) типа <type>tsquery</type> не может быть больше 16384"
 
 #: textsearch.xml:3588(para)
 msgid "No more than 256 positions per lexeme"

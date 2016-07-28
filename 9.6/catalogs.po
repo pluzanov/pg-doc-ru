@@ -19,7 +19,6 @@ msgid "System Catalogs"
 msgstr "Системные каталоги"
 
 #: catalogs.xml:10(para)
-#, fuzzy
 msgid ""
 "The system catalogs are the place where a relational database management "
 "system stores schema metadata, such as information about tables and columns, "
@@ -41,11 +40,13 @@ msgstr ""
 "<productname>PostgreSQL</productname> представляют собой обычные таблицы. "
 "Поэтому вы можете удалить и пересоздать их, добавить столбцы, изменить и "
 "добавить строки, т. е. разными способами вмешаться в работу системы. Обычно "
-"модифицировать системные каталоги вручную не следует, для всего этого есть "
-"команды SQL. (Например, <command>CREATE DATABASE</command> вставляет строку "
-"в каталог <structname>pg_database</structname> &mdash; и фактически создаёт "
-"базу данных на диске.) Исключение составляют только особенные эзотерические "
-"операции, например, добавление индексных методов."
+"модифицировать системные каталоги вручную не следует, для всего этого, как "
+"правило, есть команды SQL. (Например, <command>CREATE DATABASE</command> "
+"вставляет строку в каталог <structname>pg_database</structname> &mdash; и "
+"фактически создаёт базу данных на диске.) Исключение составляют только "
+"особенные эзотерические операции, но многие из них со временем становятся "
+"выполнимыми посредством SQL-команд, так что потребность напрямую "
+"модифицировать системные каталоги постоянно уменьшается."
 
 #: catalogs.xml:28(title)
 msgid "Overview"
@@ -377,18 +378,16 @@ msgid "table inheritance hierarchy"
 msgstr "иерархия наследования таблиц"
 
 #: catalogs.xml:185(entry)
-#, fuzzy
 msgid ""
 "<link linkend=\"catalog-pg-init-privs\"><structname>pg_init_privs</"
 "structname></link>"
 msgstr ""
-"<link linkend=\"catalog-pg-inherits\"><structname>pg_inherits</structname></"
-"link>"
+"<link linkend=\"catalog-pg-init-privs\"><structname>pg_init_privs</"
+"structname></link>"
 
 #: catalogs.xml:186(entry)
-#, fuzzy
 msgid "object initial privileges"
-msgstr "routine_privileges"
+msgstr "начальные права для объектов"
 
 #: catalogs.xml:190(entry)
 msgid ""
@@ -1014,32 +1013,27 @@ msgstr "Функция завершения (0, если её нет)"
 
 #: catalogs.xml:408(structfield)
 msgid "aggcombinefn"
-msgstr ""
+msgstr "aggcombinefn"
 
 #: catalogs.xml:411(entry)
-#, fuzzy
 msgid "Combine function (zero if none)"
-msgstr "Функция завершения (0, если её нет)"
+msgstr "Комбинирующая функция (0, если её нет)"
 
 #: catalogs.xml:414(structfield)
-#, fuzzy
 msgid "aggserialfn"
-msgstr "aggfinalfn"
+msgstr "aggserialfn"
 
 #: catalogs.xml:417(entry)
-#, fuzzy
 msgid "Serialization function (zero if none)"
-msgstr "Функция завершения (0, если её нет)"
+msgstr "Функция сериализации (0, если её нет)"
 
 #: catalogs.xml:420(structfield)
-#, fuzzy
 msgid "aggdeserialfn"
-msgstr "aggfinalfn"
+msgstr "aggdeserialfn"
 
 #: catalogs.xml:423(entry)
-#, fuzzy
 msgid "Deserialization function (zero if none)"
-msgstr "Функция завершения (0, если её нет)"
+msgstr "Функция десериализации (0, если её нет)"
 
 #: catalogs.xml:426(structfield)
 msgid "aggmtransfn"
@@ -1258,18 +1252,16 @@ msgid "Data type of the aggregate function's internal transition (state) data"
 msgstr "Тип данных внутреннего состояния (перехода) агрегатной функции"
 
 #: catalogs.xml:468(structfield)
-#, fuzzy
 msgid "aggserialtype"
-msgstr "aggtranstype"
+msgstr "aggserialtype"
 
 #: catalogs.xml:471(entry)
-#, fuzzy
 msgid ""
 "Return data type of the aggregate function's serialization function (zero if "
 "none)"
 msgstr ""
-"Тип данных внутреннего состояния (перехода) для агрегатной функции в режиме "
-"движущегося агрегата (0 в случае отсутствия)"
+"Тип данных, возвращаемый функцией сериализации для агрегата (0 в случае "
+"отсутствия)"
 
 #: catalogs.xml:474(structfield)
 msgid "aggtransspace"
@@ -1402,7 +1394,6 @@ msgid "<primary>pg_am</primary>"
 msgstr "<primary>pg_am</primary>"
 
 #: catalogs.xml:538(para)
-#, fuzzy
 msgid ""
 "The catalog <structname>pg_am</structname> stores information about index "
 "access methods. There is one row for each index access method supported by "
@@ -1410,9 +1401,9 @@ msgid ""
 "detail in <xref linkend=\"indexam\"/>."
 msgstr ""
 "В каталоге <structname>pg_am</structname> хранится информация о методах "
-"доступа индексов. Каждая строка в нём описывает один метод доступа, "
-"поддерживаемый системой. Содержимое этого каталога подробно рассматривается "
-"в <xref remap=\"6\" linkend=\"indexam\"/>."
+"доступа индексов. Каждая строка в нём описывает один метода доступа, "
+"поддерживаемый системой. Требования для реализации методов доступа подробно "
+"рассматриваются в <xref remap=\"6\" linkend=\"indexam\"/>."
 
 #: catalogs.xml:546(title)
 msgid "<structname>pg_am</structname> Columns"
@@ -1490,19 +1481,14 @@ msgid "Name of the access method"
 msgstr "Имя метода доступа"
 
 #: catalogs.xml:574(structfield)
-#, fuzzy
 msgid "amhandler"
-msgstr "tsm_handler"
+msgstr "amhandler"
 
 #: catalogs.xml:577(entry)
-#, fuzzy
 msgid ""
 "OID of a handler function that is responsible for supplying information "
 "about the access method"
-msgstr ""
-"Указывает на функцию-обработчик, отвечающую за выдачу набора исполняемых "
-"процедур для обёртки сторонних данных. Ноль говорит об отсутствии такого "
-"обработчика"
+msgstr "OID функции-обработчика, предоставляющей информацию о методе доступа"
 
 #: catalogs.xml:591(structname)
 msgid "pg_amop"
@@ -4268,7 +4254,7 @@ msgstr ""
 "Подчинённый объект был создан в процессе создания вышестоящего и на самом "
 "деле является только частью его внутренней реализации. Для такого объекта "
 "будет запрещена команда <command>DROP</command> (мы подскажем пользователю, "
-"что вместо него надо указать <command>DROP</command> вышестоящий объект). "
+"что вместо этого надо выполнить <command>DROP</command> вышестоящий объект). "
 "Действие <command>DROP</command> для вышестоящего объекта будет "
 "распространено и на этот подчинённый объект, вне зависимости от присутствия "
 "указания <command>CASCADE</command>. Например, триггер, созданный для "
@@ -4298,9 +4284,8 @@ msgstr ""
 "наглядности и упрощения <application>pg_dump</application>."
 
 #: catalogs.xml:2878(term)
-#, fuzzy
 msgid "<symbol>DEPENDENCY_AUTO_EXTENSION</symbol> (<literal>x</literal>)"
-msgstr "<symbol>DEPENDENCY_EXTENSION</symbol> (<literal>e</literal>)"
+msgstr "<symbol>DEPENDENCY_AUTO_EXTENSION</symbol> (<literal>x</literal>)"
 
 #: catalogs.xml:2880(para)
 msgid ""
@@ -4309,6 +4294,11 @@ msgid ""
 "without it and should be dropped when the extension itself is. The dependent "
 "object may be dropped on its own as well."
 msgstr ""
+"Подчинённый объект не входит в состав расширения, которое является "
+"вышестоящим объектом (и поэтому не должен игнорироваться утилитой pg_dump), "
+"но не может функционировать без него, и поэтому должен удаляться при "
+"удалении расширения. При этом подчинённый объект может быть удалён и сам по "
+"себе."
 
 #: catalogs.xml:2891(term)
 msgid "<symbol>DEPENDENCY_PIN</symbol> (<literal>p</literal>)"
@@ -5261,27 +5251,24 @@ msgstr ""
 "располагаются наследованные столбцы. Нумерация начинается с 1."
 
 #: catalogs.xml:3787(structname)
-#, fuzzy
 msgid "pg_init_privs"
-msgstr "pg_inherits"
+msgstr "pg_init_privs"
 
 #: catalogs.xml:3789(indexterm)
-#, fuzzy
 msgid "<primary>pg_init_privs</primary>"
-msgstr "<primary>pg_inherits</primary>"
+msgstr "<primary>pg_init_privs</primary>"
 
 #: catalogs.xml:3793(para)
-#, fuzzy
 msgid ""
 "The catalog <structname>pg_init_privs</structname> records information about "
 "the initial privileges of objects in the system. There is one entry for each "
 "object in the database which has a non-default (non-NULL) initial set of "
 "privileges."
 msgstr ""
-"В каталоге <structname>pg_inherits</structname> содержится информация об "
-"иерархиях наследования таблиц. Для каждой непосредственно дочерней таблицы в "
-"ней содержится одна запись. (Косвенное наследование можно определить, "
-"просмотрев цепочку записей.)"
+"В каталоге <structname>pg_init_privs</structname> содержится информация об "
+"изначально назначаемых правах для объектов в системе. Для каждого объекта в "
+"базе данных, имеющего нестандартный (отличный от NULL) начальный набор прав, "
+"в ней содержится одна запись."
 
 #: catalogs.xml:3800(para)
 msgid ""
@@ -5297,6 +5284,16 @@ msgid ""
 "set by <application>initdb</application> or during a <command>CREATE "
 "EXTENSION</command> command."
 msgstr ""
+"Начальные права доступа для объектов могут задаваться либо при инициализации "
+"базы данных (программой <application>initdb</application>), либо когда "
+"объект создаётся в процессе <command>CREATE EXTENSION</command> и скрипт "
+"расширения задаёт права, задействуя систему <command>GRANT</command>. "
+"Заметьте, что эта система автоматически записывает права, устанавливаемые "
+"скриптом расширения, так что авторам расширений достаточно использовать в "
+"своих скриптах только <command>GRANT</command> и <command>REVOKE</command>, "
+"чтобы права были сохранены. Столбец <literal>privtype</literal> показывает, "
+"были ли начальные права заданы программой <application>initdb</application> "
+"или в процессе выполнения команды <command>CREATE EXTENSION</command>."
 
 #: catalogs.xml:3814(para)
 msgid ""
@@ -5306,58 +5303,53 @@ msgid ""
 "<command>CREATE EXTENSION</command> will have entries where "
 "<literal>privtype</literal> is <literal>'e'</literal>."
 msgstr ""
+"Для объектов, которым начальные права были назначены программой "
+"<application>initdb</application>, записи в <literal>privtype</literal> "
+"помечаются буквой <literal>'i'</literal>, а для объектов, которым права "
+"назначались в процессе <command>CREATE EXTENSION</command>, — буквой "
+"<literal>'e'</literal>."
 
 #: catalogs.xml:3823(title)
-#, fuzzy
 msgid "<structname>pg_init_privs</structname> Columns"
-msgstr "Столбцы <structname>pg_inherits</structname>"
+msgstr "Столбцы <structname>pg_init_privs</structname>"
 
 #: catalogs.xml:3840(entry)
-#, fuzzy
 msgid "The OID of the specific object"
-msgstr "OID определённого зависимого объекта"
+msgstr "OID определённого объекта"
 
 #: catalogs.xml:3847(entry)
-#, fuzzy
 msgid "The OID of the system catalog the object is in"
-msgstr "OID системного каталога, в котором находится зависимый объект"
+msgstr "OID системного каталога, в котором находится объект"
 
 #: catalogs.xml:3854(entry)
-#, fuzzy
 msgid ""
 "For a table column, this is the column number (the <structfield>objoid</"
 "structfield> and <structfield>classoid</structfield> refer to the table "
 "itself). For all other object types, this column is zero."
 msgstr ""
-"Для столбца таблицы это номер столбца (<structfield>objid</structfield> и "
-"<structfield>classid</structfield> указывают на саму таблицу). Для всех "
+"Для столбца таблицы это номер столбца (<structfield>objoid</structfield> и "
+"<structfield>classoid</structfield> указывают на саму таблицу). Для всех "
 "других типов объектов это поле содержит ноль."
 
 #: catalogs.xml:3863(structfield)
-#, fuzzy
 msgid "privtype"
-msgstr "srvtype"
+msgstr "privtype"
 
 #: catalogs.xml:3866(entry)
-#, fuzzy
 msgid "A code defining the type of initial privilege of this object; see text"
-msgstr ""
-"Код, определяющий конкретную семантику данного отношения зависимости; см. "
-"текст"
+msgstr "Код, определяющий тип начального права для объекта; см. текст"
 
 #: catalogs.xml:3872(structfield)
-#, fuzzy
 msgid "initprivs"
-msgstr "initdb-options"
+msgstr "initprivs"
 
 #: catalogs.xml:3875(entry)
-#, fuzzy
 msgid ""
 "The initial access privileges; see <xref linkend=\"sql-grant\"/> and <xref "
 "linkend=\"sql-revoke\"/> for details"
 msgstr ""
-"Права доступа; за подробностями обратитесь к описанию <xref linkend=\"sql-"
-"grant\"/> и <xref linkend=\"sql-revoke\"/>"
+"Начальные права доступа; за подробностями обратитесь к описанию <xref "
+"linkend=\"sql-grant\"/> и <xref linkend=\"sql-revoke\"/>"
 
 #: catalogs.xml:3891(structname) catalogs.xml:4837(structname)
 #: catalogs.xml:6038(structname)
@@ -6444,9 +6436,8 @@ msgstr ""
 "чтобы система не оптимизировала их вызовы.)"
 
 #: catalogs.xml:4947(structfield)
-#, fuzzy
 msgid "proparallel"
-msgstr "Параллельны?"
+msgstr "proparallel"
 
 #: catalogs.xml:4950(entry)
 msgid ""
@@ -6459,6 +6450,15 @@ msgid ""
 "functions which are unsafe in parallel mode; the presence of such a function "
 "forces a serial execution plan."
 msgstr ""
+"Свойство <structfield>proparallel</structfield> говорит, может ли эта "
+"функция безопасно выполняться в параллельном режиме. Символом <literal>s</"
+"literal> в нём обозначаются функции, которые могут выполняться в "
+"параллельном режиме без ограничений. Символом <literal>r</literal> "
+"обозначаются функции, которые могут выполняться в параллельном режиме, но "
+"только в ведущем процессе группы; в параллельных рабочих процессах вызывать "
+"их нельзя. Символом <literal>u</literal> отмечаются функции небезопасные в "
+"параллельном режиме; присутствие такой функции влечёт выбор "
+"последовательного плана выполнения запроса."
 
 #: catalogs.xml:4964(structfield)
 msgid "pronargs"
@@ -8964,17 +8964,14 @@ msgid "available versions of extensions"
 msgstr "доступные версии расширений"
 
 #: catalogs.xml:7293(entry)
-#, fuzzy
 msgid ""
 "<link linkend=\"view-pg-config\"><structname>pg_config</structname></link>"
 msgstr ""
-"<link linkend=\"catalog-pg-ts-config\"><structname>pg_ts_config</"
-"structname></link>"
+"<link linkend=\"view-pg-config\"><structname>pg_config</structname></link>"
 
 #: catalogs.xml:7294(entry)
-#, fuzzy
 msgid "compile-time configuration parameters"
-msgstr "Имя параметра конфигурации времени выполнения"
+msgstr "параметры конфигурации времени компиляции"
 
 #: catalogs.xml:7298(entry)
 msgid ""
@@ -9025,9 +9022,8 @@ msgstr ""
 "<link linkend=\"view-pg-locks\"><structname>pg_locks</structname></link>"
 
 #: catalogs.xml:7319(entry)
-#, fuzzy
 msgid "locks currently held or awaited"
-msgstr "установленные в данный момент блокировки"
+msgstr "блокировки, установленные или ожидаемые в данный момент"
 
 #: catalogs.xml:7323(entry)
 msgid ""
@@ -9393,7 +9389,6 @@ msgid "<primary>pg_config</primary>"
 msgstr "<primary>pg_config</primary>"
 
 #: catalogs.xml:7574(para)
-#, fuzzy
 msgid ""
 "The view <structname>pg_config</structname> describes the compile-time "
 "configuration parameters of the currently installed version of "
@@ -9403,21 +9398,22 @@ msgid ""
 "It provides the same basic information as the <xref linkend=\"app-pgconfig\"/"
 "> <productname>PostgreSQL</productname> client application."
 msgstr ""
-"Утилита <application>pg_config</application> выводит параметры конфигурации "
-"текущей установленной версии <productname>PostgreSQL</productname>. Это "
-"помогает, например, найти заголовочные файлы и библиотеки, требующиеся "
-"программным средствам, которые хотят взаимодействовать с "
-"<productname>PostgreSQL</productname>."
+"В представлении <structname>pg_config</structname> описываются "
+"конфигурационные параметры времени компиляции для текущей установленной "
+"версии <productname>PostgreSQL</productname>. Оно предназначено, например, "
+"для программных средств, которым может потребоваться узнать у "
+"<productname>PostgreSQL</productname> расположение требуемых заголовочных "
+"файлов и библиотек. Оно выдаёт ту же базовую информацию, что и клиентская "
+"утилита <productname>PostgreSQL</productname> <xref linkend=\"app-pgconfig\"/"
+">."
 
 #: catalogs.xml:7586(title)
-#, fuzzy
 msgid "<structname>pg_config</structname> Columns"
-msgstr "Столбцы <structname>pg_ts_config</structname>"
+msgstr "Столбцы <structname>pg_config</structname>"
 
 #: catalogs.xml:7600(entry)
-#, fuzzy
 msgid "The parameter name"
-msgstr "Значение параметра."
+msgstr "Имя параметра"
 
 #: catalogs.xml:7604(structfield) catalogs.xml:7799(structfield)
 #: catalogs.xml:9134(structfield)
@@ -9425,9 +9421,8 @@ msgid "setting"
 msgstr "setting"
 
 #: catalogs.xml:7606(entry)
-#, fuzzy
 msgid "The parameter value"
-msgstr "Значение параметра."
+msgstr "Значение параметра"
 
 #: catalogs.xml:7615(structname)
 msgid "pg_cursors"
@@ -9875,18 +9870,16 @@ msgid "<primary>pg_locks</primary>"
 msgstr "<primary>pg_locks</primary>"
 
 #: catalogs.xml:7966(para)
-#, fuzzy
 msgid ""
 "The view <structname>pg_locks</structname> provides access to information "
 "about the locks held by active processes within the database server. See "
 "<xref linkend=\"mvcc\"/> for more discussion of locking."
 msgstr ""
 "Представление <structname>pg_locks</structname> даёт доступ к информации о "
-"блокировках, удерживаемых открытыми транзакциями на сервере баз данных. "
+"блокировках, удерживаемых активными процессами на сервере баз данных. "
 "Подробнее блокировки рассматриваются в <xref remap=\"6\" linkend=\"mvcc\"/>."
 
 #: catalogs.xml:7973(para)
-#, fuzzy
 msgid ""
 "<structname>pg_locks</structname> contains one row per active lockable "
 "object, requested lock mode, and relevant process. Thus, the same lockable "
@@ -9896,9 +9889,9 @@ msgid ""
 msgstr ""
 "Представление <structname>pg_locks</structname> содержит одну строку для "
 "каждого активного блокируемого объекта, запрошенного режима блокировки и "
-"запрашивающей транзакции. Таким образом, один и тот же блокируемый объект "
-"может фигурировать в этом представлении неоднократно, если его блокируют или "
-"ожидают блокировки несколько транзакций. Однако объекты, свободные от "
+"блокирующего процесса. Таким образом, один и тот же блокируемый объект может "
+"фигурировать в этом представлении неоднократно, если его блокируют или "
+"ожидают блокировки несколько процессов. Однако объекты, свободные от "
 "блокировок, в этом представлении отсутствуют вовсе."
 
 #: catalogs.xml:7982(para)
@@ -10106,7 +10099,6 @@ msgstr ""
 "через основную таблицу блокировок"
 
 #: catalogs.xml:8151(para)
-#, fuzzy
 msgid ""
 "<structfield>granted</structfield> is true in a row representing a lock held "
 "by the indicated process. False indicates that this process is currently "
@@ -10117,15 +10109,14 @@ msgid ""
 "acquire at most one lock at a time."
 msgstr ""
 "Признак <structfield>granted</structfield> устанавливается в строке, "
-"представляющей блокировку, удерживаемую указанной транзакцией. Если он "
-"сброшен, эта транзакция ждёт блокировки, из чего следует, что некоторая "
-"другая транзакция удерживает блокировку того же объекта в конфликтующем "
-"режиме. Ожидающая транзакция будет приостановлена до освобождения другой "
-"блокировки (или выявления ситуации взаимоблокировки). Одна транзакция в один "
-"момент времени может ожидать получения максимум одной блокировки."
+"представляющей блокировку, удерживаемую указанным процессом. Если он "
+"сброшен, этот процесс ждёт блокировки, из чего следует что как минимум один "
+"другой процесс удерживает или ожидает блокировку того же объекта в "
+"конфликтующем режиме. Ожидающий процесс будет приостановлен до освобождения "
+"другой блокировки (или выявления ситуации взаимоблокировки). Один процесс в "
+"один момент времени может ожидать получения максимум одной блокировки."
 
 #: catalogs.xml:8161(para)
-#, fuzzy
 msgid ""
 "Throughout running a transaction, a server process holds an exclusive lock "
 "on the transaction's virtual transaction ID. If a permanent ID is assigned "
@@ -10137,19 +10128,18 @@ msgid ""
 "virtual or permanent ID depending on the situation). That will succeed only "
 "when the other transaction terminates and releases its locks."
 msgstr ""
-"Каждая транзакция удерживает исключительную блокировку для собственного "
-"виртуального идентификатора транзакции на всём своём протяжении. Если "
-"транзакции назначается постоянный идентификатор (что обычно происходит, "
-"только если транзакция изменяет состояние базы данных), она также удерживает "
-"до своего завершения блокировку этого постоянного идентификатора. Когда одна "
-"транзакция находит необходимым ожидать именно какую-то другую транзакцию, "
-"она делает это, запрашивая разделяемую блокировку для идентификатора другой "
-"транзакции (виртуального или постоянного, в зависимости от ситуации). Этот "
-"запрос будет выполнен, только когда другая транзакция завершится и освободит "
-"свои блокировки."
+"На протяжении транзакции серверный процесс удерживает исключительную "
+"блокировку виртуального идентификатора транзакции. Если транзакции "
+"назначается постоянный идентификатор (что обычно происходит, только если "
+"транзакция изменяет состояние базы данных), он также удерживает до её "
+"завершения блокировку этого постоянного идентификатора. Когда процесс "
+"находит необходимым ожидать именно какую-то другую транзакцию, он делает "
+"это, запрашивая разделяемую блокировку для идентификатора этой транзакции "
+"(виртуального или постоянного, в зависимости от ситуации). Этот запрос будет "
+"выполнен, только когда другая транзакция завершится и освободит свои "
+"блокировки."
 
 #: catalogs.xml:8173(para)
-#, fuzzy
 msgid ""
 "Although tuples are a lockable type of object, information about row-level "
 "locks is stored on disk, not in memory, and therefore row-level locks "
@@ -10159,9 +10149,9 @@ msgid ""
 msgstr ""
 "Хотя кортежи тоже представляют собой блокируемый объект, информация о "
 "блокировках строк хранится на диске, а не в памяти, поэтому такие блокировки "
-"обычно не показываются в этом представлении. Если транзакция ожидает "
-"блокировки на уровне строки, она обычно видна в нём как ожидающая "
-"постоянного идентификатора транзакции текущего владельца этой блокировки."
+"обычно не показываются в этом представлении. Если процесс ожидает блокировки "
+"на уровне строки, он обычно виден в нём как ожидающий постоянного "
+"идентификатора транзакции текущего владельца этой блокировки."
 
 #: catalogs.xml:8182(para)
 msgid ""
@@ -10230,7 +10220,6 @@ msgstr ""
 "    ON pl.virtualtransaction = '-1/' || ppx.transaction;"
 
 #: catalogs.xml:8208(para)
-#, fuzzy
 msgid ""
 "The <structfield>pid</structfield> column can be joined to the "
 "<structfield>pid</structfield> column of the <link linkend=\"pg-stat-"
@@ -10247,15 +10236,16 @@ msgstr ""
 "Соединив столбец <structfield>pid</structfield> со столбцом "
 "<structfield>pid</structfield> представления <link linkend=\"pg-stat-"
 "activity-view\"><structname>pg_stat_activity</structname></link>, можно "
-"получить дополнительную информацию о сеансах, удерживающих блокировки, "
-"например так: <placeholder-1/> Также, если вы используете подготовленные "
-"транзакции, столбец <structfield>virtualtransaction</structfield> можно "
-"соединить со столбцом <structfield>transaction</structfield> представления "
-"<link linkend=\"view-pg-prepared-xacts\"><structname>pg_prepared_xacts</"
-"structname></link> для получения дополнительной информации о подготовленных "
-"транзакциях, удерживающих блокировки. (Подготовленная транзакция не может "
-"ожидать блокировок, но она может продолжать удерживать блокировки, "
-"полученные ей в процессе выполнения.) Например: <placeholder-2/>"
+"получить дополнительную информацию о сеансах, удерживающих или ожидающих "
+"каждую блокировку, например так: <placeholder-1/> Также, если вы используете "
+"подготовленные транзакции, столбец <structfield>virtualtransaction</"
+"structfield> можно соединить со столбцом <structfield>transaction</"
+"structfield> представления <link linkend=\"view-pg-prepared-xacts"
+"\"><structname>pg_prepared_xacts</structname></link> для получения "
+"дополнительной информации о подготовленных транзакциях, удерживающих "
+"блокировки. (Подготовленная транзакция не может ожидать блокировок, но она "
+"может продолжать удерживать блокировки, полученные ей в процессе "
+"выполнения.) Например: <placeholder-2/>"
 
 #: catalogs.xml:8229(para)
 msgid ""
@@ -10271,6 +10261,17 @@ msgid ""
 "\"functions-info-session-table\"/>) to identify which process(es) a waiting "
 "process is blocked behind."
 msgstr ""
+"Хотя в принципе возможно получить информацию о процессах, которые блокируют "
+"другие процессы, соединив представление <structname>pg_locks</structname> с "
+"ним же, очень трудно сделать это правильно во всех деталях. В частности "
+"потому, что такой запрос должен будет знать, какие режимы блокировки "
+"конфликтуют с другими. Мало того, представление <structname>pg_locks</"
+"structname> не показывает, какие процессы стоят перед какими в очередях "
+"ожидания блокировок, а также какие процессы являются параллельными рабочими "
+"процессами и к каким клиентским сеансам они относятся. Чтобы узнать, каким "
+"процессом или процессами блокируется ожидающий процесс, лучше использовать "
+"функцию <function>pg_blocking_pids()</function> (см. <xref remap=\"4\" "
+"linkend=\"functions-info-session-table\"/>)."
 
 #: catalogs.xml:8243(para)
 msgid ""
@@ -10917,7 +10918,7 @@ msgstr ""
 
 #: catalogs.xml:8787(structfield)
 msgid "confirmed_flush_lsn"
-msgstr ""
+msgstr "confirmed_flush_lsn"
 
 #: catalogs.xml:8790(entry)
 msgid ""
@@ -10925,6 +10926,9 @@ msgid ""
 "has confirmed receiving data. Data older than this is not available anymore. "
 "<literal>NULL</literal> for physical slots."
 msgstr ""
+"Адрес (<literal>LSN</literal>), до которого потребитель логического слота "
+"подтвердил получение данных. Данные старее этого LSN уже недоступны. Для "
+"физических слотов — <literal>NULL</literal>."
 
 #: catalogs.xml:8802(structname)
 msgid "pg_roles"
@@ -11364,7 +11368,6 @@ msgid "backend"
 msgstr "backend"
 
 #: catalogs.xml:9302(para)
-#, fuzzy
 msgid ""
 "Changes to these settings can be made in <filename>postgresql.conf</"
 "filename> without restarting the server. They can also be set for a "
@@ -11413,7 +11416,6 @@ msgid "user"
 msgstr "user"
 
 #: catalogs.xml:9333(para)
-#, fuzzy
 msgid ""
 "These settings can be set from <filename>postgresql.conf</filename>, or "
 "within a session via the <command>SET</command> command. Any user is allowed "
@@ -11421,7 +11423,7 @@ msgid ""
 "filename> will affect existing sessions only if no session-local value has "
 "been established with <command>SET</command>."
 msgstr ""
-"Эти параметры можно изменить в <filename>postgresql.conf</filename>, либо в "
+"Эти параметры можно задать в <filename>postgresql.conf</filename>, либо в "
 "рамках сеанса, командой <command>SET</command>. В рамках сеанса изменять их "
 "разрешено всем пользователям. Изменения в <filename>postgresql.conf</"
 "filename> будут отражены в существующих сеансах, только если в них командой "

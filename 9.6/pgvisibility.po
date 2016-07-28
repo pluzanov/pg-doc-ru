@@ -15,25 +15,24 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: pgvisibility.xml:5(title)
-#, fuzzy
 msgid "pg_visibility"
-msgstr "Карта видимости"
+msgstr "pg_visibility"
 
 #: pgvisibility.xml:7(indexterm)
-#, fuzzy
 msgid "<primary>pg_visibility</primary>"
-msgstr "<primary>Карта видимости</primary>"
+msgstr "<primary>pg_visibility</primary>"
 
 #: pgvisibility.xml:11(para)
-#, fuzzy
 msgid ""
 "The <filename>pg_visibility</filename> module provides a means for examining "
 "the visibility map (VM) and page-level visibility information. It also "
 "provides functions to check the integrity of the visibility map and to force "
 "it to be rebuilt."
 msgstr ""
-"Модуль <filename>pg_buffercache</filename> даёт возможность понять, что "
-"происходит в общем кеше буферов в реальном времени."
+"Модуль <filename>pg_visibility</filename> даёт возможность исследовать карту "
+"видимости (Visibility Map, VM) и информацию о видимости на уровне страниц. "
+"Он также предоставляет функции для проверки целостности карты видимости и "
+"для принудительного её пересоздания."
 
 #: pgvisibility.xml:18(para)
 msgid ""
@@ -52,6 +51,22 @@ msgid ""
 "visibility map and before it examines the data page. Any event which causes "
 "data corruption can also cause these bits to disagree."
 msgstr ""
+"Для хранения информации о видимости на уровне страниц применяются по три "
+"различных бита. Бит полной видимости в карте показывает, что каждый кортеж "
+"на данной странице отношения является видимым для всех текущих транзакций. "
+"Бит полной заморозки в карте видимости показывает, что все кортежи на данной "
+"странице являются замороженными; то есть никакой операции очистки в будущем "
+"не придётся обрабатывать эту страницу, пока на ней не будет добавлен, "
+"изменён, удалён или заблокирован кортеж. Бит <literal>PD_ALL_VISIBLE</"
+"literal> на уровне страницы имеет то же значение, что и бит полной видимости "
+"в карте видимости, но он хранится в самой странице данных, а не в отдельной "
+"структуре данных. В обычной ситуации они будут согласованы, но бит на уровне "
+"страницы может быть иногда установлен, тогда как в карте видимости бит "
+"оказался сброшен при восстановлении после сбоя; они также могут различаться, "
+"если происходит изменение в промежутке между обращениями "
+"<literal>pg_visibility</literal> к карте видимости и к странице данных. "
+"Разумеется, эти биты так же могут различаться при событиях, приводящих к "
+"разрушению данных."
 
 #: pgvisibility.xml:35(para)
 msgid ""
@@ -61,6 +76,11 @@ msgid ""
 "smaller) visibility map. Functions that check the relation's data blocks are "
 "similarly expensive."
 msgstr ""
+"Функции, выдающие информацию о <literal>PD_ALL_VISIBLE</literal>, более "
+"дорогостоящие, чем те, что обращаются только к карте видимости, так как они "
+"должны читать блоки отношения, а не только карту видимости (которая намного "
+"меньше). Дорогостоящими являются так же и функции, проверяющие блоки данных "
+"отношения."
 
 #: pgvisibility.xml:44(title)
 msgid "Functions"
@@ -71,18 +91,24 @@ msgid ""
 "pg_visibility_map(regclass, blkno bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean) returns record"
 msgstr ""
+"pg_visibility_map(regclass, blkno bigint, all_visible OUT boolean, "
+"all_frozen OUT boolean) returns record"
 
 #: pgvisibility.xml:50(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for the "
 "given block of the given relation."
 msgstr ""
+"Возвращает биты полной видимости и полной заморозки в карте видимости для "
+"указанного блока заданного отношения."
 
 #: pgvisibility.xml:58(function)
 msgid ""
 "pg_visibility(regclass, blkno bigint, all_visible OUT boolean, all_frozen "
 "OUT boolean, pd_all_visible OUT boolean) returns record"
 msgstr ""
+"pg_visibility(regclass, blkno bigint, all_visible OUT boolean, all_frozen "
+"OUT boolean, pd_all_visible OUT boolean) returns record"
 
 #: pgvisibility.xml:60(para)
 msgid ""
@@ -90,24 +116,33 @@ msgid ""
 "given block of the given relation, plus the <literal>PD_ALL_VISIBILE</"
 "literal> bit for that block."
 msgstr ""
+"Возвращает биты полной видимости и полной заморозки в карте видимости для "
+"указанного блока заданного отношения, а также бит <literal>PD_ALL_VISIBILE</"
+"literal> этого блока."
 
 #: pgvisibility.xml:69(function)
 msgid ""
 "pg_visibility_map(regclass, blkno OUT bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean) returns record"
 msgstr ""
+"pg_visibility_map(regclass, blkno OUT bigint, all_visible OUT boolean, "
+"all_frozen OUT boolean) returns record"
 
 #: pgvisibility.xml:71(para)
 msgid ""
 "Returns the all-visible and all-frozen bits in the visibility map for each "
 "block the given relation."
 msgstr ""
+"Возвращает биты полной видимости и полной заморозки в карте видимости для "
+"каждого блока заданного отношения."
 
 #: pgvisibility.xml:79(function)
 msgid ""
 "pg_visibility(regclass, blkno OUT bigint, all_visible OUT boolean, "
 "all_frozen OUT boolean, pd_all_visible OUT boolean) returns record"
 msgstr ""
+"pg_visibility(regclass, blkno OUT bigint, all_visible OUT boolean, "
+"all_frozen OUT boolean, pd_all_visible OUT boolean) returns record"
 
 #: pgvisibility.xml:82(para)
 msgid ""
@@ -115,22 +150,29 @@ msgid ""
 "block the given relation, plus the <literal>PD_ALL_VISIBLE</literal> bit for "
 "each block."
 msgstr ""
+"Возвращает биты полной видимости и полной заморозки в карте видимости для "
+"каждого блока заданного отношения, а также бит <literal>PD_ALL_VISIBLE</"
+"literal> каждого блока."
 
 #: pgvisibility.xml:91(function)
 msgid ""
 "pg_visibility_map_summary(regclass, all_visible OUT bigint, all_frozen OUT "
 "bigint) returns record"
 msgstr ""
+"pg_visibility_map_summary(regclass, all_visible OUT bigint, all_frozen OUT "
+"bigint) returns record"
 
 #: pgvisibility.xml:94(para)
 msgid ""
 "Returns the number of all-visible pages and the number of all-frozen pages "
 "in the relation according to the visibility map."
 msgstr ""
+"Возвращает число полностью видимых страниц и полностью замороженных страниц "
+"в отношении, согласно карте видимости."
 
 #: pgvisibility.xml:102(function)
 msgid "pg_check_frozen(regclass, t_ctid OUT tid) returns setof tid"
-msgstr ""
+msgstr "pg_check_frozen(regclass, t_ctid OUT tid) returns setof tid"
 
 #: pgvisibility.xml:105(para)
 msgid ""
@@ -138,10 +180,13 @@ msgid ""
 "the visibility map. If this function returns a non-empty set of TIDs, the "
 "database is corrupt."
 msgstr ""
+"Возвращает идентификаторы TID незамороженных кортежей в страницах, "
+"помеченных как полностью замороженные в карте видимости. Если эта функция "
+"возвращает непустой набор TID, база данных испорчена."
 
 #: pgvisibility.xml:114(function)
 msgid "pg_check_visible(regclass, t_ctid OUT tid) returns setof tid"
-msgstr ""
+msgstr "pg_check_visible(regclass, t_ctid OUT tid) returns setof tid"
 
 #: pgvisibility.xml:117(para)
 msgid ""
@@ -150,10 +195,14 @@ msgid ""
 "map. If this function returns a non-empty set of TIDs, the database is "
 "corrupt."
 msgstr ""
+"Возвращает идентификаторы (TID) кортежей, которые не являются видимыми, "
+"несмотря на то, что содержащие их страницы помечены в карте видимости как "
+"полностью видимые. Если эта функция возвращает непустой набор TID, база "
+"данных испорчена."
 
 #: pgvisibility.xml:127(function)
 msgid "pg_truncate_visibility_map(regclass) returns void"
-msgstr ""
+msgstr "pg_truncate_visibility_map(regclass) returns void"
 
 #: pgvisibility.xml:130(para)
 msgid ""
@@ -164,10 +213,15 @@ msgid ""
 "is executed will scan every page in the relation and rebuild the visibility "
 "map."
 msgstr ""
+"Аннулирует карту видимости для заданного отношения. Эта функция может быть "
+"полезна, только если вы подозреваете, что карта видимости для указанного "
+"отношения испорчена, и вы хотите пересоздать её. Первая же команда "
+"<command>VACUUM</command>, выполняемая с данным отношением после этой "
+"функции, просканирует все страницы в отношении и пересоздаст карту видимости."
 
 #: pgvisibility.xml:142(para)
 msgid "By default, these functions are not publicly executable."
-msgstr ""
+msgstr "По умолчанию выполнение этих функций не разрешено всем."
 
 #: pgvisibility.xml:148(title)
 msgid "Author"

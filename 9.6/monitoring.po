@@ -531,24 +531,22 @@ msgstr ""
 "view\"/>."
 
 #: monitoring.xml:296(structname)
-#, fuzzy
 msgid "pg_stat_wal_receiver"
-msgstr "pg_stat_archiver"
+msgstr "pg_stat_wal_receiver"
 
 #: monitoring.xml:296(indexterm)
-#, fuzzy
 msgid "<primary>pg_stat_wal_receiver</primary>"
-msgstr "<primary>pg_stat_archiver</primary>"
+msgstr "<primary>pg_stat_wal_receiver</primary>"
 
 #: monitoring.xml:297(entry)
-#, fuzzy
 msgid ""
 "Only one row, showing statistics about the WAL receiver from that receiver's "
 "connected server. See <xref linkend=\"pg-stat-wal-receiver-view\"/> for "
 "details."
 msgstr ""
-"Только одна строка со статистикой о работе активности процесса архивации "
-"WAL. Более подробно смотрите <xref linkend=\"pg-stat-archiver-view\"/>."
+"Только одна строка со статистикой приёмника WAL, полученной с сервера, на "
+"котором работает приёмник. За подробностями обратитесь к <xref remap=\"3\" "
+"linkend=\"pg-stat-wal-receiver-view\"/>."
 
 #: monitoring.xml:304(structname)
 msgid "pg_stat_ssl"
@@ -985,14 +983,12 @@ msgstr ""
 "<structname>pg_stat_user_functions</structname>)."
 
 #: monitoring.xml:503(structname)
-#, fuzzy
 msgid "pg_stat_progress_vacuum"
-msgstr "pg_stat_get_activity"
+msgstr "pg_stat_progress_vacuum"
 
 #: monitoring.xml:503(indexterm)
-#, fuzzy
 msgid "<primary>pg_stat_progress_vacuum</primary>"
-msgstr "<primary>pg_stat_reset</primary>"
+msgstr "<primary>pg_stat_progress_vacuum</primary>"
 
 #: monitoring.xml:504(entry)
 msgid ""
@@ -1000,6 +996,9 @@ msgid ""
 "<command>VACUUM</command>, showing current progress. See <xref linkend="
 "\"vacuum-progress-reporting\"/>."
 msgstr ""
+"По одной строке с текущим состоянием для каждого обслуживающего процесса "
+"(включая рабочие процессы автоочистки), в котором работает <command>VACUUM</"
+"command>. См. <xref remap=\"4\" linkend=\"vacuum-progress-reporting\"/>."
 
 #: monitoring.xml:512(para)
 msgid ""
@@ -1275,9 +1274,8 @@ msgstr ""
 "Время последнего изменения состояния (поля <structfield>state</structfield>)"
 
 #: monitoring.xml:634(structfield)
-#, fuzzy
 msgid "wait_event_type"
-msgstr "element_types"
+msgstr "wait_event_type"
 
 #: monitoring.xml:640(para)
 msgid ""
@@ -1286,6 +1284,10 @@ msgid ""
 "shared memory. <literal>wait_event</literal> will contain the name of the "
 "lightweight lock."
 msgstr ""
+"<literal>LWLockNamed</literal>: Обслуживающий процесс ожидает определённую "
+"именованную лёгкую блокировку. Такие блокировки защищают определённые "
+"структуры данных в разделяемой памяти. Имя блокировки будет показывается в "
+"<literal>wait_event</literal>."
 
 #: monitoring.xml:648(para)
 msgid ""
@@ -1294,6 +1296,10 @@ msgid ""
 "function; <literal>wait_event</literal> will identify the general purpose of "
 "locks in that group."
 msgstr ""
+"<literal>LWLockTranche</literal>: Обслуживающий процесс ожидает одну из "
+"группы связанных лёгких блокировок. Все блокировки в этой группе выполняют "
+"схожие функции; общее предназначение блокировок в этой группе показывается в "
+"<literal>wait_event</literal>."
 
 #: monitoring.xml:656(para)
 msgid ""
@@ -1304,6 +1310,12 @@ msgid ""
 "relation extension. <literal>wait_event</literal> will identify the type of "
 "lock awaited."
 msgstr ""
+"<literal>Lock</literal>: Обслуживающий процесс ожидает тяжёлую блокировку. "
+"Тяжёлые блокировки, также называемые блокировками менеджера блокировок или "
+"просто блокировками, в основном защищают объекты уровня SQL, такие как "
+"таблицы. Однако они также применяются для взаимоисключающего выполнения "
+"некоторых внутренних операций, например, для расширения отношений. Тип "
+"ожидаемой блокировки показывается в <literal>wait_event</literal>."
 
 #: monitoring.xml:666(para)
 msgid ""
@@ -1312,29 +1324,31 @@ msgid ""
 "buffer. Buffer pin waits can be protracted if another process holds an open "
 "cursor which last read data from the buffer in question."
 msgstr ""
+"<literal>BufferPin</literal>: Серверный процесс ожидает доступа к буферу "
+"данных, когда никакой другой процесс не обращается к этому буферу. Ожидание "
+"закрепления буфера может растягиваться, если другой процесс удерживает "
+"открытый курсор, который читал данные из нужного буфера."
 
 #: monitoring.xml:636(entry)
-#, fuzzy
 msgid ""
 "The type of event for which the backend is waiting, if any; otherwise NULL. "
 "Possible values are: <placeholder-1/>"
 msgstr ""
-"Общее текущее состояние этого серверного процесса. Возможные значения: "
-"<placeholder-1/>"
+"Тип события, которого ждёт обслуживающий процесс, если это имеет место; в "
+"противном случае — NULL. Возможные значения: <placeholder-1/>"
 
 #: monitoring.xml:678(structfield)
-#, fuzzy
 msgid "wait_event"
-msgstr "tg_event"
+msgstr "wait_event"
 
 #: monitoring.xml:680(entry) monitoring.xml:2424(entry)
-#, fuzzy
 msgid ""
 "Wait event name if backend is currently waiting, otherwise NULL. See <xref "
 "linkend=\"wait-event-table\"/> for details."
 msgstr ""
-"Проводит аутентификацию, используя клиентский сертификат SSL. За "
-"подробностями обратитесь к <xref remap=\"3\" linkend=\"auth-cert\"/>"
+"Имя ожидаемого события, если обслуживающий процесс находится в состоянии "
+"ожидания, а в противном случае — NULL. За подробностями обратитесь к <xref "
+"remap=\"3\" linkend=\"wait-event-table\"/>."
 
 #: monitoring.xml:685(structfield) monitoring.xml:1173(structfield)
 msgid "state"
@@ -1442,7 +1456,6 @@ msgstr ""
 "относящейся к текущей деятельности этого процесса."
 
 #: monitoring.xml:758(para)
-#, fuzzy
 msgid ""
 "The <structfield>wait_event</structfield> and <structfield>state</"
 "structfield> columns are independent. If a backend is in the "
@@ -1451,568 +1464,540 @@ msgid ""
 "<structfield>wait_event</structfield> is non-null, it means that a query is "
 "being executed, but is being blocked somewhere in the system."
 msgstr ""
-"Значения в столбцах <structfield>waiting</structfield> и <structfield>state</"
-"structfield> не зависят друг от друга. Серверный процесс, находящийся в "
-"состоянии <literal>active</literal> может быть <literal>waiting</literal>, а "
-"может и не быть. Если статусы процессов имеют значение true в "
-"<literal>active</literal>, и <structfield>waiting</structfield>, то это "
-"означает, что запрос выполняется, но его работе препятствует какая-то "
-"блокировка в системе."
+"Значения в столбцах <structfield>wait_event</structfield> и "
+"<structfield>state</structfield> не зависят друг от друга. Если "
+"обслуживающий процесс находится в состоянии <literal>active</literal> "
+"(активен), он может ожидать какое-то событие, или не ожидать никакое. Если "
+"состояние <literal>active</literal> и поле <structfield>wait_event</"
+"structfield> содержит не NULL, это означает, что запрос выполняется, но "
+"заблокирован чем-то в системе."
 
 #: monitoring.xml:769(title)
-#, fuzzy
 msgid "<structname>wait_event</structname> Description"
-msgstr "Столбцы <structname>pg_depend</structname>"
+msgstr "Описание <structname>wait_event</structname>"
 
 #: monitoring.xml:774(entry)
-#, fuzzy
 msgid "Wait Event Type"
-msgstr "Типы событий"
+msgstr "Тип события ожидания"
 
 #: monitoring.xml:775(entry)
-#, fuzzy
 msgid "Wait Event Name"
-msgstr "Пример обработки событий"
+msgstr "Название события ожидания"
 
 #: monitoring.xml:782(literal)
-#, fuzzy
 msgid "LWLockNamed"
-msgstr "LWLockMode"
+msgstr "LWLockNamed"
 
 #: monitoring.xml:783(literal)
 msgid "ShmemIndexLock"
-msgstr ""
+msgstr "ShmemIndexLock"
 
 #: monitoring.xml:784(entry)
 msgid "Waiting to find or allocate space in shared memory."
-msgstr ""
+msgstr "Ожидание при поиске или выделении области в разделяемой памяти."
 
 #: monitoring.xml:787(literal)
-#, fuzzy
 msgid "OidGenLock"
-msgstr "Просмотр информации о блокировках"
+msgstr "OidGenLock"
 
 #: monitoring.xml:788(entry)
 msgid "Waiting to allocate or assign an OID."
-msgstr ""
+msgstr "Ожидание при выделении или назначении OID."
 
 #: monitoring.xml:791(literal)
-#, fuzzy
 msgid "XidGenLock"
-msgstr "Просмотр информации о блокировках"
+msgstr "XidGenLock"
 
 #: monitoring.xml:792(entry)
 msgid "Waiting to allocate or assign a transaction id."
-msgstr ""
+msgstr "Ожидание при выделении или назначении идентификатора транзакции."
 
 #: monitoring.xml:795(literal)
 msgid "ProcArrayLock"
-msgstr ""
+msgstr "ProcArrayLock"
 
 #: monitoring.xml:796(entry)
-#, fuzzy
 msgid ""
 "Waiting to get a snapshot or clearing a transaction id at transaction end."
 msgstr ""
-"Срабатывает в начале новой транзакции. arg0 задаёт идентификатор транзакции."
+"Ожидание при получении снимка или очистке идентификатора транзакции в конце "
+"транзакции."
 
 #: monitoring.xml:800(literal)
 msgid "SInvalReadLock"
-msgstr ""
+msgstr "SInvalReadLock"
 
 #: monitoring.xml:801(entry)
 msgid "Waiting to retrieve or remove messages from shared invalidation queue."
 msgstr ""
+"Ожидание при получении или удалении из общей очереди сообщений аннулирования."
 
 #: monitoring.xml:805(literal)
 msgid "SInvalWriteLock"
-msgstr ""
+msgstr "SInvalWriteLock"
 
 #: monitoring.xml:806(entry)
 msgid "Waiting to add a message in shared invalidation queue."
-msgstr ""
+msgstr "Ожидание при добавлении в общую очередь сообщения аннулирования."
 
 #: monitoring.xml:809(literal)
 msgid "WALBufMappingLock"
-msgstr ""
+msgstr "WALBufMappingLock"
 
 #: monitoring.xml:810(entry)
 msgid "Waiting to replace a page in WAL buffers."
-msgstr ""
+msgstr "Ожидание при замене страницы в буферах WAL."
 
 #: monitoring.xml:813(literal)
 msgid "WALWriteLock"
-msgstr ""
+msgstr "WALWriteLock"
 
 #: monitoring.xml:814(entry)
 msgid "Waiting for WAL buffers to be written to disk."
-msgstr ""
+msgstr "Ожидание при записи буферов WAL на диск."
 
 #: monitoring.xml:817(literal)
-#, fuzzy
 msgid "ControlFileLock"
-msgstr "Функции управления"
+msgstr "ControlFileLock"
 
 #: monitoring.xml:818(entry)
 msgid ""
 "Waiting to read or update the control file or creation of a new WAL file."
 msgstr ""
+"Ожидание при чтении или изменении управляющего файла либо при создании "
+"нового файла WAL."
 
 #: monitoring.xml:822(literal)
-#, fuzzy
 msgid "CheckpointLock"
-msgstr "Контрольные точки"
+msgstr "CheckpointLock"
 
 #: monitoring.xml:823(entry)
 msgid "Waiting to perform checkpoint."
-msgstr ""
+msgstr "Ожидание при выполнении контрольной точки."
 
 #: monitoring.xml:826(literal)
 msgid "CLogControlLock"
-msgstr ""
+msgstr "CLogControlLock"
 
 #: monitoring.xml:827(entry)
 msgid "Waiting to read or update transaction status."
-msgstr ""
+msgstr "Ожидание при чтении или изменении состояния транзакции."
 
 #: monitoring.xml:830(literal)
-#, fuzzy
 msgid "SubtransControlLock"
-msgstr "transaction_rollback"
+msgstr "SubtransControlLock"
 
 #: monitoring.xml:831(entry)
-#, fuzzy
 msgid "Waiting to read or update sub-transaction information."
-msgstr "Информация о фиксации транзакций"
+msgstr "Ожидание при чтении или изменении информации о подтранзакции."
 
 #: monitoring.xml:834(literal)
 msgid "MultiXactGenLock"
-msgstr ""
+msgstr "MultiXactGenLock"
 
 #: monitoring.xml:835(entry)
 msgid "Waiting to read or update shared multixact state."
-msgstr ""
+msgstr "Ожидание при чтении или изменении общего состояния мультитранзакций."
 
 #: monitoring.xml:838(literal)
 msgid "MultiXactOffsetControlLock"
-msgstr ""
+msgstr "MultiXactOffsetControlLock"
 
 #: monitoring.xml:839(entry)
 msgid "Waiting to read or update multixact offset mappings."
-msgstr ""
+msgstr "Ожидание при чтении или изменении смещений мультитранзакций."
 
 #: monitoring.xml:842(literal)
 msgid "MultiXactMemberControlLock"
-msgstr ""
+msgstr "MultiXactMemberControlLock"
 
 #: monitoring.xml:843(entry)
 msgid "Waiting to read or update multixact member mappings."
-msgstr ""
+msgstr "Ожидание при чтении или изменении членов мультитранзакций."
 
 #: monitoring.xml:846(literal)
 msgid "RelCacheInitLock"
-msgstr ""
+msgstr "RelCacheInitLock"
 
 #: monitoring.xml:847(entry)
 msgid "Waiting to read or write relation cache initialization file."
-msgstr ""
+msgstr "Ожидание при чтении или записи файла инициализации кеша отношения."
 
 #: monitoring.xml:851(literal)
-#, fuzzy
 msgid "CheckpointerCommLock"
-msgstr "Контрольные точки"
+msgstr "CheckpointerCommLock"
 
 #: monitoring.xml:852(entry)
 msgid "Waiting to manage fsync requests."
-msgstr ""
+msgstr "Ожидание при управлении запросами fsync."
 
 #: monitoring.xml:855(literal)
 msgid "TwoPhaseStateLock"
-msgstr ""
+msgstr "TwoPhaseStateLock"
 
 #: monitoring.xml:856(entry)
-#, fuzzy
 msgid "Waiting to read or update the state of prepared transactions."
-msgstr "Подкаталог, содержащий файлы состояний для подготовленных транзакций"
+msgstr "Ожидание при чтении или изменении состояния подготовленных транзакций."
 
 #: monitoring.xml:859(literal)
-#, fuzzy
 msgid "TablespaceCreateLock"
-msgstr "Имя табличного пространства"
+msgstr "TablespaceCreateLock"
 
 #: monitoring.xml:860(entry)
-#, fuzzy
 msgid "Waiting to create or drop the tablespace."
-msgstr "Новый владелец табличного пространства."
+msgstr "Ожидание при создании или удалении табличного пространства."
 
 #: monitoring.xml:863(literal)
 msgid "BtreeVacuumLock"
-msgstr ""
+msgstr "BtreeVacuumLock"
 
 #: monitoring.xml:864(entry)
 msgid "Waiting to read or update vacuum-related information for a Btree index."
 msgstr ""
+"Ожидание при чтении или изменении информации, связанной с очисткой, для "
+"индекса-B-дерева."
 
 #: monitoring.xml:868(literal)
 msgid "AddinShmemInitLock"
-msgstr ""
+msgstr "AddinShmemInitLock"
 
 #: monitoring.xml:869(entry)
 msgid "Waiting to manage space allocation in shared memory."
-msgstr ""
+msgstr "Ожидание при управлении выделением блоков в общей памяти."
 
 #: monitoring.xml:872(literal)
-#, fuzzy
 msgid "AutovacuumLock"
-msgstr "autovacuum_count"
+msgstr "AutovacuumLock"
 
 #: monitoring.xml:873(entry)
 msgid ""
 "Autovacuum worker or launcher waiting to update or read the current state of "
 "autovacuum workers."
 msgstr ""
+"Ожидание в рабочем процессе или процедуре запуска автоочистки при изменении "
+"или чтении текущего состояния рабочих процессов автоочистки."
 
 #: monitoring.xml:877(literal)
 msgid "AutovacuumScheduleLock"
-msgstr ""
+msgstr "AutovacuumScheduleLock"
 
 #: monitoring.xml:878(entry)
 msgid ""
 "Waiting to ensure that the table it has selected for a vacuum still needs "
 "vacuuming."
 msgstr ""
+"Ожидание при подтверждении, что таблица, выбранная для очистки, всё ещё "
+"нуждается в очистке."
 
 #: monitoring.xml:883(literal)
 msgid "SyncScanLock"
-msgstr ""
+msgstr "SyncScanLock"
 
 #: monitoring.xml:884(entry)
 msgid ""
 "Waiting to get the start location of a scan on a table for synchronized "
 "scans."
 msgstr ""
+"Ожидание при получении начального положения сканирования таблицы для "
+"синхронизированного сканирования."
 
 #: monitoring.xml:888(literal)
 msgid "RelationMappingLock"
-msgstr ""
+msgstr "RelationMappingLock"
 
 #: monitoring.xml:889(entry)
 msgid ""
 "Waiting to update the relation map file used to store catalog to filenode "
 "mapping."
 msgstr ""
+"Ожидание при изменении в файле сопоставления отношений, используемого для "
+"хранения связей файловых узлов с каталогом БД."
 
 #: monitoring.xml:894(literal)
 msgid "AsyncCtlLock"
-msgstr ""
+msgstr "AsyncCtlLock"
 
 #: monitoring.xml:895(entry)
 msgid "Waiting to read or update shared notification state."
-msgstr ""
+msgstr "Ожидание при чтении или изменении общего состояния уведомлений."
 
 #: monitoring.xml:898(literal)
 msgid "AsyncQueueLock"
-msgstr ""
+msgstr "AsyncQueueLock"
 
 #: monitoring.xml:899(entry)
-#, fuzzy
 msgid "Waiting to read or update notification messages."
-msgstr "Выводить лишь ошибки, без сообщений информационного характера."
+msgstr "Ожидание при чтении или изменении сообщений уведомлений."
 
 #: monitoring.xml:902(literal)
-#, fuzzy
 msgid "SerializableXactHashLock"
-msgstr "Serializable (Сериализуемость)"
+msgstr "SerializableXactHashLock"
 
 #: monitoring.xml:903(entry)
-#, fuzzy
 msgid ""
 "Waiting to retrieve or store information about serializable transactions."
 msgstr ""
-"Подкаталог, содержащий информацию о выполненных сериализуемых транзакциях."
+"Ожидание при получении или сохранении информации о сериализуемых транзакциях."
 
 #: monitoring.xml:907(literal)
-#, fuzzy
 msgid "SerializableFinishedListLock"
-msgstr "Serializable (Сериализуемость)"
+msgstr "SerializableFinishedListLock"
 
 #: monitoring.xml:908(entry)
-#, fuzzy
 msgid "Waiting to access the list of finished serializable transactions."
-msgstr "Обеспечение согласованности в сериализуемых транзакциях"
+msgstr "Ожидание при обращении к списку завершённых сериализуемых транзакций."
 
 #: monitoring.xml:912(literal)
 msgid "SerializablePredicateLockListLock"
-msgstr ""
+msgstr "SerializablePredicateLockListLock"
 
 #: monitoring.xml:913(entry)
 msgid ""
 "Waiting to perform an operation on a list of locks held by serializable "
 "transactions."
 msgstr ""
+"Ожидание при выполнении операции со списком блокировок, удерживаемых "
+"сериализуемыми транзакциями."
 
 #: monitoring.xml:917(literal)
 msgid "OldSerXidLock"
-msgstr ""
+msgstr "OldSerXidLock"
 
 #: monitoring.xml:918(entry)
-#, fuzzy
 msgid "Waiting to read or record conflicting serializable transactions."
 msgstr ""
-"Подкаталог, содержащий информацию о выполненных сериализуемых транзакциях."
+"Ожидание при чтении или записи информации о конфликтующих сериализуемых "
+"транзакциях."
 
 #: monitoring.xml:922(literal)
 msgid "SyncRepLock"
-msgstr ""
+msgstr "SyncRepLock"
 
 #: monitoring.xml:923(entry)
 msgid "Waiting to read or update information about synchronous replicas."
-msgstr ""
+msgstr "Ожидание при чтении или изменении сведений о синхронных репликах."
 
 #: monitoring.xml:927(literal)
-#, fuzzy
 msgid "BackgroundWorkerLock"
-msgstr "Фоновые рабочие процессы"
+msgstr "BackgroundWorkerLock"
 
 #: monitoring.xml:928(entry)
 msgid "Waiting to read or update background worker state."
 msgstr ""
+"Ожидание при чтении или изменении состояния фонового рабочего процесса."
 
 #: monitoring.xml:931(literal)
-#, fuzzy
 msgid "DynamicSharedMemoryControlLock"
-msgstr "Разделяемая память и лёгкие блокировки"
+msgstr "DynamicSharedMemoryControlLock"
 
 #: monitoring.xml:932(entry)
-#, fuzzy
 msgid "Waiting to read or update dynamic shared memory state."
-msgstr ""
-"Подкаталог, содержащий файлы, используемые подсистемой динамически "
-"разделяемой памяти"
+msgstr "Ожидание при чтении или изменении состояния динамической общей памяти."
 
 #: monitoring.xml:935(literal)
 msgid "AutoFileLock"
-msgstr ""
+msgstr "AutoFileLock"
 
 #: monitoring.xml:936(entry)
-#, fuzzy
 msgid "Waiting to update the <filename>postgresql.auto.conf</filename> file."
-msgstr "Пример файла <filename>pg_ident.conf</filename>"
+msgstr ""
+"Ожидание при изменении файла <filename>postgresql.auto.conf</filename>."
 
 #: monitoring.xml:939(literal)
-#, fuzzy
 msgid "ReplicationSlotAllocationLock"
-msgstr "информация о слотах репликации"
+msgstr "ReplicationSlotAllocationLock"
 
 #: monitoring.xml:940(entry)
 msgid "Waiting to allocate or free a replication slot."
-msgstr ""
+msgstr "Ожидание при выделении или освобождении слота репликации."
 
 #: monitoring.xml:943(literal)
-#, fuzzy
 msgid "ReplicationSlotControlLock"
-msgstr "Слоты репликации"
+msgstr "ReplicationSlotControlLock"
 
 #: monitoring.xml:944(entry)
-#, fuzzy
 msgid "Waiting to read or update replication slot state."
-msgstr "Запросы и действия слотов репликации"
+msgstr "Ожидание при чтении или изменении состояния слота репликации."
 
 #: monitoring.xml:947(literal)
 msgid "CommitTsControlLock"
-msgstr ""
+msgstr "CommitTsControlLock"
 
 #: monitoring.xml:948(entry)
-#, fuzzy
 msgid "Waiting to read or update transaction commit timestamps."
-msgstr "Подкаталог, содержащий данные о времени фиксации транзакций"
+msgstr "Ожидание при чтении или изменении времени фиксирования транзакции."
 
 #: monitoring.xml:951(literal)
-#, fuzzy
 msgid "CommitTsLock"
-msgstr "Комментарии"
+msgstr "CommitTsLock"
 
 #: monitoring.xml:952(entry)
 msgid ""
 "Waiting to read or update the last value set for the transaction timestamp."
 msgstr ""
+"Ожидание при чтении или изменении последнего значения, заданного в качестве "
+"времени транзакции."
 
 #: monitoring.xml:956(literal)
-#, fuzzy
 msgid "ReplicationOriginLock"
-msgstr "pg_replication_origin"
+msgstr "ReplicationOriginLock"
 
 #: monitoring.xml:957(entry)
-#, fuzzy
 msgid "Waiting to setup, drop or use replication origin."
-msgstr "зарегистрированные источники репликации"
+msgstr ""
+"Ожидание при подготовке, удалении или использовании источника репликации."
 
 #: monitoring.xml:960(literal)
 msgid "MultiXactTruncationLock"
-msgstr ""
+msgstr "MultiXactTruncationLock"
 
 #: monitoring.xml:961(entry)
 msgid "Waiting to read or truncate multixact information."
-msgstr ""
+msgstr "Ожидание при чтении или очистке информации мультитранзакций."
 
 #: monitoring.xml:964(literal)
-#, fuzzy
 msgid "LWLockTranche"
-msgstr "LWLockMode"
+msgstr "LWLockTranche"
 
 #: monitoring.xml:965(literal)
-#, fuzzy
 msgid "clog"
-msgstr "pg_clog"
+msgstr "clog"
 
 #: monitoring.xml:966(entry)
 msgid "Waiting for I/O on a clog (transaction status) buffer."
-msgstr ""
+msgstr "Ожидание при вводе/выводе с буфером clog (буфер состояния транзакций)."
 
 #: monitoring.xml:969(literal)
-#, fuzzy
 msgid "commit_timestamp"
-msgstr "origin_timestamp"
+msgstr "commit_timestamp"
 
 #: monitoring.xml:970(entry)
-#, fuzzy
 msgid "Waiting for I/O on commit timestamp buffer."
-msgstr "Ожидание ответа от сервера."
+msgstr "Ожидание при вводе/выводе с буфером времени фиксирования транзакций."
 
 #: monitoring.xml:973(literal)
-#, fuzzy
 msgid "subtrans"
-msgstr "pg_subtrans"
+msgstr "subtrans"
 
 #: monitoring.xml:974(entry)
 msgid "Waiting for I/O a subtransaction buffer."
-msgstr ""
+msgstr "Ожидание при вводе/выводе с буфером подтранзакций."
 
 #: monitoring.xml:977(literal)
-#, fuzzy
 msgid "multixact_offset"
-msgstr "utc_offset"
+msgstr "multixact_offset"
 
 #: monitoring.xml:978(entry)
 msgid "Waiting for I/O on a multixact offset buffer."
-msgstr ""
+msgstr "Ожидание при вводе/выводе с буфером смещений мультитранзакций."
 
 #: monitoring.xml:981(literal)
-#, fuzzy
 msgid "multixact_member"
-msgstr "pg_multixact"
+msgstr "multixact_member"
 
 #: monitoring.xml:982(entry)
 msgid "Waiting for I/O on a multixact_member buffer."
-msgstr ""
+msgstr "Ожидание при вводе/выводе с буфером multixact_member."
 
 #: monitoring.xml:985(literal)
-#, fuzzy
 msgid "async"
-msgstr "--nosync"
+msgstr "async"
 
 #: monitoring.xml:986(entry)
 msgid "Waiting for I/O on an async (notify) buffer."
 msgstr ""
+"Ожидание при вводе/выводе с буфером асинхронных сообщений (уведомлений)."
 
 #: monitoring.xml:989(literal)
 msgid "oldserxid"
-msgstr ""
+msgstr "oldserxid"
 
 #: monitoring.xml:990(entry)
 msgid "Waiting to I/O on an oldserxid buffer."
-msgstr ""
+msgstr "Ожидание при вводе/выводе с буфером oldserxid."
 
 #: monitoring.xml:993(literal)
-#, fuzzy
 msgid "wal_insert"
-msgstr "aminsert"
+msgstr "wal_insert"
 
 #: monitoring.xml:994(entry)
 msgid "Waiting to insert WAL into a memory buffer."
-msgstr ""
+msgstr "Ожидание при добавлении записей WAL в буфер в памяти."
 
 #: monitoring.xml:997(literal)
-#, fuzzy
 msgid "buffer_content"
-msgstr "buffers_clean"
+msgstr "buffer_content"
 
 #: monitoring.xml:998(entry)
 msgid "Waiting to read or write a data page in memory."
-msgstr ""
+msgstr "Ожидание при чтении или записи страницы данных в памяти."
 
 #: monitoring.xml:1001(literal)
-#, fuzzy
 msgid "buffer_io"
-msgstr "bufferid"
+msgstr "buffer_io"
 
 #: monitoring.xml:1002(entry)
-#, fuzzy
 msgid "Waiting for I/O on a data page."
-msgstr "Ожидание, пока соединение будет установлено."
+msgstr "Ожидание при вводе/выводе, связанном со страницей данных."
 
 #: monitoring.xml:1005(literal)
-#, fuzzy
 msgid "replication_origin"
-msgstr "pg_replication_origin"
+msgstr "replication_origin"
 
 #: monitoring.xml:1006(entry)
-#, fuzzy
 msgid "Waiting to read or update the replication progress."
-msgstr ""
-"информация об источниках репликации, включая данные прогресса репликации"
+msgstr "Ожидание при чтении или изменении состояния репликации."
 
 #: monitoring.xml:1009(literal)
-#, fuzzy
 msgid "replication_slot_io"
-msgstr "pg_replication_slots"
+msgstr "replication_slot_io"
 
 #: monitoring.xml:1010(entry)
-#, fuzzy
 msgid "Waiting for I/O on a replication slot."
-msgstr "Ожидание, пока соединение будет установлено."
+msgstr "Ожидание при вводе/выводе со слотом репликации."
 
 #: monitoring.xml:1013(literal)
-#, fuzzy
 msgid "proc"
-msgstr "amproc"
+msgstr "proc"
 
 #: monitoring.xml:1014(entry)
 msgid "Waiting to read or update the fast-path lock information."
 msgstr ""
+"Ожидание при чтении или изменении информации о блокировках по быстрому пути."
 
 #: monitoring.xml:1017(literal)
-#, fuzzy
 msgid "buffer_mapping"
-msgstr "user_mappings"
+msgstr "buffer_mapping"
 
 #: monitoring.xml:1018(entry)
 msgid "Waiting to associate a data block with a buffer in the buffer pool."
-msgstr ""
+msgstr "Ожидание при связывании блока данных с буфером в пуле буферов."
 
 #: monitoring.xml:1022(literal)
-#, fuzzy
 msgid "lock_manager"
-msgstr "locker"
+msgstr "lock_manager"
 
 #: monitoring.xml:1023(entry)
 msgid ""
 "Waiting to add or examine locks for backends, or waiting to join or exit a "
 "locking group (used by parallel query)."
 msgstr ""
+"Ожидание при добавлении или обращении к блокировкам обслуживающих процессов "
+"либо ожидание входа или выхода из группы блокировок (используется в "
+"параллельных запросах)."
 
 #: monitoring.xml:1027(literal)
 msgid "predicate_lock_manager"
-msgstr ""
+msgstr "predicate_lock_manager"
 
 #: monitoring.xml:1028(entry)
-#, fuzzy
 msgid "Waiting to add or examine predicate lock information."
-msgstr "дополнительные свойства сторонних таблиц"
+msgstr ""
+"Ожидание при добавлении или обращении к информации о предикатных блокировках."
 
 #: monitoring.xml:1031(literal)
 msgid "Lock"
-msgstr ""
+msgstr "Lock"
 
 #: monitoring.xml:1032(literal)
 msgid "relation"
@@ -2020,17 +2005,15 @@ msgstr "relation"
 
 #: monitoring.xml:1033(entry)
 msgid "Waiting to acquire a lock on a relation."
-msgstr ""
+msgstr "Ожидание при запросе блокировки для отношения."
 
 #: monitoring.xml:1036(literal)
-#, fuzzy
 msgid "extend"
-msgstr "external_id"
+msgstr "extend"
 
 #: monitoring.xml:1037(entry)
-#, fuzzy
 msgid "Waiting to extend a relation."
-msgstr "Владелец отношения"
+msgstr "Ожидание при расширении отношения."
 
 #: monitoring.xml:1040(literal)
 msgid "page"
@@ -2038,7 +2021,7 @@ msgstr "page"
 
 #: monitoring.xml:1041(entry)
 msgid "Waiting to acquire a lock on page of a relation."
-msgstr ""
+msgstr "Ожидание при запросе блокировки для страницы отношения."
 
 #: monitoring.xml:1044(literal)
 msgid "tuple"
@@ -2046,16 +2029,15 @@ msgstr "tuple"
 
 #: monitoring.xml:1045(entry)
 msgid "Waiting to acquire a lock on a tuple."
-msgstr ""
+msgstr "Ожидание при запросе блокировки для кортежа."
 
 #: monitoring.xml:1048(literal)
 msgid "transactionid"
 msgstr "transactionid"
 
 #: monitoring.xml:1049(entry)
-#, fuzzy
 msgid "Waiting for a transaction to finish."
-msgstr "Ожидание, пока соединение будет установлено."
+msgstr "Ожидание завершения транзакции."
 
 #: monitoring.xml:1052(literal)
 msgid "virtualxid"
@@ -2063,50 +2045,47 @@ msgstr "virtualxid"
 
 #: monitoring.xml:1053(entry)
 msgid "Waiting to acquire a virtual xid lock."
-msgstr ""
+msgstr "Ожидание при запросе блокировки виртуального xid."
 
 #: monitoring.xml:1056(literal)
 msgid "speculative token"
-msgstr ""
+msgstr "speculative token"
 
 #: monitoring.xml:1057(entry)
 msgid "Waiting to acquire a speculative insertion lock."
-msgstr ""
+msgstr "Ожидание при запросе блокировки спекулятивного добавления."
 
 #: monitoring.xml:1060(literal)
 msgid "object"
-msgstr "объект"
+msgstr "object"
 
 #: monitoring.xml:1061(entry)
 msgid "Waiting to acquire a lock on a non-relation database object."
-msgstr ""
+msgstr "Ожидание при запросе блокировки для нереляционного объекта БД."
 
 #: monitoring.xml:1064(literal)
-#, fuzzy
 msgid "userlock"
-msgstr "userepl"
+msgstr "userlock"
 
 #: monitoring.xml:1065(entry)
 msgid "Waiting to acquire a userlock."
-msgstr ""
+msgstr "Ожидание при запросе пользовательской блокировки."
 
 #: monitoring.xml:1068(literal)
-#, fuzzy
 msgid "advisory"
-msgstr "Рекомендательные блокировки"
+msgstr "advisory"
 
 #: monitoring.xml:1069(entry)
 msgid "Waiting to acquire an advisory user lock."
-msgstr ""
+msgstr "Ожидание при запросе рекомендательной пользовательской блокировки."
 
 #: monitoring.xml:1072(literal) monitoring.xml:1073(literal)
-#, fuzzy
 msgid "BufferPin"
-msgstr "buffering"
+msgstr "BufferPin"
 
 #: monitoring.xml:1074(entry)
 msgid "Waiting to acquire a pin on a buffer."
-msgstr ""
+msgstr "Ожидание при закреплении буфера."
 
 #: monitoring.xml:1081(para)
 msgid ""
@@ -2117,6 +2096,12 @@ msgid ""
 "won't have that information, so we display <literal>extension</literal> for "
 "such cases."
 msgstr ""
+"Для траншей, регистрируемых расширениями, в поле <structfield>wait_event</"
+"structfield> выводится имя, указываемое расширением. Пользователь вполне "
+"может зарегистрировать транш и в обслуживающем процессе (воспользовавшись "
+"динамической общей памятью), в результате чего другие процессы не получат "
+"доступа к этой информации; в таких случах в этом поле выводится "
+"<literal>extension</literal>."
 
 #: monitoring.xml:1094(programlisting)
 #, no-wrap
@@ -2128,11 +2113,18 @@ msgid ""
 " 6644 | LWLockNamed     | ProcArrayLock\n"
 "(2 rows)"
 msgstr ""
+"SELECT pid, wait_event_type, wait_event FROM pg_stat_activity WHERE wait_event is NOT NULL;\n"
+" pid  | wait_event_type |  wait_event\n"
+"------+-----------------+---------------\n"
+" 2540 | Lock            | relation\n"
+" 6644 | LWLockNamed     | ProcArrayLock\n"
+"(2 rows)"
 
 #: monitoring.xml:1091(para)
-#, fuzzy
 msgid "Here is an example of how wait events can be viewed <placeholder-1/>"
-msgstr "Примеры использования этой функции: <placeholder-1/>"
+msgstr ""
+"Следующая команда показывает, как можно просмотреть события ожидания: "
+"<placeholder-1/>"
 
 #: monitoring.xml:1103(title)
 msgid "<structname>pg_stat_replication</structname> View"
@@ -2140,7 +2132,7 @@ msgstr "Представление <structname>pg_stat_replication</structname>"
 
 #: monitoring.xml:1117(entry)
 msgid "Process ID of a WAL sender process"
-msgstr "Идентификатор процесса для WAL-отправителя процесса"
+msgstr "Идентификатор процесса WAL-отправителя"
 
 #: monitoring.xml:1122(entry)
 msgid "OID of the user logged into this WAL sender process"
@@ -2275,14 +2267,12 @@ msgstr ""
 "информация о резервных серверах, подключённых опосредованно, не представлена."
 
 #: monitoring.xml:1223(title)
-#, fuzzy
 msgid "<structname>pg_stat_wal_receiver</structname> View"
-msgstr "Представление <structname>pg_stat_archiver</structname>"
+msgstr "Представление <structname>pg_stat_wal_receiver</structname>"
 
 #: monitoring.xml:1237(entry)
-#, fuzzy
 msgid "Process ID of the WAL receiver process"
-msgstr "Идентификатор процесса для WAL-отправителя процесса"
+msgstr "Идентификатор процесса WAL-приёмника"
 
 #: monitoring.xml:1240(structfield)
 msgid "status"
@@ -2290,18 +2280,15 @@ msgstr "status"
 
 #: monitoring.xml:1242(entry)
 msgid "Activity status of the WAL receiver process"
-msgstr ""
+msgstr "Состояние активности процесса WAL-приёмника"
 
 #: monitoring.xml:1245(structfield)
 msgid "receive_start_lsn"
 msgstr "receive_start_lsn"
 
 #: monitoring.xml:1247(entry)
-#, fuzzy
 msgid "First transaction log position used when WAL receiver is started"
-msgstr ""
-"Позиция последней транзакции в журнале транзакций, сброшенной на диск "
-"резервным сервером"
+msgstr "Первая позиция в журнале транзакции в момент запуска приёмника WAL"
 
 #: monitoring.xml:1251(structfield)
 msgid "receive_start_tli"
@@ -2309,7 +2296,7 @@ msgstr "receive_start_tli"
 
 #: monitoring.xml:1253(entry)
 msgid "First timeline number used when WAL receiver is started"
-msgstr ""
+msgstr "Первый номер линии времени в момент запуска приёмника WAL"
 
 #: monitoring.xml:1256(structfield)
 msgid "received_lsn"
@@ -2321,6 +2308,9 @@ msgid ""
 "initial value of this field being the first log position used when WAL "
 "receiver is started"
 msgstr ""
+"Последняя позиция в журнале транзакций, уже полученная и сброшенная на диск; "
+"начальным значением этого поля будет первая позиция в журнале в момент "
+"запуска приёмника WAL"
 
 #: monitoring.xml:1263(structfield)
 msgid "received_tli"
@@ -2332,6 +2322,9 @@ msgid ""
 "disk, the initial value of this field being the timeline number of the first "
 "log position used when WAL receiver is started"
 msgstr ""
+"Номер линии времени последней позиции в журнале транзакции, уже полученной и "
+"сброшенной на диск; начальным значением этого поля будет линия времени "
+"первой позиции в момент запуска приёмника WAL"
 
 #: monitoring.xml:1271(structfield)
 msgid "last_msg_send_time"
@@ -2340,6 +2333,8 @@ msgstr "last_msg_send_time"
 #: monitoring.xml:1273(entry)
 msgid "Send time of last message received from origin WAL sender"
 msgstr ""
+"Время отправки последнего сообщения, полученного от изначального отправителя "
+"WAL"
 
 #: monitoring.xml:1276(structfield)
 msgid "last_msg_receipt_time"
@@ -2348,28 +2343,28 @@ msgstr "last_msg_receipt_time"
 #: monitoring.xml:1278(entry)
 msgid "Receipt time of last message received from origin WAL sender"
 msgstr ""
+"Время поступления последнего сообщения, полученного от изначального "
+"отправителя WAL"
 
 #: monitoring.xml:1281(structfield)
 msgid "latest_end_lsn"
 msgstr "latest_end_lsn"
 
 #: monitoring.xml:1283(entry)
-#, fuzzy
 msgid "Last transaction log position reported to origin WAL sender"
 msgstr ""
-"Позиция последней транзакции в журнале транзакций, записанной на диск "
-"резервным сервером"
+"Последняя позиция в журнале транзакций, сообщённая изначальному отправителю "
+"WAL"
 
 #: monitoring.xml:1286(structfield)
 msgid "latest_end_time"
 msgstr "latest_end_time"
 
 #: monitoring.xml:1288(entry)
-#, fuzzy
 msgid "Time of last transaction log position reported to origin WAL sender"
 msgstr ""
-"Позиция последней транзакции в журнале транзакций, записанной на диск "
-"резервным сервером"
+"Время, когда последняя позиция в журнале транзакций была сообщена "
+"изначальному отправителю WAL"
 
 #: monitoring.xml:1291(structfield)
 msgid "slot_name"
@@ -2377,18 +2372,17 @@ msgstr "slot_name"
 
 #: monitoring.xml:1293(entry)
 msgid "Replication slot name used by this WAL receiver"
-msgstr ""
+msgstr "Имя слота репликации, используемого этим приёмником WAL"
 
 #: monitoring.xml:1299(para)
-#, fuzzy
 msgid ""
 "The <structname>pg_stat_wal_receiver</structname> view will contain only one "
 "row, showing statistics about the WAL receiver from that receiver's "
 "connected server."
 msgstr ""
-"Представление <structname>pg_stat_archiver</structname> всегда будет иметь "
-"одну строку, содержащую данные о текущем состоянии процесса архивации "
-"кластера."
+"Представление <structname>pg_stat_wal_receiver</structname> будет иметь "
+"только одну строку со статистикой приёмника WAL от сервера, на котором "
+"работает приёмник."
 
 #: monitoring.xml:1306(title)
 msgid "<structname>pg_stat_ssl</structname> View"
@@ -3668,14 +3662,14 @@ msgid "<primary>pg_stat_reset</primary>"
 msgstr "<primary>pg_stat_reset</primary>"
 
 #: monitoring.xml:2280(entry)
-#, fuzzy
 msgid ""
 "Reset all statistics counters for the current database to zero (requires "
 "superuser privileges by default, but EXECUTE for this function can be "
 "granted to others.)"
 msgstr ""
-"Сбросить все статистические счётчики в текущей базе данных в ноль (требуются "
-"привилегии суперпользователя)"
+"Сбросить в ноль все статистические счётчики в текущей базе данных (по "
+"умолчанию разрешено только суперпользователям, но право выполнения (EXECUTE) "
+"этой функции можно дать и другим)"
 
 #: monitoring.xml:2288(function)
 msgid "pg_stat_reset_shared"
@@ -3690,7 +3684,6 @@ msgid "<primary>pg_stat_reset_shared</primary>"
 msgstr "<primary>pg_stat_reset_shared</primary>"
 
 #: monitoring.xml:2290(entry)
-#, fuzzy
 msgid ""
 "Reset some cluster-wide statistics counters to zero, depending on the "
 "argument (requires superuser privileges by default, but EXECUTE for this "
@@ -3701,12 +3694,13 @@ msgid ""
 "the counters shown in the <structname>pg_stat_archiver</structname> view."
 msgstr ""
 "Сбросить в ноль некоторые статистические счётчики на уровне кластера, в "
-"зависимости от заданного аргумента (требуются привилегии суперпользователя). "
-"Вызов <literal>pg_stat_reset_shared('bgwriter')</literal> сбросит в ноль все "
-"счётчики, которые показываются в представлении <structname>pg_stat_bgwriter</"
-"structname>. Вызов <literal>pg_stat_reset_shared('archiver')</literal> "
-"сбросит в ноль все счётчики, которые показываются в представлении "
-"<structname>pg_stat_archiver</structname>."
+"зависимости от заданного аргумента (по умолчанию разрешено только "
+"суперпользователям, но право выполнения (EXECUTE) этой функции можно дать и "
+"другим). Вызов <literal>pg_stat_reset_shared('bgwriter')</literal> сбросит в "
+"ноль все счётчики, которые показываются в представлении "
+"<structname>pg_stat_bgwriter</structname>, а вызов "
+"<literal>pg_stat_reset_shared('archiver')</literal> — все счётчики в "
+"представлении <structname>pg_stat_archiver</structname>."
 
 #: monitoring.xml:2302(function)
 msgid "pg_stat_reset_single_table_counters"
@@ -3721,14 +3715,14 @@ msgid "<primary>pg_stat_reset_single_table_counters</primary>"
 msgstr "<primary>pg_stat_reset_single_table_counters</primary>"
 
 #: monitoring.xml:2304(entry)
-#, fuzzy
 msgid ""
 "Reset statistics for a single table or index in the current database to zero "
 "(requires superuser privileges by default, but EXECUTE for this function can "
 "be granted to others)"
 msgstr ""
 "Сбросить в ноль статистику по отдельной таблице или индексу в текущей базе "
-"данных (требуются привилегии суперпользователя)"
+"данных (по умолчанию разрешено только суперпользователям, но право "
+"выполнения (EXECUTE) этой функции можно дать и другим)"
 
 #: monitoring.xml:2312(function)
 msgid "pg_stat_reset_single_function_counters"
@@ -3739,14 +3733,14 @@ msgid "<primary>pg_stat_reset_single_function_counters</primary>"
 msgstr "<primary>pg_stat_reset_single_function_counters</primary>"
 
 #: monitoring.xml:2314(entry)
-#, fuzzy
 msgid ""
 "Reset statistics for a single function in the current database to zero "
 "(requires superuser privileges by default, but EXECUTE for this function can "
 "be granted to others)"
 msgstr ""
-"Сбросить в ноль статистику по отдельной функции в текущей базе данных "
-"(требуются привилегии суперпользователя)"
+"Сбросить в ноль статистику по отдельной функции в текущей базе данных (по "
+"умолчанию разрешено только суперпользователям, но право выполнения (EXECUTE) "
+"этой функции можно дать и другим)"
 
 #: monitoring.xml:2339(programlisting)
 #, no-wrap
@@ -3861,23 +3855,21 @@ msgid "pg_stat_get_backend_userid(integer)"
 msgstr "pg_stat_get_backend_userid(integer)"
 
 #: monitoring.xml:2414(function)
-#, fuzzy
 msgid "pg_stat_get_backend_wait_event_type(integer)"
-msgstr "pg_stat_get_backend_waiting(integer)"
+msgstr "pg_stat_get_backend_wait_event_type(integer)"
 
 #: monitoring.xml:2416(entry)
-#, fuzzy
 msgid ""
 "Wait event type name if backend is currently waiting, otherwise NULL. See "
 "<xref linkend=\"wait-event-table\"/> for details."
 msgstr ""
-"Проводит аутентификацию, используя клиентский сертификат SSL. За "
-"подробностями обратитесь к <xref remap=\"3\" linkend=\"auth-cert\"/>"
+"Имя типа ожидаемого события, если обслуживающий процесс находится в "
+"состоянии ожидания, а в противном случае — NULL. За подробностями обратитесь "
+"к <xref remap=\"3\" linkend=\"wait-event-table\"/>."
 
 #: monitoring.xml:2422(function)
-#, fuzzy
 msgid "pg_stat_get_backend_wait_event(integer)"
-msgstr "pg_stat_get_backend_waiting(integer)"
+msgstr "pg_stat_get_backend_wait_event(integer)"
 
 #: monitoring.xml:2430(function)
 msgid "pg_stat_get_backend_xact_start(integer)"
@@ -3946,7 +3938,7 @@ msgstr ""
 
 #: monitoring.xml:2491(title)
 msgid "Progress Reporting"
-msgstr ""
+msgstr "Отслеживание выполнения"
 
 #: monitoring.xml:2493(para)
 msgid ""
@@ -3955,10 +3947,14 @@ msgid ""
 "which supports progress reporting is <command>VACUUM</command>. This may be "
 "expanded in the future."
 msgstr ""
+"<productname>PostgreSQL</productname> имеет возможность отслеживать "
+"выполнение определённых команд. В настоящее время такое отслеживание "
+"поддерживает только команда <command>VACUUM</command>, но в будущем сфера "
+"его применения может быть расширена."
 
 #: monitoring.xml:2501(title)
 msgid "VACUUM Progress Reporting"
-msgstr ""
+msgstr "Отслеживание выполнения VACUUM"
 
 #: monitoring.xml:2503(para)
 msgid ""
@@ -3970,46 +3966,48 @@ msgid ""
 "currently supported for <command>VACUUM FULL</command> and backends running "
 "<command>VACUUM FULL</command> will not be listed in this view."
 msgstr ""
+"Во время выполнения <command>VACUUM</command> представление "
+"<structname>pg_stat_progress_vacuum</structname> будет содержать по одной "
+"строке для каждого обслуживающего процесса (включая рабочие процессы "
+"автоочистки), производящего очистку. Таблицы ниже показывают, какая "
+"информация будет отслеживаться, и рассказывают, как её интерпретировать. В "
+"настоящее время отслеживание выполнения не поддерживается для команды "
+"<command>VACUUM FULL</command>, так что процессы, выполняющие "
+"<command>VACUUM FULL</command>, не будут видны в этом представлении."
 
 #: monitoring.xml:2515(title)
-#, fuzzy
 msgid "<structname>pg_stat_progress_vacuum</structname> View"
-msgstr "Представление <structname>pg_stat_ssl</structname>"
+msgstr "Представление <structname>pg_stat_progress_vacuum</structname>"
 
 #: monitoring.xml:2529(entry)
-#, fuzzy
 msgid "Process ID of backend."
-msgstr "Идентификатор процесса этого серверного процесса"
+msgstr "Идентификатор (PID) этого обслуживающего процесса"
 
 #: monitoring.xml:2534(entry)
-#, fuzzy
 msgid "OID of the database to which this backend is connected."
-msgstr "OID базы данных, к которой подключён этот серверный процесс"
+msgstr "OID базы данных, к которой подключён этот обслуживающий процесс."
 
 #: monitoring.xml:2539(entry)
-#, fuzzy
 msgid "Name of the database to which this backend is connected."
-msgstr "Имя базы данных, к которой подключён этот серверный процесс"
+msgstr "Имя базы данных, к которой подключён этот обслуживающий процесс."
 
 #: monitoring.xml:2544(entry)
-#, fuzzy
 msgid "OID of the table being vacuumed."
-msgstr "OID таблицы для индекса"
+msgstr "OID очищаемой таблицы."
 
 #: monitoring.xml:2547(structfield)
-#, fuzzy
 msgid "phase"
-msgstr "pg_twophase"
+msgstr "phase"
 
 #: monitoring.xml:2549(entry)
 msgid ""
 "Current processing phase of vacuum. See <xref linkend=\"vacuum-phases\"/>."
 msgstr ""
+"Текущая фаза очистки. См. <xref remap=\"4\" linkend=\"vacuum-phases\"/>."
 
 #: monitoring.xml:2554(structfield)
-#, fuzzy
 msgid "heap_blks_total"
-msgstr "heap_blks_hit"
+msgstr "heap_blks_total"
 
 #: monitoring.xml:2556(entry)
 msgid ""
@@ -4017,11 +4015,13 @@ msgid ""
 "beginning of the scan; blocks added later will not be (and need not be) "
 "visited by this <command>VACUUM</command>."
 msgstr ""
+"Общее число блоков кучи в таблице. Это число отражает состояние в начале "
+"сканирования; блоки, добавленные позже, не будут (и не должны) "
+"обрабатываться текущей командой <command>VACUUM</command>."
 
 #: monitoring.xml:2563(structfield)
-#, fuzzy
 msgid "heap_blks_scanned"
-msgstr "heap_blks_read"
+msgstr "heap_blks_scanned"
 
 #: monitoring.xml:2565(entry)
 msgid ""
@@ -4032,11 +4032,16 @@ msgid ""
 "<structfield>heap_blks_total</structfield> when the vacuum is complete. This "
 "counter only advances when the phase is <literal>scanning heap</literal>."
 msgstr ""
+"Число просканированных блоков кучи. Так как для оптимизации сканирования "
+"применяется <link linkend=\"storage-vm\">карта видимости</link>, некоторые "
+"блоки могут пропускаться без осмотра; пропущенные блоки входят в это общее "
+"число, так что по завершении очистки это число станет равно "
+"<structfield>heap_blks_total</structfield>. Этот счётчик увеличивается "
+"только в фазе <literal>scanning heap</literal>."
 
 #: monitoring.xml:2575(structfield)
-#, fuzzy
 msgid "heap_blks_vacuumed"
-msgstr "heap_blks_read"
+msgstr "heap_blks_vacuumed"
 
 #: monitoring.xml:2577(entry)
 msgid ""
@@ -4045,60 +4050,66 @@ msgid ""
 "Blocks that contain no dead tuples are skipped, so the counter may sometimes "
 "skip forward in large increments."
 msgstr ""
+"Число очищенных блоков кучи. Если в таблице нет индексов, этот счётчик "
+"увеличивается только в фазе <literal>vacuuming heap</literal> (очистка "
+"кучи). Блоки, не содержащие &laquo;мёртвых&raquo; кортежей, при этом "
+"пропускаются, так что этот счётчик иногда может увеличиваться резкими "
+"рывками."
 
 #: monitoring.xml:2585(structfield)
-#, fuzzy
 msgid "index_vacuum_count"
-msgstr "vacuum_count"
+msgstr "index_vacuum_count"
 
 #: monitoring.xml:2587(entry)
-#, fuzzy
 msgid "Number of completed index vacuum cycles."
-msgstr "Количество удалённых страниц"
+msgstr "Количество завершённых циклов очистки индекса."
 
 #: monitoring.xml:2592(structfield)
-#, fuzzy
 msgid "max_dead_tuples"
-msgstr "n_dead_tup"
+msgstr "max_dead_tuples"
 
 #: monitoring.xml:2594(entry)
 msgid ""
 "Number of dead tuples that we can store before needing to perform an index "
 "vacuum cycle, based on <xref linkend=\"guc-maintenance-work-mem\"/>."
 msgstr ""
+"Число &laquo;мёртвых&raquo; кортежей, которое мы можем сохранить, прежде чем "
+"потребуется выполнить цикл очистки индекса, в зависимости от <xref linkend="
+"\"guc-maintenance-work-mem\"/>."
 
 #: monitoring.xml:2601(structfield)
-#, fuzzy
 msgid "num_dead_tuples"
-msgstr "n_dead_tup"
+msgstr "num_dead_tuples"
 
 #: monitoring.xml:2603(entry)
 msgid "Number of dead tuples collected since the last index vacuum cycle."
 msgstr ""
+"Число &laquo;мёртвых&raquo; кортежей, собранных со времени последнего цикла "
+"очистки индекса."
 
 #: monitoring.xml:2612(title)
-#, fuzzy
 msgid "VACUUM phases"
-msgstr "VACUUM"
+msgstr "Фазы VACUUM"
 
 #: monitoring.xml:2616(entry)
 msgid "Phase"
-msgstr ""
+msgstr "Фаза"
 
 #: monitoring.xml:2623(literal)
-#, fuzzy
 msgid "initializing"
-msgstr "--initialize"
+msgstr "initializing"
 
 #: monitoring.xml:2624(entry)
 msgid ""
 "<command>VACUUM</command> is preparing to begin scanning the heap. This "
 "phase is expected to be very brief."
 msgstr ""
+"Инициализация — <command>VACUUM</command> готовится начать сканирование "
+"кучи. Эта фаза должна быть очень быстрой."
 
 #: monitoring.xml:2630(literal)
 msgid "scanning heap"
-msgstr ""
+msgstr "scanning heap"
 
 #: monitoring.xml:2631(entry)
 msgid ""
@@ -4107,11 +4118,15 @@ msgid ""
 "The <structfield>heap_blks_scanned</structfield> column can be used to "
 "monitor the progress of the scan."
 msgstr ""
+"Сканирование кучи — <command>VACUUM</command> в настоящее время сканирует "
+"кучу. При этом будет очищена и, если требуется, дефрагментирована каждая "
+"страница, а возможно, также будет произведена заморозка. Отслеживать процесс "
+"сканирования можно, следя за содержимым столбца "
+"<structfield>heap_blks_scanned</structfield>."
 
 #: monitoring.xml:2639(literal)
-#, fuzzy
 msgid "vacuuming indexes"
-msgstr "Основные принципы очистки"
+msgstr "vacuuming indexes"
 
 #: monitoring.xml:2640(entry)
 msgid ""
@@ -4121,11 +4136,17 @@ msgid ""
 "linkend=\"guc-maintenance-work-mem\"/> is insufficient to store the number "
 "of dead tuples found."
 msgstr ""
+"Очистка индексов — <command>VACUUM</command> в настоящее время очищает "
+"индексы. Если у таблицы есть какие-либо индексы, эта фаза будет наблюдаться "
+"минимум единожды в процессе очистки, после того, как куча будет "
+"просканирована полностью. Она может повторяться несколько раз в процессе "
+"очистки, если объёма <xref linkend=\"guc-maintenance-work-mem\"/> "
+"оказывается недостаточно для сохранения всех найденных &laquo;мёртвых&raquo; "
+"кортежей."
 
 #: monitoring.xml:2649(literal)
-#, fuzzy
 msgid "vacuuming heap"
-msgstr "Основные принципы очистки"
+msgstr "vacuuming heap"
 
 #: monitoring.xml:2650(entry)
 msgid ""
@@ -4136,11 +4157,16 @@ msgid ""
 "scanning the heap after this phase is completed; otherwise, it will begin "
 "cleaning up indexes after this phase is completed."
 msgstr ""
+"Очистка кучи — <command>VACUUM</command> в настоящее время очищает кучу. "
+"Очистка кучи отличается от сканирования, так как она происходит после каждой "
+"операции очистки индексов. Если <structfield>heap_blks_scanned</structfield> "
+"меньше чем <structfield>heap_blks_total</structfield>, система вернётся к "
+"сканированию кучи после завершения этой фазы; в противном случае она начнёт "
+"уборку индексов."
 
 #: monitoring.xml:2660(literal)
-#, fuzzy
 msgid "cleaning up indexes"
-msgstr "Создание индексов"
+msgstr "cleaning up indexes"
 
 #: monitoring.xml:2661(entry)
 msgid ""
@@ -4148,11 +4174,13 @@ msgid ""
 "after the heap has been completely scanned and all vacuuming of the indexes "
 "and the heap has been completed."
 msgstr ""
+"Уборка индексов — <command>VACUUM</command> в настоящее время производит "
+"уборку в индексах. Это происходит после завершения полного сканирования кучи "
+"и очистки индексов и кучи."
 
 #: monitoring.xml:2668(literal)
-#, fuzzy
 msgid "truncating heap"
-msgstr "Создание схемы"
+msgstr "truncating heap"
 
 #: monitoring.xml:2669(entry)
 msgid ""
@@ -4160,10 +4188,13 @@ msgid ""
 "empty pages at the end of the relation to the operating system. This occurs "
 "after cleaning up indexes."
 msgstr ""
+"Усечение кучи — <command>VACUUM</command> в настоящее время усекает кучу, "
+"чтобы возвратить операционной системе объём пустых страниц в конце "
+"отношения. Это происходит после уборки индексов."
 
 #: monitoring.xml:2676(literal)
 msgid "performing final cleanup"
-msgstr ""
+msgstr "performing final cleanup"
 
 #: monitoring.xml:2677(entry)
 msgid ""
@@ -4172,6 +4203,11 @@ msgid ""
 "in <literal>pg_class</literal>, and report statistics to the statistics "
 "collector. When this phase is completed, <command>VACUUM</command> will end."
 msgstr ""
+"Выполнение окончательной очистки — <command>VACUUM</command> выполняет "
+"окончательную очистку. На этой стадии <command>VACUUM</command> очищает "
+"карту свободного пространства, обновляет статистику в <literal>pg_class</"
+"literal> и передаёт статистику сборщику статистики, После этой фазы "
+"<command>VACUUM</command> завершит свою работу."
 
 #: monitoring.xml:2692(title)
 msgid "Dynamic Tracing"
@@ -4470,7 +4506,6 @@ msgid "(int, int, int, int, int)"
 msgstr "(int, int, int, int, int)"
 
 #: monitoring.xml:2851(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a checkpoint is complete. (The probes listed next fire "
 "in sequence during checkpoint processing.) arg0 is the number of buffers "
@@ -4480,8 +4515,8 @@ msgstr ""
 "Срабатывает по завершении контрольной точки. (Перечисленные далее точки "
 "трассировки срабатывают последовательно при обработке контрольной точки.) "
 "arg0 задаёт число записанных буферов. arg1 &mdash; общее число буферов. "
-"arg2, arg3 и arg4 задают число файлов xlog, которые были добавлены, удалены "
-"или переработаны соответственно."
+"arg2, arg3 и arg4 задают число файлов WAL, которые были добавлены, удалены "
+"или переработаны, соответственно."
 
 #: monitoring.xml:2858(literal)
 msgid "clog-checkpoint-start"
@@ -4506,13 +4541,12 @@ msgid "clog-checkpoint-done"
 msgstr "clog-checkpoint-done"
 
 #: monitoring.xml:2867(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when the CLOG portion of a checkpoint is complete. arg0 has "
 "the same meaning as for <literal>clog-checkpoint-start</literal>."
 msgstr ""
 "Срабатывает по завершении записи контрольной точки в CLOG. Значение arg0 "
-"задаётся аналогично значению для clog-checkpoint-start."
+"задаётся аналогично значению для <literal>clog-checkpoint-start</literal>."
 
 #: monitoring.xml:2871(literal)
 msgid "subtrans-checkpoint-start"
@@ -4532,13 +4566,13 @@ msgid "subtrans-checkpoint-done"
 msgstr "subtrans-checkpoint-done"
 
 #: monitoring.xml:2881(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when the SUBTRANS portion of a checkpoint is complete. arg0 "
 "has the same meaning as for <literal>subtrans-checkpoint-start</literal>."
 msgstr ""
 "Срабатывает по завершении записи контрольной точки в SUBTRANS. Значение arg0 "
-"задаётся аналогично значению для subtrans-checkpoint-start."
+"задаётся аналогично значению для <literal>subtrans-checkpoint-start</"
+"literal>."
 
 #: monitoring.xml:2886(literal)
 msgid "multixact-checkpoint-start"
@@ -4558,14 +4592,14 @@ msgid "multixact-checkpoint-done"
 msgstr "multixact-checkpoint-done"
 
 #: monitoring.xml:2896(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when the MultiXact portion of a checkpoint is complete. "
 "arg0 has the same meaning as for <literal>multixact-checkpoint-start</"
 "literal>."
 msgstr ""
 "Срабатывает по завершении записи контрольной точки в MultiXact. Значение "
-"arg0 задаётся аналогично значению для multixact-checkpoint-start."
+"arg0 задаётся аналогично значению для <literal>multixact-checkpoint-start</"
+"literal>."
 
 #: monitoring.xml:2901(literal)
 msgid "buffer-checkpoint-start"
@@ -4622,7 +4656,6 @@ msgid "(int, int, int)"
 msgstr "(int, int, int)"
 
 #: monitoring.xml:2925(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when all dirty buffers have been written. arg0 is the total "
 "number of buffers. arg1 is the number of buffers actually written by the "
@@ -4633,9 +4666,9 @@ msgstr ""
 "Срабатывает после записи всех грязных буферов. arg0 задаёт общее число "
 "буферов. arg1 задаёт число буферов, которые фактически были записаны "
 "процессом выполнения контрольной точки. arg2 задаёт число буферов, которое "
-"должно было быть записано (arg1 из buffer-sync-start); разные значения "
-"говорят о том, что во время выполнения этой контрольной точки буферы "
-"сбрасывались другими процессами."
+"должно было быть записано (arg1 из <literal>buffer-sync-start</literal>); "
+"разные значения говорят о том, что во время выполнения этой контрольной "
+"точки буферы сбрасывались другими процессами."
 
 #: monitoring.xml:2933(literal)
 msgid "buffer-checkpoint-sync-start"
@@ -4685,7 +4718,6 @@ msgid "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, bool)"
 msgstr "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, bool)"
 
 #: monitoring.xml:2959(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a buffer read is started. arg0 and arg1 contain the "
 "fork and block numbers of the page (but arg1 will be -1 if this is a "
@@ -4695,15 +4727,15 @@ msgid ""
 "<symbol>InvalidBackendId</symbol> (-1) for a shared buffer. arg6 is true for "
 "a relation extension request, false for normal read."
 msgstr ""
-"Срабатывает, когда начинается чтение из буфера. arg0 и arg1 содержат PID "
-"дочернего процесса и номер блока этой страницы (arg1 будет иметь значение "
-"-1, если выполняется запрос на расширение места для таблицы). arg2, arg3 и "
-"arg4 содержат OID-ы табличного пространства, базы данных и отношения, "
-"которые однозначно идентифицируют отношение. arg5 для локального буфера "
-"задаёт идентификатор серверного процесса, создавшего временное отношение, "
-"или InvalidBackendId (-1) &mdash; для разделяемого буфера. arg6 = true для "
-"запросов на расширение места для таблицы, false &mdash; в случае обычного "
-"чтения."
+"Срабатывает, когда начинается чтение из буфера. arg0 и arg1 содержат номер "
+"слоя и блока этой страницы (arg1 будет иметь значение -1, если выполняется "
+"запрос на расширение места для таблицы). arg2, arg3 и arg4 содержат OID-ы "
+"табличного пространства, базы данных и отношения, которые однозначно "
+"идентифицируют отношение. arg5 для локального буфера задаёт идентификатор "
+"серверного процесса, создавшего временное отношение, или "
+"<symbol>InvalidBackendId</symbol> (-1) &mdash; для разделяемого буфера. arg6 "
+"= true для запросов на расширение места для таблицы, false &mdash; в случае "
+"обычного чтения."
 
 #: monitoring.xml:2970(literal)
 msgid "buffer-read-done"
@@ -4714,7 +4746,6 @@ msgid "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, bool, bool)"
 msgstr "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, bool, bool)"
 
 #: monitoring.xml:2972(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a buffer read is complete. arg0 and arg1 contain the "
 "fork and block numbers of the page (if this is a relation extension request, "
@@ -4725,16 +4756,16 @@ msgid ""
 "buffer. arg6 is true for a relation extension request, false for normal "
 "read. arg7 is true if the buffer was found in the pool, false if not."
 msgstr ""
-"Срабатывает по завершении чтения буфера. arg0 и arg1 содержат PID дочернего "
-"процесса и номер блока этой страницы (arg1 будет содержать номер только что "
-"добавленного блока, если выполняется запрос на расширение места для "
-"таблицы). arg2, arg3 и arg4 содержат OID-ы табличного пространства, базы "
-"данных и отношения, которые однозначно идентифицируют отношение. arg5 для "
-"локального буфера задаёт идентификатор серверного процесса, создавшего "
-"временное отношение, или InvalidBackendId (-1) &mdash; для разделяемого "
-"буфера. arg6 = true для запросов на расширение места для таблицы, false "
-"&mdash; в случае обычного чтения. arg7 = true, если буфер был обнаружен в "
-"пуле, false &mdash; если нет."
+"Срабатывает по завершении чтения буфера. arg0 и arg1 содержат номер слоя и "
+"блока этой страницы (arg1 будет содержать номер только что добавленного "
+"блока, если выполняется запрос на расширение места для таблицы). arg2, arg3 "
+"и arg4 содержат OID-ы табличного пространства, базы данных и отношения, "
+"которые однозначно идентифицируют отношение. arg5 для локального буфера "
+"задаёт идентификатор серверного процесса, создавшего временное отношение, "
+"или <symbol>InvalidBackendId</symbol> (-1) &mdash; для разделяемого буфера. "
+"arg6 = true для запросов на расширение места для таблицы, false &mdash; в "
+"случае обычного чтения. arg7 = true, если буфер был обнаружен в пуле, false "
+"&mdash; если нет."
 
 #: monitoring.xml:2985(literal)
 msgid "buffer-flush-start"
@@ -4753,32 +4784,30 @@ msgid ""
 "relation."
 msgstr ""
 "Срабатывает перед формированием любого запроса на запись в разделяемый "
-"буфер. arg0 и arg1 содержат PID дочернего процесса и номер блока этой "
-"страницы. arg2, arg3 и arg4 содержат OID-ы табличного пространства, базы "
-"данных и отношения, которые однозначно идентифицируют отношение"
+"буфер. arg0 и arg1 содержат номер слоя и блока этой страницы. arg2, arg3 и "
+"arg4 содержат OID-ы табличного пространства, базы данных и отношения, "
+"которые однозначно идентифицируют отношение."
 
 #: monitoring.xml:2994(literal)
 msgid "buffer-flush-done"
 msgstr "buffer-flush-done"
 
 #: monitoring.xml:2996(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a write request is complete. (Note that this just "
 "reflects the time to pass the data to the kernel; it's typically not "
 "actually been written to disk yet.) The arguments are the same as for "
 "<literal>buffer-flush-start</literal>."
 msgstr ""
-"Срабатывает по завершении запроса на запись в разделяемый буфер. (Учтите, "
-"что это отражает только время на передачу данных в ядро; обычно на диск они "
-"ещё не записаны.) Аргументы аналогичны buffer-flush-start."
+"Срабатывает по завершении запроса на запись. (Учтите, что это отражает "
+"только момент передачи данных в ядро; обычно на диск они ещё не записаны.) "
+"Аргументы аналогичны <literal>buffer-flush-start</literal>."
 
 #: monitoring.xml:3002(literal)
 msgid "buffer-write-dirty-start"
 msgstr "buffer-write-dirty-start"
 
 #: monitoring.xml:3004(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a server process begins to write a dirty buffer. (If "
 "this happens often, it implies that <xref linkend=\"guc-shared-buffers\"/> "
@@ -4788,10 +4817,10 @@ msgid ""
 "relation."
 msgstr ""
 "Срабатывает, когда серверный процесс начинает запись грязного буфера. "
-"(Частое повторение такой ситуации означает, что значение <xref linkend=\"guc-"
-"shared-buffers\"/> слишком мало или что управляющие параметры bgwriter "
-"необходимо откорректировать.) arg0 и arg1 содержат PID дочернего процесса и "
-"номер блока этой страницы. arg2, arg3 и arg4 содержат OID-ы табличного "
+"(Частое повторение такой пробы означает, что значение <xref linkend=\"guc-"
+"shared-buffers\"/> слишком мало или что необходимо откорректировать "
+"управляющие параметры процесса фоновой записи.) arg0 и arg1 содержат номер "
+"слоя и блока этой страницы. arg2, arg3 и arg4 содержат OID-ы табличного "
 "пространства, базы данных и отношения, которые однозначно идентифицируют "
 "отношение."
 
@@ -4800,13 +4829,12 @@ msgid "buffer-write-dirty-done"
 msgstr "buffer-write-dirty-done"
 
 #: monitoring.xml:3015(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a dirty-buffer write is complete. The arguments are "
 "the same as for <literal>buffer-write-dirty-start</literal>."
 msgstr ""
 "Срабатывает по завершении записи грязного буфера. Аргументы аналогичны "
-"buffer-write-dirty-start."
+"<literal>buffer-write-dirty-start</literal>."
 
 #: monitoring.xml:3019(literal)
 msgid "wal-buffer-write-dirty-start"
@@ -4864,7 +4892,6 @@ msgid "(ForkNumber, BlockNumber, Oid, Oid, Oid, int)"
 msgstr "(ForkNumber, BlockNumber, Oid, Oid, Oid, int)"
 
 #: monitoring.xml:3046(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when beginning to read a block from a relation. arg0 and "
 "arg1 contain the fork and block numbers of the page. arg2, arg3, and arg4 "
@@ -4873,12 +4900,12 @@ msgid ""
 "for a local buffer, or <symbol>InvalidBackendId</symbol> (-1) for a shared "
 "buffer."
 msgstr ""
-"Срабатывает, когда начинается чтение блока из отношения. arg0 и arg1 "
-"содержат PID дочернего процесса и номер блока этой страницы. arg2, arg3 и "
-"arg4 содержат OID-ы табличного пространства, базы данных и отношения, "
-"которые однозначно идентифицируют отношение. arg5 для локального буфера "
-"задаёт идентификатор серверного процесса, создавшего временное отношение, "
-"или InvalidBackendId (-1) &mdash; для разделяемого буфера."
+"Срабатывает, когда начинается чтение блока из отношения. arg0 and arg1 "
+"содержат номер слоя и блока этой страницы. arg2, arg3 и arg4 содержат OID-ы "
+"табличного пространства, базы данных и отношения, которые однозначно "
+"идентифицируют отношение. arg5 для локального буфера задаёт идентификатор "
+"серверного процесса, создавшего временное отношение, или "
+"<symbol>InvalidBackendId</symbol> (-1) для разделяемого буфера."
 
 #: monitoring.xml:3054(literal)
 msgid "smgr-md-read-done"
@@ -4889,7 +4916,6 @@ msgid "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, int, int)"
 msgstr "(ForkNumber, BlockNumber, Oid, Oid, Oid, int, int, int)"
 
 #: monitoring.xml:3056(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a block read is complete. arg0 and arg1 contain the "
 "fork and block numbers of the page. arg2, arg3, and arg4 contain the "
@@ -4899,21 +4925,20 @@ msgid ""
 "is the number of bytes actually read, while arg7 is the number requested (if "
 "these are different it indicates trouble)."
 msgstr ""
-"Срабатывает по завершении чтения блока из отношения. arg0 и arg1 содержат "
-"PID дочернего процесса и номер блока этой страницы. arg2, arg3 и arg4 "
-"содержат OID-ы табличного пространства, базы данных и отношения, которые "
-"однозначно идентифицируют отношение. arg5 для локального буфера задаёт "
-"идентификатор серверного процесса, создавшего временное отношение, или "
-"InvalidBackendId (-1) &mdash; для разделяемого буфера. arg6 задаёт "
-"количество фактически прочитанных байтов, тогда как arg7 задаёт количество "
-"запрошенных байтов (различия говорят о наличии проблемы)."
+"Срабатывает по завершении чтения блока. arg0 и arg1 содержат номер слоя и "
+"блока страницы. arg2, arg3 и arg4 содержат OID-ы табличного пространства, "
+"базы данных и отношения, которые однозначно идентифицируют отношение. arg5 "
+"для локального буфера задаёт идентификатор серверного процесса, создавшего "
+"временное отношение, или <symbol>InvalidBackendId</symbol> (-1) &mdash; для "
+"разделяемого буфера. arg6 задаёт количество фактически прочитанных байтов, "
+"тогда как arg7 задаёт количество запрошенных байтов (различия говорят о "
+"наличии проблемы)."
 
 #: monitoring.xml:3066(literal)
 msgid "smgr-md-write-start"
 msgstr "smgr-md-write-start"
 
 #: monitoring.xml:3068(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when beginning to write a block to a relation. arg0 and "
 "arg1 contain the fork and block numbers of the page. arg2, arg3, and arg4 "
@@ -4923,18 +4948,17 @@ msgid ""
 "buffer."
 msgstr ""
 "Срабатывает, когда начинается запись блока в отношение. arg0 и arg1 содержат "
-"PID дочернего процесса и номер блока этой страницы. arg2, arg3 и arg4 "
-"содержат OID-ы табличного пространства, базы данных и отношения, которые "
-"однозначно идентифицируют отношение. arg5 для локального буфера задаёт "
-"идентификатор серверного процесса, создавшего временное отношение, или "
-"InvalidBackendId (-1) &mdash; для разделяемого буфера."
+"номер слоя и блока этой страницы. arg2, arg3 и arg4 содержат OID-ы "
+"табличного пространства, базы данных и отношения, которые однозначно "
+"идентифицируют отношение. arg5 для локального буфера задаёт идентификатор "
+"серверного процесса, создавшего временное отношение, или "
+"<symbol>InvalidBackendId</symbol> (-1) &mdash; для разделяемого буфера."
 
 #: monitoring.xml:3076(literal)
 msgid "smgr-md-write-done"
 msgstr "smgr-md-write-done"
 
 #: monitoring.xml:3078(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a block write is complete. arg0 and arg1 contain the "
 "fork and block numbers of the page. arg2, arg3, and arg4 contain the "
@@ -4944,14 +4968,14 @@ msgid ""
 "is the number of bytes actually written, while arg7 is the number requested "
 "(if these are different it indicates trouble)."
 msgstr ""
-"Срабатывает по завершении записи блока в отношение. arg0 и arg1 содержат PID "
-"дочернего процесса и номер блока этой страницы. arg2, arg3 и arg4 содержат "
-"OID-ы табличного пространства, базы данных и отношения, которые однозначно "
-"идентифицируют отношение. arg5 для локального буфера задаёт идентификатор "
-"серверного процесса, создавшего временное отношение, или InvalidBackendId "
-"(-1) &mdash; для разделяемого буфера. arg6 задаёт количество фактически "
-"записанных байтов, тогда как arg7 задаёт количество запрошенных байтов "
-"(различия говорят о наличии проблемы)."
+"Срабатывает по завершении записи блока. arg0 и arg1 содержат номер слоя и "
+"блока этой страницы. arg2, arg3 и arg4 содержат OID-ы табличного "
+"пространства, базы данных и отношения, которые однозначно идентифицируют "
+"отношение. arg5 для локального буфера задаёт идентификатор серверного "
+"процесса, создавшего временное отношение, или <symbol>InvalidBackendId</"
+"symbol> (-1) &mdash; для разделяемого буфера. arg6 задаёт количество "
+"фактически записанных байтов, тогда как arg7 задаёт количество запрошенных "
+"байтов (различия говорят о наличии проблемы)."
 
 #: monitoring.xml:3088(literal)
 msgid "sort-start"
@@ -5127,15 +5151,14 @@ msgid "lock-wait-done"
 msgstr "lock-wait-done"
 
 #: monitoring.xml:3169(entry)
-#, fuzzy
 msgid ""
 "Probe that fires when a request for a heavyweight lock (lmgr lock) has "
 "finished waiting (i.e., has acquired the lock). The arguments are the same "
 "as for <literal>lock-wait-start</literal>."
 msgstr ""
 "Срабатывает, когда запрос на тяжёлую блокировку (блокировку lmgr) выходит из "
-"состояния ожидания (т. е. получает блокировку). Аргументы аналогичны lock-"
-"wait-start."
+"состояния ожидания (т. е. получает блокировку). Аргументы аналогичны "
+"<literal>lock-wait-start</literal>."
 
 #: monitoring.xml:3174(literal)
 msgid "deadlock-found"
@@ -5357,13 +5380,12 @@ msgstr ""
 "транзакций по их идентификатору."
 
 #: monitoring.xml:3336(para)
-#, fuzzy
 msgid ""
 "Decide that the probe will be named <literal>transaction-start</literal> and "
 "requires a parameter of type <type>LocalTransactionId</type>"
 msgstr ""
-"Решаем, что точка трассировки будет называться <literal>transaction-start</"
-"literal> и будет принимать параметр типа LocalTransactionId"
+"Устанавливаем, что проба будет называться <literal>transaction-start</"
+"literal> и принимать параметр типа <type>LocalTransactionId</type>"
 
 #: monitoring.xml:3345(programlisting)
 #, no-wrap
@@ -5378,12 +5400,11 @@ msgid ""
 "with a hyphen, so <literal>transaction-start</literal> is the name to "
 "document for users."
 msgstr ""
-"Добавляем определение точки трассировки в <filename>src/backend/utils/probes."
-"d</filename>: <placeholder-1/> Обратите внимание на использование двойного "
-"подчёркивания в имени точки трассировки. В скрипте DTrace, использующем эту "
-"точку, двойное подчёркивание нужно будет заменить дефисом, поэтому в "
-"документации для пользователей эта точка трассировки будет иметь имя "
-"<literal>transaction-start</literal>."
+"Добавляем определение пробы в <filename>src/backend/utils/probes.d</"
+"filename>: <placeholder-1/> Обратите внимание на использование двойного "
+"подчёркивания в имени пробы. В скрипте DTrace, использующем эту точку, "
+"двойное подчёркивание нужно будет заменить дефисом, поэтому в документации "
+"для пользователей имя этой пробы — <literal>transaction-start</literal>."
 
 #: monitoring.xml:3361(programlisting)
 #, no-wrap
@@ -5424,9 +5445,9 @@ msgid ""
 "start</screen>"
 msgstr ""
 "После перекомпиляции и запуска нового бинарного файла используйте следующую "
-"команду DTrace, чтобы проверить доступность только что добавленной точки "
-"трассировки. Должен получиться результат, подобный этому: <screen># dtrace -"
-"ln transaction-start\n"
+"команду DTrace, чтобы проверить доступность только что добавленной пробы. "
+"Должен получиться результат, подобный этому: <screen># dtrace -ln "
+"transaction-start\n"
 "   ID    PROVIDER          MODULE           FUNCTION NAME\n"
 "18705 postgresql49878     postgres     StartTransactionCommand transaction-"
 "start\n"
@@ -5445,9 +5466,9 @@ msgid ""
 "match the data types of the variables used in the macro. Otherwise, you will "
 "get compilation errors."
 msgstr ""
-"Нужно убедиться, что типы данных, определённые в параметрах точки "
-"трассировки, совпадают с типами данных переменных, которые используются в "
-"макросе. В противном случае компиляция завершится с ошибками."
+"Нужно убедиться, что типы данных, определённые в параметрах пробы, совпадают "
+"с типами данных переменных, которые используются в макросе. В противном "
+"случае компиляция завершится с ошибками."
 
 #: monitoring.xml:3407(programlisting)
 #, no-wrap

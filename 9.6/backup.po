@@ -989,7 +989,6 @@ msgid "test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp p
 msgstr "test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_xlog/00000001000000A900000065 /mnt/server/archivedir/00000001000000A900000065"
 
 #: backup.xml:564(para)
-#, fuzzy
 msgid ""
 "To enable WAL archiving, set the <xref linkend=\"guc-wal-level\"/> "
 "configuration parameter to <literal>replica</literal> or higher, <xref "
@@ -1010,7 +1009,7 @@ msgid ""
 "A similar command will be generated for each new file to be archived."
 msgstr ""
 "Чтобы включить архивирование WAL, установите в параметре конфигурации <xref "
-"linkend=\"guc-wal-level\"/> уровень <literal>archive</literal> (или выше), в "
+"linkend=\"guc-wal-level\"/> уровень <literal>replica</literal> (или выше), в "
 "<xref linkend=\"guc-archive-mode\"/> — значение <literal>on</literal>, и "
 "задайте желаемую команду оболочки в параметре <xref linkend=\"guc-archive-"
 "command\"/>. На практике эти параметры всегда задаются в файле "
@@ -1020,8 +1019,8 @@ msgstr ""
 "задаётся относительно текущего рабочего каталога, т. е. каталога данных "
 "кластера). Если в команду нужно включить сам символ <literal>%</literal>, "
 "запишите <literal>%%</literal>. Простейшая команда, которая может быть "
-"полезна, такая: <placeholder-1/> Она будет копировать архивируемые сегменты "
-"WAL в каталог /mnt/server/archivedir. (Команда дана как пример, а не как "
+"полезна: <placeholder-1/> Она будет копировать архивируемые сегменты WAL в "
+"каталог /mnt/server/archivedir. (Команда дана как пример, а не как "
 "рекомендация, и может не работать на всех платформах.) После замены "
 "параметров <literal>%p</literal> и <literal>%f</literal> фактически "
 "запускаемая команда может выглядеть так: <placeholder-2/> Подобная команда "
@@ -1365,7 +1364,6 @@ msgid "Making a Base Backup Using the Low Level API"
 msgstr "Создание базовой резервной копии через низкоуровневый API"
 
 #: backup.xml:781(para)
-#, fuzzy
 msgid ""
 "The procedure for making a base backup using the low level APIs contains a "
 "few more steps than the <xref linkend=\"app-pgbasebackup\"/> method, but is "
@@ -1376,8 +1374,7 @@ msgstr ""
 "Процедура создания базовой резервной копии с использованием низкоуровневого "
 "API содержит чуть больше шагов, чем метод <xref linkend=\"app-pgbasebackup\"/"
 ">, но всё же относительно проста. Очень важно, чтобы эти шаги выполнялись по "
-"порядку, и следующий шаг выполнялся, только если предыдущий успешен. "
-"<placeholder-1/>"
+"порядку, и следующий шаг выполнялся, только если предыдущий успешен."
 
 #: backup.xml:789(para)
 msgid ""
@@ -1385,11 +1382,13 @@ msgid ""
 "The non-exclusive method is recommended and the exclusive one is deprecated "
 "and will eventually be removed."
 msgstr ""
+"Резервное копирование на низком уровне можно произвести в монопольном или "
+"немонопольном режиме. Рекомендуется применять немонопольный метод, а "
+"монопольный считается устаревшим и в конце концов будет ликвидирован."
 
 #: backup.xml:795(title)
-#, fuzzy
 msgid "Making a non-exclusive low level backup"
-msgstr "Получает исключительную блокировку на уровне сеанса"
+msgstr "Немонопольное резервное копирование на низком уровне"
 
 #: backup.xml:796(para)
 msgid ""
@@ -1397,15 +1396,18 @@ msgid ""
 "to be running (both those started using the same backup API and those "
 "started using <xref linkend=\"app-pgbasebackup\"/>."
 msgstr ""
+"Немонопольное резервное копирование позволяет параллельно запускать другие "
+"процессы копирования (используя тот же API или <xref linkend=\"app-"
+"pgbasebackup\"/>)."
 
 #: backup.xml:805(para) backup.xml:906(para)
 msgid "Ensure that WAL archiving is enabled and working."
 msgstr "Убедитесь, что архивирование WAL включено и работает."
 
 #: backup.xml:814(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "SELECT pg_start_backup('label', false, false);"
-msgstr "SELECT pg_start_backup('label', true);"
+msgstr "SELECT pg_start_backup('label', false, false);"
 
 #: backup.xml:810(para)
 msgid ""
@@ -1417,9 +1419,16 @@ msgid ""
 "function> must be maintained until the end of the backup, or the backup will "
 "be automatically aborted."
 msgstr ""
+"Подключитесь к серверу (к любой базе данных) как пользователь с правами на "
+"выполнение pg_start_backup (суперпользователь или пользователь, которому "
+"дано право EXECUTE для этой функции) и выполните команду: <placeholder-1/> "
+"где <literal>label</literal> &mdash; любая метка, по которой можно "
+"однозначно идентифицировать данную операцию резервного копирования. "
+"Соединение, через которое вызывается <function>pg_start_backup</function>, "
+"должно поддерживаться до окончания резервного копирования, иначе этот "
+"процесс будет автоматически прерван."
 
 #: backup.xml:821(para)
-#, fuzzy
 msgid ""
 "By default, <function>pg_start_backup</function> can take a long time to "
 "finish. This is because it performs a checkpoint, and the I/O required for "
@@ -1437,17 +1446,18 @@ msgstr ""
 "точками (см. параметр <xref linkend=\"guc-checkpoint-completion-target\"/>). "
 "Обычно это вполне приемлемо, так как при этом минимизируется влияние на "
 "выполнение других запросов. Если же вы хотите начать резервное копирование "
-"максимально быстро, выполните: <placeholder-1/> При этом контрольная точка "
-"будет выполнена как можно скорее."
+"максимально быстро, передайте во втором параметре <literal>true</literal>."
 
 #: backup.xml:833(para)
 msgid ""
 "The third parameter being <literal>false</literal> tells "
 "<function>pg_start_backup</function> to initiate a non-exclusive base backup."
 msgstr ""
+"Третий параметр, имеющий значение <literal>false</literal>, указывает "
+"<function>pg_start_backup</function> начать немонопольное базовое "
+"копирование."
 
 #: backup.xml:839(para) backup.xml:943(para)
-#, fuzzy
 msgid ""
 "Perform the backup, using any convenient file-system-backup tool such as "
 "<application>tar</application> or <application>cpio</application> (not "
@@ -1461,26 +1471,26 @@ msgstr ""
 "например, <application>tar</application> или <application>cpio</application> "
 "(не <application>pg_dump</application> или <application>pg_dumpall</"
 "application>). В процессе копирования останавливать работу базы данных не "
-"требуется, это ничего не даёт."
+"требуется, это ничего не даёт. В <xref remap=\"6\" linkend=\"backup-lowlevel-"
+"base-backup-data\"/> описано, что следует учитывать в процессе копирования."
 
 #: backup.xml:853(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "SELECT * FROM pg_stop_backup(false);"
-msgstr "SELECT pg_stop_backup();"
+msgstr "SELECT * FROM pg_stop_backup(false);"
 
 #: backup.xml:851(para)
-#, fuzzy
 msgid ""
 "In the same connection as before, issue the command: <placeholder-1/> This "
 "terminates the backup mode and performs an automatic switch to the next WAL "
 "segment. The reason for the switch is to arrange for the last WAL segment "
 "file written during the backup interval to be ready to archive."
 msgstr ""
-"Снова подключитесь к базе данных как суперпользователь и выполните команду: "
-"<placeholder-1/> Сервер выйдет из режима резервного копирования и "
-"автоматически переключится на следующий сегмент WAL. Это переключение "
-"выполняется для того, чтобы файл последнего сегмента WAL, записанного во "
-"время копирования, был готов к архивации."
+"Через то же подключение, что и раньше, выполните команду: <placeholder-1/> "
+"Сервер выйдет из режима резервного копирования и автоматически переключится "
+"на следующий сегмент WAL. Это переключение выполняется для того, чтобы файл "
+"последнего сегмента WAL, записанного во время копирования, был готов к "
+"архивации."
 
 #: backup.xml:859(para)
 msgid ""
@@ -1491,9 +1501,14 @@ msgid ""
 "filename> unless the field is empty. These files are vital to the backup "
 "working, and must be written without modification."
 msgstr ""
+"Функция <function>pg_stop_backup</function> возвратит одну строку с тремя "
+"значениями. Второе из них нужно записать в файл <filename>backup_label</"
+"filename> в корневой каталог резервной копии. Третье значение, если оно не "
+"пустое, должно быть записано в файл <filename>tablespace_map</filename>. Эти "
+"значения крайне важны для восстановления копии и должны записываться без "
+"изменений."
 
 #: backup.xml:869(para)
-#, fuzzy
 msgid ""
 "Once the WAL segment files active during the backup are archived, you are "
 "done. The file identified by <function>pg_stop_backup</function>'s first "
@@ -1513,24 +1528,26 @@ msgid ""
 msgstr ""
 "После этого останется заархивировать файлы сегментов WAL, активных во время "
 "создания резервной копии, и процедура резервного копирования будет "
-"завершена. Функция <function>pg_stop_backup</function> возвращает указание "
-"на файл последнего сегмента, который требуется для формирования полного "
-"набора файлов резервной копии. Если включён режим архивации (параметр "
-"<varname>archive_mode</varname>), функция <function>pg_stop_backup</"
-"function> не завершится, пока не будет заархивирован последний сегмент. В "
-"этом случае файлы будут заархивированы автоматически, поскольку также должна "
-"быть настроена команда <varname>archive_command</varname>. Чаще всего это "
-"происходит быстро, но мы советуем наблюдать за системой архивации и "
-"проверять, не возникают ли задержки. Если архивирование остановится из-за "
-"ошибок команды архивации, попытки архивации будут продолжаться до успешного "
-"завершения, и только тогда резервная копия будет завершена. Если вы хотите "
-"ограничить время выполнения <function>pg_stop_backup</function>, установите "
-"соответствующее значение в <varname>statement_timeout</varname>."
+"завершена. Функция <function>pg_stop_backup</function> в первом значении "
+"результата указывает, какой последний сегмент требуется для формирования "
+"полного набора файлов резервной копии. Если включён режим архивации "
+"(параметр <varname>archive_mode</varname>), функция "
+"<function>pg_stop_backup</function> не завершится, пока не будет "
+"заархивирован последний сегмент. В этом случае файлы будут заархивированы "
+"автоматически, поскольку также должна быть настроена команда "
+"<varname>archive_command</varname>. Чаще всего это происходит быстро, но мы "
+"советуем наблюдать за системой архивации и проверять, не возникают ли "
+"задержки. Если архивирование остановится из-за ошибок команды архивации, "
+"попытки архивации будут продолжаться до успешного завершения, и только тогда "
+"резервная копия будет завершена. Если вы хотите ограничить время выполнения "
+"<function>pg_stop_backup</function>, установите соответствующее значение в "
+"<varname>statement_timeout</varname>, но заметьте, что в случае прерывания "
+"<function>pg_stop_backup</function> по времени резервная копия может "
+"оказаться негодной."
 
 #: backup.xml:894(title)
-#, fuzzy
 msgid "Making an exclusive low level backup"
-msgstr "Получает исключительную блокировку на уровне сеанса"
+msgstr "Монопольное резервное копирование на низком уровне"
 
 #: backup.xml:895(para)
 msgid ""
@@ -1541,6 +1558,13 @@ msgid ""
 "the only low-level method available, but it is now recommended that all "
 "users upgrade their scripts to use non-exclusive backups if possible."
 msgstr ""
+"Монопольное резервное копирование во многом похоже на немонопольное, но "
+"имеет несколько важных отличий. Этот вариант не позволяет запустить больше "
+"одного процесса копирования одновременно, а в случае сбоя в процессе "
+"копирования возможны некоторые осложнения на сервере. До PostgreSQL 9.6 это "
+"был единственный возможный метод низкоуровневого копирования, но сейчас "
+"пользователям рекомендуется по возможности подкорректировать свои скрипты и "
+"перейти к использованию немонопольного варианта."
 
 #: backup.xml:915(programlisting)
 #, no-wrap
@@ -1548,7 +1572,6 @@ msgid "SELECT pg_start_backup('label');"
 msgstr "SELECT pg_start_backup('label');"
 
 #: backup.xml:911(para)
-#, fuzzy
 msgid ""
 "Connect to the server (it does not matter which database) as a user with "
 "rights to run pg_start_backup (superuser, or a user who has been granted "
@@ -1564,19 +1587,20 @@ msgid ""
 "is present. Both files are critical to the integrity of the backup, should "
 "you need to restore from it."
 msgstr ""
-"Подключитесь к базе данных как суперпользователь и выполните команду: "
-"<placeholder-1/> где <literal>label</literal> &mdash; любая метка, по "
-"которой можно однозначно идентифицировать данную операцию резервного "
-"копирования. (Хорошей практикой является использование полного пути, куда "
-"будет помещён файл дампа.) Функция <function>pg_start_backup</function> "
-"создаёт в каталоге кластера файл <firstterm>метки резервного копирования</"
-"firstterm>, называемый <filename>backup_label</filename>, в который "
-"помещается информация о резервной копии, включая время начала и строку "
-"метки. Эта функция также создаёт в каталоге кластера файл <firstterm>карты "
-"табличных пространств</firstterm>, называемый <filename>tablespace_map</"
-"filename>, с информацией о символических ссылках табличных пространств в "
-"<filename>pg_tblspc/</filename>, если такие ссылки есть. Оба файла важны для "
-"целостности резервных копии и понадобятся при восстановлении."
+"Подключитесь к серверу (к любой базе данных) как пользователь с правами на "
+"выполнение pg_start_backup (суперпользователь или пользователь, которому "
+"дано право EXECUTE для этой функции) и выполните команду: <placeholder-1/> "
+"где <literal>label</literal> &mdash; любая метка, по которой можно "
+"однозначно идентифицировать данную операцию резервного копирования. Функция "
+"<function>pg_start_backup</function> создаёт в каталоге кластера файл "
+"<firstterm>метки резервного копирования</firstterm>, называемый "
+"<filename>backup_label</filename>, в который помещается информация о "
+"резервной копии, включающая время начала и строку метки. Эта функция также "
+"создаёт в каталоге кластера файл <firstterm>карты табличных пространств</"
+"firstterm>, называемый <filename>tablespace_map</filename>, с информацией о "
+"символических ссылках табличных пространств в <filename>pg_tblspc/</"
+"filename>, если такие ссылки есть. Оба файла важны для целостности резервных "
+"копии и понадобятся при восстановлении."
 
 #: backup.xml:938(programlisting)
 #, no-wrap
@@ -1610,7 +1634,6 @@ msgid "SELECT pg_stop_backup();"
 msgstr "SELECT pg_stop_backup();"
 
 #: backup.xml:955(para)
-#, fuzzy
 msgid ""
 "Again connect to the database as a user with rights to run pg_stop_backup "
 "(superuser, or a user who has been granted EXECUTE on the function), and "
@@ -1619,14 +1642,15 @@ msgid ""
 "switch is to arrange for the last WAL segment file written during the backup "
 "interval to be ready to archive."
 msgstr ""
-"Снова подключитесь к базе данных как суперпользователь и выполните команду: "
-"<placeholder-1/> Сервер выйдет из режима резервного копирования и "
-"автоматически переключится на следующий сегмент WAL. Это переключение "
-"выполняется для того, чтобы файл последнего сегмента WAL, записанного во "
-"время копирования, был готов к архивации."
+"Снова подключитесь к базе данных как пользователь с правами на выполнение "
+"pg_stop_backup (суперпользователь или пользователь, которому дано право "
+"EXECUTE для этой функции) и выполните команду: <placeholder-1/> Сервер "
+"выйдет из режима резервного копирования и автоматически переключится на "
+"следующий сегмент WAL. Это переключение выполняется для того, чтобы файл "
+"последнего сегмента WAL, записанного во время копирования, был готов к "
+"архивации."
 
 #: backup.xml:967(para)
-#, fuzzy
 msgid ""
 "Once the WAL segment files active during the backup are archived, you are "
 "done. The file identified by <function>pg_stop_backup</function>'s result is "
@@ -1658,12 +1682,13 @@ msgstr ""
 "ошибок команды архивации, попытки архивации будут продолжаться до успешного "
 "завершения, и только тогда резервная копия будет завершена. Если вы хотите "
 "ограничить время выполнения <function>pg_stop_backup</function>, установите "
-"соответствующее значение в <varname>statement_timeout</varname>."
+"соответствующее значение в <varname>statement_timeout</varname>, но "
+"заметьте, что в случае прерывания <function>pg_stop_backup</function> по "
+"времени резервная копия может оказаться негодной."
 
 #: backup.xml:992(title)
-#, fuzzy
 msgid "Backing up the data directory"
-msgstr "текущий каталог"
+msgstr "Копирование каталога данных"
 
 #: backup.xml:993(para)
 msgid ""
@@ -1702,7 +1727,6 @@ msgstr ""
 "предупреждения."
 
 #: backup.xml:1011(para)
-#, fuzzy
 msgid ""
 "Be certain that your backup includes all of the files under the database "
 "cluster directory (e.g., <filename>/usr/local/pgsql/data</filename>). If you "
@@ -1719,7 +1743,6 @@ msgstr ""
 "табличные пространства будут повреждены при восстановлении)."
 
 #: backup.xml:1020(para)
-#, fuzzy
 msgid ""
 "You should, however, omit from the backup the files within the cluster's "
 "<filename>pg_xlog/</filename> subdirectory. This slight adjustment is "
@@ -1732,7 +1755,7 @@ msgid ""
 "about the <application>postmaster</application> which will eventually use "
 "this backup. (These files can confuse <application>pg_ctl</application>.)"
 msgstr ""
-"Вы можете, однако, исключить из резервной копии файлы в подкаталоге данных "
+"Однако следует исключить из резервной копии файлы в подкаталоге данных "
 "кластера <filename>pg_xlog/</filename>. Эту небольшую корректировку стоит "
 "внести для снижения риска ошибок при восстановлении. Это легко организовать, "
 "если <filename>pg_xlog/</filename> — символическая ссылка на каталог за "
@@ -1745,7 +1768,6 @@ msgstr ""
 "application> в заблуждение.)"
 
 #: backup.xml:1034(para)
-#, fuzzy
 msgid ""
 "It is often a good idea to also omit from the backup the files within the "
 "cluster's <filename>pg_replslot/</filename> directory, so that replication "
@@ -1772,7 +1794,6 @@ msgstr ""
 "содержимое этих слотов станет абсолютно неактуальным."
 
 #: backup.xml:1049(para)
-#, fuzzy
 msgid ""
 "The backup label file includes the label string you gave to "
 "<function>pg_start_backup</function>, as well as the time at which "
@@ -1785,23 +1806,18 @@ msgid ""
 "presence and contents are critical to the proper operation of the system's "
 "recovery process."
 msgstr ""
-"Также стоит отметить, что функция <function>pg_start_backup</function> "
-"создаёт в каталоге кластера файлы <filename>backup_label</filename> и "
-"<filename>tablespace_map</filename> (затем они удаляются функцией "
-"<function>pg_stop_backup</function>). Данные файлы, разумеется, "
-"заархивируются и войдут в состав резервной копии. В первый файл записывается "
-"метка, заданная при вызове <function>pg_start_backup</function>, время "
-"запуска функции <function>pg_start_backup</function> и имя начального файла "
-"WAL. Таким образом, в случае сомнений можно заглянуть внутрь архива "
-"резервной копии и точно определить, в каком сеансе резервного копирования он "
-"был создан. Файл карты табличных пространств содержит имена символических "
-"ссылок, как они существуют в каталоге <filename>pg_tblspc/</filename>, и "
-"полный путь каждой символической ссылки. Эти файлы не только к вашему "
-"сведению; их существование и содержание важны для правильного проведения "
-"процесса восстановления системы."
+"В файл метки резервной копии записывается строка метки, заданная при вызове "
+"<function>pg_start_backup</function>, время запуска функции "
+"<function>pg_start_backup</function> и имя начального файла WAL. Таким "
+"образом, в случае сомнений можно заглянуть внутрь архива резервной копии и "
+"точно определить, в каком сеансе резервного копирования он был создан. Файл "
+"карты табличных пространств содержит имена символических ссылок, как они "
+"существуют в каталоге <filename>pg_tblspc/</filename>, и полный путь каждой "
+"символической ссылки. Эти файлы не только к вашему сведению; их "
+"существование и содержание важны для правильного проведения процесса "
+"восстановления системы."
 
 #: backup.xml:1063(para)
-#, fuzzy
 msgid ""
 "It is also possible to make a backup while the server is stopped. In this "
 "case, you obviously cannot use <function>pg_start_backup</function> or "
@@ -2293,7 +2309,6 @@ msgid "archive_command = 'test ! -f /var/lib/pgsql/backup_in_progress || (test !
 msgstr "archive_command = 'test ! -f /var/lib/pgsql/backup_in_progress || (test ! -f /var/lib/pgsql/archive/%f &amp;&amp; cp %p /var/lib/pgsql/archive/%f)'"
 
 #: backup.xml:1359(para)
-#, fuzzy
 msgid ""
 "If more flexibility in copying the backup files is needed, a lower level "
 "process can be used for standalone hot backups as well. To prepare for low "
@@ -2309,7 +2324,7 @@ msgstr ""
 "Если нужна дополнительная гибкость в процессе копирования файлов, создавать "
 "обособленные горячие копии можно также на более низком уровне. Чтобы "
 "подготовиться к получению такой копии на низком уровне, установите в "
-"<varname>wal_level</varname> уровень <literal>archive</literal> (или выше), "
+"<varname>wal_level</varname> уровень <literal>replica</literal> (или выше), "
 "в <varname>archive_mode</varname> значение <literal>on</literal> и настройте "
 "команду <varname>archive_command</varname>, которая будет выполнять "
 "архивацию, только когда существует <emphasis>файл-переключатель</emphasis>. "

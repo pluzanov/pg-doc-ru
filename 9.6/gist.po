@@ -552,7 +552,6 @@ msgstr ""
 "}"
 
 #: gist.xml:315(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -564,14 +563,11 @@ msgid ""
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться примерно так: "
 "<placeholder-1/> А соответствующий код в модуле C может реализовываться по "
-"такому шаблону: <placeholder-2/> Здесь <varname>key</varname> указывает на "
-"элемент в индексе, а <varname>query</varname> — значение, искомое в индексе. "
+"такому шаблону: <placeholder-2/> Здесь <varname>key</varname> — это элемент "
+"в индексе, а <varname>query</varname> — значение, искомое в индексе. "
 "Параметр <literal>StrategyNumber</literal> показывает, какой оператор из "
 "класса операторов применяется &mdash; он соответствует одному из номеров "
-"операторов, заданных в команде <command>CREATE OPERATOR CLASS</command>. В "
-"зависимости от того, какие операторы включены в класс, тип данных "
-"<varname>query</varname> может быть разным для разных операторов, но "
-"показанный выше шаблон на это не рассчитан."
+"операторов, заданных в команде <command>CREATE OPERATOR CLASS</command>."
 
 #: gist.xml:359(para)
 msgid ""
@@ -586,6 +582,16 @@ msgid ""
 "for the <varname>query</varname> argument, even though the actual type might "
 "be something else depending on the operator."
 msgstr ""
+"В зависимости от того, какие операторы включены в класс, тип данных "
+"<varname>query</varname> может быть разным для разных операторов, так как "
+"это будет тот тип, что фигурирует в правой части оператора, и он может "
+"отличаться от индексируемого типа данных, фигурирующего слева. (В показанном "
+"выше шаблоне предполагается, что допускается только один тип; в противном "
+"случае получение значения <varname>query</varname> зависело бы от "
+"оператора.) В SQL-объявлении функции <function>consistent</function> для "
+"аргумента <varname>query</varname> рекомендуется установить индексированный "
+"тип данного класса операторов, хотя фактический тип может быть каким-то "
+"другим, в зависимости от оператора."
 
 #: gist.xml:376(function)
 msgid "union"
@@ -601,7 +607,7 @@ msgstr ""
 "должен сгенерировать в индексе новую запись, представляющие все эти записи."
 
 #: gist.xml:387(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_union(internal, internal)\n"
 "RETURNS storage_type\n"
@@ -609,7 +615,7 @@ msgid ""
 "LANGUAGE C STRICT;"
 msgstr ""
 "CREATE OR REPLACE FUNCTION my_union(internal, internal)\n"
-"RETURNS internal\n"
+"RETURNS storage_type\n"
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
@@ -715,6 +721,12 @@ msgid ""
 "should return a pointer to newly <function>palloc()</function>ed memory. You "
 "can't just return the input value as-is, even if there is no type change."
 msgstr ""
+"Результатом функции <function>union</function> должно быть значение типа "
+"хранения индекса, каким бы он ни был (он может совпадать с типом "
+"индексированного столбца, а может и отличаться от него). Функция, "
+"реализующая <function>union</function>, должна возвращать указатель на "
+"память, выделенную вызовом <function>palloc()</function>. Она не может "
+"просто вернуть полученное значение как есть, даже если оно имеет тот же тип."
 
 #: gist.xml:446(para)
 msgid ""
@@ -725,6 +737,12 @@ msgid ""
 "<function>union</function> function store the size of its result value into "
 "that variable, but this is no longer necessary.)"
 msgstr ""
+"Как показано выше, первый аргумент <type>internal</type> функции "
+"<function>union</function> на самом деле представляет указатель "
+"<structname>GistEntryVector</structname>. Во втором аргументе (его можно "
+"игнорировать) передаётся указатель на целочисленную переменную. (Раньше "
+"требовалось, чтобы функция <function>union</function> сохраняла в этой "
+"переменной размер результирующего значения, но теперь такого требования нет.)"
 
 #: gist.xml:458(function)
 msgid "compress"
@@ -944,7 +962,6 @@ msgstr ""
 "}"
 
 #: gist.xml:556(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -955,10 +972,12 @@ msgid ""
 "conventional to pass back the address of that argument."
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
-"> И соответствующий код в модуле C должен реализовываться по такому шаблону: "
-"<placeholder-2/> По историческим причинам функция <function>same</function> "
-"не возвращает булевский результат; вместо этого она должна сохранить флаг в "
-"переменной, на которую указывает третий аргумент."
+"> И соответствующий код в модуле C может реализовываться по такому шаблону: "
+"<placeholder-2/> По историческим причинам функция <function>penalty</"
+"function> не просто возвращает результат типа <type>float</type>; вместо "
+"этого она должна сохранить его значение по адресу, указанному третьим "
+"аргументом. Собственно возвращаемое значение игнорируется, хотя в нём "
+"принято возвращать этот же адрес."
 
 #: gist.xml:588(para)
 msgid ""
@@ -1000,7 +1019,7 @@ msgstr ""
 "LANGUAGE C STRICT;"
 
 #: gist.xml:616(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_picksplit);\n"
 "\n"
@@ -1082,9 +1101,9 @@ msgstr ""
 "my_picksplit(PG_FUNCTION_ARGS)\n"
 "{\n"
 "    GistEntryVector *entryvec = (GistEntryVector *) PG_GETARG_POINTER(0);\n"
+"    GIST_SPLITVEC *v = (GIST_SPLITVEC *) PG_GETARG_POINTER(1);\n"
 "    OffsetNumber maxoff = entryvec-&gt;n - 1;\n"
 "    GISTENTRY  *ent = entryvec-&gt;vector;\n"
-"    GIST_SPLITVEC *v = (GIST_SPLITVEC *) PG_GETARG_POINTER(1);\n"
 "    int         i,\n"
 "                nbytes;\n"
 "    OffsetNumber *left,\n"
@@ -1151,7 +1170,6 @@ msgstr ""
 "}"
 
 #: gist.xml:606(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -1162,9 +1180,11 @@ msgid ""
 "structname>."
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
-"> И соответствующий код в модуле C должен реализовываться по такому шаблону: "
-"<placeholder-2/> Функции <function>distance</function> передаются те же "
-"аргументы, что и функции <function>consistent</function>."
+"> И соответствующий код в модуле C может реализовываться по такому шаблону: "
+"<placeholder-2/> Заметьте, что результат функции <function>picksplit</"
+"function> доставляется через полученную на вход структуру <structname>v</"
+"structname>. Собственно возвращаемое значение игнорируется, хотя в нём "
+"принято возвращать адрес <structname>v</structname>."
 
 #: gist.xml:696(para)
 msgid ""
@@ -1190,16 +1210,19 @@ msgid ""
 "<quote>index entry</quote> is a value of the index's storage type, not "
 "necessarily the original indexed column's type.)"
 msgstr ""
+"Возвращает true, если два элемента индекса равны, и false в противном "
+"случае. (<quote>Элемент индекса</quote> — это значение типа хранения "
+"индекса, а не обязательно исходного типа индексируемого столбца.)"
 
 #: gist.xml:718(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_same(storage_type, storage_type, internal)\n"
 "RETURNS internal\n"
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 msgstr ""
-"CREATE OR REPLACE FUNCTION my_same(internal, internal, internal)\n"
+"CREATE OR REPLACE FUNCTION my_same(storage_type, storage_type, internal)\n"
 "RETURNS internal\n"
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
@@ -1234,7 +1257,6 @@ msgstr ""
 "}"
 
 #: gist.xml:715(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -1245,10 +1267,12 @@ msgid ""
 "of that argument."
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
-"> И соответствующий код в модуле C должен реализовываться по такому шаблону: "
+"> И соответствующий код в модуле C может реализовываться по такому шаблону: "
 "<placeholder-2/> По историческим причинам функция <function>same</function> "
-"не возвращает булевский результат; вместо этого она должна сохранить флаг в "
-"переменной, на которую указывает третий аргумент."
+"не просто возвращает результат булевского типа; вместо этого она должна "
+"сохранить флаг по адресу, указанному третьим аргументом. Собственно "
+"возвращаемое значение игнорируется, хотя в нём принято возвращать этот же "
+"адрес."
 
 #: gist.xml:748(function)
 msgid "distance"
@@ -1278,14 +1302,14 @@ msgstr ""
 "которая может быть получена среди всех его потомков."
 
 #: gist.xml:766(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_distance(internal, data_type, smallint, oid, internal)\n"
 "RETURNS float8\n"
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 msgstr ""
-"CREATE OR REPLACE FUNCTION my_distance(internal, data_type, smallint, oid)\n"
+"CREATE OR REPLACE FUNCTION my_distance(internal, data_type, smallint, oid, internal)\n"
 "RETURNS float8\n"
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
@@ -1403,7 +1427,6 @@ msgid "fetch"
 msgstr "fetch"
 
 #: gist.xml:830(para)
-#, fuzzy
 msgid ""
 "Converts the compressed index representation of a data item into the "
 "original data type, for index-only scans. The returned data must be an "
@@ -1427,7 +1450,6 @@ msgstr ""
 "LANGUAGE C STRICT;"
 
 #: gist.xml:836(para)
-#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The argument is a pointer to a <structname>GISTENTRY</"
@@ -1440,11 +1462,12 @@ msgid ""
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
 "> В качестве аргумента ей передаётся указатель на структуру "
-"<structname>GISTENTRY</structname>. При вызове её поле 'key' содержит данные "
-"листа в сжатой форме (не NULL). Возвращаемое значение — ещё одна структура "
-"<structname>GISTENTRY</structname>, в которой поле 'key' содержит те же "
-"данные в исходной, развёрнутой форме. Если функция compress класса "
-"операторов не делает с данными листьев ничего, метод fetch может возвратить "
+"<structname>GISTENTRY</structname>. При вызове её поле <structfield>key</"
+"structfield> содержит данные листа в сжатой форме (не NULL). Возвращаемое "
+"значение — ещё одна структура <structname>GISTENTRY</structname>, в которой "
+"поле <structfield>key</structfield> содержит те же данные в исходной, "
+"развёрнутой форме. Если функция compress класса операторов не делает с "
+"данными листьев ничего, метод <function>fetch</function> может возвратить "
 "аргумент без изменений."
 
 #: gist.xml:856(programlisting)
@@ -1507,7 +1530,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: gist.xml:881(para)
-#, fuzzy
 msgid ""
 "If the compress method is lossy for leaf entries, the operator class cannot "
 "support index-only scans, and must not define a <function>fetch</function> "
@@ -1515,7 +1537,7 @@ msgid ""
 msgstr ""
 "Если метод сжатия является неточным для записей уровня листьев, такой класс "
 "операторов не может поддерживать сканирование только индекса и не должен "
-"определять функцию 'fetch'."
+"определять функцию <function>fetch</function>."
 
 #: gist.xml:891(para)
 msgid ""
