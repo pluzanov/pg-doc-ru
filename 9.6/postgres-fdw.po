@@ -398,9 +398,8 @@ msgstr ""
 "локальная статистика будет быстро устаревать."
 
 #: postgres-fdw.xml:269(title)
-#, fuzzy
 msgid "Remote Execution Options"
-msgstr "Параметры подключения"
+msgstr "Параметры удалённого выполнения"
 
 #: postgres-fdw.xml:271(para)
 msgid ""
@@ -412,11 +411,18 @@ msgid ""
 "sending such <literal>WHERE</literal> clauses for remote execution. This "
 "behavior can be controlled using the following option:"
 msgstr ""
+"По умолчанию ограничения <literal>WHERE</literal>, содержащие встроенные "
+"операторы и функции, обрабатываются на удалённом сервере, а ограничения, "
+"содержащие вызовы не встроенных функций, проверяются локально после "
+"получения строк. Если же расширенные функции доступны на удалённом сервере и "
+"можно рассчитывать, что они дадут те же результаты, что и локально, "
+"производительность можно увеличить, передавая и такие предложения "
+"<literal>WHERE</literal> для удалённого выполнения. Этим поведением "
+"позволяет управлять следующий параметр:"
 
 #: postgres-fdw.xml:284(literal)
-#, fuzzy
 msgid "extensions"
-msgstr "расширение"
+msgstr "extensions"
 
 #: postgres-fdw.xml:286(para)
 msgid ""
@@ -426,6 +432,12 @@ msgid ""
 "belong to a listed extension will be considered shippable to the remote "
 "server. This option can only be specified for foreign servers, not per-table."
 msgstr ""
+"В этом параметре задаётся список имён расширений <productname>PostgreSQL</"
+"productname> через запятую, которые установлены и имеют совместимые версии и "
+"на локальном, и на удалённом сервере. Относящиеся к перечисленным "
+"расширениям и при этом постоянные (immutable) функции и операторы могут "
+"передаваться на выполнение удалённому серверу. Этот параметр можно задать "
+"только для стороннего сервера, но не для таблицы."
 
 #: postgres-fdw.xml:295(para)
 msgid ""
@@ -434,26 +446,27 @@ msgid ""
 "identically on both the local and remote servers. Otherwise, remote queries "
 "may fail or behave unexpectedly."
 msgstr ""
+"При использовании параметра <literal>extensions</literal> "
+"<emphasis>пользователь сам отвечает</emphasis> за то, чтобы перечисленные "
+"расширения существовали и их поведение было одинаковым на локальном и "
+"удалённом сервере. В противном случае удалённые запросы могут выдавать "
+"ошибки или неожиданные результаты."
 
 #: postgres-fdw.xml:305(literal)
-#, fuzzy
 msgid "fetch_size"
-msgstr "fetch"
+msgstr "fetch_size"
 
 #: postgres-fdw.xml:307(para)
-#, fuzzy
 msgid ""
 "This option specifies the number of rows <filename>postgres_fdw</filename> "
 "should get in each fetch operation. It can be specified for a foreign table "
 "or a foreign server. The option specified on a table overrides an option "
 "specified for the server. The default is <literal>100</literal>."
 msgstr ""
-"Этот параметр определяет, будет ли <filename>postgres_fdw</filename> "
-"допускать изменения в сторонних таблицах посредством команд <command>INSERT</"
-"command>, <command>UPDATE</command> и <command>DELETE</command>. Его можно "
-"задать для сторонней таблицы или для стороннего сервера. Параметр, "
-"определённый на уровне таблицы, переопределяет параметр уровня сервера. "
-"Значение по умолчанию — <literal>true</literal> (изменения разрешены)."
+"Этот параметр определяет, сколько строк должна получать "
+"<filename>postgres_fdw</filename> в одной операции выборки. Его можно задать "
+"для сторонней таблицы или стороннего сервера. Значение по умолчанию — "
+"<literal>100</literal> строк."
 
 #: postgres-fdw.xml:322(title)
 msgid "Updatability Options"
@@ -718,6 +731,25 @@ msgid ""
 "<literal>IMMUTABLE</literal> functions, to reduce the risk of misexecution "
 "of the query."
 msgstr ""
+"Обёртка <filename>postgres_fdw</filename> пытается оптимизировать удалённые "
+"запросы, уменьшая объём обмена данными со сторонними серверами. Для этого "
+"она может передавать на выполнение удалённому серверу предложения "
+"<literal>WHERE</literal> и не получать столбцы таблицы, не требующиеся для "
+"текущего запроса. Чтобы уменьшить риск некорректного выполнения запросов, "
+"предложения <literal>WHERE</literal> передаются удалённому серверу, только "
+"если в них используются типы данных, операторы и функции, встроенные в ядро "
+"или относящиеся к расширениям, перечисленным в параметре "
+"<literal>extensions</literal> стороннего сервера. Операторы и функции в "
+"таких предложениях также должны быть постоянными (<literal>IMMUTABLE</"
+"literal>). Для запросов <command>UPDATE</command> или <command>DELETE</"
+"command> обёртка <filename>postgres_fdw</filename> пытается оптимизировать "
+"выполнение, передавая весь запрос на удалённый сервер, если в запросе нет "
+"предложения <literal>WHERE</literal>, которое нельзя было бы передать, не "
+"выполняется локальное соединение, и в целевой таблице отсутствуют локальные "
+"триггеры <literal>BEFORE</literal>/<literal>AFTER</literal> уровня строки. "
+"Кроме того, в запросах <command>UPDATE</command> выражения, присваиваемые "
+"целевым столбцам, должны задействовать только встроенные типы данных и "
+"постоянные (<literal>IMMUTABLE</literal>) операторы и функции."
 
 #: postgres-fdw.xml:499(para)
 msgid ""
@@ -729,6 +761,14 @@ msgid ""
 "<literal>JOIN</literal> clauses, it takes the same precautions as mentioned "
 "above for the <literal>WHERE</literal> clauses."
 msgstr ""
+"Когда обёртка <filename>postgres_fdw</filename> обнаруживает соединение "
+"сторонних таблиц на одном стороннем сервере, она передаёт всё соединение "
+"этому серверу, если только по какой-то причине не решит, что будет "
+"эффективнее выбирать строки из каждой таблицы по отдельности, или "
+"сопоставляемые при обращении к таблицам пользователи оказываются разными. "
+"При передаче предложений <literal>JOIN</literal> принимаются те же меры "
+"предосторожности, что были описаны выше для предложений <literal>WHERE</"
+"literal>."
 
 #: postgres-fdw.xml:509(para)
 msgid ""

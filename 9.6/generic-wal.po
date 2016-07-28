@@ -16,7 +16,7 @@ msgstr ""
 
 #: generic-wal.xml:5(title)
 msgid "Generic WAL Records"
-msgstr ""
+msgstr "Унифицированные записи WAL"
 
 #: generic-wal.xml:7(para)
 msgid ""
@@ -25,6 +25,11 @@ msgid ""
 "pages in a generic way. This is useful for extensions that provide custom "
 "access methods, because they cannot register their own WAL redo routines."
 msgstr ""
+"Хотя у всех внутренних модулей, взаимодействующих с WAL, имеются собственные "
+"типы записей WAL, существует также унифицированный тип записей WAL, "
+"описывающий изменения в страницах унифицированным образом. Это полезно для "
+"расширений, реализующих собственные методы доступа, так как они не могут "
+"зарегистрировать свои подпрограммы воспроизведения изменений WAL."
 
 #: generic-wal.xml:15(para)
 msgid ""
@@ -32,12 +37,17 @@ msgid ""
 "generic_xlog.h</filename> and implemented in <filename>access/transam/"
 "generic_xlog.c</filename>."
 msgstr ""
+"API для конструирования унифицированных записей WAL определён в "
+"<filename>access/generic_xlog.h</filename> и реализован в <filename>access/"
+"transam/generic_xlog.c</filename>."
 
 #: generic-wal.xml:27(para)
 msgid ""
 "<function>state = GenericXLogStart(relation)</function> &mdash; start "
 "construction of a generic WAL record for the given relation."
 msgstr ""
+"<function>state = GenericXLogStart(relation)</function> &mdash; начните "
+"формирование унифицированной записи WAL для заданного отношения."
 
 #: generic-wal.xml:34(para)
 msgid ""
@@ -53,22 +63,38 @@ msgid ""
 "completely. <function>GenericXLogRegisterBuffer</function> can be repeated "
 "if the WAL-logged action needs to modify multiple pages."
 msgstr ""
+"<function>page = GenericXLogRegisterBuffer(state, buffer, flags)</function>\n"
+"      &mdash; зарегистрируйте буфер, который будет изменён текущей "
+"унифицированной записью WAL. Эта функция возвращает указатель на временную "
+"копию страницы буфера, в которой должны производиться изменения. "
+"(Модифицировать непосредственно содержимое буфера нельзя.) В третьем "
+"аргументе передаётся битовая маска флагов, применимых к этой операции. В "
+"настоящее время флаг только один — <literal>GENERIC_XLOG_FULL_IMAGE</"
+"literal>, который показывает, что в запись WAL нужно включить образ всей "
+"страницы, а не только изменения. Обычно этот флаг должен устанавливаться, "
+"когда страница новая или полностью перезаписана. Вызов "
+"<function>GenericXLogRegisterBuffer</function> можно повторять, если "
+"фиксируемое в WAL действие изменяет несколько страниц."
 
 #: generic-wal.xml:51(para)
 msgid "Apply modifications to the page images obtained in the previous step."
-msgstr ""
+msgstr "Применить изменения к образам страниц, полученным на предыдущем шаге."
 
 #: generic-wal.xml:57(para)
 msgid ""
 "<function>GenericXLogFinish(state)</function> &mdash; apply the changes to "
 "the buffers and emit the generic WAL record."
 msgstr ""
+"<function>GenericXLogFinish(state)</function> &mdash; завершите изменения в "
+"буферах и выдайте унифицированную запись WAL."
 
 #: generic-wal.xml:21(para)
 msgid ""
 "To perform a WAL-logged data update using the generic WAL record facility, "
 "follow these steps: <placeholder-1/>"
 msgstr ""
+"Чтобы сформировать запись изменения данных для WAL, применяя механизм "
+"унифицированных записей WAL, выполните следующие действия: <placeholder-1/>"
 
 #: generic-wal.xml:65(para)
 msgid ""
@@ -76,6 +102,9 @@ msgid ""
 "calling <function>GenericXLogAbort(state)</function>. This will discard all "
 "changes to the page image copies."
 msgstr ""
+"Формирование записи WAL можно прервать на любом шаге, вызвав "
+"<function>GenericXLogAbort(state)</function>. При этом будут отменены все "
+"изменения, внесённые в копии образов страниц."
 
 #: generic-wal.xml:77(para)
 msgid ""
@@ -88,6 +117,15 @@ msgid ""
 "before <function>GenericXLogRegisterBuffer()</function> until after "
 "<function>GenericXLogFinish()</function>."
 msgstr ""
+"Модифицировать буферы напрямую нельзя! Все изменения должны производиться в "
+"копиях, полученных от функции <function>GenericXLogRegisterBuffer()</"
+"function>. Другими словами, код, формирующий унифицированные записи WAL, "
+"никогда не должен сам вызывать <function>BufferGetPage()</function>. Однако, "
+"вызывающий код отвечает за закрепление/открепление и блокировку/"
+"разблокировку буферов в подходящие моменты времени. Исключительная "
+"блокировка каждого целевого буфера должна удерживаться от вызова "
+"<function>GenericXLogRegisterBuffer()</function> до "
+"<function>GenericXLogFinish()</function>."
 
 #: generic-wal.xml:90(para)
 msgid ""
@@ -96,6 +134,10 @@ msgid ""
 "in mind that buffers should be registered in the same order in which locks "
 "are to be obtained on them during replay."
 msgstr ""
+"Регистрацию буферов (шаг 2) и модификацию образов страниц (шаг 3) можно "
+"свободно смешивать, оба этих шага можно повторять в любой "
+"последовательности. Но помните, что буферы должны регистрироваться в том же "
+"порядке, в каком для них должны получаться блокировки при воспроизведении."
 
 #: generic-wal.xml:99(para)
 msgid ""
@@ -103,6 +145,9 @@ msgid ""
 "record is <literal>MAX_GENERIC_XLOG_PAGES</literal>. An error will be thrown "
 "if this limit is exceeded."
 msgstr ""
+"Максимальное число буферов, которые можно зарегистрировать для "
+"унифицированной записи WAL, составляет <literal>MAX_GENERIC_XLOG_PAGES</"
+"literal>. При исчерпании этого лимита будет выдана ошибка."
 
 #: generic-wal.xml:107(para)
 msgid ""
@@ -110,6 +155,9 @@ msgid ""
 "in particular that there is no useful data between <structfield>pd_lower</"
 "structfield> and <structfield>pd_upper</structfield>."
 msgstr ""
+"Унифицированный тип WAL подразумевает, что страницы, подлежащие изменению, "
+"имеют стандартную структуру, в частности между <structfield>pd_lower</"
+"structfield> и <structfield>pd_upper</structfield> нет полезных данных."
 
 #: generic-wal.xml:115(para)
 msgid ""
@@ -121,12 +169,21 @@ msgid ""
 "<function>GenericXLogFinish()</function>. There is no need to worry about "
 "calling <function>GenericXLogAbort()</function> during an error exit, either."
 msgstr ""
+"Так как изменяются копии страниц буфера, <function>GenericXLogStart()</"
+"function> не начинает критическую секцию. Таким образом вы можете безопасно "
+"выделять память, выдать ошибку и т. п. между <function>GenericXLogStart()</"
+"function> и <function>GenericXLogFinish()</function>. Единственная "
+"фактическая критическая секция присутствует внутри "
+"<function>GenericXLogFinish()</function>. При выходе по ошибке так же не "
+"нужно заботиться о вызове <function>GenericXLogAbort()</function>."
 
 #: generic-wal.xml:128(para)
 msgid ""
 "<function>GenericXLogFinish()</function> takes care of marking buffers dirty "
 "and setting their LSNs. You do not need to do this explicitly."
 msgstr ""
+"<function>GenericXLogFinish()</function> помечает буферы как грязные и "
+"устанавливает для них LSN. Вам делать явно это не нужно."
 
 #: generic-wal.xml:135(para)
 msgid ""
@@ -134,6 +191,9 @@ msgid ""
 "record is emitted. Thus, you typically do not need to do any explicit checks "
 "for unlogged relations."
 msgstr ""
+"Для нежурналируемых отношений всё работает так же, за исключением того, что "
+"фактически запись в WAL не выдаётся. Таким образом, явно проверять, является "
+"ли отношение нежурналируемым, не требуется."
 
 #: generic-wal.xml:143(para)
 msgid ""
@@ -141,6 +201,10 @@ msgid ""
 "same order as they were registered. After redoing all changes, the locks "
 "will be released in the same order."
 msgstr ""
+"Функция воспроизведения унифицированных изменений WAL получит исключительные "
+"блокировки буферов в том же порядке, в каком они были зарегистрированы. "
+"После воспроизведения всех изменений блокировки в том же порядке и "
+"освобождаются."
 
 #: generic-wal.xml:151(para)
 msgid ""
@@ -150,15 +214,19 @@ msgid ""
 "This is not very compact for the case of moving data within a page, and "
 "might be improved in the future."
 msgstr ""
+"Если для регистрируемого буфера не задаётся "
+"<literal>GENERIC_XLOG_FULL_IMAGE</literal>, унифицированная запись WAL "
+"содержит различие между старым и новым образом страницы, которое вычисляется "
+"при побайтовом сравнении. Результат оказывается не очень компактным при "
+"перемещении данных в странице, но это может быть доработано в будущем."
 
 #: generic-wal.xml:71(para)
-#, fuzzy
 msgid ""
 "Please note the following points when using the generic WAL record facility: "
 "<placeholder-1/>"
 msgstr ""
-"Для выбора действия необходимо указать минимум один из этих параметров: "
-"<placeholder-1/>"
+"Используя механизм унифицированных записей WAL, необходимо учитывать "
+"следующее: <placeholder-1/>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: generic-wal.xml:0(None)
