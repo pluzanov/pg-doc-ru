@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-27 17:40+0300\n"
+"POT-Creation-Date: 2016-08-09 11:03+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -25,6 +25,7 @@ msgstr ""
 "<primary>агрегатная функция</primary><secondary>пользовательская</secondary>"
 
 #: xaggr.xml:11(para)
+#, fuzzy
 msgid ""
 "Aggregate functions in <productname>PostgreSQL</productname> are defined in "
 "terms of <firstterm>state values</firstterm> and <firstterm>state transition "
@@ -36,7 +37,7 @@ msgid ""
 "for the current row, and returns a new state value. A <firstterm>final "
 "function</firstterm> can also be specified, in case the desired result of "
 "the aggregate is different from the data that needs to be kept in the "
-"running state value. The final function takes the last state value and "
+"running state value. The final function takes the ending state value and "
 "returns whatever is wanted as the aggregate result. In principle, the "
 "transition and final functions are just ordinary functions that could also "
 "be used outside the context of the aggregate. (In practice, it's often "
@@ -878,10 +879,116 @@ msgstr ""
 "требуется."
 
 #: xaggr.xml:485(title)
+msgid "Partial Aggregation"
+msgstr ""
+
+#: xaggr.xml:487(indexterm)
+#, fuzzy
+msgid ""
+"<primary>aggregate function</primary><secondary>partial aggregation</"
+"secondary>"
+msgstr ""
+"<primary>агрегатная функция</primary><secondary>движущийся агрегат</"
+"secondary>"
+
+#: xaggr.xml:491(para)
+msgid ""
+"Optionally, an aggregate function can support <firstterm>partial "
+"aggregation</firstterm>. The idea of partial aggregation is to run the "
+"aggregate's state transition function over different subsets of the input "
+"data independently, and then to combine the state values resulting from "
+"those subsets to produce the same state value that would have resulted from "
+"scanning all the input in a single operation. This mode can be used for "
+"parallel aggregation by having different worker processes scan different "
+"portions of a table. Each worker produces a partial state value, and at the "
+"end those state values are combined to produce a final state value. (In the "
+"future this mode might also be used for purposes such as combining "
+"aggregations over local and remote tables; but that is not implemented yet.)"
+msgstr ""
+
+#: xaggr.xml:506(para)
+msgid ""
+"To support partial aggregation, the aggregate definition must provide a "
+"<firstterm>combine function</firstterm>, which takes two values of the "
+"aggregate's state type (representing the results of aggregating over two "
+"subsets of the input rows) and produces a new value of the state type, "
+"representing what the state would have been after aggregating over the "
+"combination of those sets of rows. It is unspecified what the relative order "
+"of the input rows from the two sets would have been. This means that it's "
+"usually impossible to define a useful combine function for aggregates that "
+"are sensitive to input row order."
+msgstr ""
+
+#: xaggr.xml:518(para)
+msgid ""
+"As simple examples, <literal>MAX</literal> and <literal>MIN</literal> "
+"aggregates can be made to support partial aggregation by specifying the "
+"combine function as the same greater-of-two or lesser-of-two comparison "
+"function that is used as their transition function. <literal>SUM</literal> "
+"aggregates just need an addition function as combine function. (Again, this "
+"is the same as their transition function, unless the state value is wider "
+"than the input data type.)"
+msgstr ""
+
+#: xaggr.xml:528(para)
+msgid ""
+"The combine function is treated much like a transition function that happens "
+"to take a value of the state type, not of the underlying input type, as its "
+"second argument. In particular, the rules for dealing with null values and "
+"strict functions are similar. Also, if the aggregate definition specifies a "
+"non-null <literal>initcond</literal>, keep in mind that that will be used "
+"not only as the initial state for each partial aggregation run, but also as "
+"the initial state for the combine function, which will be called to combine "
+"each partial result into that state."
+msgstr ""
+
+#: xaggr.xml:539(para)
+msgid ""
+"If the aggregate's state type is declared as <type>internal</type>, it is "
+"the combine function's responsibility that its result is allocated in the "
+"correct memory context for aggregate state values. This means in particular "
+"that when the first input is <literal>NULL</literal> it's invalid to simply "
+"return the second input, as that value will be in the wrong context and will "
+"not have sufficient lifespan."
+msgstr ""
+
+#: xaggr.xml:548(para)
+msgid ""
+"When the aggregate's state type is declared as <type>internal</type>, it is "
+"usually also appropriate for the aggregate definition to provide a "
+"<firstterm>serialization function</firstterm> and a "
+"<firstterm>deserialization function</firstterm>, which allow such a state "
+"value to be copied from one process to another. Without these functions, "
+"parallel aggregation cannot be performed, and future applications such as "
+"local/remote aggregation will probably not work either."
+msgstr ""
+
+#: xaggr.xml:558(para)
+msgid ""
+"A serialization function must take a single argument of type <type>internal</"
+"type> and return a result of type <type>bytea</type>, which represents the "
+"state value packaged up into a flat blob of bytes. Conversely, a "
+"deserialization function reverses that conversion. It must take two "
+"arguments of types <type>bytea</type> and <type>internal</type>, and return "
+"a result of type <type>internal</type>. (The second argument is unused and "
+"is always zero, but it is required for type-safety reasons.) The result of "
+"the deserialization function should simply be allocated in the current "
+"memory context, as unlike the combine function's result, it is not long-"
+"lived."
+msgstr ""
+
+#: xaggr.xml:571(para)
+msgid ""
+"Worth noting also is that for an aggregate to be executed in parallel, the "
+"aggregate itself must be marked <literal>PARALLEL SAFE</literal>. The "
+"parallel-safety markings on its support functions are not consulted."
+msgstr ""
+
+#: xaggr.xml:580(title)
 msgid "Support Functions for Aggregates"
 msgstr "Вспомогательные функции для агрегатов"
 
-#: xaggr.xml:487(indexterm)
+#: xaggr.xml:582(indexterm)
 msgid ""
 "<primary>aggregate function</primary><secondary>support functions for</"
 "secondary>"
@@ -889,23 +996,24 @@ msgstr ""
 "<primary>агрегатная функция</primary><secondary>вспомогательные функции</"
 "secondary>"
 
-#: xaggr.xml:495(programlisting)
+#: xaggr.xml:590(programlisting)
 #, no-wrap
 msgid "if (AggCheckCallContext(fcinfo, NULL))"
 msgstr "if (AggCheckCallContext(fcinfo, NULL))"
 
-#: xaggr.xml:491(para)
+#: xaggr.xml:586(para)
+#, fuzzy
 msgid ""
 "A function written in C can detect that it is being called as an aggregate "
-"transition or final function by calling <function>AggCheckCallContext</"
-"function>, for example: <placeholder-1/> One reason for checking this is "
-"that when it is true for a transition function, the first input must be a "
-"temporary state value and can therefore safely be modified in-place rather "
-"than allocating a new copy. See <literal>int8inc()</literal> for an example. "
-"(This is the <emphasis>only</emphasis> case where it is safe for a function "
-"to modify a pass-by-reference input. In particular, final functions for "
-"normal aggregates must not modify their inputs in any case, because in some "
-"cases they will be re-executed on the same final state value.)"
+"support function by calling <function>AggCheckCallContext</function>, for "
+"example: <placeholder-1/> One reason for checking this is that when it is "
+"true for a transition function, the first input must be a temporary state "
+"value and can therefore safely be modified in-place rather than allocating a "
+"new copy. See <literal>int8inc()</literal> for an example. (This is the "
+"<emphasis>only</emphasis> case where it is safe for a function to modify a "
+"pass-by-reference input. In particular, final functions for normal "
+"aggregates must not modify their inputs in any case, because in some cases "
+"they will be re-executed on the same final state value.)"
 msgstr ""
 "Функция, написанная на C, может определить, была ли она вызвана как функция "
 "агрегатного перехода или завершения, вызвав <function>AggCheckCallContext</"
@@ -919,7 +1027,7 @@ msgstr ""
 "изменять входные данные ни в коем случае, так как в некоторых ситуациях они "
 "могут вызываться повторно с тем же конечным значением состояния.)"
 
-#: xaggr.xml:508(para)
+#: xaggr.xml:603(para)
 msgid ""
 "Another support routine available to aggregate functions written in C is "
 "<function>AggGetAggref</function>, which returns the <literal>Aggref</"

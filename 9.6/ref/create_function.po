@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-27 17:41+0300\n"
+"POT-Creation-Date: 2016-08-09 11:03+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -1172,37 +1172,9 @@ msgstr ""
 "<primary><varname>путь_поиска</varname> параметр конфигурации</"
 "primary><secondary>использование в защищённых функциях</secondary>"
 
-#: ref/create_function.xml:742(indexterm)
+#: ref/create_function.xml:743(indexterm)
 msgid "<primary>pg_temp</primary><secondary>securing functions</secondary>"
 msgstr "<primary>pg_temp</primary><secondary>защищённые функции</secondary>"
-
-#: ref/create_function.xml:731(para)
-msgid ""
-"Because a <literal>SECURITY DEFINER</literal> function is executed with the "
-"privileges of the user that created it, care is needed to ensure that the "
-"function cannot be misused. For security, <xref linkend=\"guc-search-path\"/"
-"> should be set to exclude any schemas writable by untrusted users. This "
-"prevents malicious users from creating objects that mask objects used by the "
-"function. Particularly important in this regard is the temporary-table "
-"schema, which is searched first by default, and is normally writable by "
-"anyone. A secure arrangement can be obtained by forcing the temporary schema "
-"to be searched last. To do this, write <literal>pg_temp</"
-"literal><placeholder-1/> as the last entry in <varname>search_path</"
-"varname>. This function illustrates safe usage:"
-msgstr ""
-"Так как функция <literal>SECURITY DEFINER</literal> выполняется с правами "
-"пользователя, создавшего её, необходимо позаботиться о том, чтобы её нельзя "
-"было использовать не по назначению. В целях безопасности, в пути <xref "
-"linkend=\"guc-search-path\"/> следует исключить любые схемы, доступные на "
-"запись недоверенным пользователям. Это не позволит злонамеренным "
-"пользователям создать свои объекты, которые замаскируют объекты, "
-"используемые функцией. Особенно важно в этом отношении отключить схему "
-"временных таблиц, которая по умолчанию просматривается первой, а право "
-"записи в неё по умолчанию имеют все. Соответствующую защиту можно "
-"организовать, поместив временную схему в конец списка поиска. Для этого "
-"следует сделать <literal>pg_temp</literal><placeholder-1/> последней записью "
-"в <varname>search_path</varname>. Такую защиту демонстрирует следующая "
-"функция:"
 
 #: ref/create_function.xml:746(programlisting)
 #, no-wrap
@@ -1237,12 +1209,47 @@ msgstr ""
 "    -- Установить безопасный путь поиска: сначала доверенная схема(ы), затем 'pg_temp'.\n"
 "    SET search_path = admin, pg_temp;"
 
-#: ref/create_function.xml:761(para)
+#: ref/create_function.xml:731(para)
+#, fuzzy
+msgid ""
+"Because a <literal>SECURITY DEFINER</literal> function is executed with the "
+"privileges of the user that created it, care is needed to ensure that the "
+"function cannot be misused. For security, <xref linkend=\"guc-search-path\"/"
+"> should be set to exclude any schemas writable by untrusted users. This "
+"prevents malicious users from creating objects (e.g., tables, functions, and "
+"operators) that mask objects intended to be used by the function. "
+"Particularly important in this regard is the temporary-table schema, which "
+"is searched first by default, and is normally writable by anyone. A secure "
+"arrangement can be obtained by forcing the temporary schema to be searched "
+"last. To do this, write <literal>pg_temp</literal><placeholder-1/> as the "
+"last entry in <varname>search_path</varname>. This function illustrates safe "
+"usage: <placeholder-2/> This function's intention is to access a table "
+"<literal>admin.pwds</literal>. But without the <literal>SET</literal> "
+"clause, or with a <literal>SET</literal> clause mentioning only "
+"<literal>admin</literal>, the function could be subverted by creating a "
+"temporary table named <literal>pwds</literal>."
+msgstr ""
+"Так как функция <literal>SECURITY DEFINER</literal> выполняется с правами "
+"пользователя, создавшего её, необходимо позаботиться о том, чтобы её нельзя "
+"было использовать не по назначению. В целях безопасности, в пути <xref "
+"linkend=\"guc-search-path\"/> следует исключить любые схемы, доступные на "
+"запись недоверенным пользователям. Это не позволит злонамеренным "
+"пользователям создать свои объекты, которые замаскируют объекты, "
+"используемые функцией. Особенно важно в этом отношении отключить схему "
+"временных таблиц, которая по умолчанию просматривается первой, а право "
+"записи в неё по умолчанию имеют все. Соответствующую защиту можно "
+"организовать, поместив временную схему в конец списка поиска. Для этого "
+"следует сделать <literal>pg_temp</literal><placeholder-1/> последней записью "
+"в <varname>search_path</varname>. Такую защиту демонстрирует следующая "
+"функция:"
+
+#: ref/create_function.xml:767(para)
+#, fuzzy
 msgid ""
 "Before <productname>PostgreSQL</productname> version 8.3, the <literal>SET</"
-"literal> option was not available, and so older functions may contain rather "
+"literal> clause was not available, and so older functions may contain rather "
 "complicated logic to save, set, and restore <varname>search_path</varname>. "
-"The <literal>SET</literal> option is far easier to use for this purpose."
+"The <literal>SET</literal> clause is far easier to use for this purpose."
 msgstr ""
 "До <productname>PostgreSQL</productname> 8.3 указание <literal>SET</literal> "
 "отсутствовало, так что старые функции могут содержать довольно сложную "
@@ -1250,7 +1257,7 @@ msgstr ""
 "<varname>search_path</varname>. Существующее теперь указание <literal>SET</"
 "literal> позволяет сделать это намного проще."
 
-#: ref/create_function.xml:769(para)
+#: ref/create_function.xml:775(para)
 msgid ""
 "Another point to keep in mind is that by default, execute privilege is "
 "granted to <literal>PUBLIC</literal> for newly created functions (see <xref "
@@ -1271,7 +1278,7 @@ msgstr ""
 "недоступна совсем, создайте её и назначьте права в одной транзакции. "
 "Например, так:"
 
-#: ref/create_function.xml:781(programlisting)
+#: ref/create_function.xml:787(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN;\n"
@@ -1286,11 +1293,11 @@ msgstr ""
 "GRANT EXECUTE ON FUNCTION check_password(uname TEXT, pass TEXT) TO admins;\n"
 "COMMIT;"
 
-#: ref/create_function.xml:790(title)
+#: ref/create_function.xml:796(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/create_function.xml:792(para)
+#: ref/create_function.xml:798(para)
 msgid ""
 "A <command>CREATE FUNCTION</command> command is defined in SQL:1999 and "
 "later. The <productname>PostgreSQL</productname> version is similar but not "
@@ -1303,7 +1310,7 @@ msgstr ""
 "полностью. В частности, непереносимы атрибуты, а также различные языки "
 "реализаций."
 
-#: ref/create_function.xml:799(para)
+#: ref/create_function.xml:805(para)
 msgid ""
 "For compatibility with some other database systems, <replaceable class="
 "\"parameter\">argmode</replaceable> can be written either before or after "
@@ -1315,7 +1322,7 @@ msgstr ""
 "\"parameter\">имя_аргумента</replaceable> или перед ним, но стандарту "
 "соответствует только первый вариант."
 
-#: ref/create_function.xml:806(para)
+#: ref/create_function.xml:812(para)
 msgid ""
 "For parameter defaults, the SQL standard specifies only the syntax with the "
 "<literal>DEFAULT</literal> key word. The syntax with <literal>=</literal> is "
@@ -1325,7 +1332,7 @@ msgstr ""
 "поддерживает только синтаксис с ключевым словом <literal>DEFAULT</literal>. "
 "Синтаксис со знаком <literal>=</literal> используется в T-SQL и Firebird."
 
-#: ref/create_function.xml:815(title)
+#: ref/create_function.xml:821(title)
 msgid "See Also"
 msgstr "См. также"
 

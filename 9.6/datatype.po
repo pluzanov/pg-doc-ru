@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-27 17:39+0300\n"
+"POT-Creation-Date: 2016-08-09 11:01+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -54,7 +54,7 @@ msgstr ""
 #: datatype.xml:36(entry) datatype.xml:341(entry) datatype.xml:908(entry)
 #: datatype.xml:995(entry) datatype.xml:1186(entry) datatype.xml:1229(entry)
 #: datatype.xml:1534(entry) datatype.xml:2817(entry) datatype.xml:3042(entry)
-#: datatype.xml:3351(entry) datatype.xml:4274(entry) datatype.xml:4544(entry)
+#: datatype.xml:3351(entry) datatype.xml:4286(entry) datatype.xml:4556(entry)
 msgid "Name"
 msgstr "Имя"
 
@@ -68,7 +68,7 @@ msgstr "Псевдонимы"
 #: datatype.xml:1749(entry) datatype.xml:1870(entry) datatype.xml:1932(entry)
 #: datatype.xml:2102(entry) datatype.xml:2200(entry) datatype.xml:2668(entry)
 #: datatype.xml:2819(entry) datatype.xml:3044(entry) datatype.xml:3353(entry)
-#: datatype.xml:4276(entry) datatype.xml:4545(entry)
+#: datatype.xml:4288(entry) datatype.xml:4557(entry)
 msgid "Description"
 msgstr "Описание"
 
@@ -5653,9 +5653,9 @@ msgstr ""
 "приоритеты в функциях ранжирования результатов."
 
 #: datatype.xml:3789(programlisting)
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
-"select 'The Fat Rats'::tsvector;\n"
+"SELECT 'The Fat Rats'::tsvector;\n"
 "      tsvector      \n"
 "--------------------\n"
 " 'Fat' 'Rats' 'The'"
@@ -5679,15 +5679,17 @@ msgstr ""
 " 'fat':2 'rat':3"
 
 #: datatype.xml:3783(para)
+#, fuzzy
 msgid ""
 "It is important to understand that the <type>tsvector</type> type itself "
-"does not perform any normalization; it assumes the words it is given are "
-"normalized appropriately for the application. For example, <placeholder-1/> "
-"For most English-text-searching applications the above words would be "
-"considered non-normalized, but <type>tsvector</type> doesn't care. Raw "
-"document text should usually be passed through <function>to_tsvector</"
-"function> to normalize the words appropriately for searching: <placeholder-2/"
-"> Again, see <xref linkend=\"textsearch\"/> for more detail."
+"does not perform any word normalization; it assumes the words it is given "
+"are normalized appropriately for the application. For example, "
+"<placeholder-1/> For most English-text-searching applications the above "
+"words would be considered non-normalized, but <type>tsvector</type> doesn't "
+"care. Raw document text should usually be passed through "
+"<function>to_tsvector</function> to normalize the words appropriately for "
+"searching: <placeholder-2/> Again, see <xref linkend=\"textsearch\"/> for "
+"more detail."
 msgstr ""
 "Важно понимать, что тип <type>tsvector</type> сам по себе не выполняет "
 "нормализацию; предполагается, что в сохраняемом значении слова уже "
@@ -5703,6 +5705,7 @@ msgid "<primary>tsquery (data type)</primary>"
 msgstr "<primary>tsquery (тип данных)</primary>"
 
 #: datatype.xml:3817(para)
+#, fuzzy
 msgid ""
 "A <type>tsquery</type> value stores lexemes that are to be searched for, and "
 "can combine them using the Boolean operators <literal>&amp;</literal> (AND), "
@@ -5710,9 +5713,9 @@ msgid ""
 "phrase search operator <literal>&lt;-&gt;</literal> (FOLLOWED BY). There is "
 "also a variant <literal>&lt;<replaceable>N</replaceable>&gt;</literal> of "
 "the FOLLOWED BY operator, where <replaceable>N</replaceable> is an integer "
-"constant that specifies a maximum distance between the two lexemes being "
-"searched for. <literal>&lt;-&gt;</literal> is equivalent to "
-"<literal>&lt;1&gt;</literal>."
+"constant that specifies the distance between the two lexemes being searched "
+"for. <literal>&lt;-&gt;</literal> is equivalent to <literal>&lt;1&gt;</"
+"literal>."
 msgstr ""
 "Значение <type>tsquery</type> содержит искомые лексемы, объединяемые "
 "логическими операторами <literal>&amp;</literal> (И), <literal>|</literal> "
@@ -5724,52 +5727,66 @@ msgstr ""
 "оператора <literal>&lt;-&gt;</literal> равнозначна <literal>&lt;1&gt;</"
 "literal>."
 
-#: datatype.xml:3832(programlisting)
-#, no-wrap
-msgid ""
-"SELECT 'fat &amp; rat'::tsquery;\n"
-"    tsquery    \n"
-"---------------\n"
-" 'fat' &amp; 'rat'\n"
-"\n"
-"SELECT 'fat &amp; (rat | cat)'::tsquery;\n"
-"          tsquery          \n"
-"---------------------------\n"
-" 'fat' &amp; ( 'rat' | 'cat' )\n"
-"\n"
-"SELECT 'fat &amp; rat &amp; ! cat'::tsquery;\n"
-"        tsquery         \n"
-"------------------------\n"
-" 'fat' &amp; 'rat' &amp; !'cat'"
-msgstr ""
-"SELECT 'fat &amp; rat'::tsquery;\n"
-"    tsquery    \n"
-"---------------\n"
-" 'fat' &amp; 'rat'\n"
-"\n"
-"SELECT 'fat &amp; (rat | cat)'::tsquery;\n"
-"          tsquery          \n"
-"---------------------------\n"
-" 'fat' &amp; ( 'rat' | 'cat' )\n"
-"\n"
-"SELECT 'fat &amp; rat &amp; ! cat'::tsquery;\n"
-"        tsquery         \n"
-"------------------------\n"
-" 'fat' &amp; 'rat' &amp; !'cat'"
-
 #: datatype.xml:3829(para)
+#, fuzzy
 msgid ""
-"Parentheses can be used to enforce grouping of the operators: <placeholder-1/"
-"> In the absence of parentheses, <literal>!</literal> (NOT) binds most "
-"tightly, and <literal>&amp;</literal> (AND) and <literal>&lt;-&gt;</literal> "
-"(FOLLOWED BY) both bind more tightly than <literal>|</literal> (OR)."
+"Parentheses can be used to enforce grouping of these operators. In the "
+"absence of parentheses, <literal>!</literal> (NOT) binds most tightly, "
+"<literal>&lt;-&gt;</literal> (FOLLOWED BY) next most tightly, then "
+"<literal>&amp;</literal> (AND), with <literal>|</literal> (OR) binding the "
+"least tightly."
 msgstr ""
 "Для группировки операторов могут использоваться скобки: <placeholder-1/> Без "
 "скобок эти операторы имеют разные приоритеты, в порядке убывания: <literal>!"
 "</literal> (НЕ), затем пара <literal>&amp;</literal> (И) и <literal>&lt;-&gt;"
 "</literal> (ПРЕДШЕСТВУЕТ), и наконец, <literal>|</literal> (ИЛИ)."
 
-#: datatype.xml:3857(programlisting)
+#: datatype.xml:3840(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT 'fat &amp; rat'::tsquery;\n"
+"    tsquery    \n"
+"---------------\n"
+" 'fat' &amp; 'rat'\n"
+"\n"
+"SELECT 'fat &amp; (rat | cat)'::tsquery;\n"
+"          tsquery          \n"
+"---------------------------\n"
+" 'fat' &amp; ( 'rat' | 'cat' )\n"
+"\n"
+"SELECT 'fat &amp; rat &amp; ! cat'::tsquery;\n"
+"        tsquery         \n"
+"------------------------\n"
+" 'fat' &amp; 'rat' &amp; !'cat'\n"
+"\n"
+"SELECT '(fat | rat) &lt;-&gt; cat'::tsquery;\n"
+"              tsquery\n"
+"-----------------------------------\n"
+" 'fat' &lt;-&gt; 'cat' | 'rat' &lt;-&gt; 'cat'"
+msgstr ""
+"SELECT 'fat &amp; rat'::tsquery;\n"
+"    tsquery    \n"
+"---------------\n"
+" 'fat' &amp; 'rat'\n"
+"\n"
+"SELECT 'fat &amp; (rat | cat)'::tsquery;\n"
+"          tsquery          \n"
+"---------------------------\n"
+" 'fat' &amp; ( 'rat' | 'cat' )\n"
+"\n"
+"SELECT 'fat &amp; rat &amp; ! cat'::tsquery;\n"
+"        tsquery         \n"
+"------------------------\n"
+" 'fat' &amp; 'rat' &amp; !'cat'"
+
+#: datatype.xml:3837(para)
+msgid ""
+"Here are some examples: <placeholder-1/> The last example demonstrates that "
+"<type>tsquery</type> sometimes rearranges nested operators into a logically "
+"equivalent formulation."
+msgstr ""
+
+#: datatype.xml:3869(programlisting)
 #, no-wrap
 msgid ""
 "SELECT 'fat:ab &amp; cat'::tsquery;\n"
@@ -5782,17 +5799,18 @@ msgstr ""
 "------------------\n"
 " 'fat':AB &amp; 'cat'"
 
-#: datatype.xml:3852(para)
+#: datatype.xml:3864(para)
+#, fuzzy
 msgid ""
 "Optionally, lexemes in a <type>tsquery</type> can be labeled with one or "
 "more weight letters, which restricts them to match only <type>tsvector</"
-"type> lexemes with matching weights: <placeholder-1/>"
+"type> lexemes with one of those weights: <placeholder-1/>"
 msgstr ""
 "Лексемам в <type>tsquery</type> можно дополнительно сопоставить буквы весов, "
 "при этом они будут соответствовать только тем лексемам в <type>tsvector</"
 "type>, которые имеют те же веса: <placeholder-1/>"
 
-#: datatype.xml:3866(programlisting)
+#: datatype.xml:3878(programlisting)
 #, no-wrap
 msgid ""
 "SELECT 'super:*'::tsquery;\n"
@@ -5805,45 +5823,12 @@ msgstr ""
 "-----------\n"
 " 'super':*"
 
-#: datatype.xml:3874(programlisting)
-#, no-wrap
-msgid ""
-"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
-" ?column? \n"
-"----------\n"
-" t\n"
-"(1 row)"
-msgstr ""
-"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
-" ?column? \n"
-"----------\n"
-" t\n"
-"(1 row)"
-
-#: datatype.xml:3880(programlisting)
-#, no-wrap
-msgid ""
-"SELECT to_tsquery('postgres:*');\n"
-" to_tsquery \n"
-"------------\n"
-" 'postgr':*\n"
-"(1 row)"
-msgstr ""
-"SELECT to_tsquery('postgres:*');\n"
-" to_tsquery \n"
-"------------\n"
-" 'postgr':*\n"
-"(1 row)"
-
-#: datatype.xml:3863(para)
+#: datatype.xml:3875(para)
+#, fuzzy
 msgid ""
 "Also, lexemes in a <type>tsquery</type> can be labeled with <literal>*</"
 "literal> to specify prefix matching: <placeholder-1/> This query will match "
-"any word in a <type>tsvector</type> that begins with <quote>super</quote>. "
-"Note that prefixes are first processed by text search configurations, which "
-"means this comparison returns true: <placeholder-2/> because "
-"<literal>postgres</literal> gets stemmed to <literal>postgr</literal>: "
-"<placeholder-3/> which then matches <literal>postgraduate</literal>."
+"any word in a <type>tsvector</type> that begins with <quote>super</quote>."
 msgstr ""
 "Кроме того, в лексемах <type>tsquery</type> можно использовать знак "
 "<literal>*</literal> для поиска по префиксу: <placeholder-1/> Этот запрос "
@@ -5854,7 +5839,7 @@ msgstr ""
 "преобразуется в <literal>postgr</literal>: <placeholder-3/> и эта приставка "
 "затем находится в слове <literal>postgraduate</literal>."
 
-#: datatype.xml:3895(programlisting)
+#: datatype.xml:3893(programlisting)
 #, no-wrap
 msgid ""
 "SELECT to_tsquery('Fat:ab &amp; Cats');\n"
@@ -5867,13 +5852,47 @@ msgstr ""
 "------------------\n"
 " 'fat':AB &amp; 'cat'"
 
-#: datatype.xml:3888(para)
+#: datatype.xml:3901(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
+" ?column?\n"
+"----------\n"
+" t"
+msgstr ""
+"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
+" ?column? \n"
+"----------\n"
+" t\n"
+"(1 row)"
+
+#: datatype.xml:3906(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"SELECT to_tsvector( 'postgraduate' ), to_tsquery( 'postgres:*' );\n"
+"  to_tsvector  | to_tsquery\n"
+"---------------+------------\n"
+" 'postgradu':1 | 'postgr':*"
+msgstr ""
+"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
+" ?column? \n"
+"----------\n"
+" t\n"
+"(1 row)"
+
+#: datatype.xml:3886(para)
+#, fuzzy
 msgid ""
 "Quoting rules for lexemes are the same as described previously for lexemes "
 "in <type>tsvector</type>; and, as with <type>tsvector</type>, any required "
 "normalization of words must be done before converting to the <type>tsquery</"
 "type> type. The <function>to_tsquery</function> function is convenient for "
-"performing such normalization: <placeholder-1/>"
+"performing such normalization: <placeholder-1/> Note that "
+"<function>to_tsquery</function> will process prefixes in the same way as "
+"other words, which means this comparison returns true: <placeholder-2/> "
+"because <literal>postgres</literal> gets stemmed to <literal>postgr</"
+"literal>: <placeholder-3/> which will match the stemmed form of "
+"<literal>postgraduate</literal>."
 msgstr ""
 "Апострофы в лексемах этого типа можно использовать так же, как и в лексемах "
 "в <type>tsvector</type>; и так же, как и для типа <type>tsvector</type>, "
@@ -5881,19 +5900,19 @@ msgstr ""
 "типу <type>tsquery</type>. Для такой нормализации удобно использовать "
 "функцию <function>to_tsquery</function>: <placeholder-1/>"
 
-#: datatype.xml:3906(title)
+#: datatype.xml:3918(title)
 msgid "<acronym>UUID</acronym> Type"
 msgstr "Тип <acronym>UUID</acronym>"
 
-#: datatype.xml:3908(indexterm)
+#: datatype.xml:3920(indexterm)
 msgid "<primary>UUID</primary>"
 msgstr "<primary>UUID</primary>"
 
-#: datatype.xml:3916(indexterm)
+#: datatype.xml:3928(indexterm)
 msgid "<primary>GUID</primary>"
 msgstr "<primary>GUID</primary>"
 
-#: datatype.xml:3912(para)
+#: datatype.xml:3924(para)
 msgid ""
 "The data type <type>uuid</type> stores Universally Unique Identifiers (UUID) "
 "as defined by RFC 4122, ISO/IEC 9834-8:2005, and related standards. (Some "
@@ -5915,12 +5934,12 @@ msgstr ""
 "будут уникальными и в распределённых системах, а не только в единственной "
 "базе данных, как значения генераторов последовательностей."
 
-#: datatype.xml:3931(programlisting)
+#: datatype.xml:3943(programlisting)
 #, no-wrap
 msgid "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
 msgstr "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
 
-#: datatype.xml:3937(programlisting)
+#: datatype.xml:3949(programlisting)
 #, no-wrap
 msgid ""
 "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11\n"
@@ -5935,7 +5954,7 @@ msgstr ""
 "a0ee-bc99-9c0b-4ef8-bb6d-6bb9-bd38-0a11\n"
 "{a0eebc99-9c0b4ef8-bb6d6bb9-bd380a11}"
 
-#: datatype.xml:3925(para)
+#: datatype.xml:3937(para)
 msgid ""
 "A UUID is written as a sequence of lower-case hexadecimal digits, in several "
 "groups separated by hyphens, specifically a group of 8 digits followed by "
@@ -5959,7 +5978,7 @@ msgstr ""
 "группы из четырёх цифр. Например: <placeholder-2/> Выводится значение этого "
 "типа всегда в стандартном виде."
 
-#: datatype.xml:3945(para)
+#: datatype.xml:3957(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides storage and comparison "
 "functions for UUIDs, but the core database does not include any function for "
@@ -5980,15 +5999,15 @@ msgstr ""
 "Кроме того, можно сделать это в клиентском приложении или в другой "
 "библиотеке, подключённой на стороне сервера."
 
-#: datatype.xml:3960(title)
+#: datatype.xml:3972(title)
 msgid "<acronym>XML</acronym> Type"
 msgstr "Тип <acronym>XML</acronym>"
 
-#: datatype.xml:3962(indexterm)
+#: datatype.xml:3974(indexterm)
 msgid "<primary>XML</primary>"
 msgstr "<primary>XML</primary>"
 
-#: datatype.xml:3966(para)
+#: datatype.xml:3978(para)
 msgid ""
 "The <type>xml</type> data type can be used to store XML data. Its advantage "
 "over storing XML data in a <type>text</type> field is that it checks the "
@@ -6004,7 +6023,7 @@ msgstr ""
 "Для использования этого типа дистрибутив должен быть скомпилирован в "
 "конфигурации <command>configure --with-libxml</command>."
 
-#: datatype.xml:3976(para)
+#: datatype.xml:3988(para)
 msgid ""
 "The <type>xml</type> type can store well-formed <quote>documents</quote>, as "
 "defined by the XML standard, as well as <quote>content</quote> fragments, "
@@ -6024,15 +6043,15 @@ msgstr ""
 "<type>xml</type> полным документом или фрагментом содержимого, позволяет "
 "выражение <literal><replaceable>xmlvalue</replaceable> IS DOCUMENT</literal>."
 
-#: datatype.xml:3989(title)
+#: datatype.xml:4001(title)
 msgid "Creating XML Values"
 msgstr "Создание XML-значений"
 
-#: datatype.xml:3993(indexterm)
+#: datatype.xml:4005(indexterm)
 msgid "<primary>xmlparse</primary>"
 msgstr "<primary>xmlparse</primary>"
 
-#: datatype.xml:3990(para)
+#: datatype.xml:4002(para)
 msgid ""
 "To produce a value of type <type>xml</type> from character data, use the "
 "function <function>xmlparse</function>:<placeholder-1/>\n"
@@ -6049,11 +6068,11 @@ msgstr ""
 "описан только один способ преобразования текстовых строк в XML-значения, "
 "специфический синтаксис PostgreSQL: <placeholder-3/> тоже допустим."
 
-#: datatype.xml:4013(indexterm)
+#: datatype.xml:4025(indexterm)
 msgid "<primary>DTD</primary>"
 msgstr "<primary>DTD</primary>"
 
-#: datatype.xml:4010(para)
+#: datatype.xml:4022(para)
 msgid ""
 "The <type>xml</type> type does not validate input values against a document "
 "type declaration (DTD),<placeholder-1/> even when the input value specifies "
@@ -6066,11 +6085,11 @@ msgstr ""
 "productname> также нет встроенной поддержки других разновидностей схем, "
 "например XML Schema."
 
-#: datatype.xml:4022(indexterm)
+#: datatype.xml:4034(indexterm)
 msgid "<primary>xmlserialize</primary>"
 msgstr "<primary>xmlserialize</primary>"
 
-#: datatype.xml:4019(para)
+#: datatype.xml:4031(para)
 msgid ""
 "The inverse operation, producing a character string value from <type>xml</"
 "type>, uses the function <function>xmlserialize</function>:<placeholder-1/>\n"
@@ -6093,11 +6112,11 @@ msgstr ""
 "способ преобразования <type>xml</type> в тип текстовых строк, но PostgreSQL "
 "позволяет просто привести значение к нужному типу."
 
-#: datatype.xml:4038(indexterm)
+#: datatype.xml:4050(indexterm)
 msgid "<primary>XML option</primary>"
 msgstr "<primary>XML option</primary>"
 
-#: datatype.xml:4032(para)
+#: datatype.xml:4044(para)
 msgid ""
 "When a character string value is cast to or from type <type>xml</type> "
 "without going through <type>XMLPARSE</type> or <type>XMLSERIALIZE</type>, "
@@ -6119,7 +6138,7 @@ msgstr ""
 "CONTENT };</synopsis> По умолчанию этот параметр имеет значение "
 "<literal>CONTENT</literal>, так что допускаются все формы XML-данных."
 
-#: datatype.xml:4049(para)
+#: datatype.xml:4061(para)
 msgid ""
 "With the default XML option setting, you cannot directly cast character "
 "strings to type <type>xml</type> if they contain a document type "
@@ -6133,11 +6152,11 @@ msgstr ""
 "фрагментах. Для выполнения преобразования в таких случаях следует "
 "использовать <literal>XMLPARSE</literal> или изменить параметр XML option."
 
-#: datatype.xml:4061(title)
+#: datatype.xml:4073(title)
 msgid "Encoding Handling"
 msgstr "Обработка кодировки"
 
-#: datatype.xml:4062(para)
+#: datatype.xml:4074(para)
 msgid ""
 "Care must be taken when dealing with multiple character encodings on the "
 "client, server, and in the XML data passed through them. When using the text "
@@ -6181,10 +6200,11 @@ msgstr ""
 "значения типа <type>xml</type> не содержат объявления кодировки, а клиент "
 "должен предполагать, что все данные поступают в его текущей кодировке."
 
-#: datatype.xml:4089(para)
+#: datatype.xml:4101(para)
+#, fuzzy
 msgid ""
 "When using binary mode to pass query parameters to the server and query "
-"results back to the client, no character set conversion is performed, so the "
+"results back to the client, no encoding conversion is performed, so the "
 "situation is different. In this case, an encoding declaration in the XML "
 "data will be observed, and if it is absent, the data will be assumed to be "
 "in UTF-8 (as required by the XML standard; note that PostgreSQL does not "
@@ -6201,7 +6221,7 @@ msgstr ""
 "объявление кодировки, выбранной на стороне клиента (но если это UTF-8, "
 "объявление будет опущено)."
 
-#: datatype.xml:4101(para)
+#: datatype.xml:4113(para)
 msgid ""
 "Needless to say, processing XML data with PostgreSQL will be less error-"
 "prone and more efficient if the XML data encoding, client encoding, and "
@@ -6215,7 +6235,7 @@ msgstr ""
 "представляются в UTF-8, оптимальный вариант, когда на сервере также выбрана "
 "кодировка UTF-8."
 
-#: datatype.xml:4110(para)
+#: datatype.xml:4122(para)
 msgid ""
 "Some XML-related functions may not work at all on non-ASCII data when the "
 "server encoding is not UTF-8. This is known to be an issue for "
@@ -6225,11 +6245,11 @@ msgstr ""
 "кодировка сервера &mdash; не UTF-8. В частности, это известная особенность "
 "функции <function>xpath()</function>."
 
-#: datatype.xml:4119(title)
+#: datatype.xml:4131(title)
 msgid "Accessing XML Values"
 msgstr "Обращение к XML-значениям"
 
-#: datatype.xml:4121(para)
+#: datatype.xml:4133(para)
 msgid ""
 "The <type>xml</type> data type is unusual in that it does not provide any "
 "comparison operators. This is because there is no well-defined and "
@@ -6250,7 +6270,7 @@ msgstr ""
 "преобразовав их сначала в текстовые строки, но заметьте, что с учётом "
 "специфики XML-данных этот метод практически бесполезен."
 
-#: datatype.xml:4134(para)
+#: datatype.xml:4146(para)
 msgid ""
 "Since there are no comparison operators for the <type>xml</type> data type, "
 "it is not possible to create an index directly on a column of this type. If "
@@ -6266,7 +6286,7 @@ msgstr ""
 "выражение XPath. Конечно сам запрос при этом следует изменить, чтобы поиск "
 "выполнялся по индексированному выражению."
 
-#: datatype.xml:4144(para)
+#: datatype.xml:4156(para)
 msgid ""
 "The text-search functionality in PostgreSQL can also be used to speed up "
 "full-document searches of XML data. The necessary preprocessing support is, "
@@ -6276,64 +6296,64 @@ msgstr ""
 "полнотекстового поиска в PostgreSQL. Однако это требует определённой "
 "подготовки данных, что дистрибутив PostgreSQL пока не поддерживает."
 
-#: datatype.xml:4162(title) datatype.xml:4270(title)
+#: datatype.xml:4174(title) datatype.xml:4282(title)
 msgid "Object Identifier Types"
 msgstr "Идентификаторы объектов"
 
-#: datatype.xml:4164(indexterm)
+#: datatype.xml:4176(indexterm)
 msgid "<primary>object identifier</primary><secondary>data type</secondary>"
 msgstr ""
 "<primary>идентификатор объекта</primary><secondary>тип данных</secondary>"
 
-#: datatype.xml:4168(indexterm)
+#: datatype.xml:4180(indexterm)
 msgid "<primary>oid</primary>"
 msgstr "<primary>oid</primary>"
 
-#: datatype.xml:4172(indexterm)
+#: datatype.xml:4184(indexterm)
 msgid "<primary>regproc</primary>"
 msgstr "<primary>regproc</primary>"
 
-#: datatype.xml:4176(indexterm)
+#: datatype.xml:4188(indexterm)
 msgid "<primary>regprocedure</primary>"
 msgstr "<primary>regprocedure</primary>"
 
-#: datatype.xml:4180(indexterm)
+#: datatype.xml:4192(indexterm)
 msgid "<primary>regoper</primary>"
 msgstr "<primary>regoper</primary>"
 
-#: datatype.xml:4184(indexterm)
+#: datatype.xml:4196(indexterm)
 msgid "<primary>regoperator</primary>"
 msgstr "<primary>regoperator</primary>"
 
-#: datatype.xml:4188(indexterm)
+#: datatype.xml:4200(indexterm)
 msgid "<primary>regclass</primary>"
 msgstr "<primary>regclass</primary>"
 
-#: datatype.xml:4192(indexterm)
+#: datatype.xml:4204(indexterm)
 msgid "<primary>regtype</primary>"
 msgstr "<primary>regtype</primary>"
 
-#: datatype.xml:4196(indexterm)
+#: datatype.xml:4208(indexterm)
 msgid "<primary>regconfig</primary>"
 msgstr "<primary>regconfig</primary>"
 
-#: datatype.xml:4200(indexterm)
+#: datatype.xml:4212(indexterm)
 msgid "<primary>regdictionary</primary>"
 msgstr "<primary>regdictionary</primary>"
 
-#: datatype.xml:4204(indexterm)
+#: datatype.xml:4216(indexterm)
 msgid "<primary>xid</primary>"
 msgstr "<primary>xid</primary>"
 
-#: datatype.xml:4208(indexterm)
+#: datatype.xml:4220(indexterm)
 msgid "<primary>cid</primary>"
 msgstr "<primary>cid</primary>"
 
-#: datatype.xml:4212(indexterm)
+#: datatype.xml:4224(indexterm)
 msgid "<primary>tid</primary>"
 msgstr "<primary>tid</primary>"
 
-#: datatype.xml:4216(para)
+#: datatype.xml:4228(para)
 msgid ""
 "Object identifiers (OIDs) are used internally by <productname>PostgreSQL</"
 "productname> as primary keys for various system tables. OIDs are not added "
@@ -6360,7 +6380,7 @@ msgstr ""
 "type>. Обзор этих типов приведён в <xref remap=\"6\" linkend=\"datatype-oid-"
 "table\"/>."
 
-#: datatype.xml:4231(para)
+#: datatype.xml:4243(para)
 msgid ""
 "The <type>oid</type> type is currently implemented as an unsigned four-byte "
 "integer. Therefore, it is not large enough to provide database-wide "
@@ -6375,7 +6395,7 @@ msgstr ""
 "первичного ключа не рекомендуется. Лучше всего ограничить применение этого "
 "типа обращениями к системным таблицам."
 
-#: datatype.xml:4240(para)
+#: datatype.xml:4252(para)
 msgid ""
 "The <type>oid</type> type itself has few operations beyond comparison. It "
 "can be cast to integer, however, and then manipulated using the standard "
@@ -6387,12 +6407,12 @@ msgstr ""
 "обычных целочисленных вычислениях. (При этом следует опасаться путаницы со "
 "знаковыми/беззнаковыми значениями.)"
 
-#: datatype.xml:4255(programlisting)
+#: datatype.xml:4267(programlisting)
 #, no-wrap
 msgid "SELECT * FROM pg_attribute WHERE attrelid = 'mytable'::regclass;"
 msgstr "SELECT * FROM pg_attribute WHERE attrelid = 'mytable'::regclass;"
 
-#: datatype.xml:4257(programlisting)
+#: datatype.xml:4269(programlisting)
 #, no-wrap
 msgid ""
 "SELECT * FROM pg_attribute\n"
@@ -6401,7 +6421,7 @@ msgstr ""
 "SELECT * FROM pg_attribute\n"
 "  WHERE attrelid = (SELECT oid FROM pg_class WHERE relname = 'mytable');"
 
-#: datatype.xml:4247(para)
+#: datatype.xml:4259(para)
 msgid ""
 "The OID alias types have no operations of their own except for specialized "
 "input and output routines. These routines are able to accept and display "
@@ -6434,193 +6454,193 @@ msgstr ""
 "приведя идентификатор таблицы к типу <type>regclass</type>, можно получить "
 "символическое представление числового кода."
 
-#: datatype.xml:4275(entry)
+#: datatype.xml:4287(entry)
 msgid "References"
 msgstr "Ссылки"
 
 # msgid "References"
 # msgstr "Применяется"
-#: datatype.xml:4277(entry)
+#: datatype.xml:4289(entry)
 msgid "Value Example"
 msgstr "Пример значения"
 
-#: datatype.xml:4284(type)
+#: datatype.xml:4296(type)
 msgid "oid"
 msgstr "oid"
 
-#: datatype.xml:4285(entry)
+#: datatype.xml:4297(entry)
 msgctxt "entry"
 msgid "any"
 msgstr "any"
 
 # msgid "any"
 # msgstr "везде"
-#: datatype.xml:4286(entry)
+#: datatype.xml:4298(entry)
 msgid "numeric object identifier"
 msgstr "числовой идентификатор объекта"
 
-#: datatype.xml:4287(literal)
+#: datatype.xml:4299(literal)
 msgid "564182"
 msgstr "564182"
 
-#: datatype.xml:4291(type)
+#: datatype.xml:4303(type)
 msgid "regproc"
 msgstr "regproc"
 
-#: datatype.xml:4292(structname) datatype.xml:4299(structname)
+#: datatype.xml:4304(structname) datatype.xml:4311(structname)
 msgid "pg_proc"
 msgstr "pg_proc"
 
-#: datatype.xml:4293(entry)
+#: datatype.xml:4305(entry)
 msgid "function name"
 msgstr "имя функции"
 
-#: datatype.xml:4294(literal)
+#: datatype.xml:4306(literal)
 msgid "sum"
 msgstr "sum"
 
-#: datatype.xml:4298(type)
+#: datatype.xml:4310(type)
 msgid "regprocedure"
 msgstr "regprocedure"
 
-#: datatype.xml:4300(entry)
+#: datatype.xml:4312(entry)
 msgid "function with argument types"
 msgstr "функция с типами аргументов"
 
-#: datatype.xml:4301(literal)
+#: datatype.xml:4313(literal)
 msgid "sum(int4)"
 msgstr "sum(int4)"
 
-#: datatype.xml:4305(type)
+#: datatype.xml:4317(type)
 msgid "regoper"
 msgstr "regoper"
 
-#: datatype.xml:4306(structname) datatype.xml:4313(structname)
+#: datatype.xml:4318(structname) datatype.xml:4325(structname)
 msgid "pg_operator"
 msgstr "pg_operator"
 
-#: datatype.xml:4307(entry)
+#: datatype.xml:4319(entry)
 msgid "operator name"
 msgstr "имя оператора"
 
-#: datatype.xml:4308(literal)
+#: datatype.xml:4320(literal)
 msgid "+"
 msgstr "+"
 
-#: datatype.xml:4312(type)
+#: datatype.xml:4324(type)
 msgid "regoperator"
 msgstr "regoperator"
 
-#: datatype.xml:4314(entry)
+#: datatype.xml:4326(entry)
 msgid "operator with argument types"
 msgstr "оператор с типами аргументов"
 
-#: datatype.xml:4315(entry)
+#: datatype.xml:4327(entry)
 msgid ""
 "<literal>*(integer,integer)</literal> or <literal>-(NONE,integer)</literal>"
 msgstr ""
 "<literal>*(integer,integer)</literal> или <literal>-(NONE,integer)</literal>"
 
-#: datatype.xml:4319(type)
+#: datatype.xml:4331(type)
 msgid "regclass"
 msgstr "regclass"
 
-#: datatype.xml:4320(structname)
+#: datatype.xml:4332(structname)
 msgid "pg_class"
 msgstr "pg_class"
 
-#: datatype.xml:4321(entry)
+#: datatype.xml:4333(entry)
 msgid "relation name"
 msgstr "имя отношения"
 
-#: datatype.xml:4322(literal)
+#: datatype.xml:4334(literal)
 msgctxt "literal"
 msgid "pg_type"
 msgstr "pg_type"
 
-#: datatype.xml:4326(type)
+#: datatype.xml:4338(type)
 msgid "regtype"
 msgstr "regtype"
 
-#: datatype.xml:4327(structname)
+#: datatype.xml:4339(structname)
 msgctxt "structname"
 msgid "pg_type"
 msgstr "pg_type"
 
-#: datatype.xml:4328(entry)
+#: datatype.xml:4340(entry)
 msgid "data type name"
 msgstr "имя типа данных"
 
-#: datatype.xml:4329(literal)
+#: datatype.xml:4341(literal)
 msgctxt "literal"
 msgid "integer"
 msgstr "integer"
 
-#: datatype.xml:4333(type)
+#: datatype.xml:4345(type)
 msgid "regrole"
 msgstr "role"
 
-#: datatype.xml:4334(structname)
+#: datatype.xml:4346(structname)
 msgid "pg_authid"
 msgstr "pg_authid"
 
-#: datatype.xml:4335(entry)
+#: datatype.xml:4347(entry)
 msgid "role name"
 msgstr "имя роли"
 
-#: datatype.xml:4336(literal)
+#: datatype.xml:4348(literal)
 msgid "smithee"
 msgstr "smithee"
 
-#: datatype.xml:4340(type)
+#: datatype.xml:4352(type)
 msgid "regnamespace"
 msgstr "relnamespace"
 
-#: datatype.xml:4341(structname)
+#: datatype.xml:4353(structname)
 msgid "pg_namespace"
 msgstr "pg_namespace"
 
-#: datatype.xml:4342(entry)
+#: datatype.xml:4354(entry)
 msgid "namespace name"
 msgstr "пространство имён"
 
-#: datatype.xml:4343(literal)
+#: datatype.xml:4355(literal)
 msgid "pg_catalog"
 msgstr "pg_catalog"
 
-#: datatype.xml:4347(type)
+#: datatype.xml:4359(type)
 msgid "regconfig"
 msgstr "regconfig"
 
-#: datatype.xml:4348(structname)
+#: datatype.xml:4360(structname)
 msgid "pg_ts_config"
 msgstr "pg_ts_config"
 
-#: datatype.xml:4349(entry)
+#: datatype.xml:4361(entry)
 msgid "text search configuration"
 msgstr "конфигурация текстового поиска"
 
-#: datatype.xml:4350(literal)
+#: datatype.xml:4362(literal)
 msgid "english"
 msgstr "english"
 
-#: datatype.xml:4354(type)
+#: datatype.xml:4366(type)
 msgid "regdictionary"
 msgstr "regdictionary"
 
-#: datatype.xml:4355(structname)
+#: datatype.xml:4367(structname)
 msgid "pg_ts_dict"
 msgstr "pg_ts_dict"
 
-#: datatype.xml:4356(entry)
+#: datatype.xml:4368(entry)
 msgid "text search dictionary"
 msgstr "словарь текстового поиска"
 
-#: datatype.xml:4357(literal)
+#: datatype.xml:4369(literal)
 msgid "simple"
 msgstr "simple"
 
-#: datatype.xml:4363(para)
+#: datatype.xml:4375(para)
 msgid ""
 "All of the OID alias types for objects grouped by namespace accept schema-"
 "qualified names, and will display schema-qualified names on output if the "
@@ -6642,7 +6662,7 @@ msgstr ""
 "унарного оператора неиспользуемый операнд заменяется словом <literal>NONE</"
 "literal>."
 
-#: datatype.xml:4376(para)
+#: datatype.xml:4388(para)
 msgid ""
 "An additional property of most of the OID alias types is the creation of "
 "dependencies. If a constant of one of these types appears in a stored "
@@ -6666,7 +6686,7 @@ msgstr ""
 "Единственным ограничением является тип <type>regrole</type>. Константы этого "
 "типа в таких выражениях не допускаются."
 
-#: datatype.xml:4392(para)
+#: datatype.xml:4404(para)
 msgid ""
 "The OID alias types do not completely follow transaction isolation rules. "
 "The planner also treats them as simple constants, which may result in sub-"
@@ -6676,7 +6696,7 @@ msgstr ""
 "Планировщик тоже воспринимает их как простые константы, что может привести к "
 "неоптимальному планированию запросов."
 
-#: datatype.xml:4399(para)
+#: datatype.xml:4411(para)
 msgid ""
 "Another identifier type used by the system is <type>xid</type>, or "
 "transaction (abbreviated <abbrev>xact</abbrev>) identifier. This is the data "
@@ -6690,7 +6710,7 @@ msgstr ""
 "<structfield>xmax</structfield>. Идентификаторы транзакций определяются 32-"
 "битными числами."
 
-#: datatype.xml:4405(para)
+#: datatype.xml:4417(para)
 msgid ""
 "A third identifier type used by the system is <type>cid</type>, or command "
 "identifier. This is the data type of the system columns <structfield>cmin</"
@@ -6702,7 +6722,7 @@ msgstr ""
 "системные столбцы <structfield>cmin</structfield> и <structfield>cmax</"
 "structfield>. Идентификаторы команд &mdash; это тоже 32-битные числа."
 
-#: datatype.xml:4411(para)
+#: datatype.xml:4423(para)
 msgid ""
 "A final identifier type used by the system is <type>tid</type>, or tuple "
 "identifier (row identifier). This is the data type of the system column "
@@ -6716,7 +6736,7 @@ msgstr ""
 "представляет собой пару (из номера блока и индекса кортежа в блоке), "
 "идентифицирующую физическое расположение строки в таблице."
 
-#: datatype.xml:4419(para)
+#: datatype.xml:4431(para)
 msgid ""
 "(The system columns are further explained in <xref linkend=\"ddl-system-"
 "columns\"/>.)"
@@ -6724,15 +6744,15 @@ msgstr ""
 "(Подробнее о системных столбцах рассказывается в <xref remap=\"6\" linkend="
 "\"ddl-system-columns\"/>.)"
 
-#: datatype.xml:4426(acronym)
+#: datatype.xml:4438(acronym)
 msgid "pg_lsn Type"
 msgstr "Тип pg_lsn"
 
-#: datatype.xml:4428(indexterm)
+#: datatype.xml:4440(indexterm)
 msgid "<primary>pg_lsn</primary>"
 msgstr "<primary>pg_lsn</primary>"
 
-#: datatype.xml:4432(para)
+#: datatype.xml:4444(para)
 msgid ""
 "The <type>pg_lsn</type> data type can be used to store LSN (Log Sequence "
 "Number) data which is a pointer to a location in the XLOG. This type is a "
@@ -6745,7 +6765,7 @@ msgstr ""
 "содержит <type>XLogRecPtr</type> и является внутренним системным типом "
 "<productname>PostgreSQL</productname>."
 
-#: datatype.xml:4439(para)
+#: datatype.xml:4451(para)
 msgid ""
 "Internally, an LSN is a 64-bit integer, representing a byte position in the "
 "write-ahead log stream. It is printed as two hexadecimal numbers of up to 8 "
@@ -6764,83 +6784,83 @@ msgstr ""
 "оператора <literal>-</literal>; результатом будет число байт между этими "
 "двумя позициями в журнале транзакций."
 
-#: datatype.xml:4452(title) datatype.xml:4540(title)
+#: datatype.xml:4464(title) datatype.xml:4552(title)
 msgid "Pseudo-Types"
 msgstr "Псевдотипы"
 
-#: datatype.xml:4454(indexterm)
+#: datatype.xml:4466(indexterm)
 msgid "<primary>record</primary>"
 msgstr "<primary>record</primary>"
 
-#: datatype.xml:4458(indexterm)
+#: datatype.xml:4470(indexterm)
 msgid "<primary>any</primary>"
 msgstr "<primary>any</primary>"
 
-#: datatype.xml:4462(indexterm)
+#: datatype.xml:4474(indexterm)
 msgid "<primary>anyelement</primary>"
 msgstr "<primary>anyelement</primary>"
 
-#: datatype.xml:4466(indexterm)
+#: datatype.xml:4478(indexterm)
 msgid "<primary>anyarray</primary>"
 msgstr "<primary>anyarray</primary>"
 
-#: datatype.xml:4470(indexterm)
+#: datatype.xml:4482(indexterm)
 msgid "<primary>anynonarray</primary>"
 msgstr "<primary>anynonarray</primary>"
 
-#: datatype.xml:4474(indexterm)
+#: datatype.xml:4486(indexterm)
 msgid "<primary>anyenum</primary>"
 msgstr "<primary>anyenum</primary>"
 
-#: datatype.xml:4478(indexterm)
+#: datatype.xml:4490(indexterm)
 msgid "<primary>anyrange</primary>"
 msgstr "<primary>anyrange</primary>"
 
-#: datatype.xml:4482(indexterm)
+#: datatype.xml:4494(indexterm)
 msgid "<primary>void</primary>"
 msgstr "<primary>void</primary>"
 
-#: datatype.xml:4486(indexterm)
+#: datatype.xml:4498(indexterm)
 msgid "<primary>trigger</primary>"
 msgstr "<primary>trigger</primary>"
 
-#: datatype.xml:4490(indexterm)
+#: datatype.xml:4502(indexterm)
 msgid "<primary>event_trigger</primary>"
 msgstr "<primary>event_trigger</primary>"
 
-#: datatype.xml:4494(indexterm)
+#: datatype.xml:4506(indexterm)
 msgid "<primary>pg_ddl_command</primary>"
 msgstr "<primary>pg_ddl_command</primary>"
 
-#: datatype.xml:4498(indexterm)
+#: datatype.xml:4510(indexterm)
 msgid "<primary>language_handler</primary>"
 msgstr "<primary>language_handler</primary>"
 
-#: datatype.xml:4502(indexterm)
+#: datatype.xml:4514(indexterm)
 msgid "<primary>fdw_handler</primary>"
 msgstr "<primary>fdw_handler</primary>"
 
-#: datatype.xml:4506(indexterm)
+#: datatype.xml:4518(indexterm)
 msgid "<primary>index_am_handler</primary>"
 msgstr "<primary>index_am_handler</primary>"
 
-#: datatype.xml:4510(indexterm)
+#: datatype.xml:4522(indexterm)
 msgid "<primary>tsm_handler</primary>"
 msgstr "<primary>tsm_handler</primary>"
 
-#: datatype.xml:4514(indexterm)
+#: datatype.xml:4526(indexterm)
 msgid "<primary>cstring</primary>"
 msgstr "<primary>cstring</primary>"
 
-#: datatype.xml:4518(indexterm)
+#: datatype.xml:4530(indexterm)
 msgid "<primary>internal</primary>"
 msgstr "<primary>internal</primary>"
 
-#: datatype.xml:4522(indexterm)
+#: datatype.xml:4534(indexterm)
 msgid "<primary>opaque</primary>"
 msgstr "<primary>opaque</primary>"
 
-#: datatype.xml:4526(para)
+#: datatype.xml:4538(para)
 msgid ""
 "The <productname>PostgreSQL</productname> type system contains a number of "
 "special-purpose entries that are collectively called <firstterm>pseudo-"
@@ -6860,20 +6880,20 @@ msgstr ""
 "определённый тип данных <acronym>SQL</acronym>. Все существующие псевдотипы "
 "перечислены в <xref remap=\"6\" linkend=\"datatype-pseudotypes-table\"/>."
 
-#: datatype.xml:4551(type)
+#: datatype.xml:4563(type)
 msgctxt "type"
 msgid "any"
 msgstr "any"
 
-#: datatype.xml:4552(entry)
+#: datatype.xml:4564(entry)
 msgid "Indicates that a function accepts any input data type."
 msgstr "Указывает, что функция принимает любой вводимый тип данных."
 
-#: datatype.xml:4556(type)
+#: datatype.xml:4568(type)
 msgid "anyelement"
 msgstr "anyelement"
 
-#: datatype.xml:4557(entry)
+#: datatype.xml:4569(entry)
 msgid ""
 "Indicates that a function accepts any data type (see <xref linkend=\"extend-"
 "types-polymorphic\"/>)."
@@ -6881,11 +6901,11 @@ msgstr ""
 "Указывает, что функция принимает любой тип данных (см. <xref remap=\"4\" "
 "linkend=\"extend-types-polymorphic\"/>)."
 
-#: datatype.xml:4562(type)
+#: datatype.xml:4574(type)
 msgid "anyarray"
 msgstr "anyarray"
 
-#: datatype.xml:4563(entry)
+#: datatype.xml:4575(entry)
 msgid ""
 "Indicates that a function accepts any array data type (see <xref linkend="
 "\"extend-types-polymorphic\"/>)."
@@ -6893,11 +6913,11 @@ msgstr ""
 "Указывает, что функция принимает любой тип массива (см. <xref remap=\"4\" "
 "linkend=\"extend-types-polymorphic\"/>)."
 
-#: datatype.xml:4568(type)
+#: datatype.xml:4580(type)
 msgid "anynonarray"
 msgstr "anynonarray"
 
-#: datatype.xml:4569(entry)
+#: datatype.xml:4581(entry)
 msgid ""
 "Indicates that a function accepts any non-array data type (see <xref linkend="
 "\"extend-types-polymorphic\"/>)."
@@ -6905,11 +6925,11 @@ msgstr ""
 "Указывает, что функция принимает любой тип данных, кроме массивов (см. <xref "
 "remap=\"4\" linkend=\"extend-types-polymorphic\"/>)."
 
-#: datatype.xml:4574(type)
+#: datatype.xml:4586(type)
 msgid "anyenum"
 msgstr "anyenum"
 
-#: datatype.xml:4575(entry)
+#: datatype.xml:4587(entry)
 msgid ""
 "Indicates that a function accepts any enum data type (see <xref linkend="
 "\"extend-types-polymorphic\"/> and <xref linkend=\"datatype-enum\"/>)."
@@ -6918,11 +6938,11 @@ msgstr ""
 "linkend=\"extend-types-polymorphic\"/> и <xref remap=\"4\" linkend="
 "\"datatype-enum\"/>)."
 
-#: datatype.xml:4581(type)
+#: datatype.xml:4593(type)
 msgid "anyrange"
 msgstr "anyrange"
 
-#: datatype.xml:4582(entry)
+#: datatype.xml:4594(entry)
 msgid ""
 "Indicates that a function accepts any range data type (see <xref linkend="
 "\"extend-types-polymorphic\"/> and <xref linkend=\"rangetypes\"/>)."
@@ -6931,31 +6951,31 @@ msgstr ""
 "remap=\"4\" linkend=\"extend-types-polymorphic\"/> и <xref remap=\"4\" "
 "linkend=\"rangetypes\"/>)."
 
-#: datatype.xml:4588(type)
+#: datatype.xml:4600(type)
 msgid "cstring"
 msgstr "cstring"
 
-#: datatype.xml:4589(entry)
+#: datatype.xml:4601(entry)
 msgid ""
 "Indicates that a function accepts or returns a null-terminated C string."
 msgstr "Указывает, что функция принимает или возвращает строку в стиле C."
 
-#: datatype.xml:4593(type)
+#: datatype.xml:4605(type)
 msgid "internal"
 msgstr "internal"
 
-#: datatype.xml:4594(entry)
+#: datatype.xml:4606(entry)
 msgid ""
 "Indicates that a function accepts or returns a server-internal data type."
 msgstr ""
 "Указывает, что функция принимает или возвращает внутренний серверный тип "
 "данных."
 
-#: datatype.xml:4599(type)
+#: datatype.xml:4611(type)
 msgid "language_handler"
 msgstr "language_handler"
 
-#: datatype.xml:4600(entry)
+#: datatype.xml:4612(entry)
 msgid ""
 "A procedural language call handler is declared to return "
 "<type>language_handler</type>."
@@ -6963,11 +6983,11 @@ msgstr ""
 "Обработчик процедурного языка объявляется как возвращающий тип "
 "<type>language_handler</type>."
 
-#: datatype.xml:4604(type)
+#: datatype.xml:4616(type)
 msgid "fdw_handler"
 msgstr "fdw_handler"
 
-#: datatype.xml:4605(entry)
+#: datatype.xml:4617(entry)
 msgid ""
 "A foreign-data wrapper handler is declared to return <type>fdw_handler</"
 "type>."
@@ -6975,11 +6995,11 @@ msgstr ""
 "Обработчик обёртки сторонних данных объявляется как возвращающий тип "
 "<type>fdw_handler</type>."
 
-#: datatype.xml:4609(type)
+#: datatype.xml:4621(type)
 msgid "index_am_handler"
 msgstr "index_am_handler"
 
-#: datatype.xml:4610(entry)
+#: datatype.xml:4622(entry)
 msgid ""
 "An index access method handler is declared to return <type>index_am_handler</"
 "type>."
@@ -6987,75 +7007,75 @@ msgstr ""
 "Обработчик метода доступа индекса объявляется как возвращающий тип "
 "<type>index_am_handler</type>."
 
-#: datatype.xml:4614(type)
+#: datatype.xml:4626(type)
 msgid "tsm_handler"
 msgstr "tsm_handler"
 
-#: datatype.xml:4615(entry)
+#: datatype.xml:4627(entry)
 msgid ""
 "A tablesample method handler is declared to return <type>tsm_handler</type>."
 msgstr ""
 "Обработчик метода выборки из таблицы объявляется как возвращающий тип "
 "<type>tsm_handler</type>."
 
-#: datatype.xml:4619(type)
+#: datatype.xml:4631(type)
 msgid "record"
 msgstr "record"
 
-#: datatype.xml:4620(entry)
+#: datatype.xml:4632(entry)
 msgid "Identifies a function taking or returning an unspecified row type."
 msgstr ""
 "Указывает, что функция принимает или возвращает неопределённый тип строки."
 
-#: datatype.xml:4624(type)
+#: datatype.xml:4636(type)
 msgid "trigger"
 msgstr "trigger"
 
-#: datatype.xml:4625(entry)
+#: datatype.xml:4637(entry)
 msgid "A trigger function is declared to return <type>trigger.</type>"
 msgstr ""
 "Триггерная функция объявляется как возвращающая тип <type>trigger</type>."
 
-#: datatype.xml:4629(type)
+#: datatype.xml:4641(type)
 msgid "event_trigger"
 msgstr "event_trigger"
 
-#: datatype.xml:4630(entry)
+#: datatype.xml:4642(entry)
 msgid ""
 "An event trigger function is declared to return <type>event_trigger.</type>"
 msgstr ""
 "Функция событийного триггера объявляется как возвращающая тип "
 "<type>event_trigger</type>."
 
-#: datatype.xml:4634(type)
+#: datatype.xml:4646(type)
 msgid "pg_ddl_command"
 msgstr "pg_ddl_command"
 
-#: datatype.xml:4635(entry)
+#: datatype.xml:4647(entry)
 msgid ""
 "Identifies a representation of DDL commands that is available to event "
 "triggers."
 msgstr "Обозначает представление команд DDL, доступное событийным триггерам."
 
-#: datatype.xml:4639(type)
+#: datatype.xml:4651(type)
 msgid "void"
 msgstr "void"
 
-#: datatype.xml:4640(entry)
+#: datatype.xml:4652(entry)
 msgid "Indicates that a function returns no value."
 msgstr "Указывает, что функция не возвращает значение."
 
-#: datatype.xml:4644(type)
+#: datatype.xml:4656(type)
 msgid "opaque"
 msgstr "opaque"
 
-#: datatype.xml:4645(entry)
+#: datatype.xml:4657(entry)
 msgid "An obsolete type name that formerly served all the above purposes."
 msgstr ""
 "Устаревший тип, который раньше использовался во всех вышеперечисленных "
 "случаях."
 
-#: datatype.xml:4651(para)
+#: datatype.xml:4663(para)
 msgid ""
 "Functions coded in C (whether built-in or dynamically loaded) can be "
 "declared to accept or return any of these pseudo data types. It is up to the "
@@ -7067,7 +7087,7 @@ msgstr ""
 "Ответственность за безопасное поведение функции с аргументами таких типов "
 "ложится на разработчика функции."
 
-#: datatype.xml:4658(para)
+#: datatype.xml:4670(para)
 msgid ""
 "Functions coded in procedural languages can use pseudo-types only as allowed "
 "by their implementation languages. At present most procedural languages "
@@ -7088,7 +7108,7 @@ msgstr ""
 "<type>anyelement</type>, <type>anyarray</type>, <type>anynonarray</type>, "
 "<type>anyenum</type> и <type>anyrange</type>."
 
-#: datatype.xml:4670(para)
+#: datatype.xml:4682(para)
 msgid ""
 "The <type>internal</type> pseudo-type is used to declare functions that are "
 "meant only to be called internally by the database system, and not by direct "
@@ -7112,3 +7132,16 @@ msgstr ""
 #: datatype.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "SELECT to_tsquery('postgres:*');\n"
+#~ " to_tsquery \n"
+#~ "------------\n"
+#~ " 'postgr':*\n"
+#~ "(1 row)"
+#~ msgstr ""
+#~ "SELECT to_tsquery('postgres:*');\n"
+#~ " to_tsquery \n"
+#~ "------------\n"
+#~ " 'postgr':*\n"
+#~ "(1 row)"

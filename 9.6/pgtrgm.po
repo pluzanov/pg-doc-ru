@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-06-27 17:40+0300\n"
+"POT-Creation-Date: 2016-08-09 11:02+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -553,12 +553,10 @@ msgstr ""
 "к полному сканирования индекса."
 
 #: pgtrgm.xml:340(para)
+#, fuzzy
 msgid ""
 "The choice between GiST and GIN indexing depends on the relative performance "
-"characteristics of GiST and GIN, which are discussed elsewhere. As a rule of "
-"thumb, a GIN index is faster to search than a GiST index, but slower to "
-"build or update; so GIN is better suited for static data and GiST for often-"
-"updated data."
+"characteristics of GiST and GIN, which are discussed elsewhere."
 msgstr ""
 "Выбор между индексами GiST и GIN зависит от относительных характеристик "
 "производительности GiST и GIN, которые здесь не рассматриваются. Как "
@@ -566,11 +564,11 @@ msgstr ""
 "обновляется он медленнее; поэтому GIN лучше подходит для статических, а GiST "
 "для часто изменяемых данных."
 
-#: pgtrgm.xml:350(title)
+#: pgtrgm.xml:347(title)
 msgid "Text Search Integration"
 msgstr "Интеграция с текстовым поиском"
 
-#: pgtrgm.xml:352(para)
+#: pgtrgm.xml:349(para)
 msgid ""
 "Trigram matching is a very useful tool when used in conjunction with a full "
 "text index. In particular it can help to recognize misspelled input words "
@@ -581,7 +579,7 @@ msgstr ""
 "написанные неправильно, которые не будут находиться непосредственно "
 "механизмом полнотекстового поиска."
 
-#: pgtrgm.xml:363(programlisting)
+#: pgtrgm.xml:360(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE words AS SELECT word FROM\n"
@@ -590,7 +588,7 @@ msgstr ""
 "CREATE TABLE words AS SELECT word FROM\n"
 "        ts_stat('SELECT to_tsvector(''simple'', bodytext) FROM documents');"
 
-#: pgtrgm.xml:359(para)
+#: pgtrgm.xml:356(para)
 msgid ""
 "The first step is to generate an auxiliary table containing all the unique "
 "words in the documents: <placeholder-1/> where <structname>documents</"
@@ -608,12 +606,12 @@ msgstr ""
 "function> вместо конфигурации для определённого языка по той причине, что "
 "нам нужен список исходных (необработанных стеммером) слов."
 
-#: pgtrgm.xml:376(programlisting)
+#: pgtrgm.xml:373(programlisting)
 #, no-wrap
 msgid "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
 msgstr "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
 
-#: pgtrgm.xml:373(para)
+#: pgtrgm.xml:370(para)
 msgid ""
 "Next, create a trigram index on the word column: <placeholder-1/> Now, a "
 "<command>SELECT</command> query similar to the previous example can be used "
@@ -628,7 +626,7 @@ msgstr ""
 "дополнительно проверить, что выбранные слова также имеют длину, примерно "
 "равную длине ошибочных слов."
 
-#: pgtrgm.xml:385(para)
+#: pgtrgm.xml:382(para)
 msgid ""
 "Since the <structname>words</structname> table has been generated as a "
 "separate, static table, it will need to be periodically regenerated so that "
@@ -640,11 +638,11 @@ msgstr ""
 "достаточно хорошо соответствовала набору документов. Постоянно поддерживать "
 "её в полностью актуальном состоянии обычно не требуется."
 
-#: pgtrgm.xml:395(title)
+#: pgtrgm.xml:392(title)
 msgid "References"
 msgstr "Ссылки"
 
-#: pgtrgm.xml:397(para)
+#: pgtrgm.xml:394(para)
 msgid ""
 "GiST Development Site <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/\"/>"
@@ -652,7 +650,7 @@ msgstr ""
 "Сайт разработки GiST <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/\"/>"
 
-#: pgtrgm.xml:401(para)
+#: pgtrgm.xml:398(para)
 msgid ""
 "Tsearch2 Development Site <ulink url=\"http://www.sai.msu.su/~megera/"
 "postgres/gist/tsearch/V2/\"/>"
@@ -660,11 +658,11 @@ msgstr ""
 "Сайт разработки Tsearch2 <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/tsearch/V2/\"/>"
 
-#: pgtrgm.xml:408(title)
+#: pgtrgm.xml:405(title)
 msgid "Authors"
 msgstr "Авторы"
 
-#: pgtrgm.xml:410(para)
+#: pgtrgm.xml:407(para)
 msgid ""
 "Oleg Bartunov <email>oleg@sai.msu.su</email>, Moscow, Moscow University, "
 "Russia"
@@ -672,18 +670,18 @@ msgstr ""
 "Олег Бартунов <email>oleg@sai.msu.su</email>, Москва, Московский "
 "Государственный Университет, Россия"
 
-#: pgtrgm.xml:413(para)
+#: pgtrgm.xml:410(para)
 msgid ""
 "Teodor Sigaev <email>teodor@sigaev.ru</email>, Moscow, Delta-Soft Ltd.,Russia"
 msgstr ""
 "Фёдор Сигаев <email>teodor@sigaev.ru</email>, Москва, ООО &laquo;Дельта-"
 "Софт&raquo;, Россия"
 
-#: pgtrgm.xml:416(para)
+#: pgtrgm.xml:413(para)
 msgid "Documentation: Christopher Kings-Lynne"
 msgstr "Документация: Кристофер Кингс-Линн"
 
-#: pgtrgm.xml:419(para)
+#: pgtrgm.xml:416(para)
 msgid "This module is sponsored by Delta-Soft Ltd., Moscow, Russia."
 msgstr ""
 "Разработку этого модуля спонсировало ООО &laquo;Дельта-Софт&raquo;, г. "
