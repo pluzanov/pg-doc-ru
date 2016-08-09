@@ -27,9 +27,8 @@ msgid "2016-??-??"
 msgstr "2016-??-??"
 
 #: release-9.6.xml:11(simpara)
-#, fuzzy
 msgid "Current as of 2016-07-16 (commit 606ccc5e7)"
-msgstr "По состоянию на 2016-06-18 (изменение в git 100340e2d)"
+msgstr "По состоянию на 2016-07-16 (изменение в git 606ccc5e7)"
 
 #: release-9.6.xml:15(title)
 msgid "Overview"
@@ -1489,17 +1488,15 @@ msgstr ""
 #. 2016-01-28 [fbe5a3fb7] Only try to push down foreign joins if the user mapping
 #. 2016-07-15 [45639a052] Avoid invalidating all foreign-join cached plans when us
 #: release-9.6.xml:1339(para)
-#, fuzzy
 msgid ""
 "Consider performing joins of foreign tables remotely only when the tables "
 "will be accessed under the same role ID (Shigeru Hanada, Ashutosh Bapat, "
 "Etsuro Fujita)"
 msgstr ""
-"Допускать удалённое соединение сторонних таблиц, только если их "
-"сопоставления пользователей совпадают (Шигеру Ханада, Ашутош Бапат)"
+"Допускать удалённое соединение сторонних таблиц, только если к ним "
+"обращается одна и та же роль (Шигеру Ханада, Ашутош Бапат, Эцуро Фудзита)"
 
 #: release-9.6.xml:1345(para)
-#, fuzzy
 msgid ""
 "Previously, the foreign join pushdown infrastructure left the question of "
 "security entirely up to individual foreign data wrappers, but it would be "
@@ -1510,10 +1507,10 @@ msgid ""
 msgstr ""
 "Ранее инфраструктура вынесения соединений наружу доверяла заботу о "
 "безопасности целиком обёрткам сторонних данных, но при этом в обёртке могли "
-"легко образовываться неочевидные уязвимости. Поэтому решено было проверять "
-"приемлемость сопоставлений пользователей в коде ядра и разрешать выносить "
-"соединение наружу, только если удалённый пользователь один и тот же для всех "
-"задействованных отношений."
+"легко образовываться неочевидные уязвимости. Поэтому решено было в коде ядра "
+"определять, какая роль обращается к каждой таблице и разрешать выносить "
+"соединение наружу, только если это одна роль для всех задействованных "
+"отношений."
 
 #: release-9.6.xml:1360(title)
 msgid "Utility Commands"
@@ -1708,12 +1705,16 @@ msgid ""
 "Do not show the same subplan twice in <command>EXPLAIN</command> output (Tom "
 "Lane)"
 msgstr ""
+"Один и тот же подплан не должен выдаваться дважды в выводе <command>EXPLAIN</"
+"command> (Том Лейн)"
 
 #: release-9.6.xml:1536(para)
 msgid ""
 "In certain cases, typically involving SubPlan nodes in index conditions, "
 "<command>EXPLAIN</command> would print data for the same subplan twice."
 msgstr ""
+"В некоторых случаях, обычно с узлами SubPlan в условиях индексов, команда "
+"<command>EXPLAIN</command> выводила данные одного и того же подплана дважды."
 
 #. 2016-04-16 [c34df8a00] Disallow creation of indexes on system columns (except f
 #: release-9.6.xml:1547(para)
@@ -1883,7 +1884,6 @@ msgstr ""
 #. 2016-06-27 [3dbbd0f02] Do not fallback to AND for FTS phrase operator.
 #. 2016-06-27 [6734a1cac] Change predecence of phrase operator.
 #: release-9.6.xml:1695(para)
-#, fuzzy
 msgid ""
 "Improve full-text search to support searching for phrases, that is, lexemes "
 "appearing adjacent to each other in a specific order, or with a specified "
@@ -1894,7 +1894,6 @@ msgstr ""
 "расстоянием между ними (Фёдор Сигаев, Олег Бартунов, Дмитрий Иванов)"
 
 #: release-9.6.xml:1702(para)
-#, fuzzy
 msgid ""
 "A phrase-search query can be specified in <type>tsquery</type> input using "
 "the new operators <literal>&lt;-&gt;</literal> and <literal>&lt;"
@@ -1907,8 +1906,8 @@ msgstr ""
 "использованием новых операторов <literal>&lt;-&gt;</literal> и <literal>&lt;"
 "<replaceable>N</replaceable>&gt;</literal>. Первая запись означает, что "
 "лексемы до и после неё должны находиться рядом и в заданном порядке. Вторая "
-"запись означает, что их могут разделять другие лексемы (не больше "
-"<replaceable>N</replaceable>)."
+"запись означает, что они могут быть разделены ровно <replaceable>N</"
+"replaceable> лексемами."
 
 #. 2016-03-29 [61d66c44f] Fix support of digits in email/hostnames.
 #: release-9.6.xml:1716(para)
@@ -2758,6 +2757,8 @@ msgid ""
 "Make <command>\\df+</command> show function access privileges and parallel-"
 "safety attributes (Michael Paquier)"
 msgstr ""
+"Добавление в вывод <command>\\df+</command> прав доступа к функции и "
+"характеристик распараллеливания (Мишель Пакье)"
 
 #. 2016-03-20 [68ab8e8ba] SQL commands in pgbench scripts are now ended by semicol
 #: release-9.6.xml:2516(para)
@@ -3346,6 +3347,8 @@ msgid ""
 "Provide a makefile target to build all generated headers (Michael Paquier, "
 "Tom Lane)"
 msgstr ""
+"Реализация в Makefile цели для сборки всех генерируемых заголовочных файлов "
+"(Мишель Пакье, Том Лейн)"
 
 #: release-9.6.xml:3043(para)
 msgid ""
@@ -3353,6 +3356,10 @@ msgid ""
 "that generated backend header files are up-to-date. This is useful in "
 "subdirectories that might be built <quote>standalone</quote>."
 msgstr ""
+"Теперь, чтобы убедиться, что все генерируемые серверные заголовочные файлы "
+"актуальны, можно выполнить сборку цели <literal>submake-generated-headers</"
+"literal>. Это полезно в подкаталогах, которые могут собираться "
+"<quote>отдельно</quote>."
 
 #: release-9.6.xml:3055(title)
 msgid "Additional Modules"

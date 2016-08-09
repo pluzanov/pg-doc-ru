@@ -498,7 +498,6 @@ msgstr ""
 "literal>."
 
 #: textsearch.xml:309(para)
-#, fuzzy
 msgid ""
 "Within a <type>tsquery</type>, the <literal>&amp;</literal> (AND) operator "
 "specifies that both its arguments must appear in the document to have a "
@@ -513,8 +512,7 @@ msgstr ""
 "указывает, что в документе должен присутствовать минимум один из его "
 "операндов, тогда как оператор <literal>!</literal> (НЕ) указывает, что его "
 "операнд <emphasis>не</emphasis> должен присутствовать, чтобы условие "
-"удовлетворялось. Порядком сочетания этих операторов можно управлять, "
-"применяя скобки."
+"удовлетворялось."
 
 #: textsearch.xml:324(programlisting)
 #, no-wrap
@@ -540,7 +538,7 @@ msgstr ""
 " f"
 
 #: textsearch.xml:344(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT phraseto_tsquery('cats ate rats');\n"
 "       phraseto_tsquery        \n"
@@ -555,15 +553,14 @@ msgstr ""
 "SELECT phraseto_tsquery('cats ate rats');\n"
 "       phraseto_tsquery        \n"
 "-------------------------------\n"
-" ( 'cat' &lt;-&gt; 'ate' ) &lt;-&gt; 'rat'\n"
+" 'cat' &lt;-&gt; 'ate' &lt;-&gt; 'rat'\n"
 "\n"
 "SELECT phraseto_tsquery('the cats ate the rats');\n"
 "       phraseto_tsquery        \n"
 "-------------------------------\n"
-" ( 'cat' &lt;-&gt; 'ate' ) &lt;2&gt; 'rat'"
+" 'cat' &lt;-&gt; 'ate' &lt;2&gt; 'rat'"
 
 #: textsearch.xml:318(para)
-#, fuzzy
 msgid ""
 "Searching for phrases is possible with the help of the <literal>&lt;-&gt;</"
 "literal> (FOLLOWED BY) <type>tsquery</type> operator, which matches only if "
@@ -584,8 +581,8 @@ msgstr ""
 "соответствие, только если его операнды расположены рядом и в заданном "
 "порядке. Например: <placeholder-1/> Более общая версия оператора "
 "ПРЕДШЕСТВУЕТ имеет вид <literal>&lt;<replaceable>N</replaceable>&gt;</"
-"literal>, где <replaceable>N</replaceable> — целое число, устанавливающее "
-"расстояние между позициями найденных лексем. Запись <literal>&lt;1&gt;</"
+"literal>, где <replaceable>N</replaceable> — целое число, выражающее "
+"разность между позициями найденных лексем. Запись <literal>&lt;1&gt;</"
 "literal> равнозначна <literal>&lt;-&gt;</literal>, тогда как "
 "<literal>&lt;2&gt;</literal> допускает существование ровно одной лексемы "
 "между этими лексемами и т. д. Функция <literal>phraseto_tsquery</literal> "
@@ -598,19 +595,21 @@ msgid ""
 "A special case that's sometimes useful is that <literal>&lt;0&gt;</literal> "
 "can be used to require that two patterns match the same word."
 msgstr ""
+"Особый случай, который иногда бывает полезен, представляет собой запись "
+"<literal>&lt;0&gt;</literal>, требующая, чтобы обоим лексемам "
+"соответствовало одно слово."
 
 #: textsearch.xml:360(para)
-#, fuzzy
 msgid ""
 "Parentheses can be used to control nesting of the <type>tsquery</type> "
 "operators. Without parentheses, <literal>|</literal> binds least tightly, "
 "then <literal>&amp;</literal>, then <literal>&lt;-&gt;</literal>, and "
 "<literal>!</literal> most tightly."
 msgstr ""
-"В этом примере мы видим, что результирующий <type>tsvector</type> не "
-"содержит слова <literal>a</literal>, <literal>on</literal> и <literal>it</"
-"literal>, слово <literal>rats</literal> превратилось <literal>rat</literal>, "
-"а знак препинания <quote><literal>-</literal></quote> был проигнорирован."
+"Сочетанием операторов <type>tsquery</type> можно управлять, применяя скобки. "
+"Без скобок операторы имеют следующие приоритеты, в порядке возрастания: "
+"<literal>|</literal>, <literal>&amp;</literal>, <literal>&lt;-&gt;</literal> "
+"и самый приоритетный — <literal>!</literal>."
 
 #: textsearch.xml:369(title)
 msgid "Configurations"
@@ -1476,7 +1475,6 @@ msgstr ""
 "порядок."
 
 #: textsearch.xml:862(para)
-#, fuzzy
 msgid ""
 "Example: <screen>SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
 " phraseto_tsquery\n"
@@ -1493,13 +1491,13 @@ msgstr ""
 " phraseto_tsquery\n"
 "------------------\n"
 " 'fat' &lt;-&gt; 'rat'</screen> Как и <function>plainto_tsquery</function>, "
-"функция <function>phraseto_tsquery</function> не распознаёт во входной "
+"функция <function>phraseto_tsquery</function> не распознает во входной "
 "строке операторы типа <type>tsquery</type>, метки весов или обозначения "
 "префиксов: <screen>SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:"
 "C');\n"
 "      phraseto_tsquery\n"
 "-----------------------------\n"
-" ( 'fat' &lt;-&gt; 'rat' ) &lt;-&gt; 'c'</screen>"
+" 'fat' &lt;-&gt; 'rat' &lt;-&gt; 'c'</screen>"
 
 #: textsearch.xml:884(title)
 msgid "Ranking Search Results"
@@ -2216,7 +2214,6 @@ msgid "strip(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 msgstr "strip(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 
 #: textsearch.xml:1352(para)
-#, fuzzy
 msgid ""
 "Returns a vector that lists the same lexemes as the given vector, but lacks "
 "any position or weight information. The result is usually much smaller than "
@@ -2229,9 +2226,9 @@ msgstr ""
 "Возвращает вектор с теми же лексемами, что и в данном, но без информации о "
 "позиции и весе. Очищенный вектор обычно оказывается намного меньше "
 "исходного, но при этом и менее полезным. С очищенными векторами хуже "
-"работает ранжирование, а оператор <literal>&lt;-&gt;</literal> "
-"(ПРЕДШЕСТВУЕТ) <type>tsquery</type> по сути деградирует до простой проверки "
-"<literal>&amp;</literal> (И)."
+"работает ранжирование, а также оператор <literal>&lt;-&gt;</literal> "
+"(ПРЕДШЕСТВУЕТ) типа <type>tsquery</type> никогда не найдёт соответствие в "
+"них, так как не сможет определить расстояние между вхождениями лексем."
 
 #: textsearch.xml:1368(para)
 msgid ""
@@ -2330,7 +2327,6 @@ msgstr ""
 "<placeholder-7/>"
 
 #: textsearch.xml:1463(para)
-#, fuzzy
 msgid ""
 "Returns a query that searches for a match to the first given query followed "
 "by a match to the second given query at a distance of at "

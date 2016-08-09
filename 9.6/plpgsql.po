@@ -2373,7 +2373,6 @@ msgid "GET DIAGNOSTICS integer_var = ROW_COUNT;"
 msgstr "GET DIAGNOSTICS integer_var = ROW_COUNT;"
 
 #: plpgsql.xml:1329(para)
-#, fuzzy
 msgid ""
 "There are several ways to determine the effect of a command. The first "
 "method is to use the <command>GET DIAGNOSTICS</command> command, which has "
@@ -2390,27 +2389,26 @@ msgid ""
 "(<literal>:=</literal>) can be used instead of the SQL-standard <literal>=</"
 "literal> token. An example: <placeholder-1/>"
 msgstr ""
-"Существует несколько способов определить статус выполнения команды. Первый "
-"способ заключается в использовании команды <command>GET DIAGNOSTICS</"
-"command>, которая имеет следующий вид: <synopsis>GET <optional> CURRENT </"
-"optional> DIAGNOSTICS <replaceable>variable</replaceable> { = | := } "
-"<replaceable>item</replaceable> <optional> , ... </optional>;</synopsis> Эта "
-"команда позволяет получить значения индикаторов состояния системы. Каждый "
-"<replaceable>item</replaceable> является ключевым словом, идентифицирующим "
-"значение состояния, которое будет присвоено указанной переменной. Переменная "
-"должна быть соответствующего типа данных. В настоящий момент доступны "
-"следующие индикаторы: <varname>ROW_COUNT</varname> — количество строк, "
-"обработанных последней командой <acronym>SQL</acronym>; <varname>RESULT_OID</"
-"varname> — OID последней строки, вставленной последней выполненной командой "
-"<acronym>SQL</acronym>. Обратите внимание, что получать <varname>RESULT_OID</"
-"varname> имеет смысл только после вставки (<command>INSERT</command>) "
-"записей в таблицу, содержащую OID. Для <command>GET DIAGNOSTICS</command> "
-"можно использовать двоеточие-равно (<literal>:=</literal>) вместо "
-"<literal>=</literal> в стандарте SQL."
+"Определить результат команды можно несколькими способами. Во-первых, можно "
+"воспользоваться командой <command>GET DIAGNOSTICS</command>, имеющей форму: "
+"<synopsis>GET <optional> CURRENT </optional> DIAGNOSTICS "
+"<replaceable>переменная</replaceable> { = | := } <replaceable>элемент</"
+"replaceable> <optional> , ... </optional>;</synopsis> Эта команда позволяет "
+"получить системные индикаторы состояния. Слово <literal>CURRENT</literal> не "
+"несёт смысловой нагрузки (но см. также описание <command>GET STACKED "
+"DIAGNOSTICS</command> в <xref remap=\"6\" linkend=\"plpgsql-exception-"
+"diagnostics\"/>). Каждый <replaceable>элемент</replaceable> представляется "
+"ключевым словом, указывающим, какое значение состояния нужно присвоить "
+"заданной <replaceable>переменной</replaceable> (она должна иметь подходящий "
+"тип данных, чтобы принять его). Доступные в настоящее время элементы "
+"состояния показаны в <xref remap=\"6\" linkend=\"plpgsql-current-diagnostics-"
+"values\"/>. Вместо принятого в стандарте SQL присваивания (<literal>=</"
+"literal>) можно применять присваивание с двоеточием (<literal>:=</literal>). "
+"Например: <placeholder-1/>"
 
 #: plpgsql.xml:1350(title)
 msgid "Available Diagnostics Items"
-msgstr ""
+msgstr "Доступные элементы диагностики"
 
 #: plpgsql.xml:1354(entry) plpgsql.xml:2542(entry)
 msgid "Name"
@@ -2426,25 +2424,25 @@ msgstr "Описание"
 
 #: plpgsql.xml:1361(varname)
 msgid "ROW_COUNT"
-msgstr ""
+msgstr "ROW_COUNT"
 
 #: plpgsql.xml:1362(type)
 msgid "bigint"
-msgstr ""
+msgstr "bigint"
 
 #: plpgsql.xml:1363(entry)
 msgid ""
 "the number of rows processed by the most recent <acronym>SQL</acronym> "
 "command"
-msgstr ""
+msgstr "число строк, обработанных последней командой <acronym>SQL</acronym>"
 
 #: plpgsql.xml:1367(varname)
 msgid "RESULT_OID"
-msgstr ""
+msgstr "RESULT_OID"
 
 #: plpgsql.xml:1368(type)
 msgid "oid"
-msgstr ""
+msgstr "oid"
 
 #: plpgsql.xml:1369(entry)
 msgid ""
@@ -2452,11 +2450,13 @@ msgid ""
 "command (only useful after an <command>INSERT</command> command into a table "
 "having OIDs)"
 msgstr ""
+"OID последней строки, вставленной предыдущей командой <acronym>SQL</acronym> "
+"(полезен только после команды <command>INSERT</command> для таблицы, "
+"содержащей OID)"
 
 #: plpgsql.xml:1375(literal)
-#, fuzzy
 msgid "PG_CONTEXT"
-msgstr "PG_EXCEPTION_CONTEXT"
+msgstr "PG_CONTEXT"
 
 #: plpgsql.xml:1376(type) plpgsql.xml:2550(type) plpgsql.xml:2555(type)
 #: plpgsql.xml:2560(type) plpgsql.xml:2565(type) plpgsql.xml:2570(type)
@@ -2466,11 +2466,12 @@ msgid "text"
 msgstr "text"
 
 #: plpgsql.xml:1377(entry)
-#, fuzzy
 msgid ""
 "line(s) of text describing the current call stack (see <xref linkend="
 "\"plpgsql-call-stack\"/>)"
-msgstr "строка (или строки) с описанием стека вызова"
+msgstr ""
+"строки текста, описывающие текущий стек вызовов (см. <xref remap=\"4\" "
+"linkend=\"plpgsql-call-stack\"/>)"
 
 #: plpgsql.xml:1393(para)
 msgid ""
@@ -3035,19 +3036,16 @@ msgid "Conditionals"
 msgstr "Условные операторы"
 
 #: plpgsql.xml:1731(literal)
-#, fuzzy
 msgid "IF ... THEN ... END IF"
-msgstr "IF ... THEN ... ELSE"
+msgstr "IF ... THEN ... END IF"
 
 #: plpgsql.xml:1734(literal)
-#, fuzzy
 msgid "IF ... THEN ... ELSE ... END IF"
-msgstr "IF ... THEN ... ELSE"
+msgstr "IF ... THEN ... ELSE ... END IF"
 
 #: plpgsql.xml:1737(literal)
-#, fuzzy
 msgid "IF ... THEN ... ELSIF ... THEN ... ELSE ... END IF"
-msgstr "IF ... THEN ... ELSIF ... THEN ... ELSE"
+msgstr "IF ... THEN ... ELSIF ... THEN ... ELSE ... END IF"
 
 #: plpgsql.xml:1744(literal)
 msgid "CASE ... WHEN ... THEN ... ELSE ... END CASE"
@@ -4514,7 +4512,6 @@ msgstr ""
 "переменные являются неопределёнными вне секции <literal>EXCEPTION</literal>."
 
 #: plpgsql.xml:2523(para)
-#, fuzzy
 msgid ""
 "Within an exception handler, one may also retrieve information about the "
 "current exception by using the <command>GET STACKED DIAGNOSTICS</command> "
@@ -4527,20 +4524,20 @@ msgid ""
 "status items are shown in <xref linkend=\"plpgsql-exception-diagnostics-"
 "values\"/>."
 msgstr ""
-"Также, при обработке исключений, дополнительную информацию можно получить "
-"командой <command>GET STACKED DIAGNOSTICS</command>, которая имеет вид: "
-"<synopsis>GET STACKED DIAGNOSTICS <replaceable>variable</replaceable> { = | :"
-"= } <replaceable>item</replaceable> <optional> , ... </optional>;</synopsis> "
-"Каждый <replaceable>item</replaceable> является ключевым словом, "
-"идентифицирующим значение состояния, которое будет присвоено указанной "
-"переменной. Переменная должна быть соответствующего типа данных. "
-"Идентификаторы, доступные в настоящее время, приведены в <xref remap=\"6\" "
-"linkend=\"plpgsql-exception-diagnostics-values\"/>."
+"Также в обработчике исключения можно получить информацию о текущем "
+"исключении командой <command>GET STACKED DIAGNOSTICS</command>, которая "
+"имеет вид: <synopsis>GET STACKED DIAGNOSTICS <replaceable>переменная</"
+"replaceable> { = | := } <replaceable>элемент</replaceable> <optional> , ... "
+"</optional>;</synopsis> Каждый <replaceable>элемент</replaceable> "
+"представляется ключевым словом, указывающим, какое значение состояния нужно "
+"присвоить заданной <replaceable>переменной</replaceable> (она должна иметь "
+"подходящий тип данных, чтобы принять его). Доступные в настоящее время "
+"элементы состояния показаны в <xref remap=\"6\" linkend=\"plpgsql-exception-"
+"diagnostics-values\"/>."
 
 #: plpgsql.xml:2538(title)
-#, fuzzy
 msgid "Error Diagnostics Items"
-msgstr "Диагностические коды ошибок"
+msgstr "Элементы диагностики ошибок"
 
 #: plpgsql.xml:2549(literal)
 msgid "RETURNED_SQLSTATE"
@@ -4623,6 +4620,8 @@ msgid ""
 "line(s) of text describing the call stack at the time of the exception (see "
 "<xref linkend=\"plpgsql-call-stack\"/>)"
 msgstr ""
+"строки текста, описывающие стек вызовов в момент исключения (см. <xref remap="
+"\"4\" linkend=\"plpgsql-call-stack\"/>)"
 
 #: plpgsql.xml:2603(para)
 msgid ""
@@ -4662,9 +4661,8 @@ msgstr ""
 "END;"
 
 #: plpgsql.xml:2627(title)
-#, fuzzy
 msgid "Obtaining Execution Location Information"
-msgstr "Получение информации о выполнении в текущий момент"
+msgstr "Получение информации о месте выполнения"
 
 #: plpgsql.xml:2642(programlisting)
 #, no-wrap
@@ -4724,7 +4722,6 @@ msgstr ""
 "(1 row)"
 
 #: plpgsql.xml:2629(para)
-#, fuzzy
 msgid ""
 "The <command>GET DIAGNOSTICS</command> command, previously described in "
 "<xref linkend=\"plpgsql-statements-diagnostics\"/>, retrieves information "
@@ -4738,13 +4735,17 @@ msgid ""
 "and any subsequent lines refer to calling functions further up the call "
 "stack. For example: <placeholder-1/>"
 msgstr ""
-"В настоящий момент поддерживается только один <replaceable>item</"
-"replaceable> <literal>PG_CONTEXT</literal>, который возвращает значение типа "
-"<literal>text</literal>, содержащее стек вызова. Стек вызова может состоять "
-"из нескольких строк, первая строка относится к выполняемый в текущий момент "
-"команде <command>GET DIAGNOSTICS</command> в текущей функции. Вторая и "
-"последующие строки относятся к следующим функциям далее вверх по стеку "
-"вызова. Например: <placeholder-1/>"
+"Команда <command>GET DIAGNOSTICS</command>, ранее описанная в <xref remap="
+"\"6\" linkend=\"plpgsql-statements-diagnostics\"/>, получает информацию о "
+"текущем состоянии выполнения кода (тогда как команда <command>GET STACKED "
+"DIAGNOSTICS</command>, рассмотренная ранее, выдаёт информацию о состоянии "
+"выполнения в момент предыдущей ошибки). Её элемент состояния "
+"<literal>PG_CONTEXT</literal> позволяет определить текущее место выполнения "
+"кода. <literal>PG_CONTEXT</literal> возвращает текст с несколькими строками, "
+"описывающий стек вызова. В первой строке отмечается текущая функция и "
+"выполняемая в данный момент команда <command>GET DIAGNOSTICS</command>, а во "
+"второй и последующих строках отмечаются функции выше по стеку вызовов. "
+"Например: <placeholder-1/>"
 
 #: plpgsql.xml:2671(para)
 msgid ""
@@ -4752,6 +4753,9 @@ msgid ""
 "the same sort of stack trace, but describing the location at which an error "
 "was detected, rather than the current location."
 msgstr ""
+"<literal>GET STACKED DIAGNOSTICS ... PG_EXCEPTION_CONTEXT</literal> "
+"возвращает похожий стек вызовов, но описывает не текущее место, а место, в "
+"котором произошла ошибка."
 
 #: plpgsql.xml:2680(title)
 msgid "Cursors"
@@ -6089,7 +6093,6 @@ msgid "<primary>trigger</primary><secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>trigger</primary><secondary>in PL/pgSQL</secondary>"
 
 #: plpgsql.xml:3427(para)
-#, fuzzy
 msgid ""
 "<application>PL/pgSQL</application> can be used to define trigger procedures "
 "on data changes or database events. A trigger procedure is created with the "
@@ -6100,20 +6103,22 @@ msgid ""
 "replaceable></varname> are automatically defined to describe the condition "
 "that triggered the call."
 msgstr ""
-"В <application>PL/pgSQL</application> можно создавать триггерные процедуры. "
+"В <application>PL/pgSQL</application> можно создавать триггерные процедуры, "
+"которые будут вызываться при изменениях данных или событиях в базе данных. "
 "Триггерная процедура создаётся командой <command>CREATE FUNCTION</command>, "
-"при этом у функции не должно быть аргументов, а тип возвращаемого значения "
-"должен быть <type>trigger</type>. Обратите внимание, что функция создаётся "
-"без аргументов, даже если ей нужно получить аргументы, указанные в команде "
-"<command>CREATE TRIGGER</command>. Аргументы триггера передаются через "
-"массив <varname>TG_ARGV</varname>, как будет показано ниже."
+"при этом у функции не должно быть аргументов, а типом возвращаемого значения "
+"должен быть <type>trigger</type> (для триггеров, срабатывающих при "
+"изменениях данных) или <type>event_trigger</type> (для триггеров, "
+"срабатывающих при событиях в базе). Для триггеров автоматически определяются "
+"специальные локальные переменные с именами вида "
+"<varname>PG_<replaceable>переменная</replaceable></varname>, описывающие "
+"условие, повлекшее вызов триггера."
 
 #: plpgsql.xml:3439(title)
 msgid "Triggers on Data Changes"
-msgstr "Триггеры на изменение данных"
+msgstr "Триггеры при изменении данных"
 
 #: plpgsql.xml:3441(para)
-#, fuzzy
 msgid ""
 "A <link linkend=\"triggers\">data change trigger</link> is declared as a "
 "function with no arguments and a return type of <type>trigger</type>. Note "
@@ -6122,13 +6127,12 @@ msgid ""
 "   &mdash; such arguments are passed via <varname>TG_ARGV</varname>, as "
 "described below."
 msgstr ""
-"В <application>PL/pgSQL</application> можно создавать триггерные процедуры. "
-"Триггерная процедура создаётся командой <command>CREATE FUNCTION</command>, "
-"при этом у функции не должно быть аргументов, а тип возвращаемого значения "
-"должен быть <type>trigger</type>. Обратите внимание, что функция создаётся "
-"без аргументов, даже если ей нужно получить аргументы, указанные в команде "
-"<command>CREATE TRIGGER</command>. Аргументы триггера передаются через "
-"массив <varname>TG_ARGV</varname>, как будет показано ниже."
+"<link linkend=\"triggers\">Триггер при изменении данных</link> объявляется "
+"как функция без аргументов и с типом результата <type>trigger</type>. "
+"Заметьте, что эта функция должна объявляться без аргументов, даже если "
+"ожидается, что она будет получать аргументы, заданные в команде "
+"<command>CREATE TRIGGER</command> &mdash; такие аргументы передаются через "
+"<varname>TG_ARGV</varname>, как описано ниже."
 
 #: plpgsql.xml:3457(varname)
 msgid "NEW"
@@ -7056,7 +7060,6 @@ msgid "Triggers on Events"
 msgstr "Триггеры событий"
 
 #: plpgsql.xml:3985(para)
-#, fuzzy
 msgid ""
 "<application>PL/pgSQL</application> can be used to define <link linkend="
 "\"event-triggers\">event triggers</link>. <productname>PostgreSQL</"
@@ -7064,10 +7067,11 @@ msgid ""
 "trigger must be declared as a function with no arguments and a return type "
 "of <literal>event_trigger</literal>."
 msgstr ""
-"В <application>PL/pgSQL</application> можно создавать событийные триггеры. "
-"<productname>PostgreSQL</productname> требует, чтобы процедура, которая "
-"вызывается как событийный триггер, объявлялась без аргументов и имела тип "
-"возвращаемого значения <literal>event_trigger</literal>."
+"В <application>PL/pgSQL</application> можно создавать <link linkend=\"event-"
+"triggers\">событийные триггеры</link>. <productname>PostgreSQL</productname> "
+"требует, чтобы процедура, которая вызывается как событийный триггер, "
+"объявлялась без аргументов и типом возвращаемого значения был "
+"<literal>event_trigger</literal>."
 
 #: plpgsql.xml:4000(varname)
 msgid "TG_EVENT"
@@ -7094,18 +7098,16 @@ msgstr ""
 "которой сработал триггер."
 
 #: plpgsql.xml:3993(para)
-#, fuzzy
 msgid ""
 "When a <application>PL/pgSQL</application> function is called as an event "
 "trigger, several special variables are created automatically in the top-"
 "level block. They are: <placeholder-1/>"
 msgstr ""
-"Когда функция на <application>PL/pgSQL</application> срабатывает как "
+"Когда функция на <application>PL/pgSQL</application> вызывается как "
 "событийный триггер, в блоке верхнего уровня автоматически создаются "
 "несколько специальных переменных: <placeholder-1/>"
 
 #: plpgsql.xml:4021(para)
-#, fuzzy
 msgid ""
 "<xref linkend=\"plpgsql-event-trigger-example\"/> shows an example of an "
 "event trigger procedure in <application>PL/pgSQL</application>."

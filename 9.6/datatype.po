@@ -5653,14 +5653,14 @@ msgstr ""
 "приоритеты в функциях ранжирования результатов."
 
 #: datatype.xml:3789(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT 'The Fat Rats'::tsvector;\n"
 "      tsvector      \n"
 "--------------------\n"
 " 'Fat' 'Rats' 'The'"
 msgstr ""
-"select 'The Fat Rats'::tsvector;\n"
+"SELECT 'The Fat Rats'::tsvector;\n"
 "      tsvector      \n"
 "--------------------\n"
 " 'Fat' 'Rats' 'The'"
@@ -5679,7 +5679,6 @@ msgstr ""
 " 'fat':2 'rat':3"
 
 #: datatype.xml:3783(para)
-#, fuzzy
 msgid ""
 "It is important to understand that the <type>tsvector</type> type itself "
 "does not perform any word normalization; it assumes the words it is given "
@@ -5692,20 +5691,19 @@ msgid ""
 "more detail."
 msgstr ""
 "Важно понимать, что тип <type>tsvector</type> сам по себе не выполняет "
-"нормализацию; предполагается, что в сохраняемом значении слова уже "
+"нормализацию слов; предполагается, что в сохраняемом значении слова уже "
 "нормализованы приложением. Например: <placeholder-1/> Для большинства "
 "англоязычных приложений приведённые выше слова будут считаться "
 "ненормализованными, но для <type>tsvector</type> это не важно. Поэтому "
 "исходный документ обычно следует обработать функцией <function>to_tsvector</"
-"function>, нормализующей слова: <placeholder-2/> И это подробнее описано в "
-"<xref remap=\"6\" linkend=\"textsearch\"/>."
+"function>, нормализующей слова для поиска: <placeholder-2/> И это подробнее "
+"описано в <xref remap=\"6\" linkend=\"textsearch\"/>."
 
 #: datatype.xml:3813(indexterm)
 msgid "<primary>tsquery (data type)</primary>"
 msgstr "<primary>tsquery (тип данных)</primary>"
 
 #: datatype.xml:3817(para)
-#, fuzzy
 msgid ""
 "A <type>tsquery</type> value stores lexemes that are to be searched for, and "
 "can combine them using the Boolean operators <literal>&amp;</literal> (AND), "
@@ -5723,12 +5721,10 @@ msgstr ""
 "<literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ). Также допускается вариация "
 "оператора ПРЕДШЕСТВУЕТ вида <literal>&lt;<replaceable>N</replaceable>&gt;</"
 "literal>, где <replaceable>N</replaceable> — целочисленная константа, "
-"задающая максимальное расстояние между двумя искомыми лексемами. Запись "
-"оператора <literal>&lt;-&gt;</literal> равнозначна <literal>&lt;1&gt;</"
-"literal>."
+"задающая расстояние между двумя искомыми лексемами. Запись оператора "
+"<literal>&lt;-&gt;</literal> равнозначна <literal>&lt;1&gt;</literal>."
 
 #: datatype.xml:3829(para)
-#, fuzzy
 msgid ""
 "Parentheses can be used to enforce grouping of these operators. In the "
 "absence of parentheses, <literal>!</literal> (NOT) binds most tightly, "
@@ -5736,13 +5732,13 @@ msgid ""
 "<literal>&amp;</literal> (AND), with <literal>|</literal> (OR) binding the "
 "least tightly."
 msgstr ""
-"Для группировки операторов могут использоваться скобки: <placeholder-1/> Без "
-"скобок эти операторы имеют разные приоритеты, в порядке убывания: <literal>!"
-"</literal> (НЕ), затем пара <literal>&amp;</literal> (И) и <literal>&lt;-&gt;"
-"</literal> (ПРЕДШЕСТВУЕТ), и наконец, <literal>|</literal> (ИЛИ)."
+"Для группировки операторов могут использоваться скобки. Без скобок эти "
+"операторы имеют разные приоритеты, в порядке убывания: <literal>!</literal> "
+"(НЕ), <literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ), <literal>&amp;</literal> "
+"(И) и <literal>|</literal> (ИЛИ)."
 
 #: datatype.xml:3840(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT 'fat &amp; rat'::tsquery;\n"
 "    tsquery    \n"
@@ -5777,7 +5773,12 @@ msgstr ""
 "SELECT 'fat &amp; rat &amp; ! cat'::tsquery;\n"
 "        tsquery         \n"
 "------------------------\n"
-" 'fat' &amp; 'rat' &amp; !'cat'"
+" 'fat' &amp; 'rat' &amp; !'cat'\n"
+"\n"
+"SELECT '(fat | rat) &lt;-&gt; cat'::tsquery;\n"
+"              tsquery\n"
+"-----------------------------------\n"
+" 'fat' &lt;-&gt; 'cat' | 'rat' &lt;-&gt; 'cat'"
 
 #: datatype.xml:3837(para)
 msgid ""
@@ -5785,6 +5786,9 @@ msgid ""
 "<type>tsquery</type> sometimes rearranges nested operators into a logically "
 "equivalent formulation."
 msgstr ""
+"Несколько примеров: <placeholder-1/> Последний пример показывает, что "
+"<type>tsquery</type> иногда переставляет вложенные операторы, получая "
+"логически равнозначную формулировку."
 
 #: datatype.xml:3869(programlisting)
 #, no-wrap
@@ -5800,7 +5804,6 @@ msgstr ""
 " 'fat':AB &amp; 'cat'"
 
 #: datatype.xml:3864(para)
-#, fuzzy
 msgid ""
 "Optionally, lexemes in a <type>tsquery</type> can be labeled with one or "
 "more weight letters, which restricts them to match only <type>tsvector</"
@@ -5808,7 +5811,7 @@ msgid ""
 msgstr ""
 "Лексемам в <type>tsquery</type> можно дополнительно сопоставить буквы весов, "
 "при этом они будут соответствовать только тем лексемам в <type>tsvector</"
-"type>, которые имеют те же веса: <placeholder-1/>"
+"type>, которые имеют какой-либо из этих весов: <placeholder-1/>"
 
 #: datatype.xml:3878(programlisting)
 #, no-wrap
@@ -5824,7 +5827,6 @@ msgstr ""
 " 'super':*"
 
 #: datatype.xml:3875(para)
-#, fuzzy
 msgid ""
 "Also, lexemes in a <type>tsquery</type> can be labeled with <literal>*</"
 "literal> to specify prefix matching: <placeholder-1/> This query will match "
@@ -5833,11 +5835,7 @@ msgstr ""
 "Кроме того, в лексемах <type>tsquery</type> можно использовать знак "
 "<literal>*</literal> для поиска по префиксу: <placeholder-1/> Этот запрос "
 "найдёт все слова в <type>tsvector</type>, начинающиеся с приставки "
-"<quote>super</quote>. Заметьте, что сначала приставка обрабатывается "
-"согласно конфигурации текстового поиска, поэтому следующее сравнение "
-"возвращает true: <placeholder-2/> так как <literal>postgres</literal> "
-"преобразуется в <literal>postgr</literal>: <placeholder-3/> и эта приставка "
-"затем находится в слове <literal>postgraduate</literal>."
+"<quote>super</quote>."
 
 #: datatype.xml:3893(programlisting)
 #, no-wrap
@@ -5853,7 +5851,7 @@ msgstr ""
 " 'fat':AB &amp; 'cat'"
 
 #: datatype.xml:3901(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
 " ?column?\n"
@@ -5861,27 +5859,24 @@ msgid ""
 " t"
 msgstr ""
 "SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
-" ?column? \n"
+" ?column?\n"
 "----------\n"
-" t\n"
-"(1 row)"
+" t"
 
 #: datatype.xml:3906(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT to_tsvector( 'postgraduate' ), to_tsquery( 'postgres:*' );\n"
 "  to_tsvector  | to_tsquery\n"
 "---------------+------------\n"
 " 'postgradu':1 | 'postgr':*"
 msgstr ""
-"SELECT to_tsvector( 'postgraduate' ) @@ to_tsquery( 'postgres:*' );\n"
-" ?column? \n"
-"----------\n"
-" t\n"
-"(1 row)"
+"SELECT to_tsvector( 'postgraduate' ), to_tsquery( 'postgres:*' );\n"
+"  to_tsvector  | to_tsquery\n"
+"---------------+------------\n"
+" 'postgradu':1 | 'postgr':*"
 
 #: datatype.xml:3886(para)
-#, fuzzy
 msgid ""
 "Quoting rules for lexemes are the same as described previously for lexemes "
 "in <type>tsvector</type>; and, as with <type>tsvector</type>, any required "
@@ -5896,9 +5891,14 @@ msgid ""
 msgstr ""
 "Апострофы в лексемах этого типа можно использовать так же, как и в лексемах "
 "в <type>tsvector</type>; и так же, как и для типа <type>tsvector</type>, "
-"необходимая нормализация слов должна выполняться до приведения значения к "
+"необходимая нормализация слова должна выполняться до приведения значения к "
 "типу <type>tsquery</type>. Для такой нормализации удобно использовать "
-"функцию <function>to_tsquery</function>: <placeholder-1/>"
+"функцию <function>to_tsquery</function>: <placeholder-1/> Заметьте, что "
+"функция <function>to_tsquery</function> будет обрабатывать префиксы подобно "
+"другим словам, поэтому следующее сравнение возвращает true: <placeholder-2/> "
+"так как <literal>postgres</literal> преобразуется стеммером в "
+"<literal>postgr</literal>: <placeholder-3/> и эта приставка находится в "
+"преобразованной форме слова <literal>postgraduate</literal>."
 
 #: datatype.xml:3918(title)
 msgid "<acronym>UUID</acronym> Type"
@@ -6201,7 +6201,6 @@ msgstr ""
 "должен предполагать, что все данные поступают в его текущей кодировке."
 
 #: datatype.xml:4101(para)
-#, fuzzy
 msgid ""
 "When using binary mode to pass query parameters to the server and query "
 "results back to the client, no encoding conversion is performed, so the "
