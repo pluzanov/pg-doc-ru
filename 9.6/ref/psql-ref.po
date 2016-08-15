@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-09 11:03+0300\n"
+"POT-Creation-Date: 2016-08-11 12:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -44,8 +44,8 @@ msgctxt "command"
 msgid "psql"
 msgstr "psql"
 
-#: ref/psql-ref.xml:28(replaceable) ref/psql-ref.xml:909(replaceable)
-#: ref/psql-ref.xml:2174(replaceable)
+#: ref/psql-ref.xml:28(replaceable) ref/psql-ref.xml:912(replaceable)
+#: ref/psql-ref.xml:2177(replaceable)
 msgid "option"
 msgstr "параметр"
 
@@ -55,7 +55,7 @@ msgid "dbname"
 msgstr "имя_бд"
 
 #: ref/psql-ref.xml:30(replaceable) ref/psql-ref.xml:431(replaceable)
-#: ref/psql-ref.xml:432(replaceable) ref/psql-ref.xml:2142(replaceable)
+#: ref/psql-ref.xml:432(replaceable) ref/psql-ref.xml:2145(replaceable)
 msgid "username"
 msgstr "имя_пользователя"
 
@@ -139,8 +139,8 @@ msgstr ""
 "literal>."
 
 #: ref/psql-ref.xml:90(replaceable) ref/psql-ref.xml:91(replaceable)
-#: ref/psql-ref.xml:1829(replaceable) ref/psql-ref.xml:2843(replaceable)
-#: ref/psql-ref.xml:3655(replaceable)
+#: ref/psql-ref.xml:1832(replaceable) ref/psql-ref.xml:2846(replaceable)
+#: ref/psql-ref.xml:3658(replaceable)
 msgid "command"
 msgstr "команда"
 
@@ -330,8 +330,8 @@ msgstr ""
 #: ref/psql-ref.xml:194(replaceable) ref/psql-ref.xml:195(replaceable)
 #: ref/psql-ref.xml:285(replaceable) ref/psql-ref.xml:286(replaceable)
 #: ref/psql-ref.xml:309(replaceable) ref/psql-ref.xml:310(replaceable)
-#: ref/psql-ref.xml:1828(replaceable) ref/psql-ref.xml:2022(replaceable)
-#: ref/psql-ref.xml:2046(replaceable) ref/psql-ref.xml:2619(replaceable)
+#: ref/psql-ref.xml:1831(replaceable) ref/psql-ref.xml:2025(replaceable)
+#: ref/psql-ref.xml:2049(replaceable) ref/psql-ref.xml:2622(replaceable)
 msgid "filename"
 msgstr "имя_файла"
 
@@ -681,7 +681,7 @@ msgstr ""
 "выбранных записей. Эквивалентно команде <command>\\t</command>."
 
 #: ref/psql-ref.xml:419(replaceable) ref/psql-ref.xml:420(replaceable)
-#: ref/psql-ref.xml:2749(replaceable)
+#: ref/psql-ref.xml:2752(replaceable)
 msgid "table_options"
 msgstr "table_options"
 
@@ -929,7 +929,7 @@ msgstr ""
 msgid "-?"
 msgstr "-?"
 
-#: ref/psql-ref.xml:586(replaceable) ref/psql-ref.xml:2857(replaceable)
+#: ref/psql-ref.xml:586(replaceable) ref/psql-ref.xml:2860(replaceable)
 msgid "topic"
 msgstr "тема"
 
@@ -1303,19 +1303,20 @@ msgstr ""
 
 #: ref/psql-ref.xml:819(term)
 msgid ""
-"<literal>\\c</literal> or <literal>\\connect</literal> "
-"<literal>[ <replaceable class=\"parameter\">dbname</replaceable> "
-"[ <replaceable class=\"parameter\">username</replaceable> ] [ <replaceable "
-"class=\"parameter\">host</replaceable> ] [ <replaceable class=\"parameter"
-"\">port</replaceable> ] ] | <replaceable class=\"parameter\">conninfo</"
-"replaceable></literal>"
+"<literal>\\c</literal> or <literal>\\connect [ -reuse-previous=<replaceable "
+"class=\"parameter\">on|off</replaceable> ] [ <replaceable class=\"parameter"
+"\">dbname</replaceable> [ <replaceable class=\"parameter\">username</"
+"replaceable> ] [ <replaceable class=\"parameter\">host</replaceable> ] "
+"[ <replaceable class=\"parameter\">port</replaceable> ] | <replaceable class="
+"\"parameter\">conninfo</replaceable> ]</literal>"
 msgstr ""
-"<literal>\\c</literal> или <literal>\\connect</literal> "
-"<literal>[ <replaceable class=\"parameter\">имя_базы</replaceable> "
-"[ <replaceable class=\"parameter\">имя_пользователя</replaceable> ] "
-"[ <replaceable class=\"parameter\">компьютер</replaceable> ] [ <replaceable "
-"class=\"parameter\">порт</replaceable> ] ] | <replaceable class=\"parameter"
-"\">строка_подключения</replaceable></literal>"
+"<literal>\\c</literal> или <literal>\\connect [ -reuse-previous=<replaceable "
+"class=\"parameter\">on|off</replaceable> ] [ <replaceable class=\"parameter"
+"\">имя_базы</replaceable> [ <replaceable class=\"parameter"
+"\">имя_пользователя</replaceable> ] [ <replaceable class=\"parameter"
+"\">компьютер</replaceable> ] [ <replaceable class=\"parameter\">порт</"
+"replaceable> ] | <replaceable class=\"parameter\">строка_подключения</"
+"replaceable> ]</literal>"
 
 #: ref/psql-ref.xml:821(para)
 msgid ""
@@ -1332,28 +1333,35 @@ msgstr ""
 
 #: ref/psql-ref.xml:828(para)
 msgid ""
-"When using positional parameters, if any of <replaceable class=\"parameter"
-"\">dbname</replaceable>, <replaceable class=\"parameter\">username</"
-"replaceable>, <replaceable class=\"parameter\">host</replaceable> or "
-"<replaceable class=\"parameter\">port</replaceable> are omitted or specified "
-"as <literal>-</literal>, the value of that parameter from the previous "
-"connection is used; if there is no previous connection, the "
-"<application>libpq</application> default for the parameter's value is used. "
-"When using <literal>conninfo</literal> strings, no values from the previous "
-"connection are used for the new connection."
+"Where the command omits database name, user, host, or port, the new "
+"connection can reuse values from the previous connection. By default, values "
+"from the previous connection are reused except when processing a "
+"<literal>conninfo</literal> string. Passing a first argument of <literal>-"
+"reuse-previous=on</literal> or <literal>-reuse-previous=off</literal> "
+"overrides that default. When the command neither specifies nor reuses a "
+"particular parameter, the <application>libpq</application> default is used. "
+"Specifying any of <replaceable class=\"parameter\">dbname</replaceable>, "
+"<replaceable class=\"parameter\">username</replaceable>, <replaceable class="
+"\"parameter\">host</replaceable> or <replaceable class=\"parameter\">port</"
+"replaceable> as <literal>-</literal> is equivalent to omitting that "
+"parameter."
 msgstr ""
-"При использовании позиционных параметров, если какой-либо из параметров "
-"подключения (<replaceable class=\"parameter\">имя_базы</replaceable>,"
-"<replaceable class=\"parameter\">имя_пользователя</replaceable>,<replaceable "
-"class=\"parameter\">компьютер</replaceable> или <replaceable class="
-"\"parameter\">порт</replaceable>) не указан или указан как <literal>-</"
-"literal>, используется значение этого параметра от предыдущего соединения. В "
-"отсутствие предыдущего подключения используются значения по умолчанию, "
-"принятые в <application>libpq</application>. При использовании аргумента "
-"<literal>строка_подключения</literal> никакие параметры предыдущего "
-"подключения не будут использоваться."
+"Когда в команде опускается имя базы данных, пользователь, компьютер или "
+"порт, для нового подключения могут использоваться значения от предыдущего. "
+"По умолчанию значения от предыдущего подключения используются повторно, если "
+"только не указывается строка подключения (<literal>conninfo</literal>). Если "
+"передать в первом аргументе <literal>-reuse-previous=on</literal> или "
+"<literal moreinfo=\"none\">-reuse-previous=off</literal>, это поведение "
+"переопределяется. Когда в команде не задаётся или не используется повторно "
+"некоторый параметр, применяется значение по умолчанию, принятое в "
+"<application>libpq</application>. Указание в параметре <replaceable class="
+"\"parameter\">имя_базы</replaceable>, <replaceable class=\"parameter"
+"\">имя_пользователя</replaceable>, <replaceable class=\"parameter"
+"\">компьютер</replaceable> или <replaceable class=\"parameter\">порт</"
+"replaceable> значения <literal>-</literal> равносильно опущению этого "
+"параметра."
 
-#: ref/psql-ref.xml:841(para)
+#: ref/psql-ref.xml:844(para)
 msgid ""
 "If the new connection is successfully made, the previous connection is "
 "closed. If the connection attempt failed (wrong user name, access denied, "
@@ -1374,11 +1382,11 @@ msgstr ""
 "качестве меры безопасности, не позволяющей случайно запустить скрипты в "
 "неправильной базе, с другой."
 
-#: ref/psql-ref.xml:854(para)
+#: ref/psql-ref.xml:857(para)
 msgid "Examples:"
 msgstr "Примеры:"
 
-#: ref/psql-ref.xml:857(programlisting)
+#: ref/psql-ref.xml:860(programlisting)
 #, no-wrap
 msgid ""
 "=&gt; \\c mydb myuser host.dom 6432\n"
@@ -1391,15 +1399,15 @@ msgstr ""
 "=&gt; \\c \"host=localhost port=5432 dbname=mydb connect_timeout=10 sslmode=disable\"\n"
 "=&gt; \\c postgresql://tom@localhost/mydb?application_name=myapp"
 
-#: ref/psql-ref.xml:865(replaceable)
+#: ref/psql-ref.xml:868(replaceable)
 msgid "title"
 msgstr "заголовок"
 
-#: ref/psql-ref.xml:865(literal)
+#: ref/psql-ref.xml:868(literal)
 msgid "\\C [ <placeholder-1/> ]"
 msgstr "\\C [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:867(para)
+#: ref/psql-ref.xml:870(para)
 msgid ""
 "Sets the title of any tables being printed as the result of a query or unset "
 "any such title. This command is equivalent to <literal>\\pset title "
@@ -1414,15 +1422,15 @@ msgstr ""
 "как ранее это использовалось только для задания заголовков <acronym>HTML</"
 "acronym> таблиц.)"
 
-#: ref/psql-ref.xml:880(replaceable)
+#: ref/psql-ref.xml:883(replaceable)
 msgid "directory"
 msgstr "каталог"
 
-#: ref/psql-ref.xml:880(literal)
+#: ref/psql-ref.xml:883(literal)
 msgid "\\cd [ <placeholder-1/> ]"
 msgstr "\\cd [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:882(para)
+#: ref/psql-ref.xml:885(para)
 msgid ""
 "Changes the current working directory to <replaceable>directory</"
 "replaceable>. Without argument, changes to the current user's home directory."
@@ -1430,49 +1438,49 @@ msgstr ""
 "Заменяет текущий рабочий каталог на <replaceable>directory</replaceable>. "
 "Без аргумента устанавливается домашний каталог текущего пользователя."
 
-#: ref/psql-ref.xml:889(para)
+#: ref/psql-ref.xml:892(para)
 msgid ""
 "To print your current working directory, use <literal>\\! pwd</literal>."
 msgstr ""
 "для печати текущего рабочего каталога используйте <literal>\\! pwd</literal>."
 
-#: ref/psql-ref.xml:897(literal)
+#: ref/psql-ref.xml:900(literal)
 msgid "\\conninfo"
 msgstr "\\conninfo"
 
-#: ref/psql-ref.xml:899(para)
+#: ref/psql-ref.xml:902(para)
 msgid "Outputs information about the current database connection."
 msgstr "Выводит информацию о текущем подключении к базе данных."
 
-#: ref/psql-ref.xml:906(replaceable)
+#: ref/psql-ref.xml:909(replaceable)
 msgid "table"
 msgstr "таблица"
 
-#: ref/psql-ref.xml:906(replaceable)
+#: ref/psql-ref.xml:909(replaceable)
 msgid "column_list"
 msgstr "список_столбцов"
 
-#: ref/psql-ref.xml:906(replaceable)
+#: ref/psql-ref.xml:909(replaceable)
 msgid "query"
 msgstr "запрос"
 
-#: ref/psql-ref.xml:907(literal)
+#: ref/psql-ref.xml:910(literal)
 msgid "from"
 msgstr "from"
 
-#: ref/psql-ref.xml:907(literal)
+#: ref/psql-ref.xml:910(literal)
 msgid "to"
 msgstr "to"
 
-#: ref/psql-ref.xml:908(replaceable)
+#: ref/psql-ref.xml:911(replaceable)
 msgid "'filename'"
 msgstr "'имя_файла'"
 
-#: ref/psql-ref.xml:908(replaceable)
+#: ref/psql-ref.xml:911(replaceable)
 msgid "'command'"
 msgstr "'команда'"
 
-#: ref/psql-ref.xml:906(literal)
+#: ref/psql-ref.xml:909(literal)
 msgid ""
 "\\copy { <placeholder-1/> [ ( <placeholder-2/> ) ] | ( <placeholder-3/> ) } "
 "{ <placeholder-4/> | <placeholder-5/> } { <placeholder-6/> | program "
@@ -1484,7 +1492,7 @@ msgstr ""
 "<placeholder-7/> | stdin | stdout | pstdin | pstdout } [ [ with ] "
 "( <placeholder-8/> [, ...] ) ]"
 
-#: ref/psql-ref.xml:912(para)
+#: ref/psql-ref.xml:915(para)
 msgid ""
 "Performs a frontend (client) copy. This is an operation that runs an "
 "<acronym>SQL</acronym> <xref linkend=\"sql-copy\"/> command, but instead of "
@@ -1502,7 +1510,7 @@ msgstr ""
 "локального пользователя, а не сервера, и не требуются привилегии "
 "суперпользователя SQL."
 
-#: ref/psql-ref.xml:924(para)
+#: ref/psql-ref.xml:927(para)
 msgid ""
 "When <literal>program</literal> is specified, <replaceable class=\"parameter"
 "\">command</replaceable> is executed by <application>psql</application> and "
@@ -1518,7 +1526,7 @@ msgstr ""
 "используются привилегии локального пользователя, а не сервера, и не "
 "требуются привилегии суперпользователя SQL."
 
-#: ref/psql-ref.xml:935(para)
+#: ref/psql-ref.xml:938(para)
 msgid ""
 "For <literal>\\copy ... from stdin</literal>, data rows are read from the "
 "same source that issued the command, continuing until <literal>\\.</literal> "
@@ -1544,7 +1552,7 @@ msgstr ""
 "команды или параметра <literal>\\o</literal>, используйте <literal>from "
 "pstdin</literal> или <literal>to pstdout</literal>."
 
-#: ref/psql-ref.xml:949(para)
+#: ref/psql-ref.xml:952(para)
 msgid ""
 "The syntax of this command is similar to that of the <acronym>SQL</acronym> "
 "<xref linkend=\"sql-copy\"/> command. All options other than the data source/"
@@ -1560,7 +1568,7 @@ msgstr ""
 "частности, не применяются правила подстановки переменных и экранирование с "
 "обратной косой чертой."
 
-#: ref/psql-ref.xml:960(para)
+#: ref/psql-ref.xml:963(para)
 msgid ""
 "This operation is not as efficient as the <acronym>SQL</acronym>\n"
 "        <command>COPY</command> command because all data must pass through "
@@ -1572,11 +1580,11 @@ msgstr ""
 "сервером. Для больших объёмов данных <acronym>SQL</acronym>-команда может "
 "быть предпочтительнее."
 
-#: ref/psql-ref.xml:972(literal)
+#: ref/psql-ref.xml:975(literal)
 msgid "\\copyright"
 msgstr "\\copyright"
 
-#: ref/psql-ref.xml:974(para)
+#: ref/psql-ref.xml:977(para)
 msgid ""
 "Shows the copyright and distribution terms of <productname>PostgreSQL</"
 "productname>."
@@ -1585,26 +1593,26 @@ msgstr ""
 "<productname>PostgreSQL</productname>."
 
 # well-spelled: столбВ
-#: ref/psql-ref.xml:984(replaceable)
+#: ref/psql-ref.xml:987(replaceable)
 msgid "colV"
 msgstr "столбВ"
 
 # well-spelled: столбГ
-#: ref/psql-ref.xml:985(replaceable)
+#: ref/psql-ref.xml:988(replaceable)
 msgid "colH"
 msgstr "столбГ"
 
 # well-spelled: столбТ
-#: ref/psql-ref.xml:986(replaceable)
+#: ref/psql-ref.xml:989(replaceable)
 msgid "colD"
 msgstr "столбТ"
 
 # well-spelled: столбсортГ
-#: ref/psql-ref.xml:987(replaceable)
+#: ref/psql-ref.xml:990(replaceable)
 msgid "sortcolH"
 msgstr "столбсортГ"
 
-#: ref/psql-ref.xml:983(literal)
+#: ref/psql-ref.xml:986(literal)
 msgid ""
 "\\crosstabview [ <placeholder-1/> [ <placeholder-2/> [ <placeholder-3/> "
 "[ <placeholder-4/> ] ] ] ]"
@@ -1613,7 +1621,7 @@ msgstr ""
 "[ <placeholder-4/> ] ] ] ]"
 
 # well-spelled: столбВ, столбГ, столбТ, столбсортГ
-#: ref/psql-ref.xml:990(para)
+#: ref/psql-ref.xml:993(para)
 msgid ""
 "Executes the current query buffer (like <literal>\\g</literal>) and shows "
 "the results in a crosstab grid. The query must return at least three "
@@ -1637,7 +1645,7 @@ msgstr ""
 "необязательным столбцом сортировки горизонтальных заголовков."
 
 # well-spelled: столбВ, столбГ, столбТ, столбсортГ
-#: ref/psql-ref.xml:1004(para)
+#: ref/psql-ref.xml:1007(para)
 msgid ""
 "Each column specification can be a column number (starting at 1) or a column "
 "name. The usual SQL case folding and quoting rules apply to column names. If "
@@ -1665,7 +1673,7 @@ msgstr ""
 "\"parameter\">столбГ</replaceable>."
 
 # well-spelled: столбВ
-#: ref/psql-ref.xml:1020(para)
+#: ref/psql-ref.xml:1023(para)
 msgid ""
 "The vertical header, displayed as the leftmost column, contains the values "
 "found in column <replaceable class=\"parameter\">colV</replaceable>, in the "
@@ -1676,7 +1684,7 @@ msgstr ""
 "порядке, в каком их возвращает запрос, но без дубликатов."
 
 # well-spelled: столбВ, столбГ, столбТ, столбсортГ
-#: ref/psql-ref.xml:1026(para)
+#: ref/psql-ref.xml:1029(para)
 msgid ""
 "The horizontal header, displayed as the first row, contains the values found "
 "in column <replaceable class=\"parameter\">colH</replaceable>, with "
@@ -1699,7 +1707,7 @@ msgstr ""
 "replaceable>."
 
 # well-spelled: столбВ, столбГ, столбТ, столбсортГ
-#: ref/psql-ref.xml:1038(para)
+#: ref/psql-ref.xml:1041(para)
 msgid ""
 "Inside the crosstab grid, for each distinct value <literal>x</literal> of "
 "<replaceable class=\"parameter\">colH</replaceable> and each distinct value "
@@ -1722,33 +1730,33 @@ msgstr ""
 "не находится, ячейка остаётся пустой. Если же находится несколько таких "
 "строк, выдаётся ошибка."
 
-#: ref/psql-ref.xml:1056(replaceable) ref/psql-ref.xml:1107(replaceable)
-#: ref/psql-ref.xml:1123(replaceable) ref/psql-ref.xml:1137(replaceable)
-#: ref/psql-ref.xml:1153(replaceable) ref/psql-ref.xml:1171(replaceable)
-#: ref/psql-ref.xml:1186(replaceable) ref/psql-ref.xml:1215(replaceable)
-#: ref/psql-ref.xml:1237(replaceable) ref/psql-ref.xml:1254(replaceable)
-#: ref/psql-ref.xml:1255(replaceable) ref/psql-ref.xml:1256(replaceable)
-#: ref/psql-ref.xml:1257(replaceable) ref/psql-ref.xml:1258(replaceable)
-#: ref/psql-ref.xml:1259(replaceable) ref/psql-ref.xml:1285(replaceable)
-#: ref/psql-ref.xml:1301(replaceable) ref/psql-ref.xml:1316(replaceable)
-#: ref/psql-ref.xml:1339(replaceable) ref/psql-ref.xml:1355(replaceable)
-#: ref/psql-ref.xml:1389(replaceable) ref/psql-ref.xml:1403(replaceable)
-#: ref/psql-ref.xml:1417(replaceable) ref/psql-ref.xml:1431(replaceable)
-#: ref/psql-ref.xml:1445(replaceable) ref/psql-ref.xml:1475(replaceable)
-#: ref/psql-ref.xml:1492(replaceable) ref/psql-ref.xml:1509(replaceable)
-#: ref/psql-ref.xml:1527(replaceable) ref/psql-ref.xml:1547(replaceable)
-#: ref/psql-ref.xml:1590(replaceable) ref/psql-ref.xml:1607(replaceable)
-#: ref/psql-ref.xml:1626(replaceable) ref/psql-ref.xml:1640(replaceable)
-#: ref/psql-ref.xml:2824(replaceable)
+#: ref/psql-ref.xml:1059(replaceable) ref/psql-ref.xml:1110(replaceable)
+#: ref/psql-ref.xml:1126(replaceable) ref/psql-ref.xml:1140(replaceable)
+#: ref/psql-ref.xml:1156(replaceable) ref/psql-ref.xml:1174(replaceable)
+#: ref/psql-ref.xml:1189(replaceable) ref/psql-ref.xml:1218(replaceable)
+#: ref/psql-ref.xml:1240(replaceable) ref/psql-ref.xml:1257(replaceable)
+#: ref/psql-ref.xml:1258(replaceable) ref/psql-ref.xml:1259(replaceable)
+#: ref/psql-ref.xml:1260(replaceable) ref/psql-ref.xml:1261(replaceable)
+#: ref/psql-ref.xml:1262(replaceable) ref/psql-ref.xml:1288(replaceable)
+#: ref/psql-ref.xml:1304(replaceable) ref/psql-ref.xml:1319(replaceable)
+#: ref/psql-ref.xml:1342(replaceable) ref/psql-ref.xml:1358(replaceable)
+#: ref/psql-ref.xml:1392(replaceable) ref/psql-ref.xml:1406(replaceable)
+#: ref/psql-ref.xml:1420(replaceable) ref/psql-ref.xml:1434(replaceable)
+#: ref/psql-ref.xml:1448(replaceable) ref/psql-ref.xml:1478(replaceable)
+#: ref/psql-ref.xml:1495(replaceable) ref/psql-ref.xml:1512(replaceable)
+#: ref/psql-ref.xml:1530(replaceable) ref/psql-ref.xml:1550(replaceable)
+#: ref/psql-ref.xml:1593(replaceable) ref/psql-ref.xml:1610(replaceable)
+#: ref/psql-ref.xml:1629(replaceable) ref/psql-ref.xml:1643(replaceable)
+#: ref/psql-ref.xml:2827(replaceable)
 msgid "pattern"
 msgstr "шаблон"
 
-#: ref/psql-ref.xml:1056(literal)
+#: ref/psql-ref.xml:1059(literal)
 msgid "\\d[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\d[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1059(para)
+#: ref/psql-ref.xml:1062(para)
 msgid ""
 "For each relation (table, view, index, sequence, or foreign table) or "
 "composite type matching the <replaceable class=\"parameter\">pattern</"
@@ -1769,7 +1777,7 @@ msgstr ""
 "(<quote>Соответствие шаблону</quote> определяется ниже в <xref remap=\"6\" "
 "linkend=\"app-psql-patterns\" endterm=\"app-psql-patterns-title\"/>.)"
 
-#: ref/psql-ref.xml:1073(para)
+#: ref/psql-ref.xml:1076(para)
 msgid ""
 "For some types of relation, <literal>\\d</literal> shows additional "
 "information for each column: column values for sequences, indexed expression "
@@ -1780,7 +1788,7 @@ msgstr ""
 "последовательностей, индексное выражение для индексов и параметры "
 "обработчика внешних данных для внешних таблиц."
 
-#: ref/psql-ref.xml:1079(para)
+#: ref/psql-ref.xml:1082(para)
 msgid ""
 "The command form <literal>\\d+</literal> is identical, except that more "
 "information is displayed: any comments associated with the columns of the "
@@ -1794,7 +1802,7 @@ msgstr ""
 "умолчанию установки <link linkend=\"sql-createtable-replica-identity"
 "\">replica identity</link>."
 
-#: ref/psql-ref.xml:1088(para)
+#: ref/psql-ref.xml:1091(para)
 msgid ""
 "By default, only user-created objects are shown; supply a pattern or the "
 "<literal>S</literal> modifier to include system objects."
@@ -1803,7 +1811,7 @@ msgstr ""
 "включения системных объектов нужно задать шаблон или добавить модификатор "
 "<literal>S</literal>."
 
-#: ref/psql-ref.xml:1095(para)
+#: ref/psql-ref.xml:1098(para)
 msgid ""
 "If <command>\\d</command> is used without a <replaceable class=\"parameter"
 "\">pattern</replaceable> argument, it is equivalent to <command>\\dtvsE</"
@@ -1815,12 +1823,12 @@ msgstr ""
 "<command>\\dtvsE</command> и выдаёт список всех видимых таблиц, "
 "представлений, последовательностей и сторонних таблиц."
 
-#: ref/psql-ref.xml:1107(literal)
+#: ref/psql-ref.xml:1110(literal)
 msgid "\\da[S] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\da[S] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1110(para)
+#: ref/psql-ref.xml:1113(para)
 msgid ""
 "Lists aggregate functions, together with their return type and the data "
 "types they operate on. If <replaceable class=\"parameter\">pattern</"
@@ -1835,12 +1843,12 @@ msgstr ""
 "объекты, созданные пользователями. Для включения системных объектов нужно "
 "задать шаблон или добавить модификатор <literal>S</literal>."
 
-#: ref/psql-ref.xml:1123(literal)
+#: ref/psql-ref.xml:1126(literal)
 msgid "\\dA[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dA[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1126(para)
+#: ref/psql-ref.xml:1129(para)
 msgid ""
 "Lists access methods. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only access methods whose names match the pattern "
@@ -1853,12 +1861,12 @@ msgstr ""
 "команды для каждого метода доступа показывается его описание и связанная "
 "функция-обработчик."
 
-#: ref/psql-ref.xml:1137(literal)
+#: ref/psql-ref.xml:1140(literal)
 msgid "\\db[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\db[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1140(para)
+#: ref/psql-ref.xml:1143(para)
 msgid ""
 "Lists tablespaces. If <replaceable class=\"parameter\">pattern</replaceable> "
 "is specified, only tablespaces whose names match the pattern are shown. If "
@@ -1872,13 +1880,13 @@ msgstr ""
 "literal> к имени команды для каждого объекта дополнительно выводятся "
 "параметры, объём на диске, права доступа и описание."
 
-#: ref/psql-ref.xml:1153(literal)
+#: ref/psql-ref.xml:1156(literal)
 msgid ""
 "\\dc[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dc[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1155(para)
+#: ref/psql-ref.xml:1158(para)
 msgid ""
 "Lists conversions between character-set encodings. If <replaceable class="
 "\"parameter\">pattern</replaceable> is specified, only conversions whose "
@@ -1895,12 +1903,12 @@ msgstr ""
 "<literal>S</literal>. При добавлении <literal>+</literal> к имени команды "
 "для каждого объекта дополнительно будет выводиться описание."
 
-#: ref/psql-ref.xml:1171(literal)
+#: ref/psql-ref.xml:1174(literal)
 msgid "\\dC[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dC[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1173(para)
+#: ref/psql-ref.xml:1176(para)
 msgid ""
 "Lists type casts. If <replaceable class=\"parameter\">pattern</replaceable> "
 "is specified, only casts whose source or target types match the pattern are "
@@ -1912,12 +1920,12 @@ msgstr ""
 "которых соответствуют ему. При добавлении <literal>+</literal> к имени "
 "команды для каждого объекта дополнительно будет выводиться описание."
 
-#: ref/psql-ref.xml:1186(literal)
+#: ref/psql-ref.xml:1189(literal)
 msgid "\\dd[S] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dd[S] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1188(para)
+#: ref/psql-ref.xml:1191(para)
 msgid ""
 "Shows the descriptions of objects of type <literal>constraint</literal>, "
 "<literal>operator class</literal>, <literal>operator family</literal>, "
@@ -1930,7 +1938,7 @@ msgstr ""
 "literal>. Описания остальных объектов можно посмотреть соответствующими "
 "метакомандами для этих типов объектов."
 
-#: ref/psql-ref.xml:1196(para)
+#: ref/psql-ref.xml:1199(para)
 msgid ""
 "<literal>\\dd</literal> displays descriptions for objects matching the "
 "<replaceable class=\"parameter\">pattern</replaceable>, or of visible "
@@ -1947,7 +1955,7 @@ msgstr ""
 "системных объектов нужно задать шаблон или добавить модификатор <literal>S</"
 "literal>."
 
-#: ref/psql-ref.xml:1205(para)
+#: ref/psql-ref.xml:1208(para)
 msgid ""
 "Descriptions for objects can be created with the <xref linkend=\"sql-comment"
 "\"/>\n"
@@ -1956,11 +1964,11 @@ msgstr ""
 "Описания объектов создаются <acronym>SQL</acronym>-командой <xref linkend="
 "\"sql-comment\"/>."
 
-#: ref/psql-ref.xml:1215(literal)
+#: ref/psql-ref.xml:1218(literal)
 msgid "\\ddp [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr "\\ddp [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1217(para)
+#: ref/psql-ref.xml:1220(para)
 msgid ""
 "Lists default access privilege settings. An entry is shown for each role "
 "(and schema, if applicable) for which the default privilege settings have "
@@ -1974,7 +1982,7 @@ msgstr ""
 "replaceable>, выводятся строки только для тех ролей и схем, чьи имена "
 "соответствуют ему."
 
-#: ref/psql-ref.xml:1226(para)
+#: ref/psql-ref.xml:1229(para)
 msgid ""
 "The <xref linkend=\"sql-alterdefaultprivileges\"/> command is used to set "
 "default access privileges. The meaning of the privilege display is explained "
@@ -1984,13 +1992,13 @@ msgstr ""
 "alterdefaultprivileges\"/>. Смысл отображаемых привилегий объясняется в "
 "описании <xref linkend=\"sql-grant\"/>."
 
-#: ref/psql-ref.xml:1237(literal)
+#: ref/psql-ref.xml:1240(literal)
 msgid ""
 "\\dD[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dD[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1239(para)
+#: ref/psql-ref.xml:1242(para)
 msgid ""
 "Lists domains. If <replaceable class=\"parameter\">pattern</replaceable> is "
 "specified, only domains whose names match the pattern are shown. By default, "
@@ -2006,43 +2014,43 @@ msgstr ""
 "<literal>S</literal>. При добавлении <literal>+</literal> к имени команды "
 "для каждого объекта дополнительно будут выводиться права доступа и описание."
 
-#: ref/psql-ref.xml:1254(literal)
-msgid ""
-"\\dE[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-msgstr ""
-"\\dE[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-
-#: ref/psql-ref.xml:1255(literal)
-msgid ""
-"\\di[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-msgstr ""
-"\\di[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-
-#: ref/psql-ref.xml:1256(literal)
-msgid ""
-"\\dm[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-msgstr ""
-"\\dm[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
-
 #: ref/psql-ref.xml:1257(literal)
 msgid ""
-"\\ds[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+"\\dE[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
-"\\ds[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+"\\dE[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
 #: ref/psql-ref.xml:1258(literal)
 msgid ""
+"\\di[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+msgstr ""
+"\\di[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+
+#: ref/psql-ref.xml:1259(literal)
+msgid ""
+"\\dm[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+msgstr ""
+"\\dm[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+
+#: ref/psql-ref.xml:1260(literal)
+msgid ""
+"\\ds[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+msgstr ""
+"\\ds[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
+
+#: ref/psql-ref.xml:1261(literal)
+msgid ""
 "\\dt[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dt[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1259(literal)
+#: ref/psql-ref.xml:1262(literal)
 msgid ""
 "\\dv[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dv[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1262(para)
+#: ref/psql-ref.xml:1265(para)
 msgid ""
 "In this group of commands, the letters <literal>E</literal>, <literal>i</"
 "literal>, <literal>m</literal>, <literal>s</literal>, <literal>t</literal>, "
@@ -2071,13 +2079,13 @@ msgstr ""
 "созданные пользователями. Для включения системных объектов нужно задать "
 "шаблон или добавить модификатор <literal>S</literal>."
 
-#: ref/psql-ref.xml:1285(literal)
+#: ref/psql-ref.xml:1288(literal)
 msgid ""
 "\\des[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\des[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1287(para)
+#: ref/psql-ref.xml:1290(para)
 msgid ""
 "Lists foreign servers (mnemonic: <quote>external servers</quote>). If "
 "<replaceable class=\"parameter\">pattern</replaceable> is specified, only "
@@ -2091,13 +2099,13 @@ msgstr ""
 "используется форма <literal>\\des+</literal>, то выводится полное описание "
 "каждого сервера, включая права доступа, тип, версию, параметры и описание."
 
-#: ref/psql-ref.xml:1301(literal)
+#: ref/psql-ref.xml:1304(literal)
 msgid ""
 "\\det[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\det[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1303(para)
+#: ref/psql-ref.xml:1306(para)
 msgid ""
 "Lists foreign tables (mnemonic: <quote>external tables</quote>). If "
 "<replaceable class=\"parameter\">pattern</replaceable> is specified, only "
@@ -2111,13 +2119,13 @@ msgstr ""
 "используется форма <literal>\\det+</literal>, то дополнительно выводятся "
 "общие параметры и описание сторонней таблицы."
 
-#: ref/psql-ref.xml:1316(literal)
+#: ref/psql-ref.xml:1319(literal)
 msgid ""
 "\\deu[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\deu[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1318(para)
+#: ref/psql-ref.xml:1321(para)
 msgid ""
 "Lists user mappings (mnemonic: <quote>external users</quote>). If "
 "<replaceable class=\"parameter\">pattern</replaceable> is specified, only "
@@ -2131,7 +2139,7 @@ msgstr ""
 "соответствуют ему. Если используется форма <literal>\\deu+</literal>, то "
 "выводится дополнительная информация о каждом сопоставлении пользователей."
 
-#: ref/psql-ref.xml:1328(para)
+#: ref/psql-ref.xml:1331(para)
 msgid ""
 "<literal>\\deu+</literal> might also display the user name and password of "
 "the remote user, so care should be taken not to disclose them."
@@ -2139,13 +2147,13 @@ msgstr ""
 "<literal>\\deu+</literal> также может отображать имя и пароль удалённого "
 "пользователя, поэтому следует позаботиться о том, чтобы не раскрывать их."
 
-#: ref/psql-ref.xml:1339(literal)
+#: ref/psql-ref.xml:1342(literal)
 msgid ""
 "\\dew[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dew[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1341(para)
+#: ref/psql-ref.xml:1344(para)
 msgid ""
 "Lists foreign-data wrappers (mnemonic: <quote>external wrappers</quote>). If "
 "<replaceable class=\"parameter\">pattern</replaceable> is specified, only "
@@ -2159,13 +2167,13 @@ msgstr ""
 "соответствуют ему. Если используется форма <literal>\\dew+</literal>, то "
 "дополнительно выводятся права доступа, параметры и описание обёртки."
 
-#: ref/psql-ref.xml:1355(literal)
+#: ref/psql-ref.xml:1358(literal)
 msgid ""
 "\\df[antwS+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\df[antwS+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1358(para)
+#: ref/psql-ref.xml:1361(para)
 msgid ""
 "Lists functions, together with their result data types, argument data types, "
 "and function types, which are classified as <quote>agg</quote> (aggregate), "
@@ -2195,7 +2203,7 @@ msgstr ""
 "владелец, классификация по безопасности, права доступа, язык, исходный код и "
 "описание."
 
-#: ref/psql-ref.xml:1378(para)
+#: ref/psql-ref.xml:1381(para)
 msgid ""
 "To look up functions taking arguments or returning values of a specific data "
 "type, use your pager's search capability to scroll through the <literal>"
@@ -2205,12 +2213,12 @@ msgstr ""
 "типа данных, воспользуйтесь имеющейся в постраничнике возможностью поиска в "
 "выводе <literal>\\df</literal>."
 
-#: ref/psql-ref.xml:1389(literal)
+#: ref/psql-ref.xml:1392(literal)
 msgid "\\dF[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dF[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1391(para)
+#: ref/psql-ref.xml:1394(para)
 msgid ""
 "Lists text search configurations. If <replaceable class=\"parameter"
 "\">pattern</replaceable> is specified, only configurations whose names match "
@@ -2225,13 +2233,13 @@ msgstr ""
 "конфигурации, включая базовый синтаксический анализатор и используемые "
 "словари для каждого типа фрагментов."
 
-#: ref/psql-ref.xml:1403(literal)
+#: ref/psql-ref.xml:1406(literal)
 msgid ""
 "\\dFd[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dFd[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1405(para)
+#: ref/psql-ref.xml:1408(para)
 msgid ""
 "Lists text search dictionaries. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only dictionaries whose names match the pattern "
@@ -2245,13 +2253,13 @@ msgstr ""
 "literal>, то выводится дополнительная информация о каждом словаре, включая "
 "базовый шаблон текстового поиска и параметры инициализации."
 
-#: ref/psql-ref.xml:1417(literal)
+#: ref/psql-ref.xml:1420(literal)
 msgid ""
 "\\dFp[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dFp[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1419(para)
+#: ref/psql-ref.xml:1422(para)
 msgid ""
 "Lists text search parsers. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only parsers whose names match the pattern are "
@@ -2265,13 +2273,13 @@ msgstr ""
 "<literal>\\dFp+</literal>, то выводится полное описание для каждого "
 "анализатора, включая базовые функции и список типов фрагментов."
 
-#: ref/psql-ref.xml:1431(literal)
+#: ref/psql-ref.xml:1434(literal)
 msgid ""
 "\\dFt[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dFt[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1433(para)
+#: ref/psql-ref.xml:1436(para)
 msgid ""
 "Lists text search templates. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only templates whose names match the pattern are "
@@ -2284,13 +2292,13 @@ msgstr ""
 "literal>, то выводится дополнительная информация о каждом шаблоне, включая "
 "имена основных функций."
 
-#: ref/psql-ref.xml:1445(literal)
+#: ref/psql-ref.xml:1448(literal)
 msgid ""
 "\\dg[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dg[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1447(para)
+#: ref/psql-ref.xml:1450(para)
 msgid ""
 "Lists database roles. (Since the concepts of <quote>users</quote> and "
 "<quote>groups</quote> have been unified into <quote>roles</quote>, this "
@@ -2311,11 +2319,11 @@ msgstr ""
 "выводится дополнительная информация о каждой роли; в настоящее время это "
 "комментарий роли."
 
-#: ref/psql-ref.xml:1465(literal)
+#: ref/psql-ref.xml:1468(literal)
 msgid "\\dl"
 msgstr "\\dl"
 
-#: ref/psql-ref.xml:1467(para)
+#: ref/psql-ref.xml:1470(para)
 msgid ""
 "This is an alias for <command>\\lo_list</command>, which shows a list of "
 "large objects."
@@ -2323,13 +2331,13 @@ msgstr ""
 "Это псевдоним для <command>\\lo_list</command>, показывает список больших "
 "объектов."
 
-#: ref/psql-ref.xml:1475(literal)
+#: ref/psql-ref.xml:1478(literal)
 msgid ""
 "\\dL[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dL[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1477(para)
+#: ref/psql-ref.xml:1480(para)
 msgid ""
 "Lists procedural languages. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only languages whose names match the pattern are "
@@ -2348,13 +2356,13 @@ msgstr ""
 "обработчик вызова, функция проверки, права доступа и является ли язык "
 "системным объектом."
 
-#: ref/psql-ref.xml:1492(literal)
+#: ref/psql-ref.xml:1495(literal)
 msgid ""
 "\\dn[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dn[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1495(para)
+#: ref/psql-ref.xml:1498(para)
 msgid ""
 "Lists schemas (namespaces). If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only schemas whose names match the pattern are "
@@ -2371,13 +2379,13 @@ msgstr ""
 "literal> к имени команды для каждого объекта дополнительно будут выводиться "
 "права доступа и описание, при наличии."
 
-#: ref/psql-ref.xml:1509(literal)
+#: ref/psql-ref.xml:1512(literal)
 msgid ""
 "\\do[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\do[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1511(para)
+#: ref/psql-ref.xml:1514(para)
 msgid ""
 "Lists operators with their operand and result types. If <replaceable class="
 "\"parameter\">pattern</replaceable> is specified, only operators whose names "
@@ -2396,13 +2404,13 @@ msgstr ""
 "дополнительная информация, сейчас это имя функции, на которой основан "
 "оператор."
 
-#: ref/psql-ref.xml:1527(literal)
+#: ref/psql-ref.xml:1530(literal)
 msgid ""
 "\\dO[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dO[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1529(para)
+#: ref/psql-ref.xml:1532(para)
 msgid ""
 "Lists collations. If <replaceable class=\"parameter\">pattern</replaceable> "
 "is specified, only collations whose names match the pattern are listed. By "
@@ -2424,11 +2432,11 @@ msgstr ""
 "команды может отличаться для различных баз данных этой же установки "
 "<productname>PostgreSQL</productname>."
 
-#: ref/psql-ref.xml:1547(literal)
+#: ref/psql-ref.xml:1550(literal)
 msgid "\\dp [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr "\\dp [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1549(para)
+#: ref/psql-ref.xml:1552(para)
 msgid ""
 "Lists tables, views and sequences with their associated access privileges. "
 "If <replaceable class=\"parameter\">pattern</replaceable> is specified, only "
@@ -2439,7 +2447,7 @@ msgstr ""
 "отображаются только таблицы, представления и последовательности, имена "
 "которых соответствуют ему."
 
-#: ref/psql-ref.xml:1557(para)
+#: ref/psql-ref.xml:1560(para)
 msgid ""
 "The <xref linkend=\"sql-grant\"/> and <xref linkend=\"sql-revoke\"/> "
 "commands are used to set access privileges. The meaning of the privilege "
@@ -2449,15 +2457,15 @@ msgstr ""
 "> и <xref linkend=\"sql-revoke\"/>. Смысл отображаемых привилегий "
 "объясняется в описании <xref linkend=\"sql-grant\"/>."
 
-#: ref/psql-ref.xml:1568(replaceable)
+#: ref/psql-ref.xml:1571(replaceable)
 msgid "role-pattern"
 msgstr "шаблон-ролей"
 
-#: ref/psql-ref.xml:1568(replaceable)
+#: ref/psql-ref.xml:1571(replaceable)
 msgid "database-pattern"
 msgstr "шаблон-баз"
 
-#: ref/psql-ref.xml:1568(literal)
+#: ref/psql-ref.xml:1571(literal)
 msgid ""
 "\\drds [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> [ <link "
 "linkend=\"app-psql-patterns\"><placeholder-2/></link> ] ]"
@@ -2465,7 +2473,7 @@ msgstr ""
 "\\drds [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> [ <link "
 "linkend=\"app-psql-patterns\"><placeholder-2/></link> ] ]"
 
-#: ref/psql-ref.xml:1570(para)
+#: ref/psql-ref.xml:1573(para)
 msgid ""
 "Lists defined configuration settings. These settings can be role-specific, "
 "database-specific, or both. <replaceable>role-pattern</replaceable> and "
@@ -2482,7 +2490,7 @@ msgstr ""
 "выводятся все параметры конфигурации, в том числе не относящиеся к ролям или "
 "базам данных."
 
-#: ref/psql-ref.xml:1580(para)
+#: ref/psql-ref.xml:1583(para)
 msgid ""
 "The <xref linkend=\"sql-alterrole\"/> and <xref linkend=\"sql-alterdatabase"
 "\"/> commands are used to define per-role and per-database configuration "
@@ -2492,13 +2500,13 @@ msgstr ""
 "\"/> используются для определения параметров конфигурации, специфических для "
 "роли или базы данных."
 
-#: ref/psql-ref.xml:1590(literal)
+#: ref/psql-ref.xml:1593(literal)
 msgid ""
 "\\dT[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dT[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1592(para)
+#: ref/psql-ref.xml:1595(para)
 msgid ""
 "Lists data types. If <replaceable class=\"parameter\">pattern</replaceable> "
 "is specified, only types whose names match the pattern are listed. If "
@@ -2517,13 +2525,13 @@ msgstr ""
 "включения системных объектов нужно задать шаблон или добавить модификатор "
 "<literal>S</literal>."
 
-#: ref/psql-ref.xml:1607(literal)
+#: ref/psql-ref.xml:1610(literal)
 msgid ""
 "\\du[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\du[S+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1609(para)
+#: ref/psql-ref.xml:1612(para)
 msgid ""
 "Lists database roles. (Since the concepts of <quote>users</quote> and "
 "<quote>groups</quote> have been unified into <quote>roles</quote>, this "
@@ -2544,12 +2552,12 @@ msgstr ""
 "выводится дополнительная информация о каждой роли; в настоящее время это "
 "комментарий роли."
 
-#: ref/psql-ref.xml:1626(literal)
+#: ref/psql-ref.xml:1629(literal)
 msgid "\\dx[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dx[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1628(para)
+#: ref/psql-ref.xml:1631(para)
 msgid ""
 "Lists installed extensions. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only those extensions whose names match the "
@@ -2561,12 +2569,12 @@ msgstr ""
 "которых соответствуют ему. Если используется форма <literal>\\dx+</literal>, "
 "то для каждого расширения выводятся все принадлежащие ему объекты."
 
-#: ref/psql-ref.xml:1640(literal)
+#: ref/psql-ref.xml:1643(literal)
 msgid "\\dy[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr ""
 "\\dy[+] [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:1642(para)
+#: ref/psql-ref.xml:1645(para)
 msgid ""
 "Lists event triggers. If <replaceable class=\"parameter\">pattern</"
 "replaceable> is specified, only those event triggers whose names match the "
@@ -2578,7 +2586,7 @@ msgstr ""
 "имена которых соответствуют ему. При добавлении <literal>+</literal> к имени "
 "команды для каждого объекта дополнительно будет выводиться описание."
 
-#: ref/psql-ref.xml:1654(term)
+#: ref/psql-ref.xml:1657(term)
 msgid ""
 "<literal>\\e</literal> or <literal>\\edit</literal> "
 "<literal><optional><replaceable class=\"parameter\">filename</replaceable></"
@@ -2590,7 +2598,7 @@ msgstr ""
 "optional> <optional><replaceable class=\"parameter\">номер_строки</"
 "replaceable></optional></literal>"
 
-#: ref/psql-ref.xml:1657(para)
+#: ref/psql-ref.xml:1660(para)
 msgid ""
 "If <replaceable class=\"parameter\">filename</replaceable> is specified, the "
 "file is edited; after the editor exits, its content is copied back to the "
@@ -2603,7 +2611,7 @@ msgstr ""
 "его содержимое копируется в буфер запроса. Если не указано имя файла, "
 "текущий буфер запроса копируется во временный файл и открывается в редакторе."
 
-#: ref/psql-ref.xml:1666(para)
+#: ref/psql-ref.xml:1669(para)
 msgid ""
 "The new query buffer is then re-parsed according to the normal rules of "
 "<application>psql</application>, where the whole buffer is treated as a "
@@ -2622,7 +2630,7 @@ msgstr ""
 "\\g</literal> для отправки на выполнение или <literal>\\r</literal> для "
 "отмены."
 
-#: ref/psql-ref.xml:1677(para)
+#: ref/psql-ref.xml:1680(para)
 msgid ""
 "If a line number is specified, <application>psql</application> will position "
 "the cursor on the specified line of the file or query buffer. Note that if a "
@@ -2635,7 +2643,7 @@ msgstr ""
 "<application>psql</application> предполагает, что это номер строки, а не имя "
 "файла."
 
-#: ref/psql-ref.xml:1686(para) ref/psql-ref.xml:1751(para)
+#: ref/psql-ref.xml:1689(para) ref/psql-ref.xml:1754(para)
 msgid ""
 "See under <xref linkend=\"app-psql-environment\" endterm=\"app-psql-"
 "environment-title\"/> for how to configure and customize your editor."
@@ -2644,16 +2652,16 @@ msgstr ""
 "<xref linkend=\"app-psql-environment\" endterm=\"app-psql-environment-title"
 "\"/>."
 
-#: ref/psql-ref.xml:1696(replaceable) ref/psql-ref.xml:2155(replaceable)
-#: ref/psql-ref.xml:2597(replaceable)
+#: ref/psql-ref.xml:1699(replaceable) ref/psql-ref.xml:2158(replaceable)
+#: ref/psql-ref.xml:2600(replaceable)
 msgid "text"
 msgstr "текст"
 
-#: ref/psql-ref.xml:1696(literal)
+#: ref/psql-ref.xml:1699(literal)
 msgid "\\echo <placeholder-1/> [ ... ]"
 msgstr "\\echo <placeholder-1/> [ ... ]"
 
-#: ref/psql-ref.xml:1702(programlisting)
+#: ref/psql-ref.xml:1705(programlisting)
 #, no-wrap
 msgid ""
 "=&gt; <userinput>\\echo `date`</userinput>\n"
@@ -2662,7 +2670,7 @@ msgstr ""
 "=&gt; <userinput>\\echo `date`</userinput>\n"
 "Tue Oct 26 21:40:57 CEST 1999"
 
-#: ref/psql-ref.xml:1698(para)
+#: ref/psql-ref.xml:1701(para)
 msgid ""
 "Prints the arguments to the standard output, separated by one space and "
 "followed by a newline. This can be useful to intersperse information in the "
@@ -2674,7 +2682,7 @@ msgstr ""
 "Например: <placeholder-1/> Если первый аргумент <literal>-n</literal> без "
 "кавычек, то перевод строки в конце не ставится."
 
-#: ref/psql-ref.xml:1709(para)
+#: ref/psql-ref.xml:1712(para)
 msgid ""
 "If you use the <command>\\o</command> command to redirect your query output "
 "you might wish to use <command>\\qecho</command> instead of this command."
@@ -2683,15 +2691,15 @@ msgstr ""
 "запросов, возможно, следует применять команду <command>\\qecho</command> "
 "вместо этой."
 
-#: ref/psql-ref.xml:1719(replaceable) ref/psql-ref.xml:2691(replaceable)
+#: ref/psql-ref.xml:1722(replaceable) ref/psql-ref.xml:2694(replaceable)
 msgid "function_description"
 msgstr "описание_функции"
 
-#: ref/psql-ref.xml:1719(replaceable) ref/psql-ref.xml:1788(replaceable)
+#: ref/psql-ref.xml:1722(replaceable) ref/psql-ref.xml:1791(replaceable)
 msgid "line_number"
 msgstr "номер_строки"
 
-#: ref/psql-ref.xml:1719(literal)
+#: ref/psql-ref.xml:1722(literal)
 msgid ""
 "\\ef <optional><placeholder-1/> <optional><placeholder-2/></optional></"
 "optional>"
@@ -2699,7 +2707,7 @@ msgstr ""
 "\\ef <optional><placeholder-1/> <optional><placeholder-2/></optional></"
 "optional>"
 
-#: ref/psql-ref.xml:1722(para)
+#: ref/psql-ref.xml:1725(para)
 msgid ""
 "This command fetches and edits the definition of the named function, in the "
 "form of a <command>CREATE OR REPLACE FUNCTION</command> command. Editing is "
@@ -2714,7 +2722,7 @@ msgstr ""
 "будет находиться в буфере запроса. Введите точку с запятой или <literal>\\g</"
 "literal> для выполнения или <literal>\\r</literal> для отмены."
 
-#: ref/psql-ref.xml:1731(para) ref/psql-ref.xml:2701(para)
+#: ref/psql-ref.xml:1734(para) ref/psql-ref.xml:2704(para)
 msgid ""
 "The target function can be specified by name alone, or by name and "
 "arguments, for example <literal>foo(integer, text)</literal>. The argument "
@@ -2724,7 +2732,7 @@ msgstr ""
 "<literal>foo(integer, text)</literal>. Типы аргументов необходимы, если "
 "существует более чем одна функция с тем же именем."
 
-#: ref/psql-ref.xml:1738(para)
+#: ref/psql-ref.xml:1741(para)
 msgid ""
 "If no function is specified, a blank <command>CREATE FUNCTION</command> "
 "template is presented for editing."
@@ -2732,7 +2740,7 @@ msgstr ""
 "Если функция не указана, для редактирования открывается пустая заготовка "
 "<command>CREATE FUNCTION</command>."
 
-#: ref/psql-ref.xml:1743(para)
+#: ref/psql-ref.xml:1746(para)
 msgid ""
 "If a line number is specified, <application>psql</application> will position "
 "the cursor on the specified line of the function body. (Note that the "
@@ -2742,15 +2750,15 @@ msgstr ""
 "позиционировать курсор на указанную строку тела функции. (Обратите внимание, "
 "что тело функции обычно не начинается на первой строке файла)."
 
-#: ref/psql-ref.xml:1762(replaceable)
+#: ref/psql-ref.xml:1765(replaceable)
 msgid "encoding"
 msgstr "кодировка"
 
-#: ref/psql-ref.xml:1762(literal)
+#: ref/psql-ref.xml:1765(literal)
 msgid "\\encoding [ <placeholder-1/> ]"
 msgstr "\\encoding [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:1765(para)
+#: ref/psql-ref.xml:1768(para)
 msgid ""
 "Sets the client character set encoding. Without an argument, this command "
 "shows the current encoding."
@@ -2758,11 +2766,11 @@ msgstr ""
 "Устанавливает кодировку набора символов на клиенте. Без аргумента команда "
 "показывает текущую кодировку."
 
-#: ref/psql-ref.xml:1774(literal)
+#: ref/psql-ref.xml:1777(literal)
 msgid "\\errverbose"
 msgstr "\\errverbose"
 
-#: ref/psql-ref.xml:1777(para)
+#: ref/psql-ref.xml:1780(para)
 msgid ""
 "Repeats the most recent server error message at maximum verbosity, as though "
 "<varname>VERBOSITY</varname> were set to <literal>verbose</literal> and "
@@ -2773,11 +2781,11 @@ msgstr ""
 "значение <literal>verbose</literal>, а <varname>SHOW_CONTEXT</varname> — "
 "<literal>always</literal>."
 
-#: ref/psql-ref.xml:1788(replaceable) ref/psql-ref.xml:2718(replaceable)
+#: ref/psql-ref.xml:1791(replaceable) ref/psql-ref.xml:2721(replaceable)
 msgid "view_name"
 msgstr "имя_представления"
 
-#: ref/psql-ref.xml:1788(literal)
+#: ref/psql-ref.xml:1791(literal)
 msgid ""
 "\\ev <optional><placeholder-1/> <optional><placeholder-2/></optional></"
 "optional>"
@@ -2785,7 +2793,7 @@ msgstr ""
 "\\ev <optional><placeholder-1/> <optional><placeholder-2/></optional></"
 "optional>"
 
-#: ref/psql-ref.xml:1791(para)
+#: ref/psql-ref.xml:1794(para)
 msgid ""
 "This command fetches and edits the definition of the named view, in the form "
 "of a <command>CREATE OR REPLACE VIEW</command> command. Editing is done in "
@@ -2800,7 +2808,7 @@ msgstr ""
 "введите точку с запятой или <literal>\\g</literal>, чтобы выполнить её, либо "
 "<literal>\\r</literal>, чтобы её сбросить."
 
-#: ref/psql-ref.xml:1800(para)
+#: ref/psql-ref.xml:1803(para)
 msgid ""
 "If no view is specified, a blank <command>CREATE VIEW</command> template is "
 "presented for editing."
@@ -2808,7 +2816,7 @@ msgstr ""
 "Если представление не указано, для редактирования открывается пустая "
 "заготовка <command>CREATE VIEW</command>."
 
-#: ref/psql-ref.xml:1805(para)
+#: ref/psql-ref.xml:1808(para)
 msgid ""
 "If a line number is specified, <application>psql</application> will position "
 "the cursor on the specified line of the view definition."
@@ -2816,15 +2824,15 @@ msgstr ""
 "Если указан номер строки, <application>psql</application> установит курсор "
 "на заданную строку в определении представления."
 
-#: ref/psql-ref.xml:1814(replaceable)
+#: ref/psql-ref.xml:1817(replaceable)
 msgid "string"
 msgstr "строка"
 
-#: ref/psql-ref.xml:1814(literal)
+#: ref/psql-ref.xml:1817(literal)
 msgid "\\f [ <placeholder-1/> ]"
 msgstr "\\f [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:1817(para)
+#: ref/psql-ref.xml:1820(para)
 msgid ""
 "Sets the field separator for unaligned query output. The default is the "
 "vertical bar (<literal>|</literal>). See also <command>\\pset</command> for "
@@ -2835,15 +2843,15 @@ msgstr ""
 "также <command>\\pset</command> для универсального способа настройки "
 "параметров вывода."
 
-#: ref/psql-ref.xml:1828(literal)
+#: ref/psql-ref.xml:1831(literal)
 msgid "\\g [ <placeholder-1/> ]"
 msgstr "\\g [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:1829(literal)
+#: ref/psql-ref.xml:1832(literal)
 msgid "\\g [ |<placeholder-1/> ]"
 msgstr "\\g [ |<placeholder-1/> ]"
 
-#: ref/psql-ref.xml:1831(para)
+#: ref/psql-ref.xml:1834(para)
 msgid ""
 "Sends the current query input buffer to the server, and optionally stores "
 "the query's output in <replaceable class=\"parameter\">filename</"
@@ -2860,7 +2868,7 @@ msgstr ""
 "не происходит, если запрос завершился неудачно или выполнялась команда, не "
 "возвращающая данные."
 
-#: ref/psql-ref.xml:1840(para)
+#: ref/psql-ref.xml:1843(para)
 msgid ""
 "A bare <literal>\\g</literal> is essentially equivalent to a semicolon. A "
 "<literal>\\g</literal> with argument is a <quote>one-shot</quote> "
@@ -2870,11 +2878,11 @@ msgstr ""
 "запятой. <literal>\\g</literal> с аргументом является разовой альтернативой "
 "команде <command>\\o</command>."
 
-#: ref/psql-ref.xml:1850(literal)
+#: ref/psql-ref.xml:1853(literal)
 msgid "\\gexec"
 msgstr "\\gexec"
 
-#: ref/psql-ref.xml:1858(programlisting)
+#: ref/psql-ref.xml:1861(programlisting)
 #, no-wrap
 msgid ""
 "=&gt; <userinput>SELECT format('create index on my_table(%I)', attname)</userinput>\n"
@@ -2897,7 +2905,7 @@ msgstr ""
 "CREATE INDEX\n"
 "CREATE INDEX"
 
-#: ref/psql-ref.xml:1853(para)
+#: ref/psql-ref.xml:1856(para)
 msgid ""
 "Sends the current query input buffer to the server, then treats each column "
 "of each row of the query's output (if any) as a SQL statement to be "
@@ -2910,7 +2918,7 @@ msgstr ""
 "команда создаст индексы по каждому столбцу <structname>my_table</"
 "structname>: <placeholder-1/>"
 
-#: ref/psql-ref.xml:1869(para)
+#: ref/psql-ref.xml:1872(para)
 msgid ""
 "The generated queries are executed in the order in which the rows are "
 "returned, and left-to-right within each row if there is more than one "
@@ -2939,15 +2947,15 @@ msgstr ""
 "пошаговый режим, замер времени и т. п., так же действуют при выполнении "
 "каждого генерируемого запроса."
 
-#: ref/psql-ref.xml:1890(replaceable)
+#: ref/psql-ref.xml:1893(replaceable)
 msgid "prefix"
 msgstr "префикс"
 
-#: ref/psql-ref.xml:1890(literal)
+#: ref/psql-ref.xml:1893(literal)
 msgid "\\gset [ <placeholder-1/> ]"
 msgstr "\\gset [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:1900(programlisting)
+#: ref/psql-ref.xml:1903(programlisting)
 #, no-wrap
 msgid ""
 "=&gt; <userinput>SELECT 'hello' AS var1, 10 AS var2</userinput>\n"
@@ -2960,7 +2968,7 @@ msgstr ""
 "=&gt; <userinput>\\echo :var1 :var2</userinput>\n"
 "hello 10"
 
-#: ref/psql-ref.xml:1893(para)
+#: ref/psql-ref.xml:1896(para)
 msgid ""
 "Sends the current query input buffer to the server and stores the query's "
 "output into <application>psql</application> variables (see <xref linkend="
@@ -2976,7 +2984,7 @@ msgstr ""
 "столбец строки результата сохраняется в отдельной переменной, которая "
 "называется так же, как и столбец. Например: <placeholder-1/>"
 
-#: ref/psql-ref.xml:1909(programlisting)
+#: ref/psql-ref.xml:1912(programlisting)
 #, no-wrap
 msgid ""
 "=&gt; <userinput>SELECT 'hello' AS var1, 10 AS var2</userinput>\n"
@@ -2989,7 +2997,7 @@ msgstr ""
 "=&gt; <userinput>\\echo :result_var1 :result_var2</userinput>\n"
 "hello 10"
 
-#: ref/psql-ref.xml:1905(para)
+#: ref/psql-ref.xml:1908(para)
 msgid ""
 "If you specify a <replaceable class=\"parameter\">prefix</replaceable>, that "
 "string is prepended to the query's column names to create the variable names "
@@ -2998,7 +3006,7 @@ msgstr ""
 "Если указан <replaceable class=\"parameter\">prefix</replaceable>, то он "
 "добавляется в начале к именам переменных: <placeholder-1/>"
 
-#: ref/psql-ref.xml:1914(para)
+#: ref/psql-ref.xml:1917(para)
 msgid ""
 "If a column result is NULL, the corresponding variable is unset rather than "
 "being set."
@@ -3006,14 +3014,14 @@ msgstr ""
 "Если значение столбца NULL, то вместо присвоения значения соответствующая "
 "переменная удаляется."
 
-#: ref/psql-ref.xml:1918(para)
+#: ref/psql-ref.xml:1921(para)
 msgid ""
 "If the query fails or does not return one row, no variables are changed."
 msgstr ""
 "Если запрос завершается ошибкой или не возвращает одну строку, то никакие "
 "переменные не меняются."
 
-#: ref/psql-ref.xml:1926(term)
+#: ref/psql-ref.xml:1929(term)
 msgid ""
 "<literal>\\h</literal> or <literal>\\help</literal> <literal>[ <replaceable "
 "class=\"parameter\">command</replaceable> ]</literal>"
@@ -3021,7 +3029,7 @@ msgstr ""
 "<literal>\\h</literal> или <literal>\\help</literal> <literal>[ <replaceable "
 "class=\"parameter\">command</replaceable> ]</literal>"
 
-#: ref/psql-ref.xml:1928(para)
+#: ref/psql-ref.xml:1931(para)
 msgid ""
 "Gives syntax help on the specified <acronym>SQL</acronym> command. If "
 "<replaceable class=\"parameter\">command</replaceable> is not specified, "
@@ -3036,7 +3044,7 @@ msgstr ""
 "доступна справка. Если в качестве command указана звёздочка (<literal>*</"
 "literal>), то выводится справка по всем командам <acronym>SQL</acronym>."
 
-#: ref/psql-ref.xml:1939(para)
+#: ref/psql-ref.xml:1942(para)
 msgid ""
 "To simplify typing, commands that consists of several words do not have to "
 "be quoted. Thus it is fine to type <userinput>\\help\n"
@@ -3046,11 +3054,11 @@ msgstr ""
 "заключать в кавычки. Таким образом, можно просто писать <userinput>\\help "
 "alter table</userinput>."
 
-#: ref/psql-ref.xml:1950(term)
+#: ref/psql-ref.xml:1953(term)
 msgid "<literal>\\H</literal> or <literal>\\html</literal>"
 msgstr "<literal>\\H</literal> или <literal>\\html</literal>"
 
-#: ref/psql-ref.xml:1952(para)
+#: ref/psql-ref.xml:1955(para)
 msgid ""
 "Turns on <acronym>HTML</acronym> query output format. If the <acronym>HTML</"
 "acronym> format is already on, it is switched back to the default aligned "
@@ -3063,7 +3071,7 @@ msgstr ""
 "но в описании <command>\\pset</command> вы можете узнать о других вариантах "
 "вывода."
 
-#: ref/psql-ref.xml:1964(term)
+#: ref/psql-ref.xml:1967(term)
 msgid ""
 "<literal>\\i</literal> or <literal>\\include</literal> <replaceable class="
 "\"parameter\">filename</replaceable>"
@@ -3071,7 +3079,7 @@ msgstr ""
 "<literal>\\i</literal> или <literal>\\include</literal> <replaceable class="
 "\"parameter\">имя_файла</replaceable>"
 
-#: ref/psql-ref.xml:1966(para)
+#: ref/psql-ref.xml:1969(para)
 msgid ""
 "Reads input from the file <replaceable class=\"parameter\">filename</"
 "replaceable> and executes it as though it had been typed on the keyboard."
@@ -3079,7 +3087,7 @@ msgstr ""
 "Читает ввод из файла <replaceable class=\"parameter\">имя_файла</"
 "replaceable> и выполняет его, как будто он был набран на клавиатуре."
 
-#: ref/psql-ref.xml:1971(para)
+#: ref/psql-ref.xml:1974(para)
 msgid ""
 "If <replaceable>filename</replaceable> is <literal>-</literal> (hyphen), "
 "then standard input is read until an EOF indication or <command>\\q</"
@@ -3094,7 +3102,7 @@ msgstr ""
 "поведение Readline будет применяться, только если оно активно на внешнем "
 "уровне."
 
-#: ref/psql-ref.xml:1979(para)
+#: ref/psql-ref.xml:1982(para)
 msgid ""
 "If you want to see the lines on the screen as they are read you must set the "
 "variable <varname>ECHO</varname> to <literal>all</literal>."
@@ -3103,7 +3111,7 @@ msgstr ""
 "установить для переменной <varname>ECHO</varname> значение <literal>all</"
 "literal>."
 
-#: ref/psql-ref.xml:1990(term)
+#: ref/psql-ref.xml:1993(term)
 msgid ""
 "<literal>\\ir</literal> or <literal>\\include_relative</literal> "
 "<replaceable class=\"parameter\">filename</replaceable>"
@@ -3111,7 +3119,7 @@ msgstr ""
 "<literal>\\ir</literal> или <literal>\\include_relative</literal> "
 "<replaceable class=\"parameter\">filename</replaceable>"
 
-#: ref/psql-ref.xml:1992(para)
+#: ref/psql-ref.xml:1995(para)
 msgid ""
 "The <literal>\\ir</literal> command is similar to <literal>\\i</literal>, "
 "but resolves relative file names differently. When executing in interactive "
@@ -3126,7 +3134,7 @@ msgstr ""
 "скрипта <literal>\\ir</literal> интерпретирует имена файлов относительно "
 "каталога, в котором расположен скрипт, а не текущего рабочего каталога."
 
-#: ref/psql-ref.xml:2005(term)
+#: ref/psql-ref.xml:2008(term)
 msgid ""
 "<literal>\\l[+]</literal> or <literal>\\list[+] [ <link linkend=\"app-psql-"
 "patterns\"><replaceable class=\"parameter\">pattern</replaceable></link> ]</"
@@ -3136,7 +3144,7 @@ msgstr ""
 "patterns\"><replaceable class=\"parameter\">шаблон</replaceable></link> ]</"
 "literal>"
 
-#: ref/psql-ref.xml:2007(para)
+#: ref/psql-ref.xml:2010(para)
 msgid ""
 "List the databases in the server and show their names, owners, character set "
 "encodings, and access privileges. If <replaceable class=\"parameter"
@@ -3154,15 +3162,15 @@ msgstr ""
 "умолчанию и описание. (Информация о размере доступна только для баз данных, "
 "к которым текущий пользователь может подключиться.)"
 
-#: ref/psql-ref.xml:2022(replaceable) ref/psql-ref.xml:2084(replaceable)
+#: ref/psql-ref.xml:2025(replaceable) ref/psql-ref.xml:2087(replaceable)
 msgid "loid"
 msgstr "oid_БО"
 
-#: ref/psql-ref.xml:2022(literal)
+#: ref/psql-ref.xml:2025(literal)
 msgid "\\lo_export <placeholder-1/> <placeholder-2/>"
 msgstr "\\lo_export <placeholder-1/> <placeholder-2/>"
 
-#: ref/psql-ref.xml:2025(para)
+#: ref/psql-ref.xml:2028(para)
 msgid ""
 "Reads the large object with <acronym>OID</acronym> <replaceable class="
 "\"parameter\">loid</replaceable> from the database and writes it to "
@@ -3178,7 +3186,7 @@ msgstr ""
 "которая действует с правами пользователя, от имени которого работает сервер "
 "базы данных, и в файловой системе сервера."
 
-#: ref/psql-ref.xml:2036(para) ref/psql-ref.xml:2094(para)
+#: ref/psql-ref.xml:2039(para) ref/psql-ref.xml:2097(para)
 msgid ""
 "Use <command>\\lo_list</command> to find out the large object's "
 "<acronym>OID</acronym>."
@@ -3186,15 +3194,15 @@ msgstr ""
 "Используйте <command>\\lo_list</command> для получения <acronym>OID</"
 "acronym> больших объектов."
 
-#: ref/psql-ref.xml:2046(replaceable)
+#: ref/psql-ref.xml:2049(replaceable)
 msgid "comment"
 msgstr "комментарий"
 
-#: ref/psql-ref.xml:2046(literal)
+#: ref/psql-ref.xml:2049(literal)
 msgid "\\lo_import <placeholder-1/> [ <placeholder-2/> ]"
 msgstr "\\lo_import <placeholder-1/> [ <placeholder-2/> ]"
 
-#: ref/psql-ref.xml:2053(programlisting)
+#: ref/psql-ref.xml:2056(programlisting)
 #, no-wrap
 msgid ""
 "foo=&gt; <userinput>\\lo_import '/home/peter/pictures/photo.xcf' 'a picture of me'</userinput>\n"
@@ -3203,7 +3211,7 @@ msgstr ""
 "foo=&gt; <userinput>\\lo_import '/home/peter/pictures/photo.xcf' 'a picture of me'</userinput>\n"
 "lo_import 152801"
 
-#: ref/psql-ref.xml:2049(para)
+#: ref/psql-ref.xml:2052(para)
 msgid ""
 "Stores the file into a <productname>PostgreSQL</productname> large object. "
 "Optionally, it associates the given comment with the object. Example: "
@@ -3221,7 +3229,7 @@ msgstr ""
 "объекты с понятными комментариями. OID и комментарии можно посмотреть с "
 "помощью команды <command>\\lo_list</command>."
 
-#: ref/psql-ref.xml:2063(para)
+#: ref/psql-ref.xml:2066(para)
 msgid ""
 "Note that this command is subtly different from the server-side "
 "<function>lo_import</function> because it acts as the local user on the "
@@ -3232,11 +3240,11 @@ msgstr ""
 "пользователя в локальной файловой системе, а не пользователя сервера в "
 "файловой системе сервера."
 
-#: ref/psql-ref.xml:2073(literal)
+#: ref/psql-ref.xml:2076(literal)
 msgid "\\lo_list"
 msgstr "\\lo_list"
 
-#: ref/psql-ref.xml:2075(para)
+#: ref/psql-ref.xml:2078(para)
 msgid ""
 "Shows a list of all <productname>PostgreSQL</productname> large objects "
 "currently stored in the database, along with any comments provided for them."
@@ -3245,11 +3253,11 @@ msgstr ""
 "productname>, хранящихся в базе данных, вместе с предоставленными "
 "комментариями."
 
-#: ref/psql-ref.xml:2084(literal)
+#: ref/psql-ref.xml:2087(literal)
 msgid "\\lo_unlink <placeholder-1/>"
 msgstr "\\lo_unlink <placeholder-1/>"
 
-#: ref/psql-ref.xml:2087(para)
+#: ref/psql-ref.xml:2090(para)
 msgid ""
 "Deletes the large object with <acronym>OID</acronym>\n"
 "        <replaceable class=\"parameter\">loid</replaceable> from the "
@@ -3258,7 +3266,7 @@ msgstr ""
 "Удаляет большой объект с <acronym>OID</acronym> \n"
 "        <replaceable class=\"parameter\">loid</replaceable> из базы данных."
 
-#: ref/psql-ref.xml:2104(term)
+#: ref/psql-ref.xml:2107(term)
 msgid ""
 "<literal>\\o</literal> or <literal>\\out [ <replaceable class=\"parameter"
 "\">filename</replaceable> ]</literal>"
@@ -3266,7 +3274,7 @@ msgstr ""
 "<literal>\\o</literal> или <literal>\\out [ <replaceable class=\"parameter"
 "\">имя_файла</replaceable> ]</literal>"
 
-#: ref/psql-ref.xml:2105(term)
+#: ref/psql-ref.xml:2108(term)
 msgid ""
 "<literal>\\o</literal> or <literal>\\out [ |<replaceable class=\"parameter"
 "\">command</replaceable> ]</literal>"
@@ -3274,7 +3282,7 @@ msgstr ""
 "<literal>\\o</literal> или <literal>\\out [ |<replaceable class=\"parameter"
 "\">команда</replaceable> ]</literal>"
 
-#: ref/psql-ref.xml:2107(para)
+#: ref/psql-ref.xml:2110(para)
 msgid ""
 "Arranges to save future query results to the file <replaceable class="
 "\"parameter\">filename</replaceable> or pipe future results to the shell "
@@ -3287,7 +3295,7 @@ msgstr ""
 "аргумент не указан, результаты запросов перенаправляются на стандартный "
 "вывод."
 
-#: ref/psql-ref.xml:2115(para)
+#: ref/psql-ref.xml:2118(para)
 msgid ""
 "<quote>Query results</quote> includes all tables, command responses, and "
 "notices obtained from the database server, as well as output of various "
@@ -3299,7 +3307,7 @@ msgstr ""
 "метакоманд, запрашивающих базу данных (таких как <command>\\d</command>), но "
 "не сообщения об ошибках."
 
-#: ref/psql-ref.xml:2123(para)
+#: ref/psql-ref.xml:2126(para)
 msgid ""
 "To intersperse text output in between query results, use <command>\\qecho</"
 "command>."
@@ -3307,19 +3315,19 @@ msgstr ""
 "Чтобы вставить текст между результатами запросов, используйте <command>"
 "\\qecho</command>."
 
-#: ref/psql-ref.xml:2133(term)
+#: ref/psql-ref.xml:2136(term)
 msgid "<literal>\\p</literal> or <literal>\\print</literal>"
 msgstr "<literal>\\p</literal> или <literal>\\print</literal>"
 
-#: ref/psql-ref.xml:2135(para)
+#: ref/psql-ref.xml:2138(para)
 msgid "Print the current query buffer to the standard output."
 msgstr "Печатает содержимое буфера запросов на стандартный вывод."
 
-#: ref/psql-ref.xml:2142(literal)
+#: ref/psql-ref.xml:2145(literal)
 msgid "\\password [ <placeholder-1/> ]"
 msgstr "\\password [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:2144(para)
+#: ref/psql-ref.xml:2147(para)
 msgid ""
 "Changes the password of the specified user (by default, the current user). "
 "This command prompts for the new password, encrypts it, and sends it to the "
@@ -3333,17 +3341,17 @@ msgstr ""
 "что новый пароль не отображается в открытом виде в истории команд, журнале "
 "сервера или в другом месте."
 
-#: ref/psql-ref.xml:2155(replaceable) ref/psql-ref.xml:2635(replaceable)
-#: ref/psql-ref.xml:2676(replaceable) ref/psql-ref.xml:2774(replaceable)
-#: ref/psql-ref.xml:3643(replaceable)
+#: ref/psql-ref.xml:2158(replaceable) ref/psql-ref.xml:2638(replaceable)
+#: ref/psql-ref.xml:2679(replaceable) ref/psql-ref.xml:2777(replaceable)
+#: ref/psql-ref.xml:3646(replaceable)
 msgid "name"
 msgstr "имя"
 
-#: ref/psql-ref.xml:2155(literal)
+#: ref/psql-ref.xml:2158(literal)
 msgid "\\prompt [ <placeholder-1/> ] <placeholder-2/>"
 msgstr "\\prompt [ <placeholder-1/> ] <placeholder-2/>"
 
-#: ref/psql-ref.xml:2157(para)
+#: ref/psql-ref.xml:2160(para)
 msgid ""
 "Prompts the user to supply text, which is assigned to the variable "
 "<replaceable class=\"parameter\">name</replaceable>. An optional prompt "
@@ -3356,7 +3364,7 @@ msgstr ""
 "подсказка состоит из нескольких слов, то её текст нужно взять в одинарные "
 "кавычки)."
 
-#: ref/psql-ref.xml:2165(para)
+#: ref/psql-ref.xml:2168(para)
 msgid ""
 "By default, <literal>\\prompt</literal> uses the terminal for input and "
 "output. However, if the <option>-f</option> command line switch was used, "
@@ -3367,16 +3375,16 @@ msgstr ""
 "option>, <literal>\\prompt</literal> использует стандартный ввод и "
 "стандартный вывод."
 
-#: ref/psql-ref.xml:2174(replaceable) ref/psql-ref.xml:2635(replaceable)
-#: ref/psql-ref.xml:2676(replaceable)
+#: ref/psql-ref.xml:2177(replaceable) ref/psql-ref.xml:2638(replaceable)
+#: ref/psql-ref.xml:2679(replaceable)
 msgid "value"
 msgstr "значение"
 
-#: ref/psql-ref.xml:2174(literal)
+#: ref/psql-ref.xml:2177(literal)
 msgid "\\pset [ <placeholder-1/> [ <placeholder-2/> ] ]"
 msgstr "\\pset [ <placeholder-1/> [ <placeholder-2/> ] ]"
 
-#: ref/psql-ref.xml:2177(para)
+#: ref/psql-ref.xml:2180(para)
 msgid ""
 "This command sets options affecting the output of query result tables. "
 "<replaceable class=\"parameter\">option</replaceable> indicates which option "
@@ -3397,7 +3405,7 @@ msgstr ""
 "упоминается, то пропуск <replaceable class=\"parameter\">value</replaceable> "
 "приводит к отображению текущего значения параметра."
 
-#: ref/psql-ref.xml:2190(para)
+#: ref/psql-ref.xml:2193(para)
 msgid ""
 "<command>\\pset</command> without any arguments displays the current status "
 "of all printing options."
@@ -3405,11 +3413,11 @@ msgstr ""
 "<command>\\pset</command> без аргументов выводит текущий статус всех "
 "параметров команды."
 
-#: ref/psql-ref.xml:2199(literal)
+#: ref/psql-ref.xml:2202(literal)
 msgid "border"
 msgstr "border"
 
-#: ref/psql-ref.xml:2201(para)
+#: ref/psql-ref.xml:2204(para)
 msgid ""
 "The <replaceable class=\"parameter\">value</replaceable> must be a number. "
 "In general, the higher the number the more borders and lines the tables will "
@@ -3432,11 +3440,11 @@ msgstr ""
 "поддерживают значение 3, добавляющее разделительные линии между строками "
 "данных."
 
-#: ref/psql-ref.xml:2219(literal)
+#: ref/psql-ref.xml:2222(literal)
 msgid "columns"
 msgstr "columns"
 
-#: ref/psql-ref.xml:2221(para)
+#: ref/psql-ref.xml:2224(para)
 msgid ""
 "Sets the target width for the <literal>wrapped</literal> format, and also "
 "the width limit for determining whether output is wide enough to require the "
@@ -3458,11 +3466,11 @@ msgstr ""
 "влияет только на вывод на экран. Если <literal>columns</literal> не равно 0, "
 "то это также влияет на вывод в файл или в другую команду через канал."
 
-#: ref/psql-ref.xml:2238(term)
+#: ref/psql-ref.xml:2241(term)
 msgid "<literal>expanded</literal> (or <literal>x</literal>)"
 msgstr "<literal>expanded</literal> (или <literal>x</literal>)"
 
-#: ref/psql-ref.xml:2240(para)
+#: ref/psql-ref.xml:2243(para)
 msgid ""
 "If <replaceable class=\"parameter\">value</replaceable> is specified it must "
 "be either <literal>on</literal> or <literal>off</literal>, which will enable "
@@ -3491,11 +3499,11 @@ msgstr ""
 "форматы <literal>aligned</literal> и <literal>wrapped</literal>. С другими "
 "форматами он всегда равнозначен отключённому состоянию."
 
-#: ref/psql-ref.xml:2260(literal)
+#: ref/psql-ref.xml:2263(literal)
 msgid "fieldsep"
 msgstr "fieldsep"
 
-#: ref/psql-ref.xml:2262(para)
+#: ref/psql-ref.xml:2265(para)
 msgid ""
 "Specifies the field separator to be used in unaligned output format. That "
 "way one can create, for example, tab- or comma-separated output, which other "
@@ -3510,22 +3518,22 @@ msgstr ""
 "полей, введите <literal>\\pset fieldsep '\\t'</literal>. По умолчанию "
 "используется вертикальная черта (<literal>'|'</literal>)."
 
-#: ref/psql-ref.xml:2274(literal)
+#: ref/psql-ref.xml:2277(literal)
 msgid "fieldsep_zero"
 msgstr "fieldsep_zero"
 
-#: ref/psql-ref.xml:2276(para)
+#: ref/psql-ref.xml:2279(para)
 msgid ""
 "Sets the field separator to use in unaligned output format to a zero byte."
 msgstr ""
 "Устанавливает разделитель полей для невыровненного режима вывода в нулевой "
 "байт."
 
-#: ref/psql-ref.xml:2284(literal)
+#: ref/psql-ref.xml:2287(literal)
 msgid "footer"
 msgstr "footer"
 
-#: ref/psql-ref.xml:2286(para)
+#: ref/psql-ref.xml:2289(para)
 msgid ""
 "If <replaceable class=\"parameter\">value</replaceable> is specified it must "
 "be either <literal>on</literal> or <literal>off</literal> which will enable "
@@ -3541,11 +3549,11 @@ msgstr ""
 "class=\"parameter\">value</replaceable> не указано, то команда переключает "
 "текущее значение в <literal>on</literal> или <literal>off</literal>."
 
-#: ref/psql-ref.xml:2298(literal)
+#: ref/psql-ref.xml:2301(literal)
 msgid "format"
 msgstr "format"
 
-#: ref/psql-ref.xml:2300(para)
+#: ref/psql-ref.xml:2303(para)
 msgid ""
 "Sets the output format to one of <literal>unaligned</literal>, "
 "<literal>aligned</literal>, <literal>wrapped</literal>, <literal>html</"
@@ -3561,7 +3569,7 @@ msgstr ""
 "literal> или <literal>troff-ms</literal>. Допускается сокращение слова до "
 "уникального значения. (Это значит, что одной буквы будет достаточно.)"
 
-#: ref/psql-ref.xml:2311(para)
+#: ref/psql-ref.xml:2314(para)
 msgid ""
 "<literal>unaligned</literal> format writes all columns of a row on one line, "
 "separated by the currently active field separator. This is useful for "
@@ -3573,7 +3581,7 @@ msgstr ""
 "создания вывода, который будет читаться другими программами (например, "
 "формат с выводом значений, разделённых запятыми или табуляцией)."
 
-#: ref/psql-ref.xml:2318(para)
+#: ref/psql-ref.xml:2321(para)
 msgid ""
 "<literal>aligned</literal> format is the standard, human-readable, nicely "
 "formatted text output; this is the default."
@@ -3581,7 +3589,7 @@ msgstr ""
 "Формат <literal>aligned</literal> это стандартный, удобочитаемый, хорошо "
 "отформатированный текстовый вывод. Используется по умолчанию."
 
-#: ref/psql-ref.xml:2322(para)
+#: ref/psql-ref.xml:2325(para)
 msgid ""
 "<literal>wrapped</literal> format is like <literal>aligned</literal> but "
 "wraps wide data values across lines to make the output fit in the target "
@@ -3600,7 +3608,7 @@ msgstr ""
 "<literal>aligned</literal> если общая ширина, требуемая для всех заголовков "
 "столбцов, превышает установленную максимальную ширину."
 
-#: ref/psql-ref.xml:2331(para)
+#: ref/psql-ref.xml:2334(para)
 msgid ""
 "The <literal>html</literal>, <literal>asciidoc</literal>, <literal>latex</"
 "literal>, <literal>latex-longtable</literal>, and <literal>troff-ms</"
@@ -3623,11 +3631,11 @@ msgstr ""
 "требует наличия пакетов <application>LaTeX</application> <literal>longtable</"
 "literal> и <literal>booktabs</literal>."
 
-#: ref/psql-ref.xml:2347(literal)
+#: ref/psql-ref.xml:2350(literal)
 msgid "linestyle"
 msgstr "linestyle"
 
-#: ref/psql-ref.xml:2349(para)
+#: ref/psql-ref.xml:2352(para)
 msgid ""
 "Sets the border line drawing style to one of <literal>ascii</literal>, "
 "<literal>old-ascii</literal>, or <literal>unicode</literal>. Unique "
@@ -3641,7 +3649,7 @@ msgstr ""
 "Значение по умолчанию: <literal>ascii</literal>. Этот параметр действует "
 "только в форматах <literal>aligned</literal> и <literal>wrapped</literal>."
 
-#: ref/psql-ref.xml:2360(para)
+#: ref/psql-ref.xml:2363(para)
 msgid ""
 "<literal>ascii</literal> style uses plain <acronym>ASCII</acronym> "
 "characters. Newlines in data are shown using a <literal>+</literal> symbol "
@@ -3657,7 +3665,7 @@ msgstr ""
 "символа новой строки), ставится точка (<literal>.</literal>) в правом поле "
 "первой строки и точка в левом поле следующей строки."
 
-#: ref/psql-ref.xml:2369(para)
+#: ref/psql-ref.xml:2372(para)
 msgid ""
 "<literal>old-ascii</literal> style uses plain <acronym>ASCII</acronym> "
 "characters, using the formatting style used in <productname>PostgreSQL</"
@@ -3673,7 +3681,7 @@ msgstr ""
 "перенос данных на новую строку без символа новой строки, символ <literal>;</"
 "literal> используется вместо левого разделителя полей."
 
-#: ref/psql-ref.xml:2379(para)
+#: ref/psql-ref.xml:2382(para)
 msgid ""
 "<literal>unicode</literal> style uses Unicode box-drawing characters. "
 "Newlines in data are shown using a carriage return symbol in the right-hand "
@@ -3688,7 +3696,7 @@ msgstr ""
 "ставится символ многоточия в правом поле первой строки и в левом поле "
 "следующей строки."
 
-#: ref/psql-ref.xml:2387(para)
+#: ref/psql-ref.xml:2390(para)
 msgid ""
 "When the <literal>border</literal> setting is greater than zero, the "
 "<literal>linestyle</literal> option also determines the characters with "
@@ -3701,11 +3709,11 @@ msgstr ""
 "рисоваться границы. Обычные символы <acronym>ASCII</acronym> работают везде, "
 "но символы Юникода смотрятся лучше на терминалах, распознающих их."
 
-#: ref/psql-ref.xml:2398(literal)
+#: ref/psql-ref.xml:2401(literal)
 msgid "null"
 msgstr "null"
 
-#: ref/psql-ref.xml:2400(para)
+#: ref/psql-ref.xml:2403(para)
 msgid ""
 "Sets the string to be printed in place of a null value. The default is to "
 "print nothing, which can easily be mistaken for an empty string. For "
@@ -3715,11 +3723,11 @@ msgstr ""
 "умолчанию не печатается ничего, что можно ошибочно принять за пустую строку. "
 "Например, можно было бы предпочесть <literal>\\pset null '(null)'</literal>."
 
-#: ref/psql-ref.xml:2410(literal)
+#: ref/psql-ref.xml:2413(literal)
 msgid "numericlocale"
 msgstr "numericlocale"
 
-#: ref/psql-ref.xml:2412(para)
+#: ref/psql-ref.xml:2415(para)
 msgid ""
 "If <replaceable class=\"parameter\">value</replaceable> is specified it must "
 "be either <literal>on</literal> or <literal>off</literal> which will enable "
@@ -3735,11 +3743,11 @@ msgstr ""
 "\"parameter\">значение</replaceable> не указано, то команда переключает "
 "вывод чисел с локализованного на обычный и обратно."
 
-#: ref/psql-ref.xml:2424(literal)
+#: ref/psql-ref.xml:2427(literal)
 msgid "pager"
 msgstr "pager"
 
-#: ref/psql-ref.xml:2426(para)
+#: ref/psql-ref.xml:2429(para)
 msgid ""
 "Controls use of a pager program for query and <application>psql</"
 "application> help output. If the environment variable <envar>PAGER</envar> "
@@ -3752,7 +3760,7 @@ msgstr ""
 "программу. В противном случае используется платформозависимая программа по "
 "умолчанию (например, <filename>more</filename>)."
 
-#: ref/psql-ref.xml:2434(para)
+#: ref/psql-ref.xml:2437(para)
 msgid ""
 "When the <literal>pager</literal> option is <literal>off</literal>, the "
 "pager program is not used. When the <literal>pager</literal> option is "
@@ -3774,11 +3782,11 @@ msgstr ""
 "replaceable> переключает варианты <literal>on</literal> и <literal>off</"
 "literal>."
 
-#: ref/psql-ref.xml:2449(literal)
+#: ref/psql-ref.xml:2452(literal)
 msgid "pager_min_lines"
 msgstr "pager_min_lines"
 
-#: ref/psql-ref.xml:2451(para)
+#: ref/psql-ref.xml:2454(para)
 msgid ""
 "If <literal>pager_min_lines</literal> is set to a number greater than the "
 "page height, the pager program will not be called unless there are at least "
@@ -3788,11 +3796,11 @@ msgstr ""
 "страницы, программа постраничного вывода не будет вызываться, пока не "
 "наберётся заданное число строк для вывода. Значение по умолчанию — 0."
 
-#: ref/psql-ref.xml:2461(literal)
+#: ref/psql-ref.xml:2464(literal)
 msgid "recordsep"
 msgstr "recordsep"
 
-#: ref/psql-ref.xml:2463(para)
+#: ref/psql-ref.xml:2466(para)
 msgid ""
 "Specifies the record (line) separator to use in unaligned output format. The "
 "default is a newline character."
@@ -3800,22 +3808,22 @@ msgstr ""
 "Устанавливает разделитель записей (строк) для невыровненного режима вывода. "
 "По умолчанию используется символ новой строки."
 
-#: ref/psql-ref.xml:2471(literal)
+#: ref/psql-ref.xml:2474(literal)
 msgid "recordsep_zero"
 msgstr "recordsep_zero"
 
-#: ref/psql-ref.xml:2473(para)
+#: ref/psql-ref.xml:2476(para)
 msgid ""
 "Sets the record separator to use in unaligned output format to a zero byte."
 msgstr ""
 "Устанавливает разделитель записей для невыровненного режима вывода в нулевой "
 "байт."
 
-#: ref/psql-ref.xml:2481(term)
+#: ref/psql-ref.xml:2484(term)
 msgid "<literal>tableattr</literal> (or <literal>T</literal>)"
 msgstr "<literal>tableattr</literal> (или <literal>T</literal>)"
 
-#: ref/psql-ref.xml:2483(para)
+#: ref/psql-ref.xml:2486(para)
 msgid ""
 "In <acronym>HTML</acronym> format, this specifies attributes to be placed "
 "inside the <sgmltag>table</sgmltag> tag. This could for example be "
@@ -3832,7 +3840,7 @@ msgstr ""
 "для этого уже есть <literal>\\pset border</literal>. Если <replaceable class="
 "\"parameter\">value</replaceable> не задано, атрибуты таблицы удаляются."
 
-#: ref/psql-ref.xml:2494(para)
+#: ref/psql-ref.xml:2497(para)
 msgid ""
 "In <literal>latex-longtable</literal> format, this controls the proportional "
 "width of each column containing a left-aligned data type. It is specified as "
@@ -3845,11 +3853,11 @@ msgstr ""
 "<literal>'0.2 0.2 0.6'</literal>. Для неуказанных столбцов используется "
 "последнее из заданных значений."
 
-#: ref/psql-ref.xml:2505(term)
+#: ref/psql-ref.xml:2508(term)
 msgid "<literal>title</literal> (or <literal>C</literal>)"
 msgstr "<literal>title</literal> (или <literal>C</literal>)"
 
-#: ref/psql-ref.xml:2507(para)
+#: ref/psql-ref.xml:2510(para)
 msgid ""
 "Sets the table title for any subsequently printed tables. This can be used "
 "to give your output descriptive tags. If no <replaceable class=\"parameter"
@@ -3860,11 +3868,11 @@ msgstr ""
 "Если <replaceable class=\"parameter\">value</replaceable> не задано, "
 "заголовок таблицы удаляется."
 
-#: ref/psql-ref.xml:2517(term)
+#: ref/psql-ref.xml:2520(term)
 msgid "<literal>tuples_only</literal> (or <literal>t</literal>)"
 msgstr "<literal>tuples_only</literal> (или <literal>t</literal>)"
 
-#: ref/psql-ref.xml:2519(para)
+#: ref/psql-ref.xml:2522(para)
 msgid ""
 "If <replaceable class=\"parameter\">value</replaceable> is specified it must "
 "be either <literal>on</literal> or <literal>off</literal> which will enable "
@@ -3883,11 +3891,11 @@ msgstr ""
 "различные колонтитулы. В режиме вывода только кортежей отображаются только "
 "фактические табличные данные."
 
-#: ref/psql-ref.xml:2533(literal)
+#: ref/psql-ref.xml:2536(literal)
 msgid "unicode_border_linestyle"
 msgstr "unicode_border_linestyle"
 
-#: ref/psql-ref.xml:2535(para)
+#: ref/psql-ref.xml:2538(para)
 msgid ""
 "Sets the border drawing style for the <literal>unicode</literal> line style "
 "to one of <literal>single</literal> or <literal>double</literal>."
@@ -3896,11 +3904,11 @@ msgstr ""
 "literal>: <literal>single</literal> (одинарный) или <literal>double</"
 "literal> (двойной)."
 
-#: ref/psql-ref.xml:2544(literal)
+#: ref/psql-ref.xml:2547(literal)
 msgid "unicode_column_linestyle"
 msgstr "unicode_column_linestyle"
 
-#: ref/psql-ref.xml:2546(para)
+#: ref/psql-ref.xml:2549(para)
 msgid ""
 "Sets the column drawing style for the <literal>unicode</literal> line style "
 "to one of <literal>single</literal> or <literal>double</literal>."
@@ -3909,11 +3917,11 @@ msgstr ""
 "literal>: <literal>single</literal> (одинарный) или <literal>double</"
 "literal> (двойной)."
 
-#: ref/psql-ref.xml:2555(literal)
+#: ref/psql-ref.xml:2558(literal)
 msgid "unicode_header_linestyle"
 msgstr "unicode_header_linestyle"
 
-#: ref/psql-ref.xml:2557(para)
+#: ref/psql-ref.xml:2560(para)
 msgid ""
 "Sets the header drawing style for the <literal>unicode</literal> line style "
 "to one of <literal>single</literal> or <literal>double</literal>."
@@ -3922,11 +3930,11 @@ msgstr ""
 "literal>: <literal>single</literal> (одинарный) или <literal>double</"
 "literal> (двойной)."
 
-#: ref/psql-ref.xml:2195(para)
+#: ref/psql-ref.xml:2198(para)
 msgid "Adjustable printing options are: <placeholder-1/>"
 msgstr "Имеются следующие параметры: <placeholder-1/>"
 
-#: ref/psql-ref.xml:2567(para)
+#: ref/psql-ref.xml:2570(para)
 msgid ""
 "Illustrations of how these different formats look can be seen in the <xref "
 "linkend=\"app-psql-examples\" endterm=\"app-psql-examples-title\"/> section."
@@ -3935,7 +3943,7 @@ msgstr ""
 "разделе <xref linkend=\"app-psql-examples\" endterm=\"app-psql-examples-title"
 "\"/>."
 
-#: ref/psql-ref.xml:2574(para)
+#: ref/psql-ref.xml:2577(para)
 msgid ""
 "There are various shortcut commands for <command>\\pset</command>. See "
 "<command>\\a</command>, <command>\\C</command>, <command>\\H</command>, "
@@ -3945,11 +3953,11 @@ msgstr ""
 "См. <command>\\a</command>, <command>\\C</command>, <command>\\H</command>, "
 "<command>\\t</command>, <command>\\T</command> и <command>\\x</command>."
 
-#: ref/psql-ref.xml:2586(term)
+#: ref/psql-ref.xml:2589(term)
 msgid "<literal>\\q</literal> or <literal>\\quit</literal>"
 msgstr "<literal>\\q</literal> или <literal>\\quit</literal>"
 
-#: ref/psql-ref.xml:2588(para)
+#: ref/psql-ref.xml:2591(para)
 msgid ""
 "Quits the <application>psql</application> program. In a script file, only "
 "execution of that script is terminated."
@@ -3957,11 +3965,11 @@ msgstr ""
 "Выход из <application>psql</application>. При использовании в скрипте "
 "прекращается только выполнение этого скрипта."
 
-#: ref/psql-ref.xml:2597(literal)
+#: ref/psql-ref.xml:2600(literal)
 msgid "\\qecho <placeholder-1/> [ ... ]"
 msgstr "\\qecho <placeholder-1/> [ ... ]"
 
-#: ref/psql-ref.xml:2599(para)
+#: ref/psql-ref.xml:2602(para)
 msgid ""
 "This command is identical to <command>\\echo</command> except that the "
 "output will be written to the query output channel, as set by <command>\\o</"
@@ -3971,19 +3979,19 @@ msgstr ""
 "вывод будет записываться в канал вывода запросов, установленный <command>"
 "\\o</command>."
 
-#: ref/psql-ref.xml:2609(term)
+#: ref/psql-ref.xml:2612(term)
 msgid "<literal>\\r</literal> or <literal>\\reset</literal>"
 msgstr "<literal>\\r</literal> или <literal>\\reset</literal>"
 
-#: ref/psql-ref.xml:2611(para)
+#: ref/psql-ref.xml:2614(para)
 msgid "Resets (clears) the query buffer."
 msgstr "Сбрасывает (очищает) буфер запроса."
 
-#: ref/psql-ref.xml:2619(literal)
+#: ref/psql-ref.xml:2622(literal)
 msgid "\\s [ <placeholder-1/> ]"
 msgstr "\\s [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:2621(para)
+#: ref/psql-ref.xml:2624(para)
 msgid ""
 "Print <application>psql</application>'s command line history to <replaceable "
 "class=\"parameter\">filename</replaceable>. If <replaceable class=\"parameter"
@@ -3999,11 +4007,11 @@ msgstr ""
 "уместно). Этот параметр недоступен, если <application>psql</application> был "
 "собран без поддержки <application>Readline</application>."
 
-#: ref/psql-ref.xml:2635(literal)
+#: ref/psql-ref.xml:2638(literal)
 msgid "\\set [ <placeholder-1/> [ <placeholder-2/> [ ... ] ] ]"
 msgstr "\\set [ <placeholder-1/> [ <placeholder-2/> [ ... ] ] ]"
 
-#: ref/psql-ref.xml:2638(para)
+#: ref/psql-ref.xml:2641(para)
 msgid ""
 "Sets the <application>psql</application> variable <replaceable class="
 "\"parameter\">name</replaceable> to <replaceable class=\"parameter\">value</"
@@ -4018,7 +4026,7 @@ msgstr ""
 "присваивается пустое значение. Для удаления переменной используйте команду "
 "<command>\\unset</command>."
 
-#: ref/psql-ref.xml:2647(para)
+#: ref/psql-ref.xml:2650(para)
 msgid ""
 "<command>\\set</command> without any arguments displays the names and values "
 "of all currently-set <application>psql</application> variables."
@@ -4026,7 +4034,7 @@ msgstr ""
 "<command>\\set</command> без аргументов выводит имена и значения всех "
 "<application>psql</application> переменных, установленных в настоящее время."
 
-#: ref/psql-ref.xml:2651(para)
+#: ref/psql-ref.xml:2654(para)
 msgid ""
 "Valid variable names can contain letters, digits, and underscores. See the "
 "section <xref linkend=\"app-psql-variables\" endterm=\"app-psql-variables-"
@@ -4036,7 +4044,7 @@ msgstr ""
 "Подробнее см. раздел <xref linkend=\"app-psql-variables\" endterm=\"app-psql-"
 "variables-title\"/> ниже. Имена переменных чувствительны к регистру."
 
-#: ref/psql-ref.xml:2659(para)
+#: ref/psql-ref.xml:2662(para)
 msgid ""
 "Although you are welcome to set any variable to anything you want, "
 "<application>psql</application> treats several variables as special. They "
@@ -4046,7 +4054,7 @@ msgstr ""
 "application> рассматривает несколько переменных особым образом. Они "
 "документированы в разделе о переменных."
 
-#: ref/psql-ref.xml:2666(para)
+#: ref/psql-ref.xml:2669(para)
 msgid ""
 "This command is unrelated to the <acronym>SQL</acronym> command <xref "
 "linkend=\"sql-set\"/>."
@@ -4054,11 +4062,11 @@ msgstr ""
 "Эта команда не имеет отношения к <acronym>SQL</acronym>-команде <xref "
 "linkend=\"sql-set\"/>."
 
-#: ref/psql-ref.xml:2676(literal)
+#: ref/psql-ref.xml:2679(literal)
 msgid "\\setenv <placeholder-1/> [ <placeholder-2/> ]"
 msgstr "\\setenv <placeholder-1/> [ <placeholder-2/> ]"
 
-#: ref/psql-ref.xml:2685(programlisting)
+#: ref/psql-ref.xml:2688(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\setenv PAGER less</userinput>\n"
@@ -4067,7 +4075,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\setenv PAGER less</userinput>\n"
 "testdb=&gt; <userinput>\\setenv LESS -imx4F</userinput>"
 
-#: ref/psql-ref.xml:2679(para)
+#: ref/psql-ref.xml:2682(para)
 msgid ""
 "Sets the environment variable <replaceable class=\"parameter\">name</"
 "replaceable> to <replaceable class=\"parameter\">value</replaceable>, or if "
@@ -4079,11 +4087,11 @@ msgstr ""
 "или, если <replaceable class=\"parameter\">value</replaceable> не задано, "
 "удаляет переменную среды. Пример: <placeholder-1/>"
 
-#: ref/psql-ref.xml:2691(literal)
+#: ref/psql-ref.xml:2694(literal)
 msgid "\\sf[+] <placeholder-1/>"
 msgstr "\\sf[+] <placeholder-1/>"
 
-#: ref/psql-ref.xml:2694(para)
+#: ref/psql-ref.xml:2697(para)
 msgid ""
 "This command fetches and shows the definition of the named function, in the "
 "form of a <command>CREATE OR REPLACE FUNCTION</command> command. The "
@@ -4095,7 +4103,7 @@ msgstr ""
 "печатается в текущий канал вывода запросов, установленный <command>\\o</"
 "command>."
 
-#: ref/psql-ref.xml:2708(para)
+#: ref/psql-ref.xml:2711(para)
 msgid ""
 "If <literal>+</literal> is appended to the command name, then the output "
 "lines are numbered, with the first line of the function body being line 1."
@@ -4103,11 +4111,11 @@ msgstr ""
 "При добавлении <literal>+</literal> к имени команды строки вывода "
 "нумеруются, первая строка тела функции получит номер 1."
 
-#: ref/psql-ref.xml:2718(literal)
+#: ref/psql-ref.xml:2721(literal)
 msgid "\\sv[+] <placeholder-1/>"
 msgstr "\\sv[+] <placeholder-1/>"
 
-#: ref/psql-ref.xml:2721(para)
+#: ref/psql-ref.xml:2724(para)
 msgid ""
 "This command fetches and shows the definition of the named view, in the form "
 "of a <command>CREATE OR REPLACE VIEW</command> command. The definition is "
@@ -4119,7 +4127,7 @@ msgstr ""
 "выводится в текущий канал вывода запросов, установленный <command>\\o</"
 "command>."
 
-#: ref/psql-ref.xml:2728(para)
+#: ref/psql-ref.xml:2731(para)
 msgid ""
 "If <literal>+</literal> is appended to the command name, then the output "
 "lines are numbered from 1."
@@ -4127,11 +4135,11 @@ msgstr ""
 "При добавлении <literal>+</literal> к имени команды строки вывода "
 "нумеруются, начиная с 1."
 
-#: ref/psql-ref.xml:2737(literal)
+#: ref/psql-ref.xml:2740(literal)
 msgid "\\t"
 msgstr "\\t"
 
-#: ref/psql-ref.xml:2739(para)
+#: ref/psql-ref.xml:2742(para)
 msgid ""
 "Toggles the display of output column name headings and row count footer. "
 "This command is equivalent to <literal>\\pset tuples_only</literal> and is "
@@ -4141,11 +4149,11 @@ msgstr ""
 "количеством выбранных записей для запросов. Эта команда эквивалентна "
 "<literal>\\pset tuples_only</literal> и предоставлена для удобства."
 
-#: ref/psql-ref.xml:2749(literal)
+#: ref/psql-ref.xml:2752(literal)
 msgid "\\T <placeholder-1/>"
 msgstr "\\T <placeholder-1/>"
 
-#: ref/psql-ref.xml:2751(para)
+#: ref/psql-ref.xml:2754(para)
 msgid ""
 "Specifies attributes to be placed within the <sgmltag>table</sgmltag> tag in "
 "<acronym>HTML</acronym> output format. This command is equivalent to "
@@ -4157,19 +4165,19 @@ msgstr ""
 "эквивалентна <literal>\\pset tableattr <replaceable class=\"parameter"
 "\">table_options</replaceable></literal>."
 
-#: ref/psql-ref.xml:2763(replaceable) ref/psql-ref.xml:2813(replaceable)
+#: ref/psql-ref.xml:2766(replaceable) ref/psql-ref.xml:2816(replaceable)
 msgid "on"
 msgstr "on"
 
-#: ref/psql-ref.xml:2763(replaceable) ref/psql-ref.xml:2813(replaceable)
+#: ref/psql-ref.xml:2766(replaceable) ref/psql-ref.xml:2816(replaceable)
 msgid "off"
 msgstr "off"
 
-#: ref/psql-ref.xml:2763(literal)
+#: ref/psql-ref.xml:2766(literal)
 msgid "\\timing [ <placeholder-1/> | <placeholder-2/> ]"
 msgstr "\\timing [ <placeholder-1/> | <placeholder-2/> ]"
 
-#: ref/psql-ref.xml:2765(para)
+#: ref/psql-ref.xml:2768(para)
 msgid ""
 "Without parameter, toggles a display of how long each SQL statement takes, "
 "in milliseconds. With parameter, sets same."
@@ -4178,11 +4186,11 @@ msgstr ""
 "миллисекундах. Без параметра переключает текущий режим отображения времени "
 "выполнения."
 
-#: ref/psql-ref.xml:2774(literal)
+#: ref/psql-ref.xml:2777(literal)
 msgid "\\unset <placeholder-1/>"
 msgstr "\\unset <placeholder-1/>"
 
-#: ref/psql-ref.xml:2777(para)
+#: ref/psql-ref.xml:2780(para)
 msgid ""
 "Unsets (deletes) the <application>psql</application> variable <replaceable "
 "class=\"parameter\">name</replaceable>."
@@ -4190,7 +4198,7 @@ msgstr ""
 "Удаляет <application>psql</application> переменную <replaceable class="
 "\"parameter\">name</replaceable>."
 
-#: ref/psql-ref.xml:2786(term)
+#: ref/psql-ref.xml:2789(term)
 msgid ""
 "<literal>\\w</literal> or <literal>\\write</literal> <replaceable class="
 "\"parameter\">filename</replaceable>"
@@ -4198,7 +4206,7 @@ msgstr ""
 "<literal>\\w</literal> или <literal>\\write</literal> <replaceable class="
 "\"parameter\">filename</replaceable>"
 
-#: ref/psql-ref.xml:2787(term)
+#: ref/psql-ref.xml:2790(term)
 msgid ""
 "<literal>\\w</literal> or <literal>\\write</literal> <literal>|</"
 "literal><replaceable class=\"parameter\">command</replaceable>"
@@ -4206,7 +4214,7 @@ msgstr ""
 "<literal>\\w</literal> или <literal>\\write</literal> <literal>|</"
 "literal><replaceable class=\"parameter\">command</replaceable>"
 
-#: ref/psql-ref.xml:2789(para)
+#: ref/psql-ref.xml:2792(para)
 msgid ""
 "Outputs the current query buffer to the file <replaceable class=\"parameter"
 "\">filename</replaceable> or pipes it to the shell command <replaceable "
@@ -4216,15 +4224,15 @@ msgstr ""
 "\">filename</replaceable> или передаёт в команду ОС <replaceable class="
 "\"parameter\">command</replaceable>."
 
-#: ref/psql-ref.xml:2799(replaceable)
+#: ref/psql-ref.xml:2802(replaceable)
 msgid "seconds"
 msgstr "секунды"
 
-#: ref/psql-ref.xml:2799(literal)
+#: ref/psql-ref.xml:2802(literal)
 msgid "\\watch [ <placeholder-1/> ]"
 msgstr "\\watch [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:2801(para)
+#: ref/psql-ref.xml:2804(para)
 msgid ""
 "Repeatedly execute the current query buffer (as <literal>\\g</literal> does) "
 "until interrupted or the query fails. Wait the specified number of seconds "
@@ -4239,15 +4247,15 @@ msgstr ""
 "\\pset title</literal> (если она задана), время запуска запроса и интервал "
 "задержки."
 
-#: ref/psql-ref.xml:2813(replaceable)
+#: ref/psql-ref.xml:2816(replaceable)
 msgid "auto"
 msgstr "auto"
 
-#: ref/psql-ref.xml:2813(literal)
+#: ref/psql-ref.xml:2816(literal)
 msgid "\\x [ <placeholder-1/> | <placeholder-2/> | <placeholder-3/> ]"
 msgstr "\\x [ <placeholder-1/> | <placeholder-2/> | <placeholder-3/> ]"
 
-#: ref/psql-ref.xml:2815(para)
+#: ref/psql-ref.xml:2818(para)
 msgid ""
 "Sets or toggles expanded table formatting mode. As such it is equivalent to "
 "<literal>\\pset expanded</literal>."
@@ -4255,11 +4263,11 @@ msgstr ""
 "Устанавливает или переключает режим развёрнутого вывода таблицы. Это "
 "эквивалентно <literal>\\pset expanded</literal>."
 
-#: ref/psql-ref.xml:2824(literal)
+#: ref/psql-ref.xml:2827(literal)
 msgid "\\z [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 msgstr "\\z [ <link linkend=\"app-psql-patterns\"><placeholder-1/></link> ]"
 
-#: ref/psql-ref.xml:2826(para)
+#: ref/psql-ref.xml:2829(para)
 msgid ""
 "Lists tables, views and sequences with their associated access privileges. "
 "If a <replaceable class=\"parameter\">pattern</replaceable> is specified, "
@@ -4270,7 +4278,7 @@ msgstr ""
 "отображаются только таблицы, представления и последовательности, имена "
 "которых соответствуют ему."
 
-#: ref/psql-ref.xml:2834(para)
+#: ref/psql-ref.xml:2837(para)
 msgid ""
 "This is an alias for <command>\\dp</command> (<quote>display privileges</"
 "quote>)."
@@ -4278,11 +4286,11 @@ msgstr ""
 "Это псевдоним для <command>\\dp</command> (<quote>показать права доступа</"
 "quote>)."
 
-#: ref/psql-ref.xml:2843(literal)
+#: ref/psql-ref.xml:2846(literal)
 msgid "\\! [ <placeholder-1/> ]"
 msgstr "\\! [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:2845(para)
+#: ref/psql-ref.xml:2848(para)
 msgid ""
 "Escapes to a separate shell or executes the shell command <replaceable class="
 "\"parameter\">command</replaceable>. The arguments are not further "
@@ -4296,11 +4304,11 @@ msgstr ""
 "применяются правила подстановки переменных и экранирование с обратной косой "
 "чертой."
 
-#: ref/psql-ref.xml:2857(literal)
+#: ref/psql-ref.xml:2860(literal)
 msgid "\\? [ <placeholder-1/> ]"
 msgstr "\\? [ <placeholder-1/> ]"
 
-#: ref/psql-ref.xml:2859(para)
+#: ref/psql-ref.xml:2862(para)
 msgid ""
 "Shows help information. The optional <replaceable class=\"parameter\">topic</"
 "replaceable> parameter (defaulting to <literal>commands</literal>) selects "
@@ -4324,15 +4332,15 @@ msgstr ""
 msgid "The following meta-commands are defined: <placeholder-1/>"
 msgstr "Определены следующие метакоманды: <placeholder-1/>"
 
-#: ref/psql-ref.xml:2876(title)
+#: ref/psql-ref.xml:2879(title)
 msgid "Patterns"
 msgstr "Шаблоны поиска"
 
-#: ref/psql-ref.xml:2878(indexterm)
+#: ref/psql-ref.xml:2881(indexterm)
 msgid "<primary>patterns</primary><secondary>in psql and pg_dump</secondary>"
 msgstr "<primary>шаблоны</primary><secondary>в psql и pg_dump</secondary>"
 
-#: ref/psql-ref.xml:2882(para)
+#: ref/psql-ref.xml:2885(para)
 msgid ""
 "The various <literal>\\d</literal> commands accept a <replaceable class="
 "\"parameter\">pattern</replaceable> parameter to specify the object name(s) "
@@ -4365,7 +4373,7 @@ msgstr ""
 "двойные кавычки только часть шаблона, например <literal>\\dt FOO\"FOO\"BAR</"
 "literal> будет выводить таблицу с именем <literal>fooFOObar</literal>."
 
-#: ref/psql-ref.xml:2901(para)
+#: ref/psql-ref.xml:2904(para)
 msgid ""
 "Whenever the <replaceable class=\"parameter\">pattern</replaceable> "
 "parameter is omitted completely, the <literal>\\d</literal> commands display "
@@ -4388,7 +4396,7 @@ msgstr ""
 "объекты в базе данных, независимо от видимости, в качестве шаблона "
 "используется <literal>*.*</literal>."
 
-#: ref/psql-ref.xml:2915(para)
+#: ref/psql-ref.xml:2918(para)
 msgid ""
 "Within a pattern, <literal>*</literal> matches any sequence of characters "
 "(including no characters) and <literal>?</literal> matches any single "
@@ -4406,7 +4414,7 @@ msgstr ""
 "<literal>?</literal> теряют своё специальное значение и становятся обычными "
 "символами."
 
-#: ref/psql-ref.xml:2925(para)
+#: ref/psql-ref.xml:2928(para)
 msgid ""
 "A pattern that contains a dot (<literal>.</literal>) is interpreted as a "
 "schema name pattern followed by an object name pattern. For example, "
@@ -4424,7 +4432,7 @@ msgstr ""
 "только объекты текущей схемы. Опять же, точка внутри двойных кавычек теряет "
 "своё специальное значение."
 
-#: ref/psql-ref.xml:2936(para)
+#: ref/psql-ref.xml:2939(para)
 msgid ""
 "Advanced users can use regular-expression notations such as character "
 "classes, for example <literal>[0-9]</literal> to match any digit. All "
@@ -4473,15 +4481,15 @@ msgstr ""
 "действуют в шаблонах для имён операторов (т. е. в аргументе команды <literal>"
 "\\do</literal>)."
 
-#: ref/psql-ref.xml:2965(title)
+#: ref/psql-ref.xml:2968(title)
 msgid "Advanced Features"
 msgstr "Расширенные возможности"
 
-#: ref/psql-ref.xml:2968(title)
+#: ref/psql-ref.xml:2971(title)
 msgid "Variables"
 msgstr "Переменные"
 
-#: ref/psql-ref.xml:2970(para)
+#: ref/psql-ref.xml:2973(para)
 msgid ""
 "<application>psql</application> provides variable substitution features "
 "similar to common Unix command shells. Variables are simply name/value "
@@ -4494,12 +4502,12 @@ msgstr ""
 "любая строка любой длины. Имя должно состоять из букв (включая нелатинские "
 "буквы), цифр и знаков подчёркивания."
 
-#: ref/psql-ref.xml:2981(programlisting)
+#: ref/psql-ref.xml:2984(programlisting)
 #, no-wrap
 msgid "testdb=&gt; <userinput>\\set foo bar</userinput>"
 msgstr "testdb=&gt; <userinput>\\set foo bar</userinput>"
 
-#: ref/psql-ref.xml:2985(programlisting)
+#: ref/psql-ref.xml:2988(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\echo :foo</userinput>\n"
@@ -4508,7 +4516,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\echo :foo</userinput>\n"
 "bar"
 
-#: ref/psql-ref.xml:2978(para)
+#: ref/psql-ref.xml:2981(para)
 msgid ""
 "To set a variable, use the <application>psql</application> meta-command "
 "<command>\\set</command>. For example, <placeholder-1/> sets the variable "
@@ -4526,7 +4534,7 @@ msgstr ""
 "командах, так и в метакомандах; подробности в разделе <xref linkend=\"app-"
 "psql-interpolation\" endterm=\"app-psql-interpolation-title\"/> ниже."
 
-#: ref/psql-ref.xml:2992(para)
+#: ref/psql-ref.xml:2995(para)
 msgid ""
 "If you call <command>\\set</command> without a second argument, the variable "
 "is set, with an empty string as value. To unset (i.e., delete) a variable, "
@@ -4538,7 +4546,7 @@ msgstr ""
 "<command>\\unset</command>. Чтобы посмотреть значения всех переменных, нужно "
 "вызвать <command>\\set</command> без аргументов."
 
-#: ref/psql-ref.xml:3000(para)
+#: ref/psql-ref.xml:3003(para)
 msgid ""
 "The arguments of <command>\\set</command> are subject to the same "
 "substitution rules as with other commands. Thus you can construct "
@@ -4559,7 +4567,7 @@ msgstr ""
 "сделать ничего полезного. С другой стороны, <literal>\\set bar :foo</"
 "literal> является прекрасным способом копирования переменной."
 
-#: ref/psql-ref.xml:3014(para)
+#: ref/psql-ref.xml:3017(para)
 msgid ""
 "A number of these variables are treated specially by <application>psql</"
 "application>. They represent certain option settings that can be changed at "
@@ -4584,15 +4592,15 @@ msgstr ""
 "для собственных переменных. Далее идет список переменных, обрабатываемых "
 "особым образом."
 
-#: ref/psql-ref.xml:3032(varname)
+#: ref/psql-ref.xml:3035(varname)
 msgid "AUTOCOMMIT"
 msgstr "AUTOCOMMIT"
 
-#: ref/psql-ref.xml:3033(indexterm)
+#: ref/psql-ref.xml:3036(indexterm)
 msgid "<primary>autocommit</primary><secondary>psql</secondary>"
 msgstr "<primary>autocommit</primary><secondary>psql</secondary>"
 
-#: ref/psql-ref.xml:3038(para)
+#: ref/psql-ref.xml:3041(para)
 msgid ""
 "When <literal>on</literal> (the default), each SQL command is automatically "
 "committed upon successful completion. To postpone commit in this mode, you "
@@ -4618,7 +4626,7 @@ msgstr ""
 "транзакциями; перед командой, которая не может выполняться внутри "
 "транзакционного блока (например <command>VACUUM</command>)."
 
-#: ref/psql-ref.xml:3053(para)
+#: ref/psql-ref.xml:3056(para)
 msgid ""
 "In autocommit-off mode, you must explicitly abandon any failed transaction "
 "by entering <command>ABORT</command> or <command>ROLLBACK</command>. Also "
@@ -4631,7 +4639,7 @@ msgstr ""
 "виду, что при выходе из сессии без фиксации изменений несохранённые "
 "изменения будут потеряны."
 
-#: ref/psql-ref.xml:3062(para)
+#: ref/psql-ref.xml:3065(para)
 msgid ""
 "The autocommit-on mode is <productname>PostgreSQL</productname>'s "
 "traditional behavior, but autocommit-off is closer to the SQL spec. If you "
@@ -4644,11 +4652,11 @@ msgstr ""
 "literal>, это можно сделать в общесистемном файле <filename>psqlrc</"
 "filename> или в персональном файле <filename>~/.psqlrc</filename>."
 
-#: ref/psql-ref.xml:3074(varname)
+#: ref/psql-ref.xml:3077(varname)
 msgid "COMP_KEYWORD_CASE"
 msgstr "COMP_KEYWORD_CASE"
 
-#: ref/psql-ref.xml:3076(para)
+#: ref/psql-ref.xml:3079(para)
 msgid ""
 "Determines which letter case to use when completing an SQL key word. If set "
 "to <literal>lower</literal> or <literal>upper</literal>, the completed word "
@@ -4667,11 +4675,11 @@ msgstr ""
 "слова, завершаемые полностью, будут в нижнем или верхнем регистре "
 "соответственно."
 
-#: ref/psql-ref.xml:3090(varname)
+#: ref/psql-ref.xml:3093(varname)
 msgid "DBNAME"
 msgstr "DBNAME"
 
-#: ref/psql-ref.xml:3092(para)
+#: ref/psql-ref.xml:3095(para)
 msgid ""
 "The name of the database you are currently connected to. This is set every "
 "time you connect to a database (including program start-up), but can be "
@@ -4681,11 +4689,11 @@ msgstr ""
 "при подключении к базе данных (в том числе при старте программы), но эту "
 "переменную можно удалить."
 
-#: ref/psql-ref.xml:3101(varname)
+#: ref/psql-ref.xml:3104(varname)
 msgid "ECHO"
 msgstr "ECHO"
 
-#: ref/psql-ref.xml:3103(para)
+#: ref/psql-ref.xml:3106(para)
 msgid ""
 "If set to <literal>all</literal>, all nonempty input lines are printed to "
 "standard output as they are read. (This does not apply to lines read "
@@ -4710,11 +4718,11 @@ msgstr ""
 "вариантом <literal>none</literal> (либо другим вариантом, кроме "
 "перечисленных) запросы не выводятся."
 
-#: ref/psql-ref.xml:3121(varname)
+#: ref/psql-ref.xml:3124(varname)
 msgid "ECHO_HIDDEN"
 msgstr "ECHO_HIDDEN"
 
-#: ref/psql-ref.xml:3123(para)
+#: ref/psql-ref.xml:3126(para)
 msgid ""
 "When this variable is set to <literal>on</literal> and a backslash command "
 "queries the database, the query is first shown. This feature helps you to "
@@ -4733,19 +4741,19 @@ msgstr ""
 "option>.) При установке переменной в значение <literal>noexec</literal> "
 "запросы просто отображаются, но не отправляются на сервер и не выполняются."
 
-#: ref/psql-ref.xml:3137(varname)
+#: ref/psql-ref.xml:3140(varname)
 msgid "ENCODING"
 msgstr "ENCODING"
 
-#: ref/psql-ref.xml:3139(para)
+#: ref/psql-ref.xml:3142(para)
 msgid "The current client character set encoding."
 msgstr "Содержит текущую кодировку набора символов клиента."
 
-#: ref/psql-ref.xml:3146(varname)
+#: ref/psql-ref.xml:3149(varname)
 msgid "FETCH_COUNT"
 msgstr "FETCH_COUNT"
 
-#: ref/psql-ref.xml:3148(para)
+#: ref/psql-ref.xml:3151(para)
 msgid ""
 "If this variable is set to an integer value &gt; 0, the results of "
 "<command>SELECT</command> queries are fetched and displayed in groups of "
@@ -4764,7 +4772,7 @@ msgstr ""
 "Имейте в виду, что запрос может завершиться ошибкой после отображения "
 "некоторого количества строк."
 
-#: ref/psql-ref.xml:3161(para)
+#: ref/psql-ref.xml:3164(para)
 msgid ""
 "Although you can use any output format with this feature, the default "
 "<literal>aligned</literal> format tends to look bad because each group of "
@@ -4778,11 +4786,11 @@ msgstr ""
 "может привести к разной ширине столбцов в разных группах. Остальные форматы "
 "вывода работают лучше."
 
-#: ref/psql-ref.xml:3173(varname)
+#: ref/psql-ref.xml:3176(varname)
 msgid "HISTCONTROL"
 msgstr "HISTCONTROL"
 
-#: ref/psql-ref.xml:3175(para)
+#: ref/psql-ref.xml:3178(para)
 msgid ""
 "If this variable is set to <literal>ignorespace</literal>, lines which begin "
 "with a space are not entered into the history list. If set to a value of "
@@ -4800,8 +4808,8 @@ msgstr ""
 "(либо другим вариантом, кроме перечисленных) в истории сохраняются все "
 "строки, считываемые в интерактивном режиме."
 
-#: ref/psql-ref.xml:3186(para) ref/psql-ref.xml:3206(para)
-#: ref/psql-ref.xml:3222(para) ref/psql-ref.xml:3254(para)
+#: ref/psql-ref.xml:3189(para) ref/psql-ref.xml:3209(para)
+#: ref/psql-ref.xml:3225(para) ref/psql-ref.xml:3257(para)
 msgid ""
 "This feature was shamelessly plagiarized from <application>Bash</"
 "application>."
@@ -4809,16 +4817,16 @@ msgstr ""
 "Эта функциональность была бессовестно списана с <application>Bash</"
 "application>."
 
-#: ref/psql-ref.xml:3195(varname)
+#: ref/psql-ref.xml:3198(varname)
 msgid "HISTFILE"
 msgstr "HISTFILE"
 
-#: ref/psql-ref.xml:3200(programlisting)
+#: ref/psql-ref.xml:3203(programlisting)
 #, no-wrap
 msgid "\\set HISTFILE ~/.psql_history- :DBNAME"
 msgstr "\\set HISTFILE ~/.psql_history- :DBNAME"
 
-#: ref/psql-ref.xml:3197(para)
+#: ref/psql-ref.xml:3200(para)
 msgid ""
 "The file name that will be used to store the history list. The default value "
 "is <filename>~/.psql_history</filename>. For example, putting: "
@@ -4831,21 +4839,21 @@ msgstr ""
 "<filename>~/.psqlrc</filename>, <application>psql</application> будет "
 "поддерживать отдельную историю для каждой базы данных."
 
-#: ref/psql-ref.xml:3215(varname)
+#: ref/psql-ref.xml:3218(varname)
 msgid "HISTSIZE"
 msgstr "HISTSIZE"
 
-#: ref/psql-ref.xml:3217(para)
+#: ref/psql-ref.xml:3220(para)
 msgid ""
 "The number of commands to store in the command history. The default value is "
 "500."
 msgstr "Количество команд для хранения в истории. Значение по умолчанию 500."
 
-#: ref/psql-ref.xml:3231(varname)
+#: ref/psql-ref.xml:3234(varname)
 msgid "HOST"
 msgstr "HOST"
 
-#: ref/psql-ref.xml:3233(para)
+#: ref/psql-ref.xml:3236(para)
 msgid ""
 "The database server host you are currently connected to. This is set every "
 "time you connect to a database (including program start-up), but can be "
@@ -4855,11 +4863,11 @@ msgstr ""
 "подключены. Устанавливается всякий раз при подключении к базе данных (в том "
 "числе при старте программы), но эту переменную можно удалить."
 
-#: ref/psql-ref.xml:3242(varname)
+#: ref/psql-ref.xml:3245(varname)
 msgid "IGNOREEOF"
 msgstr "IGNOREEOF"
 
-#: ref/psql-ref.xml:3244(para)
+#: ref/psql-ref.xml:3247(para)
 msgid ""
 "If unset, sending an <acronym>EOF</acronym> character (usually <keycombo "
 "action=\"simul\"><keycap>Control</keycap><keycap>D</keycap></keycombo>) to "
@@ -4876,11 +4884,11 @@ msgstr ""
 "прежде чем приложение завершит работу. Если переменная установлена, но имеет "
 "не числовое значение, подразумевается 10."
 
-#: ref/psql-ref.xml:3263(varname)
+#: ref/psql-ref.xml:3266(varname)
 msgid "LASTOID"
 msgstr "LASTOID"
 
-#: ref/psql-ref.xml:3265(para)
+#: ref/psql-ref.xml:3268(para)
 msgid ""
 "The value of the last affected OID, as returned from an <command>INSERT</"
 "command> or <command>\\lo_import</command> command. This variable is only "
@@ -4892,15 +4900,15 @@ msgstr ""
 "гарантируется до тех пор, пока не будет отображён результат следующей "
 "<acronym>SQL</acronym>-команды."
 
-#: ref/psql-ref.xml:3277(varname)
+#: ref/psql-ref.xml:3280(varname)
 msgid "ON_ERROR_ROLLBACK"
 msgstr "ON_ERROR_ROLLBACK"
 
-#: ref/psql-ref.xml:3278(indexterm)
+#: ref/psql-ref.xml:3281(indexterm)
 msgid "<primary>rollback</primary><secondary>psql</secondary>"
 msgstr "<primary>rollback</primary><secondary>psql</secondary>"
 
-#: ref/psql-ref.xml:3283(para)
+#: ref/psql-ref.xml:3286(para)
 msgid ""
 "When set to <literal>on</literal>, if a statement in a transaction block "
 "generates an error, the error is ignored and the transaction continues. When "
@@ -4922,11 +4930,11 @@ msgstr ""
 "<command>SAVEPOINT</command> перед каждой командой в транзакционном блоке и "
 "откатом к точке сохранения в случае ошибки."
 
-#: ref/psql-ref.xml:3299(varname)
+#: ref/psql-ref.xml:3302(varname)
 msgid "ON_ERROR_STOP"
 msgstr "ON_ERROR_STOP"
 
-#: ref/psql-ref.xml:3301(para)
+#: ref/psql-ref.xml:3304(para)
 msgid ""
 "By default, command processing continues after an error. When this variable "
 "is set to <literal>on</literal>, processing will instead stop immediately. "
@@ -4950,11 +4958,11 @@ msgstr ""
 "немедленно прекращено. Если высокоуровневая командная строка содержит "
 "несколько SQL-команд, выполнение завершится на текущей команде."
 
-#: ref/psql-ref.xml:3318(varname)
+#: ref/psql-ref.xml:3321(varname)
 msgid "PORT"
 msgstr "PORT"
 
-#: ref/psql-ref.xml:3320(para)
+#: ref/psql-ref.xml:3323(para)
 msgid ""
 "The database server port to which you are currently connected. This is set "
 "every time you connect to a database (including program start-up), but can "
@@ -4964,19 +4972,19 @@ msgstr ""
 "Устанавливается всякий раз при подключении к базе данных (в том числе при "
 "старте программы), но эту переменную можно удалить."
 
-#: ref/psql-ref.xml:3329(varname)
+#: ref/psql-ref.xml:3332(varname)
 msgid "PROMPT1"
 msgstr "PROMPT1"
 
-#: ref/psql-ref.xml:3330(varname)
+#: ref/psql-ref.xml:3333(varname)
 msgid "PROMPT2"
 msgstr "PROMPT2"
 
-#: ref/psql-ref.xml:3331(varname)
+#: ref/psql-ref.xml:3334(varname)
 msgid "PROMPT3"
 msgstr "PROMPT3"
 
-#: ref/psql-ref.xml:3333(para)
+#: ref/psql-ref.xml:3336(para)
 msgid ""
 "These specify what the prompts <application>psql</application> issues should "
 "look like. See <xref linkend=\"app-psql-prompting\" endterm=\"app-psql-"
@@ -4986,11 +4994,11 @@ msgstr ""
 "См. <xref remap=\"4\" linkend=\"app-psql-prompting\" endterm=\"app-psql-"
 "prompting-title\"/>."
 
-#: ref/psql-ref.xml:3343(varname)
+#: ref/psql-ref.xml:3346(varname)
 msgid "QUIET"
 msgstr "QUIET"
 
-#: ref/psql-ref.xml:3345(para)
+#: ref/psql-ref.xml:3348(para)
 msgid ""
 "Setting this variable to <literal>on</literal> is equivalent to the command "
 "line option <option>-q</option>. It is probably not too useful in "
@@ -5000,11 +5008,11 @@ msgstr ""
 "строки <option>-q</option>. Это, вероятно, не слишком полезно в "
 "интерактивном режиме."
 
-#: ref/psql-ref.xml:3354(varname)
+#: ref/psql-ref.xml:3357(varname)
 msgid "SHOW_CONTEXT"
 msgstr "SHOW_CONTEXT"
 
-#: ref/psql-ref.xml:3356(para)
+#: ref/psql-ref.xml:3359(para)
 msgid ""
 "This variable can be set to the values <literal>never</literal>, "
 "<literal>errors</literal>, or <literal>always</literal> to control whether "
@@ -5025,11 +5033,11 @@ msgstr ""
 "<literal>terse</literal>. (Когда вам потребуется подробная версия только что "
 "выданной ошибки, может быть полезна команда <command>\\errverbose</command>.)"
 
-#: ref/psql-ref.xml:3371(varname)
+#: ref/psql-ref.xml:3374(varname)
 msgid "SINGLELINE"
 msgstr "SINGLELINE"
 
-#: ref/psql-ref.xml:3373(para)
+#: ref/psql-ref.xml:3376(para)
 msgid ""
 "Setting this variable to <literal>on</literal> is equivalent to the command "
 "line option <option>-S</option>."
@@ -5037,22 +5045,22 @@ msgstr ""
 "Установка значения <literal>on</literal> эквивалентна параметру командной "
 "строки <option>-S</option>."
 
-#: ref/psql-ref.xml:3381(varname)
+#: ref/psql-ref.xml:3384(varname)
 msgid "SINGLESTEP"
 msgstr "SINGLESTEP"
 
-#: ref/psql-ref.xml:3383(para)
+#: ref/psql-ref.xml:3386(para)
 msgid ""
 "Setting this variable to <literal>on</literal> is equivalent to the command "
 "line option <option>-s</option>."
 msgstr ""
 "Эта переменная эквивалентна параметру командной строки <option>-s</option>."
 
-#: ref/psql-ref.xml:3391(varname)
+#: ref/psql-ref.xml:3394(varname)
 msgid "USER"
 msgstr "USER"
 
-#: ref/psql-ref.xml:3393(para)
+#: ref/psql-ref.xml:3396(para)
 msgid ""
 "The database user you are currently connected as. This is set every time you "
 "connect to a database (including program start-up), but can be unset."
@@ -5061,11 +5069,11 @@ msgstr ""
 "Устанавливается всякий раз при подключении к базе данных (в том числе при "
 "старте программы), но эту переменную можно удалить."
 
-#: ref/psql-ref.xml:3402(varname)
+#: ref/psql-ref.xml:3405(varname)
 msgid "VERBOSITY"
 msgstr "VERBOSITY"
 
-#: ref/psql-ref.xml:3404(para)
+#: ref/psql-ref.xml:3407(para)
 msgid ""
 "This variable can be set to the values <literal>default</literal>, "
 "<literal>verbose</literal>, or <literal>terse</literal> to control the "
@@ -5078,11 +5086,11 @@ msgstr ""
 "\\errverbose</command>, полезную, когда требуется подробная версия только "
 "что выданной ошибки.)"
 
-#: ref/psql-ref.xml:3419(title)
+#: ref/psql-ref.xml:3422(title)
 msgid "<acronym>SQL</acronym> Interpolation"
 msgstr "Интерполяция <acronym>SQL</acronym>"
 
-#: ref/psql-ref.xml:3431(programlisting)
+#: ref/psql-ref.xml:3434(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\set foo 'my_table'</userinput>\n"
@@ -5091,7 +5099,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\set foo 'my_table'</userinput>\n"
 "testdb=&gt; <userinput>SELECT * FROM :foo;</userinput>"
 
-#: ref/psql-ref.xml:3421(para)
+#: ref/psql-ref.xml:3424(para)
 msgid ""
 "A key feature of <application>psql</application> variables is that you can "
 "substitute (<quote>interpolate</quote>) them into regular <acronym>SQL</"
@@ -5118,7 +5126,7 @@ msgstr ""
 "кавычки или даже метакоманды. При применении необходимо убедиться, что это "
 "имеет смысл."
 
-#: ref/psql-ref.xml:3448(programlisting)
+#: ref/psql-ref.xml:3451(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\set foo 'my_table'</userinput>\n"
@@ -5127,7 +5135,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\set foo 'my_table'</userinput>\n"
 "testdb=&gt; <userinput>SELECT * FROM :\"foo\";</userinput>"
 
-#: ref/psql-ref.xml:3439(para)
+#: ref/psql-ref.xml:3442(para)
 msgid ""
 "When a value is to be used as an SQL literal or identifier, it is safest to "
 "arrange for it to be quoted. To quote the value of a variable as an SQL "
@@ -5146,7 +5154,7 @@ msgstr ""
 "специальными символами, которые могут содержаться в значении переменной. "
 "Предыдущий пример более безопасно выглядит так: <placeholder-1/>"
 
-#: ref/psql-ref.xml:3452(para)
+#: ref/psql-ref.xml:3455(para)
 msgid ""
 "Variable interpolation will not be performed within quoted <acronym>SQL</"
 "acronym> literals and identifiers. Therefore, a construction such as "
@@ -5160,7 +5168,7 @@ msgstr ""
 "переменной (и это было бы небезопасно, если бы работало, так как обработка "
 "кавычек внутри значения переменной была бы некорректной)."
 
-#: ref/psql-ref.xml:3465(programlisting)
+#: ref/psql-ref.xml:3468(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\set content `cat my_file.txt`</userinput>\n"
@@ -5169,7 +5177,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\set content `cat my_file.txt`</userinput>\n"
 "testdb=&gt; <userinput>INSERT INTO my_table VALUES (:'content');</userinput>"
 
-#: ref/psql-ref.xml:3460(para)
+#: ref/psql-ref.xml:3463(para)
 msgid ""
 "One example use of this mechanism is to copy the contents of a file into a "
 "table column. First load the file into a variable and then interpolate the "
@@ -5185,7 +5193,7 @@ msgstr ""
 "<filename>my_file.txt</filename> содержит байт NUL. <application>psql</"
 "application> не поддерживает NUL в значениях переменных.)"
 
-#: ref/psql-ref.xml:3471(para)
+#: ref/psql-ref.xml:3474(para)
 msgid ""
 "Since colons can legally appear in SQL commands, an apparent attempt at "
 "interpolation (that is, <literal>:name</literal>, <literal>:'name'</"
@@ -5199,7 +5207,7 @@ msgstr ""
 "не установлена. В любом случае, можно экранировать двоеточие с помощью "
 "обратной косой черты, чтобы предотвратить подстановку."
 
-#: ref/psql-ref.xml:3479(para)
+#: ref/psql-ref.xml:3482(para)
 msgid ""
 "The colon syntax for variables is standard <acronym>SQL</acronym> for "
 "embedded query languages, such as <application>ECPG</application>. The colon "
@@ -5216,11 +5224,11 @@ msgstr ""
 "кавычек для экранирования значения переменной при подстановке в качестве SQL "
 "литерала или идентификатора — это расширение <application>psql</application>."
 
-#: ref/psql-ref.xml:3492(title)
+#: ref/psql-ref.xml:3495(title)
 msgid "Prompting"
 msgstr "Настройка приглашений"
 
-#: ref/psql-ref.xml:3494(para)
+#: ref/psql-ref.xml:3497(para)
 msgid ""
 "The prompts <application>psql</application> issues can be customized to your "
 "preference. The three variables <varname>PROMPT1</varname>, "
@@ -5247,11 +5255,11 @@ msgstr ""
 "команды <command>COPY FROM STDIN</command>, когда в терминале нужно ввести "
 "значение новой строки."
 
-#: ref/psql-ref.xml:3517(literal)
+#: ref/psql-ref.xml:3520(literal)
 msgid "%M"
 msgstr "%M"
 
-#: ref/psql-ref.xml:3519(para)
+#: ref/psql-ref.xml:3522(para)
 msgid ""
 "The full host name (with domain name) of the database server, or "
 "<literal>[local]</literal> if the connection is over a Unix domain socket, "
@@ -5263,11 +5271,11 @@ msgstr ""
 "Unix, либо <literal>[local:<replaceable>/dir/name</replaceable>]</literal>, "
 "если при компиляции был изменён путь доменного сокета Unix по умолчанию."
 
-#: ref/psql-ref.xml:3531(literal)
+#: ref/psql-ref.xml:3534(literal)
 msgid "%m"
 msgstr "%m"
 
-#: ref/psql-ref.xml:3533(para)
+#: ref/psql-ref.xml:3536(para)
 msgid ""
 "The host name of the database server, truncated at the first dot, or "
 "<literal>[local]</literal> if the connection is over a Unix domain socket."
@@ -5276,19 +5284,19 @@ msgstr ""
 "или <literal>[local]</literal>, если подключение выполнено через доменный "
 "сокет Unix."
 
-#: ref/psql-ref.xml:3542(literal)
+#: ref/psql-ref.xml:3545(literal)
 msgid "%&gt;"
 msgstr "%&gt;"
 
-#: ref/psql-ref.xml:3543(para)
+#: ref/psql-ref.xml:3546(para)
 msgid "The port number at which the database server is listening."
 msgstr "Номер порта, который прослушивает сервер базы данных."
 
-#: ref/psql-ref.xml:3547(literal)
+#: ref/psql-ref.xml:3550(literal)
 msgid "%n"
 msgstr "%n"
 
-#: ref/psql-ref.xml:3549(para)
+#: ref/psql-ref.xml:3552(para)
 msgid ""
 "The database session user name. (The expansion of this value might change "
 "during a database session as the result of the command <command>SET SESSION "
@@ -5298,19 +5306,19 @@ msgstr ""
 "меняться в течение сессии в результате выполнения команды <command>SET "
 "SESSION AUTHORIZATION</command>.)"
 
-#: ref/psql-ref.xml:3559(literal)
+#: ref/psql-ref.xml:3562(literal)
 msgid "%/"
 msgstr "%/"
 
-#: ref/psql-ref.xml:3560(para)
+#: ref/psql-ref.xml:3563(para)
 msgid "The name of the current database."
 msgstr "Имя текущей базы данных."
 
-#: ref/psql-ref.xml:3564(literal)
+#: ref/psql-ref.xml:3567(literal)
 msgid "%~"
 msgstr "%~"
 
-#: ref/psql-ref.xml:3565(para)
+#: ref/psql-ref.xml:3568(para)
 msgid ""
 "Like <literal>%/</literal>, but the output is <literal>~</literal> (tilde) "
 "if the database is your default database."
@@ -5318,11 +5326,11 @@ msgstr ""
 "Похоже на <literal>%/</literal>, но выводит тильду <literal>~</literal>, "
 "если текущая база данных совпадает с базой данных по умолчанию."
 
-#: ref/psql-ref.xml:3570(literal)
+#: ref/psql-ref.xml:3573(literal)
 msgid "%#"
 msgstr "%#"
 
-#: ref/psql-ref.xml:3572(para)
+#: ref/psql-ref.xml:3575(para)
 msgid ""
 "If the session user is a database superuser, then a <literal>#</literal>, "
 "otherwise a <literal>&gt;</literal>. (The expansion of this value might "
@@ -5334,19 +5342,19 @@ msgstr ""
 "может меняться в течение сессии в результате выполнения команды <command>SET "
 "SESSION AUTHORIZATION</command>.)"
 
-#: ref/psql-ref.xml:3583(literal)
+#: ref/psql-ref.xml:3586(literal)
 msgid "%p"
 msgstr "%p"
 
-#: ref/psql-ref.xml:3585(para)
+#: ref/psql-ref.xml:3588(para)
 msgid "The process ID of the backend currently connected to."
 msgstr "PID обслуживающего процесса для текущего подключения."
 
-#: ref/psql-ref.xml:3590(literal)
+#: ref/psql-ref.xml:3593(literal)
 msgid "%R"
 msgstr "%R"
 
-#: ref/psql-ref.xml:3592(para)
+#: ref/psql-ref.xml:3595(para)
 msgid ""
 "In prompt 1 normally <literal>=</literal>, but <literal>^</literal> if in "
 "single-line mode, or <literal>!</literal> if the session is disconnected "
@@ -5372,11 +5380,11 @@ msgstr ""
 "долларах; либо <literal>(</literal>, если после открывающей скобки не "
 "хватает закрывающей. В приглашении 3 <literal>%R</literal> не выдаёт ничего."
 
-#: ref/psql-ref.xml:3612(literal)
+#: ref/psql-ref.xml:3615(literal)
 msgid "%x"
 msgstr "%x"
 
-#: ref/psql-ref.xml:3614(para)
+#: ref/psql-ref.xml:3617(para)
 msgid ""
 "Transaction status: an empty string when not in a transaction block, or "
 "<literal>*</literal> when in a transaction block, or <literal>!</literal> "
@@ -5390,37 +5398,37 @@ msgstr ""
 "literal>, когда состояние транзакции не определено (например, нет "
 "подключения к базе данных)."
 
-#: ref/psql-ref.xml:3625(literal)
+#: ref/psql-ref.xml:3628(literal)
 msgid "%l"
 msgstr "%l"
 
-#: ref/psql-ref.xml:3627(para)
+#: ref/psql-ref.xml:3630(para)
 msgid ""
 "The line number inside the current statement, starting from <literal>1</"
 "literal>."
 msgstr "Номер строки в текущем операторе, начиная с <literal>1</literal>."
 
-#: ref/psql-ref.xml:3634(literal)
+#: ref/psql-ref.xml:3637(literal)
 msgid "%"
 msgstr "%"
 
-#: ref/psql-ref.xml:3634(replaceable)
+#: ref/psql-ref.xml:3637(replaceable)
 msgid "digits"
 msgstr "цифры"
 
-#: ref/psql-ref.xml:3636(para)
+#: ref/psql-ref.xml:3639(para)
 msgid "The character with the indicated octal code is substituted."
 msgstr "Подставляется символ с указанным восьмеричным кодом."
 
-#: ref/psql-ref.xml:3643(literal)
+#: ref/psql-ref.xml:3646(literal)
 msgid "%:"
 msgstr "%:"
 
-#: ref/psql-ref.xml:3643(literal)
+#: ref/psql-ref.xml:3646(literal)
 msgid ":"
 msgstr ":"
 
-#: ref/psql-ref.xml:3645(para)
+#: ref/psql-ref.xml:3648(para)
 msgid ""
 "The value of the <application>psql</application> variable <replaceable class="
 "\"parameter\">name</replaceable>. See the section <xref linkend=\"app-psql-"
@@ -5430,15 +5438,15 @@ msgstr ""
 "\"parameter\">имя</replaceable>. За подробностями обратитесь к разделу <xref "
 "linkend=\"app-psql-variables\" endterm=\"app-psql-variables-title\"/>."
 
-#: ref/psql-ref.xml:3655(literal)
+#: ref/psql-ref.xml:3658(literal)
 msgid "%`"
 msgstr "%`"
 
-#: ref/psql-ref.xml:3655(literal)
+#: ref/psql-ref.xml:3658(literal)
 msgid "`"
 msgstr "`"
 
-#: ref/psql-ref.xml:3657(para)
+#: ref/psql-ref.xml:3660(para)
 msgid ""
 "The output of <replaceable class=\"parameter\">command</replaceable>, "
 "similar to ordinary <quote>back-tick</quote> substitution."
@@ -5446,16 +5454,16 @@ msgstr ""
 "Подставляется вывод команды <replaceable class=\"parameter\">command</"
 "replaceable>, как и в обычной подстановке с обратными апострофами."
 
-#: ref/psql-ref.xml:3666(term)
+#: ref/psql-ref.xml:3669(term)
 msgid "<literal>%[</literal> ... <literal>%]</literal>"
 msgstr "<literal>%[</literal> ... <literal>%]</literal>"
 
-#: ref/psql-ref.xml:3677(programlisting)
+#: ref/psql-ref.xml:3680(programlisting)
 #, no-wrap
 msgid "testdb=&gt; \\set PROMPT1 '%[%033[1;33;40m%]%n@%/%R%[%033[0m%]%# '"
 msgstr "testdb=&gt; \\set PROMPT1 '%[%033[1;33;40m%]%n@%/%R%[%033[0m%]%# '"
 
-#: ref/psql-ref.xml:3668(para)
+#: ref/psql-ref.xml:3671(para)
 msgid ""
 "Prompts can contain terminal control characters which, for example, change "
 "the color, background, or style of the prompt text, or change the title of "
@@ -5477,7 +5485,7 @@ msgstr ""
 "черном (<literal>33;40</literal>) приглашение для VT100 совместимых цветных "
 "терминалов."
 
-#: ref/psql-ref.xml:3509(para)
+#: ref/psql-ref.xml:3512(para)
 msgid ""
 "The value of the selected prompt variable is printed literally, except where "
 "a percent sign (<literal>%</literal>) is encountered. Depending on the next "
@@ -5495,7 +5503,7 @@ msgstr ""
 "<varname>PROMPT2</varname> и <literal>'&gt;&gt; '</literal> для "
 "<varname>PROMPT3</varname>."
 
-#: ref/psql-ref.xml:3694(para)
+#: ref/psql-ref.xml:3697(para)
 msgid ""
 "This feature was shamelessly plagiarized from <application>tcsh</"
 "application>."
@@ -5503,11 +5511,11 @@ msgstr ""
 "Эта функциональность была бессовестно списана с <application>tcsh</"
 "application>."
 
-#: ref/psql-ref.xml:3703(title)
+#: ref/psql-ref.xml:3706(title)
 msgid "Command-Line Editing"
 msgstr "Редактирование командной строки"
 
-#: ref/psql-ref.xml:3718(programlisting)
+#: ref/psql-ref.xml:3721(programlisting)
 #, no-wrap
 msgid ""
 "$if psql\n"
@@ -5518,7 +5526,7 @@ msgstr ""
 "set disable-completion on\n"
 "$endif"
 
-#: ref/psql-ref.xml:3705(para)
+#: ref/psql-ref.xml:3708(para)
 msgid ""
 "<application>psql</application> supports the <application>Readline</"
 "application> library for convenient line editing and retrieval. The command "
@@ -5548,15 +5556,15 @@ msgstr ""
 "<application>Readline</application>. Читайте документацию к "
 "<application>Readline</application> для дополнительной информации.)"
 
-#: ref/psql-ref.xml:3731(title)
+#: ref/psql-ref.xml:3734(title)
 msgid "Environment"
 msgstr "Переменные окружения"
 
-#: ref/psql-ref.xml:3736(envar)
+#: ref/psql-ref.xml:3739(envar)
 msgid "COLUMNS"
 msgstr "COLUMNS"
 
-#: ref/psql-ref.xml:3739(para)
+#: ref/psql-ref.xml:3742(para)
 msgid ""
 "If <literal>\\pset columns</literal> is zero, controls the width for the "
 "<literal>wrapped</literal> format and width for determining if wide output "
@@ -5568,11 +5576,11 @@ msgstr ""
 "постраничник и нужно ли переключаться в вертикальный формат в режиме "
 "<literal>expanded auto</literal>."
 
-#: ref/psql-ref.xml:3749(envar)
+#: ref/psql-ref.xml:3752(envar)
 msgid "PAGER"
 msgstr "PAGER"
 
-#: ref/psql-ref.xml:3752(para)
+#: ref/psql-ref.xml:3755(para)
 msgid ""
 "If the query results do not fit on the screen, they are piped through this "
 "command. Typical values are <literal>more</literal> or <literal>less</"
@@ -5584,41 +5592,41 @@ msgstr ""
 "literal>. Значение по умолчанию зависит от платформы. Использование "
 "постраничника можно отключить с помощью команды <command>\\pset</command>."
 
-#: ref/psql-ref.xml:3763(envar)
+#: ref/psql-ref.xml:3766(envar)
 msgid "PGDATABASE"
 msgstr "PGDATABASE"
 
-#: ref/psql-ref.xml:3764(envar)
+#: ref/psql-ref.xml:3767(envar)
 msgid "PGHOST"
 msgstr "PGHOST"
 
-#: ref/psql-ref.xml:3765(envar)
+#: ref/psql-ref.xml:3768(envar)
 msgid "PGPORT"
 msgstr "PGPORT"
 
-#: ref/psql-ref.xml:3766(envar)
+#: ref/psql-ref.xml:3769(envar)
 msgid "PGUSER"
 msgstr "PGUSER"
 
-#: ref/psql-ref.xml:3769(para)
+#: ref/psql-ref.xml:3772(para)
 msgid "Default connection parameters (see <xref linkend=\"libpq-envars\"/>)."
 msgstr ""
 "Параметры подключения по умолчанию (см. <xref remap=\"4\" linkend=\"libpq-"
 "envars\"/>)."
 
-#: ref/psql-ref.xml:3776(envar)
+#: ref/psql-ref.xml:3779(envar)
 msgid "PSQL_EDITOR"
 msgstr "PSQL_EDITOR"
 
-#: ref/psql-ref.xml:3777(envar)
+#: ref/psql-ref.xml:3780(envar)
 msgid "EDITOR"
 msgstr "EDITOR"
 
-#: ref/psql-ref.xml:3778(envar)
+#: ref/psql-ref.xml:3781(envar)
 msgid "VISUAL"
 msgstr "VISUAL"
 
-#: ref/psql-ref.xml:3781(para)
+#: ref/psql-ref.xml:3784(para)
 msgid ""
 "Editor used by the <command>\\e</command>, <command>\\ef</command>, and "
 "<command>\\ev</command> commands. These variables are examined in the order "
@@ -5628,7 +5636,7 @@ msgstr ""
 "command> и <command>\\ev</command>. Эти переменные рассматриваются в этом же "
 "порядке; в силу вступает значение, установленное первым."
 
-#: ref/psql-ref.xml:3788(para)
+#: ref/psql-ref.xml:3791(para)
 msgid ""
 "The built-in default editors are <filename>vi</filename> on Unix systems and "
 "<filename>notepad.exe</filename> on Windows systems."
@@ -5636,11 +5644,11 @@ msgstr ""
 "По умолчанию в Unix-подобных системах используется <filename>vi</filename>, "
 "а в Windows — <filename>notepad.exe</filename>."
 
-#: ref/psql-ref.xml:3796(envar)
+#: ref/psql-ref.xml:3799(envar)
 msgid "PSQL_EDITOR_LINENUMBER_ARG"
 msgstr "PSQL_EDITOR_LINENUMBER_ARG"
 
-#: ref/psql-ref.xml:3808(programlisting)
+#: ref/psql-ref.xml:3811(programlisting)
 #, no-wrap
 msgid ""
 "PSQL_EDITOR_LINENUMBER_ARG='+'\n"
@@ -5649,7 +5657,7 @@ msgstr ""
 "PSQL_EDITOR_LINENUMBER_ARG='+'\n"
 "PSQL_EDITOR_LINENUMBER_ARG='--line '"
 
-#: ref/psql-ref.xml:3799(para)
+#: ref/psql-ref.xml:3802(para)
 msgid ""
 "When <command>\\e</command>, <command>\\ef</command>, or <command>\\ev</"
 "command> is used with a line number argument, this variable specifies the "
@@ -5666,7 +5674,7 @@ msgstr ""
 "это знак плюс. Добавьте в конец значения пробел, если он требуется для "
 "отделения имени аргумента от номера строки. Примеры: <placeholder-1/>"
 
-#: ref/psql-ref.xml:3812(para)
+#: ref/psql-ref.xml:3815(para)
 msgid ""
 "The default is <literal>+</literal> on Unix systems (corresponding to the "
 "default editor <filename>vi</filename>, and useful for many other common "
@@ -5677,11 +5685,11 @@ msgstr ""
 "другим распространённым редакторам). На платформе Windows нет значения по "
 "умолчанию."
 
-#: ref/psql-ref.xml:3822(envar)
+#: ref/psql-ref.xml:3825(envar)
 msgid "PSQL_HISTORY"
 msgstr "PSQL_HISTORY"
 
-#: ref/psql-ref.xml:3825(para)
+#: ref/psql-ref.xml:3828(para)
 msgid ""
 "Alternative location for the command history file. Tilde (<literal>~</"
 "literal>) expansion is performed."
@@ -5689,11 +5697,11 @@ msgstr ""
 "Альтернативное расположение файла с историей команд. Допускается "
 "использование тильды (<literal>~</literal>)."
 
-#: ref/psql-ref.xml:3832(envar)
+#: ref/psql-ref.xml:3835(envar)
 msgid "PSQLRC"
 msgstr "PSQLRC"
 
-#: ref/psql-ref.xml:3835(para)
+#: ref/psql-ref.xml:3838(para)
 msgid ""
 "Alternative location of the user's <filename>.psqlrc</filename> file. Tilde "
 "(<literal>~</literal>) expansion is performed."
@@ -5701,21 +5709,21 @@ msgstr ""
 "Альтернативное расположение пользовательского файла <filename>.psqlrc</"
 "filename>. Допускается использование тильды (<literal>~</literal>)."
 
-#: ref/psql-ref.xml:3842(envar)
+#: ref/psql-ref.xml:3845(envar)
 msgid "SHELL"
 msgstr "SHELL"
 
-#: ref/psql-ref.xml:3845(para)
+#: ref/psql-ref.xml:3848(para)
 msgid "Command executed by the <command>\\!</command> command."
 msgstr ""
 "Команда операционной системы, выполняемая метакомандой <command>\\!</"
 "command>."
 
-#: ref/psql-ref.xml:3852(envar)
+#: ref/psql-ref.xml:3855(envar)
 msgid "TMPDIR"
 msgstr "TMPDIR"
 
-#: ref/psql-ref.xml:3855(para)
+#: ref/psql-ref.xml:3858(para)
 msgid ""
 "Directory for storing temporary files. The default is <filename>/tmp</"
 "filename>."
@@ -5723,7 +5731,7 @@ msgstr ""
 "Каталог для хранения временных файлов. По умолчанию <filename>/tmp</"
 "filename>."
 
-#: ref/psql-ref.xml:3863(para)
+#: ref/psql-ref.xml:3866(para)
 msgid ""
 "This utility, like most other <productname>PostgreSQL</productname> "
 "utilities, also uses the environment variables supported by "
@@ -5734,15 +5742,15 @@ msgstr ""
 "<application>libpq</application> (см. <xref remap=\"4\" linkend=\"libpq-"
 "envars\"/>)."
 
-#: ref/psql-ref.xml:3873(title)
+#: ref/psql-ref.xml:3876(title)
 msgid "Files"
 msgstr "Файлы"
 
-#: ref/psql-ref.xml:3877(term)
+#: ref/psql-ref.xml:3880(term)
 msgid "<filename>psqlrc</filename> and <filename>~/.psqlrc</filename>"
 msgstr "<filename>psqlrc</filename> и <filename>~/.psqlrc</filename>"
 
-#: ref/psql-ref.xml:3879(para)
+#: ref/psql-ref.xml:3882(para)
 msgid ""
 "Unless it is passed an <option>-X</option> option, <application>psql</"
 "application> attempts to read and execute commands from the system-wide "
@@ -5760,7 +5768,7 @@ msgstr ""
 "можно воспользоваться для настройки клиента и/или сервера, как правило, с "
 "помощью команд <command>\\set</command> и <command>SET</command>."
 
-#: ref/psql-ref.xml:3889(para)
+#: ref/psql-ref.xml:3892(para)
 msgid ""
 "The system-wide startup file is named <filename>psqlrc</filename> and is "
 "sought in the installation's <quote>system configuration</quote> directory, "
@@ -5778,7 +5786,7 @@ msgstr ""
 "файлы <productname>PostgreSQL</productname>. Имя этого каталога можно задать "
 "явно через переменную окружения <envar>PGSYSCONFDIR</envar>."
 
-#: ref/psql-ref.xml:3899(para)
+#: ref/psql-ref.xml:3902(para)
 msgid ""
 "The user's personal startup file is named <filename>.psqlrc</filename> and "
 "is sought in the invoking user's home directory. On Windows, which lacks "
@@ -5794,7 +5802,7 @@ msgstr ""
 "Расположение персонального стартового файла пользователя можно задать явно "
 "через переменную окружения <envar>PSQLRC</envar>."
 
-#: ref/psql-ref.xml:3907(para)
+#: ref/psql-ref.xml:3910(para)
 msgid ""
 "Both the system-wide startup file and the user's personal startup file can "
 "be made <application>psql</application>-version-specific by appending a dash "
@@ -5810,11 +5818,11 @@ msgstr ""
 "filename> или <filename>~/.psqlrc-9.2.5</filename>. При наличии нескольких "
 "файлов, файл с более детальным номером версии будет иметь предпочтение."
 
-#: ref/psql-ref.xml:3921(filename)
+#: ref/psql-ref.xml:3924(filename)
 msgid ".psql_history"
 msgstr ".psql_history"
 
-#: ref/psql-ref.xml:3923(para)
+#: ref/psql-ref.xml:3926(para)
 msgid ""
 "The command-line history is stored in the file <filename>~/.psql_history</"
 "filename>, or <filename>%APPDATA%\\postgresql\\psql_history</filename> on "
@@ -5824,7 +5832,7 @@ msgstr ""
 "filename> или <filename>%APPDATA%\\postgresql\\psql_history</filename> на "
 "Windows."
 
-#: ref/psql-ref.xml:3928(para)
+#: ref/psql-ref.xml:3931(para)
 msgid ""
 "The location of the history file can be set explicitly via the "
 "<envar>PSQL_HISTORY</envar> environment variable."
@@ -5832,11 +5840,11 @@ msgstr ""
 "Расположение файла истории можно задать явно через переменную окружения "
 "<envar>PSQL_HISTORY</envar>."
 
-#: ref/psql-ref.xml:3939(title)
+#: ref/psql-ref.xml:3942(title)
 msgid "Notes"
 msgstr "Замечания"
 
-#: ref/psql-ref.xml:3943(para)
+#: ref/psql-ref.xml:3946(para)
 msgid ""
 "<application>psql</application> works best with servers of the same or an "
 "older major version. Backslash commands are particularly likely to fail if "
@@ -5857,7 +5865,7 @@ msgstr ""
 "результатов запросов также должна работать на серверах с более новой "
 "основной версией, но это не гарантируется во всех случаях."
 
-#: ref/psql-ref.xml:3953(para)
+#: ref/psql-ref.xml:3956(para)
 msgid ""
 "If you want to use <application>psql</application> to connect to several "
 "servers of different major versions, it is recommended that you use the "
@@ -5873,7 +5881,7 @@ msgstr ""
 "использовать ту, которая соответствует версии сервера. Но на практике в этих "
 "дополнительных сложностях нет необходимости."
 
-#: ref/psql-ref.xml:3965(para)
+#: ref/psql-ref.xml:3968(para)
 msgid ""
 "Before <productname>PostgreSQL</productname> 9.6, the <option>-c</option> "
 "option implied <option>-X</option> (<option>--no-psqlrc</option>); this is "
@@ -5883,7 +5891,7 @@ msgstr ""
 "option> подразумевал <option>-X</option> (<option>--no-psqlrc</option>); "
 "теперь это не так."
 
-#: ref/psql-ref.xml:3973(para)
+#: ref/psql-ref.xml:3976(para)
 msgid ""
 "Before <productname>PostgreSQL</productname> 8.4, <application>psql</"
 "application> allowed the first argument of a single-letter backslash command "
@@ -5895,11 +5903,11 @@ msgstr ""
 "косой чертой сразу после команды, без промежуточного пробела. Теперь "
 "разделительный пробельный символ обязателен."
 
-#: ref/psql-ref.xml:3986(title)
+#: ref/psql-ref.xml:3989(title)
 msgid "Notes for Windows Users"
 msgstr "Замечания для пользователей Windows"
 
-#: ref/psql-ref.xml:3999(para)
+#: ref/psql-ref.xml:4002(para)
 msgid ""
 "Set the code page by entering <userinput>cmd.exe /c chcp\n"
 "      1252</userinput>. (1252 is a code page that is appropriate for German; "
@@ -5911,7 +5919,7 @@ msgstr ""
 "значение.) При использовании Cygwin, эту команду можно записать в <filename>/"
 "etc/profile</filename>."
 
-#: ref/psql-ref.xml:4008(para)
+#: ref/psql-ref.xml:4011(para)
 msgid ""
 "Set the console font to <literal>Lucida Console</literal>, because the "
 "raster font does not work with the ANSI code page."
@@ -5919,7 +5927,7 @@ msgstr ""
 "Установите консольный шрифт в <literal>Lucida Console</literal>, потому что "
 "растровый шрифт не работает с кодовой страницей ANSI."
 
-#: ref/psql-ref.xml:3988(para)
+#: ref/psql-ref.xml:3991(para)
 msgid ""
 "<application>psql</application> is built as a <quote>console application</"
 "quote>. Since the Windows console windows use a different encoding than the "
@@ -5936,11 +5944,11 @@ msgstr ""
 "консоли, он предупредит вас при запуске. Чтобы изменить кодовую страницу "
 "консоли, необходимы две вещи: <placeholder-1/>"
 
-#: ref/psql-ref.xml:4019(title)
+#: ref/psql-ref.xml:4022(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/psql-ref.xml:4024(programlisting)
+#: ref/psql-ref.xml:4027(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>CREATE TABLE my_table (</userinput>\n"
@@ -5955,7 +5963,7 @@ msgstr ""
 "testdb-&gt; <userinput>;</userinput>\n"
 "CREATE TABLE"
 
-#: ref/psql-ref.xml:4030(programlisting)
+#: ref/psql-ref.xml:4033(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\d my_table</userinput>\n"
@@ -5972,7 +5980,7 @@ msgstr ""
 " first   | integer | NOT NULL DEFAULT 0\n"
 " second  | text    |\n"
 
-#: ref/psql-ref.xml:4038(programlisting)
+#: ref/psql-ref.xml:4041(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>\\set PROMPT1 '%n@%m %~%R%# '</userinput>\n"
@@ -5981,7 +5989,7 @@ msgstr ""
 "testdb=&gt; <userinput>\\set PROMPT1 '%n@%m %~%R%# '</userinput>\n"
 "peter@localhost testdb=&gt;"
 
-#: ref/psql-ref.xml:4042(programlisting)
+#: ref/psql-ref.xml:4045(programlisting)
 #, no-wrap
 msgid ""
 "peter@localhost testdb=&gt; SELECT * FROM my_table;\n"
@@ -6002,7 +6010,7 @@ msgstr ""
 "     4 | Четыре\n"
 "(4 строки)\n"
 
-#: ref/psql-ref.xml:4053(programlisting)
+#: ref/psql-ref.xml:4056(programlisting)
 #, no-wrap
 msgid ""
 "peter@localhost testdb=&gt; <userinput>\\pset border 2</userinput>\n"
@@ -6081,7 +6089,7 @@ msgstr ""
 "Три,3\n"
 "Четыре,4"
 
-#: ref/psql-ref.xml:4091(programlisting)
+#: ref/psql-ref.xml:4094(programlisting)
 #, no-wrap
 msgid ""
 "peter@localhost testdb=&gt; <userinput>\\a \\t \\x</userinput>\n"
@@ -6120,7 +6128,7 @@ msgstr ""
 "first  | 4\n"
 "second | Четыре"
 
-#: ref/psql-ref.xml:4021(para)
+#: ref/psql-ref.xml:4024(para)
 msgid ""
 "The first example shows how to spread a command over several lines of input. "
 "Notice the changing prompt: <placeholder-1/> Now look at the table "
@@ -6139,7 +6147,7 @@ msgstr ""
 "command>: <placeholder-5/> Также можно использовать короткие команды: "
 "<placeholder-6/>"
 
-#: ref/psql-ref.xml:4112(programlisting)
+#: ref/psql-ref.xml:4115(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>SELECT first, second, first &gt; 2 AS gt2 FROM my_table;</userinput>\n"
@@ -6178,7 +6186,7 @@ msgstr ""
 "     4 |     |     |       | t\n"
 "(4 rows)"
 
-#: ref/psql-ref.xml:4132(programlisting)
+#: ref/psql-ref.xml:4135(programlisting)
 #, no-wrap
 msgid ""
 "testdb=&gt; <userinput>SELECT t1.first as \"A\", t2.first+100 AS \"B\", t1.first*(t2.first+100) as \"AxB\",</userinput>\n"
@@ -6205,20 +6213,43 @@ msgstr ""
 " 1 | 101 | 102 | 103 | 104\n"
 "(4 rows)"
 
-#: ref/psql-ref.xml:4109(para)
+#: ref/psql-ref.xml:4112(para)
 msgid ""
 "When suitable, query results can be shown in a crosstab representation with "
-"the \\crosstabview command: <placeholder-1/> This second example shows a "
-"multiplication table with rows sorted in reverse numerical order and columns "
-"with an independent, ascending numerical order. <placeholder-2/>"
+"the <command>\\crosstabview</command> command: <placeholder-1/> This second "
+"example shows a multiplication table with rows sorted in reverse numerical "
+"order and columns with an independent, ascending numerical order. "
+"<placeholder-2/>"
 msgstr ""
 "Когда это уместно, результаты запроса можно просмотреть в виде перекрёстной "
-"таблицы с помощью команды \\crosstabview: <placeholder-1/> Второй пример "
-"показывает таблицу умножения, строки в которой отсортированы в обратном "
-"числовом порядке, а столбцы — независимо, по возрастанию числовых значений. "
-"<placeholder-2/>"
+"таблицы с помощью команды <command>\\crosstabview</command>: <placeholder-1/"
+"> Второй пример показывает таблицу умножения, строки в которой отсортированы "
+"в обратном числовом порядке, а столбцы — независимо, по возрастанию числовых "
+"значений. <placeholder-2/>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: ref/psql-ref.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "When using positional parameters, if any of <replaceable class=\"parameter"
+#~ "\">dbname</replaceable>, <replaceable class=\"parameter\">username</"
+#~ "replaceable>, <replaceable class=\"parameter\">host</replaceable> or "
+#~ "<replaceable class=\"parameter\">port</replaceable> are omitted or "
+#~ "specified as <literal>-</literal>, the value of that parameter from the "
+#~ "previous connection is used; if there is no previous connection, the "
+#~ "<application>libpq</application> default for the parameter's value is "
+#~ "used. When using <literal>conninfo</literal> strings, no values from the "
+#~ "previous connection are used for the new connection."
+#~ msgstr ""
+#~ "При использовании позиционных параметров, если какой-либо из параметров "
+#~ "подключения (<replaceable class=\"parameter\">имя_базы</replaceable>,"
+#~ "<replaceable class=\"parameter\">имя_пользователя</replaceable>,"
+#~ "<replaceable class=\"parameter\">компьютер</replaceable> или <replaceable "
+#~ "class=\"parameter\">порт</replaceable>) не указан или указан как "
+#~ "<literal>-</literal>, используется значение этого параметра от "
+#~ "предыдущего соединения. В отсутствие предыдущего подключения используются "
+#~ "значения по умолчанию, принятые в <application>libpq</application>. При "
+#~ "использовании аргумента <literal>строка_подключения</literal> никакие "
+#~ "параметры предыдущего подключения не будут использоваться."

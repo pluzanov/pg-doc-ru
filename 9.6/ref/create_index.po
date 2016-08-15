@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-09 11:03+0300\n"
+"POT-Creation-Date: 2016-08-11 12:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -828,35 +828,19 @@ msgid ""
 "setting of <xref linkend=\"guc-maintenance-work-mem\"/>. Larger values will "
 "reduce the time needed for index creation, so long as you don't make it "
 "larger than the amount of memory really available, which would drive the "
-"machine into swapping. For hash indexes, the value of <xref linkend=\"guc-"
-"effective-cache-size\"/> is also relevant to index creation time: "
-"<productname>PostgreSQL</productname> will use one of two different hash "
-"index creation methods depending on whether the estimated index size is more "
-"or less than <varname>effective_cache_size</varname>. For best results, make "
-"sure that this parameter is also set to something reflective of available "
-"memory, and be careful that the sum of <varname>maintenance_work_mem</"
-"varname> and <varname>effective_cache_size</varname> is less than the "
-"machine's RAM less whatever space is needed by other programs."
+"machine into swapping."
 msgstr ""
 "Для большинства методов индексов скорость создания индекса зависит от "
-"значения <xref linkend=\"guc-maintenance-work-mem\"/>. При увеличении этого "
-"значения индекс будет создаваться быстрее, пока оно не превысит "
-"действительно доступный объём памяти, что приведёт к использованию подкачки. "
-"Для хеш-индексов значение <xref linkend=\"guc-effective-cache-size\"/> также "
-"влияет на время создания индекса: <productname>PostgreSQL</productname> "
-"будет использовать один из двух различных методов создания индекса, в "
-"зависимости от того, больше или меньше оцениваемый размер индекса, чем "
-"<varname>effective_cache_size</varname>. Для наилучших результатов этот "
-"параметр нужно устанавливать в зависимости от объёма свободной памяти, но "
-"так, чтобы сумма <varname>maintenance_work_mem</varname> и "
-"<varname>effective_cache_size</varname> была меньше объёма ОЗУ за вычетом "
-"объёма, необходимого другим программам."
+"значения <xref linkend=\"guc-maintenance-work-mem\"/>. Чем больше это "
+"значение, тем меньше времени требуется для создания индекса (если только "
+"заданное значение не превышает объём действительно доступной памяти, что "
+"влечёт за собой использование подкачки)."
 
-#: ref/create_index.xml:579(para)
+#: ref/create_index.xml:570(para)
 msgid "Use <xref linkend=\"sql-dropindex\"/> to remove an index."
 msgstr "Для удаления индекса применяется <xref linkend=\"sql-dropindex\"/>."
 
-#: ref/create_index.xml:584(para)
+#: ref/create_index.xml:575(para)
 msgid ""
 "Prior releases of <productname>PostgreSQL</productname> also had an R-tree "
 "index method. This method has been removed because it had no significant "
@@ -872,16 +856,16 @@ msgstr ""
 "интерпретировать как <literal>USING gist</literal>, для упрощения перевода "
 "старых баз на GiST."
 
-#: ref/create_index.xml:595(title)
+#: ref/create_index.xml:586(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/create_index.xml:600(programlisting)
+#: ref/create_index.xml:591(programlisting)
 #, no-wrap
 msgid "CREATE UNIQUE INDEX title_idx ON films (title);"
 msgstr "CREATE UNIQUE INDEX title_idx ON films (title);"
 
-#: ref/create_index.xml:597(para)
+#: ref/create_index.xml:588(para)
 msgid ""
 "To create a B-tree index on the column <literal>title</literal> in the table "
 "<literal>films</literal>: <placeholder-1/>"
@@ -889,12 +873,12 @@ msgstr ""
 "Создание индекса-B-дерева по столбцу <literal>title</literal> в таблице "
 "<literal>films</literal>: <placeholder-1/>"
 
-#: ref/create_index.xml:606(programlisting)
+#: ref/create_index.xml:597(programlisting)
 #, no-wrap
 msgid "CREATE INDEX ON films ((lower(title)));"
 msgstr "CREATE INDEX ON films ((lower(title)));"
 
-#: ref/create_index.xml:603(para)
+#: ref/create_index.xml:594(para)
 msgid ""
 "To create an index on the expression <literal>lower(title)</literal>, "
 "allowing efficient case-insensitive searches: <placeholder-1/> (In this "
@@ -906,41 +890,41 @@ msgstr ""
 "примере мы решили опустить имя индекса, чтобы имя выбрала система, например "
 "<literal>films_lower_idx</literal>.)"
 
-#: ref/create_index.xml:613(programlisting)
+#: ref/create_index.xml:604(programlisting)
 #, no-wrap
 msgid "CREATE INDEX title_idx_german ON films (title COLLATE \"de_DE\");"
 msgstr "CREATE INDEX title_idx_german ON films (title COLLATE \"de_DE\");"
 
-#: ref/create_index.xml:611(para)
+#: ref/create_index.xml:602(para)
 msgid "To create an index with non-default collation: <placeholder-1/>"
 msgstr "Создание индекса с нестандартным правилом сортировки: <placeholder-1/>"
 
-#: ref/create_index.xml:618(programlisting)
+#: ref/create_index.xml:609(programlisting)
 #, no-wrap
 msgid "CREATE INDEX title_idx_nulls_low ON films (title NULLS FIRST);"
 msgstr "CREATE INDEX title_idx_nulls_low ON films (title NULLS FIRST);"
 
-#: ref/create_index.xml:616(para)
+#: ref/create_index.xml:607(para)
 msgid ""
 "To create an index with non-default sort ordering of nulls: <placeholder-1/>"
 msgstr ""
 "Создание индекса с нестандартным порядком значений NULL: <placeholder-1/>"
 
-#: ref/create_index.xml:623(programlisting)
+#: ref/create_index.xml:614(programlisting)
 #, no-wrap
 msgid "CREATE UNIQUE INDEX title_idx ON films (title) WITH (fillfactor = 70);"
 msgstr "CREATE UNIQUE INDEX title_idx ON films (title) WITH (fillfactor = 70);"
 
-#: ref/create_index.xml:621(para)
+#: ref/create_index.xml:612(para)
 msgid "To create an index with non-default fill factor: <placeholder-1/>"
 msgstr "Создание индекса с нестандартным фактором заполнения: <placeholder-1/>"
 
-#: ref/create_index.xml:628(programlisting)
+#: ref/create_index.xml:619(programlisting)
 #, no-wrap
 msgid "CREATE INDEX gin_idx ON documents_table USING GIN (locations) WITH (fastupdate = off);"
 msgstr "CREATE INDEX gin_idx ON documents_table USING GIN (locations) WITH (fastupdate = off);"
 
-#: ref/create_index.xml:626(para)
+#: ref/create_index.xml:617(para)
 msgid ""
 "To create a <acronym>GIN</acronym> index with fast updates disabled: "
 "<placeholder-1/>"
@@ -948,12 +932,12 @@ msgstr ""
 "Создание индекса <acronym>GIN</acronym> с отключённым механизмом быстрого "
 "обновления: <placeholder-1/>"
 
-#: ref/create_index.xml:635(programlisting)
+#: ref/create_index.xml:626(programlisting)
 #, no-wrap
 msgid "CREATE INDEX code_idx ON films (code) TABLESPACE indexspace;"
 msgstr "CREATE INDEX code_idx ON films (code) TABLESPACE indexspace;"
 
-#: ref/create_index.xml:631(para)
+#: ref/create_index.xml:622(para)
 msgid ""
 "To create an index on the column <literal>code</literal> in the table "
 "<literal>films</literal> and have the index reside in the tablespace "
@@ -963,7 +947,7 @@ msgstr ""
 "<literal>films</literal> и размещение его в табличном пространстве "
 "<literal>indexspace</literal>: <placeholder-1/>"
 
-#: ref/create_index.xml:642(programlisting)
+#: ref/create_index.xml:633(programlisting)
 #, no-wrap
 msgid ""
 "CREATE INDEX pointloc\n"
@@ -976,7 +960,7 @@ msgstr ""
 "SELECT * FROM points\n"
 "    WHERE box(location,location) &amp;&amp; '(0,0),(1,1)'::box;"
 
-#: ref/create_index.xml:638(para)
+#: ref/create_index.xml:629(para)
 msgid ""
 "To create a GiST index on a point attribute so that we can efficiently use "
 "box operators on the result of the conversion function: <placeholder-1/>"
@@ -985,21 +969,21 @@ msgstr ""
 "использовать операторы box с результатом функции преобразования: "
 "<placeholder-1/>"
 
-#: ref/create_index.xml:650(programlisting)
+#: ref/create_index.xml:641(programlisting)
 #, no-wrap
 msgid "CREATE INDEX CONCURRENTLY sales_quantity_index ON sales_table (quantity);"
 msgstr "CREATE INDEX CONCURRENTLY sales_quantity_index ON sales_table (quantity);"
 
-#: ref/create_index.xml:648(para)
+#: ref/create_index.xml:639(para)
 msgid ""
 "To create an index without locking out writes to the table: <placeholder-1/>"
 msgstr "Создание индекса без блокировки записи в таблицу: <placeholder-1/>"
 
-#: ref/create_index.xml:655(title)
+#: ref/create_index.xml:646(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/create_index.xml:657(para)
+#: ref/create_index.xml:648(para)
 msgid ""
 "<command>CREATE INDEX</command> is a <productname>PostgreSQL</productname> "
 "language extension. There are no provisions for indexes in the SQL standard."
@@ -1008,7 +992,7 @@ msgstr ""
 "<productname>PostgreSQL</productname>. Средства обеспечения индексов в "
 "стандарте SQL не описаны."
 
-#: ref/create_index.xml:665(title)
+#: ref/create_index.xml:656(title)
 msgid "See Also"
 msgstr "См. также"
 
@@ -1016,3 +1000,33 @@ msgstr "См. также"
 #: ref/create_index.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "For most index methods, the speed of creating an index is dependent on "
+#~ "the setting of <xref linkend=\"guc-maintenance-work-mem\"/>. Larger "
+#~ "values will reduce the time needed for index creation, so long as you "
+#~ "don't make it larger than the amount of memory really available, which "
+#~ "would drive the machine into swapping. For hash indexes, the value of "
+#~ "<xref linkend=\"guc-effective-cache-size\"/> is also relevant to index "
+#~ "creation time: <productname>PostgreSQL</productname> will use one of two "
+#~ "different hash index creation methods depending on whether the estimated "
+#~ "index size is more or less than <varname>effective_cache_size</varname>. "
+#~ "For best results, make sure that this parameter is also set to something "
+#~ "reflective of available memory, and be careful that the sum of "
+#~ "<varname>maintenance_work_mem</varname> and "
+#~ "<varname>effective_cache_size</varname> is less than the machine's RAM "
+#~ "less whatever space is needed by other programs."
+#~ msgstr ""
+#~ "Для большинства методов индексов скорость создания индекса зависит от "
+#~ "значения <xref linkend=\"guc-maintenance-work-mem\"/>. При увеличении "
+#~ "этого значения индекс будет создаваться быстрее, пока оно не превысит "
+#~ "действительно доступный объём памяти, что приведёт к использованию "
+#~ "подкачки. Для хеш-индексов значение <xref linkend=\"guc-effective-cache-"
+#~ "size\"/> также влияет на время создания индекса: <productname>PostgreSQL</"
+#~ "productname> будет использовать один из двух различных методов создания "
+#~ "индекса, в зависимости от того, больше или меньше оцениваемый размер "
+#~ "индекса, чем <varname>effective_cache_size</varname>. Для наилучших "
+#~ "результатов этот параметр нужно устанавливать в зависимости от объёма "
+#~ "свободной памяти, но так, чтобы сумма <varname>maintenance_work_mem</"
+#~ "varname> и <varname>effective_cache_size</varname> была меньше объёма ОЗУ "
+#~ "за вычетом объёма, необходимого другим программам."
