@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-09 11:03+0300\n"
+"POT-Creation-Date: 2016-08-11 12:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -506,7 +506,7 @@ msgstr ""
 "флагами в старом кластере. Многие готовые инсталляторы выполняют это "
 "действие автоматически. Запускать новый кластер не требуется."
 
-#: ref/pgupgrade.xml:266(title) ref/pgupgrade.xml:437(title)
+#: ref/pgupgrade.xml:266(title) ref/pgupgrade.xml:435(title)
 msgid "Install custom shared object files"
 msgstr "Установить дополнительные разделяемые объектные файлы"
 
@@ -757,7 +757,7 @@ msgstr ""
 msgid "Upgrade Streaming Replication and Log-Shipping standby servers"
 msgstr "Обновить серверы резерва с потоковой репликацией и трансляцией журнала"
 
-#: ref/pgupgrade.xml:405(para)
+#: ref/pgupgrade.xml:404(para)
 msgid ""
 "If you have Streaming Replication (see <xref linkend=\"streaming-replication"
 "\"/>) or Log-Shipping (see <xref linkend=\"warm-standby\"/>) standby "
@@ -772,11 +772,11 @@ msgstr ""
 "<application>pg_upgrade</application>, а <application>rsync</application>. "
 "Не запускайте никакие серверы на этом этапе."
 
-#: ref/pgupgrade.xml:417(title)
+#: ref/pgupgrade.xml:416(title)
 msgid "Install the new PostgreSQL binaries on standby servers"
 msgstr "Установите новые исполняемые файлы PostgreSQL на резервных серверах"
 
-#: ref/pgupgrade.xml:419(para)
+#: ref/pgupgrade.xml:418(para)
 msgid ""
 "Make sure the new binaries and support files are installed on all standby "
 "servers."
@@ -784,14 +784,14 @@ msgstr ""
 "Убедитесь в том, что на всех резервных серверах установлены новые "
 "исполняемые и вспомогательные файлы."
 
-#: ref/pgupgrade.xml:426(title)
+#: ref/pgupgrade.xml:425(title)
 msgid ""
 "Make sure the new standby data directories do <emphasis>not</emphasis> exist"
 msgstr ""
 "Убедитесь в том, что новые каталоги данных на резервных серверах "
 "<emphasis>не</emphasis> существуют"
 
-#: ref/pgupgrade.xml:429(para)
+#: ref/pgupgrade.xml:427(para)
 msgid ""
 "Make sure the new standby data directories do <emphasis>not</emphasis> exist "
 "or are empty. If <application>initdb</application> was run, delete the "
@@ -801,7 +801,7 @@ msgstr ""
 "быть пустыми. Если запускалась программа <application>initdb</application>, "
 "удалите каталоги данных резервных серверов."
 
-#: ref/pgupgrade.xml:439(para)
+#: ref/pgupgrade.xml:437(para)
 msgid ""
 "Install the same custom shared object files on the new standbys that you "
 "installed in the new master cluster."
@@ -809,11 +809,11 @@ msgstr ""
 "Установите на новых резервных серверах те же дополнительные разделяемые "
 "объектные файлы, что вы установили в новом ведущем кластере."
 
-#: ref/pgupgrade.xml:446(title)
+#: ref/pgupgrade.xml:444(title)
 msgid "Stop standby servers"
 msgstr "Остановите резервные серверы"
 
-#: ref/pgupgrade.xml:448(para)
+#: ref/pgupgrade.xml:446(para)
 msgid ""
 "If the standby servers are still running, stop them now using the above "
 "instructions."
@@ -821,11 +821,11 @@ msgstr ""
 "Если резервные серверы продолжают работу, остановите их, следуя приведённым "
 "выше инструкциям."
 
-#: ref/pgupgrade.xml:455(title)
+#: ref/pgupgrade.xml:453(title)
 msgid "Save configuration files"
 msgstr "Сохраните файлы конфигурации"
 
-#: ref/pgupgrade.xml:457(para)
+#: ref/pgupgrade.xml:455(para)
 msgid ""
 "Save any configuration files from the standbys you need to keep, e.g. "
 "<filename>postgresql.conf</filename>, <literal>recovery.conf</literal>, as "
@@ -835,11 +835,11 @@ msgstr ""
 "частности <filename>postgresql.conf</filename> и <literal>recovery.conf</"
 "literal>, так как они будут перезаписаны или удалены на следующем этапе."
 
-#: ref/pgupgrade.xml:465(title)
+#: ref/pgupgrade.xml:463(title)
 msgid "Start and stop the new master cluster"
 msgstr "Запустите и остановите новый ведущий кластер"
 
-#: ref/pgupgrade.xml:467(para)
+#: ref/pgupgrade.xml:465(para)
 msgid ""
 "In the new master cluster, change <varname>wal_level</varname> to "
 "<literal>replica</literal> in the <filename>postgresql.conf</filename> file "
@@ -849,16 +849,17 @@ msgstr ""
 "<literal>replica</literal> в <filename>postgresql.conf</filename> и "
 "запустите, а затем остановите кластер."
 
-#: ref/pgupgrade.xml:475(title)
+#: ref/pgupgrade.xml:473(title)
 msgid "Run <application>rsync</application>"
 msgstr "Запустите <application>rsync</application>"
 
-#: ref/pgupgrade.xml:481(programlisting)
+#: ref/pgupgrade.xml:479(programlisting)
 #, no-wrap
 msgid "rsync --archive --delete --hard-links --size-only old_pgdata new_pgdata remote_dir"
 msgstr "rsync --archive --delete --hard-links --size-only old_pgdata new_pgdata remote_dir"
 
-#: ref/pgupgrade.xml:477(para)
+#: ref/pgupgrade.xml:475(para)
+#, fuzzy
 msgid ""
 "From a directory that is above the old and new database cluster directories, "
 "run this for each slave: <placeholder-1/> where <option>old_pgdata</option> "
@@ -870,7 +871,9 @@ msgid ""
 "remote directory, e.g. <literal>standbyhost:/opt/PostgreSQL/</literal>. "
 "<application>rsync</application> will be fast when <application>pg_upgrade</"
 "application>'s <option>--link</option> mode is used because it will create "
-"hard links on the remote server rather than transferring user data."
+"hard links on the remote server rather than transferring user data. "
+"Unfortunately, <application>rsync</application> needlessly copies the files "
+"associated with temporary and unlogged tables."
 msgstr ""
 "В каталоге, внутри которого находятся каталоги старого и нового кластера, "
 "для каждого ведомого сервера выполните: <placeholder-1/> Здесь каталоги "
@@ -904,7 +907,7 @@ msgid "Configure streaming replication and log-shipping standby servers"
 msgstr ""
 "Настройте серверы резерва с потоковой репликацией и трансляцией журнала"
 
-#: ref/pgupgrade.xml:507(para)
+#: ref/pgupgrade.xml:506(para)
 msgid ""
 "Configure the servers for log shipping. (You do not need to run "
 "<function>pg_start_backup()</function> and <function>pg_stop_backup()</"
@@ -916,11 +919,11 @@ msgstr ""
 "function> или делать копию файловой системы не нужно, так как ведомые "
 "серверы остаются синхронизированными с ведущим.)"
 
-#: ref/pgupgrade.xml:520(title)
+#: ref/pgupgrade.xml:519(title)
 msgid "Restore <filename>pg_hba.conf</filename>"
 msgstr "Восстановить <filename>pg_hba.conf</filename>"
 
-#: ref/pgupgrade.xml:522(para)
+#: ref/pgupgrade.xml:521(para)
 msgid ""
 "If you modified <filename>pg_hba.conf</filename>, restore its original "
 "settings. It might also be necessary to adjust other configuration files in "
@@ -932,11 +935,11 @@ msgstr ""
 "конфигурации в новом кластере, чтобы они соответствовали старому, например "
 "<filename>postgresql.conf</filename>."
 
-#: ref/pgupgrade.xml:530(title)
+#: ref/pgupgrade.xml:529(title)
 msgid "Start the new server"
 msgstr "Запустить новый сервер"
 
-#: ref/pgupgrade.xml:532(para)
+#: ref/pgupgrade.xml:531(para)
 msgid ""
 "The new server can now be safely started, and then any <application>rsync</"
 "application>'ed standby servers."
@@ -944,16 +947,16 @@ msgstr ""
 "Теперь можно безопасно запустить новый сервер, а затем резервные серверы, "
 "синхронизированные с ним с помощью <application>rsync</application>."
 
-#: ref/pgupgrade.xml:539(title)
+#: ref/pgupgrade.xml:538(title)
 msgid "Post-Upgrade processing"
 msgstr "Действия после обновления"
 
-#: ref/pgupgrade.xml:548(programlisting)
+#: ref/pgupgrade.xml:547(programlisting)
 #, no-wrap
 msgid "psql --username postgres --file script.sql postgres"
 msgstr "psql --username postgres --file script.sql postgres"
 
-#: ref/pgupgrade.xml:541(para)
+#: ref/pgupgrade.xml:540(para)
 msgid ""
 "If any post-upgrade processing is required, pg_upgrade will issue warnings "
 "as it completes. It will also generate script files that must be run by the "
@@ -970,7 +973,7 @@ msgstr ""
 "Эти скрипты могут выполняться в любом порядке, а после выполнения их можно "
 "удалить."
 
-#: ref/pgupgrade.xml:555(para)
+#: ref/pgupgrade.xml:554(para)
 msgid ""
 "In general it is unsafe to access tables referenced in rebuild scripts until "
 "the rebuild scripts have run to completion; doing so could yield incorrect "
@@ -982,11 +985,11 @@ msgstr ""
 "некорректный результат или плохую производительность. К таблицам, не "
 "задействованным в таких скриптах, можно обращаться немедленно."
 
-#: ref/pgupgrade.xml:565(title)
+#: ref/pgupgrade.xml:564(title)
 msgid "Statistics"
 msgstr "Статистика"
 
-#: ref/pgupgrade.xml:567(para)
+#: ref/pgupgrade.xml:566(para)
 msgid ""
 "Because optimizer statistics are not transferred by <command>pg_upgrade</"
 "command>, you will be instructed to run a command to regenerate that "
@@ -999,11 +1002,11 @@ msgstr ""
 "Возможно, для этого вам понадобится установить параметры подключения к "
 "новому кластеру."
 
-#: ref/pgupgrade.xml:576(title)
+#: ref/pgupgrade.xml:575(title)
 msgid "Delete old cluster"
 msgstr "Удалить старый кластер"
 
-#: ref/pgupgrade.xml:578(para)
+#: ref/pgupgrade.xml:577(para)
 msgid ""
 "Once you are satisfied with the upgrade, you can delete the old cluster's "
 "data directories by running the script mentioned when <command>pg_upgrade</"
@@ -1019,11 +1022,11 @@ msgstr ""
 "пространства.) Также вы можете удалить каталоги старой инсталляции "
 "(например, <filename>bin</filename>, <filename>share</filename>)."
 
-#: ref/pgupgrade.xml:589(title)
+#: ref/pgupgrade.xml:588(title)
 msgid "Reverting to old cluster"
 msgstr "Возврат к старому кластеру"
 
-#: ref/pgupgrade.xml:597(para)
+#: ref/pgupgrade.xml:596(para)
 msgid ""
 "If you ran <command>pg_upgrade</command> with <option>--check</option>, no "
 "modifications were made to the old cluster and you can re-use it anytime."
@@ -1032,7 +1035,7 @@ msgstr ""
 "option>, никакие изменения в старом кластере не производились и его "
 "использование можно продолжить в любой момент."
 
-#: ref/pgupgrade.xml:605(para)
+#: ref/pgupgrade.xml:604(para)
 msgid ""
 "If you ran <command>pg_upgrade</command> with <option>--link</option>, the "
 "data files are shared between the old and new cluster. If you started the "
@@ -1044,7 +1047,7 @@ msgstr ""
 "кластер уже запускался, он произвёл запись в эти файлы, так что использовать "
 "старый кластер небезопасно."
 
-#: ref/pgupgrade.xml:615(para)
+#: ref/pgupgrade.xml:614(para)
 msgid ""
 "If you ran <command>pg_upgrade</command> <emphasis>without</emphasis>\n"
 "        <option>--link</option> or did not start the new server, the old "
@@ -1063,7 +1066,7 @@ msgstr ""
 "имени файла <filename>$PGDATA/global/pg_control</filename>; после этого "
 "старый кластер можно будет перезапустить."
 
-#: ref/pgupgrade.xml:591(para)
+#: ref/pgupgrade.xml:590(para)
 msgid ""
 "If, after running <command>pg_upgrade</command>, you wish to revert to the "
 "old cluster, there are several options: <placeholder-1/>"
@@ -1071,11 +1074,11 @@ msgstr ""
 "Если выполнив команду <command>pg_upgrade</command>, вы захотите вернуться к "
 "старому кластеру, возможны следующие варианты: <placeholder-1/>"
 
-#: ref/pgupgrade.xml:634(title)
+#: ref/pgupgrade.xml:633(title)
 msgid "Notes"
 msgstr "Замечания"
 
-#: ref/pgupgrade.xml:636(para)
+#: ref/pgupgrade.xml:635(para)
 msgid ""
 "<application>pg_upgrade</application> does not support upgrading of "
 "databases containing these <type>reg*</type> OID-referencing system data "
@@ -1089,7 +1092,7 @@ msgstr ""
 "type>, <type>regoperator</type>, <type>regconfig</type> и "
 "<type>regdictionary</type>. (Обновление <type>regtype</type> возможно.)"
 
-#: ref/pgupgrade.xml:644(para)
+#: ref/pgupgrade.xml:643(para)
 msgid ""
 "All failure, rebuild, and reindex cases will be reported by "
 "<application>pg_upgrade</application> if they affect your installation; post-"
@@ -1108,7 +1111,7 @@ msgstr ""
 "тем, что эти действия диктуются схемой базы данных, а не данными "
 "пользователей."
 
-#: ref/pgupgrade.xml:655(para)
+#: ref/pgupgrade.xml:654(para)
 msgid ""
 "For deployment testing, create a schema-only copy of the old cluster, insert "
 "dummy data, and upgrade that."
@@ -1117,7 +1120,7 @@ msgstr ""
 "кластера, наполните этот кластер фиктивными данными, и попробуйте обновить "
 "его."
 
-#: ref/pgupgrade.xml:660(para)
+#: ref/pgupgrade.xml:659(para)
 msgid ""
 "If you are upgrading a pre-<productname>PostgreSQL</productname> 9.2 cluster "
 "that uses a configuration-file-only directory, you must pass the real data "
@@ -1132,7 +1135,7 @@ msgstr ""
 "конфигурации передать серверу, например <literal>-d /каталог-данных -o '-D /"
 "каталог-конфигурации'</literal>."
 
-#: ref/pgupgrade.xml:668(para)
+#: ref/pgupgrade.xml:667(para)
 msgid ""
 "If using a pre-9.1 old server that is using a non-default Unix-domain socket "
 "directory or a default that differs from the default of the new cluster, set "
@@ -1144,7 +1147,7 @@ msgstr ""
 "отличается от принятого в новой версии, задайте в <envar>PGHOST</envar> "
 "расположение сокета старого сервера. (К Windows это не относится.)"
 
-#: ref/pgupgrade.xml:675(para)
+#: ref/pgupgrade.xml:674(para)
 msgid ""
 "If you want to use link mode and you do not want your old cluster to be "
 "modified when the new cluster is started, make a copy of the old cluster and "
@@ -1177,7 +1180,7 @@ msgstr ""
 "пространств; при этом важно, чтобы такие снимки и копии файлов создавались "
 "одномоментно или когда сервер баз данных отключён."
 
-#: ref/pgupgrade.xml:696(title)
+#: ref/pgupgrade.xml:695(title)
 msgid "See Also"
 msgstr "См. также"
 

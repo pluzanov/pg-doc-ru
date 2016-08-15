@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-09 11:02+0300\n"
+"POT-Creation-Date: 2016-08-11 12:31+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -2351,38 +2351,13 @@ msgstr ""
 #: fdwhandler.xml:1249(programlisting)
 #, no-wrap
 msgid ""
-"UserMapping *\n"
-"GetUserMappingById(Oid umid);"
+"List *\n"
+"GetForeignColumnOptions(Oid relid, AttrNumber attnum);"
 msgstr ""
-"UserMapping *\n"
-"GetUserMappingById(Oid umid);"
+"List *\n"
+"GetForeignColumnOptions(Oid relid, AttrNumber attnum);"
 
 #: fdwhandler.xml:1248(para)
-msgid ""
-"<placeholder-1/> This function returns the <structname>UserMapping</"
-"structname> object for the given user mapping OID. The OID of a user mapping "
-"for a foreign scan is available in the <structname>RelOptInfo</structname>. "
-"If there is no mapping for the OID, this function will throw an error. A "
-"<structname>UserMapping</structname> object contains properties of the user "
-"mapping (see <filename>foreign/foreign.h</filename> for details)."
-msgstr ""
-"<placeholder-1/> Эта функция возвращает объект <structname>UserMapping</"
-"structname> для заданного OID сопоставления пользователя. OID сопоставления "
-"пользователя для сторонней таблицы можно получить в <structname>RelOptInfo</"
-"structname>. Если сопоставления с таким OID нет, эта функция выдаст ошибку. "
-"Объект <structname>UserMapping</structname> содержит свойства сопоставления "
-"пользователя (они описаны в <filename>foreign/foreign.h</filename>)."
-
-#: fdwhandler.xml:1261(programlisting)
-#, no-wrap
-msgid ""
-"List *\n"
-"GetForeignColumnOptions(Oid relid, AttrNumber attnum);"
-msgstr ""
-"List *\n"
-"GetForeignColumnOptions(Oid relid, AttrNumber attnum);"
-
-#: fdwhandler.xml:1260(para)
 msgid ""
 "<placeholder-1/> This function returns the per-column FDW options for the "
 "column with the given foreign table OID and attribute number, in the form of "
@@ -2394,7 +2369,7 @@ msgstr ""
 "виде списка <structname>DefElem</structname>. Если для столбца не определены "
 "параметры, возвращается NULL."
 
-#: fdwhandler.xml:1270(para)
+#: fdwhandler.xml:1258(para)
 msgid ""
 "Some object types have name-based lookup functions in addition to the OID-"
 "based ones:"
@@ -2402,7 +2377,7 @@ msgstr ""
 "В дополнение к функциям, выбирающим объекты по OID, для некоторых объектов "
 "добавлены функции поиска по именам:"
 
-#: fdwhandler.xml:1276(programlisting)
+#: fdwhandler.xml:1264(programlisting)
 #, no-wrap
 msgid ""
 "ForeignDataWrapper *\n"
@@ -2411,7 +2386,7 @@ msgstr ""
 "ForeignDataWrapper *\n"
 "GetForeignDataWrapperByName(const char *name, bool missing_ok);"
 
-#: fdwhandler.xml:1275(para)
+#: fdwhandler.xml:1263(para)
 msgid ""
 "<placeholder-1/> This function returns a <structname>ForeignDataWrapper</"
 "structname> object for the foreign-data wrapper with the given name. If the "
@@ -2423,7 +2398,7 @@ msgstr ""
 "указанным именем. В случае отсутствия такой обёртки возвращается NULL, если "
 "missing_ok равно true, а иначе выдаётся ошибка."
 
-#: fdwhandler.xml:1286(programlisting)
+#: fdwhandler.xml:1274(programlisting)
 #, no-wrap
 msgid ""
 "ForeignServer *\n"
@@ -2432,7 +2407,7 @@ msgstr ""
 "ForeignServer *\n"
 "GetForeignServerByName(const char *name, bool missing_ok);"
 
-#: fdwhandler.xml:1285(para)
+#: fdwhandler.xml:1273(para)
 msgid ""
 "<placeholder-1/> This function returns a <structname>ForeignServer</"
 "structname> object for the foreign server with the given name. If the server "
@@ -2443,11 +2418,11 @@ msgstr ""
 "такого сервера возвращается NULL, если missing_ok равно true, а иначе "
 "выдаётся ошибка."
 
-#: fdwhandler.xml:1297(title)
+#: fdwhandler.xml:1285(title)
 msgid "Foreign Data Wrapper Query Planning"
 msgstr "Планирование запросов с обёртками сторонних данных"
 
-#: fdwhandler.xml:1299(para)
+#: fdwhandler.xml:1287(para)
 msgid ""
 "The FDW callback functions <function>GetForeignRelSize</function>, "
 "<function>GetForeignPaths</function>, <function>GetForeignPlan</function>, "
@@ -2465,7 +2440,7 @@ msgstr ""
 "планировщика <productname>PostgreSQL</productname>. Здесь даётся несколько "
 "замечаний о том, как это должно происходить."
 
-#: fdwhandler.xml:1308(para)
+#: fdwhandler.xml:1296(para)
 msgid ""
 "The information in <literal>root</literal> and <literal>baserel</literal> "
 "can be used to reduce the amount of information that has to be fetched from "
@@ -2492,7 +2467,7 @@ msgstr ""
 "<structname>ForeignScan</structname>, но не столбцы, которые задействованы в "
 "ограничивающих условиях и при этом не выводятся запросом."
 
-#: fdwhandler.xml:1322(para)
+#: fdwhandler.xml:1310(para)
 msgid ""
 "Various private fields are available for the FDW planning functions to keep "
 "information in. Generally, whatever you store in FDW private fields should "
@@ -2503,7 +2478,7 @@ msgstr ""
 "FDW помещает в закрытые поля, должны выделяться функцией palloc, чтобы они "
 "автоматически освобождались при завершении планирования."
 
-#: fdwhandler.xml:1328(para)
+#: fdwhandler.xml:1316(para)
 msgid ""
 "<literal>baserel-&gt;fdw_private</literal> is a <type>void</type> pointer "
 "that is available for FDW planning functions to store information relevant "
@@ -2524,7 +2499,7 @@ msgstr ""
 "function> в <function>GetForeignPlan</function> и позволяет избежать "
 "повторных вычислений."
 
-#: fdwhandler.xml:1339(para)
+#: fdwhandler.xml:1327(para)
 msgid ""
 "<function>GetForeignPaths</function> can identify the meaning of different "
 "access paths by storing private information in the <structfield>fdw_private</"
@@ -2544,7 +2519,7 @@ msgstr ""
 "которые сможет представить функция <function>nodeToString</function>, для "
 "применения средств отладки, имеющихся на сервере."
 
-#: fdwhandler.xml:1350(para)
+#: fdwhandler.xml:1338(para)
 msgid ""
 "<function>GetForeignPlan</function> can examine the "
 "<structfield>fdw_private</structfield> field of the selected "
@@ -2574,7 +2549,7 @@ msgstr ""
 "которые должны быть вычислены при выполнении запроса. Затем планировщик "
 "обрабатывает эти деревья, чтобы они были полностью готовы к выполнению."
 
-#: fdwhandler.xml:1365(para)
+#: fdwhandler.xml:1353(para)
 msgid ""
 "In <function>GetForeignPlan</function>, generally the passed-in target list "
 "can be copied into the plan node as-is. The passed <literal>scan_clauses</"
@@ -2603,7 +2578,7 @@ msgstr ""
 "предложения можно удалить из списка ограничений узла, чтобы исполнитель не "
 "тратил время на их перепроверку."
 
-#: fdwhandler.xml:1379(para)
+#: fdwhandler.xml:1367(para)
 msgid ""
 "As an example, the FDW might identify some restriction clauses of the form "
 "<replaceable>foreign_variable</replaceable> <literal>=</literal>\n"
@@ -2645,7 +2620,7 @@ msgstr ""
 "параметра будет получено во время выполнения в результате вычисления дерева "
 "выражения <structfield>fdw_exprs</structfield>."
 
-#: fdwhandler.xml:1400(para)
+#: fdwhandler.xml:1388(para)
 msgid ""
 "Any clauses removed from the plan node's qual list must instead be added to "
 "<literal>fdw_recheck_quals</literal> or rechecked by "
@@ -2673,7 +2648,7 @@ msgstr ""
 "наружу, так как вследствие перепроверки в соединённых кортежах могут "
 "обнуляться некоторые поля, но сами кортежи не будут исключаться."
 
-#: fdwhandler.xml:1415(para)
+#: fdwhandler.xml:1403(para)
 msgid ""
 "Another <structname>ForeignScan</structname> field that can be filled by "
 "FDWs is <structfield>fdw_scan_tlist</structfield>, which describes the "
@@ -2708,7 +2683,7 @@ msgstr ""
 "function>) должны всегда заполнять <structfield>fdw_scan_tlist</"
 "structfield>, описывая набор столбцов, которые они будут возвращать."
 
-#: fdwhandler.xml:1432(para)
+#: fdwhandler.xml:1420(para)
 msgid ""
 "The FDW should always construct at least one path that depends only on the "
 "table's restriction clauses. In join queries, it might also choose to "
@@ -2741,7 +2716,7 @@ msgstr ""
 "добавлена в <structfield>fdw_exprs</structfield>, и затем, во время "
 "выполнения, это будет работать так же, как и обычное предложение ограничения."
 
-#: fdwhandler.xml:1449(para)
+#: fdwhandler.xml:1437(para)
 msgid ""
 "If an FDW supports remote joins, <function>GetForeignJoinPaths</function> "
 "should produce <structname>ForeignPath</structname>s for potential remote "
@@ -2764,7 +2739,7 @@ msgstr ""
 "конкретного соединения передаются в <function>GetForeignJoinPaths</function> "
 "в отдельном параметре (<literal>extra-&gt;restrictlist</literal>)."
 
-#: fdwhandler.xml:1461(para)
+#: fdwhandler.xml:1449(para)
 msgid ""
 "An FDW might additionally support direct execution of some plan actions that "
 "are above the level of scans and joins, such as grouping or aggregation. To "
@@ -2801,7 +2776,7 @@ msgstr ""
 "после сканирования/соединения), если все базовые отношения запроса выдаются "
 "одной обёрткой."
 
-#: fdwhandler.xml:1480(para)
+#: fdwhandler.xml:1468(para)
 msgid ""
 "<function>PlanForeignModify</function> and the other callbacks described in "
 "<xref linkend=\"fdw-callbacks-update\"/> are designed around the assumption "
@@ -2835,7 +2810,7 @@ msgstr ""
 "вставляемый в <literal>UPPERREL_FINAL</literal>, отвечает за реализацию "
 "<emphasis>всех</emphasis> аспектов поведения запроса."
 
-#: fdwhandler.xml:1498(para)
+#: fdwhandler.xml:1486(para)
 msgid ""
 "When planning an <command>UPDATE</command> or <command>DELETE</command>, "
 "<function>PlanForeignModify</function> and <function>PlanDirectModify</"
@@ -2864,7 +2839,7 @@ msgstr ""
 "такие структуры, которые способна копировать функция <function>copyObject</"
 "function>."
 
-#: fdwhandler.xml:1512(para)
+#: fdwhandler.xml:1500(para)
 msgid ""
 "<command>INSERT</command> with an <literal>ON CONFLICT</literal> clause does "
 "not support specifying the conflict target, as unique constraints or "
@@ -2879,11 +2854,11 @@ msgstr ""
 "CONFLICT DO UPDATE</literal> не поддерживается, так как в нём это указание "
 "является обязательным."
 
-#: fdwhandler.xml:1523(title)
+#: fdwhandler.xml:1511(title)
 msgid "Row Locking in Foreign Data Wrappers"
 msgstr "Блокировка строк в обёртках сторонних данных"
 
-#: fdwhandler.xml:1525(para)
+#: fdwhandler.xml:1513(para)
 msgid ""
 "If an FDW's underlying storage mechanism has a concept of locking individual "
 "rows to prevent concurrent updates of those rows, it is usually worthwhile "
@@ -2898,7 +2873,7 @@ msgstr ""
 "productname>, насколько это возможно и практично. При этом нужно учитывать "
 "ряд замечаний."
 
-#: fdwhandler.xml:1534(para)
+#: fdwhandler.xml:1522(para)
 msgid ""
 "One key decision to be made is whether to perform <firstterm>early locking</"
 "firstterm> or <firstterm>late locking</firstterm>. In early locking, a row "
@@ -2928,7 +2903,7 @@ msgstr ""
 "идентификаторе строки следует идентифицировать определённую версию строки, "
 "как это делает TID в <productname>PostgreSQL</productname>."
 
-#: fdwhandler.xml:1549(para)
+#: fdwhandler.xml:1537(para)
 msgid ""
 "By default, <productname>PostgreSQL</productname> ignores locking "
 "considerations when interfacing to FDWs, but an FDW can perform early "
@@ -2944,7 +2919,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> 9.5, позволяют FDW применять поздние "
 "блокировки, если она этого пожелает."
 
-#: fdwhandler.xml:1558(para)
+#: fdwhandler.xml:1546(para)
 msgid ""
 "An additional consideration is that in <literal>READ COMMITTED</literal> "
 "isolation mode, <productname>PostgreSQL</productname> may need to re-check "
@@ -2981,7 +2956,7 @@ msgstr ""
 "слиянием или по хешу. FDW, которая может удовлетворить требованиям "
 "повторного чтения, может реализовать первый вариант."
 
-#: fdwhandler.xml:1578(para)
+#: fdwhandler.xml:1566(para)
 msgid ""
 "For an <command>UPDATE</command> or <command>DELETE</command> on a foreign "
 "table, it is recommended that the <literal>ForeignScan</literal> operation "
@@ -3007,7 +2982,7 @@ msgstr ""
 "<function>ExecForeignUpdate</function> или <function>ExecForeignDelete</"
 "function>, но специальной поддержки для этого нет."
 
-#: fdwhandler.xml:1591(para)
+#: fdwhandler.xml:1579(para)
 msgid ""
 "For foreign tables that are specified to be locked by a <command>SELECT FOR "
 "UPDATE/SHARE</command> command, the <literal>ForeignScan</literal> operation "
@@ -3044,7 +3019,7 @@ msgstr ""
 "и что её поле <structfield>strength</structfield> не равно "
 "<literal>LCS_NONE</literal>."
 
-#: fdwhandler.xml:1610(para)
+#: fdwhandler.xml:1598(para)
 msgid ""
 "Lastly, for foreign tables that are used in an <command>UPDATE</command>, "
 "<command>DELETE</command> or <command>SELECT FOR UPDATE/SHARE</command> "
@@ -3072,7 +3047,7 @@ msgstr ""
 "выберите для <literal>LCS_NONE</literal> вариант <literal>ROW_MARK_COPY</"
 "literal>.)"
 
-#: fdwhandler.xml:1624(para)
+#: fdwhandler.xml:1612(para)
 msgid ""
 "See <filename>src/include/nodes/lockoptions.h</filename>, the comments for "
 "<type>RowMarkType</type> and <type>PlanRowMark</type> in <filename>src/"
@@ -3090,6 +3065,30 @@ msgstr ""
 #: fdwhandler.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "UserMapping *\n"
+#~ "GetUserMappingById(Oid umid);"
+#~ msgstr ""
+#~ "UserMapping *\n"
+#~ "GetUserMappingById(Oid umid);"
+
+#~ msgid ""
+#~ "<placeholder-1/> This function returns the <structname>UserMapping</"
+#~ "structname> object for the given user mapping OID. The OID of a user "
+#~ "mapping for a foreign scan is available in the <structname>RelOptInfo</"
+#~ "structname>. If there is no mapping for the OID, this function will throw "
+#~ "an error. A <structname>UserMapping</structname> object contains "
+#~ "properties of the user mapping (see <filename>foreign/foreign.h</"
+#~ "filename> for details)."
+#~ msgstr ""
+#~ "<placeholder-1/> Эта функция возвращает объект <structname>UserMapping</"
+#~ "structname> для заданного OID сопоставления пользователя. OID "
+#~ "сопоставления пользователя для сторонней таблицы можно получить в "
+#~ "<structname>RelOptInfo</structname>. Если сопоставления с таким OID нет, "
+#~ "эта функция выдаст ошибку. Объект <structname>UserMapping</structname> "
+#~ "содержит свойства сопоставления пользователя (они описаны в "
+#~ "<filename>foreign/foreign.h</filename>)."
 
 #~ msgid ""
 #~ "void\n"
