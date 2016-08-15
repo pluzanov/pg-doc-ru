@@ -15,9 +15,8 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: release-9.5.xml:6(title)
-#, fuzzy
 msgid "Release 9.5.4"
-msgstr "Выпуск 9.5.3"
+msgstr "Выпуск 9.5.4"
 
 #: release-9.5.xml:9(title) release-9.5.xml:1082(title)
 #: release-9.5.xml:1583(title) release-9.5.xml:2294(title)
@@ -26,24 +25,21 @@ msgid "Release Date"
 msgstr "Дата выпуска"
 
 #: release-9.5.xml:10(simpara)
-#, fuzzy
 msgid "2016-08-11"
-msgstr "2016-02-11"
+msgstr "2016-08-11"
 
 #: release-9.5.xml:13(para)
-#, fuzzy
 msgid ""
 "This release contains a variety of fixes from 9.5.3. For information about "
 "new features in the 9.5 major release, see <xref linkend=\"release-9-5\"/>."
 msgstr ""
-"В этот выпуск вошли различные исправления, внесённые после версии 9.5.2. За "
+"В этот выпуск вошли различные исправления, внесённые после версии 9.5.3. За "
 "информацией о нововведениях версии 9.5 обратитесь к <xref remap=\"3\" "
 "linkend=\"release-9-5\"/>."
 
 #: release-9.5.xml:20(title)
-#, fuzzy
 msgid "Migration to Version 9.5.4"
-msgstr "Миграция на версию 9.5.3"
+msgstr "Миграция на версию 9.5.4"
 
 #: release-9.5.xml:22(para) release-9.5.xml:1095(para)
 #: release-9.5.xml:1596(para) release-9.5.xml:2307(para)
@@ -77,6 +73,8 @@ msgid ""
 "Fix possible mis-evaluation of nested <literal>CASE</literal>-<literal>WHEN</"
 "literal> expressions (Heikki Linnakangas, Michael Paquier, Tom Lane)"
 msgstr ""
+"Исправление некорректного вычисления вложенных выражений <literal>CASE</"
+"literal>-<literal>WHEN</literal> (Хейкки Линнакангас, Мишель Пакье, Том Лейн)"
 
 #: release-9.5.xml:53(para)
 msgid ""
@@ -90,6 +88,16 @@ msgid ""
 "such situations could be abused to allow disclosure of portions of server "
 "memory. (CVE-2016-5423)"
 msgstr ""
+"Выражение <literal>CASE</literal>, фигурирующее в подвыражении проверки "
+"другого выражения <literal>CASE</literal>, могло некорректно оценивать, "
+"отличается ли его собственное проверяемое значение от NULL. Кроме того, "
+"встраивание SQL-функции, реализующей оператор равенства, который "
+"используется выражением <literal>CASE</literal>, может привести к передаче "
+"неправильного проверяемого значения функциям, вызываемым в выражении "
+"<literal>CASE</literal> в теле функции SQL. Если же проверяемые значения "
+"оказываются разных типов, возможен сбой; более того, это может "
+"эксплуатироваться для несанкционированного чтения областей памяти сервера. "
+"(CVE-2016-5423)"
 
 #. Author: Noah Misch <noah@leadboat.com>
 #. Branch: master [fcd15f135] 2016-08-08 10:07:46 -0400
@@ -141,6 +149,8 @@ msgid ""
 "Fix client programs' handling of special characters in database and role "
 "names (Noah Misch, Nathan Bossart, Michael Paquier)"
 msgstr ""
+"Корректировка в клиентских программах обработки специальных символов в "
+"именах ролей и баз данных (Ной Миш, Натан Боссарт, Мишель Пакье)"
 
 #: release-9.5.xml:119(para)
 msgid ""
@@ -150,16 +160,21 @@ msgid ""
 "ensure that when a conninfo string is used as a database name parameter to "
 "these programs, it is correctly treated as such throughout."
 msgstr ""
+"Программа <application>vacuumdb</application> и другие клиентские утилиты во "
+"многих местах могли некорректно воспринимать имена ролей и баз данных, "
+"включающие кавычки или обратную косую черту. Теперь проверки ужесточены во "
+"избежание рисков. Также, когда этим программам вместо имени базы передаётся "
+"строка подключения, она обрабатывается должным образом."
 
 #: release-9.5.xml:127(para)
-#, fuzzy
 msgid ""
 "Fix handling of paired double quotes in <application>psql</application>'s "
 "<command>\\connect</command> and <command>\\password</command> commands to "
 "match the documentation."
 msgstr ""
-"В <application>psql</application> <command>\\watch</command> добавлен вывод "
-"информации <command>\\timing</command> (Фудзии Масао)"
+"Приведение в соответствие с документацией правил обработки пар двойных "
+"кавычек в командах <application>psql</application> <command>\\connect</"
+"command> и <command>\\password</command>."
 
 #: release-9.5.xml:133(para)
 msgid ""
@@ -171,6 +186,13 @@ msgid ""
 "handling of database names containing special characters in "
 "<application>pg_dumpall</application> scripts."
 msgstr ""
+"Введение нового параметра <option>-reuse-previous</option> для команды "
+"<application>psql</application> <command>\\connect</command>, позволяющего "
+"явно указывать, должны ли повторно использоваться параметры предыдущего "
+"подключения. (Без данного параметра это, как и раньше, зависит от того, "
+"похоже ли имя базы данных на строку подключения.) Это позволяет безопасно "
+"оперировать с именами баз данных, содержащими специальные символы, в "
+"скриптах <application>pg_dumpall</application>."
 
 #: release-9.5.xml:143(para)
 msgid ""
@@ -179,6 +201,11 @@ msgid ""
 "to quote those characters safely on Windows. In future we may reject such "
 "names on the server side, but that step has not been taken yet."
 msgstr ""
+"<application>pg_dumpall</application> теперь не будет принимать имена ролей "
+"или баз данных, содержащие символы перевода строки или возврата каретки, так "
+"как безопасно экранировать эти символы в Windows не представляется "
+"практичным. В будущем мы можем запретить такие имена и на стороне сервера, "
+"но пока это не сделано."
 
 #: release-9.5.xml:150(para)
 msgid ""
@@ -187,6 +214,12 @@ msgid ""
 "privileges the next time a superuser executes <application>pg_dumpall</"
 "application> or other routine maintenance operations. (CVE-2016-5424)"
 msgstr ""
+"Эти коррективы считаются исправлениями уязвимостей, так как, сконструировав "
+"имена объектов специальным образом (используя спецсимволы), можно было "
+"сформировать произвольные команды, которые выполнятся с правами "
+"суперпользователя, когда суперпользователь будет выполнять "
+"<application>pg_dumpall</application> или другие операции обслуживания базы. "
+"(CVE-2016-5424)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [4452000f3] 2016-07-26 15:25:02 -0400
@@ -206,6 +239,9 @@ msgid ""
 "Fix corner-case misbehaviors for <literal>IS NULL</literal>/<literal>IS NOT "
 "NULL</literal> applied to nested composite values (Andrew Gierth, Tom Lane)"
 msgstr ""
+"Исправление некорректного в особых случаях поведения проверок <literal>IS "
+"NULL</literal>/<literal>IS NOT NULL</literal>, применяемых к вложенным "
+"составным значениям (Эндрю Гирт, Том Лейн)"
 
 #: release-9.5.xml:180(para)
 msgid ""
@@ -218,6 +254,15 @@ msgid ""
 "postgres_fdw</filename> could produce remote queries that misbehaved "
 "similarly."
 msgstr ""
+"В стандарте SQL говорится, что проверка <literal>IS NULL</literal> должна "
+"возвращать TRUE для строки со всеми значениями NULL (то есть "
+"<literal>ROW(NULL,NULL) IS NULL</literal> выдаёт TRUE), но это не должно "
+"действовать рекурсивно (то есть, <literal>ROW(NULL, ROW(NULL,NULL)) IS NULL</"
+"literal> выдаёт FALSE). В основном исполнителе это реализовано правильно, но "
+"при некоторых оптимизациях планировщика эта проверка рассматривалась как "
+"рекурсивная (и TRUE выдавалось в обоих случаях), кроме того, обёртка "
+"<filename>contrib/postgres_fdw</filename> тоже могла выдавать удалённые "
+"запросы с подобным некорректным поведением."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [eae1ad9b6] 2016-05-23 19:23:36 -0400
@@ -228,6 +273,9 @@ msgid ""
 "CONFLICT</command> within a recursive CTE (a <literal>WITH</literal> item) "
 "(Peter Geoghegan)"
 msgstr ""
+"Исправление ошибки <quote>unrecognized node type</quote> (нераспознанный тип "
+"узла) при <command>INSERT ... ON CONFLICT</command> в рекурсивном CTE "
+"(элементе <literal>WITH</literal>) (Питер Геохеган)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [26e66184d] 2016-05-11 16:20:23 -0400
@@ -238,6 +286,9 @@ msgid ""
 "expressions or index predicates that are simplified during the planner's "
 "expression preprocessing phase (Tom Lane)"
 msgstr ""
+"Исправление в <command>INSERT ... ON CONFLICT</command> сопоставления "
+"предикатов или выражений индексов, которые были упрощены планировщиком на "
+"стадии предобработки выражений (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [9c810a2ed] 2016-07-04 16:09:11 -0400
@@ -248,12 +299,17 @@ msgid ""
 "target table of an <literal>INSERT ... ON CONFLICT</literal> command, but "
 "are not one of the selected arbiter indexes (Tom Lane)"
 msgstr ""
+"Правильная обработка нарушений ограничений-исключений, которые применяются к "
+"целевой таблице команды <literal>INSERT ... ON CONFLICT</literal>, но не "
+"являются решающими индексами (Том Лейн)"
 
 #: release-9.5.xml:230(para)
 msgid ""
 "Such a case should raise a normal constraint-violation error, but it got "
 "into an infinite loop instead."
 msgstr ""
+"В таких случаях должна выдаваться обычная ошибка нарушения ограничения, но "
+"вместо этого код попадал в бесконечный цикл."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [8a13d5e6d] 2016-05-11 17:06:53 -0400
@@ -263,6 +319,8 @@ msgid ""
 "Fix <command>INSERT ... ON CONFLICT</command> to not fail if the target "
 "table has a unique index on OID (Tom Lane)"
 msgstr ""
+"Исправление <command>INSERT ... ON CONFLICT</command>, чтобы при наличии в "
+"целевой таблице уникального индекса по OID не происходила ошибка (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [4c56f3269] 2016-06-16 17:16:32 -0400
@@ -276,6 +334,9 @@ msgid ""
 "Make the <type>inet</type> and <type>cidr</type> data types properly reject "
 "IPv6 addresses with too many colon-separated fields (Tom Lane)"
 msgstr ""
+"Недопущение для типов данных <type>inet</type> и <type>cidr</type> входных "
+"адресов IPv6 со слишком большим количеством разделённых двоеточиями полей "
+"(Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [278148907] 2016-07-16 14:42:37 -0400
@@ -290,10 +351,13 @@ msgid ""
 "<literal>##</literal> <type>lseg</type> operator) for NaN input coordinates "
 "(Tom Lane)"
 msgstr ""
+"Предотвращение сбоя в <function>close_ps()</function> (операторе "
+"<type>point</type> <literal>##</literal> <type>lseg</type>) для входных "
+"координат NaN (Том Лейн)"
 
 #: release-9.5.xml:280(para)
 msgid "Make it return NULL instead of crashing."
-msgstr ""
+msgstr "В таких случаях должен просто возвращаться NULL."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [0daeba0e9] 2016-07-01 11:40:33 -0400
@@ -305,6 +369,8 @@ msgid ""
 "Avoid possible crash in <function>pg_get_expr()</function> when inconsistent "
 "values are passed to it (Michael Paquier, Thomas Munro)"
 msgstr ""
+"Предотвращение сбоя в функции <function>pg_get_expr()</function>, когда ей "
+"передаются несогласованные значения (Мишель Пакье, Томас Мунро)"
 
 #. Author: Peter Eisentraut <peter_e@gmx.net>
 #. Branch: master [9a46324fd] 2016-08-08 11:12:59 -0400
@@ -318,6 +384,8 @@ msgid ""
 "Fix several one-byte buffer over-reads in <function>to_number()</function> "
 "(Peter Eisentraut)"
 msgstr ""
+"Исправление в нескольких местах выхода на один байт за границу буфера в "
+"<function>to_number()</function> (Питер Эйзентраут)"
 
 #: release-9.5.xml:314(para)
 msgid ""
@@ -325,6 +393,9 @@ msgid ""
 "one more character than it should from the input string. There is a small "
 "chance of a crash, if the input happens to be adjacent to the end of memory."
 msgstr ""
+"В некоторых случаях функция <function>to_number()</function> могла читать из "
+"входной строки на один символ больше, чем нужно. Это создавало небольшой "
+"риск сбоя в случае расположения входной строки у края блока памяти."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [874fe3aea] 2016-06-27 15:57:50 -0400
@@ -337,6 +408,9 @@ msgid ""
 "MATERIALIZED VIEW</literal> or <literal>CREATE TABLE AS</literal> when "
 "<literal>WITH NO DATA</literal> is specified (Michael Paquier, Tom Lane)"
 msgstr ""
+"Планировщик не должен запускаться для запроса, заданного в операторе "
+"<literal>CREATE MATERIALIZED VIEW</literal> или <literal>CREATE TABLE AS</"
+"literal> с указанием <literal>WITH NO DATA</literal> (Мишель Пакье, Том Лейн)"
 
 #: release-9.5.xml:337(para)
 msgid ""
@@ -344,6 +418,9 @@ msgid ""
 "function invoked by the materialized view depends on a table that doesn't "
 "exist yet."
 msgstr ""
+"Это предотвращает некоторые лишние условия ошибки, например, когда "
+"стабильная функция, вызываемая материализованным представлением, зависит от "
+"ещё не существующей таблицы."
 
 #. Author: Andres Freund <andres@anarazel.de>
 #. Branch: master [bfa2ab56b] 2016-07-15 17:49:48 -0700
@@ -357,6 +434,9 @@ msgid ""
 "Avoid unsafe intermediate state during expensive paths through "
 "<function>heap_update()</function> (Masahiko Sawada, Andres Freund)"
 msgstr ""
+"Ликвидация небезопасного промежуточного состояния при выполнении "
+"<function>heap_update()</function> по сложному пути (Масахико Савада, Андрес "
+"Фройнд)"
 
 #: release-9.5.xml:359(para)
 msgid ""
@@ -365,6 +445,10 @@ msgid ""
 "page were spilled to disk and then a database crash occurred before the "
 "tuple update could be completed."
 msgstr ""
+"Ранее в особых случаях целевой кортеж блокировался (путём изменения его "
+"XMAX), но это действие не отражалось в журнале, что могло угрожать "
+"целостности данных, если страница вымещалась на диск, а затем, до завершения "
+"изменения кортежа, происходил сбой базы."
 
 #. Author: Andres Freund <andres@anarazel.de>
 #. Branch: master [a4d357bfb] 2016-07-15 14:45:37 -0700
@@ -376,6 +460,8 @@ msgid ""
 "Fix hint bit update during WAL replay of row locking operations (Andres "
 "Freund)"
 msgstr ""
+"Исправление обновления вспомогательных битов при воспроизведении из WAL "
+"операций блокирования строк (Андрес Фройнд)"
 
 #: release-9.5.xml:380(para)
 msgid ""
@@ -383,6 +469,9 @@ msgid ""
 "prepared, but uncommitted, transaction might fail to be enforced after a "
 "crash and restart."
 msgstr ""
+"Единственным известным последствием этой проблемы было то, что блокировки "
+"строк, удерживаемые подготовленной, но не зафиксированной транзакцией, могли "
+"теряться после сбоя и перезапуска сервера."
 
 #. Author: Alvaro Herrera <alvherre@alvh.no-ip.org>
 #. Branch: master [533e9c6b0] 2016-07-15 14:17:20 -0400
@@ -395,6 +484,9 @@ msgid ""
 "acquiring <literal>FOR KEY SHARE</literal> row locks in serializable mode "
 "(&Aacute;lvaro Herrera)"
 msgstr ""
+"Предотвращение неоправданных ошибок <quote>could not serialize access</"
+"quote> (не удалось сериализовать доступ) при получении блокировок строк "
+"<literal>FOR KEY SHARE</literal> в сериализуемом режиме (Альваро Эррера)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [69f526aa4] 2016-06-03 15:14:50 -0400
@@ -406,6 +498,8 @@ msgid ""
 "Make sure <quote>expanded</quote> datums returned by a plan node are read-"
 "only (Tom Lane)"
 msgstr ""
+"<quote>Развёрнутые</quote> данные, возвращаемые узлом плана, должны быть "
+"доступны только для чтения (Том Лейн)"
 
 #: release-9.5.xml:415(para)
 msgid ""
@@ -415,6 +509,11 @@ msgid ""
 "returned by PL/pgSQL functions are at risk; but extensions might use "
 "expanded datums for other things."
 msgstr ""
+"Это предотвращает сбои в некоторых случаях, когда результат нижнего узла "
+"плана неоднократно задействуется в верхних узлах. Если говорить о ядре "
+"<productname>PostgreSQL</productname>, риску подвержены только значения "
+"массивов, возвращаемые функциями PL/pgSQL; но расширения могут использовать "
+"развёрнутые данные и для других целей."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [0b0baf262] 2016-06-16 12:17:38 -0400
@@ -432,6 +531,8 @@ msgid ""
 "Avoid crash in <literal>postgres -C</literal> when the specified variable "
 "has a null string value (Michael Paquier)"
 msgstr ""
+"Предупреждение сбоя в <literal>postgres -C</literal>, когда указанная "
+"переменная имеет пустое строковое значение (Мишель Пакье)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [80b346c20] 2016-07-29 12:52:57 -0400
@@ -441,6 +542,8 @@ msgid ""
 "Prevent unintended waits for the receiver in WAL sender processes (Kyotaro "
 "Horiguchi)"
 msgstr ""
+"Предотвращение незапланированного ожидания приёмника в процессах, передающих "
+"WAL (Киотаро Хоригучи)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [f8c58554d] 2016-06-30 12:37:02 -0400
@@ -451,6 +554,8 @@ msgid ""
 "Fix possible loss of large subtransactions in logical decoding (Petru-Florin "
 "Mihancea)"
 msgstr ""
+"Исправление возможной потери больших подтранзакций при логическом "
+"декодировании (Петру-Флорин Миханча)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [bcbecbce2] 2016-08-07 13:15:55 -0400
@@ -461,6 +566,8 @@ msgid ""
 "Fix failure of logical decoding when a subtransaction contains no actual "
 "changes (Marko Tiikkaja, Andrew Gierth)"
 msgstr ""
+"Исправление сбоя логического декодирования, когда подтранзакция не содержит "
+"фактических изменений (Марко Тииккая, Эндрю Гирт)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [52e8fc3e2] 2016-05-25 17:48:15 -0400
@@ -471,6 +578,8 @@ msgstr ""
 msgid ""
 "Ensure that backends see up-to-date statistics for shared catalogs (Tom Lane)"
 msgstr ""
+"Предоставление обслуживающим процессам актуальной статистики по общим "
+"каталогам (Том Лейн)"
 
 #: release-9.5.xml:495(para)
 msgid ""
@@ -479,6 +588,11 @@ msgid ""
 "masked because the autovacuum launcher regularly makes requests that did "
 "cause such updates; however, it became obvious with autovacuum disabled."
 msgstr ""
+"Ранее сборщик статистики не мог обновлять файл статистики для общих "
+"каталогов по запросу от обычного обслуживающего процесса. Эта проблема была "
+"частично скрыта, так как процесс запуска автоочистки регулярно выдавал "
+"запросы, в результате которых такие обновления производились: однако она "
+"проявлялась при отключении автоочистки."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [22b27b4c9] 2016-05-31 15:55:15 -0400
@@ -490,6 +604,8 @@ msgid ""
 "Avoid redundant writes of the statistics files when multiple backends "
 "request updates close together (Tom Lane, Tomas Vondra)"
 msgstr ""
+"Исключение ненужной записи в файлы статистики, когда несколько обслуживающих "
+"процессов запрашивают обновление один за другим (Том Лейн, Томас Вондра)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [996d27397] 2016-05-24 15:20:36 -0400
@@ -509,6 +625,8 @@ msgid ""
 "Avoid consuming a transaction ID during <command>VACUUM</command> (Alexander "
 "Korotkov)"
 msgstr ""
+"Исключение потребления лишнего ID транзакции во время <command>VACUUM</"
+"command> (Александр Коротков)"
 
 #: release-9.5.xml:539(para)
 msgid ""
@@ -517,6 +635,11 @@ msgid ""
 "is up against the XID wraparound limit, consuming more XIDs during anti-"
 "wraparound vacuums is a very bad thing."
 msgstr ""
+"В некоторых случаях в процессе <command>VACUUM</command> текущей транзакции "
+"без необходимости присваивался XID. В обычных условиях это некритично, но "
+"если очистка выполняется для предотвращения зацикливания идентификаторов "
+"транзакций, потребление дополнительных идентификаторов может привести к "
+"очень плохим последствиям."
 
 #. Author: Alvaro Herrera <alvherre@alvh.no-ip.org>
 #. Branch: master [e3ad3ffa6] 2016-06-24 18:29:28 -0400
@@ -529,6 +652,9 @@ msgid ""
 "that has been pg_upgrade'd from pre-9.3 (Andrew Gierth, &Aacute;lvaro "
 "Herrera)"
 msgstr ""
+"Предотвращение риска сбоя при очистке идентификаторов мультитранзакций в "
+"инсталляции, обновлённой (с помощью pg_upgrade) с версии старее 9.3 (Эндрю "
+"Гирт, Альваро Эррера)"
 
 #: release-9.5.xml:561(para)
 msgid ""
@@ -536,6 +662,10 @@ msgid ""
 "<replaceable>NNN</replaceable> has not been created yet -- apparent "
 "wraparound</quote>."
 msgstr ""
+"Обычно этот дефект проявлялся в ошибках типа <quote>MultiXactId "
+"<replaceable>NNN</replaceable> has not been created yet -- apparent "
+"wraparound</quote> (MultiXactId %u ещё не был создан: видимо, произошло "
+"наложение)."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [f64340e74] 2016-06-06 17:44:17 -0400
@@ -549,12 +679,17 @@ msgid ""
 "When a manual <command>ANALYZE</command> specifies a column list, don't "
 "reset the table's <literal>changes_since_analyze</literal> counter (Tom Lane)"
 msgstr ""
+"Когда в запускаемой вручную команде <command>ANALYZE</command> задаётся "
+"список столбцов, не нужно сбрасывать счётчик <literal>changes_since_analyze</"
+"literal> целевой таблицы (Том Лейн)"
 
 #: release-9.5.xml:584(para)
 msgid ""
 "If we're only analyzing some columns, we should not prevent routine auto-"
 "analyze from happening for the other columns."
 msgstr ""
+"Если мы анализируем только избранные столбцы, мы не должны предотвращать "
+"запуск процедуры автоанализа для других столбцов."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [95bee941b] 2016-08-07 18:52:02 -0400
@@ -569,12 +704,17 @@ msgid ""
 "literal> for a unique or nearly-unique column with many null entries (Tom "
 "Lane)"
 msgstr ""
+"Исправление ошибки в <command>ANALYZE</command> с завышением показателя "
+"<literal>n_distinct</literal> для столбца, содержащего уникальные или почти "
+"уникальные значениями и вместе с тем множество NULL (Том Лейн)"
 
 #: release-9.5.xml:606(para)
 msgid ""
 "The nulls could get counted as though they were themselves distinct values, "
 "leading to serious planner misestimates in some types of queries."
 msgstr ""
+"Значения NULL могли учитываться как будто они сами являются уникальными, что "
+"приводило к серьёзным просчётам планировщика с запросами некоторых типов."
 
 #. Author: Alvaro Herrera <alvherre@alvh.no-ip.org>
 #. Branch: master [15739393e] 2016-05-10 16:23:54 -0300
@@ -588,6 +728,8 @@ msgid ""
 "Prevent autovacuum from starting multiple workers for the same shared "
 "catalog (&Aacute;lvaro Herrera)"
 msgstr ""
+"Недопущение запуска при автоочистке нескольких рабочих процессов для одного "
+"общего каталога (Альваро Эррера)"
 
 #: release-9.5.xml:628(para)
 msgid ""
@@ -596,6 +738,10 @@ msgid ""
 "all but one worker uselessly waiting instead of doing useful work on other "
 "tables."
 msgstr ""
+"Обычно это не представляет большой проблемы, так как очистка выполняется "
+"быстро; но если каталог очень сильно замусорен, это может привести к тому, "
+"что все рабочие процессы, кроме одного, будут бессмысленно ждать, вместо "
+"того, чтобы делать что-то полезное с другими таблицами."
 
 #. Author: Kevin Grittner <kgrittn@postgresql.org>
 #. Branch: master [7392eed7c] 2016-06-02 12:23:01 -0500
@@ -603,12 +749,17 @@ msgstr ""
 #: release-9.5.xml:642(para)
 msgid "Fix bug in b-tree mark/restore processing (Kevin Grittner)"
 msgstr ""
+"Исправление ошибки при обработке пометки/восстановления позиции в B-дереве "
+"(Кевин Гриттнер)"
 
 #: release-9.5.xml:646(para)
 msgid ""
 "This error could lead to incorrect join results or assertion failures in a "
 "merge join whose inner source node is a b-tree indexscan."
 msgstr ""
+"Вследствие этой ошибки могли выдаваться некорректные результаты соединения "
+"или ошибочные утверждения при соединении слиянием, в котором внутренним "
+"узлом оказывалось сканирование индекса-B-дерева."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [e89526d4f] 2016-08-06 14:28:37 -0400
@@ -619,12 +770,16 @@ msgid ""
 "Avoid duplicate buffer lock release when abandoning a b-tree index page "
 "deletion attempt (Tom Lane)"
 msgstr ""
+"Предупреждение двойного освобождения блокировки буфера при отказе от попытки "
+"удаления страницы индекса-B-дерева (Том Лейн)"
 
 #: release-9.5.xml:664(para)
 msgid ""
 "This mistake prevented <command>VACUUM</command> from completing in some "
 "cases involving corrupt b-tree indexes."
 msgstr ""
+"В результате этой ошибки процедура <command>VACUUM</command> не могла "
+"завершиться в некоторых случаях при наличии проблем с индексами-B-деревьями."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [8cf739de8] 2016-06-24 16:57:36 -0400
@@ -634,6 +789,8 @@ msgid ""
 "Fix building of large (bigger than <varname>shared_buffers</varname>) hash "
 "indexes (Tom Lane)"
 msgstr ""
+"Исправление ошибки при построении больших (больше <varname>shared_buffers</"
+"varname>) хеш-индексов (Том Лейн)"
 
 #: release-9.5.xml:681(para)
 msgid ""
@@ -642,6 +799,10 @@ msgid ""
 "always failed, except for tuples inserted into the index after the initial "
 "build."
 msgstr ""
+"В коде, работающем с большими индексами, обнаружилась ошибка, приводящая к "
+"добавлению в индекс некорректных хеш-значений, так что последующий поиск по "
+"индексу всегда был безуспешным, кроме случаев, когда кортежи вставлялись в "
+"индекс уже после его создания."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [1acf75725] 2016-07-14 18:45:59 -0400
@@ -654,6 +815,8 @@ msgid ""
 "Prevent infinite loop in GiST index build for geometric columns containing "
 "NaN component values (Tom Lane)"
 msgstr ""
+"Предотвращение бесконечного цикла при построении индексов GiST для "
+"геометрических столбцов с составными значениями, содержащими NaN (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [8a859691d] 2016-06-05 11:53:06 -0400
@@ -664,6 +827,10 @@ msgid ""
 "distance) indexscan on a <filename>contrib/btree_gist</filename> index on an "
 "<type>interval</type> column (Peter Geoghegan)"
 msgstr ""
+"Предупреждение сбоя при сканировании с поиском ближайших соседей "
+"(упорядоченного (<literal>ORDER BY</literal>) по расстоянию) по индексу "
+"<filename>contrib/btree_gist</filename>, построенному по столбцу "
+"<type>interval</type> (Питер Геохеган)"
 
 #. Author: Alvaro Herrera <alvherre@alvh.no-ip.org>
 #. Branch: master [975ad4e60] 2016-05-30 14:47:22 -0400
@@ -673,6 +840,9 @@ msgid ""
 "Fix <quote>PANIC: failed to add BRIN tuple</quote> error when attempting to "
 "update a BRIN index entry (&Aacute;lvaro Herrera)"
 msgstr ""
+"Исправление ошибки <quote>PANIC: failed to add BRIN tuple</quote> (ПАНИКА: "
+"не удалось добавить кортеж BRIN), возникавшей при попытке изменить элемент "
+"индекса BRIN (Альваро Эррера)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [8d498a5c8] 2016-08-04 16:06:14 -0400
@@ -680,6 +850,8 @@ msgstr ""
 #: release-9.5.xml:735(para)
 msgid "Fix possible crash during background worker shutdown (Dmitry Ivanov)"
 msgstr ""
+"Предупреждение возможных сбоев при остановке фонового рабочего процесса "
+"(Дмитрий Иванов)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [baebab3ac] 2016-07-12 18:07:03 -0400
@@ -689,6 +861,8 @@ msgid ""
 "Fix PL/pgSQL's handling of the <literal>INTO</literal> clause within "
 "<command>IMPORT FOREIGN SCHEMA</command> commands (Tom Lane)"
 msgstr ""
+"Исправление поведения в PL/pgSQL предложения <literal>INTO</literal> внутри "
+"команд <command>IMPORT FOREIGN SCHEMA</command> (Том Лейн)"
 
 #. Author: Peter Eisentraut <peter_e@gmx.net>
 #. Branch: master [f36ca9af0] 2016-07-17 09:15:37 -0400
@@ -702,6 +876,8 @@ msgid ""
 "Fix <filename>contrib/btree_gin</filename> to handle the smallest possible "
 "<type>bigint</type> value correctly (Peter Eisentraut)"
 msgstr ""
+"Исправление кода <filename>contrib/btree_gin</filename>, чтобы он корректно "
+"выдавал наименьшее возможное значение <type>bigint</type> (Питер Эйзентраут)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [69dc5ae40] 2016-08-05 18:58:12 -0400
@@ -715,6 +891,8 @@ msgid ""
 "Teach libpq to correctly decode server version from future servers (Peter "
 "Eisentraut)"
 msgstr ""
+"Наделение libpq способностью корректно декодировать версию сервера по схеме "
+"нумерации, которая вскоре будет принята (Питер Эйзентраут)"
 
 #: release-9.5.xml:783(para)
 msgid ""
@@ -722,6 +900,10 @@ msgid ""
 "numbers for releases after 9.6. Make sure that <function>PQserverVersion()</"
 "function> returns the correct value for such cases."
 msgstr ""
+"Для выпусков после 9.6 планируется перейти на нумерацию версий по схеме с "
+"двумя, а не тремя компонентами. Поэтому нужно, чтобы "
+"<function>PQserverVersion()</function> возвращала правильное значение с "
+"такой нумерацией."
 
 #. Author: Michael Meskes <meskes@postgresql.org>
 #. Branch: master [3ebc88e56] 2016-08-01 15:08:12 +0200
@@ -731,13 +913,12 @@ msgstr ""
 #. Branch: REL9_2_STABLE [295edbecf] 2016-08-01 15:08:48 +0200
 #. Branch: REL9_1_STABLE [c15f502b6] 2016-08-01 15:08:36 +0200
 #: release-9.5.xml:801(para)
-#, fuzzy
 msgid ""
 "Fix <application>ecpg</application>'s code for <literal>unsigned long long</"
 "literal> array elements (Michael Meskes)"
 msgstr ""
-"В <application>psql</application> исправлено завершение табуляцией команды "
-"<literal>SECURITY LABEL</literal> (Том Лейн)"
+"Исправление в <application>ecpg</application> кода обработки элементов "
+"массива <literal>unsigned long long</literal> (Михаэль Мескес)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [e2e95f5ef] 2016-08-02 12:49:40 -0400
@@ -751,6 +932,9 @@ msgid ""
 "<option>-C</option> options, avoid emitting an unwanted <literal>CREATE "
 "SCHEMA public</literal> command (David Johnston, Tom Lane)"
 msgstr ""
+"В <application>pg_dump</application> с одновременно заданными ключами "
+"<option>-c</option> и <option>-C</option> не должна выдаваться команда "
+"<literal>CREATE SCHEMA public</literal> (Дэвид Джонсон, Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [e652273e0] 2016-06-02 13:28:17 -0400
@@ -762,15 +946,14 @@ msgstr ""
 #. Branch: REL9_4_STABLE [53c2601a5] 2016-06-03 11:29:20 -0400
 #. Branch: REL9_3_STABLE [4a21c6fd7] 2016-06-03 11:29:20 -0400
 #: release-9.5.xml:835(para)
-#, fuzzy
 msgid ""
 "Improve handling of <systemitem>SIGTERM</systemitem>/control-C in parallel "
 "<application>pg_dump</application> and <application>pg_restore</application> "
 "(Tom Lane)"
 msgstr ""
-"Решение проблем с выгрузкой/перезагрузкой данных при одновременном "
-"использовании <application>plpython2</application> и <application>plpython3</"
-"application> (Том Лейн)"
+"Улучшение обработки <systemitem>SIGTERM</systemitem>/control-C в "
+"параллельном режиме <application>pg_dump</application> и "
+"<application>pg_restore</application> (Том Лейн)"
 
 #: release-9.5.xml:841(para)
 msgid ""
@@ -778,6 +961,10 @@ msgid ""
 "send query-cancel requests to the connected backends, in case they are doing "
 "something long-running such as a <command>CREATE INDEX</command>."
 msgstr ""
+"Обеспечение своевременного завершения рабочих процессов и передачи команд "
+"отмены запросов в подключённые рабочие процессы, в случае, если они "
+"выполняют какие-либо длительные операции, например <command>CREATE INDEX</"
+"command>."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [9abd64ec9] 2016-05-25 12:40:12 -0400
@@ -785,14 +972,12 @@ msgstr ""
 #. Branch: REL9_4_STABLE [ea274b2f4] 2016-05-25 12:39:57 -0400
 #. Branch: REL9_3_STABLE [1c8205159] 2016-05-25 12:39:57 -0400
 #: release-9.5.xml:856(para)
-#, fuzzy
 msgid ""
 "Fix error reporting in parallel <application>pg_dump</application> and "
 "<application>pg_restore</application> (Tom Lane)"
 msgstr ""
-"Решение проблем с выгрузкой/перезагрузкой данных при одновременном "
-"использовании <application>plpython2</application> и <application>plpython3</"
-"application> (Том Лейн)"
+"Корректировка выдачи ошибок в параллельном режиме <application>pg_dump</"
+"application> и <application>pg_restore</application> (Том Лейн)"
 
 #: release-9.5.xml:861(para)
 msgid ""
@@ -805,6 +990,14 @@ msgid ""
 "messages (for instance, if all the workers report a server shutdown), but "
 "that seems better than no message."
 msgstr ""
+"Ранее ошибки, выдаваемые рабочими процессами <application>pg_dump</"
+"application> или <application>pg_restore</application>, могли никогда не "
+"достигать консоли пользователя, так как они проходили через главный процесс, "
+"и были возможны различные сценарии взаимоблокировки, когда главный процесс "
+"не мог передавать сообщения. Теперь вместо этого всё будет просто выводиться "
+"в <literal>stderr</literal>. В некоторых случах при этом возможны повторы "
+"сообщений (например, когда все рабочие процессы сообщают об отключении "
+"главного), но это представляется лучшим вариантом, чем терять сообщения."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [df8d2d8c4] 2016-05-26 10:50:30 -0400
@@ -817,12 +1010,17 @@ msgid ""
 "<application>pg_restore</application> on Windows will shut down properly "
 "after an error (Kyotaro Horiguchi)"
 msgstr ""
+"Обеспечение корректного отключения параллельных процессов "
+"<application>pg_dump</application> и <application>pg_restore</application> в "
+"Windows в случае ошибки (Киотаро Хоригучи)"
 
 #: release-9.5.xml:887(para)
 msgid ""
 "Previously, it would report the error, but then just sit until manually "
 "stopped by the user."
 msgstr ""
+"Ранее процесс выдавал ошибку, но затем просто оставался в памяти, пока "
+"пользователь не останавливал его вручную."
 
 #. Author: Magnus Hagander <magnus@hagander.net>
 #. Branch: master [d74048def] 2016-05-26 22:14:23 +0200
@@ -832,12 +1030,17 @@ msgid ""
 "Make parallel <application>pg_dump</application> fail cleanly when run "
 "against a standby server (Magnus Hagander)"
 msgstr ""
+"Параллельный <application>pg_dump</application> должен завершаться штатно "
+"при попытке подключения к резервному серверу (Магнус Хагандер)"
 
 #: release-9.5.xml:904(para)
 msgid ""
 "This usage is not supported unless <option>--no-synchronized-snapshots</"
 "option> is specified, but the error was not handled very well."
 msgstr ""
+"Такое использование не поддерживается (если только не применяется <option>--"
+"no-synchronized-snapshots</option>), но эта ошибка не обрабатывалась должным "
+"образом."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [cae2bb198] 2016-05-26 11:51:04 -0400
@@ -849,12 +1052,16 @@ msgid ""
 "Make <application>pg_dump</application> behave better when built without "
 "zlib support (Kyotaro Horiguchi)"
 msgstr ""
+"Улучшение поведения <application>pg_dump</application> при сборке без "
+"поддержки zlib (Киотаро Хоригучи)"
 
 #: release-9.5.xml:924(para)
 msgid ""
 "It didn't work right for parallel dumps, and emitted some rather pointless "
 "warnings in other cases."
 msgstr ""
+"С такой сборкой не работала корректно параллельная выгрузка, а в других "
+"случаях выдавались довольно бессмысленные предупреждения."
 
 #. Author: Fujii Masao <fujii@postgresql.org>
 #. Branch: master [74d8c95b7] 2016-08-01 17:36:14 +0900
@@ -868,6 +1075,8 @@ msgid ""
 "Make <application>pg_basebackup</application> accept <literal>-Z 0</literal> "
 "as specifying no compression (Fujii Masao)"
 msgstr ""
+"Добавление для <application>pg_basebackup</application> параметра <literal>-"
+"Z 0</literal>, позволяющего отключить сжатие (Фудзии Масао)"
 
 #. Author: Noah Misch <noah@leadboat.com>
 #. Branch: master [e8564ef03] 2016-07-23 20:30:03 -0400
@@ -881,6 +1090,8 @@ msgid ""
 "Fix makefiles' rule for building AIX shared libraries to be safe for "
 "parallel make (Noah Misch)"
 msgstr ""
+"Корректировка в makefile правила для безопасной сборки разделяемых библиотек "
+"AIX в параллельном режиме (Ной Миш)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [30b2731bd] 2016-07-09 16:47:38 -0400
@@ -894,6 +1105,8 @@ msgid ""
 "Fix TAP tests and MSVC scripts to work when build directory's path name "
 "contains spaces (Michael Paquier, Kyotaro Horiguchi)"
 msgstr ""
+"Исправление тестов TAP и скриптов MSVC для работы с каталогом сборки, путь к "
+"которому содержит пробелы (Мишель Пакье, Киотаро Хоригучи)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [9dd4178ce] 2016-05-27 10:40:20 -0400
@@ -905,6 +1118,9 @@ msgid ""
 "Be more predictable about reporting <quote>statement timeout</quote> versus "
 "<quote>lock timeout</quote> (Tom Lane)"
 msgstr ""
+"Более предсказуемое поведение в выборе ошибки <quote>statement timeout</"
+"quote> (таймаут оператора) или <quote>lock timeout</quote> (таймаут "
+"блокировки) (Том Лейн)"
 
 #: release-9.5.xml:991(para)
 msgid ""
@@ -912,6 +1128,9 @@ msgid ""
 "reporting <quote>lock timeout</quote> even though the statement timeout "
 "should have occurred first."
 msgstr ""
+"В сильно загруженных системах регрессионные тесты иногда выдавали ошибку "
+"<quote>lock timeout</quote> (таймаут блокировки), хотя прежде этого должен "
+"был случиться таймаут оператора."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [b3399cb0f] 2016-07-21 13:11:00 -0400
@@ -935,12 +1154,16 @@ msgid ""
 "Make regression tests safe for Danish and Welsh locales (Jeff Janes, Tom "
 "Lane)"
 msgstr ""
+"Адаптация регрессионных тестов к датской и валлийской локалям (Джефф Джейнс, "
+"Том Лейн)"
 
 #: release-9.5.xml:1023(para)
 msgid ""
 "Change some test data that triggered the unusual sorting rules of these "
 "locales."
 msgstr ""
+"Изменены некоторые тестовые данные, с которыми в этих локалях действовали "
+"необычные правила сортировки."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: REL9_5_STABLE [19d477aa6] 2016-07-19 15:59:36 -0400
@@ -959,12 +1182,17 @@ msgid ""
 "Update our copy of the timezone code to match IANA's <application>tzcode</"
 "application> release 2016c (Tom Lane)"
 msgstr ""
+"Приведение нашей копии кодов часовых поясов в соответствие с выпущенной IANA "
+"версией <application>tzcode</application> 2016c (Том Лейн)"
 
 #: release-9.5.xml:1049(para)
 msgid ""
 "This is needed to cope with anticipated future changes in the time zone data "
 "files. It also fixes some corner-case bugs in coping with unusual time zones."
 msgstr ""
+"Это необходимо для принятия ожидаемых в будущем изменений в файлах данных "
+"часовых поясов. Также это решает некоторые редкие проблемы при работе с "
+"необычными часовыми поясами."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [a629330b2] 2016-08-05 12:59:29 -0400
@@ -974,16 +1202,15 @@ msgstr ""
 #. Branch: REL9_2_STABLE [7822792f7] 2016-08-05 12:58:58 -0400
 #. Branch: REL9_1_STABLE [a44388ffe] 2016-08-05 12:59:02 -0400
 #: release-9.5.xml:1066(para)
-#, fuzzy
 msgid ""
 "Update time zone data files to <application>tzdata</application> release "
 "2016f for DST law changes in Kemerovo and Novosibirsk, plus historical "
 "corrections for Azerbaijan, Belarus, and Morocco."
 msgstr ""
 "Обновление данных часовых поясов до версии <application>tzdata</application> "
-"2016a, включающее изменения правил перехода на летнее время на Каймановых "
-"островах, в Метлакалте и Забайкальском крае, плюс корректировку исторических "
-"данных для Пакистана."
+"2016f, включающее новые правила перехода на летнее время в Кемерове и "
+"Новосибирске, а также корректировку исторических данных для Азербайджана, "
+"Белоруссии и Марокко."
 
 #: release-9.5.xml:1079(title)
 msgid "Release 9.5.3"

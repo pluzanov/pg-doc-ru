@@ -27,9 +27,8 @@ msgid "2016-??-??"
 msgstr "2016-??-??"
 
 #: release-9.6.xml:11(simpara)
-#, fuzzy
 msgid "Current as of 2016-08-08 (commit 34927b292)"
-msgstr "По состоянию на 2016-07-16 (изменение в git 606ccc5e7)"
+msgstr "По состоянию на 2016-08-08 (изменение в git 34927b292)"
 
 #: release-9.6.xml:15(title)
 msgid "Overview"
@@ -282,13 +281,12 @@ msgstr "Общая производительность"
 #. 2016-07-18 [eca0f1db1] Clear all-frozen visibilitymap status when locking tuple
 #. 2016-08-04 [e7caacf73] Fix hard to hit race condition in heapam's tuple locking
 #: release-9.6.xml:266(para)
-#, fuzzy
 msgid ""
 "Avoid re-vacuuming pages containing only frozen tuples (Masahiko Sawada, "
 "Robert Haas, Andres Freund)"
 msgstr ""
 "Предупреждение повторной очистки страниц, содержащих только замороженные "
-"кортежи (Масахико Савада, Роберт Хаас)"
+"кортежи (Масахико Савада, Роберт Хаас, Андрес Фройнд)"
 
 #: release-9.6.xml:271(para)
 msgid ""
@@ -392,7 +390,6 @@ msgstr ""
 "(Константин Книжник)"
 
 #: release-9.6.xml:348(para)
-#, fuzzy
 msgid ""
 "This change ensures that volatile or expensive functions in the output list "
 "are executed in the order suggested by <literal>ORDER BY</literal>, and that "
@@ -645,7 +642,6 @@ msgstr "Увеличение скорости уничтожения конте�
 
 #. 2016-01-26 [cc988fbb0] Improve ResourceOwners' behavior for large numbers of ow
 #: release-9.6.xml:550(para)
-#, fuzzy
 msgid ""
 "Improve performance of resource owners with many tracked objects (Aleksander "
 "Alekseev)"
@@ -859,7 +855,7 @@ msgstr ""
 
 #: release-9.6.xml:765(title)
 msgid "System Catalogs"
-msgstr ""
+msgstr "Системные каталоги"
 
 #. 2016-08-07 [d8710f18f] Correct column name in information schema
 #: release-9.6.xml:773(para)
@@ -870,6 +866,10 @@ msgid ""
 "<structfield>result_cast_char_set_name</structfield> (Cl&eacute;ment "
 "Pr&eacute;vost)"
 msgstr ""
+"Смена имени столбца в представлении <structname>information_schema</"
+"structname>.<structname>routines</structname> с "
+"<structfield>result_cast_character_set_name</structfield> на "
+"<structfield>result_cast_char_set_name</structfield> (Клеман Прево)"
 
 #: release-9.6.xml:781(para)
 msgid ""
@@ -877,6 +877,9 @@ msgid ""
 "because adjacent column names use the shorter style, as do other "
 "<structname>information_schema</structname> views."
 msgstr ""
+"Стандарт SQL:2011 устанавливает более длинное имя, но это, скорее всего, "
+"ошибка, так как у соседних столбцов имена более краткие, как и в других "
+"представлениях <structname>information_schema</structname>."
 
 #: release-9.6.xml:793(title)
 msgid "Monitoring"
@@ -1476,6 +1479,8 @@ msgid ""
 "Allow functions that return sets of tuples to return simple NULLs (Andrew "
 "Gierth, Tom Lane)"
 msgstr ""
+"Функции, возвращающие наборы кортежей, теперь могут возвращать просто NULL "
+"(Эндрю Гирт, Том Лейн)"
 
 #: release-9.6.xml:1338(para)
 msgid ""
@@ -1485,6 +1490,11 @@ msgid ""
 "as a row of NULLs. This avoids corner-case errors with, for example, "
 "unnesting an array of composite values."
 msgstr ""
+"В контексте <literal>SELECT FROM function(...)</literal>, функция, "
+"возвращающая набор составных значений, не могла вернуть обычное значение "
+"NULL в составе набора. Теперь это допускается и такой результат "
+"воспринимается как строка с полями NULL. Это позволяет избежать ошибок в "
+"особых случаях, например, при разворачивании массива составных значений."
 
 #. 2016-08-03 [a3c7a993d] Make INSERT-from-multiple-VALUES-rows handle targetlist
 #: release-9.6.xml:1351(para)
@@ -1493,12 +1503,18 @@ msgid ""
 "list of an <command>INSERT</command> with multiple <literal>VALUES</literal> "
 "rows (Tom Lane)"
 msgstr ""
+"Полная поддержка указаний индексов массивов и выбора полей в списке целевых "
+"столбцов команды <command>INSERT</command> с несколькими строками "
+"<literal>VALUES</literal> (Том Лейн)"
 
 #: release-9.6.xml:1357(para)
 msgid ""
 "Previously, such cases failed if the same target column was mentioned more "
 "than once, e.g., <literal>INSERT INTO tab (x[1], x[2]) VALUES ...</literal>."
 msgstr ""
+"Ранее в таких ситуациях возникала ошибка, если один и тот же целевой столбец "
+"упоминался более одного раза, например так: <literal>INSERT INTO tab (x[1], "
+"x[2]) VALUES ...</literal>."
 
 #. 2016-03-12 [23a27b039] Widen query numbers-of-tuples-processed counters to uint
 #. 2016-03-14 [74a379b98] Use repalloc_huge() to enlarge a SPITupleTable's tuple p
@@ -2347,6 +2363,8 @@ msgid ""
 "Change various catalog-inspection functions to return NULL for invalid input "
 "(Michael Paquier)"
 msgstr ""
+"Модификация ряда функций просмотра каталога, чтобы они возвращали NULL при "
+"недопустимых входных данных (Мишель Пакье)"
 
 #: release-9.6.xml:2123(para)
 msgid ""
@@ -2355,6 +2373,11 @@ msgid ""
 "Previously, such cases usually led to <quote>cache lookup failed</quote> "
 "errors, which are not meant to occur in user-facing cases."
 msgstr ""
+"Функция <function>pg_get_viewdef()</function> теперь возвращает NULL, "
+"получая неправильный OID представления; также и другие функции будут "
+"возвращать NULL при некорректных параметрах. Ранее в таких случаях обычно "
+"возникали ошибки типа <quote>cache lookup failed</quote> (ошибка поиска в "
+"кеше), с которыми не должны сталкиваться пользователи."
 
 #. 2016-08-02 [dd5eb805d] Remove unused arguments from pg_replication_origin_xact_
 #: release-9.6.xml:2136(para)
@@ -2362,6 +2385,8 @@ msgid ""
 "Fix <function>pg_replication_origin_xact_reset()</function> to not have any "
 "arguments (Fujii Masao)"
 msgstr ""
+"Избавление функции <function>pg_replication_origin_xact_reset()</function> "
+"от аргументов (Фудзии Масао)"
 
 #: release-9.6.xml:2141(para)
 msgid ""
@@ -2369,6 +2394,9 @@ msgid ""
 "expect any arguments, but the entry in <structname>pg_proc</structname> "
 "mistakenly specified two arguments."
 msgstr ""
+"В документации говорится, что у неё нет аргументов, и коду функции на C "
+"никакие аргументы не нужны, но в записи в <structname>pg_proc</structname> "
+"по ошибке указаны два аргумента."
 
 #: release-9.6.xml:2153(title)
 msgid "Server-Side Languages"
