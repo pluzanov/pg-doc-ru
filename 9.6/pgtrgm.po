@@ -388,7 +388,7 @@ msgstr ""
 "CREATE TABLE test_trgm (t text);\n"
 "CREATE INDEX trgm_idx ON test_trgm USING GIST (t gist_trgm_ops);"
 
-#: pgtrgm.xml:263(programlisting)
+#: pgtrgm.xml:265(programlisting)
 #, no-wrap
 msgid "CREATE INDEX trgm_idx ON test_trgm USING GIN (t gin_trgm_ops);"
 msgstr "CREATE INDEX trgm_idx ON test_trgm USING GIN (t gin_trgm_ops);"
@@ -397,7 +397,7 @@ msgstr "CREATE INDEX trgm_idx ON test_trgm USING GIN (t gin_trgm_ops);"
 msgid "Example: <placeholder-1/> or <placeholder-2/>"
 msgstr "Пример: <placeholder-1/> или <placeholder-2/>"
 
-#: pgtrgm.xml:269(programlisting)
+#: pgtrgm.xml:273(programlisting)
 #, no-wrap
 msgid ""
 "SELECT t, similarity(t, '<replaceable>word</replaceable>') AS sml\n"
@@ -410,7 +410,7 @@ msgstr ""
 "  WHERE t % '<replaceable>слово</replaceable>'\n"
 "  ORDER BY sml DESC, t;"
 
-#: pgtrgm.xml:266(para)
+#: pgtrgm.xml:270(para)
 msgid ""
 "At this point, you will have an index on the <structfield>t</structfield> "
 "column that you can use for similarity searching. A typical query is "
@@ -426,7 +426,7 @@ msgstr ""
 "порядке сортировки от наиболее к наименее схожим. Благодаря использованию "
 "индекса, эта операция будет быстрой даже с очень большими наборами данных."
 
-#: pgtrgm.xml:281(programlisting)
+#: pgtrgm.xml:287(programlisting)
 #, no-wrap
 msgid ""
 "SELECT t, t &lt;-&gt; '<replaceable>word</replaceable>' AS dist\n"
@@ -437,7 +437,7 @@ msgstr ""
 "  FROM test_trgm\n"
 "  ORDER BY dist LIMIT 10;"
 
-#: pgtrgm.xml:279(para)
+#: pgtrgm.xml:285(para)
 msgid ""
 "A variant of the above query is <placeholder-1/> This can be implemented "
 "quite efficiently by GiST indexes, but not by GIN indexes. It will usually "
@@ -449,7 +449,7 @@ msgstr ""
 "выигрышнее первого варианта только когда требуется получить небольшое "
 "количество близких совпадений."
 
-#: pgtrgm.xml:292(programlisting)
+#: pgtrgm.xml:300(programlisting)
 #, no-wrap
 msgid ""
 "SELECT t, word_similarity('<replaceable>word</replaceable>', t) AS sml\n"
@@ -462,7 +462,7 @@ msgstr ""
 "  WHERE '<replaceable>слово</replaceable>' &lt;% t\n"
 "  ORDER BY sml DESC, t;"
 
-#: pgtrgm.xml:289(para)
+#: pgtrgm.xml:297(para)
 msgid ""
 "Also you can use an index on the <structfield>t</structfield> column for "
 "word similarity. For example: <placeholder-1/> This will return all values "
@@ -477,7 +477,7 @@ msgstr ""
 "наименее схожим. Благодаря использованию индекса, эта операция будет быстрой "
 "даже с очень большими наборами данных."
 
-#: pgtrgm.xml:304(programlisting)
+#: pgtrgm.xml:314(programlisting)
 #, no-wrap
 msgid ""
 "SELECT t, '<replaceable>word</replaceable>' &lt;&lt;-&gt; t AS dist\n"
@@ -488,7 +488,7 @@ msgstr ""
 "  FROM test_trgm\n"
 "  ORDER BY dist LIMIT 10;"
 
-#: pgtrgm.xml:302(para)
+#: pgtrgm.xml:312(para)
 msgid ""
 "A variant of the above query is <placeholder-1/> This can be implemented "
 "quite efficiently by GiST indexes, but not by GIN indexes."
@@ -496,12 +496,12 @@ msgstr ""
 "Другой вариант предыдущего запроса: <placeholder-1/> Он может быть довольно "
 "эффективно выполнен с применением индексов GiST, а не GIN."
 
-#: pgtrgm.xml:315(programlisting)
+#: pgtrgm.xml:327(programlisting)
 #, no-wrap
 msgid "SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';"
 msgstr "SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';"
 
-#: pgtrgm.xml:312(para)
+#: pgtrgm.xml:324(para)
 msgid ""
 "Beginning in <productname>PostgreSQL</productname> 9.1, these index types "
 "also support index searches for <literal>LIKE</literal> and <literal>ILIKE</"
@@ -518,12 +518,12 @@ msgstr ""
 "поиск по индексу. В отличие от поиска по B-дереву, искомая строка не должна "
 "привязываться к левому краю."
 
-#: pgtrgm.xml:326(programlisting)
+#: pgtrgm.xml:340(programlisting)
 #, no-wrap
 msgid "SELECT * FROM test_trgm WHERE t ~ '(foo|bar)';"
 msgstr "SELECT * FROM test_trgm WHERE t ~ '(foo|bar)';"
 
-#: pgtrgm.xml:322(para)
+#: pgtrgm.xml:336(para)
 msgid ""
 "Beginning in <productname>PostgreSQL</productname> 9.3, these index types "
 "also support index searches for regular-expression matches (<literal>~</"
@@ -542,7 +542,7 @@ msgstr ""
 "более эффективным будет поиск по индексу. В отличие от поиска по B-дереву, "
 "искомая строка не должна привязываться к левому краю."
 
-#: pgtrgm.xml:334(para)
+#: pgtrgm.xml:350(para)
 msgid ""
 "For both <literal>LIKE</literal> and regular-expression searches, keep in "
 "mind that a pattern with no extractable trigrams will degenerate to a full-"
@@ -552,7 +552,7 @@ msgstr ""
 "имейте в виду, что при отсутствии триграмм в искомом шаблоне поиск сводится "
 "к полному сканирования индекса."
 
-#: pgtrgm.xml:340(para)
+#: pgtrgm.xml:356(para)
 msgid ""
 "The choice between GiST and GIN indexing depends on the relative performance "
 "characteristics of GiST and GIN, which are discussed elsewhere."
@@ -560,11 +560,11 @@ msgstr ""
 "Выбор между индексами GiST и GIN зависит от относительных характеристик "
 "производительности GiST и GIN, которые здесь не рассматриваются."
 
-#: pgtrgm.xml:347(title)
+#: pgtrgm.xml:363(title)
 msgid "Text Search Integration"
 msgstr "Интеграция с текстовым поиском"
 
-#: pgtrgm.xml:349(para)
+#: pgtrgm.xml:365(para)
 msgid ""
 "Trigram matching is a very useful tool when used in conjunction with a full "
 "text index. In particular it can help to recognize misspelled input words "
@@ -575,7 +575,7 @@ msgstr ""
 "написанные неправильно, которые не будут находиться непосредственно "
 "механизмом полнотекстового поиска."
 
-#: pgtrgm.xml:360(programlisting)
+#: pgtrgm.xml:376(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE words AS SELECT word FROM\n"
@@ -584,7 +584,7 @@ msgstr ""
 "CREATE TABLE words AS SELECT word FROM\n"
 "        ts_stat('SELECT to_tsvector(''simple'', bodytext) FROM documents');"
 
-#: pgtrgm.xml:356(para)
+#: pgtrgm.xml:372(para)
 msgid ""
 "The first step is to generate an auxiliary table containing all the unique "
 "words in the documents: <placeholder-1/> where <structname>documents</"
@@ -602,12 +602,12 @@ msgstr ""
 "function> вместо конфигурации для определённого языка по той причине, что "
 "нам нужен список исходных (необработанных стеммером) слов."
 
-#: pgtrgm.xml:373(programlisting)
+#: pgtrgm.xml:391(programlisting)
 #, no-wrap
 msgid "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
 msgstr "CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);"
 
-#: pgtrgm.xml:370(para)
+#: pgtrgm.xml:388(para)
 msgid ""
 "Next, create a trigram index on the word column: <placeholder-1/> Now, a "
 "<command>SELECT</command> query similar to the previous example can be used "
@@ -622,7 +622,7 @@ msgstr ""
 "дополнительно проверить, что выбранные слова также имеют длину, примерно "
 "равную длине ошибочных слов."
 
-#: pgtrgm.xml:382(para)
+#: pgtrgm.xml:402(para)
 msgid ""
 "Since the <structname>words</structname> table has been generated as a "
 "separate, static table, it will need to be periodically regenerated so that "
@@ -634,11 +634,11 @@ msgstr ""
 "достаточно хорошо соответствовала набору документов. Постоянно поддерживать "
 "её в полностью актуальном состоянии обычно не требуется."
 
-#: pgtrgm.xml:392(title)
+#: pgtrgm.xml:412(title)
 msgid "References"
 msgstr "Ссылки"
 
-#: pgtrgm.xml:394(para)
+#: pgtrgm.xml:414(para)
 msgid ""
 "GiST Development Site <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/\"/>"
@@ -646,7 +646,7 @@ msgstr ""
 "Сайт разработки GiST <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/\"/>"
 
-#: pgtrgm.xml:398(para)
+#: pgtrgm.xml:418(para)
 msgid ""
 "Tsearch2 Development Site <ulink url=\"http://www.sai.msu.su/~megera/"
 "postgres/gist/tsearch/V2/\"/>"
@@ -654,11 +654,11 @@ msgstr ""
 "Сайт разработки Tsearch2 <ulink url=\"http://www.sai.msu.su/~megera/postgres/"
 "gist/tsearch/V2/\"/>"
 
-#: pgtrgm.xml:405(title)
+#: pgtrgm.xml:425(title)
 msgid "Authors"
 msgstr "Авторы"
 
-#: pgtrgm.xml:407(para)
+#: pgtrgm.xml:427(para)
 msgid ""
 "Oleg Bartunov <email>oleg@sai.msu.su</email>, Moscow, Moscow University, "
 "Russia"
@@ -666,14 +666,14 @@ msgstr ""
 "Олег Бартунов <email>oleg@sai.msu.su</email>, Москва, Московский "
 "Государственный Университет, Россия"
 
-#: pgtrgm.xml:410(para)
+#: pgtrgm.xml:430(para)
 msgid ""
 "Teodor Sigaev <email>teodor@sigaev.ru</email>, Moscow, Delta-Soft Ltd.,Russia"
 msgstr ""
 "Фёдор Сигаев <email>teodor@sigaev.ru</email>, Москва, ООО &laquo;Дельта-"
 "Софт&raquo;, Россия"
 
-#: pgtrgm.xml:413(para)
+#: pgtrgm.xml:433(para)
 msgid ""
 "Alexander Korotkov <email>a.korotkov@postgrespro.ru</email>, Moscow, "
 "Postgres Professional, Russia"
@@ -681,11 +681,11 @@ msgstr ""
 "Александр Коротков <email>a.korotkov@postgrespro.ru</email>, Москва, "
 "Postgres Professional, Россия"
 
-#: pgtrgm.xml:416(para)
+#: pgtrgm.xml:436(para)
 msgid "Documentation: Christopher Kings-Lynne"
 msgstr "Документация: Кристофер Кингс-Линн"
 
-#: pgtrgm.xml:419(para)
+#: pgtrgm.xml:439(para)
 msgid "This module is sponsored by Delta-Soft Ltd., Moscow, Russia."
 msgstr ""
 "Разработку этого модуля спонсировало ООО &laquo;Дельта-Софт&raquo;, г. "

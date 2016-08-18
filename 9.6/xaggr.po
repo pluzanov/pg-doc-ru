@@ -88,7 +88,7 @@ msgstr ""
 "    initcond = '(0,0)'\n"
 ");"
 
-#: xaggr.xml:61(programlisting)
+#: xaggr.xml:63(programlisting)
 #, no-wrap
 msgid ""
 "SELECT sum(a) FROM test_complex;\n"
@@ -132,7 +132,7 @@ msgstr ""
 "определить, какая именно из них применима к столбцу типа <type>complex</"
 "type>.)"
 
-#: xaggr.xml:73(para)
+#: xaggr.xml:77(para)
 msgid ""
 "The above definition of <function>sum</function> will return zero (the "
 "initial state value) if there are no nonnull input values. Perhaps we want "
@@ -164,7 +164,7 @@ msgstr ""
 "начальное значение состояние равно NULL и функция перехода помечена как "
 "<quote>strict</quote> (то есть не должна вызываться для аргументов NULL)."
 
-#: xaggr.xml:91(para)
+#: xaggr.xml:95(para)
 msgid ""
 "Another bit of default behavior for a <quote>strict</quote> transition "
 "function is that the previous state value is retained unchanged whenever a "
@@ -179,7 +179,7 @@ msgstr ""
 "функцию перехода строгой (strict); вместо этого, проверьте в ней поступающие "
 "значения на NULL и обработайте их, как требуется."
 
-#: xaggr.xml:110(programlisting)
+#: xaggr.xml:114(programlisting)
 #, no-wrap
 msgid ""
 "CREATE AGGREGATE avg (float8)\n"
@@ -198,7 +198,7 @@ msgstr ""
 "    initcond = '{0,0,0}'\n"
 ");"
 
-#: xaggr.xml:100(para)
+#: xaggr.xml:104(para)
 msgid ""
 "<function>avg</function> (average) is a more complex example of an "
 "aggregate. It requires two pieces of running state: the sum of the inputs "
@@ -215,7 +215,7 @@ msgstr ""
 "встроенная реализация <function>avg(float8)</function> выглядит так: "
 "<placeholder-1/>"
 
-#: xaggr.xml:120(para)
+#: xaggr.xml:126(para)
 msgid ""
 "<function>float8_accum</function> requires a three-element array, not just "
 "two elements, because it accumulates the sum of squares as well as the sum "
@@ -228,7 +228,7 @@ msgstr ""
 "было применять для <function>avg</function> и для некоторых других "
 "агрегатных функций."
 
-#: xaggr.xml:128(para)
+#: xaggr.xml:134(para)
 msgid ""
 "Aggregate function calls in SQL allow <literal>DISTINCT</literal> and "
 "<literal>ORDER BY</literal> options that control which rows are fed to the "
@@ -242,29 +242,29 @@ msgstr ""
 "заднем плане и непосредственно не затрагивает функции, поддерживающие работу "
 "агрегата."
 
-#: xaggr.xml:136(para)
+#: xaggr.xml:142(para)
 msgid ""
 "For further details see the <xref linkend=\"sql-createaggregate\"/> command."
 msgstr ""
 "За дополнительными подробностями обратитесь к описанию <xref linkend=\"sql-"
 "createaggregate\"/>."
 
-#: xaggr.xml:143(title)
+#: xaggr.xml:149(title)
 msgid "Moving-Aggregate Mode"
 msgstr "Режим движущегося агрегата"
 
-#: xaggr.xml:145(indexterm)
+#: xaggr.xml:151(indexterm)
 msgid "<primary>moving-aggregate mode</primary>"
 msgstr "<primary>режим движущегося агрегата</primary>"
 
-#: xaggr.xml:149(indexterm)
+#: xaggr.xml:155(indexterm)
 msgid ""
 "<primary>aggregate function</primary><secondary>moving aggregate</secondary>"
 msgstr ""
 "<primary>агрегатная функция</primary><secondary>движущийся агрегат</"
 "secondary>"
 
-#: xaggr.xml:153(para)
+#: xaggr.xml:159(para)
 msgid ""
 "Aggregate functions can optionally support <firstterm>moving-aggregate mode</"
 "firstterm>, which allows substantially faster execution of aggregate "
@@ -301,7 +301,7 @@ msgstr ""
 "помноженному на средний размер рамки. С функцией обратного перехода это "
 "время пропорционально только количеству входных строк."
 
-#: xaggr.xml:174(para)
+#: xaggr.xml:180(para)
 msgid ""
 "The inverse transition function is passed the current state value and the "
 "aggregate input value(s) for the earliest row included in the current state. "
@@ -327,7 +327,7 @@ msgstr ""
 "аналогичными функциями обычного режима, если в дополнительном состоянии "
 "необходимости нет."
 
-#: xaggr.xml:192(programlisting)
+#: xaggr.xml:198(programlisting)
 #, no-wrap
 msgid ""
 "CREATE AGGREGATE sum (complex)\n"
@@ -352,7 +352,7 @@ msgstr ""
 "    minitcond = '(0,0)'\n"
 ");"
 
-#: xaggr.xml:188(para)
+#: xaggr.xml:194(para)
 msgid ""
 "As an example, we could extend the <function>sum</function> aggregate given "
 "above to support moving-aggregate mode like this: <placeholder-1/> The "
@@ -368,7 +368,7 @@ msgstr ""
 "функции обратного перехода, <literal>minvfunc</literal>, они соответствуют "
 "параметрам обычного агрегата без <literal>m</literal>."
 
-#: xaggr.xml:209(para)
+#: xaggr.xml:217(para)
 msgid ""
 "The forward transition function for moving-aggregate mode is not allowed to "
 "return null as the new state value. If the inverse transition function "
@@ -396,7 +396,7 @@ msgstr ""
 "спасовать, когда от неё потребуется убрать значение <literal>NaN</literal> "
 "(не число, not a number) из текущего значения состояния."
 
-#: xaggr.xml:235(programlisting)
+#: xaggr.xml:243(programlisting)
 #, no-wrap
 msgid ""
 "CREATE AGGREGATE unsafe_sum (float8)\n"
@@ -417,7 +417,7 @@ msgstr ""
 "    minvfunc = float8mi\n"
 ");"
 
-#: xaggr.xml:247(programlisting)
+#: xaggr.xml:257(programlisting)
 #, no-wrap
 msgid ""
 "SELECT\n"
@@ -430,7 +430,7 @@ msgstr ""
 "FROM (VALUES (1, 1.0e20::float8),\n"
 "             (2, 1.0::float8)) AS v (n,x);"
 
-#: xaggr.xml:225(para)
+#: xaggr.xml:233(para)
 msgid ""
 "When writing moving-aggregate support functions, it is important to be sure "
 "that the inverse transition function can reconstruct the correct state value "
@@ -471,22 +471,22 @@ msgstr ""
 "ограничение арифметики чисел с плавающей точкой, а не недостаток "
 "<productname>PostgreSQL</productname>."
 
-#: xaggr.xml:264(title)
+#: xaggr.xml:276(title)
 msgid "Polymorphic and Variadic Aggregates"
 msgstr "Агрегатные функции с полиморфными и переменными аргументами"
 
-#: xaggr.xml:266(indexterm)
+#: xaggr.xml:278(indexterm)
 msgid "<primary>aggregate function</primary><secondary>polymorphic</secondary>"
 msgstr ""
 "<primary>агрегатная функция</primary><secondary>полиморфная</secondary>"
 
-#: xaggr.xml:270(indexterm)
+#: xaggr.xml:282(indexterm)
 msgid "<primary>aggregate function</primary><secondary>variadic</secondary>"
 msgstr ""
 "<primary>агрегатная функция</primary><secondary>с переменными аргументами</"
 "secondary>"
 
-#: xaggr.xml:285(programlisting)
+#: xaggr.xml:297(programlisting)
 #, no-wrap
 msgid ""
 "CREATE AGGREGATE array_accum (anyelement)\n"
@@ -503,7 +503,7 @@ msgstr ""
 "    initcond = '{}'\n"
 ");"
 
-#: xaggr.xml:274(para)
+#: xaggr.xml:286(para)
 msgid ""
 "Aggregate functions can use polymorphic state transition functions or final "
 "functions, so that the same functions can be used to implement multiple "
@@ -533,7 +533,7 @@ msgstr ""
 "функциональность, но работает быстрее, чем могла бы функция с приведённым "
 "определением.)"
 
-#: xaggr.xml:302(programlisting)
+#: xaggr.xml:316(programlisting)
 #, no-wrap
 msgid ""
 "SELECT attrelid::regclass, array_accum(attname)\n"
@@ -576,7 +576,7 @@ msgstr ""
 " pg_tablespace | {name,oid,aclitem[],text[]}\n"
 "(1 row)"
 
-#: xaggr.xml:299(para)
+#: xaggr.xml:313(para)
 msgid ""
 "Here's the output using two different actual data types as arguments: "
 "<placeholder-1/>"
@@ -584,7 +584,7 @@ msgstr ""
 "Так будут выглядеть результаты с аргументами двух различных типов: "
 "<placeholder-1/>"
 
-#: xaggr.xml:342(programlisting)
+#: xaggr.xml:358(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION array_agg_transfn(internal, anynonarray)\n"
@@ -613,7 +613,7 @@ msgstr ""
 "    finalfunc_extra\n"
 ");"
 
-#: xaggr.xml:323(para)
+#: xaggr.xml:339(para)
 msgid ""
 "Ordinarily, an aggregate function with a polymorphic result type has a "
 "polymorphic state type, as in the above example. This is necessary because "
@@ -659,7 +659,7 @@ msgstr ""
 "агрегата. Дополнительный аргумент <type>anynonarray</type> позволяет сделать "
 "объявление <function>array_agg_finalfn</function> допустимым."
 
-#: xaggr.xml:362(para)
+#: xaggr.xml:380(para)
 msgid ""
 "An aggregate function can be made to accept a varying number of arguments by "
 "declaring its last argument as a <literal>VARIADIC</literal> array, in much "
@@ -676,17 +676,17 @@ msgstr ""
 "аргумент должен иметь тот же тип массива. Такие функции обычно также "
 "объявляются как <literal>VARIADIC</literal>, но строго это не требуется."
 
-#: xaggr.xml:380(programlisting)
+#: xaggr.xml:398(programlisting)
 #, no-wrap
 msgid "SELECT myaggregate(a ORDER BY a, b, c) FROM ..."
 msgstr "SELECT myaggregate(a ORDER BY a, b, c) FROM ..."
 
-#: xaggr.xml:383(programlisting)
+#: xaggr.xml:403(programlisting)
 #, no-wrap
 msgid "SELECT myaggregate(a, b, c ORDER BY a) FROM ..."
 msgstr "SELECT myaggregate(a, b, c ORDER BY a) FROM ..."
 
-#: xaggr.xml:373(para)
+#: xaggr.xml:391(para)
 msgid ""
 "Variadic aggregates are easily misused in connection with the <literal>ORDER "
 "BY</literal> option (see <xref linkend=\"syntax-aggregates\"/>), since the "
@@ -710,7 +710,7 @@ msgstr ""
 "<literal>myaggregate</literal> принимает переменные аргументы, оба эти "
 "вызова будут вполне допустимы."
 
-#: xaggr.xml:388(para)
+#: xaggr.xml:410(para)
 msgid ""
 "For the same reason, it's wise to think twice before creating aggregate "
 "functions with the same names and different numbers of regular arguments."
@@ -718,16 +718,16 @@ msgstr ""
 "По этой же причине, стоит подумать дважды, прежде чем создавать агрегатные "
 "функции с одинаковыми именами, но разным числом обычных аргументов."
 
-#: xaggr.xml:397(title)
+#: xaggr.xml:419(title)
 msgid "Ordered-Set Aggregates"
 msgstr "Сортирующие агрегатные функции"
 
-#: xaggr.xml:399(indexterm)
+#: xaggr.xml:421(indexterm)
 msgid "<primary>aggregate function</primary><secondary>ordered set</secondary>"
 msgstr ""
 "<primary>агрегатная функция</primary><secondary>сортирующая</secondary>"
 
-#: xaggr.xml:418(programlisting)
+#: xaggr.xml:440(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION ordered_set_transition(internal, anyelement)\n"
@@ -756,7 +756,7 @@ msgstr ""
 "    finalfunc_extra\n"
 ");"
 
-#: xaggr.xml:435(programlisting)
+#: xaggr.xml:459(programlisting)
 #, no-wrap
 msgid ""
 "SELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY income) FROM households;\n"
@@ -769,7 +769,7 @@ msgstr ""
 "-----------------\n"
 "           50489"
 
-#: xaggr.xml:403(para)
+#: xaggr.xml:425(para)
 msgid ""
 "The aggregates we have been describing so far are <quote>normal</quote> "
 "aggregates. <productname>PostgreSQL</productname> also supports "
@@ -809,7 +809,7 @@ msgstr ""
 "literal> — это прямой аргумент; если бы дробь перцентиля менялась от строки "
 "к строке, это не имело бы смысла."
 
-#: xaggr.xml:444(para)
+#: xaggr.xml:470(para)
 msgid ""
 "Unlike the case for normal aggregates, the sorting of input rows for an "
 "ordered-set aggregate is <emphasis>not</emphasis> done behind the scenes, "
@@ -842,7 +842,7 @@ msgstr ""
 "выше примере значение состояния объявлено как имеющее тип <type>internal</"
 "type> &mdash; это типичный вариант.)"
 
-#: xaggr.xml:462(para)
+#: xaggr.xml:488(para)
 msgid ""
 "The state transition function for an ordered-set aggregate receives the "
 "current state value plus the aggregated input values for each row, and "
@@ -868,7 +868,7 @@ msgstr ""
 "чтобы связать тип результата функции завершения с типом(ами) входных данных "
 "агрегата."
 
-#: xaggr.xml:477(para)
+#: xaggr.xml:503(para)
 msgid ""
 "Currently, ordered-set aggregates cannot be used as window functions, and "
 "therefore there is no need for them to support moving-aggregate mode."
@@ -877,11 +877,11 @@ msgstr ""
 "оконных функций, поэтому от них поддержка режима движущегося агрегата не "
 "требуется."
 
-#: xaggr.xml:485(title)
+#: xaggr.xml:511(title)
 msgid "Partial Aggregation"
 msgstr "Частичное агрегирование"
 
-#: xaggr.xml:487(indexterm)
+#: xaggr.xml:513(indexterm)
 msgid ""
 "<primary>aggregate function</primary><secondary>partial aggregation</"
 "secondary>"
@@ -889,7 +889,7 @@ msgstr ""
 "<primary>агрегатная функция</primary><secondary>частичное агрегирования</"
 "secondary>"
 
-#: xaggr.xml:491(para)
+#: xaggr.xml:517(para)
 msgid ""
 "Optionally, an aggregate function can support <firstterm>partial "
 "aggregation</firstterm>. The idea of partial aggregation is to run the "
@@ -916,7 +916,7 @@ msgstr ""
 "применяться, например для комбинированного агрегирования локальных и "
 "удалённых таблиц, но пока это не реализовано.)"
 
-#: xaggr.xml:506(para)
+#: xaggr.xml:532(para)
 msgid ""
 "To support partial aggregation, the aggregate definition must provide a "
 "<firstterm>combine function</firstterm>, which takes two values of the "
@@ -938,7 +938,7 @@ msgstr ""
 "что для агрегатных функций, зависящих от порядка входных строк, обычно "
 "невозможно определить осмысленную комбинирующую функцию."
 
-#: xaggr.xml:518(para)
+#: xaggr.xml:544(para)
 msgid ""
 "As simple examples, <literal>MAX</literal> and <literal>MIN</literal> "
 "aggregates can be made to support partial aggregation by specifying the "
@@ -956,7 +956,7 @@ msgstr ""
 "сложения. (И это опять же функция перехода, если только значение состояния "
 "не выходит за рамки типа входных данных.)"
 
-#: xaggr.xml:528(para)
+#: xaggr.xml:554(para)
 msgid ""
 "The combine function is treated much like a transition function that happens "
 "to take a value of the state type, not of the underlying input type, as its "
@@ -977,7 +977,7 @@ msgstr ""
 "состояние для комбинирующей функции, которая будет вызываться для "
 "комбинирования каждого частичного результата в этом состоянии."
 
-#: xaggr.xml:539(para)
+#: xaggr.xml:565(para)
 msgid ""
 "If the aggregate's state type is declared as <type>internal</type>, it is "
 "the combine function's responsibility that its result is allocated in the "
@@ -993,7 +993,7 @@ msgstr ""
 "просто возвратить второй аргумент, так как это значение окажется в неверном "
 "контексте и не просуществует достаточное время."
 
-#: xaggr.xml:548(para)
+#: xaggr.xml:574(para)
 msgid ""
 "When the aggregate's state type is declared as <type>internal</type>, it is "
 "usually also appropriate for the aggregate definition to provide a "
@@ -1011,7 +1011,7 @@ msgstr ""
 "невозможно, а также вероятно не будут работать такие будущие приложения, как "
 "локальное/удалённое агрегирование."
 
-#: xaggr.xml:558(para)
+#: xaggr.xml:584(para)
 msgid ""
 "A serialization function must take a single argument of type <type>internal</"
 "type> and return a result of type <type>bytea</type>, which represents the "
@@ -1035,7 +1035,7 @@ msgstr ""
 "контексте памяти, так как в отличие от результата комбинирующей функции он "
 "недолговечен."
 
-#: xaggr.xml:571(para)
+#: xaggr.xml:597(para)
 msgid ""
 "Worth noting also is that for an aggregate to be executed in parallel, the "
 "aggregate itself must be marked <literal>PARALLEL SAFE</literal>. The "
@@ -1046,11 +1046,11 @@ msgstr ""
 "(безопасная для распараллеливания). Характеристики допустимости "
 "распараллеливания её опорных функций значения не имеют."
 
-#: xaggr.xml:580(title)
+#: xaggr.xml:606(title)
 msgid "Support Functions for Aggregates"
 msgstr "Вспомогательные функции для агрегатов"
 
-#: xaggr.xml:582(indexterm)
+#: xaggr.xml:608(indexterm)
 msgid ""
 "<primary>aggregate function</primary><secondary>support functions for</"
 "secondary>"
@@ -1058,12 +1058,12 @@ msgstr ""
 "<primary>агрегатная функция</primary><secondary>вспомогательные функции</"
 "secondary>"
 
-#: xaggr.xml:590(programlisting)
+#: xaggr.xml:616(programlisting)
 #, no-wrap
 msgid "if (AggCheckCallContext(fcinfo, NULL))"
 msgstr "if (AggCheckCallContext(fcinfo, NULL))"
 
-#: xaggr.xml:586(para)
+#: xaggr.xml:612(para)
 msgid ""
 "A function written in C can detect that it is being called as an aggregate "
 "support function by calling <function>AggCheckCallContext</function>, for "
@@ -1088,7 +1088,7 @@ msgstr ""
 "изменять входные данные ни в коем случае, так как в некоторых ситуациях они "
 "могут вызываться повторно с тем же конечным значением состояния.)"
 
-#: xaggr.xml:603(para)
+#: xaggr.xml:631(para)
 msgid ""
 "Another support routine available to aggregate functions written in C is "
 "<function>AggGetAggref</function>, which returns the <literal>Aggref</"

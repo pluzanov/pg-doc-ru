@@ -303,7 +303,7 @@ msgstr ""
 "индексации может создаваться из нескольких частей и не храниться где-либо "
 "как единое целое. Например: <placeholder-1/>"
 
-#: textsearch.xml:206(para)
+#: textsearch.xml:208(para)
 msgid ""
 "Actually, in these example queries, <function>coalesce</function> should be "
 "used to prevent a single <literal>NULL</literal> attribute from causing a "
@@ -314,7 +314,7 @@ msgstr ""
 "каком-либо одном атрибуте не привело к тому, что результирующим документом "
 "окажется <literal>NULL</literal>."
 
-#: textsearch.xml:213(para)
+#: textsearch.xml:215(para)
 msgid ""
 "Another possibility is to store the documents as simple text files in the "
 "file system. In this case, the database can be used to store the full text "
@@ -336,7 +336,7 @@ msgstr ""
 "хранится в базе данных, это упрощает доступ к метаданным документов при "
 "индексации и выводе результатов."
 
-#: textsearch.xml:225(para)
+#: textsearch.xml:227(para)
 msgid ""
 "For text search purposes, each document must be reduced to the preprocessed "
 "<type>tsvector</type> format. Searching and ranking are performed entirely "
@@ -354,11 +354,11 @@ msgstr ""
 "документ, тогда как этот тип, конечно, содержит только компактное "
 "представление всего документа."
 
-#: textsearch.xml:238(title)
+#: textsearch.xml:240(title)
 msgid "Basic Text Matching"
 msgstr "Простое соответствие текста"
 
-#: textsearch.xml:247(programlisting)
+#: textsearch.xml:249(programlisting)
 #, no-wrap
 msgid ""
 "SELECT 'a fat cat sat on a mat and ate a fat rat'::tsvector @@ 'cat &amp; rat'::tsquery;\n"
@@ -383,7 +383,7 @@ msgstr ""
 "----------\n"
 " f"
 
-#: textsearch.xml:240(para)
+#: textsearch.xml:242(para)
 msgid ""
 "Full text searching in <productname>PostgreSQL</productname> is based on the "
 "match operator <literal>@@</literal>, which returns <literal>true</literal> "
@@ -396,7 +396,7 @@ msgstr ""
 "<type>tsquery</type> (запросу). Для этого оператора не важно, какой тип "
 "записан первым: <placeholder-1/>"
 
-#: textsearch.xml:272(programlisting)
+#: textsearch.xml:276(programlisting)
 #, no-wrap
 msgid ""
 "SELECT to_tsvector('fat cats ate fat rats') @@ to_tsquery('fat &amp; rat');\n"
@@ -409,7 +409,7 @@ msgstr ""
 "----------\n"
 " t"
 
-#: textsearch.xml:279(programlisting)
+#: textsearch.xml:285(programlisting)
 #, no-wrap
 msgid ""
 "SELECT 'fat cats ate fat rats'::tsvector @@ to_tsquery('fat &amp; rat');\n"
@@ -422,7 +422,7 @@ msgstr ""
 "----------\n"
 " f"
 
-#: textsearch.xml:258(para)
+#: textsearch.xml:262(para)
 msgid ""
 "As the above example suggests, a <type>tsquery</type> is not just raw text, "
 "any more than a <type>tsvector</type> is. A <type>tsquery</type> contains "
@@ -458,7 +458,7 @@ msgstr ""
 "нормализованные, так что <literal>rats</literal> считается не "
 "соответствующим <literal>rat</literal>."
 
-#: textsearch.xml:295(programlisting)
+#: textsearch.xml:303(programlisting)
 #, no-wrap
 msgid ""
 "tsvector @@ tsquery\n"
@@ -471,7 +471,7 @@ msgstr ""
 "text @@ tsquery\n"
 "text @@ text"
 
-#: textsearch.xml:289(para)
+#: textsearch.xml:297(para)
 msgid ""
 "The <literal>@@</literal> operator also supports <type>text</type> input, "
 "allowing explicit conversion of a text string to <type>tsvector</type> or "
@@ -483,7 +483,7 @@ msgstr ""
 "<type>tsvector</type> и <type>tsquery</type> в простых случаях. Всего есть "
 "четыре варианта этого оператора: <placeholder-1/>"
 
-#: textsearch.xml:301(para)
+#: textsearch.xml:311(para)
 msgid ""
 "The first two of these we saw already. The form <type>text</type> "
 "<literal>@@</literal> <type>tsquery</type> is equivalent to "
@@ -497,7 +497,7 @@ msgstr ""
 "type> &mdash; выражению <literal>to_tsvector(x) @@ plainto_tsquery(y)</"
 "literal>."
 
-#: textsearch.xml:309(para)
+#: textsearch.xml:319(para)
 msgid ""
 "Within a <type>tsquery</type>, the <literal>&amp;</literal> (AND) operator "
 "specifies that both its arguments must appear in the document to have a "
@@ -514,7 +514,7 @@ msgstr ""
 "операнд <emphasis>не</emphasis> должен присутствовать, чтобы условие "
 "удовлетворялось."
 
-#: textsearch.xml:324(programlisting)
+#: textsearch.xml:334(programlisting)
 #, no-wrap
 msgid ""
 "SELECT to_tsvector('fatal error') @@ to_tsquery('fatal &lt;-&gt; error');\n"
@@ -537,7 +537,7 @@ msgstr ""
 "----------\n"
 " f"
 
-#: textsearch.xml:344(programlisting)
+#: textsearch.xml:356(programlisting)
 #, no-wrap
 msgid ""
 "SELECT phraseto_tsquery('cats ate rats');\n"
@@ -560,7 +560,7 @@ msgstr ""
 "-------------------------------\n"
 " 'cat' &lt;-&gt; 'ate' &lt;2&gt; 'rat'"
 
-#: textsearch.xml:318(para)
+#: textsearch.xml:328(para)
 msgid ""
 "Searching for phrases is possible with the help of the <literal>&lt;-&gt;</"
 "literal> (FOLLOWED BY) <type>tsquery</type> operator, which matches only if "
@@ -590,7 +590,7 @@ msgstr ""
 "который может содержать многословную фразу, включающую в себя стоп-слова. "
 "Например: <placeholder-2/>"
 
-#: textsearch.xml:355(para)
+#: textsearch.xml:369(para)
 msgid ""
 "A special case that's sometimes useful is that <literal>&lt;0&gt;</literal> "
 "can be used to require that two patterns match the same word."
@@ -599,7 +599,7 @@ msgstr ""
 "<literal>&lt;0&gt;</literal>, требующая, чтобы обоим лексемам "
 "соответствовало одно слово."
 
-#: textsearch.xml:360(para)
+#: textsearch.xml:374(para)
 msgid ""
 "Parentheses can be used to control nesting of the <type>tsquery</type> "
 "operators. Without parentheses, <literal>|</literal> binds least tightly, "
@@ -611,11 +611,11 @@ msgstr ""
 "<literal>|</literal>, <literal>&amp;</literal>, <literal>&lt;-&gt;</literal> "
 "и самый приоритетный — <literal>!</literal>."
 
-#: textsearch.xml:369(title)
+#: textsearch.xml:383(title)
 msgid "Configurations"
 msgstr "Конфигурации"
 
-#: textsearch.xml:371(para)
+#: textsearch.xml:385(para)
 msgid ""
 "The above are all simple text search examples. As mentioned before, full "
 "text search functionality includes the ability to do many more things: skip "
@@ -638,7 +638,7 @@ msgstr ""
 "просмотреть с помощью команды <command>\\dF</command> в <application>psql</"
 "application>.)"
 
-#: textsearch.xml:383(para)
+#: textsearch.xml:397(para)
 msgid ""
 "During installation an appropriate configuration is selected and <xref "
 "linkend=\"guc-default-text-search-config\"/> is set accordingly in "
@@ -659,7 +659,7 @@ msgstr ""
 "command>. В противном случае конфигурацию можно выбрать в рамках сеанса, "
 "определив параметр <varname>default_text_search_config</varname>."
 
-#: textsearch.xml:394(para)
+#: textsearch.xml:408(para)
 msgid ""
 "Each text search function that depends on a configuration has an optional "
 "<type>regconfig</type> argument, so that the configuration to use can be "
@@ -672,7 +672,7 @@ msgstr ""
 "<varname>default_text_search_config</varname> используется, только когда "
 "этот аргумент опущен."
 
-#: textsearch.xml:401(para)
+#: textsearch.xml:415(para)
 msgid ""
 "To make it easier to build custom text search configurations, a "
 "configuration is built up from simpler database objects. "
@@ -683,7 +683,7 @@ msgstr ""
 "простых объектов. В <productname>PostgreSQL</productname> есть четыре типа "
 "таких объектов:"
 
-#: textsearch.xml:410(para)
+#: textsearch.xml:424(para)
 msgid ""
 "<firstterm>Text search parsers</firstterm> break documents into tokens and "
 "classify each token (for example, as words or numbers)."
@@ -691,7 +691,7 @@ msgstr ""
 "<firstterm>Анализаторы текстового поиска</firstterm> разделяют документ на "
 "фрагменты и классифицируют их (например, как слова или числа)."
 
-#: textsearch.xml:417(para)
+#: textsearch.xml:431(para)
 msgid ""
 "<firstterm>Text search dictionaries</firstterm> convert tokens to normalized "
 "form and reject stop words."
@@ -699,7 +699,7 @@ msgstr ""
 "<firstterm>Словари текстового поиска</firstterm> приводят фрагменты к "
 "нормализованной форме и отбрасывают стоп-слова."
 
-#: textsearch.xml:424(para)
+#: textsearch.xml:438(para)
 msgid ""
 "<firstterm>Text search templates</firstterm> provide the functions "
 "underlying dictionaries. (A dictionary simply specifies a template and a set "
@@ -709,7 +709,7 @@ msgstr ""
 "образующие реализацию словарей. (При создании словаря просто задаётся шаблон "
 "и набор параметров для него.)"
 
-#: textsearch.xml:432(para)
+#: textsearch.xml:446(para)
 msgid ""
 "<firstterm>Text search configurations</firstterm> select a parser and a set "
 "of dictionaries to use to normalize the tokens produced by the parser."
@@ -718,7 +718,7 @@ msgstr ""
 "набор словарей, который будет использоваться для нормализации фрагментов, "
 "выданных анализатором."
 
-#: textsearch.xml:439(para)
+#: textsearch.xml:453(para)
 msgid ""
 "Text search parsers and templates are built from low-level C functions; "
 "therefore it requires C programming ability to develop new ones, and "
@@ -739,11 +739,11 @@ msgstr ""
 "анализаторы и шаблоны, их можно создавать, не имея административных прав. "
 "Далее в этой главе будут приведены примеры их создания."
 
-#: textsearch.xml:456(title)
+#: textsearch.xml:470(title)
 msgid "Tables and Indexes"
 msgstr "Таблицы и индексы"
 
-#: textsearch.xml:458(para)
+#: textsearch.xml:472(para)
 msgid ""
 "The examples in the previous section illustrated full text matching using "
 "simple constant strings. This section shows how to search table data, "
@@ -753,11 +753,11 @@ msgstr ""
 "выполнить сопоставление с простыми текстовыми константами. В этом разделе "
 "показывается, как находить текст в таблице, возможно с применением индексов."
 
-#: textsearch.xml:465(title)
+#: textsearch.xml:479(title)
 msgid "Searching a Table"
 msgstr "Поиск в таблице"
 
-#: textsearch.xml:472(programlisting)
+#: textsearch.xml:486(programlisting)
 #, no-wrap
 msgid ""
 "SELECT title\n"
@@ -768,7 +768,7 @@ msgstr ""
 "FROM pgweb\n"
 "WHERE to_tsvector('english', body) @@ to_tsquery('english', 'friend');"
 
-#: textsearch.xml:467(para)
+#: textsearch.xml:481(para)
 msgid ""
 "It is possible to do a full text search without an index. A simple query to "
 "print the <structname>title</structname> of each row that contains the word "
@@ -784,7 +784,7 @@ msgstr ""
 "такие как <literal>friends</literal> и <literal>friendly</literal>, так как "
 "все они сводятся к одной нормализованной лексеме."
 
-#: textsearch.xml:486(programlisting)
+#: textsearch.xml:502(programlisting)
 #, no-wrap
 msgid ""
 "SELECT title\n"
@@ -795,7 +795,7 @@ msgstr ""
 "FROM pgweb\n"
 "WHERE to_tsvector(body) @@ to_tsquery('friend');"
 
-#: textsearch.xml:481(para)
+#: textsearch.xml:497(para)
 msgid ""
 "The query above specifies that the <literal>english</literal> configuration "
 "is to be used to parse and normalize the strings. Alternatively we could "
@@ -808,7 +808,7 @@ msgstr ""
 "использовать конфигурацию, заданную в параметре <xref linkend=\"guc-default-"
 "text-search-config\"/>."
 
-#: textsearch.xml:499(programlisting)
+#: textsearch.xml:517(programlisting)
 #, no-wrap
 msgid ""
 "SELECT title\n"
@@ -823,7 +823,7 @@ msgstr ""
 "ORDER BY last_mod_date DESC\n"
 "LIMIT 10;"
 
-#: textsearch.xml:494(para)
+#: textsearch.xml:512(para)
 msgid ""
 "A more complex example is to select the ten most recent documents that "
 "contain <literal>create</literal> and <literal>table</literal> in the "
@@ -839,7 +839,7 @@ msgstr ""
 "одном из полей, нужно воспользоваться функцией <function>coalesce</"
 "function>, но здесь мы опустили её вызовы для краткости."
 
-#: textsearch.xml:510(para)
+#: textsearch.xml:530(para)
 msgid ""
 "Although these queries will work without an index, most applications will "
 "find this approach too slow, except perhaps for occasional ad-hoc searches. "
@@ -850,16 +850,16 @@ msgstr ""
 "нерегулярного поиска и динамического содержимого. Для практического "
 "применения полнотекстового поиска обычно создаются индексы."
 
-#: textsearch.xml:520(title)
+#: textsearch.xml:540(title)
 msgid "Creating Indexes"
 msgstr "Создание индексов"
 
-#: textsearch.xml:526(programlisting)
+#: textsearch.xml:546(programlisting)
 #, no-wrap
 msgid "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector('english', body));"
 msgstr "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector('english', body));"
 
-#: textsearch.xml:522(para)
+#: textsearch.xml:542(para)
 msgid ""
 "We can create a <acronym>GIN</acronym> index (<xref linkend=\"textsearch-"
 "indexes\"/>) to speed up text searches: <placeholder-1/> Notice that the 2-"
@@ -887,7 +887,7 @@ msgstr ""
 "понять, какую именно использовать. Выгрузить и восстановить такой индекс "
 "будет невозможно."
 
-#: textsearch.xml:539(para)
+#: textsearch.xml:561(para)
 msgid ""
 "Because the two-argument version of <function>to_tsvector</function> was "
 "used in the index above, only a query reference that uses the 2-argument "
@@ -907,12 +907,12 @@ msgstr ""
 "literal> &mdash; нет. Это гарантирует, что индекс будет использоваться "
 "только с той конфигурацией, с которой создавались его элементы."
 
-#: textsearch.xml:554(programlisting)
+#: textsearch.xml:576(programlisting)
 #, no-wrap
 msgid "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector(config_name, body));"
 msgstr "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector(config_name, body));"
 
-#: textsearch.xml:550(para)
+#: textsearch.xml:572(para)
 msgid ""
 "It is possible to set up more complex expression indexes wherein the "
 "configuration name is specified by another column, e.g.: <placeholder-1/> "
@@ -935,17 +935,17 @@ msgstr ""
 "конфигурацией), например, так: <literal>WHERE to_tsvector(config_name, body) "
 "@@ 'a &amp; b'</literal>."
 
-#: textsearch.xml:568(programlisting)
+#: textsearch.xml:592(programlisting)
 #, no-wrap
 msgid "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector('english', title || ' ' || body));"
 msgstr "CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector('english', title || ' ' || body));"
 
-#: textsearch.xml:565(para)
+#: textsearch.xml:589(para)
 msgid "Indexes can even concatenate columns: <placeholder-1/>"
 msgstr ""
 "Индексы могут создаваться даже по объединению столбцов: <placeholder-1/>"
 
-#: textsearch.xml:578(programlisting)
+#: textsearch.xml:604(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TABLE pgweb ADD COLUMN textsearchable_index_col tsvector;\n"
@@ -956,12 +956,12 @@ msgstr ""
 "UPDATE pgweb SET textsearchable_index_col =\n"
 "     to_tsvector('english', coalesce(title,'') || ' ' || coalesce(body,''));"
 
-#: textsearch.xml:584(programlisting)
+#: textsearch.xml:612(programlisting)
 #, no-wrap
 msgid "CREATE INDEX textsearch_idx ON pgweb USING GIN (textsearchable_index_col);"
 msgstr "CREATE INDEX textsearch_idx ON pgweb USING GIN (textsearchable_index_col);"
 
-#: textsearch.xml:588(programlisting)
+#: textsearch.xml:618(programlisting)
 #, no-wrap
 msgid ""
 "SELECT title\n"
@@ -976,7 +976,7 @@ msgstr ""
 "ORDER BY last_mod_date DESC\n"
 "LIMIT 10;"
 
-#: textsearch.xml:571(para)
+#: textsearch.xml:597(para)
 msgid ""
 "Another approach is to create a separate <type>tsvector</type> column to "
 "hold the output of <function>to_tsvector</function>. This example is a "
@@ -996,7 +996,7 @@ msgstr ""
 "ускорения поиска: <placeholder-2/> Теперь мы можем быстро выполнять "
 "полнотекстовый поиск: <placeholder-3/>"
 
-#: textsearch.xml:595(para)
+#: textsearch.xml:627(para)
 msgid ""
 "When using a separate column to store the <type>tsvector</type> "
 "representation, it is necessary to create a trigger to keep the "
@@ -1010,7 +1010,7 @@ msgstr ""
 "<literal>title</literal> или <literal>body</literal>. Как это сделать, "
 "рассказывается в <xref remap=\"6\" linkend=\"textsearch-update-triggers\"/>."
 
-#: textsearch.xml:603(para)
+#: textsearch.xml:635(para)
 msgid ""
 "One advantage of the separate-column approach over an expression index is "
 "that it is not necessary to explicitly specify the text search configuration "
@@ -1035,11 +1035,11 @@ msgstr ""
 "реализовать и она позволяет сэкономить место на диске, так как представление "
 "<type>tsvector</type> не хранится явно."
 
-#: textsearch.xml:622(title)
+#: textsearch.xml:654(title)
 msgid "Controlling Text Search"
 msgstr "Управление текстовым поиском"
 
-#: textsearch.xml:624(para)
+#: textsearch.xml:656(para)
 msgid ""
 "To implement full text searching there must be a function to create a "
 "<type>tsvector</type> from a document and a <type>tsquery</type> from a user "
@@ -1057,11 +1057,11 @@ msgstr ""
 "образом. В <productname>PostgreSQL</productname> есть все необходимые для "
 "этого функции."
 
-#: textsearch.xml:635(title)
+#: textsearch.xml:667(title)
 msgid "Parsing Documents"
 msgstr "Разбор документов"
 
-#: textsearch.xml:637(para)
+#: textsearch.xml:669(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides the function "
 "<function>to_tsvector</function> for converting a document to the "
@@ -1071,82 +1071,86 @@ msgstr ""
 "<productname>PostgreSQL</productname> предоставляет функцию "
 "<function>to_tsvector</function>."
 
-#: textsearch.xml:643(indexterm)
+#: textsearch.xml:675(indexterm)
 msgid "<primary>to_tsvector</primary>"
 msgstr "<primary>to_tsvector</primary>"
 
-#: textsearch.xml:647(replaceable) textsearch.xml:751(replaceable)
-#: textsearch.xml:814(replaceable) textsearch.xml:848(replaceable)
-#: textsearch.xml:1109(replaceable) textsearch.xml:2982(replaceable)
+#: textsearch.xml:680(replaceable) textsearch.xml:790(replaceable)
+#: textsearch.xml:863(replaceable) textsearch.xml:903(replaceable)
+#: textsearch.xml:1178(replaceable) textsearch.xml:3167(replaceable)
 msgid "config"
 msgstr "конфигурация"
 
-#: textsearch.xml:647(type) textsearch.xml:751(type) textsearch.xml:814(type)
-#: textsearch.xml:848(type) textsearch.xml:1109(type) textsearch.xml:2982(type)
+#: textsearch.xml:680(type) textsearch.xml:790(type) textsearch.xml:863(type)
+#: textsearch.xml:903(type) textsearch.xml:1178(type) textsearch.xml:3167(type)
 msgid "regconfig"
 msgstr "regconfig"
 
-#: textsearch.xml:647(optional) textsearch.xml:751(optional)
-#: textsearch.xml:814(optional) textsearch.xml:848(optional)
-#: textsearch.xml:913(optional) textsearch.xml:930(optional)
-#: textsearch.xml:1109(optional) textsearch.xml:1775(optional)
-#: textsearch.xml:2982(optional)
+#: textsearch.xml:680(optional) textsearch.xml:790(optional)
+#: textsearch.xml:863(optional) textsearch.xml:903(optional)
+#: textsearch.xml:973(optional) textsearch.xml:990(optional)
+#: textsearch.xml:1178(optional) textsearch.xml:1876(optional)
+#: textsearch.xml:3167(optional)
 msgid "<placeholder-1/> <placeholder-2/>,"
 msgstr "<placeholder-1/> <placeholder-2/>,"
 
-#: textsearch.xml:647(replaceable) textsearch.xml:1109(replaceable)
-#: textsearch.xml:2982(replaceable) textsearch.xml:3155(replaceable)
-#: textsearch.xml:3157(replaceable)
+#: textsearch.xml:680(replaceable) textsearch.xml:1178(replaceable)
+#: textsearch.xml:3167(replaceable) textsearch.xml:3350(replaceable)
+#: textsearch.xml:3352(replaceable)
 msgid "document"
 msgstr "документ"
 
-#: textsearch.xml:647(type) textsearch.xml:751(type) textsearch.xml:814(type)
-#: textsearch.xml:848(type) textsearch.xml:1109(type) textsearch.xml:1518(type)
-#: textsearch.xml:1591(type) textsearch.xml:1775(type)
-#: textsearch.xml:1776(type) textsearch.xml:2982(type)
-#: textsearch.xml:2983(type) textsearch.xml:2984(type)
-#: textsearch.xml:2985(type) textsearch.xml:3155(type)
-#: textsearch.xml:3156(type) textsearch.xml:3157(type)
-#: textsearch.xml:3158(type) textsearch.xml:3182(type)
-#: textsearch.xml:3183(type) textsearch.xml:3185(type)
-#: textsearch.xml:3236(type)
+#: textsearch.xml:680(type) textsearch.xml:790(type) textsearch.xml:863(type)
+#: textsearch.xml:903(type) textsearch.xml:1178(type) textsearch.xml:1600(type)
+#: textsearch.xml:1677(type) textsearch.xml:1876(type)
+#: textsearch.xml:1877(type) textsearch.xml:3167(type)
+#: textsearch.xml:3168(type) textsearch.xml:3169(type)
+#: textsearch.xml:3170(type) textsearch.xml:3350(type)
+#: textsearch.xml:3351(type) textsearch.xml:3352(type)
+#: textsearch.xml:3353(type) textsearch.xml:3381(type)
+#: textsearch.xml:3382(type) textsearch.xml:3384(type)
+#: textsearch.xml:3439(type)
 msgid "text"
 msgstr "text"
 
-#: textsearch.xml:647(type) textsearch.xml:913(type) textsearch.xml:930(type)
-#: textsearch.xml:1264(type) textsearch.xml:1303(type)
-#: textsearch.xml:1331(type) textsearch.xml:1348(type)
+#: textsearch.xml:680(type) textsearch.xml:973(type) textsearch.xml:990(type)
+#: textsearch.xml:1340(type) textsearch.xml:1379(type)
+#: textsearch.xml:1407(type) textsearch.xml:1424(type)
 msgid "tsvector"
 msgstr "tsvector"
 
-#: textsearch.xml:647(synopsis)
+#: textsearch.xml:679(synopsis)
 #, no-wrap
 msgid "to_tsvector(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 msgstr "to_tsvector(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">документ</replaceable> <type>text</type>) возвращает <type>tsvector</type>"
 
-#: textsearch.xml:649(para)
+#: textsearch.xml:683(para)
 msgid ""
 "<function>to_tsvector</function> parses a textual document into tokens, "
 "reduces the tokens to lexemes, and returns a <type>tsvector</type> which "
 "lists the lexemes together with their positions in the document. The "
 "document is processed according to the specified or default text search "
-"configuration. Here is a simple example: <screen>SELECT "
-"to_tsvector('english', 'a fat  cat sat on a mat - it ate a fat rats');\n"
+"configuration. Here is a simple example: <screen>\n"
+"SELECT to_tsvector('english', 'a fat  cat sat on a mat - it ate a fat "
+"rats');\n"
 "                  to_tsvector\n"
 "-----------------------------------------------------\n"
-" 'ate':9 'cat':3 'fat':2,11 'mat':7 'rat':12 'sat':4</screen>"
+" 'ate':9 'cat':3 'fat':2,11 'mat':7 'rat':12 'sat':4\n"
+"</screen>"
 msgstr ""
 "<function>to_tsvector</function> разбирает текстовые документ на фрагменты, "
 "сводит фрагменты к лексемам и возвращает значение <type>tsvector</type>, в "
 "котором перечисляются лексемы и их позиции в документе. При обработке "
 "документа используется указанная конфигурация текстового поиска или "
-"конфигурация по умолчанию. Простой пример: <screen>SELECT "
-"to_tsvector('english', 'a fat  cat sat on a mat - it ate a fat rats');\n"
+"конфигурация по умолчанию. Простой пример: <screen>\n"
+"SELECT to_tsvector('english', 'a fat  cat sat on a mat - it ate a fat "
+"rats');\n"
 "                  to_tsvector\n"
 "-----------------------------------------------------\n"
-" 'ate':9 'cat':3 'fat':2,11 'mat':7 'rat':12 'sat':4</screen>"
+" 'ate':9 'cat':3 'fat':2,11 'mat':7 'rat':12 'sat':4\n"
+"</screen>"
 
-#: textsearch.xml:663(para)
+#: textsearch.xml:699(para)
 msgid ""
 "In the example above we see that the resulting <type>tsvector</type> does "
 "not contain the words <literal>a</literal>, <literal>on</literal>, or "
@@ -1158,7 +1162,7 @@ msgstr ""
 "literal>, слово <literal>rats</literal> превратилось <literal>rat</literal>, "
 "а знак препинания <quote><literal>-</literal></quote> был проигнорирован."
 
-#: textsearch.xml:671(para)
+#: textsearch.xml:707(para)
 msgid ""
 "The <function>to_tsvector</function> function internally calls a parser "
 "which breaks the document text into tokens and assigns a type to each token. "
@@ -1208,7 +1212,7 @@ msgstr ""
 "использовали конфигурацию по умолчанию для английского языка &mdash; "
 "<literal>english</literal>."
 
-#: textsearch.xml:699(para)
+#: textsearch.xml:735(para)
 msgid ""
 "The function <function>setweight</function> can be used to label the entries "
 "of a <type>tsvector</type> with a given <firstterm>weight</firstterm>, where "
@@ -1225,7 +1229,7 @@ msgstr ""
 "документа. Затем эта информация может использоваться при ранжировании "
 "результатов поиска."
 
-#: textsearch.xml:716(programlisting)
+#: textsearch.xml:752(programlisting)
 #, no-wrap
 msgid ""
 "UPDATE tt SET ti =\n"
@@ -1240,7 +1244,7 @@ msgstr ""
 "    setweight(to_tsvector(coalesce(abstract,'')), 'C') ||\n"
 "    setweight(to_tsvector(coalesce(body,'')), 'D');"
 
-#: textsearch.xml:709(para)
+#: textsearch.xml:745(para)
 msgid ""
 "Because <function>to_tsvector</function>(<literal>NULL</literal>) will "
 "return <literal>NULL</literal>, it is recommended to use <function>coalesce</"
@@ -1263,11 +1267,11 @@ msgstr ""
 "эти операции рассматриваются в <xref remap=\"6\" linkend=\"textsearch-"
 "manipulate-tsvector\"/>.)"
 
-#: textsearch.xml:733(title)
+#: textsearch.xml:771(title)
 msgid "Parsing Queries"
 msgstr "Разбор запросов"
 
-#: textsearch.xml:735(para)
+#: textsearch.xml:773(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides the functions "
 "<function>to_tsquery</function>, <function>plainto_tsquery</function>, and "
@@ -1284,31 +1288,31 @@ msgstr ""
 "возможностей, чем <function>plainto_tsquery</function> и "
 "<function>phraseto_tsquery</function>, но более строга к входному запросу."
 
-#: textsearch.xml:747(indexterm)
+#: textsearch.xml:785(indexterm)
 msgid "<primary>to_tsquery</primary>"
 msgstr "<primary>to_tsquery</primary>"
 
-#: textsearch.xml:751(replaceable) textsearch.xml:814(replaceable)
-#: textsearch.xml:848(replaceable)
+#: textsearch.xml:790(replaceable) textsearch.xml:863(replaceable)
+#: textsearch.xml:903(replaceable)
 msgid "querytext"
 msgstr "текст_запроса"
 
-#: textsearch.xml:751(type) textsearch.xml:814(type) textsearch.xml:848(type)
-#: textsearch.xml:913(type) textsearch.xml:930(type) textsearch.xml:1109(type)
-#: textsearch.xml:1391(type) textsearch.xml:1405(type)
-#: textsearch.xml:1419(type) textsearch.xml:1433(type)
-#: textsearch.xml:1459(type) textsearch.xml:1486(type)
-#: textsearch.xml:1518(type) textsearch.xml:1569(type)
-#: textsearch.xml:1591(type)
+#: textsearch.xml:790(type) textsearch.xml:863(type) textsearch.xml:903(type)
+#: textsearch.xml:973(type) textsearch.xml:990(type) textsearch.xml:1178(type)
+#: textsearch.xml:1467(type) textsearch.xml:1481(type)
+#: textsearch.xml:1495(type) textsearch.xml:1509(type)
+#: textsearch.xml:1537(type) textsearch.xml:1566(type)
+#: textsearch.xml:1600(type) textsearch.xml:1653(type)
+#: textsearch.xml:1677(type)
 msgid "tsquery"
 msgstr "tsquery"
 
-#: textsearch.xml:751(synopsis)
+#: textsearch.xml:789(synopsis)
 #, no-wrap
 msgid "to_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 msgstr "to_tsquery(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">текст_запроса</replaceable> <type>text</type>) возвращает <type>tsquery</type>"
 
-#: textsearch.xml:753(para)
+#: textsearch.xml:793(para)
 msgid ""
 "<function>to_tsquery</function> creates a <type>tsquery</type> value from "
 "<replaceable>querytext</replaceable>, which must consist of single tokens "
@@ -1321,23 +1325,26 @@ msgid ""
 "while basic <type>tsquery</type> input takes the tokens at face value, "
 "<function>to_tsquery</function> normalizes each token into a lexeme using "
 "the specified or default configuration, and discards any tokens that are "
-"stop words according to the configuration. For example: <screen>SELECT "
-"to_tsquery('english', 'The &amp; Fat &amp; Rats');\n"
+"stop words according to the configuration. For example: <screen>\n"
+"SELECT to_tsquery('english', 'The &amp; Fat &amp; Rats');\n"
 "  to_tsquery   \n"
 "---------------\n"
-" 'fat' &amp; 'rat'</screen> As in basic <type>tsquery</type> input, "
-"weight(s) can be attached to each lexeme to restrict it to match only "
-"<type>tsvector</type> lexemes of those weight(s). For example: "
-"<screen>SELECT to_tsquery('english', 'Fat | Rats:AB');\n"
+" 'fat' &amp; 'rat'\n"
+"</screen> As in basic <type>tsquery</type> input, weight(s) can be attached "
+"to each lexeme to restrict it to match only <type>tsvector</type> lexemes of "
+"those weight(s). For example: <screen>\n"
+"SELECT to_tsquery('english', 'Fat | Rats:AB');\n"
 "    to_tsquery    \n"
 "------------------\n"
-" 'fat' | 'rat':AB</screen> Also, <literal>*</literal> can be attached to a "
-"lexeme to specify prefix matching: <screen>SELECT to_tsquery('supern:*A "
-"&amp; star:A*B');\n"
+" 'fat' | 'rat':AB\n"
+"</screen> Also, <literal>*</literal> can be attached to a lexeme to specify "
+"prefix matching: <screen>\n"
+"SELECT to_tsquery('supern:*A &amp; star:A*B');\n"
 "        to_tsquery        \n"
 "--------------------------\n"
-" 'supern':*A &amp; 'star':*AB</screen> Such a lexeme will match any word in "
-"a <type>tsvector</type> that begins with the given string."
+" 'supern':*A &amp; 'star':*AB\n"
+"</screen> Such a lexeme will match any word in a <type>tsvector</type> that "
+"begins with the given string."
 msgstr ""
 "<function>to_tsquery</function> создаёт значение <type>tsquery</type> из "
 "<replaceable>текста_запроса</replaceable>, который может состоять из простых "
@@ -1351,58 +1358,64 @@ msgstr ""
 "<type>tsquery</type> значении фрагменты воспринимаются буквально, тогда как "
 "<function>to_tsquery</function> нормализует фрагменты, приводя их к "
 "лексемам, используя явно указанную или подразумеваемую конфигурацию, и "
-"отбрасывая стоп-слова. Например: <screen>SELECT to_tsquery('english', 'The "
-"&amp; Fat &amp; Rats');\n"
+"отбрасывая стоп-слова. Например: <screen>\n"
+"SELECT to_tsquery('english', 'The &amp; Fat &amp; Rats');\n"
 "  to_tsquery   \n"
 "---------------\n"
-" 'fat' &amp; 'rat'</screen> Как и при вводе значения <type>tsquery</type>, "
-"для каждой лексемы можно задать вес(а), чтобы при поиске можно было выбрать "
-"из <type>tsvector</type> только лексемы с заданными весами. Например: "
-"<screen>SELECT to_tsquery('english', 'Fat | Rats:AB');\n"
+" 'fat' &amp; 'rat'\n"
+"</screen> Как и при вводе значения <type>tsquery</type>, для каждой лексемы "
+"можно задать вес(а), чтобы при поиске можно было выбрать из <type>tsvector</"
+"type> только лексемы с заданными весами. Например: <screen>\n"
+"SELECT to_tsquery('english', 'Fat | Rats:AB');\n"
 "    to_tsquery    \n"
 "------------------\n"
-" 'fat' | 'rat':AB</screen> К лексеме также можно добавить <literal>*</"
-"literal>, определив таким образом условие поиска по префиксу: <screen>SELECT "
-"to_tsquery('supern:*A &amp; star:A*B');\n"
+" 'fat' | 'rat':AB\n"
+"</screen> К лексеме также можно добавить <literal>*</literal>, определив "
+"таким образом условие поиска по префиксу: <screen>\n"
+"SELECT to_tsquery('supern:*A &amp; star:A*B');\n"
 "        to_tsquery        \n"
 "--------------------------\n"
-" 'supern':*A &amp; 'star':*AB</screen> Такая лексема будет соответствовать "
-"любому слову в <type>tsvector</type>, начинающемуся с данной подстроки."
+" 'supern':*A &amp; 'star':*AB\n"
+"</screen> Такая лексема будет соответствовать любому слову в <type>tsvector</"
+"type>, начинающемуся с данной подстроки."
 
-#: textsearch.xml:793(para)
+#: textsearch.xml:839(para)
 msgid ""
 "<function>to_tsquery</function> can also accept single-quoted phrases. This "
 "is primarily useful when the configuration includes a thesaurus dictionary "
 "that may trigger on such phrases. In the example below, a thesaurus contains "
-"the rule <literal>supernovae stars : sn</literal>: <screen>SELECT "
-"to_tsquery('''supernovae stars'' &amp; !crab');\n"
+"the rule <literal>supernovae stars : sn</literal>: <screen>\n"
+"SELECT to_tsquery('''supernovae stars'' &amp; !crab');\n"
 "  to_tsquery\n"
 "---------------\n"
-" 'sn' &amp; !'crab'</screen> Without quotes, <function>to_tsquery</function> "
-"will generate a syntax error for tokens that are not separated by an AND, "
-"OR, or FOLLOWED BY operator."
+" 'sn' &amp; !'crab'\n"
+"</screen> Without quotes, <function>to_tsquery</function> will generate a "
+"syntax error for tokens that are not separated by an AND, OR, or FOLLOWED BY "
+"operator."
 msgstr ""
 "<function>to_tsquery</function> может также принимать фразы в апострофах. "
 "Это полезно в основном когда конфигурация включает тезаурус, который может "
 "обрабатывать такие фразы. В показанном ниже примере предполагается, что "
 "тезаурус содержит правило <literal>supernovae stars : sn</literal>: "
-"<screen>SELECT to_tsquery('''supernovae stars'' &amp; !crab');\n"
+"<screen>\n"
+"SELECT to_tsquery('''supernovae stars'' &amp; !crab');\n"
 "  to_tsquery\n"
 "---------------\n"
-" 'sn' &amp; !'crab'</screen> Если убрать эти апострофы, "
-"<function>to_tsquery</function> не примет фрагменты, не разделённые "
-"операторами И, ИЛИ и ПРЕДШЕСТВУЕТ, и выдаст синтаксическую ошибку."
+" 'sn' &amp; !'crab'\n"
+"</screen> Если убрать эти апострофы, <function>to_tsquery</function> не "
+"примет фрагменты, не разделённые операторами И, ИЛИ и ПРЕДШЕСТВУЕТ, и выдаст "
+"синтаксическую ошибку."
 
-#: textsearch.xml:810(indexterm)
+#: textsearch.xml:858(indexterm)
 msgid "<primary>plainto_tsquery</primary>"
 msgstr "<primary>plainto_tsquery</primary>"
 
-#: textsearch.xml:814(synopsis)
+#: textsearch.xml:862(synopsis)
 #, no-wrap
 msgid "plainto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 msgstr "plainto_tsquery(<optional> <replaceable class=\"parameter\">конфигурация</replaceable> <type>regconfig</type>, </optional> <replaceable class=\"parameter\">текст_запроса</replaceable> <type>text</type>) возвращает <type>tsquery</type>"
 
-#: textsearch.xml:816(para)
+#: textsearch.xml:866(para)
 msgid ""
 "<function>plainto_tsquery</function> transforms the unformatted text "
 "<replaceable>querytext</replaceable> to a <type>tsquery</type> value. The "
@@ -1416,42 +1429,48 @@ msgstr ""
 "<function>to_tsvector</function>, а затем между оставшимися словами "
 "вставляются операторы <literal>&amp;</literal> (И) типа <type>tsquery</type>."
 
-#: textsearch.xml:824(para)
+#: textsearch.xml:874(para)
 msgid ""
-"Example: <screen>SELECT plainto_tsquery('english', 'The Fat Rats');\n"
+"Example: <screen>\n"
+"SELECT plainto_tsquery('english', 'The Fat Rats');\n"
 " plainto_tsquery \n"
 "-----------------\n"
-" 'fat' &amp; 'rat'</screen> Note that <function>plainto_tsquery</function> "
-"will not recognize <type>tsquery</type> operators, weight labels, or prefix-"
-"match labels in its input: <screen>SELECT plainto_tsquery('english', 'The "
-"Fat &amp; Rats:C');\n"
+" 'fat' &amp; 'rat'\n"
+"</screen> Note that <function>plainto_tsquery</function> will not recognize "
+"<type>tsquery</type> operators, weight labels, or prefix-match labels in its "
+"input: <screen>\n"
+"SELECT plainto_tsquery('english', 'The Fat &amp; Rats:C');\n"
 "   plainto_tsquery   \n"
 "---------------------\n"
-" 'fat' &amp; 'rat' &amp; 'c'</screen> Here, all the input punctuation was "
-"discarded as being space symbols."
+" 'fat' &amp; 'rat' &amp; 'c'\n"
+"</screen> Here, all the input punctuation was discarded as being space "
+"symbols."
 msgstr ""
-"Пример: <screen>SELECT plainto_tsquery('english', 'The Fat Rats');\n"
+"Пример: <screen>\n"
+"SELECT plainto_tsquery('english', 'The Fat Rats');\n"
 " plainto_tsquery \n"
 "-----------------\n"
-" 'fat' &amp; 'rat'</screen> Заметьте, что <function>plainto_tsquery</"
-"function> не распознает во входной строке операторы <type>tsquery</type>, "
-"метки весов или обозначения префиксов: <screen>SELECT "
-"plainto_tsquery('english', 'The Fat &amp; Rats:C');\n"
+" 'fat' &amp; 'rat'\n"
+"</screen> Заметьте, что <function>plainto_tsquery</function> не распознает "
+"во входной строке операторы <type>tsquery</type>, метки весов или "
+"обозначения префиксов: <screen>\n"
+"SELECT plainto_tsquery('english', 'The Fat &amp; Rats:C');\n"
 "   plainto_tsquery   \n"
 "---------------------\n"
-" 'fat' &amp; 'rat' &amp; 'c'</screen> В данном случае все знаки пунктуации "
-"были отброшены как символы-разделители."
+" 'fat' &amp; 'rat' &amp; 'c'\n"
+"</screen> В данном случае все знаки пунктуации были отброшены как символы-"
+"разделители."
 
-#: textsearch.xml:844(indexterm)
+#: textsearch.xml:898(indexterm)
 msgid "<primary>phraseto_tsquery</primary>"
 msgstr "<primary>phraseto_tsquery</primary>"
 
-#: textsearch.xml:848(synopsis)
+#: textsearch.xml:902(synopsis)
 #, no-wrap
 msgid "phraseto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 msgstr "phraseto_tsquery(<placeholder-1/> <placeholder-2/> <placeholder-3/>) returns <placeholder-4/>"
 
-#: textsearch.xml:850(para)
+#: textsearch.xml:906(para)
 msgid ""
 "<function>phraseto_tsquery</function> behaves much like "
 "<function>plainto_tsquery</function>, except that it inserts the "
@@ -1474,36 +1493,43 @@ msgstr ""
 "операторы ПРЕДШЕСТВУЕТ проверяют не только наличие всех лексем, но и их "
 "порядок."
 
-#: textsearch.xml:862(para)
+#: textsearch.xml:918(para)
 msgid ""
-"Example: <screen>SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
+"Example: <screen>\n"
+"SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
 " phraseto_tsquery\n"
 "------------------\n"
-" 'fat' &lt;-&gt; 'rat'</screen> Like <function>plainto_tsquery</function>, "
-"the <function>phraseto_tsquery</function> function will not recognize "
+" 'fat' &lt;-&gt; 'rat'\n"
+"</screen> Like <function>plainto_tsquery</function>, the "
+"<function>phraseto_tsquery</function> function will not recognize "
 "<type>tsquery</type> operators, weight labels, or prefix-match labels in its "
-"input: <screen>SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:C');\n"
+"input: <screen>\n"
+"SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:C');\n"
 "      phraseto_tsquery\n"
 "-----------------------------\n"
-" 'fat' &lt;-&gt; 'rat' &lt;-&gt; 'c'</screen>"
+" 'fat' &lt;-&gt; 'rat' &lt;-&gt; 'c'\n"
+"</screen>"
 msgstr ""
-"Пример: <screen>SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
+"Пример: <screen>\n"
+"SELECT phraseto_tsquery('english', 'The Fat Rats');\n"
 " phraseto_tsquery\n"
 "------------------\n"
-" 'fat' &lt;-&gt; 'rat'</screen> Как и <function>plainto_tsquery</function>, "
-"функция <function>phraseto_tsquery</function> не распознает во входной "
-"строке операторы типа <type>tsquery</type>, метки весов или обозначения "
-"префиксов: <screen>SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:"
-"C');\n"
+" 'fat' &lt;-&gt; 'rat'\n"
+"</screen> Как и <function>plainto_tsquery</function>, функция "
+"<function>phraseto_tsquery</function> не распознает во входной строке "
+"операторы типа <type>tsquery</type>, метки весов или обозначения префиксов: "
+"<screen>\n"
+"SELECT phraseto_tsquery('english', 'The Fat &amp; Rats:C');\n"
 "      phraseto_tsquery\n"
 "-----------------------------\n"
-" 'fat' &lt;-&gt; 'rat' &lt;-&gt; 'c'</screen>"
+" 'fat' &lt;-&gt; 'rat' &lt;-&gt; 'c'\n"
+"</screen>"
 
-#: textsearch.xml:884(title)
+#: textsearch.xml:944(title)
 msgid "Ranking Search Results"
 msgstr "Ранжирование результатов поиска"
 
-#: textsearch.xml:886(para)
+#: textsearch.xml:946(para)
 msgid ""
 "Ranking attempts to measure how relevant documents are to a particular "
 "query, so that when there are many matches the most relevant ones can be "
@@ -1532,54 +1558,54 @@ msgstr ""
 "собственные функции ранжирования и/или учесть при обработке их результатов "
 "дополнительные факторы."
 
-#: textsearch.xml:909(indexterm)
+#: textsearch.xml:969(indexterm)
 msgid "<primary>ts_rank</primary>"
 msgstr "<primary>ts_rank</primary>"
 
-#: textsearch.xml:913(replaceable) textsearch.xml:930(replaceable)
-#: textsearch.xml:1775(replaceable)
+#: textsearch.xml:973(replaceable) textsearch.xml:990(replaceable)
+#: textsearch.xml:1876(replaceable)
 msgid "weights"
 msgstr "веса"
 
-#: textsearch.xml:913(type) textsearch.xml:930(type)
+#: textsearch.xml:973(type) textsearch.xml:990(type)
 msgid "float4[]"
 msgstr "float4[]"
 
-#: textsearch.xml:913(replaceable) textsearch.xml:930(replaceable)
-#: textsearch.xml:1303(replaceable) textsearch.xml:1331(replaceable)
-#: textsearch.xml:1348(replaceable)
+#: textsearch.xml:973(replaceable) textsearch.xml:990(replaceable)
+#: textsearch.xml:1379(replaceable) textsearch.xml:1407(replaceable)
+#: textsearch.xml:1424(replaceable)
 msgid "vector"
 msgstr "вектор"
 
-#: textsearch.xml:913(replaceable) textsearch.xml:930(replaceable)
-#: textsearch.xml:1109(replaceable) textsearch.xml:1486(replaceable)
-#: textsearch.xml:1518(replaceable) textsearch.xml:1569(replaceable)
-#: textsearch.xml:1591(replaceable)
+#: textsearch.xml:973(replaceable) textsearch.xml:990(replaceable)
+#: textsearch.xml:1178(replaceable) textsearch.xml:1566(replaceable)
+#: textsearch.xml:1600(replaceable) textsearch.xml:1653(replaceable)
+#: textsearch.xml:1677(replaceable)
 msgid "query"
 msgstr "запрос"
 
-#: textsearch.xml:913(replaceable) textsearch.xml:930(replaceable)
+#: textsearch.xml:973(replaceable) textsearch.xml:990(replaceable)
 msgid "normalization"
 msgstr "нормализация"
 
-#: textsearch.xml:913(type) textsearch.xml:930(type) textsearch.xml:1331(type)
-#: textsearch.xml:1459(type) textsearch.xml:1486(type)
-#: textsearch.xml:1776(type) textsearch.xml:1777(type)
-#: textsearch.xml:3156(type) textsearch.xml:3158(type)
-#: textsearch.xml:3182(type) textsearch.xml:3184(type)
+#: textsearch.xml:973(type) textsearch.xml:990(type) textsearch.xml:1407(type)
+#: textsearch.xml:1537(type) textsearch.xml:1566(type)
+#: textsearch.xml:1877(type) textsearch.xml:1878(type)
+#: textsearch.xml:3351(type) textsearch.xml:3353(type)
+#: textsearch.xml:3381(type) textsearch.xml:3383(type)
 msgid "integer"
 msgstr "integer"
 
-#: textsearch.xml:913(optional) textsearch.xml:930(optional)
-#: textsearch.xml:1109(optional)
+#: textsearch.xml:973(optional) textsearch.xml:990(optional)
+#: textsearch.xml:1178(optional)
 msgid ", <placeholder-1/> <placeholder-2/>"
 msgstr ", <placeholder-1/> <placeholder-2/>"
 
-#: textsearch.xml:913(type) textsearch.xml:930(type)
+#: textsearch.xml:973(type) textsearch.xml:990(type)
 msgid "float4"
 msgstr "float4"
 
-#: textsearch.xml:913(literal)
+#: textsearch.xml:973(literal)
 msgid ""
 "ts_rank(<placeholder-1/> <placeholder-2/> <placeholder-3/>, <placeholder-4/> "
 "<placeholder-5/> <placeholder-6/>) returns <placeholder-7/>"
@@ -1587,15 +1613,15 @@ msgstr ""
 "ts_rank(<placeholder-1/> <placeholder-2/> <placeholder-3/>, <placeholder-4/> "
 "<placeholder-5/> <placeholder-6/>) возвращает <placeholder-7/>"
 
-#: textsearch.xml:917(para)
+#: textsearch.xml:977(para)
 msgid "Ranks vectors based on the frequency of their matching lexemes."
 msgstr "Ранжирует векторы по частоте найденных лексем."
 
-#: textsearch.xml:926(indexterm)
+#: textsearch.xml:986(indexterm)
 msgid "<primary>ts_rank_cd</primary>"
 msgstr "<primary>ts_rank_cd</primary>"
 
-#: textsearch.xml:930(literal)
+#: textsearch.xml:990(literal)
 msgid ""
 "ts_rank_cd(<placeholder-1/> <placeholder-2/> <placeholder-3/>, "
 "<placeholder-4/> <placeholder-5/> <placeholder-6/>) returns <placeholder-7/>"
@@ -1604,7 +1630,7 @@ msgstr ""
 "<placeholder-4/> <placeholder-5/> <placeholder-6/>) возвращает "
 "<placeholder-7/>"
 
-#: textsearch.xml:934(para)
+#: textsearch.xml:994(para)
 msgid ""
 "This function computes the <firstterm>cover density</firstterm> ranking for "
 "the given document vector and query, as described in Clarke, Cormack, and "
@@ -1620,7 +1646,7 @@ msgstr ""
 "Плотность покрытия вычисляется подобно рангу <function>ts_rank</function>, "
 "но в расчёт берётся ещё и близость соответствующих лексем друг к другу."
 
-#: textsearch.xml:944(para)
+#: textsearch.xml:1004(para)
 msgid ""
 "This function requires lexeme positional information to perform its "
 "calculation. Therefore, it ignores any <quote>stripped</quote> lexemes in "
@@ -1637,51 +1663,53 @@ msgstr ""
 "type> обратитесь к <xref remap=\"3\" linkend=\"textsearch-manipulate-tsvector"
 "\"/>.)"
 
-#: textsearch.xml:901(para)
+#: textsearch.xml:961(para)
 msgid "The two ranking functions currently available are: <placeholder-1/>"
 msgstr "Ниже описаны две встроенные функции ранжирования: <placeholder-1/>"
 
-#: textsearch.xml:972(programlisting)
+#: textsearch.xml:1034(programlisting)
 #, no-wrap
 msgid "{0.1, 0.2, 0.4, 1.0}"
 msgstr "{0.1, 0.2, 0.4, 1.0}"
 
-#: textsearch.xml:960(para)
+#: textsearch.xml:1020(para)
 msgid ""
 "For both these functions, the optional <replaceable class=\"parameter"
 "\">weights</replaceable> argument offers the ability to weigh word instances "
 "more or less heavily depending on how they are labeled. The weight arrays "
 "specify how heavily to weigh each category of word, in the order: "
-"<synopsis>{D-weight, C-weight, B-weight, A-weight}</synopsis> If no "
-"<replaceable class=\"parameter\">weights</replaceable> are provided, then "
-"these defaults are used: <placeholder-1/> Typically weights are used to mark "
-"words from special areas of the document, like the title or an initial "
-"abstract, so they can be treated with more or less importance than words in "
-"the document body."
+"<synopsis>\n"
+"{D-weight, C-weight, B-weight, A-weight}\n"
+"</synopsis> If no <replaceable class=\"parameter\">weights</replaceable> are "
+"provided, then these defaults are used: <placeholder-1/> Typically weights "
+"are used to mark words from special areas of the document, like the title or "
+"an initial abstract, so they can be treated with more or less importance "
+"than words in the document body."
 msgstr ""
 "Для обеих этих функций аргумент <replaceable class=\"parameter\">веса</"
 "replaceable> позволяет придать больший или меньший вес словам, в зависимости "
 "от их меток. В передаваемом массиве весов определяется, насколько весома "
-"каждая категория слов, в следующем порядке: <synopsis>{вес D, вес C, вес B, "
-"вес A}</synopsis> Если этот аргумент опускается, подразумеваются следующие "
+"каждая категория слов, в следующем порядке: <synopsis>\n"
+"{вес D, вес C, вес B, вес A}\n"
+"</synopsis> Если этот аргумент опускается, подразумеваются следующие "
 "значения: <placeholder-1/> Обычно весами выделяются слова из особых областей "
 "документа, например из заголовка или краткого введения, с тем, чтобы эти "
 "слова считались более и менее значимыми, чем слова в основном тексте "
 "документа."
 
-#: textsearch.xml:992(para)
+#: textsearch.xml:1056(para)
 msgid "0 (the default) ignores the document length"
 msgstr "0 (по умолчанию): длина документа не учитывается"
 
-#: textsearch.xml:997(para)
+#: textsearch.xml:1061(para)
 msgid "1 divides the rank by 1 + the logarithm of the document length"
 msgstr "1: ранг документа делится на 1 + логарифм длины документа"
 
-#: textsearch.xml:1002(para)
+#: textsearch.xml:1066(para)
 msgid "2 divides the rank by the document length"
 msgstr "2: ранг документа делится на его длину"
 
-#: textsearch.xml:1007(para)
+#: textsearch.xml:1071(para)
 msgid ""
 "4 divides the rank by the mean harmonic distance between extents (this is "
 "implemented only by <function>ts_rank_cd</function>)"
@@ -1689,22 +1717,22 @@ msgstr ""
 "4: ранг документа делится на среднее гармоническое расстояние между блоками "
 "(это реализовано только в <function>ts_rank_cd</function>)"
 
-#: textsearch.xml:1013(para)
+#: textsearch.xml:1077(para)
 msgid "8 divides the rank by the number of unique words in document"
 msgstr "8: ранг документа делится на число уникальных слов в документе"
 
-#: textsearch.xml:1018(para)
+#: textsearch.xml:1082(para)
 msgid ""
 "16 divides the rank by 1 + the logarithm of the number of unique words in "
 "document"
 msgstr ""
 "16: ранг документа делится на 1 + логарифм числа уникальных слов в документе"
 
-#: textsearch.xml:1024(para)
+#: textsearch.xml:1088(para)
 msgid "32 divides the rank by itself + 1"
 msgstr "32: ранг делится своё же значение + 1"
 
-#: textsearch.xml:979(para)
+#: textsearch.xml:1043(para)
 msgid ""
 "Since a longer document has a greater chance of containing a query term it "
 "is reasonable to take into account document size, e.g., a hundred-word "
@@ -1729,7 +1757,7 @@ msgstr ""
 "<literal>2|4</literal>). <placeholder-1/> Если включены несколько флагов, "
 "соответствующие операции выполняются в показанном порядке."
 
-#: textsearch.xml:1034(para)
+#: textsearch.xml:1098(para)
 msgid ""
 "It is important to note that the ranking functions do not use any global "
 "information, so it is impossible to produce a fair normalization to 1% or "
@@ -1744,10 +1772,11 @@ msgstr ""
 "literal>), можно свести все ранги к диапазону 0..1, но это изменение будет "
 "лишь косметическим, на порядке сортировки результатов это не отразится."
 
-#: textsearch.xml:1043(para)
+#: textsearch.xml:1107(para)
 msgid ""
 "Here is an example that selects only the ten highest-ranked matches: "
-"<screen>SELECT title, ts_rank_cd(textsearch, query) AS rank\n"
+"<screen>\n"
+"SELECT title, ts_rank_cd(textsearch, query) AS rank\n"
 "FROM apod, to_tsquery('neutrino|(dark &amp; matter)') query\n"
 "WHERE query @@ textsearch\n"
 "ORDER BY rank DESC\n"
@@ -1763,9 +1792,10 @@ msgid ""
 " NGC 4650A: Strange Galaxy and Dark Matter     |  1.85774\n"
 " Hot Gas and Dark Matter                       |   1.6123\n"
 " Ice Fishing for Cosmic Neutrinos              |      1.6\n"
-" Weak Lensing Distorts the Universe            | 0.818218</screen> This is "
-"the same example using normalized ranking: <screen>SELECT title, "
-"ts_rank_cd(textsearch, query, 32 /* rank/(rank+1) */ ) AS rank\n"
+" Weak Lensing Distorts the Universe            | 0.818218\n"
+"</screen> This is the same example using normalized ranking: <screen>\n"
+"SELECT title, ts_rank_cd(textsearch, query, 32 /* rank/(rank+1) */ ) AS "
+"rank\n"
 "FROM apod, to_tsquery('neutrino|(dark &amp; matter)') query\n"
 "WHERE  query @@ textsearch\n"
 "ORDER BY rank DESC\n"
@@ -1781,10 +1811,12 @@ msgid ""
 " NGC 4650A: Strange Galaxy and Dark Matter     | 0.650072921219637\n"
 " Hot Gas and Dark Matter                       | 0.617195790024749\n"
 " Ice Fishing for Cosmic Neutrinos              | 0.615384618911517\n"
-" Weak Lensing Distorts the Universe            | 0.450010798361481</screen>"
+" Weak Lensing Distorts the Universe            | 0.450010798361481\n"
+"</screen>"
 msgstr ""
 "В данном примере выбираются десять найденных документов с максимальным "
-"рангом: <screen>SELECT title, ts_rank_cd(textsearch, query) AS rank\n"
+"рангом: <screen>\n"
+"SELECT title, ts_rank_cd(textsearch, query) AS rank\n"
 "FROM apod, to_tsquery('neutrino|(dark &amp; matter)') query\n"
 "WHERE query @@ textsearch\n"
 "ORDER BY rank DESC\n"
@@ -1800,9 +1832,10 @@ msgstr ""
 " NGC 4650A: Strange Galaxy and Dark Matter     |  1.85774\n"
 " Hot Gas and Dark Matter                       |   1.6123\n"
 " Ice Fishing for Cosmic Neutrinos              |      1.6\n"
-" Weak Lensing Distorts the Universe            | 0.818218</screen> Тот же "
-"пример с нормализованным рангом: <screen>SELECT title, "
-"ts_rank_cd(textsearch, query, 32 /* rank/(rank+1) */ ) AS rank\n"
+" Weak Lensing Distorts the Universe            | 0.818218\n"
+"</screen> Тот же пример с нормализованным рангом: <screen>\n"
+"SELECT title, ts_rank_cd(textsearch, query, 32 /* rank/(rank+1) */ ) AS "
+"rank\n"
 "FROM apod, to_tsquery('neutrino|(dark &amp; matter)') query\n"
 "WHERE  query @@ textsearch\n"
 "ORDER BY rank DESC\n"
@@ -1818,9 +1851,10 @@ msgstr ""
 " NGC 4650A: Strange Galaxy and Dark Matter     | 0.650072921219637\n"
 " Hot Gas and Dark Matter                       | 0.617195790024749\n"
 " Ice Fishing for Cosmic Neutrinos              | 0.615384618911517\n"
-" Weak Lensing Distorts the Universe            | 0.450010798361481</screen>"
+" Weak Lensing Distorts the Universe            | 0.450010798361481\n"
+"</screen>"
 
-#: textsearch.xml:1085(para)
+#: textsearch.xml:1153(para)
 msgid ""
 "Ranking can be expensive since it requires consulting the <type>tsvector</"
 "type> of each matching document, which can be I/O bound and therefore slow. "
@@ -1833,11 +1867,11 @@ msgstr ""
 "обращаться к диску. К сожалению, избежать этого вряд ли возможно, так как на "
 "практике по многим запросам выдаётся большое количество результатов."
 
-#: textsearch.xml:1095(title)
+#: textsearch.xml:1163(title)
 msgid "Highlighting Results"
 msgstr "Выделение результатов"
 
-#: textsearch.xml:1097(para)
+#: textsearch.xml:1165(para)
 msgid ""
 "To present search results it is ideal to show a part of each document and "
 "how it is related to the query. Usually, search engines show fragments of "
@@ -1851,22 +1885,22 @@ msgstr ""
 "<productname>PostgreSQL</productname> для реализации этой возможности "
 "представлена функция <function>ts_headline</function>."
 
-#: textsearch.xml:1105(indexterm)
+#: textsearch.xml:1173(indexterm)
 msgid "<primary>ts_headline</primary>"
 msgstr "<primary>ts_headline</primary>"
 
-#: textsearch.xml:1109(replaceable)
+#: textsearch.xml:1178(replaceable)
 msgid "options"
 msgstr "параметры"
 
-#: textsearch.xml:1109(synopsis)
+#: textsearch.xml:1177(synopsis)
 #, no-wrap
 msgid "ts_headline(<placeholder-1/> <placeholder-2/> <placeholder-3/>, <placeholder-4/> <placeholder-5/> <placeholder-6/>) returns <placeholder-7/>"
 msgstr ""
 "ts_headline(<placeholder-1/> <placeholder-2/> <placeholder-3/>, <placeholder-4/> <placeholder-5/> <placeholder-6/>)\n"
 "  returns <placeholder-7/>"
 
-#: textsearch.xml:1111(para)
+#: textsearch.xml:1181(para)
 msgid ""
 "<function>ts_headline</function> accepts a document along with a query, and "
 "returns an excerpt from the document in which terms from the query are "
@@ -1881,7 +1915,7 @@ msgstr ""
 "<replaceable>config</replaceable>; если этот параметр опущен, применяется "
 "конфигурация <varname>default_text_search_config</varname>."
 
-#: textsearch.xml:1129(para)
+#: textsearch.xml:1199(para)
 msgid ""
 "<literal>StartSel</literal>, <literal>StopSel</literal>: the strings with "
 "which to delimit query words appearing in the document, to distinguish them "
@@ -1892,7 +1926,7 @@ msgstr ""
 "будут разграничивать слова запроса в документе, выделяя их среди остальных. "
 "Если эти строки содержат пробелы или запятые, их нужно заключить в кавычки."
 
-#: textsearch.xml:1137(para)
+#: textsearch.xml:1207(para)
 msgid ""
 "<literal>MaxWords</literal>, <literal>MinWords</literal>: these numbers "
 "determine the longest and shortest headlines to output."
@@ -1900,7 +1934,7 @@ msgstr ""
 "<literal>MaxWords</literal>, <literal>MinWords</literal>: эти числа "
 "определяет нижний и верхний предел размера выдержки."
 
-#: textsearch.xml:1143(para)
+#: textsearch.xml:1213(para)
 msgid ""
 "<literal>ShortWord</literal>: words of this length or less will be dropped "
 "at the start and end of a headline. The default value of three eliminates "
@@ -1910,7 +1944,7 @@ msgstr ""
 "выдержки будут отбрасываться. Значение по умолчанию, равное 3, исключает "
 "распространённые английские артикли."
 
-#: textsearch.xml:1150(para)
+#: textsearch.xml:1220(para)
 msgid ""
 "<literal>HighlightAll</literal>: Boolean flag; if <literal>true</literal> "
 "the whole document will be used as the headline, ignoring the preceding "
@@ -1920,7 +1954,7 @@ msgstr ""
 "<literal>true</literal>, выдержкой будет весь документ и три предыдущие "
 "параметра игнорируются."
 
-#: textsearch.xml:1157(para)
+#: textsearch.xml:1227(para)
 msgid ""
 "<literal>MaxFragments</literal>: maximum number of text excerpts or "
 "fragments to display. The default value of zero selects a non-fragment-"
@@ -1946,7 +1980,7 @@ msgstr ""
 "запроса, выводится один фрагмент, включающий первые <literal>MinWords</"
 "literal> слов в документе."
 
-#: textsearch.xml:1173(para)
+#: textsearch.xml:1243(para)
 msgid ""
 "<literal>FragmentDelimiter</literal>: When more than one fragment is "
 "displayed, the fragments will be separated by this string."
@@ -1954,7 +1988,7 @@ msgstr ""
 "<literal>FragmentDelimiter</literal>: Когда выводятся несколько фрагментов, "
 "они будут разделяться этой строкой."
 
-#: textsearch.xml:1182(programlisting)
+#: textsearch.xml:1252(programlisting)
 #, no-wrap
 msgid ""
 "StartSel=&lt;b&gt;, StopSel=&lt;/b&gt;,\n"
@@ -1965,7 +1999,7 @@ msgstr ""
 "MaxWords=35, MinWords=15, ShortWord=3, HighlightAll=FALSE,\n"
 "MaxFragments=0, FragmentDelimiter=\" ... \""
 
-#: textsearch.xml:1121(para)
+#: textsearch.xml:1191(para)
 msgid ""
 "If an <replaceable>options</replaceable> string is specified it must consist "
 "of a comma-separated list of one or more <replaceable>option</"
@@ -1979,9 +2013,10 @@ msgstr ""
 "Параметры могут быть следующими: <placeholder-1/> Все явно не определённые "
 "параметры получают такие значения по умолчанию: <placeholder-2/>"
 
-#: textsearch.xml:1187(para)
+#: textsearch.xml:1259(para)
 msgid ""
-"For example: <screen>SELECT ts_headline('english',\n"
+"For example: <screen>\n"
+"SELECT ts_headline('english',\n"
 "  'The most common type of search\n"
 "is to find all documents containing given query terms\n"
 "and return them in order of their similarity to the\n"
@@ -2004,9 +2039,11 @@ msgid ""
 "-------------------------------------------------------\n"
 " containing given &lt;query&gt; terms\n"
 " and return them in order of their &lt;similarity&gt; to the\n"
-" &lt;query&gt;.</screen>"
+" &lt;query&gt;.\n"
+"</screen>"
 msgstr ""
-"Пример использования: <screen>SELECT ts_headline('english',\n"
+"Пример использования: <screen>\n"
+"SELECT ts_headline('english',\n"
 "  'The most common type of search\n"
 "is to find all documents containing given query terms\n"
 "and return them in order of their similarity to the\n"
@@ -2029,9 +2066,10 @@ msgstr ""
 "-------------------------------------------------------\n"
 " containing given &lt;query&gt; terms\n"
 " and return them in order of their &lt;similarity&gt; to the\n"
-" &lt;query&gt;.</screen>"
+" &lt;query&gt;.\n"
+"</screen>"
 
-#: textsearch.xml:1224(programlisting)
+#: textsearch.xml:1298(programlisting)
 #, no-wrap
 msgid ""
 "SELECT id, ts_headline(body, q), rank\n"
@@ -2048,7 +2086,7 @@ msgstr ""
 "      ORDER BY rank DESC\n"
 "      LIMIT 10) AS foo;"
 
-#: textsearch.xml:1216(para)
+#: textsearch.xml:1290(para)
 msgid ""
 "<function>ts_headline</function> uses the original document, not a "
 "<type>tsvector</type> summary, so it can be slow and should be used with "
@@ -2065,11 +2103,11 @@ msgstr ""
 "Правильный подход можно реализовать, применив подзапросы <acronym>SQL</"
 "acronym>, например так: <placeholder-1/>"
 
-#: textsearch.xml:1237(title)
+#: textsearch.xml:1313(title)
 msgid "Additional Features"
 msgstr "Дополнительные возможности"
 
-#: textsearch.xml:1239(para)
+#: textsearch.xml:1315(para)
 msgid ""
 "This section describes additional functions and operators that are useful in "
 "connection with text search."
@@ -2077,11 +2115,11 @@ msgstr ""
 "В этом разделе описываются дополнительные функции и операторы, которые могут "
 "быть полезны при поиске текста."
 
-#: textsearch.xml:1245(title)
+#: textsearch.xml:1321(title)
 msgid "Manipulating Documents"
 msgstr "Обработка документов"
 
-#: textsearch.xml:1247(para)
+#: textsearch.xml:1323(para)
 msgid ""
 "<xref linkend=\"textsearch-parsing-documents\"/> showed how raw textual "
 "documents can be converted into <type>tsvector</type> values. "
@@ -2095,15 +2133,15 @@ msgstr ""
 "также набор функций и операторов для обработки документов, уже "
 "представленных в формате <type>tsvector</type>."
 
-#: textsearch.xml:1260(indexterm)
+#: textsearch.xml:1336(indexterm)
 msgid "<primary>tsvector concatenation</primary>"
 msgstr "<primary>конкатенация значений tsvector</primary>"
 
-#: textsearch.xml:1264(literal) textsearch.xml:1405(literal)
+#: textsearch.xml:1340(literal) textsearch.xml:1481(literal)
 msgid "<placeholder-1/> || <placeholder-2/>"
 msgstr "<placeholder-1/> || <placeholder-2/>"
 
-#: textsearch.xml:1268(para)
+#: textsearch.xml:1344(para)
 msgid ""
 "The <type>tsvector</type> concatenation operator returns a vector which "
 "combines the lexemes and positional information of the two vectors given as "
@@ -2127,7 +2165,7 @@ msgstr ""
 "конкатенации исходных строк влияют на позиции лексем в правой части, а при "
 "конкатенации <type>tsvector</type> &mdash; нет.)"
 
-#: textsearch.xml:1283(para)
+#: textsearch.xml:1359(para)
 msgid ""
 "One advantage of using concatenation in the vector form, rather than "
 "concatenating text before applying <function>to_tsvector</function>, is that "
@@ -2145,19 +2183,19 @@ msgstr ""
 "<function>setweight</function> нужно до объединения разных частей документа "
 "с подразумеваемым разным весом."
 
-#: textsearch.xml:1299(indexterm)
+#: textsearch.xml:1375(indexterm)
 msgid "<primary>setweight</primary>"
 msgstr "<primary>setweight</primary>"
 
-#: textsearch.xml:1303(replaceable)
+#: textsearch.xml:1379(replaceable)
 msgid "weight"
 msgstr "вес"
 
-#: textsearch.xml:1303(type)
+#: textsearch.xml:1379(type)
 msgid "\"char\""
 msgstr "\"char\""
 
-#: textsearch.xml:1303(literal)
+#: textsearch.xml:1379(literal)
 msgid ""
 "setweight(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/"
 ">) returns <placeholder-5/>"
@@ -2165,7 +2203,7 @@ msgstr ""
 "setweight(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/"
 ">) returns <placeholder-5/>"
 
-#: textsearch.xml:1307(para)
+#: textsearch.xml:1383(para)
 msgid ""
 "<function>setweight</function> returns a copy of the input vector in which "
 "every position has been labeled with the given <replaceable>weight</"
@@ -2183,7 +2221,7 @@ msgstr ""
 "конкатенации векторов, что позволяет придавать разные веса словам из разных "
 "частей документа и, как следствие, ранжировать их по-разному."
 
-#: textsearch.xml:1317(para)
+#: textsearch.xml:1393(para)
 msgid ""
 "Note that weight labels apply to <emphasis>positions</emphasis>, not "
 "<emphasis>lexemes</emphasis>. If the input vector has been stripped of "
@@ -2193,27 +2231,27 @@ msgstr ""
 "<emphasis>лексемам</emphasis>. Если входной вектор очищен от позиционной "
 "информации, <function>setweight</function> не делает ничего."
 
-#: textsearch.xml:1327(indexterm)
+#: textsearch.xml:1403(indexterm)
 msgid "<primary>length(tsvector)</primary>"
 msgstr "<primary>length(tsvector)</primary>"
 
-#: textsearch.xml:1331(literal)
+#: textsearch.xml:1407(literal)
 msgid "length(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 msgstr "length(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 
-#: textsearch.xml:1335(para)
+#: textsearch.xml:1411(para)
 msgid "Returns the number of lexemes stored in the vector."
 msgstr "Возвращает число лексем, сохранённых в векторе."
 
-#: textsearch.xml:1344(indexterm)
+#: textsearch.xml:1420(indexterm)
 msgid "<primary>strip</primary>"
 msgstr "<primary>strip</primary>"
 
-#: textsearch.xml:1348(literal)
+#: textsearch.xml:1424(literal)
 msgid "strip(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 msgstr "strip(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 
-#: textsearch.xml:1352(para)
+#: textsearch.xml:1428(para)
 msgid ""
 "Returns a vector that lists the same lexemes as the given vector, but lacks "
 "any position or weight information. The result is usually much smaller than "
@@ -2230,7 +2268,7 @@ msgstr ""
 "(ПРЕДШЕСТВУЕТ) типа <type>tsquery</type> никогда не найдёт соответствие в "
 "них, так как не сможет определить расстояние между вхождениями лексем."
 
-#: textsearch.xml:1368(para)
+#: textsearch.xml:1444(para)
 msgid ""
 "A full list of <type>tsvector</type>-related functions is available in <xref "
 "linkend=\"textsearch-functions-table\"/>."
@@ -2238,11 +2276,11 @@ msgstr ""
 "Полный список связанных с <type>tsvector</type> функций приведён в <xref "
 "remap=\"6\" linkend=\"textsearch-functions-table\"/>."
 
-#: textsearch.xml:1376(title)
+#: textsearch.xml:1452(title)
 msgid "Manipulating Queries"
 msgstr "Обработка запросов"
 
-#: textsearch.xml:1378(para)
+#: textsearch.xml:1454(para)
 msgid ""
 "<xref linkend=\"textsearch-parsing-queries\"/> showed how raw textual "
 "queries can be converted into <type>tsquery</type> values. "
@@ -2256,67 +2294,69 @@ msgstr ""
 "набор функций и операторов для обработки запросов, уже представленных в "
 "формате <type>tsquery</type>."
 
-#: textsearch.xml:1391(literal)
+#: textsearch.xml:1467(literal)
 msgid "<placeholder-1/> &amp;&amp; <placeholder-2/>"
 msgstr "<placeholder-1/> &amp;&amp; <placeholder-2/>"
 
-#: textsearch.xml:1395(para)
+#: textsearch.xml:1471(para)
 msgid "Returns the AND-combination of the two given queries."
 msgstr "Возвращает логическое произведение (AND) двух данных запросов."
 
-#: textsearch.xml:1409(para)
+#: textsearch.xml:1485(para)
 msgid "Returns the OR-combination of the two given queries."
 msgstr "Возвращает логическое объединение (OR) двух данных запросов."
 
-#: textsearch.xml:1419(literal)
+#: textsearch.xml:1495(literal)
 msgid "!! <placeholder-1/>"
 msgstr "!! <placeholder-1/>"
 
-#: textsearch.xml:1423(para)
+#: textsearch.xml:1499(para)
 msgid "Returns the negation (NOT) of the given query."
 msgstr "Возвращает логическое отрицание (NOT) данного запроса."
 
-#: textsearch.xml:1433(literal)
+#: textsearch.xml:1509(literal)
 msgid "<placeholder-1/> &lt;-&gt; <placeholder-2/>"
 msgstr "<placeholder-1/> &lt;-&gt; <placeholder-2/>"
 
-#: textsearch.xml:1437(para)
+#: textsearch.xml:1513(para)
 msgid ""
 "Returns a query that searches for a match to the first given query "
 "immediately followed by a match to the second given query, using the "
 "<literal>&lt;-&gt;</literal> (FOLLOWED BY) <type>tsquery</type> operator. "
-"For example: <screen>SELECT to_tsquery('fat') &lt;-&gt; to_tsquery('cat | "
-"rat');\n"
+"For example: <screen>\n"
+"SELECT to_tsquery('fat') &lt;-&gt; to_tsquery('cat | rat');\n"
 "             ?column?\n"
 "-----------------------------------\n"
-" 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'</screen>"
+" 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'\n"
+"</screen>"
 msgstr ""
 "Возвращает запрос, который ищет соответствие первому данному запросу, за "
 "которым следует соответствие второму данному запросу, с применением "
 "оператора <literal>&lt;-&gt;</literal> (ПРЕДШЕСТВУЕТ) типа <type>tsquery</"
-"type>. Например: <screen>SELECT to_tsquery('fat') &lt;-&gt; to_tsquery('cat "
-"| rat');\n"
+"type>. Например: <screen>\n"
+"SELECT to_tsquery('fat') &lt;-&gt; to_tsquery('cat | rat');\n"
 "             ?column?\n"
 "-----------------------------------\n"
-" 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'</screen>"
+" 'fat' &lt;-&gt; 'cat' | 'fat' &lt;-&gt; 'rat'\n"
+"</screen>"
 
-#: textsearch.xml:1455(indexterm)
+#: textsearch.xml:1533(indexterm)
 msgid "<primary>tsquery_phrase</primary>"
 msgstr "<primary>tsquery_phrase</primary>"
 
-#: textsearch.xml:1459(replaceable)
+#: textsearch.xml:1537(replaceable)
 msgid "query1"
 msgstr "запрос1"
 
-#: textsearch.xml:1459(replaceable)
+#: textsearch.xml:1537(replaceable)
 msgid "query2"
 msgstr "запрос2"
 
-#: textsearch.xml:1459(replaceable)
+#: textsearch.xml:1537(replaceable)
 msgid "distance"
 msgstr "расстояние"
 
-#: textsearch.xml:1459(literal)
+#: textsearch.xml:1537(literal)
 msgid ""
 "tsquery_phrase(<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/> [, <placeholder-5/> <placeholder-6/> ]) returns "
@@ -2326,42 +2366,45 @@ msgstr ""
 "<placeholder-4/> [, <placeholder-5/> <placeholder-6/> ]) returns "
 "<placeholder-7/>"
 
-#: textsearch.xml:1463(para)
+#: textsearch.xml:1541(para)
 msgid ""
 "Returns a query that searches for a match to the first given query followed "
 "by a match to the second given query at a distance of at "
 "<replaceable>distance</replaceable> lexemes, using the <literal>&lt;"
 "<replaceable>N</replaceable>&gt;</literal>\n"
-"       <type>tsquery</type> operator. For example: <screen>SELECT "
-"tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10);\n"
+"       <type>tsquery</type> operator. For example: <screen>\n"
+"SELECT tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10);\n"
 "  tsquery_phrase\n"
 "------------------\n"
-" 'fat' &lt;10&gt; 'cat'</screen>"
+" 'fat' &lt;10&gt; 'cat'\n"
+"</screen>"
 msgstr ""
 "Возвращает запрос, который ищет соответствие первому данному запросу, за "
 "которым следует соответствие второму данному запросу (число лексем между "
 "ними задаётся параметром <replaceable>расстояние</replaceable>), с "
 "применением оператора <literal>&lt;<replaceable>N</replaceable>&gt;</"
-"literal> типа <type>tsquery</type>. Например: <screen>SELECT "
-"tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10);\n"
+"literal> типа <type>tsquery</type>. Например: <screen>\n"
+"SELECT tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10);\n"
 "  tsquery_phrase\n"
 "------------------\n"
-" 'fat' &lt;10&gt; 'cat'</screen>"
+" 'fat' &lt;10&gt; 'cat'\n"
+"</screen>"
 
-#: textsearch.xml:1482(indexterm)
+#: textsearch.xml:1562(indexterm)
 msgid "<primary>numnode</primary>"
 msgstr "<primary>numnode</primary>"
 
-#: textsearch.xml:1486(literal)
+#: textsearch.xml:1566(literal)
 msgid "numnode(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 msgstr "numnode(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 
-#: textsearch.xml:1490(para)
+#: textsearch.xml:1570(para)
 msgid ""
 "Returns the number of nodes (lexemes plus operators) in a <type>tsquery</"
 "type>. This function is useful to determine if the <replaceable>query</"
 "replaceable> is meaningful (returns &gt; 0), or contains only stop words "
-"(returns 0). Examples: <screen>SELECT numnode(plainto_tsquery('the any'));\n"
+"(returns 0). Examples: <screen>\n"
+"SELECT numnode(plainto_tsquery('the any'));\n"
 "NOTICE:  query contains only stopword(s) or doesn't contain lexeme(s), "
 "ignored\n"
 " numnode\n"
@@ -2371,13 +2414,14 @@ msgid ""
 "SELECT numnode('foo &amp; bar'::tsquery);\n"
 " numnode\n"
 "---------\n"
-"       3</screen>"
+"       3\n"
+"</screen>"
 msgstr ""
 "Возвращает число узлов (лексем и операторов) в значении <type>tsquery</"
 "type>. Эта функция помогает определить, имеет ли смысл <replaceable>запрос</"
 "replaceable> (тогда её результат &gt; 0) или он содержит только стоп-слова "
-"(тогда она возвращает 0). Примеры: <screen> SELECT "
-"numnode(plainto_tsquery('the any'));\n"
+"(тогда она возвращает 0). Примеры: <screen>\n"
+" SELECT numnode(plainto_tsquery('the any'));\n"
 "ЗАМЕЧАНИЕ:  запрос поиска текста игнорируется, так как содержит\n"
 " только стоп-слова или не содержит лексем\n"
 " numnode\n"
@@ -2387,43 +2431,48 @@ msgstr ""
 "SELECT numnode('foo &amp; bar'::tsquery);\n"
 " numnode\n"
 "---------\n"
-"       3</screen>"
+"       3\n"
+"</screen>"
 
-#: textsearch.xml:1514(indexterm)
+#: textsearch.xml:1596(indexterm)
 msgid "<primary>querytree</primary>"
 msgstr "<primary>querytree</primary>"
 
-#: textsearch.xml:1518(literal)
+#: textsearch.xml:1600(literal)
 msgid "querytree(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 msgstr "querytree(<placeholder-1/> <placeholder-2/>) returns <placeholder-3/>"
 
-#: textsearch.xml:1522(para)
+#: textsearch.xml:1604(para)
 msgid ""
 "Returns the portion of a <type>tsquery</type> that can be used for searching "
 "an index. This function is useful for detecting unindexable queries, for "
 "example those containing only stop words or only negated terms. For example: "
-"<screen>SELECT querytree(to_tsquery('!defined'));\n"
+"<screen>\n"
+"SELECT querytree(to_tsquery('!defined'));\n"
 " querytree\n"
 "-----------\n"
+"\n"
 "</screen>"
 msgstr ""
 "Возвращает часть <type>tsquery</type>, которую можно использовать для поиска "
 "по индексу. Эта функция помогает выявить неиндексируемые запросы, например, "
 "такие, которые содержат только стоп-слова или условия отрицания. Например: "
-"<screen>SELECT querytree(to_tsquery('!defined'));\n"
+"<screen>\n"
+"SELECT querytree(to_tsquery('!defined'));\n"
 " querytree\n"
 "-----------\n"
+"\n"
 "</screen>"
 
-#: textsearch.xml:1539(title)
+#: textsearch.xml:1623(title)
 msgid "Query Rewriting"
 msgstr "Перезапись запросов"
 
-#: textsearch.xml:1541(indexterm)
+#: textsearch.xml:1625(indexterm)
 msgid "<primary>ts_rewrite</primary>"
 msgstr "<primary>ts_rewrite</primary>"
 
-#: textsearch.xml:1545(para)
+#: textsearch.xml:1629(para)
 msgid ""
 "The <function>ts_rewrite</function> family of functions search a given "
 "<type>tsquery</type> for occurrences of a target subquery, and replace each "
@@ -2454,15 +2503,15 @@ msgstr ""
 "подходе вы можете изменять правила перезаписи &laquo;на лету&raquo;, тогда "
 "как при обновлении тезауруса необходима переиндексация."
 
-#: textsearch.xml:1569(replaceable)
+#: textsearch.xml:1653(replaceable)
 msgid "target"
 msgstr "цель"
 
-#: textsearch.xml:1569(replaceable)
+#: textsearch.xml:1653(replaceable)
 msgid "substitute"
 msgstr "замена"
 
-#: textsearch.xml:1569(literal)
+#: textsearch.xml:1653(literal)
 msgid ""
 "ts_rewrite (<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>, <placeholder-5/> <placeholder-6/>) returns <placeholder-7/>"
@@ -2470,33 +2519,35 @@ msgstr ""
 "ts_rewrite (<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>, <placeholder-5/> <placeholder-6/>) returns <placeholder-7/>"
 
-#: textsearch.xml:1573(para)
+#: textsearch.xml:1657(para)
 msgid ""
 "This form of <function>ts_rewrite</function> simply applies a single rewrite "
 "rule: <replaceable class=\"parameter\">target</replaceable> is replaced by "
 "<replaceable class=\"parameter\">substitute</replaceable> wherever it "
 "appears in <replaceable class=\"parameter\">query</replaceable>. For "
-"example: <screen>SELECT ts_rewrite('a &amp; b'::tsquery, 'a'::tsquery, 'c'::"
-"tsquery);\n"
+"example: <screen>\n"
+"SELECT ts_rewrite('a &amp; b'::tsquery, 'a'::tsquery, 'c'::tsquery);\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 msgstr ""
 "Эта форма <function>ts_rewrite</function> просто применяет одно правило "
 "перезаписи: <replaceable class=\"parameter\">цель</replaceable> заменяется "
 "<replaceable class=\"parameter\">подстановкой</replaceable> везде, где она "
 "находится в <replaceable class=\"parameter\">запросе</replaceable>. "
-"Например: <screen>SELECT ts_rewrite('a &amp; b'::tsquery, 'a'::tsquery, 'c'::"
-"tsquery);\n"
+"Например: <screen>\n"
+"SELECT ts_rewrite('a &amp; b'::tsquery, 'a'::tsquery, 'c'::tsquery);\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 
-#: textsearch.xml:1591(replaceable)
+#: textsearch.xml:1677(replaceable)
 msgid "select"
 msgstr "выборка"
 
-#: textsearch.xml:1591(literal)
+#: textsearch.xml:1677(literal)
 msgid ""
 "ts_rewrite (<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>) returns <placeholder-5/>"
@@ -2504,7 +2555,7 @@ msgstr ""
 "ts_rewrite (<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>) returns <placeholder-5/>"
 
-#: textsearch.xml:1595(para)
+#: textsearch.xml:1681(para)
 msgid ""
 "This form of <function>ts_rewrite</function> accepts a starting "
 "<replaceable>query</replaceable> and a SQL <replaceable>select</replaceable> "
@@ -2513,13 +2564,15 @@ msgid ""
 "row of the <replaceable>select</replaceable> result, occurrences of the "
 "first column value (the target) are replaced by the second column value (the "
 "substitute) within the current <replaceable>query</replaceable> value. For "
-"example: <screen>CREATE TABLE aliases (t tsquery PRIMARY KEY, s tsquery);\n"
+"example: <screen>\n"
+"CREATE TABLE aliases (t tsquery PRIMARY KEY, s tsquery);\n"
 "INSERT INTO aliases VALUES('a', 'c');\n"
 "\n"
 "SELECT ts_rewrite('a &amp; b'::tsquery, 'SELECT t,s FROM aliases');\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 msgstr ""
 "Эта форма <function>ts_rewrite</function> принимает начальный "
 "<replaceable>запрос</replaceable> и SQL-команду <replaceable>select</"
@@ -2528,15 +2581,17 @@ msgstr ""
 "<type>tsquery</type>. Для каждой строки результата <replaceable>select</"
 "replaceable> вхождения первого столбца (цели) заменяются значениями второго "
 "столбца (подстановкой) в тексте <replaceable>запроса</replaceable>. "
-"Например: <screen>CREATE TABLE aliases (t tsquery PRIMARY KEY, s tsquery);\n"
+"Например: <screen>\n"
+"CREATE TABLE aliases (t tsquery PRIMARY KEY, s tsquery);\n"
 "INSERT INTO aliases VALUES('a', 'c');\n"
 "\n"
 "SELECT ts_rewrite('a &amp; b'::tsquery, 'SELECT t,s FROM aliases');\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 
-#: textsearch.xml:1613(para)
+#: textsearch.xml:1701(para)
 msgid ""
 "Note that when multiple rewrite rules are applied in this way, the order of "
 "application can be important; so in practice you will want the source query "
@@ -2546,11 +2601,11 @@ msgstr ""
 "порядок их применения может иметь значение, поэтому в исходном запросе "
 "следует добавить <literal>ORDER BY</literal> по какому-либо ключу."
 
-#: textsearch.xml:1623(para)
+#: textsearch.xml:1711(para)
 msgid ""
 "Let's consider a real-life astronomical example. We'll expand query "
-"<literal>supernovae</literal> using table-driven rewriting rules: "
-"<screen>CREATE TABLE aliases (t tsquery primary key, s tsquery);\n"
+"<literal>supernovae</literal> using table-driven rewriting rules: <screen>\n"
+"CREATE TABLE aliases (t tsquery primary key, s tsquery);\n"
 "INSERT INTO aliases VALUES(to_tsquery('supernovae'), to_tsquery('supernovae|"
 "sn'));\n"
 "\n"
@@ -2558,8 +2613,10 @@ msgid ""
 "aliases');\n"
 "           ts_rewrite            \n"
 "---------------------------------\n"
-" 'crab' &amp; ( 'supernova' | 'sn' )</screen> We can change the rewriting "
-"rules just by updating the table: <screen>UPDATE aliases\n"
+" 'crab' &amp; ( 'supernova' | 'sn' )\n"
+"</screen> We can change the rewriting rules just by updating the table: "
+"<screen>\n"
+"UPDATE aliases\n"
 "SET s = to_tsquery('supernovae|sn &amp; !nebulae')\n"
 "WHERE t = to_tsquery('supernovae');\n"
 "\n"
@@ -2567,11 +2624,13 @@ msgid ""
 "aliases');\n"
 "                 ts_rewrite                  \n"
 "---------------------------------------------\n"
-" 'crab' &amp; ( 'supernova' | 'sn' &amp; !'nebula' )</screen>"
+" 'crab' &amp; ( 'supernova' | 'sn' &amp; !'nebula' )\n"
+"</screen>"
 msgstr ""
 "Давайте рассмотрим практический пример на тему астрономии. Мы развернём "
 "запрос <literal>supernovae</literal>, используя правила перезаписи в "
-"таблице: <screen>CREATE TABLE aliases (t tsquery primary key, s tsquery);\n"
+"таблице: <screen>\n"
+"CREATE TABLE aliases (t tsquery primary key, s tsquery);\n"
 "INSERT INTO aliases VALUES(to_tsquery('supernovae'),\n"
 "  to_tsquery('supernovae|sn'));\n"
 "\n"
@@ -2579,8 +2638,10 @@ msgstr ""
 "aliases');\n"
 "           ts_rewrite            \n"
 "---------------------------------\n"
-" 'crab' &amp; ( 'supernova' | 'sn' )</screen> Мы можем скорректировать "
-"правила перезаписи, просто изменив таблицу: <screen>UPDATE aliases\n"
+" 'crab' &amp; ( 'supernova' | 'sn' )\n"
+"</screen> Мы можем скорректировать правила перезаписи, просто изменив "
+"таблицу: <screen>\n"
+"UPDATE aliases\n"
 "SET s = to_tsquery('supernovae|sn &amp; !nebulae')\n"
 "WHERE t = to_tsquery('supernovae');\n"
 "\n"
@@ -2588,38 +2649,42 @@ msgstr ""
 "aliases');\n"
 "                 ts_rewrite                  \n"
 "---------------------------------------------\n"
-" 'crab' &amp; ( 'supernova' | 'sn' &amp; !'nebula' )</screen>"
+" 'crab' &amp; ( 'supernova' | 'sn' &amp; !'nebula' )\n"
+"</screen>"
 
-#: textsearch.xml:1647(para)
+#: textsearch.xml:1739(para)
 msgid ""
 "Rewriting can be slow when there are many rewriting rules, since it checks "
 "every rule for a possible match. To filter out obvious non-candidate rules "
 "we can use the containment operators for the <type>tsquery</type> type. In "
 "the example below, we select only those rules which might match the original "
-"query: <screen>SELECT ts_rewrite('a &amp; b'::tsquery,\n"
+"query: <screen>\n"
+"SELECT ts_rewrite('a &amp; b'::tsquery,\n"
 "                  'SELECT t,s FROM aliases WHERE ''a &amp; b''::tsquery "
 "@&gt; t');\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 msgstr ""
 "Перезапись может быть медленной, когда задано много правил перезаписи, так "
 "как соответствия будут проверяться для каждого правила. Чтобы отфильтровать "
 "явно неподходящие правила, можно использовать проверки включения для типа "
 "<type>tsquery</type>. В следующем примере выбираются только те правила, "
-"которые могут соответствовать исходному запросу: <screen>SELECT "
-"ts_rewrite('a &amp; b'::tsquery,\n"
+"которые могут соответствовать исходному запросу: <screen>\n"
+"SELECT ts_rewrite('a &amp; b'::tsquery,\n"
 "                  'SELECT t,s FROM aliases WHERE ''a &amp; b''::tsquery "
 "@&gt; t');\n"
 " ts_rewrite\n"
 "------------\n"
-" 'b' &amp; 'c'</screen>"
+" 'b' &amp; 'c'\n"
+"</screen>"
 
-#: textsearch.xml:1666(title)
+#: textsearch.xml:1760(title)
 msgid "Triggers for Automatic Updates"
 msgstr "Триггеры для автоматического обновления"
 
-#: textsearch.xml:1668(indexterm)
+#: textsearch.xml:1762(indexterm)
 msgid ""
 "<primary>trigger</primary><secondary>for updating a derived tsvector column</"
 "secondary>"
@@ -2627,7 +2692,7 @@ msgstr ""
 "<primary>триггер</primary><secondary>для обновления столбца с производным "
 "значением tsvector</secondary>"
 
-#: textsearch.xml:1672(para)
+#: textsearch.xml:1766(para)
 msgid ""
 "When using a separate column to store the <type>tsvector</type> "
 "representation of your documents, it is necessary to create a trigger to "
@@ -2641,27 +2706,27 @@ msgstr ""
 "документ. Для этого можно использовать две встроенные триггерные функции или "
 "написать свои собственные."
 
-#: textsearch.xml:1680(replaceable) textsearch.xml:1681(replaceable)
+#: textsearch.xml:1775(replaceable) textsearch.xml:1776(replaceable)
 msgid "tsvector_column_name"
 msgstr "столбец_tsvector"
 
-#: textsearch.xml:1680(replaceable)
+#: textsearch.xml:1775(replaceable)
 msgid "config_name"
 msgstr "имя_конфигурации"
 
-#: textsearch.xml:1680(replaceable) textsearch.xml:1681(replaceable)
+#: textsearch.xml:1775(replaceable) textsearch.xml:1776(replaceable)
 msgid "text_column_name"
 msgstr "столбец_текста"
 
-#: textsearch.xml:1680(optional) textsearch.xml:1681(optional)
+#: textsearch.xml:1775(optional) textsearch.xml:1776(optional)
 msgid ", ..."
 msgstr ", ..."
 
-#: textsearch.xml:1681(replaceable)
+#: textsearch.xml:1776(replaceable)
 msgid "config_column_name"
 msgstr "столбец_конфигурации"
 
-#: textsearch.xml:1680(synopsis)
+#: textsearch.xml:1774(synopsis)
 #, no-wrap
 msgid ""
 "tsvector_update_trigger(<placeholder-1/>, <placeholder-2/>, <placeholder-3/> <placeholder-4/>)\n"
@@ -2671,12 +2736,13 @@ msgstr ""
 "tsvector_update_trigger_column(<placeholder-5/>, <placeholder-6/>,\n"
 "<placeholder-7/> <placeholder-8/>)"
 
-#: textsearch.xml:1683(para)
+#: textsearch.xml:1779(para)
 msgid ""
 "These trigger functions automatically compute a <type>tsvector</type> column "
 "from one or more textual columns, under the control of parameters specified "
 "in the <command>CREATE TRIGGER</command> command. An example of their use "
-"is: <screen>CREATE TABLE messages (\n"
+"is: <screen>\n"
+"CREATE TABLE messages (\n"
 "    title       text,\n"
 "    body        text,\n"
 "    tsv         tsvector\n"
@@ -2697,15 +2763,17 @@ msgid ""
 "body');\n"
 "   title    |         body          \n"
 "------------+-----------------------\n"
-" title here | the body text is here</screen> Having created this trigger, "
-"any change in <structfield>title</structfield> or <structfield>body</"
-"structfield> will automatically be reflected into <structfield>tsv</"
-"structfield>, without the application having to worry about it."
+" title here | the body text is here\n"
+"</screen> Having created this trigger, any change in <structfield>title</"
+"structfield> or <structfield>body</structfield> will automatically be "
+"reflected into <structfield>tsv</structfield>, without the application "
+"having to worry about it."
 msgstr ""
 "Эти триггерные функции автоматически вычисляют значение для столбца "
 "<type>tsvector</type> из одного или нескольких текстовых столбцов с "
 "параметрами, указанными в команде <command>CREATE TRIGGER</command>. Пример "
-"их использования: <screen>CREATE TABLE messages (\n"
+"их использования: <screen>\n"
+"CREATE TABLE messages (\n"
 "    title       text,\n"
 "    body        text,\n"
 "    tsv         tsvector\n"
@@ -2726,12 +2794,13 @@ msgstr ""
 "body');\n"
 "   title    |         body          \n"
 "------------+-----------------------\n"
-" title here | the body text is here</screen> С таким триггером любое "
-"изменение в полях <structfield>title</structfield> или <structfield>body</"
-"structfield> будет автоматически отражаться в содержимом <structfield>tsv</"
-"structfield>, так что приложению не придётся заниматься этим."
+" title here | the body text is here\n"
+"</screen> С таким триггером любое изменение в полях <structfield>title</"
+"structfield> или <structfield>body</structfield> будет автоматически "
+"отражаться в содержимом <structfield>tsv</structfield>, так что приложению "
+"не придётся заниматься этим."
 
-#: textsearch.xml:1716(para)
+#: textsearch.xml:1814(para)
 msgid ""
 "The first trigger argument must be the name of the <type>tsvector</type> "
 "column to be updated. The second argument specifies the text search "
@@ -2763,7 +2832,7 @@ msgstr ""
 "содержимое будет включено в документ в заданном порядке. При этом значения "
 "NULL будут пропущены (а другие столбцы будут индексироваться)."
 
-#: textsearch.xml:1740(programlisting)
+#: textsearch.xml:1838(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION messages_trigger() RETURNS trigger AS $$\n"
@@ -2792,7 +2861,7 @@ msgstr ""
 "CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE\n"
 "    ON messages FOR EACH ROW EXECUTE PROCEDURE messages_trigger();"
 
-#: textsearch.xml:1733(para)
+#: textsearch.xml:1831(para)
 msgid ""
 "A limitation of these built-in triggers is that they treat all the input "
 "columns alike. To process columns differently &mdash; for example, to weight "
@@ -2806,7 +2875,7 @@ msgstr ""
 "документа, потребуется разработать свой триггер. К примеру, так это можно "
 "сделать на языке <application>PL/pgSQL</application>: <placeholder-1/>"
 
-#: textsearch.xml:1753(para)
+#: textsearch.xml:1853(para)
 msgid ""
 "Keep in mind that it is important to specify the configuration name "
 "explicitly when creating <type>tsvector</type> values inside triggers, so "
@@ -2820,15 +2889,15 @@ msgstr ""
 "могут возникнуть проблемы, например результаты поиска изменятся после "
 "выгрузки и восстановления данных."
 
-#: textsearch.xml:1764(title)
+#: textsearch.xml:1864(title)
 msgid "Gathering Document Statistics"
 msgstr "Сбор статистики по документу"
 
-#: textsearch.xml:1766(indexterm)
+#: textsearch.xml:1866(indexterm)
 msgid "<primary>ts_stat</primary>"
 msgstr "<primary>ts_stat</primary>"
 
-#: textsearch.xml:1770(para)
+#: textsearch.xml:1870(para)
 msgid ""
 "The function <function>ts_stat</function> is useful for checking your "
 "configuration and for finding stop-word candidates."
@@ -2836,30 +2905,30 @@ msgstr ""
 "Функция <function>ts_stat</function> может быть полезна для проверки "
 "конфигурации и нахождения возможных стоп-слов."
 
-#: textsearch.xml:1775(replaceable)
+#: textsearch.xml:1876(replaceable)
 msgid "sqlquery"
 msgstr "sql_запрос"
 
-#: textsearch.xml:1776(replaceable)
+#: textsearch.xml:1877(replaceable)
 msgctxt "replaceable"
 msgid "word"
 msgstr "слово"
 
-#: textsearch.xml:1776(replaceable)
+#: textsearch.xml:1877(replaceable)
 msgid "ndoc"
 msgstr "число_док"
 
-#: textsearch.xml:1777(replaceable)
+#: textsearch.xml:1878(replaceable)
 msgid "nentry"
 msgstr "число_вхожд"
 
-#: textsearch.xml:1777(type) textsearch.xml:3156(type)
-#: textsearch.xml:3158(type) textsearch.xml:3183(type)
-#: textsearch.xml:3185(type)
+#: textsearch.xml:1878(type) textsearch.xml:3351(type)
+#: textsearch.xml:3353(type) textsearch.xml:3382(type)
+#: textsearch.xml:3384(type)
 msgid "setof record"
 msgstr "setof record"
 
-#: textsearch.xml:1775(synopsis)
+#: textsearch.xml:1875(synopsis)
 #, no-wrap
 msgid ""
 "ts_stat(<placeholder-1/> <placeholder-2/>, <placeholder-3/>\n"
@@ -2870,14 +2939,14 @@ msgstr ""
 "        OUT <placeholder-4/> <placeholder-5/>, OUT <placeholder-6/> <placeholder-7/>,\n"
 "        OUT <placeholder-8/> <placeholder-9/>) returns <placeholder-10/>"
 
-#: textsearch.xml:1788(para)
+#: textsearch.xml:1890(para)
 msgid ""
 "<replaceable>word</replaceable> <type>text</type> &mdash; the value of a "
 "lexeme"
 msgstr ""
 "<replaceable>слово</replaceable> <type>text</type> &mdash; значение лексемы"
 
-#: textsearch.xml:1793(para)
+#: textsearch.xml:1895(para)
 msgid ""
 "<replaceable>ndoc</replaceable> <type>integer</type> &mdash; number of "
 "documents (<type>tsvector</type>s) the word occurred in"
@@ -2885,7 +2954,7 @@ msgstr ""
 "<replaceable>число_док</replaceable> <type>integer</type> &mdash; число "
 "документов (значений <type>tsvector</type>), в которых встретилось слово"
 
-#: textsearch.xml:1799(para)
+#: textsearch.xml:1901(para)
 msgid ""
 "<replaceable>nentry</replaceable> <type>integer</type> &mdash; total number "
 "of occurrences of the word"
@@ -2893,7 +2962,7 @@ msgstr ""
 "<replaceable>число_вхожд</replaceable> <type>integer</type> &mdash; общее "
 "число вхождений слова"
 
-#: textsearch.xml:1779(para)
+#: textsearch.xml:1881(para)
 msgid ""
 "<replaceable>sqlquery</replaceable> is a text value containing an SQL query "
 "which must return a single <type>tsvector</type> column. <function>ts_stat</"
@@ -2910,7 +2979,7 @@ msgstr ""
 "<placeholder-1/> Если передаётся параметр <replaceable>weights</"
 "replaceable>, то подсчитываются только вхождения с указанными в нём весами."
 
-#: textsearch.xml:1813(programlisting)
+#: textsearch.xml:1915(programlisting)
 #, no-wrap
 msgid ""
 "SELECT * FROM ts_stat('SELECT vector FROM apod')\n"
@@ -2921,7 +2990,7 @@ msgstr ""
 "ORDER BY nentry DESC, ndoc DESC, word\n"
 "LIMIT 10;"
 
-#: textsearch.xml:1820(programlisting)
+#: textsearch.xml:1924(programlisting)
 #, no-wrap
 msgid ""
 "SELECT * FROM ts_stat('SELECT vector FROM apod', 'ab')\n"
@@ -2932,7 +3001,7 @@ msgstr ""
 "ORDER BY nentry DESC, ndoc DESC, word\n"
 "LIMIT 10;"
 
-#: textsearch.xml:1810(para)
+#: textsearch.xml:1912(para)
 msgid ""
 "For example, to find the ten most frequent words in a document collection: "
 "<placeholder-1/> The same, but counting only word occurrences with weight "
@@ -2943,11 +3012,11 @@ msgstr ""
 "десять слов, но при выборе их учитываются только вхождения с весами "
 "<literal>A</literal> или <literal>B</literal>: <placeholder-2/>"
 
-#: textsearch.xml:1830(title)
+#: textsearch.xml:1936(title)
 msgid "Parsers"
 msgstr "Анализаторы"
 
-#: textsearch.xml:1832(para)
+#: textsearch.xml:1938(para)
 msgid ""
 "Text search parsers are responsible for splitting raw document text into "
 "<firstterm>tokens</firstterm> and identifying each token's type, where the "
@@ -2967,7 +3036,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> есть только один встроенный "
 "анализатор, который может быть полезен для широкого круга приложений."
 
-#: textsearch.xml:1844(para)
+#: textsearch.xml:1950(para)
 msgid ""
 "The built-in parser is named <literal>pg_catalog.default</literal>. It "
 "recognizes 23 token types, shown in <xref linkend=\"textsearch-default-parser"
@@ -2977,104 +3046,104 @@ msgstr ""
 "Он распознаёт 23 типа фрагментов, перечисленные в <xref remap=\"6\" linkend="
 "\"textsearch-default-parser\"/>."
 
-#: textsearch.xml:1850(title)
+#: textsearch.xml:1956(title)
 msgid "Default Parser's Token Types"
 msgstr "Типы фрагментов, выделяемых стандартным анализатором"
 
-#: textsearch.xml:1854(entry)
+#: textsearch.xml:1960(entry)
 msgid "Alias"
 msgstr "Псевдоним"
 
-#: textsearch.xml:1855(entry)
+#: textsearch.xml:1961(entry)
 msgid "Description"
 msgstr "Описание"
 
-#: textsearch.xml:1856(entry)
+#: textsearch.xml:1962(entry)
 msgid "Example"
 msgstr "Пример"
 
-#: textsearch.xml:1861(literal)
+#: textsearch.xml:1967(literal)
 msgid "asciiword"
 msgstr "asciiword"
 
-#: textsearch.xml:1862(entry)
+#: textsearch.xml:1968(entry)
 msgid "Word, all ASCII letters"
 msgstr "Слово только из букв ASCII"
 
-#: textsearch.xml:1863(literal)
+#: textsearch.xml:1969(literal)
 msgid "elephant"
 msgstr "elephant"
 
-#: textsearch.xml:1866(literal)
+#: textsearch.xml:1972(literal)
 msgctxt "literal"
 msgid "word"
 msgstr "word"
 
-#: textsearch.xml:1867(entry)
+#: textsearch.xml:1973(entry)
 msgid "Word, all letters"
 msgstr "Слово из любых букв"
 
-#: textsearch.xml:1868(literal)
+#: textsearch.xml:1974(literal)
 msgid "ma&ntilde;ana"
 msgstr "ma&ntilde;ana"
 
-#: textsearch.xml:1871(literal)
+#: textsearch.xml:1977(literal)
 msgid "numword"
 msgstr "numword"
 
-#: textsearch.xml:1872(entry)
+#: textsearch.xml:1978(entry)
 msgid "Word, letters and digits"
 msgstr "Слово из букв и цифр"
 
-#: textsearch.xml:1873(literal)
+#: textsearch.xml:1979(literal)
 msgid "beta1"
 msgstr "beta1"
 
-#: textsearch.xml:1876(literal)
+#: textsearch.xml:1982(literal)
 msgid "asciihword"
 msgstr "asciihword"
 
-#: textsearch.xml:1877(entry)
+#: textsearch.xml:1983(entry)
 msgid "Hyphenated word, all ASCII"
 msgstr "Слово только из букв ASCII с дефисами"
 
-#: textsearch.xml:1878(literal)
+#: textsearch.xml:1984(literal)
 msgid "up-to-date"
 msgstr "up-to-date"
 
-#: textsearch.xml:1881(literal)
+#: textsearch.xml:1987(literal)
 msgid "hword"
 msgstr "hword"
 
-#: textsearch.xml:1882(entry)
+#: textsearch.xml:1988(entry)
 msgid "Hyphenated word, all letters"
 msgstr "Слово из любых букв с дефисами"
 
-#: textsearch.xml:1883(literal)
+#: textsearch.xml:1989(literal)
 msgid "l&oacute;gico-matem&aacute;tica"
 msgstr "l&oacute;gico-matem&aacute;tica"
 
-#: textsearch.xml:1886(literal)
+#: textsearch.xml:1992(literal)
 msgid "numhword"
 msgstr "numhword"
 
-#: textsearch.xml:1887(entry)
+#: textsearch.xml:1993(entry)
 msgid "Hyphenated word, letters and digits"
 msgstr "Слово из букв и цифр с дефисами"
 
-#: textsearch.xml:1888(literal)
+#: textsearch.xml:1994(literal)
 msgid "postgresql-beta1"
 msgstr "postgresql-beta1"
 
-#: textsearch.xml:1891(literal)
+#: textsearch.xml:1997(literal)
 msgid "hword_asciipart"
 msgstr "hword_asciipart"
 
-#: textsearch.xml:1892(entry)
+#: textsearch.xml:1998(entry)
 msgid "Hyphenated word part, all ASCII"
 msgstr "Часть слова с дефисами, только из букв ASCII"
 
-#: textsearch.xml:1893(entry)
+#: textsearch.xml:1999(entry)
 msgid ""
 "<literal>postgresql</literal> in the context <literal>postgresql-beta1</"
 "literal>"
@@ -3082,15 +3151,15 @@ msgstr ""
 "<literal>postgresql</literal> в словосочетании <literal>postgresql-beta1</"
 "literal>"
 
-#: textsearch.xml:1896(literal)
+#: textsearch.xml:2002(literal)
 msgid "hword_part"
 msgstr "hword_part"
 
-#: textsearch.xml:1897(entry)
+#: textsearch.xml:2003(entry)
 msgid "Hyphenated word part, all letters"
 msgstr "Часть слова с дефисами, из любых букв"
 
-#: textsearch.xml:1898(entry)
+#: textsearch.xml:2004(entry)
 msgid ""
 "<literal>l&oacute;gico</literal> or <literal>matem&aacute;tica</literal> in "
 "the context <literal>l&oacute;gico-matem&aacute;tica</literal>"
@@ -3098,191 +3167,191 @@ msgstr ""
 "<literal>l&oacute;gico</literal> или <literal>matem&aacute;tica</literal> в "
 "словосочетании <literal>l&oacute;gico-matem&aacute;tica</literal>"
 
-#: textsearch.xml:1902(literal)
+#: textsearch.xml:2008(literal)
 msgid "hword_numpart"
 msgstr "hword_numpart"
 
-#: textsearch.xml:1903(entry)
+#: textsearch.xml:2009(entry)
 msgid "Hyphenated word part, letters and digits"
 msgstr "Часть слова с дефисами, из букв и цифр"
 
-#: textsearch.xml:1904(entry)
+#: textsearch.xml:2010(entry)
 msgid ""
 "<literal>beta1</literal> in the context <literal>postgresql-beta1</literal>"
 msgstr ""
 "<literal>beta1</literal> в словосочетании <literal>postgresql-beta1</literal>"
 
-#: textsearch.xml:1908(literal)
+#: textsearch.xml:2014(literal)
 msgid "email"
 msgstr "email"
 
-#: textsearch.xml:1909(entry)
+#: textsearch.xml:2015(entry)
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: textsearch.xml:1910(literal)
+#: textsearch.xml:2016(literal)
 msgid "foo@example.com"
 msgstr "foo@example.com"
 
-#: textsearch.xml:1913(literal)
+#: textsearch.xml:2019(literal)
 msgid "protocol"
 msgstr "protocol"
 
-#: textsearch.xml:1914(entry)
+#: textsearch.xml:2020(entry)
 msgid "Protocol head"
 msgstr "Префикс протокола"
 
-#: textsearch.xml:1915(literal)
+#: textsearch.xml:2021(literal)
 msgid "http://"
 msgstr "http://"
 
-#: textsearch.xml:1918(literal)
+#: textsearch.xml:2024(literal)
 msgid "url"
 msgstr "url"
 
-#: textsearch.xml:1919(entry)
+#: textsearch.xml:2025(entry)
 msgid "URL"
 msgstr "URL"
 
-#: textsearch.xml:1920(literal)
+#: textsearch.xml:2026(literal)
 msgid "example.com/stuff/index.html"
 msgstr "example.com/stuff/&zwsp;index.html"
 
-#: textsearch.xml:1923(literal)
+#: textsearch.xml:2029(literal)
 msgid "host"
 msgstr "host"
 
-#: textsearch.xml:1924(entry)
+#: textsearch.xml:2030(entry)
 msgid "Host"
 msgstr "Имя узла"
 
-#: textsearch.xml:1925(literal)
+#: textsearch.xml:2031(literal)
 msgid "example.com"
 msgstr "example.com"
 
-#: textsearch.xml:1928(literal)
+#: textsearch.xml:2034(literal)
 msgid "url_path"
 msgstr "url_path"
 
-#: textsearch.xml:1929(entry)
+#: textsearch.xml:2035(entry)
 msgid "URL path"
 msgstr "Путь в адресе URL"
 
-#: textsearch.xml:1930(entry)
+#: textsearch.xml:2036(entry)
 msgid "<literal>/stuff/index.html</literal>, in the context of a URL"
 msgstr "<literal>/stuff/index.html</literal>, как часть URL"
 
-#: textsearch.xml:1933(literal)
+#: textsearch.xml:2039(literal)
 msgid "file"
 msgstr "file"
 
-#: textsearch.xml:1934(entry)
+#: textsearch.xml:2040(entry)
 msgid "File or path name"
 msgstr "Путь или имя файла"
 
-#: textsearch.xml:1935(entry)
+#: textsearch.xml:2041(entry)
 msgid "<literal>/usr/local/foo.txt</literal>, if not within a URL"
 msgstr "<literal>/usr/local/foo.txt</literal>, если не является частью URL"
 
-#: textsearch.xml:1938(literal)
+#: textsearch.xml:2044(literal)
 msgid "sfloat"
 msgstr "sfloat"
 
-#: textsearch.xml:1939(entry)
+#: textsearch.xml:2045(entry)
 msgid "Scientific notation"
 msgstr "Научная запись числа"
 
-#: textsearch.xml:1940(literal)
+#: textsearch.xml:2046(literal)
 msgid "-1.234e56"
 msgstr "-1.234e56"
 
-#: textsearch.xml:1943(literal)
+#: textsearch.xml:2049(literal)
 msgid "float"
 msgstr "float"
 
-#: textsearch.xml:1944(entry)
+#: textsearch.xml:2050(entry)
 msgid "Decimal notation"
 msgstr "Десятичная запись числа"
 
-#: textsearch.xml:1945(literal)
+#: textsearch.xml:2051(literal)
 msgid "-1.234"
 msgstr "-1.234"
 
-#: textsearch.xml:1948(literal)
+#: textsearch.xml:2054(literal)
 msgid "int"
 msgstr "int"
 
-#: textsearch.xml:1949(entry)
+#: textsearch.xml:2055(entry)
 msgid "Signed integer"
 msgstr "Целое со знаком"
 
-#: textsearch.xml:1950(literal)
+#: textsearch.xml:2056(literal)
 msgid "-1234"
 msgstr "-1234"
 
-#: textsearch.xml:1953(literal)
+#: textsearch.xml:2059(literal)
 msgid "uint"
 msgstr "uint"
 
-#: textsearch.xml:1954(entry)
+#: textsearch.xml:2060(entry)
 msgid "Unsigned integer"
 msgstr "Целое без знака"
 
-#: textsearch.xml:1955(literal)
+#: textsearch.xml:2061(literal)
 msgid "1234"
 msgstr "1234"
 
-#: textsearch.xml:1958(literal)
+#: textsearch.xml:2064(literal)
 msgid "version"
 msgstr "version"
 
-#: textsearch.xml:1959(entry)
+#: textsearch.xml:2065(entry)
 msgid "Version number"
 msgstr "Номер версии"
 
-#: textsearch.xml:1960(literal)
+#: textsearch.xml:2066(literal)
 msgid "8.3.0"
 msgstr "8.3.0"
 
-#: textsearch.xml:1963(literal)
+#: textsearch.xml:2069(literal)
 msgid "tag"
 msgstr "tag"
 
-#: textsearch.xml:1964(entry)
+#: textsearch.xml:2070(entry)
 msgid "XML tag"
 msgstr "Тег XML"
 
-#: textsearch.xml:1965(literal)
+#: textsearch.xml:2071(literal)
 msgid "&lt;a href=\"dictionaries.html\"&gt;"
 msgstr "&lt;a href=&zwsp;\"dictionaries.html\"&gt;"
 
-#: textsearch.xml:1968(literal)
+#: textsearch.xml:2074(literal)
 msgid "entity"
 msgstr "entity"
 
-#: textsearch.xml:1969(entry)
+#: textsearch.xml:2075(entry)
 msgid "XML entity"
 msgstr "Сущность XML"
 
-#: textsearch.xml:1970(literal)
+#: textsearch.xml:2076(literal)
 msgid "&amp;amp;"
 msgstr "&amp;amp;"
 
-#: textsearch.xml:1973(literal)
+#: textsearch.xml:2079(literal)
 msgid "blank"
 msgstr "blank"
 
-#: textsearch.xml:1974(entry)
+#: textsearch.xml:2080(entry)
 msgid "Space symbols"
 msgstr "Символы-разделители"
 
-#: textsearch.xml:1975(entry)
+#: textsearch.xml:2081(entry)
 msgid "(any whitespace or punctuation not otherwise recognized)"
 msgstr ""
 "(любые пробельные символы или знаки препинания, не попавшие в другие "
 "категории)"
 
-#: textsearch.xml:1982(para)
+#: textsearch.xml:2088(para)
 msgid ""
 "The parser's notion of a <quote>letter</quote> is determined by the "
 "database's locale setting, specifically <varname>lc_ctype</varname>. Words "
@@ -3298,7 +3367,7 @@ msgstr ""
 "многих европейских языков типы фрагментов <literal>word</literal> и "
 "<literal>asciiword</literal> можно воспринимать как синонимы."
 
-#: textsearch.xml:1991(para)
+#: textsearch.xml:2097(para)
 msgid ""
 "<literal>email</literal> does not support all valid email characters as "
 "defined by RFC 5322. Specifically, the only non-alphanumeric characters "
@@ -3309,12 +3378,12 @@ msgstr ""
 "алфавитно-цифровых символов может содержать только точку, минус и "
 "подчёркивание."
 
-#: textsearch.xml:1999(para)
+#: textsearch.xml:2105(para)
 msgid ""
 "It is possible for the parser to produce overlapping tokens from the same "
 "piece of text. As an example, a hyphenated word will be reported both as the "
-"entire word and as each component: <screen>SELECT alias, description, token "
-"FROM ts_debug('foo-bar-beta1');\n"
+"entire word and as each component: <screen>\n"
+"SELECT alias, description, token FROM ts_debug('foo-bar-beta1');\n"
 "      alias      |               description                |     "
 "token     \n"
 "-----------------+------------------------------------------"
@@ -3324,22 +3393,24 @@ msgid ""
 " blank           | Space symbols                            | -\n"
 " hword_asciipart | Hyphenated word part, all ASCII          | bar\n"
 " blank           | Space symbols                            | -\n"
-" hword_numpart   | Hyphenated word part, letters and digits | beta1</screen> "
-"This behavior is desirable since it allows searches to work for both the "
-"whole compound word and for components. Here is another instructive example: "
-"<screen>SELECT alias, description, token FROM ts_debug('http://example.com/"
-"stuff/index.html');\n"
+" hword_numpart   | Hyphenated word part, letters and digits | beta1\n"
+"</screen> This behavior is desirable since it allows searches to work for "
+"both the whole compound word and for components. Here is another instructive "
+"example: <screen>\n"
+"SELECT alias, description, token FROM ts_debug('http://example.com/stuff/"
+"index.html');\n"
 "  alias   |  description  |            token             \n"
 "----------+---------------+------------------------------\n"
 " protocol | Protocol head | http://\n"
 " url      | URL           | example.com/stuff/index.html\n"
 " host     | Host          | example.com\n"
-" url_path | URL path      | /stuff/index.html</screen>"
+" url_path | URL path      | /stuff/index.html\n"
+"</screen>"
 msgstr ""
 "Анализатор может выделить в одном тексте несколько перекрывающихся "
 "фрагментов. Например, слово с дефисом будет выдано как целое составное слово "
-"и по частям: <screen>SELECT alias, description, token FROM ts_debug('foo-bar-"
-"beta1');\n"
+"и по частям: <screen>\n"
+"SELECT alias, description, token FROM ts_debug('foo-bar-beta1');\n"
 "      alias      |               description                |     token    \n"
 "-----------------+------------------------------------------+--------------\n"
 " numhword        | Hyphenated word, letters and digits      | foo-bar-beta1\n"
@@ -3347,23 +3418,25 @@ msgstr ""
 " blank           | Space symbols                            | -\n"
 " hword_asciipart | Hyphenated word part, all ASCII          | bar\n"
 " blank           | Space symbols                            | -\n"
-" hword_numpart   | Hyphenated word part, letters and digits | beta1</screen> "
-"Это поведение считается желательным, так как это позволяет находить при "
-"последующем поиске и всё слово целиком, и его части. Ещё один показательный "
-"пример: <screen>SELECT alias, description, token\n"
+" hword_numpart   | Hyphenated word part, letters and digits | beta1\n"
+"</screen> Это поведение считается желательным, так как это позволяет "
+"находить при последующем поиске и всё слово целиком, и его части. Ещё один "
+"показательный пример: <screen>\n"
+"SELECT alias, description, token\n"
 "FROM ts_debug('http://example.com/stuff/index.html');\n"
 "  alias   |  description  |            token             \n"
 "----------+---------------+------------------------------\n"
 " protocol | Protocol head | http://\n"
 " url      | URL           | example.com/stuff/index.html\n"
 " host     | Host          | example.com\n"
-" url_path | URL path      | /stuff/index.html</screen>"
+" url_path | URL path      | /stuff/index.html\n"
+"</screen>"
 
-#: textsearch.xml:2030(title)
+#: textsearch.xml:2140(title)
 msgid "Dictionaries"
 msgstr "Словари"
 
-#: textsearch.xml:2032(para)
+#: textsearch.xml:2142(para)
 msgid ""
 "Dictionaries are used to eliminate words that should not be considered in a "
 "search (<firstterm>stop words</firstterm>), and to <firstterm>normalize</"
@@ -3384,7 +3457,7 @@ msgstr ""
 "Нормализация не всегда имеет лингвистический смысл, обычно она зависит от "
 "требований приложения."
 
-#: textsearch.xml:2049(para)
+#: textsearch.xml:2159(para)
 msgid ""
 "Linguistic - Ispell dictionaries try to reduce input words to a normalized "
 "form; stemmer dictionaries remove word endings"
@@ -3392,19 +3465,19 @@ msgstr ""
 "Лингвистическая нормализация &mdash; словари Ispell пытаются свести слова на "
 "входе к нормализованной форме, а стеммеры убирают окончания слов"
 
-#: textsearch.xml:2061(para)
+#: textsearch.xml:2171(para)
 msgid "http://www.pgsql.ru/db/mw/index.html"
 msgstr "http://www.pgsql.ru/db/mw/index.html"
 
-#: textsearch.xml:2066(para)
+#: textsearch.xml:2176(para)
 msgid "http://www.pgsql.ru/db/mw/"
 msgstr "http://www.pgsql.ru/db/mw/"
 
-#: textsearch.xml:2071(para)
+#: textsearch.xml:2181(para)
 msgid "http://www.pgsql.ru/db/../db/mw/index.html"
 msgstr "http://www.pgsql.ru/db/../db/mw/index.html"
 
-#: textsearch.xml:2055(para)
+#: textsearch.xml:2165(para)
 msgid ""
 "<acronym>URL</acronym> locations can be canonicalized to make equivalent "
 "URLs match: <placeholder-1/>"
@@ -3412,7 +3485,7 @@ msgstr ""
 "Адреса <acronym>URL</acronym> могут быть канонизированы, чтобы например "
 "следующие адреса считались одинаковыми: <placeholder-1/>"
 
-#: textsearch.xml:2079(para)
+#: textsearch.xml:2189(para)
 msgid ""
 "Color names can be replaced by their hexadecimal values, e.g., <literal>red, "
 "green, blue, magenta -&gt; FF0000, 00FF00, 0000FF, FF00FF</literal>"
@@ -3421,7 +3494,7 @@ msgstr ""
 "например <literal>red, green, blue, magenta -&gt; FF0000, 00FF00, 0000FF, "
 "FF00FF</literal>"
 
-#: textsearch.xml:2085(para)
+#: textsearch.xml:2195(para)
 msgid ""
 "If indexing numbers, we can remove some fractional digits to reduce the "
 "range of possible numbers, so for example <emphasis>3.14</"
@@ -3435,11 +3508,11 @@ msgstr ""
 "emphasis> стали одинаковыми после нормализации, при которой после точки "
 "останутся только две цифры."
 
-#: textsearch.xml:2043(para)
+#: textsearch.xml:2153(para)
 msgid "Some examples of normalization: <placeholder-1/>"
 msgstr "Несколько примеров нормализации: <placeholder-1/>"
 
-#: textsearch.xml:2102(para)
+#: textsearch.xml:2212(para)
 msgid ""
 "an array of lexemes if the input token is known to the dictionary (notice "
 "that one token can produce more than one lexeme)"
@@ -3447,7 +3520,7 @@ msgstr ""
 "массив лексем, если входной фрагмент известен в словаре (заметьте, один "
 "фрагмент может породить несколько лексем)"
 
-#: textsearch.xml:2108(para)
+#: textsearch.xml:2218(para)
 msgid ""
 "a single lexeme with the <literal>TSL_FILTER</literal> flag set, to replace "
 "the original token with a new token to be passed to subsequent dictionaries "
@@ -3459,19 +3532,19 @@ msgstr ""
 "вариантом (словарь, который делает это, называется <firstterm>фильтрующим "
 "словарём</firstterm>)"
 
-#: textsearch.xml:2116(para)
+#: textsearch.xml:2226(para)
 msgid "an empty array if the dictionary knows the token, but it is a stop word"
 msgstr ""
 "пустой массив, если словарь воспринимает этот фрагмент, но считает его стоп-"
 "словом"
 
-#: textsearch.xml:2121(para)
+#: textsearch.xml:2231(para)
 msgid ""
 "<literal>NULL</literal> if the dictionary does not recognize the input token"
 msgstr ""
 "<literal>NULL</literal>, если словарь не воспринимает полученный фрагмент"
 
-#: textsearch.xml:2097(para)
+#: textsearch.xml:2207(para)
 msgid ""
 "A dictionary is a program that accepts a token as input and returns: "
 "<placeholder-1/>"
@@ -3479,7 +3552,7 @@ msgstr ""
 "Словарь &mdash; это программа, которая принимает на вход фрагмент и "
 "возвращает: <placeholder-1/>"
 
-#: textsearch.xml:2128(para)
+#: textsearch.xml:2238(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides predefined dictionaries for "
 "many languages. There are also several predefined templates that can be used "
@@ -3496,7 +3569,7 @@ msgstr ""
 "<filename>contrib/</filename> инсталляции <productname>PostgreSQL</"
 "productname>."
 
-#: textsearch.xml:2138(para)
+#: textsearch.xml:2248(para)
 msgid ""
 "A text search configuration binds a parser together with a set of "
 "dictionaries to process the parser's output tokens. For each token type that "
@@ -3523,7 +3596,7 @@ msgstr ""
 "заменить полученное слово другим, которое и будет передано следующим "
 "словарям."
 
-#: textsearch.xml:2164(programlisting)
+#: textsearch.xml:2274(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TEXT SEARCH CONFIGURATION astro_en\n"
@@ -3532,7 +3605,7 @@ msgstr ""
 "ALTER TEXT SEARCH CONFIGURATION astro_en\n"
 "    ADD MAPPING FOR asciiword WITH astrosyn, english_ispell, english_stem;"
 
-#: textsearch.xml:2153(para)
+#: textsearch.xml:2263(para)
 msgid ""
 "The general rule for configuring a list of dictionaries is to place first "
 "the most narrow, most specific dictionary, then the more general "
@@ -3555,7 +3628,7 @@ msgstr ""
 "стеммером английских окончаний <application>Snowball</application>: "
 "<placeholder-1/>"
 
-#: textsearch.xml:2168(para)
+#: textsearch.xml:2280(para)
 msgid ""
 "A filtering dictionary can be placed anywhere in the list, except at the end "
 "where it'd be useless. Filtering dictionaries are useful to partially "
@@ -3569,25 +3642,27 @@ msgstr ""
 "фильтрующий словарь может удалить из текста диакритические знаки, как это "
 "делает модуль <xref linkend=\"unaccent\"/>."
 
-#: textsearch.xml:2177(title)
+#: textsearch.xml:2289(title)
 msgid "Stop Words"
 msgstr "Стоп-слова"
 
-#: textsearch.xml:2179(para)
+#: textsearch.xml:2291(para)
 msgid ""
 "Stop words are words that are very common, appear in almost every document, "
 "and have no discrimination value. Therefore, they can be ignored in the "
 "context of full text searching. For example, every English text contains "
 "words like <literal>a</literal> and <literal>the</literal>, so it is useless "
 "to store them in an index. However, stop words do affect the positions in "
-"<type>tsvector</type>, which in turn affect ranking: <screen>SELECT "
-"to_tsvector('english','in the list of stop words');\n"
+"<type>tsvector</type>, which in turn affect ranking: <screen>\n"
+"SELECT to_tsvector('english','in the list of stop words');\n"
 "        to_tsvector\n"
 "----------------------------\n"
-" 'list':3 'stop':5 'word':6</screen> The missing positions 1,2,4 are because "
-"of stop words. Ranks calculated for documents with and without stop words "
-"are quite different: <screen>SELECT ts_rank_cd (to_tsvector('english','in "
-"the list of stop words'), to_tsquery('list &amp; stop'));\n"
+" 'list':3 'stop':5 'word':6\n"
+"</screen> The missing positions 1,2,4 are because of stop words. Ranks "
+"calculated for documents with and without stop words are quite different: "
+"<screen>\n"
+"SELECT ts_rank_cd (to_tsvector('english','in the list of stop words'), "
+"to_tsquery('list &amp; stop'));\n"
 " ts_rank_cd\n"
 "------------\n"
 "       0.05\n"
@@ -3596,7 +3671,8 @@ msgid ""
 "to_tsquery('list &amp; stop'));\n"
 " ts_rank_cd\n"
 "------------\n"
-"        0.1</screen>"
+"        0.1\n"
+"</screen>"
 msgstr ""
 "Стоп-словами называются слова, которые встречаются очень часто, практически "
 "в каждом документе, и поэтому не имеют различительной ценности. Таким "
@@ -3604,15 +3680,15 @@ msgstr ""
 "английском тексте содержатся артикли <literal>a</literal> и <literal>the</"
 "literal>, так что хранить их в индексе бессмысленно. Однако стоп-слова "
 "влияют на позиции лексем в значении <type>tsvector</type>, от чего, в свою "
-"очередь, зависит ранжирование: <screen>SELECT to_tsvector('english','in the "
-"list of stop words');\n"
+"очередь, зависит ранжирование: <screen>\n"
+"SELECT to_tsvector('english','in the list of stop words');\n"
 "        to_tsvector\n"
 "----------------------------\n"
-" 'list':3 'stop':5 'word':6</screen> В результате отсутствуют позиции 1,2,4, "
-"потому что фрагменты в этих позициях оказались стоп-словами. Ранги, "
-"вычисленные для документов со стоп-словами и без них, могут значительно "
-"различаться: <screen>SELECT ts_rank_cd (to_tsvector('english','in the list "
-"of stop words'),\n"
+" 'list':3 'stop':5 'word':6\n"
+"</screen> В результате отсутствуют позиции 1,2,4, потому что фрагменты в "
+"этих позициях оказались стоп-словами. Ранги, вычисленные для документов со "
+"стоп-словами и без них, могут значительно различаться: <screen>\n"
+"SELECT ts_rank_cd (to_tsvector('english','in the list of stop words'),\n"
 "  to_tsquery('list &amp; stop'));\n"
 " ts_rank_cd\n"
 "------------\n"
@@ -3622,9 +3698,10 @@ msgstr ""
 "  to_tsquery('list &amp; stop'));\n"
 " ts_rank_cd\n"
 "------------\n"
-"        0.1</screen>"
+"        0.1\n"
+"</screen>"
 
-#: textsearch.xml:2207(para)
+#: textsearch.xml:2323(para)
 msgid ""
 "It is up to the specific dictionary how it treats stop words. For example, "
 "<literal>ispell</literal> dictionaries first normalize words and then look "
@@ -3638,11 +3715,11 @@ msgstr ""
 "literal> просматривают свой список стоп-слов в первую очередь. Это различие "
 "в поведении объясняется стремлением уменьшить шум."
 
-#: textsearch.xml:2218(title)
+#: textsearch.xml:2334(title)
 msgid "Simple Dictionary"
 msgstr "Простой словарь"
 
-#: textsearch.xml:2220(para)
+#: textsearch.xml:2336(para)
 msgid ""
 "The <literal>simple</literal> dictionary template operates by converting the "
 "input token to lower case and checking it against a file of stop words. If "
@@ -3661,7 +3738,7 @@ msgstr ""
 "кроме стоп-слов, считались неопознанными и передавались следующему словарю в "
 "списке."
 
-#: textsearch.xml:2234(programlisting)
+#: textsearch.xml:2350(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY public.simple_dict (\n"
@@ -3674,7 +3751,7 @@ msgstr ""
 "    STOPWORDS = english\n"
 ");"
 
-#: textsearch.xml:2230(para)
+#: textsearch.xml:2346(para)
 msgid ""
 "Here is an example of a dictionary definition using the <literal>simple</"
 "literal> template: <placeholder-1/> Here, <literal>english</literal> is the "
@@ -3698,10 +3775,10 @@ msgstr ""
 "строки и окружающие пробелы игнорируются, все символы переводятся в нижний "
 "регистр и на этом обработка файла заканчивается."
 
-#: textsearch.xml:2252(para)
+#: textsearch.xml:2370(para)
 msgid ""
-"Now we can test our dictionary: <screen>SELECT ts_lexize('public."
-"simple_dict','YeS');\n"
+"Now we can test our dictionary: <screen>\n"
+"SELECT ts_lexize('public.simple_dict','YeS');\n"
 " ts_lexize\n"
 "-----------\n"
 " {yes}\n"
@@ -3709,10 +3786,11 @@ msgid ""
 "SELECT ts_lexize('public.simple_dict','The');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 msgstr ""
-"Теперь мы можем проверить наш словарь: <screen>SELECT ts_lexize('public."
-"simple_dict','YeS');\n"
+"Теперь мы можем проверить наш словарь: <screen>\n"
+"SELECT ts_lexize('public.simple_dict','YeS');\n"
 " ts_lexize\n"
 "-----------\n"
 " {yes}\n"
@@ -3720,15 +3798,16 @@ msgstr ""
 "SELECT ts_lexize('public.simple_dict','The');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 
-#: textsearch.xml:2266(para)
+#: textsearch.xml:2386(para)
 msgid ""
 "We can also choose to return <literal>NULL</literal>, instead of the lower-"
 "cased word, if it is not found in the stop words file. This behavior is "
 "selected by setting the dictionary's <literal>Accept</literal> parameter to "
-"<literal>false</literal>. Continuing the example: <screen>ALTER TEXT SEARCH "
-"DICTIONARY public.simple_dict ( Accept = false );\n"
+"<literal>false</literal>. Continuing the example: <screen>\n"
+"ALTER TEXT SEARCH DICTIONARY public.simple_dict ( Accept = false );\n"
 "\n"
 "SELECT ts_lexize('public.simple_dict','YeS');\n"
 " ts_lexize\n"
@@ -3738,13 +3817,14 @@ msgid ""
 "SELECT ts_lexize('public.simple_dict','The');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 msgstr ""
 "Мы также можем настроить словарь так, чтобы он возвращал <literal>NULL</"
 "literal> вместо слова в нижнем регистре, если оно не находится в файле стоп-"
 "слов. Для этого нужно присвоить параметру <literal>Accept</literal> значение "
-"<literal>false</literal>. Продолжая наш пример: <screen>ALTER TEXT SEARCH "
-"DICTIONARY public.simple_dict ( Accept = false );\n"
+"<literal>false</literal>. Продолжая наш пример: <screen>\n"
+"ALTER TEXT SEARCH DICTIONARY public.simple_dict ( Accept = false );\n"
 "\n"
 "SELECT ts_lexize('public.simple_dict','YeS');\n"
 " ts_lexize\n"
@@ -3754,9 +3834,10 @@ msgstr ""
 "SELECT ts_lexize('public.simple_dict','The');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 
-#: textsearch.xml:2285(para)
+#: textsearch.xml:2407(para)
 msgid ""
 "With the default setting of <literal>Accept</literal> = <literal>true</"
 "literal>, it is only useful to place a <literal>simple</literal> dictionary "
@@ -3771,7 +3852,7 @@ msgstr ""
 "словарю. И напротив, <literal>Accept</literal> = <literal>false</literal> "
 "имеет смысл, только если за ним следует ещё минимум один словарь."
 
-#: textsearch.xml:2294(para)
+#: textsearch.xml:2416(para)
 msgid ""
 "Most types of dictionaries rely on configuration files, such as files of "
 "stop words. These files <emphasis>must</emphasis> be stored in UTF-8 "
@@ -3783,7 +3864,7 @@ msgstr ""
 "кодировку UTF-8. Если база данных работает в другой кодировке, они будут "
 "переведены в неё, когда сервер будет загружать их."
 
-#: textsearch.xml:2303(para)
+#: textsearch.xml:2425(para)
 msgid ""
 "Normally, a database session will read a dictionary configuration file only "
 "once, when it is first used within the session. If you modify a "
@@ -3799,11 +3880,11 @@ msgstr ""
 "обновление словаря может быть <quote>фиктивным</quote>, фактически не "
 "меняющим значения никаких параметров."
 
-#: textsearch.xml:2316(title)
+#: textsearch.xml:2438(title)
 msgid "Synonym Dictionary"
 msgstr "Словарь синонимов"
 
-#: textsearch.xml:2318(para)
+#: textsearch.xml:2440(para)
 msgid ""
 "This dictionary template is used to create dictionaries that replace a word "
 "with a synonym. Phrases are not supported (use the thesaurus template (<xref "
@@ -3812,8 +3893,8 @@ msgid ""
 "stemmer dictionary from reducing the word <quote>Paris</quote> to "
 "<quote>pari</quote>. It is enough to have a <literal>Paris paris</literal> "
 "line in the synonym dictionary and put it before the <literal>english_stem</"
-"literal> dictionary. For example: <screen>SELECT * FROM ts_debug('english', "
-"'Paris');\n"
+"literal> dictionary. For example: <screen>\n"
+"SELECT * FROM ts_debug('english', 'Paris');\n"
 "   alias   |   description   | token |  dictionaries  |  dictionary  | "
 "lexemes \n"
 "-----------+-----------------+-------+----------------+--------------"
@@ -3836,7 +3917,8 @@ msgid ""
 "-----------+-----------------+-------+---------------------------"
 "+------------+---------\n"
 " asciiword | Word, all ASCII | Paris | {my_synonym,english_stem} | "
-"my_synonym | {paris}</screen>"
+"my_synonym | {paris}\n"
+"</screen>"
 msgstr ""
 "Этот шаблон словарей используется для создания словарей, заменяющих слова "
 "синонимами. Словосочетания такие словари не поддерживают (используйте для "
@@ -3845,8 +3927,8 @@ msgstr ""
 "дать стеммеру английского уменьшить слово <quote>Paris</quote> до "
 "<quote>pari</quote>. Для этого достаточно поместить в словарь синонимов "
 "строку <literal>Paris paris</literal> и поставить этот словарь перед "
-"словарём <literal>english_stem</literal>. Например: <screen>SELECT * FROM "
-"ts_debug('english', 'Paris');\n"
+"словарём <literal>english_stem</literal>. Например: <screen>\n"
+"SELECT * FROM ts_debug('english', 'Paris');\n"
 "   alias  |   description  | token|  dictionaries |  dictionary | lexemes\n"
 "----------+----------------+------+---------------+-------------+--------\n"
 " asciiword| Word, all ASCII| Paris| {english_stem}| english_stem| {pari}\n"
@@ -3864,9 +3946,10 @@ msgstr ""
 "   alias  |   description  | token| dictionaries | dictionary| lexemes\n"
 "----------+----------------+------+--------------+-----------+--------\n"
 " asciiword| Word, all ASCII| Paris| {my_synonym, | my_synonym| {paris}\n"
-"          |                |      | english_stem}|           |</screen>"
+"          |                |      | english_stem}|           |\n"
+"</screen>"
 
-#: textsearch.xml:2348(para)
+#: textsearch.xml:2472(para)
 msgid ""
 "The only parameter required by the <literal>synonym</literal> template is "
 "<literal>SYNONYMS</literal>, which is the base name of its configuration "
@@ -3888,7 +3971,7 @@ msgstr ""
 "а второе &mdash; его синоним), разделёнными пробелами. Пустые строки и "
 "окружающие пробелы при разборе этого файла игнорируются."
 
-#: textsearch.xml:2361(para)
+#: textsearch.xml:2485(para)
 msgid ""
 "The <literal>synonym</literal> template also has an optional parameter "
 "<literal>CaseSensitive</literal>, which defaults to <literal>false</"
@@ -3905,7 +3988,7 @@ msgstr ""
 "<literal>true</literal>, регистр слов в файле и проверяемых фрагментов не "
 "меняются, они сравниваются &laquo;как есть&raquo;."
 
-#: textsearch.xml:2380(programlisting)
+#: textsearch.xml:2504(programlisting)
 #, no-wrap
 msgid ""
 "postgres        pgsql\n"
@@ -3920,7 +4003,7 @@ msgstr ""
 "gogle   googl\n"
 "indices index*"
 
-#: textsearch.xml:2370(para)
+#: textsearch.xml:2494(para)
 msgid ""
 "An asterisk (<literal>*</literal>) can be placed at the end of a synonym in "
 "the configuration file. This indicates that the synonym is a prefix. The "
@@ -3929,8 +4012,9 @@ msgid ""
 "result will be a query item with the prefix match marker (see <xref linkend="
 "\"textsearch-parsing-queries\"/>). For example, suppose we have these "
 "entries in <filename>$SHAREDIR/tsearch_data/synonym_sample.syn</filename>: "
-"<placeholder-1/> Then we will get these results: <screen>mydb=# CREATE TEXT "
-"SEARCH DICTIONARY syn (template=synonym, synonyms='synonym_sample');\n"
+"<placeholder-1/> Then we will get these results: <screen>\n"
+"mydb=# CREATE TEXT SEARCH DICTIONARY syn (template=synonym, "
+"synonyms='synonym_sample');\n"
 "mydb=# SELECT ts_lexize('syn','indices');\n"
 " ts_lexize\n"
 "-----------\n"
@@ -3963,7 +4047,8 @@ msgid ""
 " ?column?\n"
 "----------\n"
 " t\n"
-"(1 row)</screen>"
+"(1 row)\n"
+"</screen>"
 msgstr ""
 "В конце синонима в этом файле можно добавить звёздочку (<literal>*</"
 "literal>), тогда этот синоним будет рассматриваться как префикс. Эта "
@@ -3972,8 +4057,8 @@ msgstr ""
 "сопоставления префикса (см. <xref remap=\"4\" linkend=\"textsearch-parsing-"
 "queries\"/>). Например, предположим, что файл <filename>$SHAREDIR/"
 "tsearch_data/synonym_sample.syn</filename> имеет следующее содержание: "
-"<placeholder-1/> С ним мы получим такие результаты: <screen>mydb=# CREATE "
-"TEXT SEARCH DICTIONARY\n"
+"<placeholder-1/> С ним мы получим такие результаты: <screen>\n"
+"mydb=# CREATE TEXT SEARCH DICTIONARY\n"
 "  syn (template=synonym, synonyms='synonym_sample');\n"
 "mydb=# SELECT ts_lexize('syn','indices');\n"
 " ts_lexize\n"
@@ -4007,13 +4092,14 @@ msgstr ""
 " ?column?\n"
 "----------\n"
 " t\n"
-"(1 row)</screen>"
+"(1 row)\n"
+"</screen>"
 
-#: textsearch.xml:2422(title)
+#: textsearch.xml:2550(title)
 msgid "Thesaurus Dictionary"
 msgstr "Тезаурус"
 
-#: textsearch.xml:2424(para)
+#: textsearch.xml:2552(para)
 msgid ""
 "A thesaurus dictionary (sometimes abbreviated as <acronym>TZ</acronym>) is a "
 "collection of words that includes information about the relationships of "
@@ -4027,7 +4113,7 @@ msgstr ""
 "<acronym>NT</acronym>), предпочитаемые названия, исключаемые названия, "
 "связанные понятия и т. д."
 
-#: textsearch.xml:2440(programlisting)
+#: textsearch.xml:2568(programlisting)
 #, no-wrap
 msgid ""
 "# this is a comment\n"
@@ -4040,7 +4126,7 @@ msgstr ""
 "другой образец слов(а) : другие индексируемые слова\n"
 "..."
 
-#: textsearch.xml:2432(para)
+#: textsearch.xml:2560(para)
 msgid ""
 "Basically a thesaurus dictionary replaces all non-preferred terms by one "
 "preferred term and, optionally, preserves the original terms for indexing as "
@@ -4059,7 +4145,7 @@ msgstr ""
 "следующего формата: <placeholder-1/> Здесь двоеточие (<symbol>:</symbol>) "
 "служит разделителем между исходной фразой и её заменой."
 
-#: textsearch.xml:2449(para)
+#: textsearch.xml:2579(para)
 msgid ""
 "A thesaurus dictionary uses a <firstterm>subdictionary</firstterm> (which is "
 "specified in the dictionary's configuration) to normalize the input text "
@@ -4080,7 +4166,7 @@ msgstr ""
 "по внутреннему словарю, но все слова-образцы <emphasis>должны</emphasis> "
 "быть известны внутреннему словарю."
 
-#: textsearch.xml:2461(para)
+#: textsearch.xml:2591(para)
 msgid ""
 "The thesaurus dictionary chooses the longest match if there are multiple "
 "phrases matching the input, and ties are broken by using the last definition."
@@ -4089,12 +4175,12 @@ msgstr ""
 "выберет самое длинное определение, а если таких окажется несколько, самое "
 "последнее из них."
 
-#: textsearch.xml:2473(programlisting)
+#: textsearch.xml:2603(programlisting)
 #, no-wrap
 msgid "? one ? two : swsw"
 msgstr "? one ? two : swsw"
 
-#: textsearch.xml:2467(para)
+#: textsearch.xml:2597(para)
 msgid ""
 "Specific stop words recognized by the subdictionary cannot be specified; "
 "instead use <literal>?</literal> to mark the location where any stop word "
@@ -4110,7 +4196,7 @@ msgstr ""
 "строкам <literal>a one the two</literal> и <literal>the one a two</literal>, "
 "так что обе эти строки будут заменены на <literal>swsw</literal>."
 
-#: textsearch.xml:2479(para)
+#: textsearch.xml:2611(para)
 msgid ""
 "Since a thesaurus dictionary has the capability to recognize phrases it must "
 "remember its state and interact with the parser. A thesaurus dictionary uses "
@@ -4131,7 +4217,7 @@ msgstr ""
 "literal> не будет работать, так как этот тезаурус не связан с типом "
 "<literal>uint</literal>."
 
-#: textsearch.xml:2491(para)
+#: textsearch.xml:2623(para)
 msgid ""
 "Thesauruses are used during indexing so any change in the thesaurus "
 "dictionary's parameters <emphasis>requires</emphasis> reindexing. For most "
@@ -4144,11 +4230,11 @@ msgstr ""
 "изменениях, таких как удаление и добавление стоп-слов, переиндексация не "
 "требуется."
 
-#: textsearch.xml:2500(title)
+#: textsearch.xml:2632(title)
 msgid "Thesaurus Configuration"
 msgstr "Конфигурация тезауруса"
 
-#: textsearch.xml:2506(programlisting)
+#: textsearch.xml:2638(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY thesaurus_simple (\n"
@@ -4163,11 +4249,11 @@ msgstr ""
 "    Dictionary = pg_catalog.english_stem\n"
 ");"
 
-#: textsearch.xml:2515(para)
+#: textsearch.xml:2649(para)
 msgid "<literal>thesaurus_simple</literal> is the new dictionary's name"
 msgstr "<literal>thesaurus_simple</literal> &mdash; имя нового словаря"
 
-#: textsearch.xml:2520(para)
+#: textsearch.xml:2654(para)
 msgid ""
 "<literal>mythesaurus</literal> is the base name of the thesaurus "
 "configuration file. (Its full name will be <filename>$SHAREDIR/tsearch_data/"
@@ -4179,7 +4265,7 @@ msgstr ""
 "mythesaurus.ths</filename>, где <literal>$SHAREDIR</literal> указывает на "
 "каталог общих данных <productname>PostgreSQL</productname>.)"
 
-#: textsearch.xml:2529(para)
+#: textsearch.xml:2663(para)
 msgid ""
 "<literal>pg_catalog.english_stem</literal> is the subdictionary (here, a "
 "Snowball English stemmer) to use for thesaurus normalization. Notice that "
@@ -4191,7 +4277,7 @@ msgstr ""
 "тезауруса. Заметьте, что внутренний словарь имеет собственную конфигурацию "
 "(например, список стоп-слов), но здесь она не рассматривается."
 
-#: textsearch.xml:2541(programlisting)
+#: textsearch.xml:2675(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TEXT SEARCH CONFIGURATION russian\n"
@@ -4202,7 +4288,7 @@ msgstr ""
 "    ALTER MAPPING FOR asciiword, asciihword, hword_asciipart\n"
 "    WITH thesaurus_simple;"
 
-#: textsearch.xml:2502(para)
+#: textsearch.xml:2634(para)
 msgid ""
 "To define a new thesaurus dictionary, use the <literal>thesaurus</literal> "
 "template. For example: <placeholder-1/> Here: <placeholder-2/> Now it is "
@@ -4216,11 +4302,11 @@ msgstr ""
 "связать с желаемыми типами фрагментов в конфигурации, например так: "
 "<placeholder-3/>"
 
-#: textsearch.xml:2549(title)
+#: textsearch.xml:2685(title)
 msgid "Thesaurus Example"
 msgstr "Пример тезауруса"
 
-#: textsearch.xml:2555(programlisting)
+#: textsearch.xml:2691(programlisting)
 #, no-wrap
 msgid ""
 "supernovae stars : sn\n"
@@ -4229,7 +4315,7 @@ msgstr ""
 "supernovae stars : sn\n"
 "crab nebulae : crab"
 
-#: textsearch.xml:2561(programlisting)
+#: textsearch.xml:2699(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY thesaurus_astro (\n"
@@ -4252,7 +4338,7 @@ msgstr ""
 "    ALTER MAPPING FOR asciiword, asciihword, hword_asciipart\n"
 "    WITH thesaurus_astro, english_stem;"
 
-#: textsearch.xml:2551(para)
+#: textsearch.xml:2687(para)
 msgid ""
 "Consider a simple astronomical thesaurus <literal>thesaurus_astro</literal>, "
 "which contains some astronomical word combinations: <placeholder-1/> Below "
@@ -4261,8 +4347,8 @@ msgid ""
 "<function>ts_lexize</function> is not very useful for testing a thesaurus, "
 "because it treats its input as a single token. Instead we can use "
 "<function>plainto_tsquery</function> and <function>to_tsvector</function> "
-"which will break their input strings into multiple tokens: <screen>SELECT "
-"plainto_tsquery('supernova star');\n"
+"which will break their input strings into multiple tokens: <screen>\n"
+"SELECT plainto_tsquery('supernova star');\n"
 " plainto_tsquery\n"
 "-----------------\n"
 " 'sn'\n"
@@ -4270,11 +4356,14 @@ msgid ""
 "SELECT to_tsvector('supernova star');\n"
 " to_tsvector\n"
 "-------------\n"
-" 'sn':1</screen> In principle, one can use <function>to_tsquery</function> "
-"if you quote the argument: <screen>SELECT to_tsquery('''supernova star''');\n"
+" 'sn':1\n"
+"</screen> In principle, one can use <function>to_tsquery</function> if you "
+"quote the argument: <screen>\n"
+"SELECT to_tsquery('''supernova star''');\n"
 " to_tsquery\n"
 "------------\n"
-" 'sn'</screen> Notice that <literal>supernova star</literal> matches "
+" 'sn'\n"
+"</screen> Notice that <literal>supernova star</literal> matches "
 "<literal>supernovae stars</literal> in <literal>thesaurus_astro</literal> "
 "because we specified the <literal>english_stem</literal> stemmer in the "
 "thesaurus definition. The stemmer removed the <literal>e</literal> and "
@@ -4289,7 +4378,8 @@ msgstr ""
 "как она обрабатывает входную строку как один фрагмент. Вместо неё мы можем "
 "использовать функции <function>plainto_tsquery</function> и "
 "<function>to_tsvector</function>, которые разбивают входную строку на "
-"несколько фрагментов: <screen>SELECT plainto_tsquery('supernova star');\n"
+"несколько фрагментов: <screen>\n"
+"SELECT plainto_tsquery('supernova star');\n"
 " plainto_tsquery\n"
 "-----------------\n"
 " 'sn'\n"
@@ -4297,42 +4387,46 @@ msgstr ""
 "SELECT to_tsvector('supernova star');\n"
 " to_tsvector\n"
 "-------------\n"
-" 'sn':1</screen> В принципе так же можно использовать <function>to_tsquery</"
-"function>, если заключить аргумент в кавычки: <screen>SELECT to_tsquery(' "
-"''supernova star''');\n"
+" 'sn':1\n"
+"</screen> В принципе так же можно использовать <function>to_tsquery</"
+"function>, если заключить аргумент в кавычки: <screen>\n"
+"SELECT to_tsquery(' ''supernova star''');\n"
 " to_tsquery\n"
 "------------\n"
-" 'sn'</screen> Заметьте, что <literal>supernova star</literal> совпадает с "
+" 'sn'\n"
+"</screen> Заметьте, что <literal>supernova star</literal> совпадает с "
 "<literal>supernovae stars</literal> в <literal>thesaurus_astro</literal>, "
 "так как мы подключили стеммер <literal>english_stem</literal> в определении "
 "тезауруса. Этот стеммер удалил конечные буквы <literal>e</literal> и "
 "<literal>s</literal>."
 
-#: textsearch.xml:2601(para)
+#: textsearch.xml:2745(para)
 msgid ""
 "To index the original phrase as well as the substitute, just include it in "
-"the right-hand part of the definition: <screen>supernovae stars : sn "
-"supernovae stars\n"
+"the right-hand part of the definition: <screen>\n"
+"supernovae stars : sn supernovae stars\n"
 "\n"
 "SELECT plainto_tsquery('supernova star');\n"
 "       plainto_tsquery\n"
 "-----------------------------\n"
-" 'sn' &amp; 'supernova' &amp; 'star'</screen>"
+" 'sn' &amp; 'supernova' &amp; 'star'\n"
+"</screen>"
 msgstr ""
 "Чтобы проиндексировать исходную фразу вместе с заменой, её нужно просто "
-"добавить в правую часть соответствующего определения: <screen>supernovae "
-"stars : sn supernovae stars\n"
+"добавить в правую часть соответствующего определения: <screen>\n"
+"supernovae stars : sn supernovae stars\n"
 "\n"
 "SELECT plainto_tsquery('supernova star');\n"
 "       plainto_tsquery\n"
 "-----------------------------\n"
-" 'sn' &amp; 'supernova' &amp; 'star'</screen>"
+" 'sn' &amp; 'supernova' &amp; 'star'\n"
+"</screen>"
 
-#: textsearch.xml:2618(title)
+#: textsearch.xml:2764(title)
 msgid "<application>Ispell</application> Dictionary"
 msgstr "Словарь <application>Ispell</application>"
 
-#: textsearch.xml:2620(para)
+#: textsearch.xml:2766(para)
 msgid ""
 "The <application>Ispell</application> dictionary template supports "
 "<firstterm>morphological dictionaries</firstterm>, which can normalize many "
@@ -4350,7 +4444,7 @@ msgstr ""
 "<literal>banking</literal>, <literal>banked</literal>, <literal>banks</"
 "literal>, <literal>banks'</literal>,<literal>bank's</literal> и т. п."
 
-#: textsearch.xml:2630(para)
+#: textsearch.xml:2776(para)
 msgid ""
 "The standard <productname>PostgreSQL</productname> distribution does not "
 "include any <application>Ispell</application> configuration files. "
@@ -4373,7 +4467,7 @@ msgstr ""
 "соответствующих словарей можно найти на странице <ulink url=\"http://wiki."
 "services.openoffice.org/wiki/Dictionaries\">OpenOffice Wiki</ulink>."
 
-#: textsearch.xml:2643(para)
+#: textsearch.xml:2789(para)
 msgid ""
 "To create an <application>Ispell</application> dictionary perform these "
 "steps:"
@@ -4381,7 +4475,7 @@ msgstr ""
 "Чтобы создать словарь <application>Ispell</application>, выполните следующие "
 "действия:"
 
-#: textsearch.xml:2655(programlisting)
+#: textsearch.xml:2801(programlisting)
 #, no-wrap
 msgid ""
 "iconv -f ISO_8859-1 -t UTF-8 -o nn_no.affix nn_NO.aff\n"
@@ -4390,7 +4484,7 @@ msgstr ""
 "iconv -f ISO_8859-1 -t UTF-8 -o nn_no.affix nn_NO.aff\n"
 "iconv -f ISO_8859-1 -t UTF-8 -o nn_no.dict nn_NO.dic"
 
-#: textsearch.xml:2648(para)
+#: textsearch.xml:2794(para)
 msgid ""
 "download dictionary configuration files. <productname>OpenOffice</"
 "productname> extension files have the <filename>.oxt</filename> extension. "
@@ -4408,11 +4502,11 @@ msgstr ""
 "словарей также необходимо преобразовать символы в кодировку UTF-8 с помощью, "
 "например, таких команд (для норвежского языка): <placeholder-1/>"
 
-#: textsearch.xml:2660(para)
+#: textsearch.xml:2808(para)
 msgid "copy files to the <filename>$SHAREDIR/tsearch_data</filename> directory"
 msgstr "скопируйте файлы в каталог <filename>$SHAREDIR/tsearch_data</filename>"
 
-#: textsearch.xml:2667(programlisting)
+#: textsearch.xml:2815(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY english_hunspell (\n"
@@ -4427,11 +4521,11 @@ msgstr ""
 "    AffFile = en_us,\n"
 "    Stopwords = english);"
 
-#: textsearch.xml:2665(para)
+#: textsearch.xml:2813(para)
 msgid "load files into PostgreSQL with the following command: <placeholder-1/>"
 msgstr "загрузите эти файлы в PostgreSQL следующей командой: <placeholder-1/>"
 
-#: textsearch.xml:2676(para)
+#: textsearch.xml:2826(para)
 msgid ""
 "Here, <literal>DictFile</literal>, <literal>AffFile</literal>, and "
 "<literal>StopWords</literal> specify the base names of the dictionary, "
@@ -4447,7 +4541,7 @@ msgstr ""
 "других файлов здесь не рассматривается, но его можно узнать по вышеуказанным "
 "веб-адресам."
 
-#: textsearch.xml:2684(para)
+#: textsearch.xml:2834(para)
 msgid ""
 "Ispell dictionaries usually recognize a limited set of words, so they should "
 "be followed by another broader dictionary; for example, a Snowball "
@@ -4457,7 +4551,7 @@ msgstr ""
 "следует подключить другой, более общий словарь, например, Snowball, который "
 "принимает всё."
 
-#: textsearch.xml:2693(programlisting)
+#: textsearch.xml:2843(programlisting)
 #, no-wrap
 msgid ""
 "prefixes\n"
@@ -4480,7 +4574,7 @@ msgstr ""
 "    [AEIOU]Y    &gt;   EST     # As in gray &gt; grayest\n"
 "    [^EY]       &gt;   EST     # As in small &gt; smallest"
 
-#: textsearch.xml:2690(para)
+#: textsearch.xml:2840(para)
 msgid ""
 "The <filename>.affix</filename> file of <application>Ispell</application> "
 "has the following structure: <placeholder-1/>"
@@ -4488,7 +4582,7 @@ msgstr ""
 "Файл <filename>.affix</filename> для <application>Ispell</application> имеет "
 "такую структуру: <placeholder-1/>"
 
-#: textsearch.xml:2705(programlisting)
+#: textsearch.xml:2857(programlisting)
 #, no-wrap
 msgid ""
 "lapse/ADGRS\n"
@@ -4501,27 +4595,27 @@ msgstr ""
 "large/PRTY\n"
 "lark/MRS"
 
-#: textsearch.xml:2703(para)
+#: textsearch.xml:2855(para)
 msgid ""
 "And the <filename>.dict</filename> file has the following structure: "
 "<placeholder-1/>"
 msgstr "А файл <filename>.dict</filename> — такую: <placeholder-1/>"
 
-#: textsearch.xml:2713(programlisting)
+#: textsearch.xml:2867(programlisting)
 #, no-wrap
 msgid "basic_form/affix_class_name"
 msgstr "basic_form/affix_class_name"
 
-#: textsearch.xml:2711(para)
+#: textsearch.xml:2865(para)
 msgid "Format of the <filename>.dict</filename> file is: <placeholder-1/>"
 msgstr "Формат файла <filename>.dict</filename> следующий: <placeholder-1/>"
 
-#: textsearch.xml:2719(programlisting)
+#: textsearch.xml:2875(programlisting)
 #, no-wrap
 msgid "condition &gt; [-stripping_letters,] adding_affix"
 msgstr "условие &gt; [-отсекаемые_буквы,] добавляемый_аффикс"
 
-#: textsearch.xml:2716(para)
+#: textsearch.xml:2872(para)
 msgid ""
 "In the <filename>.affix</filename> file every affix flag is described in the "
 "following format: <placeholder-1/>"
@@ -4529,7 +4623,7 @@ msgstr ""
 "В файле <filename>.affix</filename> каждый флаг аффиксов описывается в "
 "следующем формате: <placeholder-1/>"
 
-#: textsearch.xml:2722(para)
+#: textsearch.xml:2880(para)
 msgid ""
 "Here, condition has a format similar to the format of regular expressions. "
 "It can use groupings <literal>[...]</literal> and <literal>[^...]</literal>. "
@@ -4549,12 +4643,12 @@ msgstr ""
 "<literal>[^EY]</literal> означает, что последняя буква не <literal>\"e\"</"
 "literal> и не <literal>\"y\"</literal>."
 
-#: textsearch.xml:2739(programlisting)
+#: textsearch.xml:2897(programlisting)
 #, no-wrap
 msgid "compoundwords  controlled z"
 msgstr "compoundwords  controlled z"
 
-#: textsearch.xml:2743(programlisting)
+#: textsearch.xml:2903(programlisting)
 #, no-wrap
 msgid ""
 "SELECT ts_lexize('norwegian_ispell', 'overbuljongterningpakkmesterassistent');\n"
@@ -4568,7 +4662,7 @@ msgstr ""
 "SELECT ts_lexize('norwegian_ispell', 'sjokoladefabrikk');\n"
 "   {sjokoladefabrikk,sjokolade,fabrikk}"
 
-#: textsearch.xml:2732(para)
+#: textsearch.xml:2890(para)
 msgid ""
 "Ispell dictionaries support splitting compound words; a useful feature. "
 "Notice that the affix file should specify a special flag using the "
@@ -4582,7 +4676,7 @@ msgstr ""
 "участвовать в составных образованиях: <placeholder-1/> Вот как это работает "
 "для норвежского языка: <placeholder-2/>"
 
-#: textsearch.xml:2753(programlisting)
+#: textsearch.xml:2915(programlisting)
 #, no-wrap
 msgid ""
 "PFX A Y 1\n"
@@ -4601,7 +4695,7 @@ msgstr ""
 "SFX T   0     est        [aeiou]y\n"
 "SFX T   0     est        [^ey]"
 
-#: textsearch.xml:2749(para)
+#: textsearch.xml:2911(para)
 msgid ""
 "<application>MySpell</application> format is a subset of "
 "<application>Hunspell</application>. The <filename>.affix</filename> file of "
@@ -4613,7 +4707,7 @@ msgstr ""
 "filename> словаря <application>Hunspell</application> имеет следующую "
 "структуру: <placeholder-1/>"
 
-#: textsearch.xml:2762(para)
+#: textsearch.xml:2926(para)
 msgid ""
 "The first line of an affix class is the header. Fields of an affix rules are "
 "listed after the header:"
@@ -4621,31 +4715,31 @@ msgstr ""
 "Первая строка класса аффиксов &mdash; заголовок. Поля правил аффиксов "
 "указываются после заголовка:"
 
-#: textsearch.xml:2768(para)
+#: textsearch.xml:2932(para)
 msgid "parameter name (PFX or SFX)"
 msgstr "имя параметра (PFX или SFX)"
 
-#: textsearch.xml:2773(para)
+#: textsearch.xml:2937(para)
 msgid "flag (name of the affix class)"
 msgstr "флаг (имя класса аффиксов)"
 
-#: textsearch.xml:2778(para)
+#: textsearch.xml:2942(para)
 msgid ""
 "stripping characters from beginning (at prefix) or end (at suffix) of the "
 "word"
 msgstr ""
 "отсекаемые символы в начале (в префиксе) или в конце (в суффиксе) слова"
 
-#: textsearch.xml:2784(para)
+#: textsearch.xml:2948(para)
 msgid "adding affix"
 msgstr "добавляемый аффикс"
 
-#: textsearch.xml:2789(para)
+#: textsearch.xml:2953(para)
 msgid ""
 "condition that has a format similar to the format of regular expressions."
 msgstr "условие в формате, подобном регулярным выражениям."
 
-#: textsearch.xml:2798(programlisting)
+#: textsearch.xml:2962(programlisting)
 #, no-wrap
 msgid ""
 "larder/M\n"
@@ -4658,7 +4752,7 @@ msgstr ""
 "large/RSPMYT\n"
 "largehearted"
 
-#: textsearch.xml:2795(para)
+#: textsearch.xml:2959(para)
 msgid ""
 "The <filename>.dict</filename> file looks like the <filename>.dict</"
 "filename> file of <application>Ispell</application>: <placeholder-1/>"
@@ -4666,7 +4760,7 @@ msgstr ""
 "Файл <filename>.dict</filename> подобен файлу <filename>.dict</filename> "
 "словаря <application>Ispell</application>: <placeholder-1/>"
 
-#: textsearch.xml:2805(para)
+#: textsearch.xml:2971(para)
 msgid ""
 "<application>MySpell</application> does not support compound words. "
 "<application>Hunspell</application> has sophisticated support for compound "
@@ -4678,11 +4772,11 @@ msgstr ""
 "операции с ними, но в настоящее время <productname>PostgreSQL</productname> "
 "использует только самые простые из этого множества."
 
-#: textsearch.xml:2816(title)
+#: textsearch.xml:2982(title)
 msgid "<application>Snowball</application> Dictionary"
 msgstr "Словарь <application>Snowball</application>"
 
-#: textsearch.xml:2832(programlisting)
+#: textsearch.xml:2998(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY english_stem (\n"
@@ -4697,7 +4791,7 @@ msgstr ""
 "    StopWords = english\n"
 ");"
 
-#: textsearch.xml:2818(para)
+#: textsearch.xml:2984(para)
 msgid ""
 "The <application>Snowball</application> dictionary template is based on a "
 "project by Martin Porter, inventor of the popular Porter's stemming "
@@ -4727,7 +4821,7 @@ msgstr ""
 "<placeholder-1/> Формат файла стоп-слов не отличается от рассмотренного "
 "ранее."
 
-#: textsearch.xml:2841(para)
+#: textsearch.xml:3009(para)
 msgid ""
 "A <application>Snowball</application> dictionary recognizes everything, "
 "whether or not it is able to simplify the word, so it should be placed at "
@@ -4739,11 +4833,11 @@ msgstr ""
 "списке словарей. Помещать его перед другими словарями нет смысла, так как "
 "после него никакой фрагмент не будет передан следующему словарю."
 
-#: textsearch.xml:2854(title)
+#: textsearch.xml:3022(title)
 msgid "Configuration Example"
 msgstr "Пример конфигурации"
 
-#: textsearch.xml:2856(para)
+#: textsearch.xml:3024(para)
 msgid ""
 "A text search configuration specifies all options necessary to transform a "
 "document into a <type>tsvector</type>: the parser to use to break text into "
@@ -4768,7 +4862,7 @@ msgstr ""
 "<filename>postgresql.conf</filename> или установить в рамках отдельного "
 "сеанса с помощью команды <command>SET</command>."
 
-#: textsearch.xml:2872(para)
+#: textsearch.xml:3040(para)
 msgid ""
 "Several predefined text search configurations are available, and you can "
 "create custom configurations easily. To facilitate management of text search "
@@ -4783,12 +4877,12 @@ msgstr ""
 "<application>psql</application>, выводящие информацию об этих объектах "
 "(<xref linkend=\"textsearch-psql\"/>)."
 
-#: textsearch.xml:2885(programlisting)
+#: textsearch.xml:3053(programlisting)
 #, no-wrap
 msgid "CREATE TEXT SEARCH CONFIGURATION public.pg ( COPY = pg_catalog.english );"
 msgstr "CREATE TEXT SEARCH CONFIGURATION public.pg ( COPY = pg_catalog.english );"
 
-#: textsearch.xml:2880(para)
+#: textsearch.xml:3048(para)
 msgid ""
 "As an example we will create a configuration <literal>pg</literal>, starting "
 "by duplicating the built-in <literal>english</literal> configuration: "
@@ -4798,7 +4892,7 @@ msgstr ""
 "<literal>pg</literal>, взяв за основу встроенную конфигурацию "
 "<literal>english</literal>: <placeholder-1/>"
 
-#: textsearch.xml:2893(programlisting)
+#: textsearch.xml:3063(programlisting)
 #, no-wrap
 msgid ""
 "postgres    pg\n"
@@ -4809,7 +4903,7 @@ msgstr ""
 "pgsql       pg\n"
 "postgresql  pg"
 
-#: textsearch.xml:2899(programlisting)
+#: textsearch.xml:3071(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY pg_dict (\n"
@@ -4822,7 +4916,7 @@ msgstr ""
 "    SYNONYMS = pg_dict\n"
 ");"
 
-#: textsearch.xml:2907(programlisting)
+#: textsearch.xml:3081(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH DICTIONARY english_ispell (\n"
@@ -4839,7 +4933,7 @@ msgstr ""
 "    StopWords = english\n"
 ");"
 
-#: textsearch.xml:2917(programlisting)
+#: textsearch.xml:3093(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TEXT SEARCH CONFIGURATION pg\n"
@@ -4852,7 +4946,7 @@ msgstr ""
 "                      word, hword, hword_part\n"
 "    WITH pg_dict, english_ispell, english_stem;"
 
-#: textsearch.xml:2925(programlisting)
+#: textsearch.xml:3103(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TEXT SEARCH CONFIGURATION pg\n"
@@ -4861,7 +4955,7 @@ msgstr ""
 "ALTER TEXT SEARCH CONFIGURATION pg\n"
 "    DROP MAPPING FOR email, url, url_path, sfloat, float;"
 
-#: textsearch.xml:2888(para)
+#: textsearch.xml:3058(para)
 msgid ""
 "We will use a PostgreSQL-specific synonym list and store it in <filename>"
 "$SHAREDIR/tsearch_data/pg_dict.syn</filename>. The file contents look like: "
@@ -4883,7 +4977,7 @@ msgstr ""
 "индексировать и не учитывать при поиске некоторые типы фрагментов, которые "
 "не обрабатываются встроенной конфигурацией: <placeholder-5/>"
 
-#: textsearch.xml:2932(programlisting)
+#: textsearch.xml:3112(programlisting)
 #, no-wrap
 msgid ""
 "SELECT * FROM ts_debug('public.pg', '\n"
@@ -4898,14 +4992,15 @@ msgstr ""
 "beta testing of the next version of our software.\n"
 "');"
 
-#: textsearch.xml:2929(para)
+#: textsearch.xml:3109(para)
 msgid "Now we can test our configuration: <placeholder-1/>"
 msgstr "Теперь мы можем протестировать нашу конфигурацию: <placeholder-1/>"
 
-#: textsearch.xml:2939(para)
+#: textsearch.xml:3121(para)
 msgid ""
 "The next step is to set the session to use the new configuration, which was "
-"created in the <literal>public</literal> schema: <screen>=&gt; \\dF\n"
+"created in the <literal>public</literal> schema: <screen>\n"
+"=&gt; \\dF\n"
 "   List of text search configurations\n"
 " Schema  | Name | Description\n"
 "---------+------+-------------\n"
@@ -4917,10 +5012,12 @@ msgid ""
 "SHOW default_text_search_config;\n"
 " default_text_search_config\n"
 "----------------------------\n"
-" public.pg</screen>"
+" public.pg\n"
+"</screen>"
 msgstr ""
 "И наконец мы выбираем в текущем сеансе эту конфигурацию, созданную в схеме "
-"<literal>public</literal>: <screen>=&gt; \\dF\n"
+"<literal>public</literal>: <screen>\n"
+"=&gt; \\dF\n"
 "   List of text search configurations\n"
 " Schema  | Name | Description\n"
 "---------+------+-------------\n"
@@ -4932,13 +5029,14 @@ msgstr ""
 "SHOW default_text_search_config;\n"
 " default_text_search_config\n"
 "----------------------------\n"
-" public.pg</screen>"
+" public.pg\n"
+"</screen>"
 
-#: textsearch.xml:2961(title)
+#: textsearch.xml:3145(title)
 msgid "Testing and Debugging Text Search"
 msgstr "Тестирование и отладка текстового поиска"
 
-#: textsearch.xml:2963(para)
+#: textsearch.xml:3147(para)
 msgid ""
 "The behavior of a custom text search configuration can easily become "
 "confusing. The functions described in this section are useful for testing "
@@ -4950,11 +5048,11 @@ msgstr ""
 "тестирования объектов текстового поиска. Вы можете тестировать конфигурацию "
 "как целиком, так и по частям, отлаживая анализаторы и словари по отдельности."
 
-#: textsearch.xml:2971(title)
+#: textsearch.xml:3155(title)
 msgid "Configuration Testing"
 msgstr "Тестирование конфигурации"
 
-#: textsearch.xml:2973(para)
+#: textsearch.xml:3157(para)
 msgid ""
 "The function <function>ts_debug</function> allows easy testing of a text "
 "search configuration."
@@ -4962,50 +5060,50 @@ msgstr ""
 "Созданную конфигурацию текстового поиска можно легко протестировать с "
 "помощью функции <function>ts_debug</function>."
 
-#: textsearch.xml:2978(indexterm)
+#: textsearch.xml:3162(indexterm)
 msgid "<primary>ts_debug</primary>"
 msgstr "<primary>ts_debug</primary>"
 
-#: textsearch.xml:2983(replaceable) textsearch.xml:3183(replaceable)
-#: textsearch.xml:3185(replaceable)
+#: textsearch.xml:3168(replaceable) textsearch.xml:3382(replaceable)
+#: textsearch.xml:3384(replaceable)
 msgid "alias"
 msgstr "псевдоним"
 
-#: textsearch.xml:2984(replaceable) textsearch.xml:3183(replaceable)
-#: textsearch.xml:3185(replaceable)
+#: textsearch.xml:3169(replaceable) textsearch.xml:3382(replaceable)
+#: textsearch.xml:3384(replaceable)
 msgid "description"
 msgstr "описание"
 
-#: textsearch.xml:2985(replaceable) textsearch.xml:3156(replaceable)
-#: textsearch.xml:3158(replaceable) textsearch.xml:3236(replaceable)
+#: textsearch.xml:3170(replaceable) textsearch.xml:3351(replaceable)
+#: textsearch.xml:3353(replaceable) textsearch.xml:3439(replaceable)
 msgid "token"
 msgstr "фрагмент"
 
-#: textsearch.xml:2986(replaceable)
+#: textsearch.xml:3171(replaceable)
 msgid "dictionaries"
 msgstr "словари"
 
-#: textsearch.xml:2986(type)
+#: textsearch.xml:3171(type)
 msgid "regdictionary[]"
 msgstr "regdictionary[]"
 
-#: textsearch.xml:2987(replaceable)
+#: textsearch.xml:3172(replaceable)
 msgid "dictionary"
 msgstr "словарь"
 
-#: textsearch.xml:2987(type) textsearch.xml:3236(type)
+#: textsearch.xml:3172(type) textsearch.xml:3439(type)
 msgid "regdictionary"
 msgstr "regdictionary"
 
-#: textsearch.xml:2988(replaceable)
+#: textsearch.xml:3173(replaceable)
 msgid "lexemes"
 msgstr "лексемы"
 
-#: textsearch.xml:2988(type) textsearch.xml:3236(type)
+#: textsearch.xml:3173(type) textsearch.xml:3439(type)
 msgid "text[]"
 msgstr "text[]"
 
-#: textsearch.xml:2982(synopsis)
+#: textsearch.xml:3166(synopsis)
 #, no-wrap
 msgid ""
 "ts_debug(<placeholder-1/> <placeholder-2/> <placeholder-3/>,\n"
@@ -5026,7 +5124,7 @@ msgstr ""
 "         OUT <placeholder-14/> <placeholder-15/>)\n"
 "         returns setof record"
 
-#: textsearch.xml:2991(para)
+#: textsearch.xml:3177(para)
 msgid ""
 "<function>ts_debug</function> displays information about every token of "
 "<replaceable class=\"parameter\">document</replaceable> as produced by the "
@@ -5041,7 +5139,7 @@ msgstr ""
 "class=\"parameter\">config</replaceable>, или "
 "<varname>default_text_search_config</varname>, если этот аргумент опущен."
 
-#: textsearch.xml:3007(para)
+#: textsearch.xml:3193(para)
 msgid ""
 "<replaceable>alias</replaceable> <type>text</type> &mdash; short name of the "
 "token type"
@@ -5049,7 +5147,7 @@ msgstr ""
 "<replaceable>синоним</replaceable> <type>text</type> &mdash; краткое имя "
 "типа фрагмента"
 
-#: textsearch.xml:3012(para)
+#: textsearch.xml:3198(para)
 msgid ""
 "<replaceable>description</replaceable> <type>text</type> &mdash; description "
 "of the token type"
@@ -5057,13 +5155,13 @@ msgstr ""
 "<replaceable>описание</replaceable> <type>text</type> &mdash; описание типа "
 "фрагмента"
 
-#: textsearch.xml:3018(para)
+#: textsearch.xml:3204(para)
 msgid ""
 "<replaceable>token</replaceable> <type>text</type> &mdash; text of the token"
 msgstr ""
 "<replaceable>фрагмент</replaceable> <type>text</type> &mdash; текст фрагмента"
 
-#: textsearch.xml:3023(para)
+#: textsearch.xml:3209(para)
 msgid ""
 "<replaceable>dictionaries</replaceable> <type>regdictionary[]</type> &mdash; "
 "the dictionaries selected by the configuration for this token type"
@@ -5071,7 +5169,7 @@ msgstr ""
 "<replaceable>словари</replaceable> <type>regdictionary[]</type> &mdash; "
 "словари, назначенные в конфигурации для фрагментов такого типа"
 
-#: textsearch.xml:3029(para)
+#: textsearch.xml:3215(para)
 msgid ""
 "<replaceable>dictionary</replaceable> <type>regdictionary</type> &mdash; the "
 "dictionary that recognized the token, or <literal>NULL</literal> if none did"
@@ -5080,7 +5178,7 @@ msgstr ""
 "словарь, распознавший этот фрагмент, или <literal>NULL</literal>, если "
 "подходящего словаря не нашлось"
 
-#: textsearch.xml:3035(para)
+#: textsearch.xml:3221(para)
 msgid ""
 "<replaceable>lexemes</replaceable> <type>text[]</type> &mdash; the lexeme(s) "
 "produced by the dictionary that recognized the token, or <literal>NULL</"
@@ -5092,7 +5190,7 @@ msgstr ""
 "подходящий словарь не нашёлся; может быть также пустым массивом (<literal>{}"
 "</literal>), если фрагмент распознан как стоп-слово"
 
-#: textsearch.xml:3001(para)
+#: textsearch.xml:3187(para)
 msgid ""
 "<function>ts_debug</function> returns one row for each token identified in "
 "the text by the parser. The columns returned are <placeholder-1/>"
@@ -5101,10 +5199,11 @@ msgstr ""
 "фрагмента, найденного в тексте анализатором. Эта строка содержит следующие "
 "столбцы: <placeholder-1/>"
 
-#: textsearch.xml:3045(para)
+#: textsearch.xml:3231(para)
 msgid ""
-"Here is a simple example: <screen>SELECT * FROM ts_debug('english','a fat  "
-"cat sat on a mat - it ate a fat rats');\n"
+"Here is a simple example: <screen>\n"
+"SELECT * FROM ts_debug('english','a fat  cat sat on a mat - it ate a fat "
+"rats');\n"
 "   alias   |   description   | token |  dictionaries  |  dictionary  | "
 "lexemes \n"
 "-----------+-----------------+-------+----------------+--------------"
@@ -5138,10 +5237,12 @@ msgid ""
 " asciiword | Word, all ASCII | fat   | {english_stem} | english_stem | "
 "{fat}\n"
 " blank     | Space symbols   |       | {}             |              | \n"
-" asciiword | Word, all ASCII | rats  | {english_stem} | english_stem | {rat}"
+" asciiword | Word, all ASCII | rats  | {english_stem} | english_stem | "
+"{rat}\n"
 "</screen>"
 msgstr ""
-"Простой пример: <screen>SELECT * FROM ts_debug('english',\n"
+"Простой пример: <screen>\n"
+"SELECT * FROM ts_debug('english',\n"
 "  'a fat  cat sat on a mat - it ate a fat rats');\n"
 "   alias  |   description  | token|  dictionaries |  dictionary |lexemes\n"
 "----------+----------------+------+---------------+-------------+-------\n"
@@ -5168,10 +5269,10 @@ msgstr ""
 " blank    | Space symbols  |      | {}            |             | \n"
 " asciiword| Word, all ASCII| fat  | {english_stem}| english_stem| {fat}\n"
 " blank    | Space symbols  |      | {}            |             | \n"
-" asciiword| Word, all ASCII| rats | {english_stem}| english_stem| {rat}</"
-"screen>"
+" asciiword| Word, all ASCII| rats | {english_stem}| english_stem| {rat}\n"
+"</screen>"
 
-#: textsearch.xml:3077(para)
+#: textsearch.xml:3265(para)
 msgid ""
 "For a more extensive demonstration, we first create a <literal>public."
 "english</literal> configuration and Ispell dictionary for the English "
@@ -5180,7 +5281,7 @@ msgstr ""
 "Для более полной демонстрации мы сначала создадим конфигурацию "
 "<literal>public.english</literal> и словарь Ispell для английского языка:"
 
-#: textsearch.xml:3083(programlisting)
+#: textsearch.xml:3271(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TEXT SEARCH CONFIGURATION public.english ( COPY = pg_catalog.english );\n"
@@ -5208,7 +5309,7 @@ msgstr ""
 "ALTER TEXT SEARCH CONFIGURATION public.english\n"
 "   ALTER MAPPING FOR asciiword WITH english_ispell, english_stem;"
 
-#: textsearch.xml:3095(screen)
+#: textsearch.xml:3285(screen)
 #, no-wrap
 msgid ""
 "SELECT * FROM ts_debug('public.english','The Brightest supernovaes');\n"
@@ -5234,7 +5335,7 @@ msgstr ""
 "asciiword|Word,        |supernovaes|{english_ispell|english_  |{supernova}\n"
 "         |all ASCII    |           |,english_stem} |stem      |"
 
-#: textsearch.xml:3104(para)
+#: textsearch.xml:3296(para)
 msgid ""
 "In this example, the word <literal>Brightest</literal> was recognized by the "
 "parser as an <literal>ASCII word</literal> (alias <literal>asciiword</"
@@ -5260,7 +5361,7 @@ msgstr ""
 "<literal>english_stem</literal> &mdash; это стеммер Snowball, который "
 "распознаёт всё, поэтому он включён в список словарей последним)."
 
-#: textsearch.xml:3119(para)
+#: textsearch.xml:3311(para)
 msgid ""
 "The word <literal>The</literal> was recognized by the "
 "<literal>english_ispell</literal> dictionary as a stop word (<xref linkend="
@@ -5274,10 +5375,11 @@ msgstr ""
 "Пробелы тоже отбрасываются, так как в данной конфигурации для них нет "
 "словарей."
 
-#: textsearch.xml:3127(para)
+#: textsearch.xml:3319(para)
 msgid ""
 "You can reduce the width of the output by explicitly specifying which "
-"columns you want to see: <screen>SELECT alias, token, dictionary, lexemes\n"
+"columns you want to see: <screen>\n"
+"SELECT alias, token, dictionary, lexemes\n"
 "FROM ts_debug('public.english','The Brightest supernovaes');\n"
 "   alias   |    token    |   dictionary   |   lexemes   \n"
 "-----------+-------------+----------------+-------------\n"
@@ -5285,10 +5387,12 @@ msgid ""
 " blank     |             |                | \n"
 " asciiword | Brightest   | english_ispell | {bright}\n"
 " blank     |             |                | \n"
-" asciiword | supernovaes | english_stem   | {supernova}</screen>"
+" asciiword | supernovaes | english_stem   | {supernova}\n"
+"</screen>"
 msgstr ""
 "Вы можете уменьшить ширину вывода, явно перечислив только те столбцы, "
-"которые вы хотите видеть: <screen>SELECT alias, token, dictionary, lexemes\n"
+"которые вы хотите видеть: <screen>\n"
+"SELECT alias, token, dictionary, lexemes\n"
 "FROM ts_debug('public.english','The Brightest supernovaes');\n"
 "   alias   |    token    |   dictionary   |   lexemes   \n"
 "-----------+-------------+----------------+-------------\n"
@@ -5296,40 +5400,41 @@ msgstr ""
 " blank     |             |                | \n"
 " asciiword | Brightest   | english_ispell | {bright}\n"
 " blank     |             |                | \n"
-" asciiword | supernovaes | english_stem   | {supernova}</screen>"
+" asciiword | supernovaes | english_stem   | {supernova}\n"
+"</screen>"
 
-#: textsearch.xml:3145(title)
+#: textsearch.xml:3339(title)
 msgid "Parser Testing"
 msgstr "Тестирование анализатора"
 
-#: textsearch.xml:3147(para)
+#: textsearch.xml:3341(para)
 msgid "The following functions allow direct testing of a text search parser."
 msgstr ""
 "Следующие функции позволяют непосредственно протестировать анализатор "
 "текстового поиска."
 
-#: textsearch.xml:3151(indexterm)
+#: textsearch.xml:3345(indexterm)
 msgid "<primary>ts_parse</primary>"
 msgstr "<primary>ts_parse</primary>"
 
-#: textsearch.xml:3155(replaceable) textsearch.xml:3182(replaceable)
+#: textsearch.xml:3350(replaceable) textsearch.xml:3381(replaceable)
 msgid "parser_name"
 msgstr "имя_анализатора"
 
-#: textsearch.xml:3156(replaceable) textsearch.xml:3158(replaceable)
-#: textsearch.xml:3182(replaceable) textsearch.xml:3184(replaceable)
+#: textsearch.xml:3351(replaceable) textsearch.xml:3353(replaceable)
+#: textsearch.xml:3381(replaceable) textsearch.xml:3383(replaceable)
 msgid "tokid"
 msgstr "код_фрагмента"
 
-#: textsearch.xml:3157(replaceable) textsearch.xml:3184(replaceable)
+#: textsearch.xml:3352(replaceable) textsearch.xml:3383(replaceable)
 msgid "parser_oid"
 msgstr "oid_анализатора"
 
-#: textsearch.xml:3157(type) textsearch.xml:3184(type)
+#: textsearch.xml:3352(type) textsearch.xml:3383(type)
 msgid "oid"
 msgstr "oid"
 
-#: textsearch.xml:3155(synopsis)
+#: textsearch.xml:3349(synopsis)
 #, no-wrap
 msgid ""
 "ts_parse(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>,\n"
@@ -5342,14 +5447,14 @@ msgstr ""
 "ts_parse(<placeholder-10/> <placeholder-11/>, <placeholder-12/> <placeholder-13/>,\n"
 "         OUT <placeholder-14/> <placeholder-15/>, OUT <placeholder-16/> <placeholder-17/>) returns <placeholder-18/>"
 
-#: textsearch.xml:3160(para)
+#: textsearch.xml:3356(para)
 msgid ""
 "<function>ts_parse</function> parses the given <replaceable>document</"
 "replaceable> and returns a series of records, one for each token produced by "
 "parsing. Each record includes a <varname>tokid</varname> showing the "
 "assigned token type and a <varname>token</varname> which is the text of the "
-"token. For example: <screen>SELECT * FROM ts_parse('default', '123 - a "
-"number');\n"
+"token. For example: <screen>\n"
+"SELECT * FROM ts_parse('default', '123 - a number');\n"
 " tokid | token\n"
 "-------+--------\n"
 "    22 | 123\n"
@@ -5357,13 +5462,14 @@ msgid ""
 "    12 | -\n"
 "     1 | a\n"
 "    12 |\n"
-"     1 | number</screen>"
+"     1 | number\n"
+"</screen>"
 msgstr ""
 "<function>ts_parse</function> разбирает данный документ и возвращает набор "
 "записей, по одной для каждого извлечённого фрагмента. Каждая запись содержит "
 "<varname>код_фрагмента</varname>, код назначенного типа фрагмента, и "
-"<varname>фрагмент</varname>, собственно текст фрагмента. Например: "
-"<screen>SELECT * FROM ts_parse('default', '123 - a number');\n"
+"<varname>фрагмент</varname>, собственно текст фрагмента. Например: <screen>\n"
+"SELECT * FROM ts_parse('default', '123 - a number');\n"
 " tokid | token\n"
 "-------+--------\n"
 "    22 | 123\n"
@@ -5371,13 +5477,14 @@ msgstr ""
 "    12 | -\n"
 "     1 | a\n"
 "    12 |\n"
-"     1 | number</screen>"
+"     1 | number\n"
+"</screen>"
 
-#: textsearch.xml:3178(indexterm)
+#: textsearch.xml:3376(indexterm)
 msgid "<primary>ts_token_type</primary>"
 msgstr "<primary>ts_token_type</primary>"
 
-#: textsearch.xml:3182(synopsis)
+#: textsearch.xml:3380(synopsis)
 #, no-wrap
 msgid ""
 "ts_token_type(<placeholder-1/> <placeholder-2/>, OUT <placeholder-3/> <placeholder-4/>,\n"
@@ -5390,14 +5497,15 @@ msgstr ""
 "ts_token_type(<placeholder-10/> <placeholder-11/>, OUT <placeholder-12/> <placeholder-13/>,\n"
 "              OUT <placeholder-14/> <placeholder-15/>, OUT <placeholder-16/> <placeholder-17/>) returns <placeholder-18/>"
 
-#: textsearch.xml:3187(para)
+#: textsearch.xml:3387(para)
 msgid ""
 "<function>ts_token_type</function> returns a table which describes each type "
 "of token the specified parser can recognize. For each token type, the table "
 "gives the integer <varname>tokid</varname> that the parser uses to label a "
 "token of that type, the <varname>alias</varname> that names the token type "
 "in configuration commands, and a short <varname>description</varname>. For "
-"example: <screen>SELECT * FROM ts_token_type('default');\n"
+"example: <screen>\n"
+"SELECT * FROM ts_token_type('default');\n"
 " tokid |      alias      |               description                \n"
 "-------+-----------------+------------------------------------------\n"
 "     1 | asciiword       | Word, all ASCII\n"
@@ -5422,14 +5530,15 @@ msgid ""
 "    20 | float           | Decimal notation\n"
 "    21 | int             | Signed integer\n"
 "    22 | uint            | Unsigned integer\n"
-"    23 | entity          | XML entity</screen>"
+"    23 | entity          | XML entity\n"
+"</screen>"
 msgstr ""
 "<function>ts_token_type</function> возвращает таблицу, описывающую все типы "
 "фрагментов, которые может распознать анализатор. Для каждого типа в этой "
 "таблице указывается его целочисленный <varname>код_фрагмента</varname>, "
 "<varname>псевдоним </varname>, с которым этот тип фигурирует в командах, и "
-"краткое <varname>description</varname>. Например: <screen>SELECT * FROM "
-"ts_token_type('default');\n"
+"краткое <varname>description</varname>. Например: <screen>\n"
+"SELECT * FROM ts_token_type('default');\n"
 " tokid |      alias      |               description                \n"
 "-------+-----------------+------------------------------------------\n"
 "     1 | asciiword       | Word, all ASCII\n"
@@ -5454,33 +5563,34 @@ msgstr ""
 "    20 | float           | Decimal notation\n"
 "    21 | int             | Signed integer\n"
 "    22 | uint            | Unsigned integer\n"
-"    23 | entity          | XML entity</screen>"
+"    23 | entity          | XML entity\n"
+"</screen>"
 
-#: textsearch.xml:3226(title)
+#: textsearch.xml:3428(title)
 msgid "Dictionary Testing"
 msgstr "Тестирование словаря"
 
-#: textsearch.xml:3228(para)
+#: textsearch.xml:3430(para)
 msgid ""
 "The <function>ts_lexize</function> function facilitates dictionary testing."
 msgstr ""
 "Для тестирования словаря предназначена функция <function>ts_lexize</"
 "function>."
 
-#: textsearch.xml:3232(indexterm)
+#: textsearch.xml:3434(indexterm)
 msgid "<primary>ts_lexize</primary>"
 msgstr "<primary>ts_lexize</primary>"
 
-#: textsearch.xml:3236(replaceable)
+#: textsearch.xml:3439(replaceable)
 msgid "dict"
 msgstr "словарь"
 
-#: textsearch.xml:3236(synopsis)
+#: textsearch.xml:3438(synopsis)
 #, no-wrap
 msgid "ts_lexize(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>) returns <placeholder-5/>"
 msgstr "ts_lexize(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>) returns <placeholder-5/>"
 
-#: textsearch.xml:3238(para)
+#: textsearch.xml:3442(para)
 msgid ""
 "<function>ts_lexize</function> returns an array of lexemes if the input "
 "<replaceable>token</replaceable> is known to the dictionary, or an empty "
@@ -5492,9 +5602,10 @@ msgstr ""
 "если этот фрагмент считается в словаре стоп-словом, либо <literal>NULL</"
 "literal>, если он не был распознан."
 
-#: textsearch.xml:3246(para)
+#: textsearch.xml:3450(para)
 msgid ""
-"Examples: <screen>SELECT ts_lexize('english_stem', 'stars');\n"
+"Examples: <screen>\n"
+"SELECT ts_lexize('english_stem', 'stars');\n"
 " ts_lexize\n"
 "-----------\n"
 " {star}\n"
@@ -5502,9 +5613,11 @@ msgid ""
 "SELECT ts_lexize('english_stem', 'a');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 msgstr ""
-"Примеры: <screen>SELECT ts_lexize('english_stem', 'stars');\n"
+"Примеры: <screen>\n"
+"SELECT ts_lexize('english_stem', 'stars');\n"
 " ts_lexize\n"
 "-----------\n"
 " {star}\n"
@@ -5512,51 +5625,58 @@ msgstr ""
 "SELECT ts_lexize('english_stem', 'a');\n"
 " ts_lexize\n"
 "-----------\n"
-" {}</screen>"
+" {}\n"
+"</screen>"
 
-#: textsearch.xml:3261(para)
+#: textsearch.xml:3467(para)
 msgid ""
 "The <function>ts_lexize</function> function expects a single "
 "<emphasis>token</emphasis>, not text. Here is a case where this can be "
-"confusing: <screen>SELECT ts_lexize('thesaurus_astro','supernovae stars') is "
-"null;\n"
+"confusing: <screen>\n"
+"SELECT ts_lexize('thesaurus_astro','supernovae stars') is null;\n"
 " ?column?\n"
 "----------\n"
-" t</screen> The thesaurus dictionary <literal>thesaurus_astro</literal> does "
+" t\n"
+"</screen> The thesaurus dictionary <literal>thesaurus_astro</literal> does "
 "know the phrase <literal>supernovae stars</literal>, but "
 "<function>ts_lexize</function> fails since it does not parse the input text "
 "but treats it as a single token. Use <function>plainto_tsquery</function> or "
 "<function>to_tsvector</function> to test thesaurus dictionaries, for "
-"example: <screen>SELECT plainto_tsquery('supernovae stars');\n"
+"example: <screen>\n"
+"SELECT plainto_tsquery('supernovae stars');\n"
 " plainto_tsquery\n"
 "-----------------\n"
-" 'sn'</screen>"
+" 'sn'\n"
+"</screen>"
 msgstr ""
 "Функция <function>ts_lexize</function> принимает одиночный "
 "<emphasis>фрагмент</emphasis>, а не просто текст. Вот пример возможного "
-"заблуждения: <screen>SELECT ts_lexize('thesaurus_astro','supernovae stars') "
-"is null;\n"
+"заблуждения: <screen>\n"
+"SELECT ts_lexize('thesaurus_astro','supernovae stars') is null;\n"
 " ?column?\n"
 "----------\n"
-" t</screen> Хотя фраза <literal>supernovae stars</literal> есть в тезаурусе "
+" t\n"
+"</screen> Хотя фраза <literal>supernovae stars</literal> есть в тезаурусе "
 "<literal>thesaurus_astro</literal>, <function>ts_lexize</function> не "
 "работает, так как она не разбирает входной текст, а воспринимает его как "
 "один фрагмент. Поэтому для проверки тезаурусов следует использовать функции "
 "<function>plainto_tsquery</function> и <function>to_tsvector</function>, "
-"например: <screen>SELECT plainto_tsquery('supernovae stars');\n"
+"например: <screen>\n"
+"SELECT plainto_tsquery('supernovae stars');\n"
 " plainto_tsquery\n"
 "-----------------\n"
-" 'sn'</screen>"
+" 'sn'\n"
+"</screen>"
 
-#: textsearch.xml:3289(title)
+#: textsearch.xml:3499(title)
 msgid "GIN and GiST Index Types"
 msgstr "Типы индексов GIN и GiST"
 
-#: textsearch.xml:3291(indexterm)
+#: textsearch.xml:3501(indexterm)
 msgid "<primary>text search</primary><secondary>indexes</secondary>"
 msgstr "<primary>текстовый поиск</primary><secondary>индексы</secondary>"
 
-#: textsearch.xml:3307(indexterm)
+#: textsearch.xml:3517(indexterm)
 msgid ""
 "<primary>index</primary><secondary>GIN</secondary><tertiary>text search</"
 "tertiary>"
@@ -5564,19 +5684,19 @@ msgstr ""
 "<primary>индекс</primary><secondary>GIN</secondary><tertiary>текстовый "
 "поиск</tertiary>"
 
-#: textsearch.xml:3311(replaceable) textsearch.xml:3329(replaceable)
+#: textsearch.xml:3521(replaceable) textsearch.xml:3539(replaceable)
 msgid "name"
 msgstr "имя"
 
-#: textsearch.xml:3311(replaceable) textsearch.xml:3329(replaceable)
+#: textsearch.xml:3521(replaceable) textsearch.xml:3539(replaceable)
 msgid "table"
 msgstr "таблица"
 
-#: textsearch.xml:3311(replaceable) textsearch.xml:3329(replaceable)
+#: textsearch.xml:3521(replaceable) textsearch.xml:3539(replaceable)
 msgid "column"
 msgstr "столбец"
 
-#: textsearch.xml:3311(literal)
+#: textsearch.xml:3521(literal)
 msgid ""
 "CREATE INDEX <placeholder-1/> ON <placeholder-2/> USING GIN (<placeholder-3/"
 ">);"
@@ -5584,7 +5704,7 @@ msgstr ""
 "CREATE INDEX <placeholder-1/> ON <placeholder-2/> USING GIN (<placeholder-3/"
 ">);"
 
-#: textsearch.xml:3315(para)
+#: textsearch.xml:3525(para)
 msgid ""
 "Creates a GIN (Generalized Inverted Index)-based index. The "
 "<replaceable>column</replaceable> must be of <type>tsvector</type> type."
@@ -5593,7 +5713,7 @@ msgstr ""
 "Инвертированный Индекс). <replaceable>Столбец</replaceable> должен иметь тип "
 "<type>tsvector</type>."
 
-#: textsearch.xml:3325(indexterm)
+#: textsearch.xml:3535(indexterm)
 msgid ""
 "<primary>index</primary><secondary>GiST</secondary><tertiary>text search</"
 "tertiary>"
@@ -5601,7 +5721,7 @@ msgstr ""
 "<primary>индекс</primary><secondary>GiST</secondary><tertiary>текстовый "
 "поиск</tertiary>"
 
-#: textsearch.xml:3329(literal)
+#: textsearch.xml:3539(literal)
 msgid ""
 "CREATE INDEX <placeholder-1/> ON <placeholder-2/> USING GIST (<placeholder-3/"
 ">);"
@@ -5609,7 +5729,7 @@ msgstr ""
 "CREATE INDEX <placeholder-1/> ON <placeholder-2/> USING GIST (<placeholder-3/"
 ">);"
 
-#: textsearch.xml:3333(para)
+#: textsearch.xml:3543(para)
 msgid ""
 "Creates a GiST (Generalized Search Tree)-based index. The "
 "<replaceable>column</replaceable> can be of <type>tsvector</type> or "
@@ -5619,7 +5739,7 @@ msgstr ""
 "поиска). Здесь <replaceable>столбец</replaceable> может иметь тип "
 "<type>tsvector</type> или <type>tsquery</type>."
 
-#: textsearch.xml:3295(para)
+#: textsearch.xml:3505(para)
 msgid ""
 "There are two kinds of indexes that can be used to speed up full text "
 "searches. Note that indexes are not mandatory for full text searching, but "
@@ -5631,7 +5751,7 @@ msgstr ""
 "столбцу поиск выполняется регулярно, обычно желательно её индексировать. "
 "<placeholder-1/>"
 
-#: textsearch.xml:3344(para)
+#: textsearch.xml:3554(para)
 msgid ""
 "GIN indexes are the preferred text search index type. As inverted indexes, "
 "they contain an index entry for each word (lexeme), with a compressed list "
@@ -5650,7 +5770,7 @@ msgstr ""
 "весах. Таким образом для выполнения запроса с весами потребуется "
 "перепроверить строки в таблице."
 
-#: textsearch.xml:3354(para)
+#: textsearch.xml:3564(para)
 msgid ""
 "A GiST index is <firstterm>lossy</firstterm>, meaning that the index might "
 "produce false matches, and it is necessary to check the actual table row to "
@@ -5676,7 +5796,7 @@ msgstr ""
 "проверки правильности предположения о совпадении слов необходимо прочитать "
 "строку таблицы."
 
-#: textsearch.xml:3368(para)
+#: textsearch.xml:3578(para)
 msgid ""
 "Lossiness causes performance degradation due to unnecessary fetches of table "
 "records that turn out to be false matches. Since random access to table "
@@ -5691,7 +5811,7 @@ msgstr ""
 "ложных попаданий зависит от ряда факторов, например от количества уникальных "
 "слов, так что его рекомендуется сокращать, применяя словари."
 
-#: textsearch.xml:3377(para)
+#: textsearch.xml:3587(para)
 msgid ""
 "Note that <acronym>GIN</acronym> index build time can often be improved by "
 "increasing <xref linkend=\"guc-maintenance-work-mem\"/>, while "
@@ -5702,7 +5822,7 @@ msgstr ""
 "время построения индекса <acronym>GiST</acronym> не зависит от этого "
 "параметра."
 
-#: textsearch.xml:3384(para)
+#: textsearch.xml:3594(para)
 msgid ""
 "Partitioning of big collections and the proper use of GIN and GiST indexes "
 "allows the implementation of very fast searches with online update. "
@@ -5719,79 +5839,89 @@ msgstr ""
 "\"dblink\"/>. Последний вариант возможен благодаря тому, что функции "
 "ранжирования используют только локальную информацию."
 
-#: textsearch.xml:3397(title)
+#: textsearch.xml:3607(title)
 msgid "<application>psql</application> Support"
 msgstr "Поддержка <application>psql</application>"
 
-#: textsearch.xml:3399(para)
+#: textsearch.xml:3609(para)
 msgid ""
 "Information about text search configuration objects can be obtained in "
-"<application>psql</application> using a set of commands: <synopsis>\\dF{d,p,"
-"t}<optional>+</optional> <optional>PATTERN</optional></synopsis> An optional "
-"<literal>+</literal> produces more details."
+"<application>psql</application> using a set of commands: <synopsis>\n"
+"\\dF{d,p,t}<optional>+</optional> <optional>PATTERN</optional>\n"
+"</synopsis> An optional <literal>+</literal> produces more details."
 msgstr ""
 "Информацию об объектах конфигурации текстового поиска можно получить в "
 "<application>psql</application> с помощью следующего набора команд: "
-"<synopsis>\\dF{d,p,t}<optional>+</optional> <optional>ШАБЛОН</optional></"
-"synopsis> Необязательный <literal>+</literal> в этих командах включает более "
-"подробный вывод."
+"<synopsis>\n"
+"\\dF{d,p,t}<optional>+</optional> <optional>ШАБЛОН</optional>\n"
+"</synopsis> Необязательный <literal>+</literal> в этих командах включает "
+"более подробный вывод."
 
-#: textsearch.xml:3406(para)
+#: textsearch.xml:3618(para)
 msgid ""
 "The optional parameter <literal>PATTERN</literal> can be the name of a text "
 "search object, optionally schema-qualified. If <literal>PATTERN</literal> is "
 "omitted then information about all visible objects will be displayed. "
 "<literal>PATTERN</literal> can be a regular expression and can provide "
 "<emphasis>separate</emphasis> patterns for the schema and object names. The "
-"following examples illustrate this: <screen>=&gt; \\dF *fulltext*\n"
+"following examples illustrate this: <screen>\n"
+"=&gt; \\dF *fulltext*\n"
 "       List of text search configurations\n"
 " Schema |  Name        | Description\n"
 "--------+--------------+-------------\n"
-" public | fulltext_cfg |</screen>\n"
+" public | fulltext_cfg |\n"
+"</screen>\n"
 "\n"
-"<screen>=&gt; \\dF *.fulltext*\n"
+"<screen>\n"
+"=&gt; \\dF *.fulltext*\n"
 "       List of text search configurations\n"
 " Schema   |  Name        | Description\n"
 "----------+----------------------------\n"
 " fulltext | fulltext_cfg |\n"
-" public   | fulltext_cfg |</screen> The available commands are:"
+" public   | fulltext_cfg |\n"
+"</screen> The available commands are:"
 msgstr ""
 "В необязательном параметре <literal>ШАБЛОН</literal> может указываться имя "
 "объекта текстового поиска, возможно дополненное именем схемы. Если "
 "<literal>ШАБЛОН</literal> не указан, выводится информация обо всех видимых "
 "объектах. <literal>ШАБЛОН</literal> может содержать регулярное выражение с "
 "<emphasis>разными</emphasis> масками для схемы и объекта. Это иллюстрируют "
-"следующие примеры: <screen>=&gt; \\dF *fulltext*\n"
+"следующие примеры: <screen>\n"
+"=&gt; \\dF *fulltext*\n"
 "       List of text search configurations\n"
 " Schema |  Name        | Description\n"
 "--------+--------------+-------------\n"
-" public | fulltext_cfg |</screen>\n"
+" public | fulltext_cfg |\n"
+"</screen>\n"
 "\n"
-"<screen>=&gt; \\dF *.fulltext*\n"
+"<screen>\n"
+"=&gt; \\dF *.fulltext*\n"
 "       List of text search configurations\n"
 " Schema   |  Name        | Description\n"
 "----------+----------------------------\n"
 " fulltext | fulltext_cfg |\n"
-" public   | fulltext_cfg |</screen> Возможны следующие команды:"
+" public   | fulltext_cfg |\n"
+"</screen> Возможны следующие команды:"
 
-#: textsearch.xml:3432(optional) textsearch.xml:3471(optional)
-#: textsearch.xml:3500(optional) textsearch.xml:3551(optional)
+#: textsearch.xml:3648(optional) textsearch.xml:3689(optional)
+#: textsearch.xml:3720(optional) textsearch.xml:3773(optional)
 msgid "+"
 msgstr "+"
 
-#: textsearch.xml:3432(optional) textsearch.xml:3471(optional)
-#: textsearch.xml:3500(optional) textsearch.xml:3551(optional)
+#: textsearch.xml:3648(optional) textsearch.xml:3689(optional)
+#: textsearch.xml:3720(optional) textsearch.xml:3773(optional)
 msgid "PATTERN"
 msgstr "ШАБЛОН"
 
-#: textsearch.xml:3432(literal)
+#: textsearch.xml:3648(literal)
 msgid "\\dF<placeholder-1/> <placeholder-2/>"
 msgstr "\\dF<placeholder-1/> <placeholder-2/>"
 
-#: textsearch.xml:3434(para)
+#: textsearch.xml:3650(para)
 msgid ""
 "List text search configurations (add <literal>+</literal> for more detail). "
-"<screen>=&gt; \\dF russian\n"
+"<screen>\n"
+"=&gt; \\dF russian\n"
 "            List of text search configurations\n"
 "   Schema   |  Name   |            Description             \n"
 "------------+---------+------------------------------------\n"
@@ -5820,10 +5950,12 @@ msgid ""
 " url             | simple\n"
 " url_path        | simple\n"
 " version         | simple\n"
-" word            | russian_stem</screen>"
+" word            | russian_stem\n"
+"</screen>"
 msgstr ""
 "Список конфигураций текстового поиска (добавьте <literal>+</literal> для "
-"дополнительных сведений). <screen>=&gt; \\dF russian\n"
+"дополнительных сведений). <screen>\n"
+"=&gt; \\dF russian\n"
 "            List of text search configurations\n"
 "   Schema   |  Name   |            Description             \n"
 "------------+---------+------------------------------------\n"
@@ -5852,16 +5984,18 @@ msgstr ""
 " url             | simple\n"
 " url_path        | simple\n"
 " version         | simple\n"
-" word            | russian_stem</screen>"
+" word            | russian_stem\n"
+"</screen>"
 
-#: textsearch.xml:3471(literal)
+#: textsearch.xml:3689(literal)
 msgid "\\dFd<placeholder-1/> <placeholder-2/>"
 msgstr "\\dFd<placeholder-1/> <placeholder-2/>"
 
-#: textsearch.xml:3473(para)
+#: textsearch.xml:3691(para)
 msgid ""
 "List text search dictionaries (add <literal>+</literal> for more detail). "
-"<screen>=&gt; \\dFd\n"
+"<screen>\n"
+"=&gt; \\dFd\n"
 "                            List of text search dictionaries\n"
 "   Schema   |      Name       |                        "
 "Description                        \n"
@@ -5883,11 +6017,12 @@ msgid ""
 "for stopword\n"
 " pg_catalog | spanish_stem    | snowball stemmer for spanish language\n"
 " pg_catalog | swedish_stem    | snowball stemmer for swedish language\n"
-" pg_catalog | turkish_stem    | snowball stemmer for turkish language</"
-"screen>"
+" pg_catalog | turkish_stem    | snowball stemmer for turkish language\n"
+"</screen>"
 msgstr ""
 "Список словарей текстового поиска (добавьте <literal>+</literal> для "
-"дополнительных сведений). <screen>=&gt; \\dFd\n"
+"дополнительных сведений). <screen>\n"
+"=&gt; \\dFd\n"
 "                            List of text search dictionaries\n"
 "  Schema   |     Name       |              Description                  \n"
 "-----------+----------------+-------------------------------------------\n"
@@ -5906,16 +6041,18 @@ msgstr ""
 "pg_catalog | simple         | simple dictionary: just lower case and ...\n"
 "pg_catalog | spanish_stem   | snowball stemmer for spanish language\n"
 "pg_catalog | swedish_stem   | snowball stemmer for swedish language\n"
-"pg_catalog | turkish_stem   | snowball stemmer for turkish language</screen>"
+"pg_catalog | turkish_stem   | snowball stemmer for turkish language\n"
+"</screen>"
 
-#: textsearch.xml:3500(literal)
+#: textsearch.xml:3720(literal)
 msgid "\\dFp<placeholder-1/> <placeholder-2/>"
 msgstr "\\dFp<placeholder-1/> <placeholder-2/>"
 
-#: textsearch.xml:3502(para)
+#: textsearch.xml:3722(para)
 msgid ""
 "List text search parsers (add <literal>+</literal> for more detail). "
-"<screen>=&gt; \\dFp\n"
+"<screen>\n"
+"=&gt; \\dFp\n"
 "        List of text search parsers\n"
 "   Schema   |  Name   |     Description     \n"
 "------------+---------+---------------------\n"
@@ -5956,10 +6093,12 @@ msgid ""
 " url_path        | URL path\n"
 " version         | Version number\n"
 " word            | Word, all letters\n"
-"(23 rows)</screen>"
+"(23 rows)\n"
+"</screen>"
 msgstr ""
 "Список анализаторов текстового поиска (добавьте <literal>+</literal> для "
-"дополнительных сведений). <screen>=&gt; \\dFp\n"
+"дополнительных сведений). <screen>\n"
+"=&gt; \\dFp\n"
 "        List of text search parsers\n"
 "   Schema   |  Name   |     Description     \n"
 "------------+---------+---------------------\n"
@@ -6000,16 +6139,18 @@ msgstr ""
 " url_path        | URL path\n"
 " version         | Version number\n"
 " word            | Word, all letters\n"
-"(23 rows)</screen>"
+"(23 rows)\n"
+"</screen>"
 
-#: textsearch.xml:3551(literal)
+#: textsearch.xml:3773(literal)
 msgid "\\dFt<placeholder-1/> <placeholder-2/>"
 msgstr "\\dFt<placeholder-1/> <placeholder-2/>"
 
-#: textsearch.xml:3553(para)
+#: textsearch.xml:3775(para)
 msgid ""
 "List text search templates (add <literal>+</literal> for more detail). "
-"<screen>=&gt; \\dFt\n"
+"<screen>\n"
+"=&gt; \\dFt\n"
 "                           List of text search templates\n"
 "   Schema   |   Name    |                        "
 "Description                        \n"
@@ -6021,10 +6162,12 @@ msgid ""
 " pg_catalog | snowball  | snowball stemmer\n"
 " pg_catalog | synonym   | synonym dictionary: replace word by its synonym\n"
 " pg_catalog | thesaurus | thesaurus dictionary: phrase by phrase "
-"substitution</screen>"
+"substitution\n"
+"</screen>"
 msgstr ""
 "Список шаблонов текстового поиска (добавьте <literal>+</literal> для "
-"дополнительных сведений). <screen>=&gt; \\dFt\n"
+"дополнительных сведений). <screen>\n"
+"=&gt; \\dFt\n"
 "                           List of text search templates\n"
 "  Schema  |  Name   |                       Description                  \n"
 "----------+---------+----------------------------------------------------\n"
@@ -6032,18 +6175,18 @@ msgstr ""
 "pg_catalog|simple   |simple dictionary: just lower case and check for ...\n"
 "pg_catalog|snowball |snowball stemmer\n"
 "pg_catalog|synonym  |synonym dictionary: replace word by its synonym\n"
-"pg_catalog|thesaurus|thesaurus dictionary: phrase by phrase substitution</"
-"screen>"
+"pg_catalog|thesaurus|thesaurus dictionary: phrase by phrase substitution\n"
+"</screen>"
 
-#: textsearch.xml:3572(title)
+#: textsearch.xml:3796(title)
 msgid "Limitations"
 msgstr "Ограничения"
 
-#: textsearch.xml:3579(para)
+#: textsearch.xml:3803(para)
 msgid "The length of each lexeme must be less than 2K bytes"
 msgstr "Длина лексемы не может превышать 2 килобайта"
 
-#: textsearch.xml:3582(para)
+#: textsearch.xml:3806(para)
 msgid ""
 "The length of a <type>tsvector</type> (lexemes + positions) must be less "
 "than 1 megabyte"
@@ -6052,17 +6195,17 @@ msgstr ""
 "превышать 1 мегабайт"
 
 #. TODO: number of lexemes in what?  This is unclear
-#: textsearch.xml:3587(para)
+#: textsearch.xml:3811(para)
 msgid "The number of lexemes must be less than 2<superscript>64</superscript>"
 msgstr "Число лексем должно быть меньше 2<superscript>64</superscript>"
 
-#: textsearch.xml:3591(para)
+#: textsearch.xml:3815(para)
 msgid ""
 "Position values in <type>tsvector</type> must be greater than 0 and no more "
 "than 16,383"
 msgstr "Значения позиций в <type>tsvector</type> должны быть от 0 до 16383"
 
-#: textsearch.xml:3595(para)
+#: textsearch.xml:3819(para)
 msgid ""
 "The match distance in a <literal>&lt;<replaceable>N</replaceable>&gt;</"
 "literal> (FOLLOWED BY) <type>tsquery</type> operator cannot be more than "
@@ -6071,11 +6214,11 @@ msgstr ""
 "Расстояние в операторе <literal>&lt;<replaceable>N</replaceable>&gt;</"
 "literal> (ПРЕДШЕСТВУЕТ) типа <type>tsquery</type> не может быть больше 16384"
 
-#: textsearch.xml:3600(para)
+#: textsearch.xml:3824(para)
 msgid "No more than 256 positions per lexeme"
 msgstr "Не больше 256 позиций для одной лексемы"
 
-#: textsearch.xml:3603(para)
+#: textsearch.xml:3827(para)
 msgid ""
 "The number of nodes (lexemes + operators) in a <type>tsquery</type> must be "
 "less than 32,768"
@@ -6083,7 +6226,7 @@ msgstr ""
 "Число узлов (лексемы + операторы) в значении <type>tsquery</type> должно "
 "быть меньше 32768"
 
-#: textsearch.xml:3574(para)
+#: textsearch.xml:3798(para)
 msgid ""
 "The current limitations of <productname>PostgreSQL</productname>'s text "
 "search features are: <placeholder-1/>"
@@ -6091,7 +6234,7 @@ msgstr ""
 "Текущая реализация текстового поиска в <productname>PostgreSQL</productname> "
 "имеет следующие ограничения: <placeholder-1/>"
 
-#: textsearch.xml:3609(para)
+#: textsearch.xml:3833(para)
 msgid ""
 "For comparison, the <productname>PostgreSQL</productname> 8.1 documentation "
 "contained 10,441 unique words, a total of 335,420 words, and the most "
@@ -6104,7 +6247,7 @@ msgstr ""
 "раз в 655 документах."
 
 #. TODO we need to put a date on these numbers?
-#: textsearch.xml:3617(para)
+#: textsearch.xml:3841(para)
 msgid ""
 "Another example &mdash; the <productname>PostgreSQL</productname> mailing "
 "list archives contained 910,989 unique words with 57,491,343 lexemes in "
@@ -6114,11 +6257,11 @@ msgstr ""
 "productname> содержали 910&nbsp;989 уникальных слов в 57&nbsp;491&nbsp;343 "
 "лексемах в 461&nbsp;020 сообщениях."
 
-#: textsearch.xml:3626(title)
+#: textsearch.xml:3850(title)
 msgid "Migration from Pre-8.3 Text Search"
 msgstr "Миграция с реализации текстового поиска в версиях до 8.3"
 
-#: textsearch.xml:3628(para)
+#: textsearch.xml:3852(para)
 msgid ""
 "Applications that use the <xref linkend=\"tsearch2\"/> module for text "
 "searching will need some adjustments to work with the built-in features:"
@@ -6127,7 +6270,7 @@ msgstr ""
 "использовавшие модуль <xref linkend=\"tsearch2\"/>, должны быть изменены с "
 "учётом следующих замечаний:"
 
-#: textsearch.xml:3637(para)
+#: textsearch.xml:3861(para)
 msgid ""
 "Some functions have been renamed or had small adjustments in their argument "
 "lists, and all of them are now in the <literal>pg_catalog</literal> schema, "
@@ -6143,7 +6286,7 @@ msgstr ""
 "выпущена новая версия <application>tsearch2</application>, предоставляющая "
 "необходимый уровень совместимости."
 
-#: textsearch.xml:3649(para)
+#: textsearch.xml:3873(para)
 msgid ""
 "The old <application>tsearch2</application> functions and other objects "
 "<emphasis>must</emphasis> be suppressed when loading <application>pg_dump</"
@@ -6160,7 +6303,7 @@ msgstr ""
 "application> прежде чем восстанавливать базу; тогда он предотвратит загрузку "
 "старых объектов."
 
-#: textsearch.xml:3660(para)
+#: textsearch.xml:3884(para)
 msgid ""
 "Text search configuration setup is completely different now. Instead of "
 "manually inserting rows into configuration tables, search is configured "
@@ -6174,7 +6317,7 @@ msgstr ""
 "Нестандартные конфигурации в базах версий до 8.3 не будут автоматически "
 "преобразованы в новый формат, вам придётся делать это самостоятельно."
 
-#: textsearch.xml:3678(para)
+#: textsearch.xml:3902(para)
 msgid ""
 "Configuration files now must be placed in a single specified directory "
 "(<filename>$SHAREDIR/tsearch_data</filename>), and must have a specific "
@@ -6188,7 +6331,7 @@ msgstr ""
 "словарей. Это ограничение было добавлено для предупреждения проблем "
 "безопасности."
 
-#: textsearch.xml:3688(para)
+#: textsearch.xml:3912(para)
 msgid ""
 "Configuration files must be encoded in UTF-8 encoding, regardless of what "
 "database encoding is used."
@@ -6196,7 +6339,7 @@ msgstr ""
 "Файлы конфигурации должны иметь кодировку UTF-8, вне зависимости от "
 "кодировок баз данных."
 
-#: textsearch.xml:3695(para)
+#: textsearch.xml:3919(para)
 msgid ""
 "In thesaurus configuration files, stop words must be marked with <literal>?</"
 "literal>."
@@ -6204,7 +6347,7 @@ msgstr ""
 "В файлах конфигурации тезаурусов стоп-слова должны помечаться знаком "
 "<literal>?</literal>."
 
-#: textsearch.xml:3671(para)
+#: textsearch.xml:3895(para)
 msgid ""
 "Most types of dictionaries rely on some outside-the-database configuration "
 "files. These are largely compatible with pre-8.3 usage, but note the "

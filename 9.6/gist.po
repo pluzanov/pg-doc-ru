@@ -308,11 +308,11 @@ msgstr ""
 "type>. Чтобы использовать его, укажите имя класса в <command>CREATE INDEX</"
 "command>, например: <placeholder-1/>"
 
-#: gist.xml:222(title)
+#: gist.xml:224(title)
 msgid "Extensibility"
 msgstr "Расширяемость"
 
-#: gist.xml:224(para)
+#: gist.xml:226(para)
 msgid ""
 "Traditionally, implementing a new index access method meant a lot of "
 "difficult work. It was necessary to understand the inner workings of the "
@@ -331,7 +331,7 @@ msgstr ""
 "acronym> берёт на себя заботу о параллельном доступе, поддержке журнала и "
 "поиске в структуре дерева."
 
-#: gist.xml:234(para)
+#: gist.xml:236(para)
 msgid ""
 "This extensibility should not be confused with the extensibility of the "
 "other standard search trees in terms of the data they can handle. For "
@@ -351,7 +351,7 @@ msgstr ""
 "предикаты сравнений (<literal>&lt;</literal>, <literal>=</literal>, "
 "<literal>&gt;</literal>), а индексы по хешу только запросы с равенством."
 
-#: gist.xml:245(para)
+#: gist.xml:247(para)
 msgid ""
 "So if you index, say, an image collection with a <productname>PostgreSQL</"
 "productname> B-tree, you can only issue queries such as <quote>is imagex "
@@ -374,7 +374,7 @@ msgstr ""
 "<quote>найти все изображения лошадей</quote> или <quote>найти все "
 "пересвеченные изображения</quote>."
 
-#: gist.xml:257(para)
+#: gist.xml:259(para)
 msgid ""
 "All it takes to get a <acronym>GiST</acronym> access method up and running "
 "is to implement several user-defined methods, which define the behavior of "
@@ -392,7 +392,7 @@ msgstr ""
 "<acronym>GiST</acronym> сочетает расширяемость с универсальностью, повторным "
 "использованием кода и аккуратным интерфейсом."
 
-#: gist.xml:267(para)
+#: gist.xml:269(para)
 msgid ""
 "There are seven methods that an index operator class for <acronym>GiST</"
 "acronym> must provide, and two that are optional. Correctness of the index "
@@ -435,11 +435,11 @@ msgstr ""
 "Необязательный девятый метод <function>fetch</function> требуется, если "
 "класс операторов желает поддерживать сканирование только индекса."
 
-#: gist.xml:291(function)
+#: gist.xml:293(function)
 msgid "consistent"
 msgstr "consistent"
 
-#: gist.xml:293(para)
+#: gist.xml:295(para)
 msgid ""
 "Given an index entry <literal>p</literal> and a query value <literal>q</"
 "literal>, this function determines whether the index entry is "
@@ -481,7 +481,7 @@ msgstr ""
 "соответствует ли оно запросу. Благодаря этому <acronym>GiST</acronym> "
 "поддерживает индексы как точной, так и неточной структуры."
 
-#: gist.xml:318(programlisting)
+#: gist.xml:320(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_consistent(internal, data_type, smallint, oid, internal)\n"
@@ -494,7 +494,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:325(programlisting)
+#: gist.xml:329(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_consistent);\n"
@@ -551,7 +551,7 @@ msgstr ""
 "    PG_RETURN_BOOL(retval);\n"
 "}"
 
-#: gist.xml:315(para)
+#: gist.xml:317(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -569,7 +569,7 @@ msgstr ""
 "класса операторов применяется &mdash; он соответствует одному из номеров "
 "операторов, заданных в команде <command>CREATE OPERATOR CLASS</command>."
 
-#: gist.xml:359(para)
+#: gist.xml:365(para)
 msgid ""
 "Depending on which operators you have included in the class, the data type "
 "of <varname>query</varname> could vary with the operator, since it will be "
@@ -593,11 +593,11 @@ msgstr ""
 "тип данного класса операторов, хотя фактический тип может быть каким-то "
 "другим, в зависимости от оператора."
 
-#: gist.xml:376(function)
+#: gist.xml:382(function)
 msgid "union"
 msgstr "union"
 
-#: gist.xml:378(para)
+#: gist.xml:384(para)
 msgid ""
 "This method consolidates information in the tree. Given a set of entries, "
 "this function generates a new index entry that represents all the given "
@@ -606,7 +606,7 @@ msgstr ""
 "Этот метод консолидирует информацию в дереве. Получив набор записей, он "
 "должен сгенерировать в индексе новую запись, представляющие все эти записи."
 
-#: gist.xml:387(programlisting)
+#: gist.xml:393(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_union(internal, internal)\n"
@@ -619,7 +619,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:394(programlisting)
+#: gist.xml:402(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_union);\n"
@@ -690,7 +690,7 @@ msgstr ""
 "    PG_RETURN_DATA_TYPE_P(out);\n"
 "}"
 
-#: gist.xml:384(para) gist.xml:465(para)
+#: gist.xml:390(para) gist.xml:475(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -700,7 +700,7 @@ msgstr ""
 "> И соответствующий код в модуле C должен реализовываться по такому шаблону: "
 "<placeholder-2/>"
 
-#: gist.xml:429(para)
+#: gist.xml:439(para)
 msgid ""
 "As you can see, in this skeleton we're dealing with a data type where "
 "<literal>union(X, Y, Z) = union(union(X, Y), Z)</literal>. It's easy enough "
@@ -713,7 +713,7 @@ msgstr ""
 "выполняется, реализовав соответствующий алгоритм объединения в этом опорном "
 "методе <acronym>GiST</acronym>."
 
-#: gist.xml:437(para)
+#: gist.xml:447(para)
 msgid ""
 "The result of the <function>union</function> function must be a value of the "
 "index's storage type, whatever that is (it might or might not be different "
@@ -728,7 +728,7 @@ msgstr ""
 "память, выделенную вызовом <function>palloc()</function>. Она не может "
 "просто вернуть полученное значение как есть, даже если оно имеет тот же тип."
 
-#: gist.xml:446(para)
+#: gist.xml:456(para)
 msgid ""
 "As shown above, the <function>union</function> function's first "
 "<type>internal</type> argument is actually a <structname>GistEntryVector</"
@@ -744,11 +744,11 @@ msgstr ""
 "требовалось, чтобы функция <function>union</function> сохраняла в этой "
 "переменной размер результирующего значения, но теперь такого требования нет.)"
 
-#: gist.xml:458(function)
+#: gist.xml:468(function)
 msgid "compress"
 msgstr "compress"
 
-#: gist.xml:460(para)
+#: gist.xml:470(para)
 msgid ""
 "Converts the data item into a format suitable for physical storage in an "
 "index page."
@@ -756,7 +756,7 @@ msgstr ""
 "Преобразует элемент данных в формат, подходящий для физического хранения в "
 "странице индекса."
 
-#: gist.xml:468(programlisting)
+#: gist.xml:478(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_compress(internal)\n"
@@ -769,7 +769,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:475(programlisting)
+#: gist.xml:487(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_compress);\n"
@@ -828,7 +828,7 @@ msgstr ""
 "    PG_RETURN_POINTER(retval);\n"
 "}"
 
-#: gist.xml:504(para)
+#: gist.xml:518(para)
 msgid ""
 "You have to adapt <replaceable>compressed_data_type</replaceable> to the "
 "specific type you're converting to in order to compress your leaf nodes, of "
@@ -838,11 +838,11 @@ msgstr ""
 "данных) нужно привести к нужному типу, при преобразовании в который будут "
 "сжиматься узлы на уровне листьев."
 
-#: gist.xml:513(function)
+#: gist.xml:527(function)
 msgid "decompress"
 msgstr "decompress"
 
-#: gist.xml:515(para)
+#: gist.xml:529(para)
 msgid ""
 "The reverse of the <function>compress</function> method. Converts the index "
 "representation of the data item into a format that can be manipulated by the "
@@ -852,7 +852,7 @@ msgstr ""
 "элемента данных в индексе в формат, с которым могут работать другие методы "
 "GiST в классе операторов."
 
-#: gist.xml:524(programlisting)
+#: gist.xml:538(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_decompress(internal)\n"
@@ -865,7 +865,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:531(programlisting)
+#: gist.xml:547(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_decompress);\n"
@@ -884,7 +884,7 @@ msgstr ""
 "    PG_RETURN_POINTER(PG_GETARG_POINTER(0));\n"
 "}"
 
-#: gist.xml:521(para)
+#: gist.xml:535(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -896,11 +896,11 @@ msgstr ""
 "<placeholder-2/> Этот шаблон подходит для случая, когда преобразовывать "
 "данные не нужно."
 
-#: gist.xml:546(function)
+#: gist.xml:564(function)
 msgid "penalty"
 msgstr "penalty"
 
-#: gist.xml:548(para)
+#: gist.xml:566(para)
 msgid ""
 "Returns a value indicating the <quote>cost</quote> of inserting the new "
 "entry into a particular branch of the tree. Items will be inserted down the "
@@ -915,7 +915,7 @@ msgstr ""
 "неотрицательными; если возвращается отрицательное значение, оно "
 "воспринимается как ноль."
 
-#: gist.xml:559(programlisting)
+#: gist.xml:577(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_penalty(internal, internal, internal)\n"
@@ -928,7 +928,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;  -- в некоторых случая функции стоимости не должны быть строгими"
 
-#: gist.xml:566(programlisting)
+#: gist.xml:586(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_penalty);\n"
@@ -961,7 +961,7 @@ msgstr ""
 "    PG_RETURN_POINTER(penalty);\n"
 "}"
 
-#: gist.xml:556(para)
+#: gist.xml:574(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -979,7 +979,7 @@ msgstr ""
 "аргументом. Собственно возвращаемое значение игнорируется, хотя в нём "
 "принято возвращать этот же адрес."
 
-#: gist.xml:588(para)
+#: gist.xml:610(para)
 msgid ""
 "The <function>penalty</function> function is crucial to good performance of "
 "the index. It'll get used at insertion time to determine which branch to "
@@ -992,11 +992,11 @@ msgstr ""
 "Это имеет значение во время запроса, так как чем более сбалансирован индекс, "
 "тем быстрее будет поиск в нём."
 
-#: gist.xml:598(function)
+#: gist.xml:620(function)
 msgid "picksplit"
 msgstr "picksplit"
 
-#: gist.xml:600(para)
+#: gist.xml:622(para)
 msgid ""
 "When an index page split is necessary, this function decides which entries "
 "on the page are to stay on the old page, and which are to move to the new "
@@ -1005,7 +1005,7 @@ msgstr ""
 "Когда необходимо разделить страницу индекса, эта функция решает, какие "
 "записи должны остаться в старой странице, а какие нужно перенести в новую."
 
-#: gist.xml:609(programlisting)
+#: gist.xml:631(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_picksplit(internal, internal)\n"
@@ -1018,7 +1018,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:616(programlisting)
+#: gist.xml:640(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_picksplit);\n"
@@ -1169,7 +1169,7 @@ msgstr ""
 "    PG_RETURN_POINTER(v);\n"
 "}"
 
-#: gist.xml:606(para)
+#: gist.xml:628(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -1186,7 +1186,7 @@ msgstr ""
 "structname>. Собственно возвращаемое значение игнорируется, хотя в нём "
 "принято возвращать адрес <structname>v</structname>."
 
-#: gist.xml:696(para)
+#: gist.xml:722(para)
 msgid ""
 "Like <function>penalty</function>, the <function>picksplit</function> "
 "function is crucial to good performance of the index. Designing suitable "
@@ -1200,11 +1200,11 @@ msgstr ""
 "разработке подходящих реализаций <function>penalty</function> и "
 "<function>picksplit</function>."
 
-#: gist.xml:707(function)
+#: gist.xml:733(function)
 msgid "same"
 msgstr "same"
 
-#: gist.xml:709(para)
+#: gist.xml:735(para)
 msgid ""
 "Returns true if two index entries are identical, false otherwise. (An "
 "<quote>index entry</quote> is a value of the index's storage type, not "
@@ -1214,7 +1214,7 @@ msgstr ""
 "случае. (<quote>Элемент индекса</quote> — это значение типа хранения "
 "индекса, а не обязательно исходного типа индексируемого столбца.)"
 
-#: gist.xml:718(programlisting)
+#: gist.xml:744(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_same(storage_type, storage_type, internal)\n"
@@ -1227,7 +1227,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:725(programlisting)
+#: gist.xml:753(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_same);\n"
@@ -1256,7 +1256,7 @@ msgstr ""
 "    PG_RETURN_POINTER(result);\n"
 "}"
 
-#: gist.xml:715(para)
+#: gist.xml:741(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -1274,11 +1274,11 @@ msgstr ""
 "возвращаемое значение игнорируется, хотя в нём принято возвращать этот же "
 "адрес."
 
-#: gist.xml:748(function)
+#: gist.xml:778(function)
 msgid "distance"
 msgstr "distance"
 
-#: gist.xml:750(para)
+#: gist.xml:780(para)
 msgid ""
 "Given an index entry <literal>p</literal> and a query value <literal>q</"
 "literal>, this function determines the index entry's <quote>distance</quote> "
@@ -1301,7 +1301,7 @@ msgstr ""
 "записи, а для внутреннего узла дерева это будет минимальная дистанция, "
 "которая может быть получена среди всех его потомков."
 
-#: gist.xml:766(programlisting)
+#: gist.xml:796(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_distance(internal, data_type, smallint, oid, internal)\n"
@@ -1314,7 +1314,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:773(programlisting)
+#: gist.xml:805(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_distance);\n"
@@ -1357,7 +1357,7 @@ msgstr ""
 "    PG_RETURN_FLOAT8(retval);\n"
 "}"
 
-#: gist.xml:763(para)
+#: gist.xml:793(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> And the matching code in the C module could then follow "
@@ -1370,7 +1370,7 @@ msgstr ""
 "<placeholder-2/> Функции <function>distance</function> передаются те же "
 "аргументы, что и функции <function>consistent</function>."
 
-#: gist.xml:797(para)
+#: gist.xml:831(para)
 msgid ""
 "Some approximation is allowed when determining the distance, so long as the "
 "result is never greater than the entry's actual distance. Thus, for example, "
@@ -1394,7 +1394,7 @@ msgstr ""
 "вычислит точную дистанцию, выбрав кортеж из кучи, и переупорядочит кортежи "
 "при необходимости."
 
-#: gist.xml:810(para)
+#: gist.xml:844(para)
 msgid ""
 "If the distance function returns <literal>*recheck = true</literal> for any "
 "leaf node, the original ordering operator's return type must be "
@@ -1422,11 +1422,11 @@ msgstr ""
 "возвращать такие значения из функций <function>distance</function> не "
 "рекомендуется.)"
 
-#: gist.xml:828(function)
+#: gist.xml:862(function)
 msgid "fetch"
 msgstr "fetch"
 
-#: gist.xml:830(para)
+#: gist.xml:864(para)
 msgid ""
 "Converts the compressed index representation of a data item into the "
 "original data type, for index-only scans. The returned data must be an "
@@ -1436,7 +1436,7 @@ msgstr ""
 "данных, для сканирования только индекса. Возвращаемые данные должны быть "
 "точной, не примерной копией изначально проиндексированного значения."
 
-#: gist.xml:839(programlisting)
+#: gist.xml:873(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION my_fetch(internal)\n"
@@ -1449,7 +1449,7 @@ msgstr ""
 "AS 'MODULE_PATHNAME'\n"
 "LANGUAGE C STRICT;"
 
-#: gist.xml:836(para)
+#: gist.xml:870(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The argument is a pointer to a <structname>GISTENTRY</"
@@ -1470,7 +1470,7 @@ msgstr ""
 "данными листьев ничего, метод <function>fetch</function> может возвратить "
 "аргумент без изменений."
 
-#: gist.xml:856(programlisting)
+#: gist.xml:892(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(my_fetch);\n"
@@ -1521,7 +1521,7 @@ msgstr ""
 "    PG_RETURN_POINTER(retval);\n"
 "}"
 
-#: gist.xml:853(para)
+#: gist.xml:889(para)
 msgid ""
 "The matching code in the C module could then follow this skeleton: "
 "<placeholder-1/>"
@@ -1529,7 +1529,7 @@ msgstr ""
 "Соответствующий код в модуле C должен реализовываться по такому шаблону: "
 "<placeholder-1/>"
 
-#: gist.xml:881(para)
+#: gist.xml:919(para)
 msgid ""
 "If the compress method is lossy for leaf entries, the operator class cannot "
 "support index-only scans, and must not define a <function>fetch</function> "
@@ -1539,7 +1539,7 @@ msgstr ""
 "операторов не может поддерживать сканирование только индекса и не должен "
 "определять функцию <function>fetch</function>."
 
-#: gist.xml:891(para)
+#: gist.xml:929(para)
 msgid ""
 "All the GiST support methods are normally called in short-lived memory "
 "contexts; that is, <varname>CurrentMemoryContext</varname> will get reset "
@@ -1567,15 +1567,15 @@ msgstr ""
 "pfree для предыдущего значения, заменяя значение в <literal>fn_extra</"
 "literal>, чтобы не допустить накопления утечек памяти в ходе операции."
 
-#: gist.xml:908(title)
+#: gist.xml:946(title)
 msgid "Implementation"
 msgstr "Реализация"
 
-#: gist.xml:911(title)
+#: gist.xml:949(title)
 msgid "GiST buffering build"
 msgstr "Построение GiST с буферизацией"
 
-#: gist.xml:912(para)
+#: gist.xml:950(para)
 msgid ""
 "Building large GiST indexes by simply inserting all the tuples tends to be "
 "slow, because if the index tuples are scattered across the index and the "
@@ -1600,7 +1600,7 @@ msgstr ""
 "кортежи в один момент времени, и эти страницы будут умещаться в кеше, даже "
 "если весь индекс очень большой."
 
-#: gist.xml:924(para)
+#: gist.xml:962(para)
 msgid ""
 "However, buffering index build needs to call the <function>penalty</"
 "function> function more often, which consumes some extra CPU resources. "
@@ -1619,7 +1619,7 @@ msgstr ""
 "зависит от различных факторов, например, от распределения поступающих данных "
 "и от реализации класса операторов."
 
-#: gist.xml:934(para)
+#: gist.xml:972(para)
 msgid ""
 "By default, a GiST index build switches to the buffering method when the "
 "index size reaches <xref linkend=\"guc-effective-cache-size\"/>. It can be "
@@ -1635,67 +1635,67 @@ msgstr ""
 "достаточно эффективно в большинстве случаев, но если входные данные "
 "упорядочены, выключив буферизацию, можно получить некоторое ускорение."
 
-#: gist.xml:947(title)
+#: gist.xml:985(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: gist.xml:961(filename)
+#: gist.xml:999(filename)
 msgid "btree_gist"
 msgstr "btree_gist"
 
-#: gist.xml:963(para)
+#: gist.xml:1001(para)
 msgid "B-tree equivalent functionality for several data types"
 msgstr "Функциональность B-дерева для различных типов данных"
 
-#: gist.xml:968(filename)
+#: gist.xml:1006(filename)
 msgid "cube"
 msgstr "cube"
 
-#: gist.xml:970(para)
+#: gist.xml:1008(para)
 msgid "Indexing for multidimensional cubes"
 msgstr "Индексирование для многомерных кубов"
 
-#: gist.xml:975(filename)
+#: gist.xml:1013(filename)
 msgid "hstore"
 msgstr "hstore"
 
-#: gist.xml:977(para)
+#: gist.xml:1015(para)
 msgid "Module for storing (key, value) pairs"
 msgstr "Модуль для хранения пар (ключ, значение)"
 
-#: gist.xml:982(filename)
+#: gist.xml:1020(filename)
 msgid "intarray"
 msgstr "intarray"
 
-#: gist.xml:984(para)
+#: gist.xml:1022(para)
 msgid "RD-Tree for one-dimensional array of int4 values"
 msgstr "RD-дерево для одномерных массивов значений int4"
 
-#: gist.xml:989(filename)
+#: gist.xml:1027(filename)
 msgid "ltree"
 msgstr "ltree"
 
-#: gist.xml:991(para)
+#: gist.xml:1029(para)
 msgid "Indexing for tree-like structures"
 msgstr "Индексирование древовидных структур"
 
-#: gist.xml:996(filename)
+#: gist.xml:1034(filename)
 msgid "pg_trgm"
 msgstr "pg_trgm"
 
-#: gist.xml:998(para)
+#: gist.xml:1036(para)
 msgid "Text similarity using trigram matching"
 msgstr "Схожесть текста на основе статистики триграмм"
 
-#: gist.xml:1003(filename)
+#: gist.xml:1041(filename)
 msgid "seg"
 msgstr "seg"
 
-#: gist.xml:1005(para)
+#: gist.xml:1043(para)
 msgid "Indexing for <quote>float ranges</quote>"
 msgstr "Индексирование <quote>диапазонов чисел с плавающей точкой</quote>"
 
-#: gist.xml:949(para)
+#: gist.xml:987(para)
 msgid ""
 "The <productname>PostgreSQL</productname> source distribution includes "
 "several examples of index methods implemented using <acronym>GiST</acronym>. "

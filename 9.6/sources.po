@@ -18,7 +18,7 @@ msgstr ""
 msgid "PostgreSQL Coding Conventions"
 msgstr "Соглашения по оформлению кода PostgreSQL"
 
-#: sources.xml:8(title) sources.xml:445(title)
+#: sources.xml:8(title) sources.xml:463(title)
 msgid "Formatting"
 msgstr "Форматирование"
 
@@ -81,7 +81,7 @@ msgstr ""
 " * и продолжается здесь\n"
 " */"
 
-#: sources.xml:45(programlisting)
+#: sources.xml:47(programlisting)
 #, no-wrap
 msgid ""
 "    /*----------\n"
@@ -111,7 +111,7 @@ msgstr ""
 "обычный текст. Если вы хотите сохранить разрывы строк в блоке с отступом, "
 "добавьте минусы следующим образом: <placeholder-2/>"
 
-#: sources.xml:52(para)
+#: sources.xml:56(para)
 msgid ""
 "While submitted patches do not absolutely have to follow these formatting "
 "rules, it's a good idea to do so. Your code will get run through "
@@ -127,7 +127,7 @@ msgstr ""
 "правило: <quote>оформляйте новый код так же, как выглядит существующий код "
 "вокруг</quote>."
 
-#: sources.xml:61(para)
+#: sources.xml:65(para)
 msgid ""
 "The <filename>src/tools</filename> directory contains sample settings files "
 "that can be used with the <productname>emacs</productname>, "
@@ -140,7 +140,7 @@ msgstr ""
 "productname> для упрощения задачи форматирования кода в соответствии с "
 "описанными соглашениями."
 
-#: sources.xml:72(programlisting)
+#: sources.xml:76(programlisting)
 #, no-wrap
 msgid ""
 "more -x4\n"
@@ -149,7 +149,7 @@ msgstr ""
 "more -x4\n"
 "less -x4"
 
-#: sources.xml:69(para)
+#: sources.xml:73(para)
 msgid ""
 "The text browsing tools <application>more</application> and "
 "<application>less</application> can be invoked as: <placeholder-1/> to make "
@@ -159,19 +159,19 @@ msgstr ""
 "<application>more</application> и <application>less</application>, их можно "
 "вызвать так: <placeholder-1/>"
 
-#: sources.xml:79(title)
+#: sources.xml:85(title)
 msgid "Reporting Errors Within the Server"
 msgstr "Вывод сообщений об ошибках в коде сервера"
 
-#: sources.xml:81(indexterm)
+#: sources.xml:87(indexterm)
 msgid "<primary>ereport</primary>"
 msgstr "<primary>ereport</primary>"
 
-#: sources.xml:84(indexterm)
+#: sources.xml:90(indexterm)
 msgid "<primary>elog</primary>"
 msgstr "<primary>elog</primary>"
 
-#: sources.xml:88(para)
+#: sources.xml:94(para)
 msgid ""
 "Error, warning, and log messages generated within the server code should be "
 "created using <function>ereport</function>, or its older cousin "
@@ -183,7 +183,7 @@ msgstr ""
 "родственной её предшественницей <function>elog</function>. Использование "
 "этой функции достаточно сложно и требует дополнительного объяснения."
 
-#: sources.xml:95(para)
+#: sources.xml:101(para)
 msgid ""
 "There are two required elements for every message: a severity level (ranging "
 "from <literal>DEBUG</literal> to <literal>PANIC</literal>) and a primary "
@@ -210,7 +210,7 @@ msgstr ""
 "вспомогательных функций, таких как <function>errmsg</function>, в вызове "
 "<function>ereport</function>."
 
-#: sources.xml:112(programlisting)
+#: sources.xml:118(programlisting)
 #, no-wrap
 msgid ""
 "ereport(ERROR,\n"
@@ -221,7 +221,7 @@ msgstr ""
 "        (errcode(ERRCODE_DIVISION_BY_ZERO),\n"
 "         errmsg(\"division by zero\")));"
 
-#: sources.xml:110(para)
+#: sources.xml:116(para)
 msgid ""
 "A typical call to <function>ereport</function> might look like this: "
 "<placeholder-1/> This specifies error severity level <literal>ERROR</"
@@ -241,7 +241,7 @@ msgstr ""
 "окружающих вызовы вспомогательных функций &mdash; они загромождают код, но "
 "требуются синтаксисом."
 
-#: sources.xml:125(programlisting)
+#: sources.xml:133(programlisting)
 #, no-wrap
 msgid ""
 "ereport(ERROR,\n"
@@ -260,7 +260,7 @@ msgstr ""
 "         errhint(\"Unable to choose a best candidate function. \"\n"
 "                 \"You might need to add explicit typecasts.\")));"
 
-#: sources.xml:123(para)
+#: sources.xml:131(para)
 msgid ""
 "Here is a more complex example: <placeholder-1/> This illustrates the use of "
 "format codes to embed run-time values into a message text. Also, an optional "
@@ -271,7 +271,7 @@ msgstr ""
 "сообщения. Также в нём добавляется дополнительное сообщение "
 "<quote>подсказки</quote>."
 
-#: sources.xml:136(para)
+#: sources.xml:146(para)
 msgid ""
 "If the severity level is <literal>ERROR</literal> or higher, "
 "<function>ereport</function> aborts the execution of the user-defined "
@@ -284,7 +284,7 @@ msgstr ""
 "<literal>ERROR</literal>, <function>ereport</function> завершается обычным "
 "способом."
 
-#: sources.xml:147(para)
+#: sources.xml:157(para)
 msgid ""
 "<function>errcode(sqlerrcode)</function> specifies the SQLSTATE error "
 "identifier code for the condition. If this routine is not called, the error "
@@ -306,7 +306,7 @@ msgstr ""
 "умолчанию довольно разумны, всегда стоит подумать, насколько они уместны, "
 "прежде чем опустить вызов <function>errcode()</function>."
 
-#: sources.xml:168(para)
+#: sources.xml:178(para)
 msgid ""
 "That is, the value that was current when the <function>ereport</function> "
 "call was reached; changes of <literal>errno</literal> within the auxiliary "
@@ -320,7 +320,7 @@ msgstr ""
 "так, если вы запишете <literal>strerror(errno)</literal> явно в списке "
 "параметров <function>errmsg</function>; поэтому делать так не нужно."
 
-#: sources.xml:160(para)
+#: sources.xml:170(para)
 msgid ""
 "<function>errmsg(const char *msg, ...)</function> specifies the primary "
 "error message text, and possibly run-time values to insert into it. "
@@ -347,7 +347,7 @@ msgstr ""
 "пропущена через <function>gettext</function>, то есть может быть "
 "локализована, до обработки кодов формата."
 
-#: sources.xml:183(para)
+#: sources.xml:193(para)
 msgid ""
 "<function>errmsg_internal(const char *msg, ...)</function> is the same as "
 "<function>errmsg</function>, except that the message string will not be "
@@ -361,7 +361,7 @@ msgstr ""
 "использовать для случаев, которые <quote>не происходят никогда</quote>, так "
 "что тратить силы на их перевод не стоит."
 
-#: sources.xml:192(para)
+#: sources.xml:202(para)
 msgid ""
 "<function>errmsg_plural(const char *fmt_singular, const char *fmt_plural, "
 "unsigned long n, ...)</function> is like <function>errmsg</function>, but "
@@ -384,7 +384,7 @@ msgstr ""
 "формата. За дополнительными сведениями обратитесь к <xref remap=\"3\" "
 "linkend=\"nls-guidelines\"/>."
 
-#: sources.xml:205(para)
+#: sources.xml:215(para)
 msgid ""
 "<function>errdetail(const char *msg, ...)</function> supplies an optional "
 "<quote>detail</quote> message; this is to be used when there is additional "
@@ -398,7 +398,7 @@ msgstr ""
 "Строка сообщения обрабатывается так же, как и для <function>errmsg</"
 "function>."
 
-#: sources.xml:214(para)
+#: sources.xml:224(para)
 msgid ""
 "<function>errdetail_internal(const char *msg, ...)</function> is the same as "
 "<function>errdetail</function>, except that the message string will not be "
@@ -414,7 +414,7 @@ msgstr ""
 "силы, например, когда это техническая информация, непонятная большинству "
 "пользователей."
 
-#: sources.xml:224(para)
+#: sources.xml:234(para)
 msgid ""
 "<function>errdetail_plural(const char *fmt_singular, const char *fmt_plural, "
 "unsigned long n, ...)</function> is like <function>errdetail</function>, but "
@@ -427,7 +427,7 @@ msgstr ""
 "числами. За дополнительными сведениями обратитесь к <xref remap=\"3\" "
 "linkend=\"nls-guidelines\"/>."
 
-#: sources.xml:232(para)
+#: sources.xml:242(para)
 msgid ""
 "<function>errdetail_log(const char *msg, ...)</function> is the same as "
 "<function>errdetail</function> except that this string goes only to the "
@@ -446,7 +446,7 @@ msgstr ""
 "имеющих конфиденциальный характер или большой размер, так что передавать их "
 "клиенту нежелательно."
 
-#: sources.xml:244(para)
+#: sources.xml:254(para)
 msgid ""
 "<function>errdetail_log_plural(const char *fmt_singular, const char "
 "*fmt_plural, unsigned long n, ...)</function> is like "
@@ -460,7 +460,7 @@ msgstr ""
 "сообщения с множественными числами. За дополнительными сведениями обратитесь "
 "к <xref remap=\"3\" linkend=\"nls-guidelines\"/>."
 
-#: sources.xml:253(para)
+#: sources.xml:263(para)
 msgid ""
 "<function>errhint(const char *msg, ...)</function> supplies an optional "
 "<quote>hint</quote> message; this is to be used when offering suggestions "
@@ -473,7 +473,7 @@ msgstr ""
 "проблемы, а не просто сообщить факты, связанные с ней. Строка сообщения "
 "обрабатывается так же, как и для <function>errmsg</function>."
 
-#: sources.xml:263(para)
+#: sources.xml:273(para)
 msgid ""
 "<function>errcontext(const char *msg, ...)</function> is not normally called "
 "directly from an <function>ereport</function> message site; rather it is "
@@ -495,7 +495,7 @@ msgstr ""
 "добавляемые таким образом последовательные сообщения складываются через "
 "символы перевода строк."
 
-#: sources.xml:276(para)
+#: sources.xml:286(para)
 msgid ""
 "<function>errposition(int cursorpos)</function> specifies the textual "
 "location of an error within a query string. Currently it is only useful for "
@@ -506,7 +506,7 @@ msgstr ""
 "тексте запроса. В настоящее время это полезно только для ошибок, выявляемых "
 "на этапах лексического и синтаксического анализа запроса."
 
-#: sources.xml:284(para)
+#: sources.xml:294(para)
 msgid ""
 "<function>errtable(Relation rel)</function> specifies a relation whose name "
 "and schema name should be included as auxiliary fields in the error report."
@@ -515,7 +515,7 @@ msgstr ""
 "схема которого должны быть включены во вспомогательные поля сообщения об "
 "ошибке."
 
-#: sources.xml:291(para)
+#: sources.xml:301(para)
 msgid ""
 "<function>errtablecol(Relation rel, int attnum)</function> specifies a "
 "column whose name, table name, and schema name should be included as "
@@ -525,7 +525,7 @@ msgstr ""
 "столбец, имя которого, вместе с именем таблицы и схемы, должно быть включено "
 "во вспомогательные поля сообщения об ошибке."
 
-#: sources.xml:298(para)
+#: sources.xml:308(para)
 msgid ""
 "<function>errtableconstraint(Relation rel, const char *conname)</function> "
 "specifies a table constraint whose name, table name, and schema name should "
@@ -543,7 +543,7 @@ msgstr ""
 "в качестве <literal>rel</literal> нужно передавать нижележащее отношение, а "
 "не сам индекс."
 
-#: sources.xml:309(para)
+#: sources.xml:319(para)
 msgid ""
 "<function>errdatatype(Oid datatypeOid)</function> specifies a data type "
 "whose name and schema name should be included as auxiliary fields in the "
@@ -553,7 +553,7 @@ msgstr ""
 "которого, вместе с именем схемы, должно включаться во вспомогательные поля "
 "сообщения об ошибке."
 
-#: sources.xml:316(para)
+#: sources.xml:326(para)
 msgid ""
 "<function>errdomainconstraint(Oid datatypeOid, const char *conname)</"
 "function> specifies a domain constraint whose name, domain name, and schema "
@@ -563,7 +563,7 @@ msgstr ""
 "function> задаёт имя ограничения домена, которое вместе с именем домена и "
 "схемы должно включаться во вспомогательные поля сообщения об ошибке."
 
-#: sources.xml:323(para)
+#: sources.xml:333(para)
 msgid ""
 "<function>errcode_for_file_access()</function> is a convenience function "
 "that selects an appropriate SQLSTATE error identifier for a failure in a "
@@ -578,7 +578,7 @@ msgstr ""
 "literal>. Обычно это используется в сочетании с <literal>%m</literal> в "
 "основном сообщении об ошибке."
 
-#: sources.xml:333(para)
+#: sources.xml:343(para)
 msgid ""
 "<function>errcode_for_socket_access()</function> is a convenience function "
 "that selects an appropriate SQLSTATE error identifier for a failure in a "
@@ -588,7 +588,7 @@ msgstr ""
 "выбирающая подходящий идентификатор SQLSTATE при сбое в системном вызове, в "
 "котором происходит обращение к сокетам."
 
-#: sources.xml:340(para)
+#: sources.xml:350(para)
 msgid ""
 "<function>errhidestmt(bool hide_stmt)</function> can be called to specify "
 "suppression of the <literal>STATEMENT:</literal> portion of a message in the "
@@ -600,7 +600,7 @@ msgstr ""
 "literal>) в журнал сервера. Обычно это уместно, когда само сообщение "
 "включает текст текущего оператора."
 
-#: sources.xml:348(para)
+#: sources.xml:358(para)
 msgid ""
 "<function>errhidecontext(bool hide_ctx)</function> can be called to specify "
 "suppression of the <literal>CONTEXT:</literal> portion of a message in the "
@@ -613,7 +613,7 @@ msgstr ""
 "отладочных сообщений, в которых одна и та же информация о контексте, "
 "выводимая в журнал, будет только чрезмерно замусоривать его."
 
-#: sources.xml:143(para)
+#: sources.xml:153(para)
 msgid ""
 "The available auxiliary routines for <function>ereport</function> are: "
 "<placeholder-1/>"
@@ -621,7 +621,7 @@ msgstr ""
 "Для <function>ereport</function> предлагаются следующие вспомогательные "
 "функции: <placeholder-1/>"
 
-#: sources.xml:360(para)
+#: sources.xml:370(para)
 msgid ""
 "At most one of the functions <function>errtable</function>, "
 "<function>errtablecol</function>, <function>errtableconstraint</function>, "
@@ -648,17 +648,17 @@ msgstr ""
 "целостности ограничения), но в будущем область его применения может быть "
 "расширена."
 
-#: sources.xml:379(programlisting)
+#: sources.xml:389(programlisting)
 #, no-wrap
 msgid "elog(level, \"format string\", ...);"
 msgstr "elog(level, \"format string\", ...);"
 
-#: sources.xml:381(programlisting)
+#: sources.xml:393(programlisting)
 #, no-wrap
 msgid "ereport(level, (errmsg_internal(\"format string\", ...)));"
 msgstr "ereport(level, (errmsg_internal(\"format string\", ...)));"
 
-#: sources.xml:376(para)
+#: sources.xml:386(para)
 msgid ""
 "There is an older function <function>elog</function> that is still heavily "
 "used. An <function>elog</function> call: <placeholder-1/> is exactly "
@@ -684,7 +684,7 @@ msgstr ""
 "function>; для таких сообщений эта функция предпочитается из-за простоты "
 "записи."
 
-#: sources.xml:392(para)
+#: sources.xml:406(para)
 msgid ""
 "Advice about writing good error messages can be found in <xref linkend="
 "\"error-style-guide\"/>."
@@ -692,11 +692,11 @@ msgstr ""
 "Советы по написанию хороших сообщений об ошибках можно найти в <xref remap="
 "\"6\" linkend=\"error-style-guide\"/>."
 
-#: sources.xml:399(title)
+#: sources.xml:413(title)
 msgid "Error Message Style Guide"
 msgstr "Руководство по стилю сообщений об ошибках"
 
-#: sources.xml:401(para)
+#: sources.xml:415(para)
 msgid ""
 "This style guide is offered in the hope of maintaining a consistent, user-"
 "friendly style throughout all the messages generated by "
@@ -706,11 +706,11 @@ msgstr ""
 "понятный пользователю стиль для всех сообщений, которые выдаёт "
 "<productname>PostgreSQL</productname>."
 
-#: sources.xml:408(title)
+#: sources.xml:422(title)
 msgid "What Goes Where"
 msgstr "Что и куда выводить"
 
-#: sources.xml:410(para)
+#: sources.xml:424(para)
 msgid ""
 "The primary message should be short, factual, and avoid reference to "
 "implementation details such as specific function names. <quote>Short</quote> "
@@ -732,7 +732,7 @@ msgstr ""
 "решение проблемы, особенно, если это решение может быть применимо не всегда, "
 "передайте его в сообщении-подсказке."
 
-#: sources.xml:424(programlisting)
+#: sources.xml:438(programlisting)
 #, no-wrap
 msgid ""
 "IpcMemoryCreate: shmget(key=%d, size=%u, 0%o) failed: %m\n"
@@ -741,7 +741,7 @@ msgstr ""
 "IpcMemoryCreate: ошибка в shmget(ключ=%d, размер=%u, 0%o): %m\n"
 "(плюс длинное дополнение, по сути представляющее собой подсказку)"
 
-#: sources.xml:427(programlisting)
+#: sources.xml:443(programlisting)
 #, no-wrap
 msgid ""
 "Primary:    could not create shared memory segment: %m\n"
@@ -752,11 +752,11 @@ msgstr ""
 "Подробное:   Ошибка в системном вызове shmget(key=%d, size=%u, 0%o).\n"
 "Подсказка:   дополнительный текст"
 
-#: sources.xml:422(para)
+#: sources.xml:436(para)
 msgid "For example, instead of: <placeholder-1/> write: <placeholder-2/>"
 msgstr "Например, вместо: <placeholder-1/> следует записать: <placeholder-2/>"
 
-#: sources.xml:432(para)
+#: sources.xml:450(para)
 msgid ""
 "Rationale: keeping the primary message short helps keep it to the point, and "
 "lets clients lay out screen space on the assumption that one line is enough "
@@ -774,7 +774,7 @@ msgstr ""
 "записываются в журнал сервера для сокращения его объёма. Детали реализации "
 "лучше опускать, так как пользователи не должны в них разбираться."
 
-#: sources.xml:447(para)
+#: sources.xml:465(para)
 msgid ""
 "Don't put any specific assumptions about formatting into the message texts. "
 "Expect clients and the server log to wrap lines to fit their own needs. In "
@@ -792,7 +792,7 @@ msgstr ""
 "автоматически добавляются символы перевода строки для разделения уровней "
 "контекста, например, вызовов функций.)"
 
-#: sources.xml:457(para)
+#: sources.xml:475(para)
 msgid ""
 "Rationale: Messages are not necessarily displayed on terminal-type displays. "
 "In GUI displays or browsers these formatting instructions are at best "
@@ -802,11 +802,11 @@ msgstr ""
 "терминального типа. В графических интерфейсах или браузерах эти инструкции "
 "форматирования в лучшем случае игнорируются."
 
-#: sources.xml:466(title)
+#: sources.xml:484(title)
 msgid "Quotation Marks"
 msgstr "Символы кавычек"
 
-#: sources.xml:468(para)
+#: sources.xml:486(para)
 msgid ""
 "English text should use double quotes when quoting is appropriate. Text in "
 "other languages should consistently use one kind of quotes that is "
@@ -816,7 +816,7 @@ msgstr ""
 "двойные кавычки. В тексте на других языках следует единообразно использовать "
 "тот тип кавычек, который принят для печати вывода других программ."
 
-#: sources.xml:474(para)
+#: sources.xml:492(para)
 msgid ""
 "Rationale: The choice of double quotes over single quotes is somewhat "
 "arbitrary, but tends to be the preferred use. Some have suggested choosing "
@@ -835,11 +835,11 @@ msgstr ""
 "сущностей в кавычках, не всегда можно перевести на другие языки и к тому же "
 "довольно бессмысленно."
 
-#: sources.xml:487(title)
+#: sources.xml:505(title)
 msgid "Use of Quotes"
 msgstr "Использование кавычек"
 
-#: sources.xml:489(para)
+#: sources.xml:507(para)
 msgid ""
 "Use quotes always to delimit file names, user-supplied identifiers, and "
 "other variables that might contain words. Do not use them to mark up "
@@ -850,7 +850,7 @@ msgstr ""
 "слова. Не заключайте в кавычки переменные, которые никогда не будут "
 "содержать слова (например, имена операторов)."
 
-#: sources.xml:495(para)
+#: sources.xml:513(para)
 msgid ""
 "There are functions in the backend that will double-quote their own output "
 "at need (for example, <function>format_type_be()</function>). Do not put "
@@ -861,7 +861,7 @@ msgstr ""
 "function>). Дополнительные кавычки вокруг результата таких функций добавлять "
 "не следует."
 
-#: sources.xml:501(para)
+#: sources.xml:519(para)
 msgid ""
 "Rationale: Objects can have names that create ambiguity when embedded in a "
 "message. Be consistent about denoting where a plugged-in name starts and "
@@ -872,11 +872,11 @@ msgstr ""
 "где заканчивается встроенное имя. Но не загромождайте сообщения ненужными "
 "или повторными знаками кавычек."
 
-#: sources.xml:511(title)
+#: sources.xml:529(title)
 msgid "Grammar and Punctuation"
 msgstr "Грамматика и пунктуация"
 
-#: sources.xml:513(para)
+#: sources.xml:531(para)
 msgid ""
 "The rules are different for primary error messages and for detail/hint "
 "messages:"
@@ -884,7 +884,7 @@ msgstr ""
 "Правила для основного сообщения и дополнительного сообщения/подсказки "
 "различаются:"
 
-#: sources.xml:518(para)
+#: sources.xml:536(para)
 msgid ""
 "Primary error messages: Do not capitalize the first letter. Do not end a "
 "message with a period. Do not even think about ending a message with an "
@@ -894,7 +894,7 @@ msgstr ""
 "завершайте сообщение точкой. Даже не думайте о том, чтобы завершить "
 "сообщение восклицательным знаком!"
 
-#: sources.xml:524(para)
+#: sources.xml:542(para)
 msgid ""
 "Detail and hint messages: Use complete sentences, and end each with a "
 "period. Capitalize the first word of sentences. Put two spaces after the "
@@ -906,7 +906,7 @@ msgstr ""
 "Добавляйте два пробела после точки, если за одним предложением следует "
 "другое (для английского текста; может не подходить для других языков)."
 
-#: sources.xml:531(para)
+#: sources.xml:549(para)
 msgid ""
 "Error context strings: Do not capitalize the first letter and do not end the "
 "string with a period. Context strings should normally not be complete "
@@ -916,7 +916,7 @@ msgstr ""
 "завершайте строку точкой. Строки контекста обычно не должны быть полными "
 "предложениями."
 
-#: sources.xml:537(para)
+#: sources.xml:555(para)
 msgid ""
 "Rationale: Avoiding punctuation makes it easier for client applications to "
 "embed the message into a variety of grammatical contexts. Often, primary "
@@ -935,11 +935,11 @@ msgstr ""
 "Единообразия ради, они должны следовать стилю полного предложения, даже если "
 "предложение всего одно."
 
-#: sources.xml:550(title)
+#: sources.xml:568(title)
 msgid "Upper Case vs. Lower Case"
 msgstr "Верхний регистр или нижний регистр"
 
-#: sources.xml:552(para)
+#: sources.xml:570(para)
 msgid ""
 "Use lower case for message wording, including the first letter of a primary "
 "error message. Use upper case for SQL commands and key words if they appear "
@@ -949,7 +949,7 @@ msgstr ""
 "об ошибке. Используйте верхний регистр для команд SQL и ключевых слов, если "
 "они выводятся в сообщении."
 
-#: sources.xml:558(para)
+#: sources.xml:576(para)
 msgid ""
 "Rationale: It's easier to make everything look more consistent this way, "
 "since some messages are complete sentences and some not."
@@ -957,11 +957,11 @@ msgstr ""
 "Объяснение: так проще сделать, чтобы всё выглядело единообразно, так как "
 "некоторые сообщения могут быть полными предложениями, а другие нет."
 
-#: sources.xml:566(title)
+#: sources.xml:584(title)
 msgid "Avoid Passive Voice"
 msgstr "Избегайте пассивного залога"
 
-#: sources.xml:568(para)
+#: sources.xml:586(para)
 msgid ""
 "Use the active voice. Use complete sentences when there is an acting subject "
 "(<quote>A could not do B</quote>). Use telegram style without subject if the "
@@ -973,17 +973,17 @@ msgstr ""
 "телеграфный стиль без субъекта, если субъект — сама программа; не пишите "
 "<quote>я</quote> от имени программы."
 
-#: sources.xml:575(para)
+#: sources.xml:593(para)
 msgid "Rationale: The program is not human. Don't pretend otherwise."
 msgstr ""
 "Объяснение: программа — не человек. Не создавайте впечатление, что это не "
 "так."
 
-#: sources.xml:582(title)
+#: sources.xml:600(title)
 msgid "Present vs. Past Tense"
 msgstr "Настоящее или прошедшее время"
 
-#: sources.xml:584(para)
+#: sources.xml:602(para)
 msgid ""
 "Use past tense if an attempt to do something failed, but could perhaps "
 "succeed next time (perhaps after fixing some problem). Use present tense if "
@@ -993,17 +993,17 @@ msgstr ""
 "может быть успешной в следующий раз (возможно, после устранения некоторой "
 "проблемы). Используйте настоящее время, если ошибка, определённо, постоянная."
 
-#: sources.xml:592(programlisting)
+#: sources.xml:610(programlisting)
 #, no-wrap
 msgid "could not open file \"%s\": %m"
 msgstr "не удалось открыть файл \"%s\": %m"
 
-#: sources.xml:594(programlisting)
+#: sources.xml:614(programlisting)
 #, no-wrap
 msgid "cannot open file \"%s\""
 msgstr "нельзя открыть файл \"%s\""
 
-#: sources.xml:590(para)
+#: sources.xml:608(para)
 msgid ""
 "There is a nontrivial semantic difference between sentences of the form: "
 "<placeholder-1/> and: <placeholder-2/> The first one means that the attempt "
@@ -1019,7 +1019,7 @@ msgstr ""
 "Прошедшее время уместно, потому что в следующий раз диск может быть не "
 "переполнен или запрошенный файл будет найден."
 
-#: sources.xml:602(para)
+#: sources.xml:624(para)
 msgid ""
 "The second form indicates that the functionality of opening the named file "
 "does not exist at all in the program, or that it's conceptually impossible. "
@@ -1031,7 +1031,7 @@ msgstr ""
 "Настоящее время в этом случае уместно, так как это условие будет сохраняться "
 "неопределённое время."
 
-#: sources.xml:609(para)
+#: sources.xml:631(para)
 msgid ""
 "Rationale: Granted, the average user will not be able to draw great "
 "conclusions merely from the tense of the message, but since the language "
@@ -1041,15 +1041,15 @@ msgstr ""
 "проанализировав синтаксическое время, но если язык даёт нам возможность "
 "такого выражения, мы должны использовать это корректно."
 
-#: sources.xml:618(title)
+#: sources.xml:640(title)
 msgid "Type of the Object"
 msgstr "Тип объекта"
 
-#: sources.xml:620(para)
+#: sources.xml:642(para)
 msgid "When citing the name of an object, state what kind of object it is."
 msgstr "Цитируя имя объекта, указывайте также его тип."
 
-#: sources.xml:624(para)
+#: sources.xml:646(para)
 msgid ""
 "Rationale: Otherwise no one will know what <quote>foo.bar.baz</quote> refers "
 "to."
@@ -1057,11 +1057,11 @@ msgstr ""
 "Объяснение: иначе никто не поймёт, к чему относится <quote>foo.bar.baz</"
 "quote>."
 
-#: sources.xml:632(title)
+#: sources.xml:654(title)
 msgid "Brackets"
 msgstr "Скобки"
 
-#: sources.xml:634(para)
+#: sources.xml:656(para)
 msgid ""
 "Square brackets are only to be used (1) in command synopses to denote "
 "optional arguments, or (2) to denote an array subscript."
@@ -1070,7 +1070,7 @@ msgstr ""
 "обозначать необязательные аргументы, либо (2) для обозначения индекса "
 "массива."
 
-#: sources.xml:639(para)
+#: sources.xml:661(para)
 msgid ""
 "Rationale: Anything else does not correspond to widely-known customary usage "
 "and will confuse people."
@@ -1078,16 +1078,16 @@ msgstr ""
 "Объяснение: все другие варианты их использования не являются общепринятыми и "
 "будут вводить в заблуждение."
 
-#: sources.xml:647(title)
+#: sources.xml:669(title)
 msgid "Assembling Error Messages"
 msgstr "Сборка сообщений об ошибках"
 
-#: sources.xml:652(programlisting)
+#: sources.xml:674(programlisting)
 #, no-wrap
 msgid "could not open file %s: %m"
 msgstr "не удалось открыть файл %s: %m"
 
-#: sources.xml:649(para)
+#: sources.xml:671(para)
 msgid ""
 "When a message includes text that is generated elsewhere, embed it in this "
 "style: <placeholder-1/>"
@@ -1095,7 +1095,7 @@ msgstr ""
 "Когда сообщение включает текст, сгенерированный в другом месте, внедряйте "
 "его следующим образом: <placeholder-1/>"
 
-#: sources.xml:655(para)
+#: sources.xml:679(para)
 msgid ""
 "Rationale: It would be difficult to account for all possible error codes to "
 "paste this into a single smooth sentence, so some sort of punctuation is "
@@ -1109,11 +1109,11 @@ msgstr ""
 "текст в скобки, но это не вполне естественно, если этот текст содержит "
 "наиболее важную часть сообщения, что часто имеет место."
 
-#: sources.xml:666(title)
+#: sources.xml:690(title)
 msgid "Reasons for Errors"
 msgstr "Причины ошибок"
 
-#: sources.xml:671(programlisting)
+#: sources.xml:695(programlisting)
 #, no-wrap
 msgid ""
 "BAD:    could not open file %s\n"
@@ -1122,7 +1122,7 @@ msgstr ""
 "ПЛОХО:  не удалось открыть файл %s\n"
 "ЛУЧШЕ:  не удалось открыть файл %s (ошибка ввода/вывода)"
 
-#: sources.xml:668(para)
+#: sources.xml:692(para)
 msgid ""
 "Messages should always state the reason why an error occurred. For example: "
 "<placeholder-1/> If no reason is known you better fix the code."
@@ -1130,11 +1130,11 @@ msgstr ""
 "Сообщения должны всегда сообщать о причине произошедшей ошибки. Например: "
 "<placeholder-1/> Если причина неизвестна, лучше исправить код."
 
-#: sources.xml:679(title)
+#: sources.xml:705(title)
 msgid "Function Names"
 msgstr "Имена функций"
 
-#: sources.xml:686(programlisting)
+#: sources.xml:712(programlisting)
 #, no-wrap
 msgid ""
 "BAD:    pg_atoi: error in \"z\": cannot parse \"z\"\n"
@@ -1143,7 +1143,7 @@ msgstr ""
 "ПЛОХО:  pg_atoi: ошибка в \"z\": не удалось разобрать \"z\"\n"
 "ЛУЧШЕ:  неверное значение для целого числа: \"z\""
 
-#: sources.xml:681(para)
+#: sources.xml:707(para)
 msgid ""
 "Don't include the name of the reporting routine in the error text. We have "
 "other mechanisms for finding that out when needed, and for most users it's "
@@ -1156,7 +1156,7 @@ msgstr ""
 "оказывается бессвязным без имени функции, перефразируйте его. <placeholder-1/"
 ">"
 
-#: sources.xml:693(programlisting)
+#: sources.xml:721(programlisting)
 #, no-wrap
 msgid ""
 "BAD:    open() failed: %m\n"
@@ -1165,7 +1165,7 @@ msgstr ""
 "ПЛОХО:  ошибка в open(): %m\n"
 "ЛУЧШЕ:  не удалось открыть файл %s: %m"
 
-#: sources.xml:690(para)
+#: sources.xml:718(para)
 msgid ""
 "Avoid mentioning called function names, either; instead say what the code "
 "was trying to do: <placeholder-1/> If it really seems necessary, mention the "
@@ -1179,19 +1179,19 @@ msgstr ""
 "случаях в подробном сообщении стоит показать фактические значения, "
 "передаваемые системному вызову.)"
 
-#: sources.xml:700(para)
+#: sources.xml:730(para)
 msgid "Rationale: Users don't know what all those functions do."
 msgstr "Объяснение: пользователи не знают, что делают все эти функции."
 
-#: sources.xml:707(title)
+#: sources.xml:737(title)
 msgid "Tricky Words to Avoid"
 msgstr "Скользкие слова, которых следует избегать"
 
-#: sources.xml:710(title)
+#: sources.xml:740(title)
 msgid "Unable"
 msgstr "Unable (Неспособен)"
 
-#: sources.xml:711(para)
+#: sources.xml:741(para)
 msgid ""
 "<quote>Unable</quote> is nearly the passive voice. Better use <quote>cannot</"
 "quote> or <quote>could not</quote>, as appropriate."
@@ -1200,11 +1200,11 @@ msgstr ""
 "<quote>cannot</quote> (нельзя) или <quote>could not</quote> (не удалось), в "
 "зависимости от ситуации."
 
-#: sources.xml:718(title)
+#: sources.xml:748(title)
 msgid "Bad"
 msgstr "Bad (Плохое)"
 
-#: sources.xml:719(para)
+#: sources.xml:749(para)
 msgid ""
 "Error messages like <quote>bad result</quote> are really hard to interpret "
 "intelligently. It's better to write why the result is <quote>bad</quote>, e."
@@ -1215,11 +1215,11 @@ msgstr ""
 "<quote>плохой</quote>, например, <quote>invalid format</quote> (неверный "
 "формат)."
 
-#: sources.xml:727(title)
+#: sources.xml:757(title)
 msgid "Illegal"
 msgstr "Illegal (Нелегальное)"
 
-#: sources.xml:728(para)
+#: sources.xml:758(para)
 msgid ""
 "<quote>Illegal</quote> stands for a violation of the law, the rest is "
 "<quote>invalid</quote>. Better yet, say why it's invalid."
@@ -1228,11 +1228,11 @@ msgstr ""
 "можно называть <quote>invalid</quote> (неверным). Опять же лучше сказать, "
 "почему что-то неверное."
 
-#: sources.xml:735(title)
+#: sources.xml:765(title)
 msgid "Unknown"
 msgstr "Unknown (Неизвестное)"
 
-#: sources.xml:741(programlisting)
+#: sources.xml:771(programlisting)
 #, no-wrap
 msgid ""
 "BAD:    unknown node type\n"
@@ -1241,7 +1241,7 @@ msgstr ""
 "ПЛОХО:  неизвестный тип узла\n"
 "ЛУЧШЕ:  нераспознанный тип узла: 42"
 
-#: sources.xml:736(para)
+#: sources.xml:766(para)
 msgid ""
 "Try to avoid <quote>unknown</quote>. Consider <quote>error: unknown "
 "response</quote>. If you don't know what the response is, how do you know "
@@ -1255,11 +1255,11 @@ msgstr ""
 "(нераспознанный). Также обязательно добавьте значение, которое не было "
 "воспринято. <placeholder-1/>"
 
-#: sources.xml:747(title)
+#: sources.xml:779(title)
 msgid "Find vs. Exists"
 msgstr "&laquo;Не найдено&raquo; или &laquo;не существует&raquo;"
 
-#: sources.xml:748(para)
+#: sources.xml:780(para)
 msgid ""
 "If the program uses a nontrivial algorithm to locate a resource (e.g., a "
 "path search) and that algorithm fails, it is fair to say that the program "
@@ -1276,11 +1276,11 @@ msgstr ""
 "quote>. Формулировка с глаголом <quote>найти</quote> в данном случае звучит "
 "слабо и затрудняет понимание."
 
-#: sources.xml:759(title)
+#: sources.xml:791(title)
 msgid "May vs. Can vs. Might"
 msgstr "Разрешено, могу или возможно"
 
-#: sources.xml:760(para)
+#: sources.xml:792(para)
 msgid ""
 "<quote>May</quote> suggests permission (e.g., \"You may borrow my rake.\"), "
 "and has little use in documentation or error messages. <quote>Can</quote> "
@@ -1296,11 +1296,11 @@ msgstr ""
 "(например, &laquo;Сегодня возможен дождь.&raquo;). Использование подходящего "
 "слова проясняет значение и облегчает перевод."
 
-#: sources.xml:771(title)
+#: sources.xml:803(title)
 msgid "Contractions"
 msgstr "Сокращения"
 
-#: sources.xml:772(para)
+#: sources.xml:804(para)
 msgid ""
 "Avoid contractions, like <quote>can't</quote>; use <quote>cannot</quote> "
 "instead."
@@ -1308,44 +1308,44 @@ msgstr ""
 "Избегайте сокращений, например <quote>can't</quote>; вместо это напишите "
 "<quote>cannot</quote>."
 
-#: sources.xml:781(title)
+#: sources.xml:813(title)
 msgid "Proper Spelling"
 msgstr "Правильное написание"
 
-#: sources.xml:787(para)
+#: sources.xml:819(para)
 msgid "spec"
 msgstr "spec"
 
-#: sources.xml:792(para)
+#: sources.xml:824(para)
 msgid "stats"
 msgstr "stats"
 
-#: sources.xml:797(para)
+#: sources.xml:829(para)
 msgid "parens"
 msgstr "parens"
 
-#: sources.xml:802(para)
+#: sources.xml:834(para)
 msgid "auth"
 msgstr "auth"
 
-#: sources.xml:807(para)
+#: sources.xml:839(para)
 msgid "xact"
 msgstr "xact"
 
-#: sources.xml:783(para)
+#: sources.xml:815(para)
 msgid "Spell out words in full. For instance, avoid: <placeholder-1/>"
 msgstr ""
 "Пишите слова полностью. Например, избегайте (в английском): <placeholder-1/>"
 
-#: sources.xml:814(para)
+#: sources.xml:846(para)
 msgid "Rationale: This will improve consistency."
 msgstr "Объяснение: так сообщения будут единообразными."
 
-#: sources.xml:821(title)
+#: sources.xml:853(title)
 msgid "Localization"
 msgstr "Локализация"
 
-#: sources.xml:823(para)
+#: sources.xml:855(para)
 msgid ""
 "Keep in mind that error message texts need to be translated into other "
 "languages. Follow the guidelines in <xref linkend=\"nls-guidelines\"/> to "
@@ -1355,15 +1355,15 @@ msgstr ""
 "советам, приведённым в <xref remap=\"6\" linkend=\"nls-guidelines\"/>, чтобы "
 "излишне не усложнять жизнь переводчикам."
 
-#: sources.xml:833(title)
+#: sources.xml:865(title)
 msgid "Miscellaneous Coding Conventions"
 msgstr "Различные соглашения по оформлению кода"
 
-#: sources.xml:836(title)
+#: sources.xml:868(title)
 msgid "C Standard"
 msgstr "Стандарт C"
 
-#: sources.xml:837(para)
+#: sources.xml:869(para)
 msgid ""
 "Code in <productname>PostgreSQL</productname> should only rely on language "
 "features available in the C89 standard. That means a conforming C89 compiler "
@@ -1378,7 +1378,7 @@ msgstr ""
 "более поздних ревизий стандарта C или специфические особенности компилятора "
 "могут использоваться, только если предусмотрен и вариант компиляции без них."
 
-#: sources.xml:845(para)
+#: sources.xml:877(para)
 msgid ""
 "For example <literal>static inline</literal> and <literal>_StaticAssert()</"
 "literal> are currently used, even though they are from newer revisions of "
@@ -1393,16 +1393,16 @@ msgstr ""
 "которая совместима с C89 и выполняет те же проверки, но выдаёт довольно "
 "непонятные сообщения."
 
-#: sources.xml:856(title)
+#: sources.xml:888(title)
 msgid "Function-Like Macros and Inline Functions"
 msgstr "Внедрённые функции и макросы, подобные функциям"
 
-#: sources.xml:862(programlisting)
+#: sources.xml:894(programlisting)
 #, no-wrap
 msgid "#define Max(x, y)       ((x) &gt; (y) ? (x) : (y))"
 msgstr "#define Max(x, y)       ((x) &gt; (y) ? (x) : (y))"
 
-#: sources.xml:857(para)
+#: sources.xml:889(para)
 msgid ""
 "Both, macros with arguments and <literal>static inline</literal> functions, "
 "may be used. The latter are preferable if there are multiple-evaluation "
@@ -1419,7 +1419,7 @@ msgstr ""
 "простой вариант. Например, может быть полезна возможность передавать макросу "
 "выражения различных типов."
 
-#: sources.xml:872(programlisting)
+#: sources.xml:906(programlisting)
 #, no-wrap
 msgid ""
 "#ifndef FRONTEND\n"
@@ -1444,7 +1444,7 @@ msgstr ""
 "}\n"
 "#endif   /* FRONTEND */"
 
-#: sources.xml:867(para)
+#: sources.xml:901(para)
 msgid ""
 "When the definition an inline function references symbols (i.e. variables, "
 "functions) that are only available as part of the backend, the function may "
@@ -1464,11 +1464,11 @@ msgstr ""
 "некоторые компиляторы генерируют указатели на символы, фигурирующие во "
 "внедрённых функциях, даже когда эти функции не используются."
 
-#: sources.xml:891(title)
+#: sources.xml:927(title)
 msgid "Writing Signal Handlers"
 msgstr "Написание обработчиков сигналов"
 
-#: sources.xml:892(para)
+#: sources.xml:928(para)
 msgid ""
 "To be suitable to run inside a signal handler code has to be written very "
 "carefully. The fundamental problem is that, unless blocked, a signal handler "
@@ -1485,7 +1485,7 @@ msgstr ""
 "что произойдёт, если обработчик сигнала попытается получить ту же "
 "блокировку, которой уже владеет прерванный код."
 
-#: sources.xml:901(para)
+#: sources.xml:937(para)
 msgid ""
 "Barring special arrangements code in signal handlers may only call async-"
 "signal safe functions (as defined in POSIX) and access variables of type "
@@ -1500,7 +1500,7 @@ msgstr ""
 "считаются несколько функций в <command>postgres</command>, в том числе, что "
 "важно, <function>SetLatch()</function>."
 
-#: sources.xml:913(programlisting)
+#: sources.xml:949(programlisting)
 #, no-wrap
 msgid ""
 "static void\n"
@@ -1525,7 +1525,7 @@ msgstr ""
 "    errno = save_errno;\n"
 "}"
 
-#: sources.xml:908(para)
+#: sources.xml:944(para)
 msgid ""
 "In most cases signal handlers should do nothing more than note that a signal "
 "has arrived, and wake up code running outside of the handler using a latch. "

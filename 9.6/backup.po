@@ -68,30 +68,31 @@ msgid ""
 "that, when fed back to the server, will recreate the database in the same "
 "state as it was at the time of the dump. <productname>PostgreSQL</"
 "productname> provides the utility program <xref linkend=\"app-pgdump\"/> for "
-"this purpose. The basic usage of this command is: <synopsis>pg_dump "
-"<replaceable class=\"parameter\">dbname</replaceable> &gt; <replaceable "
-"class=\"parameter\">outfile</replaceable></synopsis> As you see, "
-"<application>pg_dump</application> writes its result to the standard output. "
-"We will see below how this can be useful. While the above command creates a "
-"text file, <application>pg_dump</application> can create files in other "
-"formats that allow for parallelism and more fine-grained control of object "
-"restoration."
+"this purpose. The basic usage of this command is: <synopsis>\n"
+"pg_dump <replaceable class=\"parameter\">dbname</replaceable> &gt; "
+"<replaceable class=\"parameter\">outfile</replaceable>\n"
+"</synopsis> As you see, <application>pg_dump</application> writes its result "
+"to the standard output. We will see below how this can be useful. While the "
+"above command creates a text file, <application>pg_dump</application> can "
+"create files in other formats that allow for parallelism and more fine-"
+"grained control of object restoration."
 msgstr ""
 "Идея, стоящая за этим методом, заключается в генерации текстового файла с "
 "командами SQL, которые при выполнении на сервере пересоздадут базу данных в "
 "том же самом состоянии, в котором она была на момент выгрузки. "
 "<productname>PostgreSQL</productname> предоставляет для этой цели "
 "вспомогательную программу <xref linkend=\"app-pgdump\"/>. Простейшее "
-"применение этой программы выглядит так: <synopsis>pg_dump <replaceable class="
-"\"parameter\">имя_базы</replaceable> &gt; <replaceable class=\"parameter"
-"\">выходной_файл</replaceable></synopsis> Как видите, <application>pg_dump</"
-"application> записывает результаты своей работы в устройство стандартного "
-"вывода. Далее будет рассмотрено, чем это может быть полезно. В то время как "
-"вышеупомянутая команда создаёт текстовый файл, <application>pg_dump</"
-"application> может создать файлы и в других форматах, которые допускают "
-"параллельную обработку и более гибкое управление восстановлением объектов."
+"применение этой программы выглядит так: <synopsis>\n"
+"pg_dump <replaceable class=\"parameter\">имя_базы</replaceable> &gt; "
+"<replaceable class=\"parameter\">выходной_файл</replaceable>\n"
+"</synopsis> Как видите, <application>pg_dump</application> записывает "
+"результаты своей работы в устройство стандартного вывода. Далее будет "
+"рассмотрено, чем это может быть полезно. В то время как вышеупомянутая "
+"команда создаёт текстовый файл, <application>pg_dump</application> может "
+"создать файлы и в других форматах, которые допускают параллельную обработку "
+"и более гибкое управление восстановлением объектов."
 
-#: backup.xml:46(para)
+#: backup.xml:48(para)
 msgid ""
 "<application>pg_dump</application> is a regular <productname>PostgreSQL</"
 "productname> client application (albeit a particularly clever one). This "
@@ -120,7 +121,7 @@ msgstr ""
 "параметры, как <option>-n <replaceable>схема</replaceable></option> или "
 "<option>-t <replaceable>таблица</replaceable></option>.)"
 
-#: backup.xml:61(para)
+#: backup.xml:63(para)
 msgid ""
 "To specify which database server <application>pg_dump</application> should "
 "contact, use the command line options <option>-h <replaceable>host</"
@@ -141,7 +142,7 @@ msgstr ""
 "то порт, указанный по умолчанию при компиляции. (Для удобства при компиляции "
 "сервера обычно устанавливается то же значение по умолчанию.)"
 
-#: backup.xml:73(para)
+#: backup.xml:75(para)
 msgid ""
 "Like any other <productname>PostgreSQL</productname> client application, "
 "<application>pg_dump</application> will by default connect with the database "
@@ -162,7 +163,7 @@ msgstr ""
 "(которые описываются в <xref remap=\"6\" linkend=\"client-authentication\"/"
 ">)."
 
-#: backup.xml:84(para)
+#: backup.xml:86(para)
 msgid ""
 "An important advantage of <application>pg_dump</application> over the other "
 "backup methods described later is that <application>pg_dump</application>'s "
@@ -182,7 +183,7 @@ msgstr ""
 "application> будет работать при переносе базы данных на другую машинную "
 "архитектуру, например, при переносе с 32-битной на 64-битную версию сервера."
 
-#: backup.xml:94(para)
+#: backup.xml:96(para)
 msgid ""
 "Dumps created by <application>pg_dump</application> are internally "
 "consistent, meaning, the dump represents a snapshot of the database at the "
@@ -199,20 +200,21 @@ msgstr ""
 "исключительная блокировка, как например, большинство форм команды "
 "<command>ALTER TABLE</command>.)"
 
-#: backup.xml:104(title)
+#: backup.xml:106(title)
 msgid "Restoring the Dump"
 msgstr "Восстановление дампа"
 
-#: backup.xml:106(para)
+#: backup.xml:108(para)
 msgid ""
 "Text files created by <application>pg_dump</application> are intended to be "
 "read in by the <application>psql</application> program. The general command "
-"form to restore a dump is <synopsis>psql <replaceable class=\"parameter"
-"\">dbname</replaceable> &lt; <replaceable class=\"parameter\">infile</"
-"replaceable></synopsis> where <replaceable class=\"parameter\">infile</"
-"replaceable> is the file output by the <application>pg_dump</application> "
-"command. The database <replaceable class=\"parameter\">dbname</replaceable> "
-"will not be created by this command, so you must create it yourself from "
+"form to restore a dump is <synopsis>\n"
+"psql <replaceable class=\"parameter\">dbname</replaceable> &lt; <replaceable "
+"class=\"parameter\">infile</replaceable>\n"
+"</synopsis> where <replaceable class=\"parameter\">infile</replaceable> is "
+"the file output by the <application>pg_dump</application> command. The "
+"database <replaceable class=\"parameter\">dbname</replaceable> will not be "
+"created by this command, so you must create it yourself from "
 "<literal>template0</literal> before executing <application>psql</"
 "application> (e.g., with <literal>createdb -T template0 <replaceable class="
 "\"parameter\">dbname</replaceable></literal>). <application>psql</"
@@ -224,23 +226,23 @@ msgid ""
 msgstr ""
 "Текстовые файлы, созданные <application>pg_dump</application> "
 "предназначаются для последующего чтения программой <application>psql</"
-"application>. Общий вид команды для восстановления дампа: <synopsis>psql "
-"<replaceable class=\"parameter\">имя_базы</replaceable> &lt; <replaceable "
-"class=\"parameter\">входной_файл</replaceable></synopsis> где <replaceable "
-"class=\"parameter\">входной_файл</replaceable> &mdash; это файл, содержащий "
-"вывод команды <application>pg_dump</application>. База данных, заданная "
-"параметром <replaceable class=\"parameter\">имя_базы</replaceable>, не будет "
-"создана данной командой, так что вы должны создать её сами из базы "
-"<literal>template0</literal> перед запуском <application>psql</application> "
-"(например, с помощью команды <literal>createdb -T template0 <replaceable "
-"class=\"parameter\">имя_базы</replaceable></literal>). Программа "
-"<application>psql</application> принимает параметры, указывающие сервер, к "
-"которому осуществляется подключение, и имя пользователя, подобно "
-"<application>pg_dump</application>. За дополнительными сведениями обратитесь "
-"к справке по <xref linkend=\"app-pgrestore\"/>. Копии не текстовые "
-"восстанавливаются утилитой <xref linkend=\"app-pgrestore\"/>."
+"application>. Общий вид команды для восстановления дампа: <synopsis>\n"
+"psql <replaceable class=\"parameter\">имя_базы</replaceable> &lt; "
+"<replaceable class=\"parameter\">входной_файл</replaceable>\n"
+"</synopsis> где <replaceable class=\"parameter\">входной_файл</replaceable> "
+"&mdash; это файл, содержащий вывод команды <application>pg_dump</"
+"application>. База данных, заданная параметром <replaceable class=\"parameter"
+"\">имя_базы</replaceable>, не будет создана данной командой, так что вы "
+"должны создать её сами из базы <literal>template0</literal> перед запуском "
+"<application>psql</application> (например, с помощью команды "
+"<literal>createdb -T template0 <replaceable class=\"parameter\">имя_базы</"
+"replaceable></literal>). Программа <application>psql</application> принимает "
+"параметры, указывающие сервер, к которому осуществляется подключение, и имя "
+"пользователя, подобно <application>pg_dump</application>. За дополнительными "
+"сведениями обратитесь к справке по <xref linkend=\"app-pgrestore\"/>. Копии "
+"не текстовые восстанавливаются утилитой <xref linkend=\"app-pgrestore\"/>."
 
-#: backup.xml:125(para)
+#: backup.xml:129(para)
 msgid ""
 "Before restoring an SQL dump, all the users who own objects or were granted "
 "permissions on objects in the dumped database must already exist. If they do "
@@ -254,12 +256,12 @@ msgstr ""
 "объектов с изначальными владельцами и/или правами. (Иногда это желаемый "
 "результат, но обычно нет)."
 
-#: backup.xml:140(programlisting)
+#: backup.xml:144(programlisting)
 #, no-wrap
 msgid "psql --set ON_ERROR_STOP=on dbname &lt; infile"
 msgstr "psql --set ON_ERROR_STOP=on имя_базы &lt; входной_файл"
 
-#: backup.xml:133(para)
+#: backup.xml:137(para)
 msgid ""
 "By default, the <application>psql</application> script will continue to "
 "execute after an SQL error is encountered. You might wish to run "
@@ -291,12 +293,12 @@ msgstr ""
 "часов. Однако, это всё же может быть предпочтительней, чем вручную вычищать "
 "сложную базу данных после частично восстановленного дампа."
 
-#: backup.xml:157(programlisting)
+#: backup.xml:163(programlisting)
 #, no-wrap
 msgid "pg_dump -h <replaceable>host1</replaceable> <replaceable>dbname</replaceable> | psql -h <replaceable>host2</replaceable> <replaceable>dbname</replaceable>"
 msgstr "pg_dump -h <replaceable>host1</replaceable> <replaceable>имя_базы</replaceable> | psql -h <replaceable>host2</replaceable> <replaceable>имя_базы</replaceable>"
 
-#: backup.xml:153(para)
+#: backup.xml:159(para)
 msgid ""
 "The ability of <application>pg_dump</application> and <application>psql</"
 "application> to write to or read from pipes makes it possible to dump a "
@@ -307,7 +309,7 @@ msgstr ""
 "скопировать базу данных непосредственно с одного сервера на другой, "
 "например: <placeholder-1/>"
 
-#: backup.xml:161(para)
+#: backup.xml:169(para)
 msgid ""
 "The dumps produced by <application>pg_dump</application> are relative to "
 "<literal>template0</literal>. This means that any languages, procedures, "
@@ -324,7 +326,7 @@ msgstr ""
 "<literal>template1</literal>, вы должны создать пустую базу данных из "
 "<literal>template0</literal>, как показано в примере выше."
 
-#: backup.xml:172(para)
+#: backup.xml:180(para)
 msgid ""
 "After restoring a backup, it is wise to run <xref linkend=\"sql-analyze\"/> "
 "on each database so the query optimizer has useful statistics; see <xref "
@@ -341,11 +343,11 @@ msgstr ""
 "<productname>PostgreSQL</productname> вы можете найти в <xref remap=\"6\" "
 "linkend=\"populate\"/>."
 
-#: backup.xml:185(title)
+#: backup.xml:193(title)
 msgid "Using <application>pg_dumpall</application>"
 msgstr "Использование <application>pg_dumpall</application>"
 
-#: backup.xml:187(para)
+#: backup.xml:195(para)
 msgid ""
 "<application>pg_dump</application> dumps only a single database at a time, "
 "and it does not dump information about roles or tablespaces (because those "
@@ -354,16 +356,18 @@ msgid ""
 "\"/> program is provided. <application>pg_dumpall</application> backs up "
 "each database in a given cluster, and also preserves cluster-wide data such "
 "as role and tablespace definitions. The basic usage of this command is: "
-"<synopsis>pg_dumpall &gt; <replaceable>outfile</replaceable></synopsis> The "
-"resulting dump can be restored with <application>psql</application>: "
-"<synopsis>psql -f <replaceable class=\"parameter\">infile</replaceable> "
-"postgres</synopsis> (Actually, you can specify any existing database name to "
-"start from, but if you are loading into an empty cluster then "
-"<literal>postgres</literal> should usually be used.) It is always necessary "
-"to have database superuser access when restoring a <application>pg_dumpall</"
-"application> dump, as that is required to restore the role and tablespace "
-"information. If you use tablespaces, make sure that the tablespace paths in "
-"the dump are appropriate for the new installation."
+"<synopsis>\n"
+"pg_dumpall &gt; <replaceable>outfile</replaceable>\n"
+"</synopsis> The resulting dump can be restored with <application>psql</"
+"application>: <synopsis>\n"
+"psql -f <replaceable class=\"parameter\">infile</replaceable> postgres\n"
+"</synopsis> (Actually, you can specify any existing database name to start "
+"from, but if you are loading into an empty cluster then <literal>postgres</"
+"literal> should usually be used.) It is always necessary to have database "
+"superuser access when restoring a <application>pg_dumpall</application> "
+"dump, as that is required to restore the role and tablespace information. If "
+"you use tablespaces, make sure that the tablespace paths in the dump are "
+"appropriate for the new installation."
 msgstr ""
 "Программа <application>pg_dump</application> выгружает только одну базу "
 "данных в один момент времени и не включает в дамп информацию о ролях и "
@@ -372,20 +376,22 @@ msgstr ""
 "данных предоставляется программа <xref linkend=\"app-pg-dumpall\"/>, которая "
 "делает резервную копию всех баз данных кластера, а также сохраняет данные "
 "уровня кластера, такие как роли и определения табличных пространств. Простое "
-"использование этой команды: <synopsis>pg_dumpall &gt; "
-"<replaceable>выходной_файл</replaceable></synopsis> Полученную копию можно "
-"восстановить с помощью <application>psql</application>: <synopsis>psql -f "
-"<replaceable class=\"parameter\">входной_файл</replaceable> postgres</"
-"synopsis> (В принципе, здесь в качестве начальной базы данных можно указать "
-"имя любой существующей базы, но если вы загружаете копию в пустой кластер, "
-"обычно нужно использовать <literal>postgres</literal>). Восстанавливать "
-"дамп, который выдала <application>pg_dumpall</application>, всегда "
-"необходимо с правами суперпользователя, так как они требуются для "
+"использование этой команды: <synopsis>\n"
+"pg_dumpall &gt; <replaceable>выходной_файл</replaceable>\n"
+"</synopsis> Полученную копию можно восстановить с помощью <application>psql</"
+"application>: <synopsis>\n"
+"psql -f <replaceable class=\"parameter\">входной_файл</replaceable> "
+"postgres\n"
+"</synopsis> (В принципе, здесь в качестве начальной базы данных можно "
+"указать имя любой существующей базы, но если вы загружаете копию в пустой "
+"кластер, обычно нужно использовать <literal>postgres</literal>). "
+"Восстанавливать дамп, который выдала <application>pg_dumpall</application>, "
+"всегда необходимо с правами суперпользователя, так как они требуются для "
 "восстановления информации о ролях и табличных пространствах. Если вы "
 "используете табличные пространства, убедитесь, что пути к табличным "
 "пространствам в дампе соответствуют новой среде."
 
-#: backup.xml:208(para)
+#: backup.xml:220(para)
 msgid ""
 "<application>pg_dumpall</application> works by emitting commands to re-"
 "create roles, tablespaces, and empty databases, then invoking "
@@ -399,7 +405,7 @@ msgstr ""
 "база данных будет внутренне согласованной, состояние разных баз не будет "
 "синхронным."
 
-#: backup.xml:216(para)
+#: backup.xml:228(para)
 msgid ""
 "Cluster-wide data can be dumped alone using the <application>pg_dumpall</"
 "application> <option>--globals-only</option> option. This is necessary to "
@@ -411,11 +417,11 @@ msgstr ""
 "Это необходимо, чтобы полностью скопировать кластер, когда "
 "<application>pg_dump</application> выполняется для отдельных баз данных."
 
-#: backup.xml:225(title)
+#: backup.xml:237(title)
 msgid "Handling Large Databases"
 msgstr "Управление большими базами данных"
 
-#: backup.xml:227(para)
+#: backup.xml:239(para)
 msgid ""
 "Some operating systems have maximum file size limits that cause problems "
 "when creating large <application>pg_dump</application> output files. "
@@ -430,26 +436,26 @@ msgstr ""
 "использовать стандартные инструменты Unix для того, чтобы избежать "
 "потенциальных проблем. Вот несколько возможных методов:"
 
-#: backup.xml:236(title)
+#: backup.xml:248(title)
 msgid "Use compressed dumps."
 msgstr "Используйте сжатые дампы."
 
-#: backup.xml:241(programlisting)
+#: backup.xml:253(programlisting)
 #, no-wrap
 msgid "pg_dump <replaceable class=\"parameter\">dbname</replaceable> | gzip &gt; <replaceable class=\"parameter\">filename</replaceable>.gz"
 msgstr "pg_dump <replaceable class=\"parameter\">имя_базы</replaceable> | gzip &gt; <replaceable class=\"parameter\">имя_файла</replaceable>.gz"
 
-#: backup.xml:245(programlisting)
+#: backup.xml:259(programlisting)
 #, no-wrap
 msgid "gunzip -c <replaceable class=\"parameter\">filename</replaceable>.gz | psql <replaceable class=\"parameter\">dbname</replaceable>"
 msgstr "gunzip -c <replaceable class=\"parameter\">имя_файла</replaceable>.gz | psql <replaceable class=\"parameter\">имя_базы</replaceable>"
 
-#: backup.xml:249(programlisting)
+#: backup.xml:265(programlisting)
 #, no-wrap
 msgid "cat <replaceable class=\"parameter\">filename</replaceable>.gz | gunzip | psql <replaceable class=\"parameter\">dbname</replaceable>"
 msgstr "cat <replaceable class=\"parameter\">имя_файла</replaceable>.gz | gunzip | psql <replaceable class=\"parameter\">имя_базы</replaceable>"
 
-#: backup.xml:237(para)
+#: backup.xml:249(para)
 msgid ""
 "You can use your favorite compression program, for example "
 "<application>gzip</application>: <placeholder-1/> Reload with: "
@@ -459,21 +465,21 @@ msgstr ""
 "<application>gzip</application>: <placeholder-1/> Затем загрузить сжатый "
 "дамп можно командой: <placeholder-2/> или: <placeholder-3/>"
 
-#: backup.xml:254(title)
+#: backup.xml:272(title)
 msgid "Use <command>split</command>."
 msgstr "Используйте <command>split</command>."
 
-#: backup.xml:261(programlisting)
+#: backup.xml:279(programlisting)
 #, no-wrap
 msgid "pg_dump <replaceable class=\"parameter\">dbname</replaceable> | split -b 1m - <replaceable class=\"parameter\">filename</replaceable>"
 msgstr "pg_dump <replaceable class=\"parameter\">имя_базы</replaceable> | split -b 1m - <replaceable class=\"parameter\">имя_файла</replaceable>"
 
-#: backup.xml:265(programlisting)
+#: backup.xml:285(programlisting)
 #, no-wrap
 msgid "cat <replaceable class=\"parameter\">filename</replaceable>* | psql <replaceable class=\"parameter\">dbname</replaceable>"
 msgstr "cat <replaceable class=\"parameter\">имя_файла</replaceable>* | psql <replaceable class=\"parameter\">имя_базы</replaceable>"
 
-#: backup.xml:255(para)
+#: backup.xml:273(para)
 msgid ""
 "The <command>split</command> command allows you to split the output into "
 "smaller files that are acceptable in size to the underlying file system. For "
@@ -485,22 +491,22 @@ msgstr ""
 "файловой системы. Например, чтобы получить части по 1 мегабайту: "
 "<placeholder-1/> Восстановить их можно так: <placeholder-2/>"
 
-#: backup.xml:270(title)
+#: backup.xml:292(title)
 msgid "Use <application>pg_dump</application>'s custom dump format."
 msgstr ""
 "Используйте специальный формат дампа <application>pg_dump</application>."
 
-#: backup.xml:279(programlisting)
+#: backup.xml:301(programlisting)
 #, no-wrap
 msgid "pg_dump -Fc <replaceable class=\"parameter\">dbname</replaceable> &gt; <replaceable class=\"parameter\">filename</replaceable>"
 msgstr "pg_dump -Fc <replaceable class=\"parameter\">имя_базы</replaceable> &gt; <replaceable class=\"parameter\">имя_файла</replaceable>"
 
-#: backup.xml:284(programlisting)
+#: backup.xml:308(programlisting)
 #, no-wrap
 msgid "pg_restore -d <replaceable class=\"parameter\">dbname</replaceable> <replaceable class=\"parameter\">filename</replaceable>"
 msgstr "pg_restore -d <replaceable class=\"parameter\">имя_базы</replaceable> <replaceable class=\"parameter\">имя_файла</replaceable>"
 
-#: backup.xml:271(para)
+#: backup.xml:293(para)
 msgid ""
 "If <productname>PostgreSQL</productname> was built on a system with the "
 "<application>zlib</application> compression library installed, the custom "
@@ -525,7 +531,7 @@ msgstr ""
 "справке по командам <xref linkend=\"app-pgdump\"/> и <xref linkend=\"app-"
 "pgrestore\"/>."
 
-#: backup.xml:291(para)
+#: backup.xml:317(para)
 msgid ""
 "For very large databases, you might need to combine <command>split</command> "
 "with one of the other two approaches."
@@ -533,18 +539,18 @@ msgstr ""
 "Для очень больших баз данных может понадобиться сочетать <command>split</"
 "command> с одним из двух других методов."
 
-#: backup.xml:297(title)
+#: backup.xml:323(title)
 msgid "Use <application>pg_dump</application>'s parallel dump feature."
 msgstr ""
 "Используйте возможность параллельной выгрузки в <application>pg_dump</"
 "application>."
 
-#: backup.xml:305(programlisting)
+#: backup.xml:331(programlisting)
 #, no-wrap
 msgid "pg_dump -j <replaceable class=\"parameter\">num</replaceable> -F d -f <replaceable class=\"parameter\">out.dir</replaceable> <replaceable class=\"parameter\">dbname</replaceable>"
 msgstr "pg_dump -j <replaceable class=\"parameter\">число</replaceable> -F d -f <replaceable class=\"parameter\">выходной_каталог</replaceable> <replaceable class=\"parameter\">имя_базы</replaceable>"
 
-#: backup.xml:298(para)
+#: backup.xml:324(para)
 msgid ""
 "To speed up the dump of a large database, you can use <application>pg_dump</"
 "application>'s parallel mode. This will dump multiple tables at the same "
@@ -565,16 +571,16 @@ msgstr ""
 "формате каталога или специальном формате, даже если архив создавался не "
 "командой <command>pg_dump -j</command>."
 
-#: backup.xml:316(title)
+#: backup.xml:344(title)
 msgid "File System Level Backup"
 msgstr "Резервное копирование на уровне файлов"
 
-#: backup.xml:325(programlisting)
+#: backup.xml:353(programlisting)
 #, no-wrap
 msgid "tar -cf backup.tar /usr/local/pgsql/data"
 msgstr "tar -cf backup.tar /usr/local/pgsql/data"
 
-#: backup.xml:318(para)
+#: backup.xml:346(para)
 msgid ""
 "An alternative backup strategy is to directly copy the files that "
 "<productname>PostgreSQL</productname> uses to store the data in the "
@@ -588,7 +594,7 @@ msgstr ""
 "рассказывается, где находятся эти файлы. Вы можете использовать любой способ "
 "копирования файлов по желанию, например: <placeholder-1/>"
 
-#: backup.xml:335(para)
+#: backup.xml:365(para)
 msgid ""
 "The database server <emphasis>must</emphasis> be shut down in order to get a "
 "usable backup. Half-way measures such as disallowing all connections will "
@@ -608,7 +614,7 @@ msgstr ""
 "\"6\" linkend=\"server-shutdown\"/>. Необходимо отметить, что сервер нужно "
 "будет остановить и перед восстановлением данных."
 
-#: backup.xml:349(para)
+#: backup.xml:379(para)
 msgid ""
 "If you have dug into the details of the file system layout of the database, "
 "you might be tempted to try to back up or restore only certain individual "
@@ -635,7 +641,7 @@ msgstr ""
 "копирование на уровне файловой системы будет работать, только если "
 "выполняется полное копирование и восстановление всего кластера баз данных."
 
-#: backup.xml:328(para)
+#: backup.xml:358(para)
 msgid ""
 "There are two restrictions, however, which make this method impractical, or "
 "at least inferior to the <application>pg_dump</application> method: "
@@ -645,7 +651,7 @@ msgstr ""
 "или как минимум менее предпочтительным по сравнению с <application>pg_dump</"
 "application>: <placeholder-1/>"
 
-#: backup.xml:368(para)
+#: backup.xml:398(para)
 msgid ""
 "An alternative file-system backup approach is to make a <quote>consistent "
 "snapshot</quote> of the data directory, if the file system supports that "
@@ -679,7 +685,7 @@ msgstr ""
 "резервную копию). Чтобы сократить время восстановления, можно выполнить "
 "команду <command>CHECKPOINT</command> перед созданием снимка."
 
-#: backup.xml:387(para)
+#: backup.xml:417(para)
 msgid ""
 "If your database is spread across multiple file systems, there might not be "
 "any way to obtain exactly-simultaneous frozen snapshots of all the volumes. "
@@ -698,7 +704,7 @@ msgstr ""
 "внимательно изучите документацию по вашей файловой системе, прежде чем "
 "довериться технологии согласованных снимков."
 
-#: backup.xml:398(para)
+#: backup.xml:428(para)
 msgid ""
 "If simultaneous snapshots are not possible, one option is to shut down the "
 "database server long enough to establish all the frozen snapshots. Another "
@@ -718,7 +724,7 @@ msgstr ""
 "применяется процедура восстановления из непрерывного архива (<xref linkend="
 "\"backup-pitr-recovery\"/>)."
 
-#: backup.xml:408(para)
+#: backup.xml:438(para)
 msgid ""
 "Another option is to use <application>rsync</application> to perform a file "
 "system backup. This is done by first running <application>rsync</"
@@ -743,7 +749,7 @@ msgstr ""
 "Данный метод позволяет получить копию на уровне файловой системы с "
 "минимальным временем простоя."
 
-#: backup.xml:421(para)
+#: backup.xml:451(para)
 msgid ""
 "Note that a file system backup will typically be larger than an SQL dump. "
 "(<application>pg_dump</application> does not need to dump the contents of "
@@ -755,25 +761,25 @@ msgstr ""
 "записывать содержимое индексов, достаточно команд для их пересоздания). "
 "Однако копирование на уровне файлов может выполняться быстрее."
 
-#: backup.xml:430(title)
+#: backup.xml:460(title)
 msgid "Continuous Archiving and Point-in-Time Recovery (PITR)"
 msgstr ""
 "Непрерывное архивирование и восстановление на момент времени (Point-in-Time "
 "Recovery, PITR)"
 
-#: backup.xml:432(indexterm)
+#: backup.xml:462(indexterm)
 msgid "<primary>continuous archiving</primary>"
 msgstr "<primary>непрерывное архивирование</primary>"
 
-#: backup.xml:436(indexterm)
+#: backup.xml:466(indexterm)
 msgid "<primary>point-in-time recovery</primary>"
 msgstr "<primary>восстановление на момент времени</primary>"
 
-#: backup.xml:440(indexterm)
+#: backup.xml:470(indexterm)
 msgid "<primary>PITR</primary>"
 msgstr "<primary>PITR</primary>"
 
-#: backup.xml:461(para)
+#: backup.xml:491(para)
 msgid ""
 "We do not need a perfectly consistent file system backup as the starting "
 "point. Any internal inconsistency in the backup will be corrected by log "
@@ -788,7 +794,7 @@ msgstr ""
 "снимок файловой системы не требуется, вполне можно использовать "
 "<application>tar</application> или похожие средства архивации."
 
-#: backup.xml:470(para)
+#: backup.xml:500(para)
 msgid ""
 "Since we can combine an indefinitely long sequence of WAL files for replay, "
 "continuous backup can be achieved simply by continuing to archive the WAL "
@@ -800,7 +806,7 @@ msgstr ""
 "просто продолжая архивировать файлы WAL. Это особенно ценно для больших баз "
 "данных, полные резервные копии которых делать как минимум неудобно."
 
-#: backup.xml:478(para)
+#: backup.xml:508(para)
 msgid ""
 "It is not necessary to replay the WAL entries all the way to the end. We "
 "could stop the replay at any point and have a consistent snapshot of the "
@@ -815,7 +821,7 @@ msgstr ""
 "восстановить состояние базы данных на любое время с момента создания "
 "резервной копии."
 
-#: backup.xml:488(para)
+#: backup.xml:518(para)
 msgid ""
 "If we continuously feed the series of WAL files to another machine that has "
 "been loaded with the same base backup file, we have a <firstterm>warm "
@@ -827,7 +833,7 @@ msgstr ""
 "<firstterm>тёплого резерва</firstterm>: в любой момент мы можем запустить "
 "второй сервер и он будет иметь практически текущую копию баз данных."
 
-#: backup.xml:444(para)
+#: backup.xml:474(para)
 msgid ""
 "At all times, <productname>PostgreSQL</productname> maintains a "
 "<firstterm>write ahead log</firstterm> (WAL) in the <filename>pg_xlog/</"
@@ -859,7 +865,7 @@ msgstr ""
 "администрирования, чем любой из описанных выше, но он имеет значительные "
 "преимущества: <placeholder-1/>"
 
-#: backup.xml:500(para)
+#: backup.xml:530(para)
 msgid ""
 "<application>pg_dump</application> and <application>pg_dumpall</application> "
 "do not produce file-system-level backups and cannot be used as part of a "
@@ -872,7 +878,7 @@ msgstr ""
 "копии являются логическими и не содержат информации, необходимой для "
 "воспроизведения WAL."
 
-#: backup.xml:509(para)
+#: backup.xml:539(para)
 msgid ""
 "As with the plain file-system-backup technique, this method can only support "
 "restoration of an entire database cluster, not a subset. Also, it requires a "
@@ -889,7 +895,7 @@ msgstr ""
 "метод резервного копирования предпочитается во многих ситуациях, где "
 "необходима высокая надёжность."
 
-#: backup.xml:518(para)
+#: backup.xml:548(para)
 msgid ""
 "To recover successfully using continuous archiving (also called "
 "<quote>online backup</quote> by many database vendors), you need a "
@@ -908,11 +914,11 @@ msgstr ""
 "получите первую базовую копию. Соответственно, сначала мы обсудим механику "
 "архивирования файлов WAL."
 
-#: backup.xml:529(title)
+#: backup.xml:559(title)
 msgid "Setting Up WAL Archiving"
 msgstr "Настройка архивирования WAL"
 
-#: backup.xml:531(para)
+#: backup.xml:561(para)
 msgid ""
 "In an abstract sense, a running <productname>PostgreSQL</productname> system "
 "produces an indefinitely long sequence of WAL records. The system physically "
@@ -939,7 +945,7 @@ msgstr ""
 "предшествует последней контрольной точке, уже не представляют интереса и "
 "могут быть переработаны."
 
-#: backup.xml:546(para)
+#: backup.xml:576(para)
 msgid ""
 "When archiving WAL data, we need to capture the contents of each segment "
 "file once it is filled, and save that data somewhere before the segment file "
@@ -974,7 +980,7 @@ msgstr ""
 "<literal>cp</literal>, а может вызывать сложный скрипт оболочки &mdash; это "
 "решать вам."
 
-#: backup.xml:580(programlisting)
+#: backup.xml:610(programlisting)
 #, no-wrap
 msgid ""
 "archive_command = 'test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f'  # Unix\n"
@@ -983,12 +989,12 @@ msgstr ""
 "archive_command = 'test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f'  # Unix\n"
 "archive_command = 'copy \"%p\" \"C:\\\\server\\\\archivedir\\\\%f\"'  # Windows"
 
-#: backup.xml:587(programlisting)
+#: backup.xml:619(programlisting)
 #, no-wrap
 msgid "test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_xlog/00000001000000A900000065 /mnt/server/archivedir/00000001000000A900000065"
 msgstr "test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_xlog/00000001000000A900000065 /mnt/server/archivedir/00000001000000A900000065"
 
-#: backup.xml:564(para)
+#: backup.xml:594(para)
 msgid ""
 "To enable WAL archiving, set the <xref linkend=\"guc-wal-level\"/> "
 "configuration parameter to <literal>replica</literal> or higher, <xref "
@@ -1026,7 +1032,7 @@ msgstr ""
 "запускаемая команда может выглядеть так: <placeholder-2/> Подобная команда "
 "будет генерироваться для каждого следующего архивируемого файла."
 
-#: backup.xml:591(para)
+#: backup.xml:625(para)
 msgid ""
 "The archive command will be executed under the ownership of the same user "
 "that the <productname>PostgreSQL</productname> server is running as. Since "
@@ -1042,7 +1048,7 @@ msgstr ""
 "посторонних глаз; например, сохраните архив в каталог, чтение которого "
 "запрещено для группы и остальных пользователей."
 
-#: backup.xml:600(para)
+#: backup.xml:634(para)
 msgid ""
 "It is important that the archive command return zero exit status if and only "
 "if it succeeds. Upon getting a zero result, <productname>PostgreSQL</"
@@ -1059,7 +1065,7 @@ msgstr ""
 "попытки заархивировать его будут периодически повторяться, пока это не "
 "удастся."
 
-#: backup.xml:609(para)
+#: backup.xml:643(para)
 msgid ""
 "The archive command should generally be designed to refuse to overwrite any "
 "pre-existing archive file. This is an important safety feature to preserve "
@@ -1072,7 +1078,7 @@ msgstr ""
 "(например, если архивируемые данные двух разных серверов будут сохраняться в "
 "одном каталоге)."
 
-#: backup.xml:617(para)
+#: backup.xml:651(para)
 msgid ""
 "It is advisable to test your proposed archive command to ensure that it "
 "indeed does not overwrite an existing file, <emphasis>and that it returns "
@@ -1096,7 +1102,7 @@ msgstr ""
 "возвратит нулевой код состояния, если используется ключ <option>-i</option> "
 "и целевой файл существует, а это <emphasis>не то</emphasis>, что нужно.)"
 
-#: backup.xml:630(para)
+#: backup.xml:664(para)
 msgid ""
 "While designing your archiving setup, consider what will happen if the "
 "archive command fails repeatedly because some aspect requires operator "
@@ -1125,7 +1131,7 @@ msgstr ""
 "productname> завершит свою работу аварийно. Зафиксированные транзакции не "
 "потеряются, но база данных не будет работать, пока вы не освободите место.)"
 
-#: backup.xml:646(para)
+#: backup.xml:680(para)
 msgid ""
 "The speed of the archiving command is unimportant as long as it can keep up "
 "with the average rate at which your server generates WAL data. Normal "
@@ -1147,7 +1153,7 @@ msgstr ""
 "доступное дисковое пространство. Поэтому рекомендуется контролировать "
 "процесс архивации и следить за тем, чтобы он выполнялся как задумано."
 
-#: backup.xml:658(para)
+#: backup.xml:692(para)
 msgid ""
 "In writing your archive command, you should assume that the file names to be "
 "archived can be up to 64 characters long and can contain any combination of "
@@ -1161,7 +1167,7 @@ msgstr ""
 "путь (<literal>%p</literal>) необязательно, но необходимо сохранять имя "
 "файла (<literal>%f</literal>)."
 
-#: backup.xml:666(para)
+#: backup.xml:700(para)
 msgid ""
 "Note that although WAL archiving will allow you to restore any modifications "
 "made to the data in your <productname>PostgreSQL</productname> database, it "
@@ -1184,7 +1190,7 @@ msgstr ""
 "рассказывается в <xref remap=\"6\" linkend=\"runtime-config-file-locations\"/"
 ">."
 
-#: backup.xml:679(para)
+#: backup.xml:713(para)
 msgid ""
 "The archive command is only invoked on completed WAL segments. Hence, if "
 "your server generates only little WAL traffic (or has slack periods where it "
@@ -1212,7 +1218,7 @@ msgstr ""
 "неэффективному заполнению архива. Обычно подходящее значение "
 "<varname>archive_timeout</varname> — минута или около того."
 
-#: backup.xml:694(para)
+#: backup.xml:728(para)
 msgid ""
 "Also, you can force a segment switch manually with <function>pg_switch_xlog</"
 "function> if you want to ensure that a just-finished transaction is archived "
@@ -1225,7 +1231,7 @@ msgstr ""
 "функции, относящиеся к управлению WAL, перечисляются в <xref remap=\"6\" "
 "linkend=\"functions-admin-backup-table\"/>."
 
-#: backup.xml:702(para)
+#: backup.xml:736(para)
 msgid ""
 "When <varname>wal_level</varname> is <literal>minimal</literal> some SQL "
 "commands are optimized to avoid WAL logging, as described in <xref linkend="
@@ -1255,11 +1261,11 @@ msgstr ""
 "не будет восстановлена действующая команда <varname>archive_command</"
 "varname>."
 
-#: backup.xml:719(title)
+#: backup.xml:753(title)
 msgid "Making a Base Backup"
 msgstr "Создание базовой резервной копии"
 
-#: backup.xml:721(para)
+#: backup.xml:755(para)
 msgid ""
 "The easiest way to perform a base backup is to use the <xref linkend=\"app-"
 "pgbasebackup\"/> tool. It can create a base backup either as regular files "
@@ -1275,7 +1281,7 @@ msgstr ""
 "копию, используя низкоуровневый API (см. <xref remap=\"4\" linkend=\"backup-"
 "lowlevel-base-backup\"/>)."
 
-#: backup.xml:730(para)
+#: backup.xml:764(para)
 msgid ""
 "It is not necessary to be concerned about the amount of time it takes to "
 "make a base backup. However, if you normally run the server with "
@@ -1290,7 +1296,7 @@ msgstr ""
 "<varname>full_page_writes</varname> включается принудительно на время "
 "резервного копирования."
 
-#: backup.xml:738(para)
+#: backup.xml:772(para)
 msgid ""
 "To make use of the backup, you will need to keep all the WAL segment files "
 "generated during and after the file system backup. To aid you in doing this, "
@@ -1326,7 +1332,7 @@ msgstr ""
 "возможность хранения нескольких наборов резервных копий, чтобы быть "
 "абсолютно уверенными, что вы сможете восстановить ваши данные."
 
-#: backup.xml:759(para)
+#: backup.xml:793(para)
 msgid ""
 "The backup history file is just a small text file. It contains the label "
 "string you gave to <xref linkend=\"app-pgbasebackup\"/>, as well as the "
@@ -1341,7 +1347,7 @@ msgstr ""
 "файл дампа, то заархивированного файла истории достаточно, чтобы найти файл "
 "дампа, нужный для восстановления."
 
-#: backup.xml:768(para)
+#: backup.xml:802(para)
 msgid ""
 "Since you have to keep around all the archived WAL files back to your last "
 "base backup, the interval between base backups should usually be chosen "
@@ -1359,11 +1365,11 @@ msgstr ""
 "воспроизвести все эти сегменты WAL, а этот процесс может быть долгим, если с "
 "момента последней базовой копии прошло много времени."
 
-#: backup.xml:780(title)
+#: backup.xml:814(title)
 msgid "Making a Base Backup Using the Low Level API"
 msgstr "Создание базовой резервной копии через низкоуровневый API"
 
-#: backup.xml:781(para)
+#: backup.xml:815(para)
 msgid ""
 "The procedure for making a base backup using the low level APIs contains a "
 "few more steps than the <xref linkend=\"app-pgbasebackup\"/> method, but is "
@@ -1376,7 +1382,7 @@ msgstr ""
 ">, но всё же относительно проста. Очень важно, чтобы эти шаги выполнялись по "
 "порядку, и следующий шаг выполнялся, только если предыдущий успешен."
 
-#: backup.xml:789(para)
+#: backup.xml:823(para)
 msgid ""
 "Low level base backups can be made in a non-exclusive or an exclusive way. "
 "The non-exclusive method is recommended and the exclusive one is deprecated "
@@ -1386,11 +1392,11 @@ msgstr ""
 "немонопольном режиме. Рекомендуется применять немонопольный метод, а "
 "монопольный считается устаревшим и в конце концов будет ликвидирован."
 
-#: backup.xml:795(title)
+#: backup.xml:829(title)
 msgid "Making a non-exclusive low level backup"
 msgstr "Немонопольное резервное копирование на низком уровне"
 
-#: backup.xml:796(para)
+#: backup.xml:830(para)
 msgid ""
 "A non-exclusive low level backup is one that allows other concurrent backups "
 "to be running (both those started using the same backup API and those "
@@ -1400,16 +1406,16 @@ msgstr ""
 "процессы копирования (используя тот же API или <xref linkend=\"app-"
 "pgbasebackup\"/>)."
 
-#: backup.xml:805(para) backup.xml:906(para)
+#: backup.xml:839(para) backup.xml:944(para)
 msgid "Ensure that WAL archiving is enabled and working."
 msgstr "Убедитесь, что архивирование WAL включено и работает."
 
-#: backup.xml:814(programlisting)
+#: backup.xml:848(programlisting)
 #, no-wrap
 msgid "SELECT pg_start_backup('label', false, false);"
 msgstr "SELECT pg_start_backup('label', false, false);"
 
-#: backup.xml:810(para)
+#: backup.xml:844(para)
 msgid ""
 "Connect to the server (it does not matter which database) as a user with "
 "rights to run pg_start_backup (superuser, or a user who has been granted "
@@ -1428,7 +1434,7 @@ msgstr ""
 "должно поддерживаться до окончания резервного копирования, иначе этот "
 "процесс будет автоматически прерван."
 
-#: backup.xml:821(para)
+#: backup.xml:857(para)
 msgid ""
 "By default, <function>pg_start_backup</function> can take a long time to "
 "finish. This is because it performs a checkpoint, and the I/O required for "
@@ -1448,7 +1454,7 @@ msgstr ""
 "выполнение других запросов. Если же вы хотите начать резервное копирование "
 "максимально быстро, передайте во втором параметре <literal>true</literal>."
 
-#: backup.xml:833(para)
+#: backup.xml:869(para)
 msgid ""
 "The third parameter being <literal>false</literal> tells "
 "<function>pg_start_backup</function> to initiate a non-exclusive base backup."
@@ -1457,7 +1463,7 @@ msgstr ""
 "<function>pg_start_backup</function> начать немонопольное базовое "
 "копирование."
 
-#: backup.xml:839(para) backup.xml:943(para)
+#: backup.xml:875(para) backup.xml:985(para)
 msgid ""
 "Perform the backup, using any convenient file-system-backup tool such as "
 "<application>tar</application> or <application>cpio</application> (not "
@@ -1474,12 +1480,12 @@ msgstr ""
 "требуется, это ничего не даёт. В <xref remap=\"6\" linkend=\"backup-lowlevel-"
 "base-backup-data\"/> описано, что следует учитывать в процессе копирования."
 
-#: backup.xml:853(programlisting)
+#: backup.xml:889(programlisting)
 #, no-wrap
 msgid "SELECT * FROM pg_stop_backup(false);"
 msgstr "SELECT * FROM pg_stop_backup(false);"
 
-#: backup.xml:851(para)
+#: backup.xml:887(para)
 msgid ""
 "In the same connection as before, issue the command: <placeholder-1/> This "
 "terminates the backup mode and performs an automatic switch to the next WAL "
@@ -1492,7 +1498,7 @@ msgstr ""
 "последнего сегмента WAL, записанного во время копирования, был готов к "
 "архивации."
 
-#: backup.xml:859(para)
+#: backup.xml:897(para)
 msgid ""
 "The <function>pg_stop_backup</function> will return one row with three "
 "values. The second of these fields should be written to a file named "
@@ -1508,7 +1514,7 @@ msgstr ""
 "значения крайне важны для восстановления копии и должны записываться без "
 "изменений."
 
-#: backup.xml:869(para)
+#: backup.xml:907(para)
 msgid ""
 "Once the WAL segment files active during the backup are archived, you are "
 "done. The file identified by <function>pg_stop_backup</function>'s first "
@@ -1545,11 +1551,11 @@ msgstr ""
 "<function>pg_stop_backup</function> по времени резервная копия может "
 "оказаться негодной."
 
-#: backup.xml:894(title)
+#: backup.xml:932(title)
 msgid "Making an exclusive low level backup"
 msgstr "Монопольное резервное копирование на низком уровне"
 
-#: backup.xml:895(para)
+#: backup.xml:933(para)
 msgid ""
 "The process for an exclusive backup is mostly the same as for a non-"
 "exclusive one, but it differs in a few key steps. It does not allow more "
@@ -1566,12 +1572,12 @@ msgstr ""
 "пользователям рекомендуется по возможности подкорректировать свои скрипты и "
 "перейти к использованию немонопольного варианта."
 
-#: backup.xml:915(programlisting)
+#: backup.xml:953(programlisting)
 #, no-wrap
 msgid "SELECT pg_start_backup('label');"
 msgstr "SELECT pg_start_backup('label');"
 
-#: backup.xml:911(para)
+#: backup.xml:949(para)
 msgid ""
 "Connect to the server (it does not matter which database) as a user with "
 "rights to run pg_start_backup (superuser, or a user who has been granted "
@@ -1602,12 +1608,12 @@ msgstr ""
 "filename>, если такие ссылки есть. Оба файла важны для целостности резервных "
 "копии и понадобятся при восстановлении."
 
-#: backup.xml:938(programlisting)
+#: backup.xml:978(programlisting)
 #, no-wrap
 msgid "SELECT pg_start_backup('label', true);"
 msgstr "SELECT pg_start_backup('label', true);"
 
-#: backup.xml:928(para)
+#: backup.xml:968(para)
 msgid ""
 "By default, <function>pg_start_backup</function> can take a long time to "
 "finish. This is because it performs a checkpoint, and the I/O required for "
@@ -1628,12 +1634,12 @@ msgstr ""
 "максимально быстро, выполните: <placeholder-1/> При этом контрольная точка "
 "будет выполнена как можно скорее."
 
-#: backup.xml:959(programlisting)
+#: backup.xml:1001(programlisting)
 #, no-wrap
 msgid "SELECT pg_stop_backup();"
 msgstr "SELECT pg_stop_backup();"
 
-#: backup.xml:955(para)
+#: backup.xml:997(para)
 msgid ""
 "Again connect to the database as a user with rights to run pg_stop_backup "
 "(superuser, or a user who has been granted EXECUTE on the function), and "
@@ -1650,7 +1656,7 @@ msgstr ""
 "последнего сегмента WAL, записанного во время копирования, был готов к "
 "архивации."
 
-#: backup.xml:967(para)
+#: backup.xml:1011(para)
 msgid ""
 "Once the WAL segment files active during the backup are archived, you are "
 "done. The file identified by <function>pg_stop_backup</function>'s result is "
@@ -1686,11 +1692,11 @@ msgstr ""
 "заметьте, что в случае прерывания <function>pg_stop_backup</function> по "
 "времени резервная копия может оказаться негодной."
 
-#: backup.xml:992(title)
+#: backup.xml:1036(title)
 msgid "Backing up the data directory"
 msgstr "Копирование каталога данных"
 
-#: backup.xml:993(para)
+#: backup.xml:1037(para)
 msgid ""
 "Some file system backup tools emit warnings or errors if the files they are "
 "trying to copy change while the copy proceeds. When taking a base backup of "
@@ -1726,7 +1732,7 @@ msgstr ""
 "warning=no-file-removed</literal>, чтобы скрыть соответствующие "
 "предупреждения."
 
-#: backup.xml:1011(para)
+#: backup.xml:1055(para)
 msgid ""
 "Be certain that your backup includes all of the files under the database "
 "cluster directory (e.g., <filename>/usr/local/pgsql/data</filename>). If you "
@@ -1742,7 +1748,7 @@ msgstr ""
 "при создании резервной копии символьные ссылки сохранялись как ссылки, иначе "
 "табличные пространства будут повреждены при восстановлении)."
 
-#: backup.xml:1020(para)
+#: backup.xml:1064(para)
 msgid ""
 "You should, however, omit from the backup the files within the cluster's "
 "<filename>pg_xlog/</filename> subdirectory. This slight adjustment is "
@@ -1767,7 +1773,7 @@ msgstr ""
 "восстанавливать эту копию). (Эти файлы могут ввести <application>pg_ctl</"
 "application> в заблуждение.)"
 
-#: backup.xml:1034(para)
+#: backup.xml:1078(para)
 msgid ""
 "It is often a good idea to also omit from the backup the files within the "
 "cluster's <filename>pg_replslot/</filename> directory, so that replication "
@@ -1793,7 +1799,7 @@ msgstr ""
 "принесёт пользу, так как к моменту включения в работу этого нового сервера "
 "содержимое этих слотов станет абсолютно неактуальным."
 
-#: backup.xml:1049(para)
+#: backup.xml:1093(para)
 msgid ""
 "The backup label file includes the label string you gave to "
 "<function>pg_start_backup</function>, as well as the time at which "
@@ -1817,7 +1823,7 @@ msgstr ""
 "существование и содержание важны для правильного проведения процесса "
 "восстановления системы."
 
-#: backup.xml:1063(para)
+#: backup.xml:1107(para)
 msgid ""
 "It is also possible to make a backup while the server is stopped. In this "
 "case, you obviously cannot use <function>pg_start_backup</function> or "
@@ -1833,15 +1839,15 @@ msgstr ""
 "какие файлы WAL должны быть заархивированы. Поэтому обычно всё-таки лучше "
 "следовать вышеописанной процедуре непрерывного архивирования."
 
-#: backup.xml:1075(title)
+#: backup.xml:1119(title)
 msgid "Recovering Using a Continuous Archive Backup"
 msgstr "Восстановление непрерывной архивной копии"
 
-#: backup.xml:1082(para)
+#: backup.xml:1126(para)
 msgid "Stop the server, if it's running."
 msgstr "Остановите сервер баз данных, если он запущен."
 
-#: backup.xml:1087(para)
+#: backup.xml:1131(para)
 msgid ""
 "If you have the space to do so, copy the whole cluster data directory and "
 "any tablespaces to a temporary location in case you need them later. Note "
@@ -1860,7 +1866,7 @@ msgstr ""
 "кластера, так как он может содержать журналы, не попавшие в архив перед "
 "остановкой системы."
 
-#: backup.xml:1099(para)
+#: backup.xml:1143(para)
 msgid ""
 "Remove all existing files and subdirectories under the cluster data "
 "directory and under the root directories of any tablespaces you are using."
@@ -1868,7 +1874,7 @@ msgstr ""
 "Удалите все существующие файлы и подкаталоги из каталога кластера и из "
 "корневых каталогов используемых табличных пространств."
 
-#: backup.xml:1105(para)
+#: backup.xml:1149(para)
 msgid ""
 "Restore the database files from your file system backup. Be sure that they "
 "are restored with the right ownership (the database system user, not "
@@ -1882,7 +1888,7 @@ msgstr ""
 "используете табличные пространства, убедитесь также, что символьные ссылки в "
 "<filename>pg_tblspc/</filename> восстановились корректно."
 
-#: backup.xml:1115(para)
+#: backup.xml:1159(para)
 msgid ""
 "Remove any files present in <filename>pg_xlog/</filename>; these came from "
 "the file system backup and are therefore probably obsolete rather than "
@@ -1896,7 +1902,7 @@ msgstr ""
 "каталог с правильными правами доступа, но если это была символьная ссылка, "
 "восстановите её."
 
-#: backup.xml:1125(para)
+#: backup.xml:1169(para)
 msgid ""
 "If you have unarchived WAL segment files that you saved in step 2, copy them "
 "into <filename>pg_xlog/</filename>. (It is best to copy them, not move them, "
@@ -1908,7 +1914,7 @@ msgstr ""
 "копировать, а не перемещать их, чтобы у вас остались неизменённые файлы на "
 "случай, если возникнет проблема и всё придётся начинать сначала.)"
 
-#: backup.xml:1133(para)
+#: backup.xml:1177(para)
 msgid ""
 "Create a recovery command file <filename>recovery.conf</filename> in the "
 "cluster data directory (see <xref linkend=\"recovery-config\"/>). You might "
@@ -1922,7 +1928,7 @@ msgstr ""
 "чтобы обычные пользователи не могли подключаться, пока вы не будете уверены, "
 "что восстановление завершилось успешно."
 
-#: backup.xml:1141(para)
+#: backup.xml:1185(para)
 msgid ""
 "Start the server. The server will go into recovery mode and proceed to read "
 "through the archived WAL files it needs. Should the recovery be terminated "
@@ -1940,7 +1946,7 @@ msgstr ""
 "done</filename> (чтобы предотвратить повторный запуск режима "
 "восстановления), а затем перейдёт к обычной работе с базой данных."
 
-#: backup.xml:1153(para)
+#: backup.xml:1197(para)
 msgid ""
 "Inspect the contents of the database to ensure you have recovered to the "
 "desired state. If not, return to step 1. If all is well, allow your users to "
@@ -1951,7 +1957,7 @@ msgstr ""
 "разрешите пользователям подключаться к серверу, восстановив обычный файл "
 "<filename>pg_hba.conf</filename>."
 
-#: backup.xml:1077(para)
+#: backup.xml:1121(para)
 msgid ""
 "Okay, the worst has happened and you need to recover from your backup. Here "
 "is the procedure: <placeholder-1/>"
@@ -1959,12 +1965,12 @@ msgstr ""
 "Допустим, худшее случилось и вам необходимо восстановить базу данных из "
 "резервной копии. Порядок действий таков: <placeholder-1/>"
 
-#: backup.xml:1179(programlisting)
+#: backup.xml:1223(programlisting)
 #, no-wrap
 msgid "restore_command = 'cp /mnt/server/archivedir/%f %p'"
 msgstr "restore_command = 'cp /mnt/server/archivedir/%f %p'"
 
-#: backup.xml:1162(para)
+#: backup.xml:1206(para)
 msgid ""
 "The key part of all this is to set up a recovery configuration file that "
 "describes how you want to recover and how far the recovery should run. You "
@@ -2005,7 +2011,7 @@ msgstr ""
 "использовать что-то более сложное, возможно, даже скрипт оболочки, который "
 "укажет оператору установить соответствующую ленту."
 
-#: backup.xml:1186(para)
+#: backup.xml:1232(para)
 msgid ""
 "It is important that the command return nonzero exit status on failure. The "
 "command <emphasis>will</emphasis> be called requesting files that are not "
@@ -2024,7 +2030,7 @@ msgstr ""
 "ошибка оболочки (например, команда не найдена), восстановление будет "
 "прервано и сервер не запустится."
 
-#: backup.xml:1197(para)
+#: backup.xml:1243(para)
 msgid ""
 "Not all of the requested files will be WAL segment files; you should also "
 "expect requests for files with a suffix of <literal>.backup</literal> or "
@@ -2038,7 +2044,7 @@ msgstr ""
 "будет отличаться от <literal>%f</literal>; не думайте, что они "
 "взаимозаменяемы."
 
-#: backup.xml:1205(para)
+#: backup.xml:1251(para)
 msgid ""
 "WAL segments that cannot be found in the archive will be sought in "
 "<filename>pg_xlog/</filename>; this allows use of recent un-archived "
@@ -2050,7 +2056,7 @@ msgstr ""
 "незаархивированные сегменты. Однако файлы в <filename>pg_xlog/</filename> "
 "будут менее предпочтительными, если такие сегменты окажутся в архиве."
 
-#: backup.xml:1212(para)
+#: backup.xml:1258(para)
 msgid ""
 "Normally, recovery will proceed through all available WAL segments, thereby "
 "restoring the database to the current point in time (or as close as possible "
@@ -2073,7 +2079,7 @@ msgstr ""
 "проблеме при восстановлении в простых ситуациях; подробнее об этом "
 "рассказывается в <xref remap=\"6\" linkend=\"backup-timelines\"/>."
 
-#: backup.xml:1225(para)
+#: backup.xml:1271(para)
 msgid ""
 "If you want to recover to some previous point in time (say, right before the "
 "junior DBA dropped your main transaction table), just specify the required "
@@ -2095,7 +2101,7 @@ msgstr ""
 "нет никаких средств, позволяющих точно определить, какой идентификатор "
 "транзакции нужно выбрать."
 
-#: backup.xml:1237(para)
+#: backup.xml:1283(para)
 msgid ""
 "The stop point must be after the ending time of the base backup, i.e., the "
 "end time of <function>pg_stop_backup</function>. You cannot use a base "
@@ -2110,7 +2116,7 @@ msgstr ""
 "данные на этот момент времени, придётся вернуться к предыдущей базовой "
 "резервной копии и накатывать изменения с этой позиции.)"
 
-#: backup.xml:1246(para)
+#: backup.xml:1292(para)
 msgid ""
 "If recovery finds corrupted WAL data, recovery will halt at that point and "
 "the server will not start. In such a case the recovery process could be re-"
@@ -2136,15 +2142,15 @@ msgstr ""
 "<filename>pg_control</filename>, чтобы уже обработанные данные WAL не "
 "приходилось сканировать снова."
 
-#: backup.xml:1264(title)
+#: backup.xml:1310(title)
 msgid "Timelines"
 msgstr "Линии времени"
 
-#: backup.xml:1266(indexterm)
+#: backup.xml:1312(indexterm)
 msgid "<primary>timelines</primary>"
 msgstr "<primary>линии времени</primary>"
 
-#: backup.xml:1270(para)
+#: backup.xml:1316(para)
 msgid ""
 "The ability to restore the database to a previous point in time creates some "
 "complexities that are akin to science-fiction stories about time travel and "
@@ -2178,7 +2184,7 @@ msgstr ""
 "записей WAL, добавленные после восстановления на какой-то момент времени от "
 "тех, что существовали в начальной истории базы данных."
 
-#: backup.xml:1289(para)
+#: backup.xml:1335(para)
 msgid ""
 "To deal with this problem, <productname>PostgreSQL</productname> has a "
 "notion of <firstterm>timelines</firstterm>. Whenever an archive recovery "
@@ -2211,7 +2217,7 @@ msgstr ""
 "предыдущему состоянию, включая состояния в ветках линий времени, покинутых "
 "ранее."
 
-#: backup.xml:1306(para)
+#: backup.xml:1352(para)
 msgid ""
 "Every time a new timeline is created, <productname>PostgreSQL</productname> "
 "creates a <quote>timeline history</quote> file that shows which timeline it "
@@ -2240,7 +2246,7 @@ msgstr ""
 "особенно ценны, если в результате экспериментов у вас образуется "
 "хитросплетение разных линий времени."
 
-#: backup.xml:1321(para)
+#: backup.xml:1367(para)
 msgid ""
 "The default behavior of recovery is to recover along the same timeline that "
 "was current when the base backup was taken. If you wish to recover into some "
@@ -2258,20 +2264,20 @@ msgstr ""
 "состояние в линии времени, ответвившейся раньше, чем была сделана базовая "
 "резервная копия, нельзя."
 
-#: backup.xml:1332(title)
+#: backup.xml:1378(title)
 msgid "Tips and Examples"
 msgstr "Советы и примеры"
 
-#: backup.xml:1334(para)
+#: backup.xml:1380(para)
 msgid "Some tips for configuring continuous archiving are given here."
 msgstr ""
 "Ниже мы дадим несколько советов по настройке непрерывного архивирования."
 
-#: backup.xml:1339(title)
+#: backup.xml:1385(title)
 msgid "Standalone Hot Backups"
 msgstr "Обособленные горячие резервные копии"
 
-#: backup.xml:1341(para)
+#: backup.xml:1387(para)
 msgid ""
 "It is possible to use <productname>PostgreSQL</productname>'s backup "
 "facilities to produce standalone hot backups. These are backups that cannot "
@@ -2288,7 +2294,7 @@ msgstr ""
 "<application>pg_dump</application>, так что в некоторых случаях выигрыш в "
 "скорости может быть потерян.)"
 
-#: backup.xml:1350(para)
+#: backup.xml:1396(para)
 msgid ""
 "As with base backups, the easiest way to produce a standalone hot backup is "
 "to use the <xref linkend=\"app-pgbasebackup\"/> tool. If you include the "
@@ -2303,12 +2309,12 @@ msgstr ""
 "использования, так что никакие особые действия для восстановления не "
 "потребуются."
 
-#: backup.xml:1366(programlisting)
+#: backup.xml:1412(programlisting)
 #, no-wrap
 msgid "archive_command = 'test ! -f /var/lib/pgsql/backup_in_progress || (test ! -f /var/lib/pgsql/archive/%f &amp;&amp; cp %p /var/lib/pgsql/archive/%f)'"
 msgstr "archive_command = 'test ! -f /var/lib/pgsql/backup_in_progress || (test ! -f /var/lib/pgsql/archive/%f &amp;&amp; cp %p /var/lib/pgsql/archive/%f)'"
 
-#: backup.xml:1359(para)
+#: backup.xml:1405(para)
 msgid ""
 "If more flexibility in copying the backup files is needed, a lower level "
 "process can be used for standalone hot backups as well. To prepare for low "
@@ -2333,7 +2339,7 @@ msgstr ""
 "в противном случае просто вернёт нулевой код возврата (и тогда "
 "<productname>PostgreSQL</productname> сможет переработать ненужный файл WAL)."
 
-#: backup.xml:1376(programlisting)
+#: backup.xml:1424(programlisting)
 #, no-wrap
 msgid ""
 "touch /var/lib/pgsql/backup_in_progress\n"
@@ -2350,7 +2356,7 @@ msgstr ""
 "rm /var/lib/pgsql/backup_in_progress\n"
 "tar -rf /var/lib/pgsql/backup.tar /var/lib/pgsql/archive/"
 
-#: backup.xml:1373(para)
+#: backup.xml:1421(para)
 msgid ""
 "With this preparation, a backup can be taken using a script like the "
 "following: <placeholder-1/> The switch file <filename>/var/lib/pgsql/"
@@ -2370,21 +2376,21 @@ msgstr ""
 "Пожалуйста, не забудьте добавить в ваши скрипты резервного копирования "
 "обработку ошибок."
 
-#: backup.xml:1393(title)
+#: backup.xml:1443(title)
 msgid "Compressed Archive Logs"
 msgstr "Сжатие журналов в архиве"
 
-#: backup.xml:1398(programlisting)
+#: backup.xml:1448(programlisting)
 #, no-wrap
 msgid "archive_command = 'gzip &lt; %p &gt; /var/lib/pgsql/archive/%f'"
 msgstr "archive_command = 'gzip &lt; %p &gt; /var/lib/pgsql/archive/%f'"
 
-#: backup.xml:1400(programlisting)
+#: backup.xml:1452(programlisting)
 #, no-wrap
 msgid "restore_command = 'gunzip &lt; /mnt/server/archivedir/%f &gt; %p'"
 msgstr "restore_command = 'gunzip &lt; /mnt/server/archivedir/%f &gt; %p'"
 
-#: backup.xml:1395(para)
+#: backup.xml:1445(para)
 msgid ""
 "If archive storage size is a concern, you can use <application>gzip</"
 "application> to compress the archive files: <placeholder-1/> You will then "
@@ -2396,16 +2402,16 @@ msgstr ""
 "При этом для восстановления придётся использовать <application>gunzip</"
 "application>: <placeholder-2/>"
 
-#: backup.xml:1405(title)
+#: backup.xml:1459(title)
 msgid "<varname>archive_command</varname> Scripts"
 msgstr "Скрипты <varname>archive_command</varname>"
 
-#: backup.xml:1411(programlisting)
+#: backup.xml:1465(programlisting)
 #, no-wrap
 msgid "archive_command = 'local_backup_script.sh \"%p\" \"%f\"'"
 msgstr "archive_command = 'local_backup_script.sh \"%p\" \"%f\"'"
 
-#: backup.xml:1407(para)
+#: backup.xml:1461(para)
 msgid ""
 "Many people choose to use scripts to define their <varname>archive_command</"
 "varname>, so that their <filename>postgresql.conf</filename> entry looks "
@@ -2424,11 +2430,11 @@ msgstr ""
 "например на <application>bash</application> или <application>perl</"
 "application>."
 
-#: backup.xml:1423(para)
+#: backup.xml:1479(para)
 msgid "Copying data to secure off-site data storage"
 msgstr "Копирование данных в безопасное внешнее хранилище"
 
-#: backup.xml:1428(para)
+#: backup.xml:1484(para)
 msgid ""
 "Batching WAL files so that they are transferred every three hours, rather "
 "than one at a time"
@@ -2436,23 +2442,23 @@ msgstr ""
 "Пакетная обработка файлов WAL, чтобы они передавались каждые три часа, а не "
 "по одному"
 
-#: backup.xml:1434(para)
+#: backup.xml:1490(para)
 msgid "Interfacing with other backup and recovery software"
 msgstr ""
 "Взаимодействие с другими приложениями резервного копирования и восстановления"
 
-#: backup.xml:1439(para)
+#: backup.xml:1495(para)
 msgid "Interfacing with monitoring software to report errors"
 msgstr "Взаимодействие со средствами мониторинга, регистрация ошибок"
 
-#: backup.xml:1419(para)
+#: backup.xml:1475(para)
 msgid ""
 "Examples of requirements that might be solved within a script include: "
 "<placeholder-1/>"
 msgstr ""
 "В частности, с помощью скриптов можно решить такие задачи: <placeholder-1/>"
 
-#: backup.xml:1447(para)
+#: backup.xml:1503(para)
 msgid ""
 "When using an <varname>archive_command</varname> script, it's desirable to "
 "enable <xref linkend=\"guc-logging-collector\"/>. Any messages written to "
@@ -2466,11 +2472,11 @@ msgstr ""
 "в журнал сервера баз данных, что позволит легко диагностировать ошибки в "
 "сложных конфигурациях."
 
-#: backup.xml:1459(title)
+#: backup.xml:1515(title)
 msgid "Caveats"
 msgstr "Ограничения"
 
-#: backup.xml:1467(para)
+#: backup.xml:1523(para)
 msgid ""
 "Operations on hash indexes are not presently WAL-logged, so replay will not "
 "update these indexes. This will mean that any new inserts will be ignored by "
@@ -2489,7 +2495,7 @@ msgstr ""
 "восстановления рекомендуется вручную выполнить <xref linkend=\"sql-reindex\"/"
 "> для каждого такого индекса."
 
-#: backup.xml:1480(para)
+#: backup.xml:1536(para)
 msgid ""
 "If a <xref linkend=\"sql-createdatabase\"/> command is executed while a base "
 "backup is being taken, and then the template database that the "
@@ -2507,7 +2513,7 @@ msgstr ""
 "подобных рисков, лучше всего не изменять никакие базы-шаблоны во время "
 "получения базовой резервной копии."
 
-#: backup.xml:1493(para)
+#: backup.xml:1549(para)
 msgid ""
 "<xref linkend=\"sql-createtablespace\"/> commands are WAL-logged with the "
 "literal absolute path, and will therefore be replayed as tablespace "
@@ -2528,7 +2534,7 @@ msgstr ""
 "делать новую базовую резервную копию после создания или удаления табличных "
 "пространств."
 
-#: backup.xml:1461(para)
+#: backup.xml:1517(para)
 msgid ""
 "At this writing, there are several limitations of the continuous archiving "
 "technique. These will probably be fixed in future releases: <placeholder-1/>"
@@ -2537,7 +2543,7 @@ msgstr ""
 "несколько ограничений. Они могут быть ликвидированы в будущих версиях: "
 "<placeholder-1/>"
 
-#: backup.xml:1509(para)
+#: backup.xml:1565(para)
 msgid ""
 "It should also be noted that the default <acronym>WAL</acronym> format is "
 "fairly bulky since it includes many disk page snapshots. These page "

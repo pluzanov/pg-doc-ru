@@ -280,7 +280,7 @@ msgstr ""
 "Структура <structname>IndexAmRoutine</structname> определяется так: "
 "<placeholder-1/>"
 
-#: indexam.xml:143(para)
+#: indexam.xml:145(para)
 msgid ""
 "To be useful, an index access method must also have one or more "
 "<firstterm>operator families</firstterm> and <firstterm>operator classes</"
@@ -306,7 +306,7 @@ msgstr ""
 "в <xref remap=\"6\" linkend=\"xindex\"/>; этот материал необходимо изучить, "
 "прежде чем читать данную главу."
 
-#: indexam.xml:158(para)
+#: indexam.xml:160(para)
 msgid ""
 "An individual index is defined by a <link linkend=\"catalog-pg-class"
 "\"><structname>pg_class</structname></link> entry that describes it as a "
@@ -337,7 +337,7 @@ msgstr ""
 "<structname>Relation</structname>, которая передаётся всем функциям, "
 "реализующим операции с индексом."
 
-#: indexam.xml:175(para)
+#: indexam.xml:177(para)
 msgid ""
 "Some of the flag fields of <structname>IndexAmRoutine</structname> have "
 "nonobvious implications. The requirements of <structfield>amcanunique</"
@@ -414,11 +414,11 @@ msgstr ""
 "поддерживает в качестве условий поиска <literal>IS NULL</literal> и "
 "<literal>IS NOT NULL</literal>."
 
-#: indexam.xml:219(title)
+#: indexam.xml:221(title)
 msgid "Index Access Method Functions"
 msgstr "Функции для метода доступа индекса"
 
-#: indexam.xml:221(para)
+#: indexam.xml:223(para)
 msgid ""
 "The index construction and maintenance functions that an index access method "
 "must provide in <structname>IndexAmRoutine</structname> are:"
@@ -426,7 +426,7 @@ msgstr ""
 "Метод доступа индекса должен определить в <structname>IndexAmRoutine</"
 "structname> следующие функции построения и обслуживания индексов:"
 
-#: indexam.xml:227(programlisting)
+#: indexam.xml:229(programlisting)
 #, no-wrap
 msgid ""
 "IndexBuildResult *\n"
@@ -439,7 +439,7 @@ msgstr ""
 "         Relation indexRelation,\n"
 "         IndexInfo *indexInfo);"
 
-#: indexam.xml:226(para)
+#: indexam.xml:228(para)
 msgid ""
 "<placeholder-1/> Build a new index. The index relation has been physically "
 "created, but is empty. It must be filled in with whatever fixed data the "
@@ -459,7 +459,7 @@ msgstr ""
 "Эта функция должна возвращать структуру, выделенную вызовом palloc и "
 "содержащую статистику нового индекса."
 
-#: indexam.xml:242(programlisting)
+#: indexam.xml:246(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -468,7 +468,7 @@ msgstr ""
 "void\n"
 "ambuildempty (Relation indexRelation);"
 
-#: indexam.xml:241(para)
+#: indexam.xml:245(para)
 msgid ""
 "<placeholder-1/> Build an empty index, and write it to the initialization "
 "fork (<symbol>INIT_FORKNUM</symbol>) of the given relation. This method is "
@@ -482,7 +482,7 @@ msgstr ""
 "инициализации, будет копироваться в основной слой отношения при каждом "
 "перезапуске сервера."
 
-#: indexam.xml:251(programlisting)
+#: indexam.xml:257(programlisting)
 #, no-wrap
 msgid ""
 "bool\n"
@@ -501,7 +501,7 @@ msgstr ""
 "          Relation heapRelation,\n"
 "          IndexUniqueCheck checkUnique);"
 
-#: indexam.xml:250(para)
+#: indexam.xml:256(para)
 msgid ""
 "<placeholder-1/> Insert a new tuple into an existing index. The "
 "<literal>values</literal> and <literal>isnull</literal> arrays give the key "
@@ -528,7 +528,7 @@ msgstr ""
 "уникальности (так как он должен обратиться к основным данным, чтобы "
 "убедиться в актуальности кортежа)."
 
-#: indexam.xml:271(para)
+#: indexam.xml:279(para)
 msgid ""
 "The function's Boolean result value is significant only when "
 "<literal>checkUnique</literal> is <literal>UNIQUE_CHECK_PARTIAL</literal>. "
@@ -543,7 +543,7 @@ msgstr ""
 "требуется назначить отложенную проверку уникальности). В других случаях "
 "рекомендуется возвращать постоянный результат FALSE."
 
-#: indexam.xml:279(para)
+#: indexam.xml:287(para)
 msgid ""
 "Some indexes might not index all tuples. If the tuple is not to be indexed, "
 "<function>aminsert</function> should just return without doing anything."
@@ -552,7 +552,7 @@ msgstr ""
 "индексирован, <function>aminsert</function> должна просто завершиться, не "
 "делая ничего."
 
-#: indexam.xml:285(programlisting)
+#: indexam.xml:293(programlisting)
 #, no-wrap
 msgid ""
 "IndexBulkDeleteResult *\n"
@@ -567,7 +567,7 @@ msgstr ""
 "              IndexBulkDeleteCallback callback,\n"
 "              void *callback_state);"
 
-#: indexam.xml:284(para)
+#: indexam.xml:292(para)
 msgid ""
 "<placeholder-1/> Delete tuple(s) from the index. This is a <quote>bulk "
 "delete</quote> operation that is intended to be implemented by scanning the "
@@ -591,7 +591,7 @@ msgstr ""
 "результата удаления. NULL можно вернуть, если никакая информация не должна "
 "передаваться в <function>amvacuumcleanup</function>."
 
-#: indexam.xml:302(para)
+#: indexam.xml:312(para)
 msgid ""
 "Because of limited <varname>maintenance_work_mem</varname>, "
 "<function>ambulkdelete</function> might need to be called more than once "
@@ -611,7 +611,7 @@ msgstr ""
 "операции. Обычно <function>ambulkdelete</function> модифицирует и возвращает "
 "одну и ту же структуру, если в <literal>stats</literal> передаётся не NULL."
 
-#: indexam.xml:314(programlisting)
+#: indexam.xml:324(programlisting)
 #, no-wrap
 msgid ""
 "IndexBulkDeleteResult *\n"
@@ -622,7 +622,7 @@ msgstr ""
 "amvacuumcleanup (IndexVacuumInfo *info,\n"
 "                 IndexBulkDeleteResult *stats);"
 
-#: indexam.xml:313(para)
+#: indexam.xml:323(para)
 msgid ""
 "<placeholder-1/> Clean up after a <command>VACUUM</command> operation (zero "
 "or more <function>ambulkdelete</function> calls). This does not have to do "
@@ -652,7 +652,7 @@ msgstr ""
 "вовсе не изменился в процессе операции <command>VACUUM</command>, но в "
 "противном случае должна возвращаться корректная статистика."
 
-#: indexam.xml:331(para)
+#: indexam.xml:343(para)
 msgid ""
 "As of <productname>PostgreSQL</productname> 8.4, <function>amvacuumcleanup</"
 "function> will also be called at completion of an <command>ANALYZE</command> "
@@ -671,7 +671,7 @@ msgstr ""
 "провести очистку после добавления данных, и только в рабочем процессе "
 "автоочистки."
 
-#: indexam.xml:342(programlisting)
+#: indexam.xml:354(programlisting)
 #, no-wrap
 msgid ""
 "bool\n"
@@ -680,7 +680,7 @@ msgstr ""
 "bool\n"
 "amcanreturn (Relation indexRelation, int attno);"
 
-#: indexam.xml:341(para)
+#: indexam.xml:353(para)
 msgid ""
 "<placeholder-1/> Check whether the index can support <link linkend=\"indexes-"
 "index-only-scans\"><firstterm>index-only scans</firstterm></link> on the "
@@ -701,7 +701,7 @@ msgstr ""
 "<structfield>amcanreturn</structfield> его структуры "
 "<structname>IndexAmRoutine</structname> можно записать NULL."
 
-#: indexam.xml:355(programlisting) indexam.xml:988(programlisting)
+#: indexam.xml:369(programlisting) indexam.xml:1022(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -722,7 +722,7 @@ msgstr ""
 "                Selectivity *indexSelectivity,\n"
 "                double *indexCorrelation);"
 
-#: indexam.xml:354(para)
+#: indexam.xml:368(para)
 msgid ""
 "<placeholder-1/> Estimate the costs of an index scan. This function is "
 "described fully in <xref linkend=\"index-cost-estimation\"/>, below."
@@ -731,7 +731,7 @@ msgstr ""
 "функция полностью описывается ниже в <xref remap=\"6\" linkend=\"index-cost-"
 "estimation\"/>."
 
-#: indexam.xml:368(programlisting)
+#: indexam.xml:384(programlisting)
 #, no-wrap
 msgid ""
 "bytea *\n"
@@ -742,7 +742,7 @@ msgstr ""
 "amoptions (ArrayType *reloptions,\n"
 "           bool validate);"
 
-#: indexam.xml:367(para)
+#: indexam.xml:383(para)
 msgid ""
 "<placeholder-1/> Parse and validate the reloptions array for an index. This "
 "is called only when a non-null reloptions array exists for the index. "
@@ -783,7 +783,7 @@ msgstr ""
 "обработки параметров, и в этом случае стоит просто игнорировать такие "
 "записи.) NULL можно вернуть, когда нужно получить поведение по умолчанию."
 
-#: indexam.xml:391(programlisting)
+#: indexam.xml:409(programlisting)
 #, no-wrap
 msgid ""
 "bool\n"
@@ -792,7 +792,7 @@ msgstr ""
 "bool\n"
 "amvalidate (Oid opclassoid);"
 
-#: indexam.xml:390(para)
+#: indexam.xml:408(para)
 msgid ""
 "<placeholder-1/> Validate the catalog entries for the specified operator "
 "class, so far as the access method can reasonably do that. For example, this "
@@ -808,7 +808,7 @@ msgstr ""
 "непригоден к использованию. Сообщения о проблеме следует выдать через "
 "<function>ereport</function>."
 
-#: indexam.xml:401(para)
+#: indexam.xml:421(para)
 msgid ""
 "The purpose of an index, of course, is to support scans for tuples matching "
 "an indexable <literal>WHERE</literal> condition, often called a "
@@ -828,7 +828,7 @@ msgstr ""
 "quote> или и то, и другое. Метод доступа должен или может реализовывать "
 "следующие функции, связанные со сканированием:"
 
-#: indexam.xml:412(programlisting)
+#: indexam.xml:432(programlisting)
 #, no-wrap
 msgid ""
 "IndexScanDesc\n"
@@ -841,7 +841,7 @@ msgstr ""
 "             int nkeys,\n"
 "             int norderbys);"
 
-#: indexam.xml:411(para)
+#: indexam.xml:431(para)
 msgid ""
 "<placeholder-1/> Prepare for an index scan. The <literal>nkeys</literal> and "
 "<literal>norderbys</literal> parameters indicate the number of quals and "
@@ -867,7 +867,7 @@ msgstr ""
 "вызова и, возможно, получению блокировок; всё самое интересное при запуске "
 "сканирования индекса происходит в <function>amrescan</function>."
 
-#: indexam.xml:430(programlisting)
+#: indexam.xml:452(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -884,7 +884,7 @@ msgstr ""
 "          ScanKey orderbys,\n"
 "          int norderbys);"
 
-#: indexam.xml:429(para)
+#: indexam.xml:451(para)
 msgid ""
 "<placeholder-1/> Start or restart an index scan, possibly with new scan "
 "keys. (To restart using previously-passed keys, NULL is passed for "
@@ -905,7 +905,7 @@ msgstr ""
 "требуется сравнение с новым ключом, но структура ключей сканирования не "
 "меняется."
 
-#: indexam.xml:447(programlisting)
+#: indexam.xml:471(programlisting)
 #, no-wrap
 msgid ""
 "boolean\n"
@@ -916,7 +916,7 @@ msgstr ""
 "amgettuple (IndexScanDesc scan,\n"
 "            ScanDirection direction);"
 
-#: indexam.xml:446(para)
+#: indexam.xml:470(para)
 msgid ""
 "<placeholder-1/> Fetch the next tuple in the given scan, moving in the given "
 "direction (forward or backward in the index). Returns TRUE if a tuple was "
@@ -953,7 +953,7 @@ msgstr ""
 "индекса (если он имеется) никогда не перепроверяется кодом, вызывающим "
 "<function>amgettuple</function>."
 
-#: indexam.xml:467(para)
+#: indexam.xml:493(para)
 msgid ""
 "If the index supports <link linkend=\"indexes-index-only-scans\">index-only "
 "scans</link> (i.e., <function>amcanreturn</function> returns TRUE for it), "
@@ -980,7 +980,7 @@ msgstr ""
 "<function>amgettuple</function>, <function>amrescan</function> или "
 "<function>amendscan</function> в текущем сканировании.)"
 
-#: indexam.xml:481(para)
+#: indexam.xml:507(para)
 msgid ""
 "The <function>amgettuple</function> function need only be provided if the "
 "access method supports <quote>plain</quote> index scans. If it doesn't, the "
@@ -992,7 +992,7 @@ msgstr ""
 "противном случае поле <structfield>amgettuple</structfield> в структуре "
 "<structname>IndexAmRoutine</structname> должно содержать NULL."
 
-#: indexam.xml:489(programlisting)
+#: indexam.xml:515(programlisting)
 #, no-wrap
 msgid ""
 "int64\n"
@@ -1003,7 +1003,7 @@ msgstr ""
 "amgetbitmap (IndexScanDesc scan,\n"
 "             TIDBitmap *tbm);"
 
-#: indexam.xml:488(para)
+#: indexam.xml:514(para)
 msgid ""
 "<placeholder-1/> Fetch all tuples in the given scan and add them to the "
 "caller-supplied <type>TIDBitmap</type> (that is, OR the set of tuple IDs "
@@ -1041,7 +1041,7 @@ msgstr ""
 "применении <function>amgetbitmap</function>, описанные в <xref remap=\"6\" "
 "linkend=\"index-scanning\"/>."
 
-#: indexam.xml:510(para)
+#: indexam.xml:538(para)
 msgid ""
 "The <function>amgetbitmap</function> function need only be provided if the "
 "access method supports <quote>bitmap</quote> index scans. If it doesn't, the "
@@ -1054,7 +1054,7 @@ msgstr ""
 "structfield> в структуре <structname>IndexAmRoutine</structname> должно "
 "содержать NULL."
 
-#: indexam.xml:518(programlisting)
+#: indexam.xml:546(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -1063,7 +1063,7 @@ msgstr ""
 "void\n"
 "amendscan (IndexScanDesc scan);"
 
-#: indexam.xml:517(para)
+#: indexam.xml:545(para)
 msgid ""
 "<placeholder-1/> End a scan and release resources. The <literal>scan</"
 "literal> struct itself should not be freed, but any locks or pins taken "
@@ -1074,7 +1074,7 @@ msgstr ""
 "блокировки или закрепления объектов, установленные внутри метода доступа, "
 "должны быть сняты."
 
-#: indexam.xml:526(programlisting)
+#: indexam.xml:556(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -1083,7 +1083,7 @@ msgstr ""
 "void\n"
 "ammarkpos (IndexScanDesc scan);"
 
-#: indexam.xml:525(para)
+#: indexam.xml:555(para)
 msgid ""
 "<placeholder-1/> Mark current scan position. The access method need only "
 "support one remembered scan position per scan."
@@ -1091,7 +1091,7 @@ msgstr ""
 "<placeholder-1/> Помечает текущую позицию сканирования. Метод доступа должен "
 "поддерживать сохранение только одной позиции в процессе сканирования."
 
-#: indexam.xml:532(para)
+#: indexam.xml:564(para)
 msgid ""
 "The <function>ammarkpos</function> function need only be provided if the "
 "access method supports ordered scans. If it doesn't, the "
@@ -1103,7 +1103,7 @@ msgstr ""
 "<structfield>ammarkpos</structfield> в структуре <structname>IndexAmRoutine</"
 "structname> можно записать NULL."
 
-#: indexam.xml:540(programlisting)
+#: indexam.xml:572(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -1112,12 +1112,12 @@ msgstr ""
 "void\n"
 "amrestrpos (IndexScanDesc scan);"
 
-#: indexam.xml:539(para)
+#: indexam.xml:571(para)
 msgid "<placeholder-1/> Restore the scan to the most recently marked position."
 msgstr ""
 "<placeholder-1/> Восстанавливает позицию сканирования, отмеченную последней."
 
-#: indexam.xml:545(para)
+#: indexam.xml:579(para)
 msgid ""
 "The <function>amrestrpos</function> function need only be provided if the "
 "access method supports ordered scans. If it doesn't, the "
@@ -1129,11 +1129,11 @@ msgstr ""
 "<structfield>amrestrpos</structfield> в структуре "
 "<structname>IndexAmRoutine</structname> можно записать NULL."
 
-#: indexam.xml:554(title)
+#: indexam.xml:588(title)
 msgid "Index Scanning"
 msgstr "Сканирование индекса"
 
-#: indexam.xml:556(para)
+#: indexam.xml:590(para)
 msgid ""
 "In an index scan, the index access method is responsible for regurgitating "
 "the TIDs of all the tuples it has been told about that match the "
@@ -1149,7 +1149,7 @@ msgstr ""
 "таблицы и не определяет, удовлетворяют ли эти кортежи условиям видимости или "
 "другим ограничениям."
 
-#: indexam.xml:565(para)
+#: indexam.xml:599(para)
 msgid ""
 "A scan key is the internal representation of a <literal>WHERE</literal> "
 "clause of the form <replaceable>index_key</replaceable> "
@@ -1170,7 +1170,7 @@ msgstr ""
 "ожидается, что возвращаемые кортежи будут удовлетворять всем заданным "
 "условиям."
 
-#: indexam.xml:575(para)
+#: indexam.xml:609(para)
 msgid ""
 "The access method can report that the index is <firstterm>lossy</firstterm>, "
 "or requires rechecks, for a particular query. This implies that the index "
@@ -1190,7 +1190,7 @@ msgstr ""
 "сканировании индекса должны возвращаться только соответствующие ключам "
 "записи."
 
-#: indexam.xml:585(para)
+#: indexam.xml:619(para)
 msgid ""
 "Note that it is entirely up to the access method to ensure that it correctly "
 "finds all and only the entries passing all the given scan keys. Also, the "
@@ -1219,7 +1219,7 @@ msgstr ""
 "какой степени метод доступа должен сводить ключи к <quote>нормализованной</"
 "quote> форме."
 
-#: indexam.xml:607(para)
+#: indexam.xml:641(para)
 msgid ""
 "Access methods that always return entries in the natural ordering of their "
 "data (such as btree) should set <structfield>amcanorder</structfield> to "
@@ -1232,7 +1232,7 @@ msgstr ""
 "равенства и упорядочивания при этом должны назначаться номера "
 "соответствующих стратегий B-дерева."
 
-#: indexam.xml:616(para)
+#: indexam.xml:650(para)
 msgid ""
 "Access methods that support ordering operators should set "
 "<structfield>amcanorderbyop</structfield> to true. This indicates that the "
@@ -1250,7 +1250,7 @@ msgstr ""
 "replaceable>. Модификаторы для такого сканирования могут передаваться в "
 "<function>amrescan</function>, как описывалось ранее."
 
-#: indexam.xml:600(para)
+#: indexam.xml:634(para)
 msgid ""
 "Some access methods return index entries in a well-defined order, others do "
 "not. There are actually two different ways that an access method can support "
@@ -1260,7 +1260,7 @@ msgstr ""
 "порядке, в отличие от других. Фактически есть два различных варианта "
 "реализации упорядоченного вывода некоторым методом доступа: <placeholder-1/>"
 
-#: indexam.xml:629(para)
+#: indexam.xml:663(para)
 msgid ""
 "The <function>amgettuple</function> function has a <literal>direction</"
 "literal> argument, which can be either <literal>ForwardScanDirection</"
@@ -1292,7 +1292,7 @@ msgstr ""
 "<structfield>amcanbackward</structfield> не установлен, при всех последующих "
 "вызовах должно сохраняться то же направление, что было в первом.)"
 
-#: indexam.xml:645(para)
+#: indexam.xml:679(para)
 msgid ""
 "Access methods that support ordered scans must support <quote>marking</"
 "quote> a position in a scan and later returning to the marked position. The "
@@ -1313,7 +1313,7 @@ msgstr ""
 "<function>amrestrpos</function> в <structname>IndexAmRoutine</structname>; "
 "достаточно записать в эти указатели NULL."
 
-#: indexam.xml:656(para)
+#: indexam.xml:690(para)
 msgid ""
 "Both the scan position and the mark position (if any) must be maintained "
 "consistently in the face of concurrent insertions or deletions in the index. "
@@ -1336,7 +1336,7 @@ msgstr ""
 "только, чтобы при таких операциях добавления или удаления не происходило "
 "потерь или дублирования записей, которые в этих операциях не участвовали."
 
-#: indexam.xml:669(para)
+#: indexam.xml:703(para)
 msgid ""
 "If the index stores the original indexed data values (and not some lossy "
 "representation of them), it is useful to support <link linkend=\"indexes-"
@@ -1355,7 +1355,7 @@ msgstr ""
 "придётся посетить кортеж, чтобы проверить его видимость для MVCC. Но это не "
 "является заботой метода доступа."
 
-#: indexam.xml:679(para)
+#: indexam.xml:713(para)
 msgid ""
 "Instead of using <function>amgettuple</function>, an index scan can be done "
 "with <function>amgetbitmap</function> to fetch all tuples in one call. This "
@@ -1395,7 +1395,7 @@ msgstr ""
 "либо блокировки для возвращаемых кортежей, и следствия этого описаны в <xref "
 "remap=\"6\" linkend=\"index-locking\"/>."
 
-#: indexam.xml:700(para)
+#: indexam.xml:734(para)
 msgid ""
 "Note that it is permitted for an access method to implement only "
 "<function>amgetbitmap</function> and not <function>amgettuple</function>, or "
@@ -1407,11 +1407,11 @@ msgstr ""
 "наоборот, если его внутренняя реализация несовместима с одной из этих "
 "функций."
 
-#: indexam.xml:709(title)
+#: indexam.xml:743(title)
 msgid "Index Locking Considerations"
 msgstr "Замечания о блокировке с индексами"
 
-#: indexam.xml:711(para)
+#: indexam.xml:745(para)
 msgid ""
 "Index access methods must handle concurrent updates of the index by multiple "
 "processes. The core <productname>PostgreSQL</productname> system obtains "
@@ -1433,7 +1433,7 @@ msgstr ""
 "блокировка индекса в целом устанавливается только при создании и уничтожении "
 "индекса или операции <command>REINDEX</command>."
 
-#: indexam.xml:723(para)
+#: indexam.xml:757(para)
 msgid ""
 "Building an index type that supports concurrent updates usually requires "
 "extensive and subtle analysis of the required behavior. For the b-tree and "
@@ -1448,7 +1448,7 @@ msgstr ""
 "access/nbtree/README</filename> и <filename>src/backend/access/hash/README</"
 "filename>."
 
-#: indexam.xml:742(para)
+#: indexam.xml:776(para)
 msgid ""
 "A new heap entry is made before making its index entries. (Therefore a "
 "concurrent index scan is likely to fail to see the heap entry. This is okay "
@@ -1461,7 +1461,7 @@ msgstr ""
 "читателю индекса всё равно не нужны незафиксированные строки. Но учтите "
 "написанное в <xref remap=\"6\" linkend=\"index-unique-checks\"/>.)"
 
-#: indexam.xml:750(para)
+#: indexam.xml:784(para)
 msgid ""
 "When a heap entry is to be deleted (by <command>VACUUM</command>), all its "
 "index entries must be removed first."
@@ -1469,7 +1469,7 @@ msgstr ""
 "Когда запись данных удаляется (командой <command>VACUUM</command>), сначала "
 "должны удалиться все созданные для неё записи в индексах."
 
-#: indexam.xml:756(para)
+#: indexam.xml:790(para)
 msgid ""
 "An index scan must maintain a pin on the index page holding the item last "
 "returned by <function>amgettuple</function>, and <function>ambulkdelete</"
@@ -1482,7 +1482,7 @@ msgstr ""
 "закреплённых другими процессами. Чем обосновано это правило, описывается "
 "ниже."
 
-#: indexam.xml:731(para)
+#: indexam.xml:765(para)
 msgid ""
 "Aside from the index's own internal consistency requirements, concurrent "
 "updates create issues about consistency between the parent table (the "
@@ -1541,7 +1541,7 @@ msgstr ""
 "оказывается очень недорогим по времени выполнения, а издержки блокирования "
 "привносятся только в редких случаях, когда действительно возникает конфликт."
 
-#: indexam.xml:789(para)
+#: indexam.xml:823(para)
 msgid ""
 "This solution requires that index scans be <quote>synchronous</quote>: we "
 "have to fetch each heap tuple immediately after scanning the corresponding "
@@ -1564,7 +1564,7 @@ msgstr ""
 "снимков, несовместимых с MVCC, но для запросов со снимками MVCC будет "
 "работать и асинхронное сканирование."
 
-#: indexam.xml:801(para)
+#: indexam.xml:835(para)
 msgid ""
 "In an <function>amgetbitmap</function> index scan, the access method does "
 "not keep an index pin on any of the returned tuples. Therefore it is only "
@@ -1574,7 +1574,7 @@ msgstr ""
 "не закрепляет страницы индекса ни для каких из возвращаемых кортежей. "
 "Поэтому такое сканирование можно безопасно применять только со снимками MVCC."
 
-#: indexam.xml:807(para)
+#: indexam.xml:841(para)
 msgid ""
 "When the <structfield>ampredlocks</structfield> flag is not set, any scan "
 "using that index access method within a serializable transaction will "
@@ -1598,11 +1598,11 @@ msgstr ""
 "что метод доступа реализует более точную предикатную блокировку, что "
 "способствует сокращению частоты отмены транзакций по этой причине."
 
-#: indexam.xml:823(title)
+#: indexam.xml:857(title)
 msgid "Index Uniqueness Checks"
 msgstr "Проверки уникальности в индексе"
 
-#: indexam.xml:825(para)
+#: indexam.xml:859(para)
 msgid ""
 "<productname>PostgreSQL</productname> enforces SQL uniqueness constraints "
 "using <firstterm>unique indexes</firstterm>, which are indexes that disallow "
@@ -1617,7 +1617,7 @@ msgstr ""
 "<structfield>amcanunique</structfield>. (В настоящее время это поддерживают "
 "только B-деревья.)"
 
-#: indexam.xml:843(para)
+#: indexam.xml:877(para)
 msgid ""
 "If a conflicting valid row has been deleted by the current transaction, it's "
 "okay. (In particular, since an UPDATE always deletes the old row version "
@@ -1629,7 +1629,7 @@ msgstr ""
 "прежде чем вставлять новую, операцию UPDATE можно выполнять со строкой, не "
 "меняя её ключ.)"
 
-#: indexam.xml:851(para)
+#: indexam.xml:885(para)
 msgid ""
 "If a conflicting row has been inserted by an as-yet-uncommitted transaction, "
 "the would-be inserter must wait to see if that transaction commits. If it "
@@ -1645,7 +1645,7 @@ msgstr ""
 "нарушение уникальности. (На практике мы просто ждём завершения другой "
 "транзакции и затем пересматриваем проверку видимости.)"
 
-#: indexam.xml:861(para)
+#: indexam.xml:895(para)
 msgid ""
 "Similarly, if a conflicting valid row has been deleted by an as-yet-"
 "uncommitted transaction, the would-be inserter must wait for that "
@@ -1656,7 +1656,7 @@ msgstr ""
 "строки, должен дождаться фиксации или отката этой транзакции, а затем "
 "повторить проверку."
 
-#: indexam.xml:833(para)
+#: indexam.xml:867(para)
 msgid ""
 "Because of MVCC, it is always necessary to allow duplicate entries to exist "
 "physically in an index: the entries might refer to successive versions of a "
@@ -1673,7 +1673,7 @@ msgstr ""
 "ситуации, которые необходимо отследить, добавляя новую строку в уникальный "
 "индекс: <placeholder-1/>"
 
-#: indexam.xml:870(para)
+#: indexam.xml:904(para)
 msgid ""
 "Furthermore, immediately before reporting a uniqueness violation according "
 "to the above rules, the access method must recheck the liveness of the row "
@@ -1690,7 +1690,7 @@ msgstr ""
 "однако это может произойти в процессе <command>CREATE UNIQUE INDEX "
 "CONCURRENTLY</command>.)"
 
-#: indexam.xml:880(para)
+#: indexam.xml:914(para)
 msgid ""
 "We require the index access method to apply these tests itself, which means "
 "that it must reach into the heap to check the commit status of any row that "
@@ -1711,7 +1711,7 @@ msgstr ""
 "избежать условий гонки, если проверка конфликта не будет неотъемлемой частью "
 "процедуры добавления новой записи индекса."
 
-#: indexam.xml:909(para)
+#: indexam.xml:943(para)
 msgid ""
 "<literal>UNIQUE_CHECK_NO</literal> indicates that no uniqueness checking "
 "should be done (this is not a unique index)."
@@ -1719,7 +1719,7 @@ msgstr ""
 "<literal>UNIQUE_CHECK_NO</literal> указывает, что проверка уникальности не "
 "должна выполняться (это не уникальный индекс)."
 
-#: indexam.xml:915(para)
+#: indexam.xml:949(para)
 msgid ""
 "<literal>UNIQUE_CHECK_YES</literal> indicates that this is a non-deferrable "
 "unique index, and the uniqueness check must be done immediately, as "
@@ -1729,7 +1729,7 @@ msgstr ""
 "уникальный индекс и проверку уникальности нужно выполнить немедленно, как "
 "описано выше."
 
-#: indexam.xml:922(para)
+#: indexam.xml:956(para)
 msgid ""
 "<literal>UNIQUE_CHECK_PARTIAL</literal> indicates that the unique constraint "
 "is deferrable. <productname>PostgreSQL</productname> will use this mode to "
@@ -1746,7 +1746,7 @@ msgstr ""
 "каждой такой строки (для которой возвращается FALSE) будет запланирована "
 "отложенная перепроверка."
 
-#: indexam.xml:932(para)
+#: indexam.xml:966(para)
 msgid ""
 "The access method must identify any rows which might violate the unique "
 "constraint, but it is not an error for it to report false positives. This "
@@ -1760,7 +1760,7 @@ msgstr ""
 "конфликты, выявленные на этой стадии, не считаются ошибками и будут "
 "перепроверены позже, когда они могут быть уже исчерпаны."
 
-#: indexam.xml:942(para)
+#: indexam.xml:976(para)
 msgid ""
 "<literal>UNIQUE_CHECK_EXISTING</literal> indicates that this is a deferred "
 "recheck of a row that was reported as a potential uniqueness violation. "
@@ -1779,7 +1779,7 @@ msgstr ""
 "записи. Если она находится и соответствующая ей строка продолжает "
 "существовать, должна выдаваться ошибка."
 
-#: indexam.xml:952(para)
+#: indexam.xml:986(para)
 msgid ""
 "It is recommended that in a <literal>UNIQUE_CHECK_EXISTING</literal> call, "
 "the access method further verify that the target row actually does have an "
@@ -1800,7 +1800,7 @@ msgstr ""
 "целевой строки при перепроверке, мы можем быть уверены, что сканируются те "
 "же значения кортежа, что передавались при изначальном добавлении строки."
 
-#: indexam.xml:892(para)
+#: indexam.xml:926(para)
 msgid ""
 "If the unique constraint is deferrable, there is additional complexity: we "
 "need to be able to insert an index entry for a new row, but defer any "
@@ -1832,11 +1832,11 @@ msgstr ""
 "параметр <literal>checkUnique</literal>, принимающий одно из следующих "
 "значений: <placeholder-1/>"
 
-#: indexam.xml:970(title)
+#: indexam.xml:1004(title)
 msgid "Index Cost Estimation Functions"
 msgstr "Функции оценки стоимости индекса"
 
-#: indexam.xml:972(para)
+#: indexam.xml:1006(para)
 msgid ""
 "The <function>amcostestimate</function> function is given information "
 "describing a possible index scan, including lists of WHERE and ORDER BY "
@@ -1860,19 +1860,19 @@ msgstr ""
 "методы доступа индексов могли поделиться знаниями, специфичными для типа "
 "индекса, когда это может помочь улучшить стандартные оценки."
 
-#: indexam.xml:1001(parameter)
+#: indexam.xml:1037(parameter)
 msgid "root"
 msgstr "root"
 
-#: indexam.xml:1003(para)
+#: indexam.xml:1039(para)
 msgid "The planner's information about the query being processed."
 msgstr "Информация планировщика о выполняемом запросе."
 
-#: indexam.xml:1010(parameter)
+#: indexam.xml:1046(parameter)
 msgid "path"
 msgstr "path"
 
-#: indexam.xml:1012(para)
+#: indexam.xml:1048(para)
 msgid ""
 "The index access path being considered. All fields except cost and "
 "selectivity values are valid."
@@ -1880,11 +1880,11 @@ msgstr ""
 "Рассматриваемый путь доступа к индексу. В нём действительны все поля, кроме "
 "значений стоимости и избирательности."
 
-#: indexam.xml:1020(parameter)
+#: indexam.xml:1056(parameter)
 msgid "loop_count"
 msgstr "loop_count"
 
-#: indexam.xml:1022(para)
+#: indexam.xml:1058(para)
 msgid ""
 "The number of repetitions of the index scan that should be factored into the "
 "cost estimates. This will typically be greater than one when considering a "
@@ -1901,7 +1901,7 @@ msgstr ""
 "parameter> лишь дают основания предположить, что при многократном "
 "сканировании положительное влияние может оказать кеширование."
 
-#: indexam.xml:985(para)
+#: indexam.xml:1019(para)
 msgid ""
 "Each <function>amcostestimate</function> function must have the signature: "
 "<placeholder-1/> The first three parameters are inputs: <placeholder-2/>"
@@ -1910,35 +1910,35 @@ msgstr ""
 "сигнатуру: <placeholder-1/> Первые три параметра передают входные значения: "
 "<placeholder-2/>"
 
-#: indexam.xml:1040(parameter)
+#: indexam.xml:1076(parameter)
 msgid "*indexStartupCost"
 msgstr "*indexStartupCost"
 
-#: indexam.xml:1042(para)
+#: indexam.xml:1078(para)
 msgid "Set to cost of index start-up processing"
 msgstr "Стоимость выполнения запуска индекса"
 
-#: indexam.xml:1049(parameter)
+#: indexam.xml:1085(parameter)
 msgid "*indexTotalCost"
 msgstr "*indexTotalCost"
 
-#: indexam.xml:1051(para)
+#: indexam.xml:1087(para)
 msgid "Set to total cost of index processing"
 msgstr "Общая стоимость использования индекса"
 
-#: indexam.xml:1058(parameter)
+#: indexam.xml:1094(parameter)
 msgid "*indexSelectivity"
 msgstr "*indexSelectivity"
 
-#: indexam.xml:1060(para)
+#: indexam.xml:1096(para)
 msgid "Set to index selectivity"
 msgstr "Избирательность индекса"
 
-#: indexam.xml:1067(parameter)
+#: indexam.xml:1103(parameter)
 msgid "*indexCorrelation"
 msgstr "*indexCorrelation"
 
-#: indexam.xml:1069(para)
+#: indexam.xml:1105(para)
 msgid ""
 "Set to correlation coefficient between index scan order and underlying "
 "table's order"
@@ -1946,14 +1946,14 @@ msgstr ""
 "Коэффициент корреляции между порядком сканирования индекса и порядком "
 "записей в нижележащей таблице"
 
-#: indexam.xml:1035(para)
+#: indexam.xml:1071(para)
 msgid ""
 "The last four parameters are pass-by-reference outputs: <placeholder-1/>"
 msgstr ""
 "Последние четыре параметра — указатели на переменные для выходных значений: "
 "<placeholder-1/>"
 
-#: indexam.xml:1078(para)
+#: indexam.xml:1114(para)
 msgid ""
 "Note that cost estimate functions must be written in C, not in SQL or any "
 "available procedural language, because they must access internal data "
@@ -1963,7 +1963,7 @@ msgstr ""
 "SQL или другом доступном процедурном языке, так как они должны обращаться к "
 "внутренним структурам данным планировщика/оптимизатора."
 
-#: indexam.xml:1084(para)
+#: indexam.xml:1120(para)
 msgid ""
 "The index access costs should be computed using the parameters used by "
 "<filename>src/backend/optimizer/path/costsize.c</filename>: a sequential "
@@ -1985,7 +1985,7 @@ msgstr ""
 "взиматься цена <varname>cpu_operator_cost</varname> (особенно за вычисление "
 "собственно условий индекса)."
 
-#: indexam.xml:1095(para)
+#: indexam.xml:1131(para)
 msgid ""
 "The access costs should include all disk and CPU costs associated with "
 "scanning the index itself, but <emphasis>not</emphasis> the costs of "
@@ -1997,7 +1997,7 @@ msgstr ""
 "emphasis> не стоимости извлечения или обработки строк основной таблицы, с "
 "которой связан индекс."
 
-#: indexam.xml:1101(para)
+#: indexam.xml:1137(para)
 msgid ""
 "The <quote>start-up cost</quote> is the part of the total scan cost that "
 "must be expended before we can begin to fetch the first row. For most "
@@ -2010,7 +2010,7 @@ msgstr ""
 "но для типов индексов с высокими затратами на запуск она может быть больше "
 "нуля."
 
-#: indexam.xml:1108(para)
+#: indexam.xml:1144(para)
 msgid ""
 "The <parameter>indexSelectivity</parameter> should be set to the estimated "
 "fraction of the parent table rows that will be retrieved during the index "
@@ -2022,7 +2022,7 @@ msgstr ""
 "В случае неточного запроса это обычно будет больше процента строк, "
 "действительно удовлетворяющих заданным ограничивающим условиям."
 
-#: indexam.xml:1115(para)
+#: indexam.xml:1151(para)
 msgid ""
 "The <parameter>indexCorrelation</parameter> should be set to the correlation "
 "(ranging between -1.0 and 1.0) between the index order and the table order. "
@@ -2034,7 +2034,7 @@ msgstr ""
 "значение будет корректировать оценку стоимости выборки строк из основной "
 "таблицы."
 
-#: indexam.xml:1122(para)
+#: indexam.xml:1158(para)
 msgid ""
 "When <parameter>loop_count</parameter> is greater than one, the returned "
 "numbers should be averages expected for any one scan of the index."
@@ -2042,15 +2042,15 @@ msgstr ""
 "Когда <parameter>loop_count</parameter> больше нуля, возвращаться должны "
 "средние значения, ожидаемые для одного сканирования индекса."
 
-#: indexam.xml:1128(title)
+#: indexam.xml:1164(title)
 msgid "Cost Estimation"
 msgstr "Оценка стоимости"
 
-#: indexam.xml:1129(para)
+#: indexam.xml:1165(para)
 msgid "A typical cost estimator will proceed as follows:"
 msgstr "Типичная процедура оценки выглядит следующим образом:"
 
-#: indexam.xml:1139(programlisting)
+#: indexam.xml:1175(programlisting)
 #, no-wrap
 msgid ""
 "*indexSelectivity = clauselist_selectivity(root, path-&gt;indexquals,\n"
@@ -2061,7 +2061,7 @@ msgstr ""
 "                                           path-&gt;indexinfo-&gt;rel-&gt;relid,\n"
 "                                           JOIN_INNER, NULL);"
 
-#: indexam.xml:1134(para)
+#: indexam.xml:1170(para)
 msgid ""
 "Estimate and return the fraction of parent-table rows that will be visited "
 "based on the given qual conditions. In the absence of any index-type-"
@@ -2073,7 +2073,7 @@ msgstr ""
 "знаний, специфичных для типа индекса, использовать стандартную функцию "
 "оптимизатора <function>clauselist_selectivity()</function>: <placeholder-1/>"
 
-#: indexam.xml:1146(para)
+#: indexam.xml:1184(para)
 msgid ""
 "Estimate the number of index rows that will be visited during the scan. For "
 "many index types this is the same as <parameter>indexSelectivity</parameter> "
@@ -2087,7 +2087,7 @@ msgstr ""
 "что размер индекса в страницах и строках можно узнать из структуры "
 "<literal>path-&gt;indexinfo</literal>.)"
 
-#: indexam.xml:1156(para)
+#: indexam.xml:1194(para)
 msgid ""
 "Estimate the number of index pages that will be retrieved during the scan. "
 "This might be just <parameter>indexSelectivity</parameter> times the index's "
@@ -2097,7 +2097,7 @@ msgstr ""
 "Это может быть просто произведение <parameter>indexSelectivity</parameter> и "
 "размера индекса в страницах."
 
-#: indexam.xml:1166(programlisting)
+#: indexam.xml:1204(programlisting)
 #, no-wrap
 msgid ""
 "/*\n"
@@ -2122,7 +2122,7 @@ msgstr ""
 "*indexTotalCost = seq_page_cost * numIndexPages +\n"
 "    (cpu_index_tuple_cost + index_qual_cost.per_tuple) * numIndexTuples;"
 
-#: indexam.xml:1163(para)
+#: indexam.xml:1201(para)
 msgid ""
 "Compute the index access cost. A generic estimator might do this: "
 "<placeholder-1/> However, the above does not account for amortization of "
@@ -2132,7 +2132,7 @@ msgstr ""
 "следующее: <placeholder-1/> Однако при таком расчёте не учитывается "
 "амортизация чтения индекса при повторном сканировании."
 
-#: indexam.xml:1183(para)
+#: indexam.xml:1223(para)
 msgid ""
 "Estimate the index correlation. For a simple ordered index on a single "
 "field, this can be retrieved from pg_statistic. If the correlation is not "
@@ -2142,7 +2142,7 @@ msgstr ""
 "полю её можно получить из pg_statistic. Если корреляция неизвестна, вернуть "
 "консервативную оценку — ноль (корреляция отсутствует)."
 
-#: indexam.xml:1191(para)
+#: indexam.xml:1231(para)
 msgid ""
 "Examples of cost estimator functions can be found in <filename>src/backend/"
 "utils/adt/selfuncs.c</filename>."

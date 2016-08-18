@@ -1063,7 +1063,7 @@ msgid ""
 "A simple example of a <filename>recovery.conf</filename> is: <placeholder-1/>"
 msgstr "Простой пример <filename>recovery.conf</filename>: <placeholder-1/>"
 
-#: high-availability.xml:719(para)
+#: high-availability.xml:721(para)
 msgid ""
 "You can have any number of standby servers, but if you use streaming "
 "replication, make sure you set <varname>max_wal_senders</varname> high "
@@ -1074,15 +1074,15 @@ msgstr ""
 "<varname>max_wal_senders</varname> на ведущем достаточно большое, чтобы все "
 "они могли подключиться одновременно."
 
-#: high-availability.xml:728(title)
+#: high-availability.xml:730(title)
 msgid "Streaming Replication"
 msgstr "Потоковая репликация"
 
-#: high-availability.xml:730(indexterm)
+#: high-availability.xml:732(indexterm)
 msgid "<primary>Streaming Replication</primary>"
 msgstr "<primary>Потоковая репликация</primary>"
 
-#: high-availability.xml:734(para)
+#: high-availability.xml:736(para)
 msgid ""
 "Streaming replication allows a standby server to stay more up-to-date than "
 "is possible with file-based log shipping. The standby connects to the "
@@ -1094,7 +1094,7 @@ msgstr ""
 "ведущему, который передаёт поток записей WAL резервному в момент их "
 "добавления, не дожидаясь окончания заполнения файла WAL."
 
-#: high-availability.xml:741(para)
+#: high-availability.xml:743(para)
 msgid ""
 "Streaming replication is asynchronous by default (see <xref linkend="
 "\"synchronous-replication\"/>), in which case there is a small delay between "
@@ -1114,7 +1114,7 @@ msgstr ""
 "настраивать <varname>archive_timeout</varname> для уменьшения окна "
 "потенциальной потери данных не требуется."
 
-#: high-availability.xml:752(para)
+#: high-availability.xml:754(para)
 msgid ""
 "If you use streaming replication without file-based continuous archiving, "
 "the server might recycle old WAL segments before the standby has received "
@@ -1136,7 +1136,7 @@ msgstr ""
 "WAL, этого не требуется, так как резервный может всегда обратиться к архиву "
 "для восполнения пропущенных сегментов."
 
-#: high-availability.xml:764(para)
+#: high-availability.xml:766(para)
 msgid ""
 "To use streaming replication, set up a file-based log-shipping standby "
 "server as described in <xref linkend=\"warm-standby\"/>. The step that turns "
@@ -1160,7 +1160,7 @@ msgstr ""
 "<literal>replication</literal> на ведущем (см. <xref remap=\"4\" linkend="
 "\"streaming-replication-authentication\"/>)."
 
-#: high-availability.xml:776(para)
+#: high-availability.xml:778(para)
 msgid ""
 "On systems that support the keepalive socket option, setting <xref linkend="
 "\"guc-tcp-keepalives-idle\"/>, <xref linkend=\"guc-tcp-keepalives-interval\"/"
@@ -1172,7 +1172,7 @@ msgstr ""
 "keepalives-interval\"/> и <xref linkend=\"guc-tcp-keepalives-count\"/> "
 "помогут ведущему вовремя заметить разрыв соединения."
 
-#: high-availability.xml:784(para)
+#: high-availability.xml:786(para)
 msgid ""
 "Set the maximum number of concurrent connections from the standby servers "
 "(see <xref linkend=\"guc-max-wal-senders\"/> for details)."
@@ -1180,7 +1180,7 @@ msgstr ""
 "Установите максимальное количество одновременных соединений с резервных "
 "серверов (см. описание <xref linkend=\"guc-max-wal-senders\"/>."
 
-#: high-availability.xml:789(para)
+#: high-availability.xml:791(para)
 msgid ""
 "When the standby is started and <varname>primary_conninfo</varname> is set "
 "correctly, the standby will connect to the primary after replaying all WAL "
@@ -1194,11 +1194,11 @@ msgstr ""
 "установлении соединения можно увидеть процесс walreceiver на резервном "
 "сервере и соответствующий процесс walsender на ведущем."
 
-#: high-availability.xml:798(title)
+#: high-availability.xml:800(title)
 msgid "Authentication"
 msgstr "Аутентификация"
 
-#: high-availability.xml:799(para)
+#: high-availability.xml:801(para)
 msgid ""
 "It is very important that the access privileges for replication be set up so "
 "that only trusted users can read the WAL stream, because it is easy to "
@@ -1221,7 +1221,7 @@ msgstr ""
 "позволяет модифицировать данные в ведущей системе, тогда как с правом "
 "<literal>SUPERUSER</literal> это можно делать."
 
-#: high-availability.xml:819(programlisting)
+#: high-availability.xml:821(programlisting)
 #, no-wrap
 msgid ""
 "# Allow the user \"foo\" from host 192.168.1.100 to connect to the primary\n"
@@ -1236,7 +1236,7 @@ msgstr ""
 "# TYPE  DATABASE        USER            ADDRESS                 METHOD\n"
 "host    replication     foo             192.168.1.100/32        md5"
 
-#: high-availability.xml:811(para)
+#: high-availability.xml:813(para)
 msgid ""
 "Client authentication for replication is controlled by a <filename>pg_hba."
 "conf</filename> record specifying <literal>replication</literal> in the "
@@ -1254,7 +1254,7 @@ msgstr ""
 "администратор может добавить следующую строку в файл <filename>pg_hba.conf</"
 "filename> ведущего: <placeholder-1/>"
 
-#: high-availability.xml:837(programlisting)
+#: high-availability.xml:841(programlisting)
 #, no-wrap
 msgid ""
 "# The standby connects to the primary that is running on host 192.168.1.50\n"
@@ -1265,7 +1265,7 @@ msgstr ""
 "# (порт 5432), от имени пользователя \"foo\" с паролем \"foopass\".\n"
 "primary_conninfo = 'host=192.168.1.50 port=5432 user=foo password=foopass'"
 
-#: high-availability.xml:825(para)
+#: high-availability.xml:829(para)
 msgid ""
 "The host name and port number of the primary, connection user name, and "
 "password are specified in the <filename>recovery.conf</filename> file. The "
@@ -1289,11 +1289,11 @@ msgstr ""
 "следующую строку в файл <filename>recovery.conf</filename> на резервном "
 "сервере: <placeholder-1/>"
 
-#: high-availability.xml:844(title)
+#: high-availability.xml:850(title)
 msgid "Monitoring"
 msgstr "Наблюдение"
 
-#: high-availability.xml:845(para)
+#: high-availability.xml:851(para)
 msgid ""
 "An important health indicator of streaming replication is the amount of WAL "
 "records generated in the primary, but not yet applied in the standby. You "
@@ -1321,7 +1321,7 @@ msgstr ""
 "команде <command>ps</command> (более подробно см. <xref remap=\"4\" linkend="
 "\"monitoring-ps\"/>)."
 
-#: high-availability.xml:859(para)
+#: high-availability.xml:865(para)
 msgid ""
 "You can retrieve a list of WAL sender processes via the <link linkend="
 "\"monitoring-stats-views-table\"><literal>pg_stat_replication</literal></"
@@ -1341,11 +1341,11 @@ msgstr ""
 "function> на резервном указывает на задержки в сети или на то, что с большой "
 "нагрузкой работает резервный."
 
-#: high-availability.xml:873(title)
+#: high-availability.xml:879(title)
 msgid "Replication Slots"
 msgstr "Слоты репликации"
 
-#: high-availability.xml:874(indexterm)
+#: high-availability.xml:880(indexterm)
 msgid ""
 "<primary>replication slot</primary><secondary>streaming replication</"
 "secondary>"
@@ -1353,7 +1353,7 @@ msgstr ""
 "<primary>Слоты репликации</primary><secondary>Потоковая репликация</"
 "secondary>"
 
-#: high-availability.xml:877(para)
+#: high-availability.xml:883(para)
 msgid ""
 "Replication slots provide an automated way to ensure that the master does "
 "not remove WAL segments until they have been received by all standbys, and "
@@ -1366,7 +1366,7 @@ msgstr ""
 "удалять строки, находящиеся в статусе <link linkend=\"hot-standby-conflict"
 "\">recovery conflict</link> даже при отключении резервного."
 
-#: high-availability.xml:884(para)
+#: high-availability.xml:890(para)
 msgid ""
 "In lieu of using replication slots, it is possible to prevent the removal of "
 "old WAL segments using <xref linkend=\"guc-wal-keep-segments\"/>, or by "
@@ -1387,7 +1387,7 @@ msgstr ""
 "для <literal>pg_xlog</literal>; в то время как текущая реализация "
 "репликационных слотов не представляет такой возможности."
 
-#: high-availability.xml:895(para)
+#: high-availability.xml:901(para)
 msgid ""
 "Similarly, <xref linkend=\"guc-hot-standby-feedback\"/> and <xref linkend="
 "\"guc-vacuum-defer-cleanup-age\"/> provide protection against relevant rows "
@@ -1403,11 +1403,11 @@ msgstr ""
 "для последнего часто нужно задавать большое значение, чтобы обеспечить "
 "должную защиту. Слоты репликации решают эти проблемы."
 
-#: high-availability.xml:904(title)
+#: high-availability.xml:910(title)
 msgid "Querying and manipulating replication slots"
 msgstr "Запросы и действия слотов репликации"
 
-#: high-availability.xml:905(para)
+#: high-availability.xml:911(para)
 msgid ""
 "Each replication slot has a name, which can contain lower-case letters, "
 "numbers, and the underscore character."
@@ -1415,7 +1415,7 @@ msgstr ""
 "Каждый слот репликации обладает именем, состоящим из строчных букв, цифр и "
 "символов подчёркивания."
 
-#: high-availability.xml:909(para)
+#: high-availability.xml:915(para)
 msgid ""
 "Existing replication slots and their state can be seen in the <link linkend="
 "\"view-pg-replication-slots\"><structname>pg_replication_slots</structname></"
@@ -1425,7 +1425,7 @@ msgstr ""
 "<link linkend=\"view-pg-replication-slots"
 "\"><structname>pg_replication_slots</structname></link>."
 
-#: high-availability.xml:914(para)
+#: high-availability.xml:920(para)
 msgid ""
 "Slots can be created and dropped either via the streaming replication "
 "protocol (see <xref linkend=\"protocol-replication\"/>) or via SQL functions "
@@ -1436,11 +1436,11 @@ msgstr ""
 "посредством функций SQL (см. <xref remap=\"4\" linkend=\"functions-"
 "replication\"/>)."
 
-#: high-availability.xml:921(title)
+#: high-availability.xml:927(title)
 msgid "Configuration Example"
 msgstr "Пример конфигурации"
 
-#: high-availability.xml:924(programlisting)
+#: high-availability.xml:930(programlisting)
 #, no-wrap
 msgid ""
 "postgres=# SELECT * FROM pg_create_physical_replication_slot('node_a_slot');\n"
@@ -1465,7 +1465,7 @@ msgstr ""
 " node_a_slot | physical  |        |          | f      |      |             |\n"
 "(1 row)"
 
-#: high-availability.xml:937(programlisting)
+#: high-availability.xml:945(programlisting)
 #, no-wrap
 msgid ""
 "standby_mode = 'on'\n"
@@ -1476,7 +1476,7 @@ msgstr ""
 "primary_conninfo = 'host=192.168.1.50 port=5432 user=foo password=foopass'\n"
 "primary_slot_name = 'node_a_slot'"
 
-#: high-availability.xml:922(para)
+#: high-availability.xml:928(para)
 msgid ""
 "You can create a replication slot like this: <placeholder-1/> To configure "
 "the standby to use this slot, <varname>primary_slot_name</varname> should be "
@@ -1488,15 +1488,15 @@ msgstr ""
 "varname> должно быть настроено в конфигурации <filename>recovery.conf</"
 "filename> резервного. Вот простейший пример: <placeholder-2/>"
 
-#: high-availability.xml:945(title)
+#: high-availability.xml:955(title)
 msgid "Cascading Replication"
 msgstr "Каскадная репликация"
 
-#: high-availability.xml:947(indexterm)
+#: high-availability.xml:957(indexterm)
 msgid "<primary>Cascading Replication</primary>"
 msgstr "<primary>Каскадная репликация</primary>"
 
-#: high-availability.xml:951(para)
+#: high-availability.xml:961(para)
 msgid ""
 "The cascading replication feature allows a standby server to accept "
 "replication connections and stream WAL records to other standbys, acting as "
@@ -1509,7 +1509,7 @@ msgstr ""
 "подключений к главному серверу, а также для уменьшения накладных расходов "
 "при передаче данных в интрасети."
 
-#: high-availability.xml:958(para)
+#: high-availability.xml:968(para)
 msgid ""
 "A standby acting as both a receiver and a sender is known as a cascading "
 "standby. Standbys that are more directly connected to the master are known "
@@ -1526,7 +1526,7 @@ msgstr ""
 "одним сервером вышестоящего уровня, который в конце концов соединяется с "
 "единственным главным/ведущим сервером."
 
-#: high-availability.xml:968(para)
+#: high-availability.xml:978(para)
 msgid ""
 "A cascading standby sends not only WAL records received from the master but "
 "also those restored from the archive. So even if the replication connection "
@@ -1539,7 +1539,7 @@ msgstr ""
 "для последующих уровней будет продолжаться до исчерпания доступных записей "
 "WAL."
 
-#: high-availability.xml:975(para)
+#: high-availability.xml:985(para)
 msgid ""
 "Cascading replication is currently asynchronous. Synchronous replication "
 "(see <xref linkend=\"synchronous-replication\"/>) settings have no effect on "
@@ -1549,14 +1549,14 @@ msgstr ""
 "репликации (см. <xref remap=\"4\" linkend=\"synchronous-replication\"/>) в "
 "настоящее время не оказывают влияние на каскадную репликацию."
 
-#: high-availability.xml:981(para)
+#: high-availability.xml:991(para)
 msgid ""
 "Hot Standby feedback propagates upstream, whatever the cascaded arrangement."
 msgstr ""
 "Распространение обратной связи горячего резерва работает от нижестоящего "
 "уровня к вышестоящему уровню вне зависимости от способа организации связи."
 
-#: high-availability.xml:985(para)
+#: high-availability.xml:995(para)
 msgid ""
 "If an upstream standby server is promoted to become new master, downstream "
 "servers will continue to stream from the new master if "
@@ -1568,7 +1568,7 @@ msgstr ""
 "главного при условии, что <varname>recovery_target_timeline</varname> "
 "установлен в значение <literal>'latest'</literal>."
 
-#: high-availability.xml:991(para)
+#: high-availability.xml:1001(para)
 msgid ""
 "To use cascading replication, set up the cascading standby so that it can "
 "accept replication connections (that is, set <xref linkend=\"guc-max-wal-"
@@ -1584,15 +1584,15 @@ msgstr ""
 "link>). Так же может быть необходимо настроить на нижестоящем резервном "
 "значение <varname>primary_conninfo</varname> на каскадный резервный сервер."
 
-#: high-availability.xml:1003(title)
+#: high-availability.xml:1013(title)
 msgid "Synchronous Replication"
 msgstr "Синхронная репликация"
 
-#: high-availability.xml:1005(indexterm)
+#: high-availability.xml:1015(indexterm)
 msgid "<primary>Synchronous Replication</primary>"
 msgstr "<primary>Синхронная репликация</primary>"
 
-#: high-availability.xml:1009(para)
+#: high-availability.xml:1019(para)
 msgid ""
 "<productname>PostgreSQL</productname> streaming replication is asynchronous "
 "by default. If the primary server crashes then some transactions that were "
@@ -1606,7 +1606,7 @@ msgstr ""
 "Объём потерянных данных пропорционален задержке репликации на момент "
 "отработки отказа."
 
-#: high-availability.xml:1018(para)
+#: high-availability.xml:1028(para)
 msgid ""
 "Synchronous replication offers the ability to confirm that all changes made "
 "by a transaction have been transferred to one or more synchronous standby "
@@ -1625,7 +1625,7 @@ msgstr ""
 "(безопасности групповой и уровня 1), когда выбран режим "
 "<varname>synchronous_commit</varname> <literal>remote_write</literal>."
 
-#: high-availability.xml:1028(para)
+#: high-availability.xml:1038(para)
 msgid ""
 "When requesting synchronous replication, each commit of a write transaction "
 "will wait until confirmation is received that the commit has been written to "
@@ -1650,7 +1650,7 @@ msgstr ""
 "увеличивает время отклика для обработки транзакции. Минимальное время "
 "ожидания равно времени передачи данных от ведущего к резервному и обратно."
 
-#: high-availability.xml:1042(para)
+#: high-availability.xml:1052(para)
 msgid ""
 "Read only transactions and transaction rollbacks need not wait for replies "
 "from standby servers. Subtransaction commits do not wait for responses from "
@@ -1666,11 +1666,11 @@ msgstr ""
 "подтверждения. Но все двухфазные подтверждения требуют ожидания, включая "
 "подготовку и непосредственно подтверждение."
 
-#: high-availability.xml:1052(title)
+#: high-availability.xml:1062(title)
 msgid "Basic Configuration"
 msgstr "Базовая настройка"
 
-#: high-availability.xml:1054(para)
+#: high-availability.xml:1064(para)
 msgid ""
 "Once streaming replication has been configured, configuring synchronous "
 "replication requires only one additional configuration step: <xref linkend="
@@ -1699,7 +1699,7 @@ msgstr ""
 "конкретного пользователя или БД или динамически изменено приложением для "
 "управления степенью надёжности на уровне отдельных транзакций."
 
-#: high-availability.xml:1071(para)
+#: high-availability.xml:1081(para)
 msgid ""
 "After a commit record has been written to disk on the primary, the WAL "
 "record is then sent to the standby. The standby sends reply messages each "
@@ -1738,7 +1738,7 @@ msgstr ""
 "нему непосредственно; он ничего не знает о резервных серверах, подключённых "
 "каскадно, через промежуточные серверы."
 
-#: high-availability.xml:1091(para)
+#: high-availability.xml:1101(para)
 msgid ""
 "Setting <varname>synchronous_commit</varname> to <literal>remote_write</"
 "literal> will cause each commit to wait for confirmation that the standby "
@@ -1764,7 +1764,7 @@ msgstr ""
 "данных может произойти только в случае одновременного сбоя ведущего и "
 "резервного, осложнённого повреждением БД на ведущем."
 
-#: high-availability.xml:1105(para)
+#: high-availability.xml:1115(para)
 msgid ""
 "Setting <varname>synchronous_commit</varname> to <literal>remote_apply</"
 "literal> will cause each commit to wait until the current synchronous "
@@ -1779,7 +1779,7 @@ msgstr ""
 "простых случаях это позволяет обеспечить обычный уровень согласованности и "
 "распределение нагрузки."
 
-#: high-availability.xml:1113(para)
+#: high-availability.xml:1123(para)
 msgid ""
 "Users will stop waiting if a fast shutdown is requested. However, as when "
 "using asynchronous replication, the server will not fully shutdown until all "
@@ -1791,11 +1791,11 @@ msgstr ""
 "будет полностью остановлен, пока все исходящие записи WAL не переместятся на "
 "текущий присоединённый резервный сервер."
 
-#: high-availability.xml:1123(title)
+#: high-availability.xml:1133(title)
 msgid "Multiple Synchronous Standbys"
 msgstr "Несколько синхронных резервных серверов"
 
-#: high-availability.xml:1125(para)
+#: high-availability.xml:1135(para)
 msgid ""
 "Synchronous replication supports one or more synchronous standby servers; "
 "transactions will wait until all the standby servers which are considered as "
@@ -1823,12 +1823,12 @@ msgstr ""
 "текущих синхронных резервных серверов по какой-либо причине отключается, он "
 "будет немедленно заменён следующим по порядку резервным сервером."
 
-#: high-availability.xml:1142(programlisting)
+#: high-availability.xml:1152(programlisting)
 #, no-wrap
 msgid "synchronous_standby_names = '2 (s1, s2, s3)'"
 msgstr "synchronous_standby_names = '2 (s1, s2, s3)'"
 
-#: high-availability.xml:1139(para)
+#: high-availability.xml:1149(para)
 msgid ""
 "An example of <varname>synchronous_standby_names</varname> for multiple "
 "synchronous standbys is: <placeholder-1/> In this example, if four standby "
@@ -1852,11 +1852,11 @@ msgstr ""
 "literal>. Сервер <literal>s4</literal> будет асинхронным резервным, так как "
 "его имя в этом списке отсутствует."
 
-#: high-availability.xml:1155(title)
+#: high-availability.xml:1167(title)
 msgid "Planning for Performance"
 msgstr "Планирование производительности"
 
-#: high-availability.xml:1157(para)
+#: high-availability.xml:1169(para)
 msgid ""
 "Synchronous replication usually requires carefully planned and placed "
 "standby servers to ensure applications perform acceptably. Waiting doesn't "
@@ -1873,7 +1873,7 @@ msgstr ""
 "снижению производительности БД из-за увеличения времени отклика и числа "
 "конфликтов."
 
-#: high-availability.xml:1166(para)
+#: high-availability.xml:1178(para)
 msgid ""
 "<productname>PostgreSQL</productname> allows the application developer to "
 "specify the durability level required via replication. This can be specified "
@@ -1885,7 +1885,7 @@ msgstr ""
 "установлен для системы в целом, для отдельного пользователя или соединения "
 "или даже для отдельной транзакции."
 
-#: high-availability.xml:1173(para)
+#: high-availability.xml:1185(para)
 msgid ""
 "For example, an application workload might consist of: 10% of changes are "
 "important customer details, while 90% of changes are less important data "
@@ -1897,7 +1897,7 @@ msgstr ""
 "бизнес вполне сможет выжить (например, это могут быть текущие разговоры "
 "пользователей между собой)."
 
-#: high-availability.xml:1180(para)
+#: high-availability.xml:1192(para)
 msgid ""
 "With synchronous replication options specified at the application level (on "
 "the primary) we can offer synchronous replication for the most important "
@@ -1911,7 +1911,7 @@ msgstr ""
 "приложения является важным и практичным средством для получения выгод "
 "синхронной репликации при высоком быстродействии."
 
-#: high-availability.xml:1188(para)
+#: high-availability.xml:1200(para)
 msgid ""
 "You should consider that the network bandwidth must be higher than the rate "
 "of generation of WAL data."
@@ -1919,11 +1919,11 @@ msgstr ""
 "Следует иметь в виду, что пропускная способность сети должна быть больше "
 "скорости генерирования данных WAL."
 
-#: high-availability.xml:1196(title)
+#: high-availability.xml:1208(title)
 msgid "Planning for High Availability"
 msgstr "Планирование отказоустойчивости"
 
-#: high-availability.xml:1198(para)
+#: high-availability.xml:1210(para)
 msgid ""
 "<varname>synchronous_standby_names</varname> specifies the number and names "
 "of synchronous standbys that transaction commits made when "
@@ -1940,7 +1940,7 @@ msgstr ""
 "таком режиме может не завершиться никогда, если один из синхронных резервных "
 "серверов выйдет из строя."
 
-#: high-availability.xml:1207(para)
+#: high-availability.xml:1219(para)
 msgid ""
 "The best solution for high availability is to ensure you keep as many "
 "synchronous standbys as requested. This can be achieved by naming multiple "
@@ -1957,7 +1957,7 @@ msgstr ""
 "первыми. Следующие за ними серверы будут становиться синхронными резервными "
 "при отказе одного из текущих."
 
-#: high-availability.xml:1216(para)
+#: high-availability.xml:1228(para)
 msgid ""
 "When a standby first attaches to the primary, it will not yet be properly "
 "synchronized. This is described as <literal>catchup</literal> mode. Once the "
@@ -1979,7 +1979,7 @@ msgstr ""
 "синхронным только по достижении состояния <literal>потоковой передачи</"
 "literal>."
 
-#: high-availability.xml:1228(para)
+#: high-availability.xml:1240(para)
 msgid ""
 "If primary restarts while commits are waiting for acknowledgement, those "
 "waiting transactions will be marked fully committed once the primary "
@@ -2002,7 +2002,7 @@ msgstr ""
 "будет уверенности, что данные WAL получены всеми синхронными резервными "
 "серверами."
 
-#: high-availability.xml:1241(para)
+#: high-availability.xml:1253(para)
 msgid ""
 "If you really cannot keep as many synchronous standbys as requested then you "
 "should decrease the number of synchronous standbys that transaction commits "
@@ -2015,7 +2015,7 @@ msgstr ""
 "<varname>synchronous_standby_names</varname> (или вовсе отключить его) и "
 "перезагрузить файл конфигурации на ведущем сервере."
 
-#: high-availability.xml:1249(para)
+#: high-availability.xml:1261(para)
 msgid ""
 "If the primary is isolated from remaining standby servers you should fail "
 "over to the best candidate of those other remaining standby servers."
@@ -2023,7 +2023,7 @@ msgstr ""
 "В случае если ведущий сервер стал недоступным для оставшихся резервных, "
 "следует переключиться на наиболее подходящий из имеющихся резервных серверов."
 
-#: high-availability.xml:1254(para)
+#: high-availability.xml:1266(para)
 msgid ""
 "If you need to re-create a standby server while transactions are waiting, "
 "make sure that the commands pg_start_backup() and pg_stop_backup() are run "
@@ -2038,18 +2038,18 @@ msgstr ""
 "случае эти запросы на подтверждение будут бесконечными для вновь возникшего "
 "резервного сервера."
 
-#: high-availability.xml:1266(title)
+#: high-availability.xml:1278(title)
 msgid "Continuous archiving in standby"
 msgstr "Непрерывное архивирование на резервном сервере"
 
-#: high-availability.xml:1268(indexterm)
+#: high-availability.xml:1280(indexterm)
 msgid ""
 "<primary>continuous archiving</primary><secondary>in standby</secondary>"
 msgstr ""
 "<primary>непрерывное архивирование</primary><secondary>на резервном сервере</"
 "secondary>"
 
-#: high-availability.xml:1272(para)
+#: high-availability.xml:1284(para)
 msgid ""
 "When continuous WAL archiving is used in a standby, there are two different "
 "scenarios: the WAL archive can be shared between the primary and the "
@@ -2082,7 +2082,7 @@ msgstr ""
 "условия гонки, возможные, если два сервера попытаются архивировать один и "
 "тот же файл одновременно."
 
-#: high-availability.xml:1290(para)
+#: high-availability.xml:1302(para)
 msgid ""
 "If <varname>archive_mode</varname> is set to <literal>on</literal>, the "
 "archiver is not enabled during recovery or standby mode. If the standby "
@@ -2107,11 +2107,11 @@ msgstr ""
 "в режиме резерва, различий между режимами <literal>on</literal> и "
 "<literal>always</literal> нет."
 
-#: high-availability.xml:1306(title)
+#: high-availability.xml:1318(title)
 msgid "Failover"
 msgstr "Отработка отказа"
 
-#: high-availability.xml:1308(para)
+#: high-availability.xml:1320(para)
 msgid ""
 "If the primary server fails then the standby server should begin failover "
 "procedures."
@@ -2119,7 +2119,7 @@ msgstr ""
 "Если ведущий сервер отказывает, резервный должен начать процедуры отработки "
 "отказа."
 
-#: high-availability.xml:1313(para)
+#: high-availability.xml:1325(para)
 msgid ""
 "If the standby server fails then no failover need take place. If the standby "
 "server can be restarted, even some time later, then the recovery process can "
@@ -2133,7 +2133,7 @@ msgstr ""
 "возобновляемого восстановления. Если вернуть резервный сервер в строй "
 "невозможно, необходимо создать полностью новый экземпляр резервного сервера."
 
-#: high-availability.xml:1321(para)
+#: high-availability.xml:1333(para)
 msgid ""
 "If the primary server fails and the standby server becomes the new primary, "
 "and then the old primary restarts, you must have a mechanism for informing "
@@ -2150,7 +2150,7 @@ msgstr ""
 "когда обе системы считают себя ведущими, и в результате возникают конфликты "
 "и потеря данных."
 
-#: high-availability.xml:1330(para)
+#: high-availability.xml:1342(para)
 msgid ""
 "Many failover systems use just two systems, the primary and the standby, "
 "connected by some kind of heartbeat mechanism to continually verify the "
@@ -2167,7 +2167,7 @@ msgstr ""
 "сложность оправдана, только если вся схема достаточно хорошо продумана и "
 "тщательно протестирована."
 
-#: high-availability.xml:1340(para)
+#: high-availability.xml:1352(para)
 msgid ""
 "<productname>PostgreSQL</productname> does not provide the system software "
 "required to identify a failure on the primary and notify the standby "
@@ -2182,7 +2182,7 @@ msgstr ""
 "системы, требуемыми для успешной отработки отказа, например, для миграции IP-"
 "адреса."
 
-#: high-availability.xml:1348(para)
+#: high-availability.xml:1360(para)
 msgid ""
 "Once failover to the standby occurs, there is only a single server in "
 "operation. This is known as a degenerate state. The former standby is now "
@@ -2208,7 +2208,7 @@ msgstr ""
 "будет воссоздан новый резервный сервер, хотя это, очевидно, усложняет "
 "конфигурацию системы и рабочие процедуры."
 
-#: high-availability.xml:1365(para)
+#: high-availability.xml:1377(para)
 msgid ""
 "So, switching from primary to standby server can be fast but requires some "
 "time to re-prepare the failover cluster. Regular switching from primary to "
@@ -2226,7 +2226,7 @@ msgstr ""
 "работать, когда потребуется. Эти административные процедуры рекомендуется "
 "документировать письменно."
 
-#: high-availability.xml:1374(para)
+#: high-availability.xml:1386(para)
 msgid ""
 "To trigger failover of a log-shipping standby server, run <command>pg_ctl "
 "promote</command> or create a trigger file with the file name and path "
@@ -2247,11 +2247,11 @@ msgstr ""
 "запросы на чтение, а не обеспечивать отказоустойчивость, повышать его до "
 "ведущего не понадобится."
 
-#: high-availability.xml:1387(title)
+#: high-availability.xml:1399(title)
 msgid "Alternative Method for Log Shipping"
 msgstr "Другие методы трансляции журнала"
 
-#: high-availability.xml:1389(para)
+#: high-availability.xml:1401(para)
 msgid ""
 "An alternative to the built-in standby mode described in the previous "
 "sections is to use a <varname>restore_command</varname> that polls the "
@@ -2269,7 +2269,7 @@ msgstr ""
 "резервного сервера. См. модуль <xref linkend=\"pgstandby\"/> для примера "
 "реализации такой возможности."
 
-#: high-availability.xml:1399(para)
+#: high-availability.xml:1411(para)
 msgid ""
 "Note that in this mode, the server will apply WAL one file at a time, so if "
 "you use the standby server for queries (see Hot Standby), there is a delay "
@@ -2286,7 +2286,7 @@ msgstr ""
 "использовать для снижения этой задержки. Так же необходимо отметить, что "
 "нельзя совмещать этот метод с потоковой репликацией."
 
-#: high-availability.xml:1409(para)
+#: high-availability.xml:1421(para)
 msgid ""
 "The operations that occur on both primary and standby servers are normal "
 "continuous archiving and recovery tasks. The only point of contact between "
@@ -2304,7 +2304,7 @@ msgstr ""
 "разных ведущих серверов не смешивались или не перепутывались. Архив не "
 "должен быть больше, чем это необходимо для работы резерва."
 
-#: high-availability.xml:1419(para)
+#: high-availability.xml:1431(para)
 msgid ""
 "The magic that makes the two loosely coupled servers work together is simply "
 "a <varname>restore_command</varname> used on the standby that, when asked "
@@ -2340,7 +2340,7 @@ msgstr ""
 "должен получить ошибку &laquo;файл не найден&raquo;. При этом восстановление "
 "завершится и резервный сервер сможет станет обычным."
 
-#: high-availability.xml:1440(programlisting)
+#: high-availability.xml:1452(programlisting)
 #, no-wrap
 msgid ""
 "triggered = false;\n"
@@ -2363,14 +2363,14 @@ msgstr ""
 "if (!triggered)\n"
 "        CopyWALFileForRecovery();"
 
-#: high-availability.xml:1438(para)
+#: high-availability.xml:1450(para)
 msgid ""
 "Pseudocode for a suitable <varname>restore_command</varname> is: "
 "<placeholder-1/>"
 msgstr ""
 "Псевдокод для подходящей <varname>restore_command</varname>: <placeholder-1/>"
 
-#: high-availability.xml:1451(para)
+#: high-availability.xml:1465(para)
 msgid ""
 "A working example of a waiting <varname>restore_command</varname> is "
 "provided in the <xref linkend=\"pgstandby\"/> module. It should be used as a "
@@ -2383,7 +2383,7 @@ msgstr ""
 "правильной реализации логики, описанной выше. Он так же может быть расширен "
 "для поддержки особых конфигураций и окружений."
 
-#: high-availability.xml:1459(para)
+#: high-availability.xml:1473(para)
 msgid ""
 "The method for triggering failover is an important part of planning and "
 "design. One potential option is the <varname>restore_command</varname> "
@@ -2412,11 +2412,11 @@ msgstr ""
 "механизм уведомлений, например явно создавать файл-триггер, если это "
 "возможно."
 
-#: high-availability.xml:1476(title)
+#: high-availability.xml:1490(title)
 msgid "Implementation"
 msgstr "Реализация"
 
-#: high-availability.xml:1484(para)
+#: high-availability.xml:1498(para)
 msgid ""
 "Set up primary and standby systems as nearly identical as possible, "
 "including two identical copies of <productname>PostgreSQL</productname> at "
@@ -2426,7 +2426,7 @@ msgstr ""
 "включая две одинаковые копии <productname>PostgreSQL</productname> одного "
 "выпуска."
 
-#: high-availability.xml:1491(para)
+#: high-availability.xml:1505(para)
 msgid ""
 "Set up continuous archiving from the primary to a WAL archive directory on "
 "the standby server. Ensure that <xref linkend=\"guc-archive-mode\"/>, <xref "
@@ -2440,7 +2440,7 @@ msgstr ""
 "установлены в соответствующие значения на ведущем (см. <xref remap=\"4\" "
 "linkend=\"backup-archiving-wal\"/>)."
 
-#: high-availability.xml:1502(para)
+#: high-availability.xml:1516(para)
 msgid ""
 "Make a base backup of the primary server (see <xref linkend=\"backup-base-"
 "backup\"/>), and load this data onto the standby."
@@ -2448,7 +2448,7 @@ msgstr ""
 "Создайте базовую копию данных ведущего сервера (см. <xref remap=\"4\" "
 "linkend=\"backup-base-backup\"/>) и восстановите её на резервном."
 
-#: high-availability.xml:1508(para)
+#: high-availability.xml:1522(para)
 msgid ""
 "Begin recovery on the standby server from the local WAL archive, using a "
 "<filename>recovery.conf</filename> that specifies a "
@@ -2460,7 +2460,7 @@ msgstr ""
 "<filename>recovery.conf</filename> как описано выше (см. <xref remap=\"4\" "
 "linkend=\"backup-pitr-recovery\"/>)."
 
-#: high-availability.xml:1478(para)
+#: high-availability.xml:1492(para)
 msgid ""
 "The short procedure for configuring a standby server using this alternative "
 "method is as follows. For full details of each step, refer to previous "
@@ -2470,7 +2470,7 @@ msgstr ""
 "альтернативного метода указана ниже. Для подробностей по каждому шагу "
 "следует обратиться к указанному разделу. <placeholder-1/>"
 
-#: high-availability.xml:1518(para)
+#: high-availability.xml:1532(para)
 msgid ""
 "Recovery treats the WAL archive as read-only, so once a WAL file has been "
 "copied to the standby system it can be copied to tape at the same time as it "
@@ -2484,7 +2484,7 @@ msgstr ""
 "целях отказоустойчивости может быть совмещена с долговременным сохранением "
 "файлов для восстановления после катастрофических сбоев."
 
-#: high-availability.xml:1527(para)
+#: high-availability.xml:1541(para)
 msgid ""
 "For testing purposes, it is possible to run both primary and standby servers "
 "on the same system. This does not provide any worthwhile improvement in "
@@ -2494,11 +2494,11 @@ msgstr ""
 "системе. Это не обеспечивает надёжность серверов, так же как и не подходит "
 "под описание высокой доступности."
 
-#: high-availability.xml:1535(title)
+#: high-availability.xml:1549(title)
 msgid "Record-based Log Shipping"
 msgstr "Построчная трансляция журнала"
 
-#: high-availability.xml:1537(para)
+#: high-availability.xml:1551(para)
 msgid ""
 "It is also possible to implement record-based log shipping using this "
 "alternative method, though this requires custom development, and changes "
@@ -2510,7 +2510,7 @@ msgstr ""
 "изменения будут видны для запросов на сервере горячего резерва только после "
 "передачи полного файла WAL."
 
-#: high-availability.xml:1544(para)
+#: high-availability.xml:1558(para)
 msgid ""
 "An external program can call the <function>pg_xlogfile_name_offset()</"
 "function> function (see <xref linkend=\"functions-admin\"/>) to find out the "
@@ -2545,7 +2545,7 @@ msgstr ""
 "требует взаимодействия скрипта команды <varname>restore_command</varname> с "
 "данными из программы копирования."
 
-#: high-availability.xml:1563(para)
+#: high-availability.xml:1577(para)
 msgid ""
 "Starting with <productname>PostgreSQL</productname> version 9.0, you can use "
 "streaming replication (see <xref linkend=\"streaming-replication\"/>) to "
@@ -2555,15 +2555,15 @@ msgstr ""
 "использовать потоковую репликацию (см. <xref remap=\"4\" linkend=\"streaming-"
 "replication\"/>) для получения этих же преимуществ меньшими усилиями."
 
-#: high-availability.xml:1572(title)
+#: high-availability.xml:1586(title)
 msgid "Hot Standby"
 msgstr "Горячий резерв"
 
-#: high-availability.xml:1574(indexterm)
+#: high-availability.xml:1588(indexterm)
 msgid "<primary>Hot Standby</primary>"
 msgstr "<primary>горячий резерв</primary>"
 
-#: high-availability.xml:1578(para)
+#: high-availability.xml:1592(para)
 msgid ""
 "Hot Standby is the term used to describe the ability to connect to the "
 "server and run read-only queries while the server is in archive recovery or "
@@ -2582,7 +2582,7 @@ msgstr ""
 "то время как пользователи продолжают выполнять запросы и/или их соединения "
 "остаются открытыми."
 
-#: high-availability.xml:1589(para)
+#: high-availability.xml:1603(para)
 msgid ""
 "Running queries in hot standby mode is similar to normal query operation, "
 "though there are several usage and administrative differences explained "
@@ -2592,11 +2592,11 @@ msgstr ""
 "обычном режиме, с некоторыми отличиями в использовании и администрировании, "
 "описанными ниже."
 
-#: high-availability.xml:1596(title)
+#: high-availability.xml:1610(title)
 msgid "User's Overview"
 msgstr "Обзор на уровне пользователя"
 
-#: high-availability.xml:1598(para)
+#: high-availability.xml:1612(para)
 msgid ""
 "When the <xref linkend=\"guc-hot-standby\"/> parameter is set to true on a "
 "standby server, it will begin accepting connections once the recovery has "
@@ -2608,7 +2608,7 @@ msgstr ""
 "система придёт в согласованное состояние в процессе восстановления. Все "
 "соединения только для чтения, даже временные таблицы не могут быть записаны."
 
-#: high-availability.xml:1605(para)
+#: high-availability.xml:1619(para)
 msgid ""
 "The data on the standby takes some time to arrive from the primary server so "
 "there will be a measurable delay between primary and standby. Running the "
@@ -2634,12 +2634,12 @@ msgstr ""
 "транзакции. Более подробно см. <xref remap=\"4\" linkend=\"transaction-iso\"/"
 ">."
 
-#: high-availability.xml:1623(para)
+#: high-availability.xml:1637(para)
 msgid "Query access - <command>SELECT</command>, <command>COPY TO</command>"
 msgstr ""
 "Доступ к данным — <command>SELECT</command>, <command>COPY TO</command>"
 
-#: high-availability.xml:1628(para)
+#: high-availability.xml:1642(para)
 msgid ""
 "Cursor commands - <command>DECLARE</command>, <command>FETCH</command>, "
 "<command>CLOSE</command>"
@@ -2647,7 +2647,7 @@ msgstr ""
 "Команды для работы с курсором — <command>DECLARE</command>, <command>FETCH</"
 "command>, <command>CLOSE</command>"
 
-#: high-availability.xml:1633(para)
+#: high-availability.xml:1647(para)
 msgid ""
 "Parameters - <command>SHOW</command>, <command>SET</command>, "
 "<command>RESET</command>"
@@ -2655,7 +2655,7 @@ msgstr ""
 "Параметры — <command>SHOW</command>, <command>SET</command>, <command>RESET</"
 "command>"
 
-#: high-availability.xml:1642(para)
+#: high-availability.xml:1656(para)
 msgid ""
 "<command>BEGIN</command>, <command>END</command>, <command>ABORT</command>, "
 "<command>START TRANSACTION</command>"
@@ -2663,7 +2663,7 @@ msgstr ""
 "<command>BEGIN</command>, <command>END</command>, <command>ABORT</command>, "
 "<command>START TRANSACTION</command>"
 
-#: high-availability.xml:1647(para)
+#: high-availability.xml:1661(para)
 msgid ""
 "<command>SAVEPOINT</command>, <command>RELEASE</command>, <command>ROLLBACK "
 "TO SAVEPOINT</command>"
@@ -2671,16 +2671,16 @@ msgstr ""
 "<command>SAVEPOINT</command>, <command>RELEASE</command>, <command>ROLLBACK "
 "TO SAVEPOINT</command>"
 
-#: high-availability.xml:1652(para)
+#: high-availability.xml:1666(para)
 msgid "<command>EXCEPTION</command> blocks and other internal subtransactions"
 msgstr ""
 "Блок <command>EXCEPTION</command> и другие внутренние подчиненные транзакции"
 
-#: high-availability.xml:1638(para)
+#: high-availability.xml:1652(para)
 msgid "Transaction management commands <placeholder-1/>"
 msgstr "Команды явного управления транзакциями <placeholder-1/>"
 
-#: high-availability.xml:1660(para)
+#: high-availability.xml:1674(para)
 msgid ""
 "<command>LOCK TABLE</command>, though only when explicitly in one of these "
 "modes: <literal>ACCESS SHARE</literal>, <literal>ROW SHARE</literal> or "
@@ -2690,7 +2690,7 @@ msgstr ""
 "следующем режиме: <literal>ACCESS SHARE</literal>, <literal>ROW SHARE</"
 "literal> или <literal>ROW EXCLUSIVE</literal>."
 
-#: high-availability.xml:1666(para)
+#: high-availability.xml:1680(para)
 msgid ""
 "Plans and resources - <command>PREPARE</command>, <command>EXECUTE</"
 "command>, <command>DEALLOCATE</command>, <command>DISCARD</command>"
@@ -2698,11 +2698,11 @@ msgstr ""
 "Планы и ресурсы — <command>PREPARE</command>, <command>EXECUTE</command>, "
 "<command>DEALLOCATE</command>, <command>DISCARD</command>"
 
-#: high-availability.xml:1672(para)
+#: high-availability.xml:1686(para)
 msgid "Plugins and extensions - <command>LOAD</command>"
 msgstr "Дополнения и расширения — <command>LOAD</command>"
 
-#: high-availability.xml:1618(para)
+#: high-availability.xml:1632(para)
 msgid ""
 "Transactions started during hot standby may issue the following commands: "
 "<placeholder-1/>"
@@ -2710,7 +2710,7 @@ msgstr ""
 "Транзакции, запущенные в режиме горячего резерва, могут выполнять следующие "
 "команды: <placeholder-1/>"
 
-#: high-availability.xml:1686(para)
+#: high-availability.xml:1700(para)
 msgid ""
 "Data Manipulation Language (DML) - <command>INSERT</command>, "
 "<command>UPDATE</command>, <command>DELETE</command>, <command>COPY FROM</"
@@ -2728,7 +2728,7 @@ msgstr ""
 "так как строки таблицы не могут быть прочитаны или записаны без обращения к "
 "ID транзакции, что в настоящее время не возможно в среде горячего резерва."
 
-#: high-availability.xml:1698(para)
+#: high-availability.xml:1712(para)
 msgid ""
 "Data Definition Language (DDL) - <command>CREATE</command>, <command>DROP</"
 "command>, <command>ALTER</command>, <command>COMMENT</command>. This "
@@ -2740,7 +2740,7 @@ msgstr ""
 "ограничения так же относятся и к временным таблицам, так как операции могут "
 "потребовать обновления таблиц системных каталогов."
 
-#: high-availability.xml:1706(para)
+#: high-availability.xml:1720(para)
 msgid ""
 "<command>SELECT ... FOR SHARE | UPDATE</command>, because row locks cannot "
 "be taken without updating the underlying data files."
@@ -2748,14 +2748,14 @@ msgstr ""
 "<command>SELECT ... FOR SHARE | UPDATE</command>, так как блокировка строки "
 "не может быть проведена без обновления соответствующих файлов данных."
 
-#: high-availability.xml:1712(para)
+#: high-availability.xml:1726(para)
 msgid ""
 "Rules on <command>SELECT</command> statements that generate DML commands."
 msgstr ""
 "Правила для выражений <command>SELECT</command>, которые приводят к "
 "выполнению команд DML."
 
-#: high-availability.xml:1717(para)
+#: high-availability.xml:1731(para)
 msgid ""
 "<command>LOCK</command> that explicitly requests a mode higher than "
 "<literal>ROW EXCLUSIVE MODE</literal>."
@@ -2763,7 +2763,7 @@ msgstr ""
 "<command>LOCK</command> которая явно требует режим более строгий чем "
 "<literal>ROW EXCLUSIVE MODE</literal>."
 
-#: high-availability.xml:1722(para)
+#: high-availability.xml:1736(para)
 msgid ""
 "<command>LOCK</command> in short default form, since it requests "
 "<literal>ACCESS EXCLUSIVE MODE</literal>."
@@ -2771,7 +2771,7 @@ msgstr ""
 "<command>LOCK</command> в короткой форме с умолчаниями, так как требует "
 "<literal>ACCESS EXCLUSIVE MODE</literal>."
 
-#: high-availability.xml:1731(para)
+#: high-availability.xml:1745(para)
 msgid ""
 "<command>BEGIN READ WRITE</command>, <command>START TRANSACTION READ WRITE</"
 "command>"
@@ -2779,7 +2779,7 @@ msgstr ""
 "<command>BEGIN READ WRITE</command>, <command>START TRANSACTION READ WRITE</"
 "command>"
 
-#: high-availability.xml:1737(para)
+#: high-availability.xml:1751(para)
 msgid ""
 "<command>SET TRANSACTION READ WRITE</command>, <command>SET SESSION "
 "CHARACTERISTICS AS TRANSACTION READ WRITE</command>"
@@ -2787,11 +2787,11 @@ msgstr ""
 "<command>SET TRANSACTION READ WRITE</command>, <command>SET SESSION "
 "CHARACTERISTICS AS TRANSACTION READ WRITE</command>"
 
-#: high-availability.xml:1744(command)
+#: high-availability.xml:1758(command)
 msgid "SET transaction_read_only = off"
 msgstr "SET transaction_read_only = off"
 
-#: high-availability.xml:1727(para)
+#: high-availability.xml:1741(para)
 msgid ""
 "Transaction management commands that explicitly set non-read-only state: "
 "<placeholder-1/>"
@@ -2799,7 +2799,7 @@ msgstr ""
 "Команды управления транзакциями, которые в явном виде требуют режим не "
 "только для чтения <placeholder-1/>"
 
-#: high-availability.xml:1751(para)
+#: high-availability.xml:1765(para)
 msgid ""
 "Two-phase commit commands - <command>PREPARE TRANSACTION</command>, "
 "<command>COMMIT PREPARED</command>, <command>ROLLBACK PREPARED</command> "
@@ -2811,7 +2811,7 @@ msgstr ""
 "так как даже транзакции только для чтения нуждаются в записи в WAL на "
 "подготовительной фазе (первая фаза двухфазной фиксации)."
 
-#: high-availability.xml:1759(para)
+#: high-availability.xml:1773(para)
 msgid ""
 "Sequence updates - <function>nextval()</function>, <function>setval()</"
 "function>"
@@ -2819,7 +2819,7 @@ msgstr ""
 "Обновление последовательностей — <function>nextval()</function>, "
 "<function>setval()</function>"
 
-#: high-availability.xml:1764(para)
+#: high-availability.xml:1778(para)
 msgid ""
 "<command>LISTEN</command>, <command>UNLISTEN</command>, <command>NOTIFY</"
 "command>"
@@ -2827,7 +2827,7 @@ msgstr ""
 "<command>LISTEN</command>, <command>UNLISTEN</command>, <command>NOTIFY</"
 "command>"
 
-#: high-availability.xml:1679(para)
+#: high-availability.xml:1693(para)
 msgid ""
 "Transactions started during hot standby will never be assigned a transaction "
 "ID and cannot write to the system write-ahead log. Therefore, the following "
@@ -2837,7 +2837,7 @@ msgstr ""
 "транзакции и не могут быть записаны в журнал транзакций. Поэтому при попытке "
 "выполнить следующие действия возникнут ошибки: <placeholder-1/>"
 
-#: high-availability.xml:1771(para)
+#: high-availability.xml:1785(para)
 msgid ""
 "In normal operation, <quote>read-only</quote> transactions are allowed to "
 "update sequences and to use <command>LISTEN</command>, <command>UNLISTEN</"
@@ -2853,7 +2853,7 @@ msgstr ""
 "чем обычные только читающие сессии. Возможно, что некоторые из этих "
 "ограничений будут ослаблены в следующих выпуска."
 
-#: high-availability.xml:1779(para)
+#: high-availability.xml:1793(para)
 msgid ""
 "During hot standby, the parameter <varname>transaction_read_only</varname> "
 "is always true and may not be changed. But as long as no attempt is made to "
@@ -2873,7 +2873,7 @@ msgstr ""
 "После выхода из режима горячего резерва становится возможным запускать "
 "пишущие транзакции (даже в сеансах, начатых ещё в режиме горячего резерва)."
 
-#: high-availability.xml:1790(para)
+#: high-availability.xml:1804(para)
 msgid ""
 "Users will be able to tell whether their session is read-only by issuing "
 "<command>SHOW transaction_read_only</command>. In addition, a set of "
@@ -2891,11 +2891,11 @@ msgstr ""
 "режим может быть полезен для мониторинга процесса восстановления или для "
 "написания комплексного восстановления для особенных случаев."
 
-#: high-availability.xml:1802(title)
+#: high-availability.xml:1816(title)
 msgid "Handling Query Conflicts"
 msgstr "Обработка конфликтов запросов"
 
-#: high-availability.xml:1804(para)
+#: high-availability.xml:1818(para)
 msgid ""
 "The primary and standby servers are in many ways loosely connected. Actions "
 "on the primary will have an effect on the standby. As a result, there is "
@@ -2914,7 +2914,7 @@ msgstr ""
 "образом, запросы на резервном конкурируют за системные ресурсы, например, "
 "ввод-вывод."
 
-#: high-availability.xml:1822(para)
+#: high-availability.xml:1836(para)
 msgid ""
 "Access Exclusive locks taken on the primary server, including both explicit "
 "<command>LOCK</command> commands and various <acronym>DDL</acronym> actions, "
@@ -2924,7 +2924,7 @@ msgstr ""
 "команды <command>LOCK</command>, так и при различных <acronym>DDL</acronym>, "
 "что приводит к конфликту доступа к таблицам на резервном."
 
-#: high-availability.xml:1829(para)
+#: high-availability.xml:1843(para)
 msgid ""
 "Dropping a tablespace on the primary conflicts with standby queries using "
 "that tablespace for temporary work files."
@@ -2933,7 +2933,7 @@ msgstr ""
 "резервном когда запросы используют это пространство для хранения временных "
 "рабочих файлов."
 
-#: high-availability.xml:1835(para)
+#: high-availability.xml:1849(para)
 msgid ""
 "Dropping a database on the primary conflicts with sessions connected to that "
 "database on the standby."
@@ -2941,7 +2941,7 @@ msgstr ""
 "Удаление базы данных на ведущем сервере конфликтует с сессиями, "
 "подключёнными к этой БД на резервном."
 
-#: high-availability.xml:1841(para)
+#: high-availability.xml:1855(para)
 msgid ""
 "Application of a vacuum cleanup record from WAL conflicts with standby "
 "transactions whose snapshots can still <quote>see</quote> any of the rows to "
@@ -2951,7 +2951,7 @@ msgstr ""
 "на резервном сервере, которые используют снимок данных, который всё ещё "
 "видит какие-то из очищенных на ведущем строк."
 
-#: high-availability.xml:1848(para)
+#: high-availability.xml:1862(para)
 msgid ""
 "Application of a vacuum cleanup record from WAL conflicts with queries "
 "accessing the target page on the standby, whether or not the data to be "
@@ -2961,7 +2961,7 @@ msgstr ""
 "целевой странице на резервном сервере вне зависимости от того, являются ли "
 "данные удалёнными или видимыми."
 
-#: high-availability.xml:1813(para)
+#: high-availability.xml:1827(para)
 msgid ""
 "There are also additional types of conflict that can occur with Hot Standby. "
 "These conflicts are <emphasis>hard conflicts</emphasis> in the sense that "
@@ -2976,7 +2976,7 @@ msgstr ""
 "средств для обработки подобных конфликтов. Случаи конфликтов включают: "
 "<placeholder-1/>"
 
-#: high-availability.xml:1857(para)
+#: high-availability.xml:1871(para)
 msgid ""
 "On the primary server, these cases simply result in waiting; and the user "
 "might choose to cancel either of the conflicting actions. However, on the "
@@ -2996,7 +2996,7 @@ msgstr ""
 "обеспечивает принудительную отмену запросов на резервном сервере, которые "
 "конфликтуют с применяемыми записями WAL."
 
-#: high-availability.xml:1868(para)
+#: high-availability.xml:1882(para)
 msgid ""
 "An example of the problem situation is an administrator on the primary "
 "server running <command>DROP TABLE</command> on a table that is currently "
@@ -3027,7 +3027,7 @@ msgstr ""
 "конфликтующий запрос, чтобы можно было применить <command>DROP TABLE</"
 "command>."
 
-#: high-availability.xml:1884(para)
+#: high-availability.xml:1898(para)
 msgid ""
 "When a conflicting query is short, it's typically desirable to allow it to "
 "complete by delaying WAL application for a little bit; but a long delay in "
@@ -3055,7 +3055,7 @@ msgstr ""
 "quote> ведущего сервера в случае большого отставания) и для получения "
 "записей WAL при потоковой репликации."
 
-#: high-availability.xml:1899(para)
+#: high-availability.xml:1913(para)
 msgid ""
 "In a standby server that exists primarily for high availability, it's best "
 "to set the delay parameters relatively short, so that the server cannot fall "
@@ -3075,7 +3075,7 @@ msgstr ""
 "отсутствия последних изменений от ведущего из-за задержки применения записей "
 "WAL."
 
-#: high-availability.xml:1910(para)
+#: high-availability.xml:1924(para)
 msgid ""
 "Once the delay specified by <varname>max_standby_archive_delay</varname> or "
 "<varname>max_standby_streaming_delay</varname> has been exceeded, "
@@ -3093,7 +3093,7 @@ msgstr ""
 "блокировке, вызванной транзакцией в состоянии IDLE, конфликтная сессия "
 "разрывается (это поведение может изменить в будущем)."
 
-#: high-availability.xml:1920(para)
+#: high-availability.xml:1934(para)
 msgid ""
 "Canceled queries may be retried immediately (after beginning a new "
 "transaction, of course). Since query cancellation depends on the nature of "
@@ -3104,7 +3104,7 @@ msgstr ""
 "новой транзакции). Так как причина отмены зависит от природы проигрываемых "
 "записей WAL, запрос, который был отменён, может быть успешно выполнен вновь."
 
-#: high-availability.xml:1927(para)
+#: high-availability.xml:1941(para)
 msgid ""
 "Keep in mind that the delay parameters are compared to the elapsed time "
 "since the WAL data was received by the standby server. Thus, the grace "
@@ -3120,7 +3120,7 @@ msgstr ""
 "режиме задержки в результате ожидания предыдущего запроса или результат не "
 "доступен из-за высокой нагрузки обновлений."
 
-#: high-availability.xml:1936(para)
+#: high-availability.xml:1950(para)
 msgid ""
 "The most common reason for conflict between standby queries and WAL replay "
 "is <quote>early cleanup</quote>. Normally, <productname>PostgreSQL</"
@@ -3140,7 +3140,7 @@ msgstr ""
 "ситуация, когда на главном запись уже очищена, но эта же запись всё ещё "
 "видна для транзакций на резервном сервере."
 
-#: high-availability.xml:1946(para)
+#: high-availability.xml:1960(para)
 msgid ""
 "Experienced users should note that both row version cleanup and row version "
 "freezing will potentially conflict with standby queries. Running a manual "
@@ -3153,7 +3153,7 @@ msgstr ""
 "FREEZE</command> может привести к конфликту, даже в таблице без обновленных "
 "и удалённых строк."
 
-#: high-availability.xml:1953(para)
+#: high-availability.xml:1967(para)
 msgid ""
 "Users should be clear that tables that are regularly and heavily updated on "
 "the primary server will quickly cause cancellation of longer running queries "
@@ -3169,7 +3169,7 @@ msgstr ""
 "<varname>max_standby_streaming_delay</varname> действует подобно ограничению "
 "<varname>statement_timeout</varname>."
 
-#: high-availability.xml:1962(para)
+#: high-availability.xml:1976(para)
 msgid ""
 "Remedial possibilities exist if the number of standby-query cancellations is "
 "found to be unacceptable. The first option is to set the parameter "
@@ -3208,7 +3208,7 @@ msgstr ""
 "предотвращения быстрой отмены запросов из-за полученных записей WAL после "
 "восстановления соединения."
 
-#: high-availability.xml:1983(para)
+#: high-availability.xml:1997(para)
 msgid ""
 "Another option is to increase <xref linkend=\"guc-vacuum-defer-cleanup-age\"/"
 "> on the primary server, so that dead rows will not be cleaned up as quickly "
@@ -3228,7 +3228,7 @@ msgstr ""
 "окно по времени, так как <varname>vacuum_defer_cleanup_age</varname> "
 "измеряется в количестве транзакций, выполняемых на ведущем сервере."
 
-#: high-availability.xml:1994(para)
+#: high-availability.xml:2008(para)
 msgid ""
 "The number of query cancels and the reason for them can be viewed using the "
 "<structname>pg_stat_database_conflicts</structname> system view on the "
@@ -3240,11 +3240,11 @@ msgstr ""
 "на резервном сервере. Системное представление <structname>pg_stat_database</"
 "structname> так же содержит итоговую информацию."
 
-#: high-availability.xml:2003(title)
+#: high-availability.xml:2017(title)
 msgid "Administrator's Overview"
 msgstr "Обзор административной части"
 
-#: high-availability.xml:2017(programlisting)
+#: high-availability.xml:2031(programlisting)
 #, no-wrap
 msgid ""
 "LOG:  entering standby mode\n"
@@ -3261,15 +3261,15 @@ msgstr ""
 "LOG:  consistent recovery state reached\n"
 "LOG:  database system is ready to accept read only connections"
 
-#: high-availability.xml:2033(para)
+#: high-availability.xml:2049(para)
 msgid "A write transaction has more than 64 subtransactions"
 msgstr "Пишущая транзакция имеет более 64 подтранзакций"
 
-#: high-availability.xml:2038(para)
+#: high-availability.xml:2054(para)
 msgid "Very long-lived write transactions"
 msgstr "Очень длительные пишущие транзакции"
 
-#: high-availability.xml:2005(para)
+#: high-availability.xml:2019(para)
 msgid ""
 "If <varname>hot_standby</varname> is turned <literal>on</literal> in "
 "<filename>postgresql.conf</filename> and there is a <filename>recovery.conf</"
@@ -3311,23 +3311,23 @@ msgstr ""
 "следующего файла WAL (максимальное время ожидания задаётся параметром "
 "<varname>archive_timeout</varname> на ведущем сервере)."
 
-#: high-availability.xml:2061(varname)
+#: high-availability.xml:2077(varname)
 msgid "max_connections"
 msgstr "max_connections"
 
-#: high-availability.xml:2066(varname)
+#: high-availability.xml:2082(varname)
 msgid "max_prepared_transactions"
 msgstr "max_prepared_transactions"
 
-#: high-availability.xml:2071(varname)
+#: high-availability.xml:2087(varname)
 msgid "max_locks_per_transaction"
 msgstr "max_locks_per_transaction"
 
-#: high-availability.xml:2076(varname)
+#: high-availability.xml:2092(varname)
 msgid "max_worker_processes"
 msgstr "max_worker_processes"
 
-#: high-availability.xml:2049(para)
+#: high-availability.xml:2065(para)
 msgid ""
 "The setting of some parameters on the standby will need reconfiguration if "
 "they have been changed on the primary. For these parameters, the value on "
@@ -3343,7 +3343,7 @@ msgstr ""
 "работу. Следует увеличить значение и повторить попытку восстановления ещё "
 "раз. Это касается следующих параметров: <placeholder-1/>"
 
-#: high-availability.xml:2082(para)
+#: high-availability.xml:2098(para)
 msgid ""
 "It is important that the administrator select appropriate settings for <xref "
 "linkend=\"guc-max-standby-archive-delay\"/> and <xref linkend=\"guc-max-"
@@ -3365,7 +3365,7 @@ msgstr ""
 "несколько часов или даже -1, что означает бесконечное ожидание окончания "
 "запроса."
 
-#: high-availability.xml:2094(para)
+#: high-availability.xml:2110(para)
 msgid ""
 "Transaction status \"hint bits\" written on the primary are not WAL-logged, "
 "so data on the standby will likely re-write the hints again on the standby. "
@@ -3390,12 +3390,12 @@ msgstr ""
 "другие операции вне базы данных с применением PL-функций, несмотря на то, "
 "что транзакции по-прежнему смогут только читать данные."
 
-#: high-availability.xml:2114(para)
+#: high-availability.xml:2130(para)
 msgid "Data Definition Language (DDL) - e.g. <command>CREATE INDEX</command>"
 msgstr ""
 "Команды определения данных (DDL) — например: <command>CREATE INDEX</command>"
 
-#: high-availability.xml:2119(para)
+#: high-availability.xml:2135(para)
 msgid ""
 "Privilege and Ownership - <command>GRANT</command>, <command>REVOKE</"
 "command>, <command>REASSIGN</command>"
@@ -3403,7 +3403,7 @@ msgstr ""
 "Команды выдачи привилегий и назначения владельца — <command>GRANT</command>, "
 "<command>REVOKE</command>, <command>REASSIGN</command>"
 
-#: high-availability.xml:2125(para)
+#: high-availability.xml:2141(para)
 msgid ""
 "Maintenance commands - <command>ANALYZE</command>, <command>VACUUM</"
 "command>, <command>CLUSTER</command>, <command>REINDEX</command>"
@@ -3411,7 +3411,7 @@ msgstr ""
 "Команды обслуживания — <command>ANALYZE</command>, <command>VACUUM</"
 "command>, <command>CLUSTER</command>, <command>REINDEX</command>"
 
-#: high-availability.xml:2108(para)
+#: high-availability.xml:2124(para)
 msgid ""
 "The following types of administration commands are not accepted during "
 "recovery mode: <placeholder-1/>"
@@ -3419,7 +3419,7 @@ msgstr ""
 "Следующие типы административных команд недоступны в течение режима "
 "восстановления: <placeholder-1/>"
 
-#: high-availability.xml:2133(para)
+#: high-availability.xml:2149(para)
 msgid ""
 "Again, note that some of these commands are actually allowed during \"read "
 "only\" mode transactions on the primary."
@@ -3427,7 +3427,7 @@ msgstr ""
 "Ещё раз следует отметить, что некоторые из этих команд фактически доступны "
 "на ведущем сервере для транзакций в режиме только для чтения."
 
-#: high-availability.xml:2138(para)
+#: high-availability.xml:2154(para)
 msgid ""
 "As a result, you cannot create additional indexes that exist solely on the "
 "standby, nor statistics that exist solely on the standby. If these "
@@ -3439,7 +3439,7 @@ msgstr ""
 "нужны, то их следует выполнить на ведущем сервере, затем эти изменения будут "
 "распространены на резервные серверы."
 
-#: high-availability.xml:2146(para)
+#: high-availability.xml:2162(para)
 msgid ""
 "<function>pg_cancel_backend()</function> and "
 "<function>pg_terminate_backend()</function> will work on user backends, but "
@@ -3461,7 +3461,7 @@ msgstr ""
 "подготовленные транзакции, следует обратиться к <literal>pg_prepared_xacts</"
 "literal> на ведущем и выполнить команду для разрешения транзакции там."
 
-#: high-availability.xml:2158(para)
+#: high-availability.xml:2174(para)
 msgid ""
 "<structname>pg_locks</structname> will show locks held by backends, as "
 "normal. <structname>pg_locks</structname> also shows a virtual transaction "
@@ -3482,7 +3482,7 @@ msgstr ""
 "показываются в <structname>pg_locks</structname> для процесса запуска, "
 "подразумевается их существование."
 
-#: high-availability.xml:2169(para)
+#: high-availability.xml:2185(para)
 msgid ""
 "The <productname>Nagios</productname> plugin <productname>check_pgsql</"
 "productname> will work, because the simple information it checks for exists. "
@@ -3501,7 +3501,7 @@ msgstr ""
 "очистка не производится на резервном сервере. Очистка запускается на ведущем "
 "сервере и результаты её работы передаются резервному."
 
-#: high-availability.xml:2179(para)
+#: high-availability.xml:2195(para)
 msgid ""
 "WAL file control commands will not work during recovery, e.g. "
 "<function>pg_start_backup</function>, <function>pg_switch_xlog</function> "
@@ -3511,7 +3511,7 @@ msgstr ""
 "восстановления, например: <function>pg_start_backup</function>, "
 "<function>pg_switch_xlog</function> и т. п."
 
-#: high-availability.xml:2184(para)
+#: high-availability.xml:2200(para)
 msgid ""
 "Dynamically loadable modules work, including <structname>pg_stat_statements</"
 "structname>."
@@ -3519,7 +3519,7 @@ msgstr ""
 "Динамически загружаемые модули работать будут, включая "
 "<structname>pg_stat_statements</structname>."
 
-#: high-availability.xml:2188(para)
+#: high-availability.xml:2204(para)
 msgid ""
 "Advisory locks work normally in recovery, including deadlock detection. Note "
 "that advisory locks are never WAL logged, so it is impossible for an "
@@ -3537,7 +3537,7 @@ msgstr ""
 "резервном. Рекомендательная блокировка относится только к серверу, на "
 "котором она получена."
 
-#: high-availability.xml:2197(para)
+#: high-availability.xml:2213(para)
 msgid ""
 "Trigger-based replication systems such as <productname>Slony</productname>, "
 "<productname>Londiste</productname> and <productname>Bucardo</productname> "
@@ -3556,7 +3556,7 @@ msgstr ""
 "другую систему, которая требует дополнительной записи в БД или работает на "
 "основе триггеров."
 
-#: high-availability.xml:2207(para)
+#: high-availability.xml:2223(para)
 msgid ""
 "New OIDs cannot be assigned, though some <acronym>UUID</acronym> generators "
 "may still work as long as they do not rely on writing new status to the "
@@ -3566,7 +3566,7 @@ msgstr ""
 "acronym> смогут работать, если они не пытаются записывать новое состояние в "
 "базу данных."
 
-#: high-availability.xml:2212(para)
+#: high-availability.xml:2228(para)
 msgid ""
 "Currently, temporary table creation is not allowed during read only "
 "transactions, so in some cases existing scripts will not run correctly. This "
@@ -3578,7 +3578,7 @@ msgstr ""
 "неверно. Это ограничение может быть ослаблено в следующих выпусках. Это "
 "одновременно требование SQL стандарта и техническое требование."
 
-#: high-availability.xml:2219(para)
+#: high-availability.xml:2235(para)
 msgid ""
 "<command>DROP TABLESPACE</command> can only succeed if the tablespace is "
 "empty. Some standby users may be actively using the tablespace via their "
@@ -3595,7 +3595,7 @@ msgstr ""
 "удаления временных файлов, затем табличное пространство может быть удалено и "
 "продолжено проигрывание WAL."
 
-#: high-availability.xml:2228(para)
+#: high-availability.xml:2244(para)
 msgid ""
 "Running <command>DROP DATABASE</command> or <command>ALTER DATABASE ... SET "
 "TABLESPACE</command> on the primary will generate a WAL entry that will "
@@ -3616,7 +3616,7 @@ msgstr ""
 "незаметно, хотя в некоторых случаях возможны сбои программ, которые зависят "
 "от имени базы данных."
 
-#: high-availability.xml:2240(para)
+#: high-availability.xml:2256(para)
 msgid ""
 "In normal (non-recovery) mode, if you issue <command>DROP USER</command> or "
 "<command>DROP ROLE</command> for a role with login capability while that "
@@ -3633,7 +3633,7 @@ msgstr ""
 "режиме восстановления — если выполнить <command>DROP USER</command> на "
 "ведущем сервере, пользователь не будет отключён от резервного."
 
-#: high-availability.xml:2248(para)
+#: high-availability.xml:2264(para)
 msgid ""
 "The statistics collector is active during recovery. All scans, reads, "
 "blocks, index usage, etc., will be recorded normally on the standby. "
@@ -3651,7 +3651,7 @@ msgstr ""
 "восстановления, таким образом, статистика на ведущем сервере и резервном "
 "будет разной. Это является особенностью, не ошибкой."
 
-#: high-availability.xml:2257(para)
+#: high-availability.xml:2273(para)
 msgid ""
 "Autovacuum is not active during recovery. It will start normally at the end "
 "of recovery."
@@ -3659,7 +3659,7 @@ msgstr ""
 "Автоматическая очистка не работает во время восстановления. Она запустится в "
 "обычном режиме после завершения восстановления."
 
-#: high-availability.xml:2262(para)
+#: high-availability.xml:2278(para)
 msgid ""
 "The background writer is active during recovery and will perform "
 "restartpoints (similar to checkpoints on the primary) and normal block "
@@ -3675,11 +3675,11 @@ msgstr ""
 "принимается команда <command>CHECKPOINT</command>, но она производит точку "
 "перезапуска, а не создаёт новую точку восстановления."
 
-#: high-availability.xml:2273(title)
+#: high-availability.xml:2289(title)
 msgid "Hot Standby Parameter Reference"
 msgstr "Ссылки на параметры горячего резерва"
 
-#: high-availability.xml:2275(para)
+#: high-availability.xml:2291(para)
 msgid ""
 "Various parameters have been mentioned above in <xref linkend=\"hot-standby-"
 "conflict\"/> and <xref linkend=\"hot-standby-admin\"/>."
@@ -3687,7 +3687,7 @@ msgstr ""
 "Различные параметры были упомянуты выше в <xref remap=\"6\" linkend=\"hot-"
 "standby-conflict\"/> и <xref remap=\"6\" linkend=\"hot-standby-admin\"/>."
 
-#: high-availability.xml:2281(para)
+#: high-availability.xml:2297(para)
 msgid ""
 "On the primary, parameters <xref linkend=\"guc-wal-level\"/> and <xref "
 "linkend=\"guc-vacuum-defer-cleanup-age\"/> can be used. <xref linkend=\"guc-"
@@ -3699,7 +3699,7 @@ msgstr ""
 "\"guc-max-standby-archive-delay\"/> и <xref linkend=\"guc-max-standby-"
 "streaming-delay\"/> на ведущем не действуют."
 
-#: high-availability.xml:2289(para)
+#: high-availability.xml:2305(para)
 msgid ""
 "On the standby, parameters <xref linkend=\"guc-hot-standby\"/>, <xref "
 "linkend=\"guc-max-standby-archive-delay\"/> and <xref linkend=\"guc-max-"
@@ -3714,11 +3714,11 @@ msgstr ""
 "режиме резервного сервера. Но если он станет ведущим, его значение вступит в "
 "силу."
 
-#: high-availability.xml:2300(title)
+#: high-availability.xml:2316(title)
 msgid "Caveats"
 msgstr "Ограничения"
 
-#: high-availability.xml:2308(para)
+#: high-availability.xml:2324(para)
 msgid ""
 "Operations on hash indexes are not presently WAL-logged, so replay will not "
 "update these indexes."
@@ -3726,7 +3726,7 @@ msgstr ""
 "Операции с хеш-индексами в настоящее время не проходят через журнал WAL, "
 "таким образом, при воспроизведении WAL эти индексы не обновляются."
 
-#: high-availability.xml:2314(para)
+#: high-availability.xml:2330(para)
 msgid ""
 "Full knowledge of running transactions is required before snapshots can be "
 "taken. Transactions that use large numbers of subtransactions (currently "
@@ -3741,7 +3741,7 @@ msgstr ""
 "При возникновении этой ситуации поясняющее сообщение будет записано в журнал "
 "сервера."
 
-#: high-availability.xml:2323(para)
+#: high-availability.xml:2339(para)
 msgid ""
 "Valid starting points for standby queries are generated at each checkpoint "
 "on the master. If the standby is shut down while the master is in a shutdown "
@@ -3766,7 +3766,7 @@ msgstr ""
 "намеренно, проверка готовности резервного к преобразованию в ведущий тоже "
 "является обычной процедурой."
 
-#: high-availability.xml:2338(para)
+#: high-availability.xml:2354(para)
 msgid ""
 "At the end of recovery, <literal>AccessExclusiveLocks</literal> held by "
 "prepared transactions will require twice the normal number of lock table "
@@ -3790,7 +3790,7 @@ msgstr ""
 "два раза большее, чем значение параметра на ведущем сервере. Всё это не "
 "имеет значения, когда <varname>max_prepared_transactions</varname> равно 0."
 
-#: high-availability.xml:2351(para)
+#: high-availability.xml:2367(para)
 msgid ""
 "The Serializable transaction isolation level is not yet available in hot "
 "standby. (See <xref linkend=\"xact-serializable\"/> and <xref linkend="
@@ -3804,7 +3804,7 @@ msgstr ""
 "consistency\"/>) Попытка выставить для транзакции такой уровень изоляции в "
 "режиме горячего резерва вызовет ошибку."
 
-#: high-availability.xml:2302(para)
+#: high-availability.xml:2318(para)
 msgid ""
 "There are several limitations of Hot Standby. These can and probably will be "
 "fixed in future releases: <placeholder-1/>"

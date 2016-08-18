@@ -100,25 +100,27 @@ msgstr ""
 "собственно выполняющая операцию, а затем мы сможем определить оператор: "
 "<placeholder-1/>"
 
-#: xoper.xml:51(para)
+#: xoper.xml:53(para)
 msgid ""
-"Now we could execute a query like this: <screen>SELECT (a + b) AS c FROM "
-"test_complex;\n"
+"Now we could execute a query like this: <screen>\n"
+"SELECT (a + b) AS c FROM test_complex;\n"
 "\n"
 "        c\n"
 "-----------------\n"
 " (5.2,6.05)\n"
-" (133.42,144.95)</screen>"
+" (133.42,144.95)\n"
+"</screen>"
 msgstr ""
-"Теперь мы можем выполнить такой запрос: <screen>SELECT (a + b) AS c FROM "
-"test_complex;\n"
+"Теперь мы можем выполнить такой запрос: <screen>\n"
+"SELECT (a + b) AS c FROM test_complex;\n"
 "\n"
 "        c\n"
 "-----------------\n"
 " (5.2,6.05)\n"
-" (133.42,144.95)</screen>"
+" (133.42,144.95)\n"
+"</screen>"
 
-#: xoper.xml:62(para)
+#: xoper.xml:66(para)
 msgid ""
 "We've shown how to create a binary operator here. To create unary operators, "
 "just omit one of <literal>leftarg</literal> (for left unary) or "
@@ -139,11 +141,11 @@ msgstr ""
 "<literal>commutator</literal> и других подсказках для оптимизатора "
 "рассказывается в следующем разделе."
 
-#: xoper.xml:75(title)
+#: xoper.xml:79(title)
 msgid "Operator Optimization Information"
 msgstr "Информация для оптимизации операторов"
 
-#: xoper.xml:77(para)
+#: xoper.xml:81(para)
 msgid ""
 "A <productname>PostgreSQL</productname> operator definition can include "
 "several optional clauses that tell the system useful things about how the "
@@ -166,7 +168,7 @@ msgstr ""
 "лучше вовсе не использовать его; единственным последствием будет то, что "
 "запросы будут работать медленнее, чем могли бы."
 
-#: xoper.xml:90(para)
+#: xoper.xml:94(para)
 msgid ""
 "Additional optimization clauses might be added in future versions of "
 "<productname>PostgreSQL</productname>. The ones described here are all the "
@@ -176,11 +178,11 @@ msgstr ""
 "и другие предложения. Здесь описываются те, что поддерживаются версией "
 "&version;."
 
-#: xoper.xml:97(literal)
+#: xoper.xml:101(literal)
 msgid "COMMUTATOR"
 msgstr "COMMUTATOR"
 
-#: xoper.xml:99(para)
+#: xoper.xml:103(para)
 msgid ""
 "The <literal>COMMUTATOR</literal> clause, if provided, names an operator "
 "that is the commutator of the operator being defined. We say that operator A "
@@ -200,7 +202,7 @@ msgstr ""
 "literal> — коммутирующий для себя. Но традиционный оператор <literal>-</"
 "literal> коммутирующего не имеет."
 
-#: xoper.xml:109(para)
+#: xoper.xml:113(para)
 msgid ""
 "The left operand type of a commutable operator is the same as the right "
 "operand type of its commutator, and vice versa. So the name of the "
@@ -214,7 +216,7 @@ msgstr ""
 "чтобы найти коммутатор, и всё, что нужно указать в предложении "
 "<literal>COMMUTATOR</literal>."
 
-#: xoper.xml:117(para)
+#: xoper.xml:121(para)
 msgid ""
 "It's critical to provide commutator information for operators that will be "
 "used in indexes and join clauses, because this allows the query optimizer to "
@@ -246,7 +248,7 @@ msgstr ""
 "возможно &mdash; это должен определить создатель оператора <literal>=</"
 "literal>, добавив информацию о коммутирующем операторе."
 
-#: xoper.xml:143(para)
+#: xoper.xml:147(para)
 msgid ""
 "One way is to omit the <literal>COMMUTATOR</literal> clause in the first "
 "operator that you define, and then provide one in the second operator's "
@@ -262,7 +264,7 @@ msgstr ""
 "автоматически возвращается к первому и добавляет в него недостающее "
 "предложение <literal>COMMUTATOR</literal>."
 
-#: xoper.xml:154(para)
+#: xoper.xml:158(para)
 msgid ""
 "The other, more straightforward way is just to include <literal>COMMUTATOR</"
 "literal> clauses in both definitions. When <productname>PostgreSQL</"
@@ -290,7 +292,7 @@ msgstr ""
 "применить фиктивный оператор, прежде чем он будет полностью определён, вы "
 "просто получите сообщение об ошибке."
 
-#: xoper.xml:134(para)
+#: xoper.xml:138(para)
 msgid ""
 "When you are defining a self-commutative operator, you just do it. When you "
 "are defining a pair of commutative operators, things are a little trickier: "
@@ -303,11 +305,11 @@ msgstr ""
 "небольшое затруднение: как оператор, определяемый первым, может ссылаться на "
 "другой, ещё не определённый? Есть два решения этой проблемы: <placeholder-1/>"
 
-#: xoper.xml:174(literal)
+#: xoper.xml:178(literal)
 msgid "NEGATOR"
 msgstr "NEGATOR"
 
-#: xoper.xml:176(para)
+#: xoper.xml:180(para)
 msgid ""
 "The <literal>NEGATOR</literal> clause, if provided, names an operator that "
 "is the negator of the operator being defined. We say that operator A is the "
@@ -325,7 +327,7 @@ msgstr ""
 "обратных друг к другу для большинства типов данных. Никакой оператор не "
 "может быть обратным к себе же."
 
-#: xoper.xml:186(para)
+#: xoper.xml:190(para)
 msgid ""
 "Unlike commutators, a pair of unary operators could validly be marked as "
 "each other's negators; that would mean (A x) equals NOT (B x) for all x, or "
@@ -335,7 +337,7 @@ msgstr ""
 "быть обратными к друг другу; это будет означать, что (A x) равняется NOT (B "
 "x) для всех x (и для правых унарных операторов аналогично)."
 
-#: xoper.xml:192(para)
+#: xoper.xml:196(para)
 msgid ""
 "An operator's negator must have the same left and/or right operand types as "
 "the operator to be defined, so just as with <literal>COMMUTATOR</literal>, "
@@ -347,7 +349,7 @@ msgstr ""
 "<literal>COMMUTATOR</literal>; отличие только в том, что имя оператора "
 "задаётся в предложении <literal>NEGATOR</literal>."
 
-#: xoper.xml:198(para)
+#: xoper.xml:202(para)
 msgid ""
 "Providing a negator is very helpful to the query optimizer since it allows "
 "expressions like <literal>NOT (x = y)</literal> to be simplified into "
@@ -361,7 +363,7 @@ msgstr ""
 "показаться, так как операции <literal>NOT</literal> могут добавляться "
 "автоматически в результате реорганизаций выражений."
 
-#: xoper.xml:205(para)
+#: xoper.xml:209(para)
 msgid ""
 "Pairs of negator operators can be defined using the same methods explained "
 "above for commutator pairs."
@@ -369,16 +371,16 @@ msgstr ""
 "Пару обратных операторов можно определить теми же способами, что были "
 "описаны ранее для пары коммутирующих."
 
-#: xoper.xml:213(literal)
+#: xoper.xml:217(literal)
 msgid "RESTRICT"
 msgstr "RESTRICT"
 
-#: xoper.xml:222(programlisting)
+#: xoper.xml:226(programlisting)
 #, no-wrap
 msgid "column OP constant"
 msgstr "column OP constant"
 
-#: xoper.xml:215(para)
+#: xoper.xml:219(para)
 msgid ""
 "The <literal>RESTRICT</literal> clause, if provided, names a restriction "
 "selectivity estimation function for the operator. (Note that this is a "
@@ -406,57 +408,57 @@ msgstr ""
 "находится слева? Ну, собственно для таких случаев и задаётся "
 "<literal>COMMUTATOR</literal>...)"
 
-#: xoper.xml:237(function)
+#: xoper.xml:243(function)
 msgid "eqsel"
 msgstr "eqsel"
 
-#: xoper.xml:237(literal) xoper.xml:303(literal)
+#: xoper.xml:243(literal) xoper.xml:311(literal)
 msgid "="
 msgstr "="
 
-#: xoper.xml:237(member) xoper.xml:238(member) xoper.xml:303(member)
-#: xoper.xml:304(member)
+#: xoper.xml:243(member) xoper.xml:244(member) xoper.xml:311(member)
+#: xoper.xml:312(member)
 msgid "<placeholder-1/> for <placeholder-2/>"
 msgstr "<placeholder-1/> для <placeholder-2/>"
 
-#: xoper.xml:238(function)
+#: xoper.xml:244(function)
 msgid "neqsel"
 msgstr "neqsel"
 
-#: xoper.xml:238(literal) xoper.xml:304(literal)
+#: xoper.xml:244(literal) xoper.xml:312(literal)
 msgid "&lt;&gt;"
 msgstr "&lt;&gt;"
 
-#: xoper.xml:239(function)
+#: xoper.xml:245(function)
 msgid "scalarltsel"
 msgstr "scalarltsel"
 
-#: xoper.xml:239(literal) xoper.xml:305(literal)
+#: xoper.xml:245(literal) xoper.xml:313(literal)
 msgid "&lt;"
 msgstr "&lt;"
 
-#: xoper.xml:239(literal) xoper.xml:305(literal)
+#: xoper.xml:245(literal) xoper.xml:313(literal)
 msgid "&lt;="
 msgstr "&lt;="
 
-#: xoper.xml:239(member) xoper.xml:240(member) xoper.xml:305(member)
-#: xoper.xml:306(member)
+#: xoper.xml:245(member) xoper.xml:246(member) xoper.xml:313(member)
+#: xoper.xml:314(member)
 msgid "<placeholder-1/> for <placeholder-2/> or <placeholder-3/>"
 msgstr "<placeholder-1/> для <placeholder-2/> или <placeholder-3/>"
 
-#: xoper.xml:240(function)
+#: xoper.xml:246(function)
 msgid "scalargtsel"
 msgstr "scalargtsel"
 
-#: xoper.xml:240(literal) xoper.xml:306(literal)
+#: xoper.xml:246(literal) xoper.xml:314(literal)
 msgid "&gt;"
 msgstr "&gt;"
 
-#: xoper.xml:240(literal) xoper.xml:306(literal)
+#: xoper.xml:246(literal) xoper.xml:314(literal)
 msgid "&gt;="
 msgstr "&gt;="
 
-#: xoper.xml:231(para)
+#: xoper.xml:237(para)
 msgid ""
 "Writing new restriction selectivity estimation functions is far beyond the "
 "scope of this chapter, but fortunately you can usually just use one of the "
@@ -492,7 +494,7 @@ msgstr ""
 "результата, чем просто угадывание. Подобные замечания применимы и к "
 "операторам <literal>&gt;</literal> и <literal>&gt;=</literal>."
 
-#: xoper.xml:255(para)
+#: xoper.xml:261(para)
 msgid ""
 "You can frequently get away with using either <function>eqsel</function> or "
 "<function>neqsel</function> for operators that have very high or very low "
@@ -509,7 +511,7 @@ msgstr ""
 "(равные) элементы будут составлять только небольшой процент от всех записей "
 "таблицы."
 
-#: xoper.xml:263(para)
+#: xoper.xml:269(para)
 msgid ""
 "You can use <function>scalarltsel</function> and <function>scalargtsel</"
 "function> for comparisons on data types that have some sensible means of "
@@ -534,7 +536,7 @@ msgstr ""
 "этого не сделаете, всё будет работать, но оценки оптимизатора будут не так "
 "хороши, как могли бы быть."
 
-#: xoper.xml:274(para)
+#: xoper.xml:280(para)
 msgid ""
 "There are additional selectivity estimation functions designed for geometric "
 "operators in <filename>src/backend/utils/adt/geo_selfuncs.c</filename>: "
@@ -549,16 +551,16 @@ msgstr ""
 "заглушки, но вы, тем не менее, вполне можете использовать (или ещё лучше, "
 "доработать) их."
 
-#: xoper.xml:283(literal)
+#: xoper.xml:289(literal)
 msgid "JOIN"
 msgstr "JOIN"
 
-#: xoper.xml:292(programlisting)
+#: xoper.xml:298(programlisting)
 #, no-wrap
 msgid "table1.column1 OP table2.column2"
 msgstr "table1.column1 OP table2.column2"
 
-#: xoper.xml:285(para)
+#: xoper.xml:291(para)
 msgid ""
 "The <literal>JOIN</literal> clause, if provided, names a join selectivity "
 "estimation function for the operator. (Note that this is a function name, "
@@ -582,47 +584,47 @@ msgstr ""
 "оптимизатору, позволяя ему выяснить, какой из возможных вариантов соединения "
 "скорее всего окажется выгоднее."
 
-#: xoper.xml:303(function)
+#: xoper.xml:311(function)
 msgid "eqjoinsel"
 msgstr "eqjoinsel"
 
-#: xoper.xml:304(function)
+#: xoper.xml:312(function)
 msgid "neqjoinsel"
 msgstr "neqjoinsel"
 
-#: xoper.xml:305(function)
+#: xoper.xml:313(function)
 msgid "scalarltjoinsel"
 msgstr "scalarltjoinsel"
 
-#: xoper.xml:306(function)
+#: xoper.xml:314(function)
 msgid "scalargtjoinsel"
 msgstr "scalargtjoinsel"
 
-#: xoper.xml:307(function)
+#: xoper.xml:315(function)
 msgid "areajoinsel"
 msgstr "areajoinsel"
 
-#: xoper.xml:307(member)
+#: xoper.xml:315(member)
 msgid "<placeholder-1/> for 2D area-based comparisons"
 msgstr "<placeholder-1/> для сравнений областей в плоскости"
 
-#: xoper.xml:308(function)
+#: xoper.xml:316(function)
 msgid "positionjoinsel"
 msgstr "positionjoinsel"
 
-#: xoper.xml:308(member)
+#: xoper.xml:316(member)
 msgid "<placeholder-1/> for 2D position-based comparisons"
 msgstr "<placeholder-1/> для сравнения положений в плоскости"
 
-#: xoper.xml:309(function)
+#: xoper.xml:317(function)
 msgid "contjoinsel"
 msgstr "contjoinsel"
 
-#: xoper.xml:309(member)
+#: xoper.xml:317(member)
 msgid "<placeholder-1/> for 2D containment-based comparisons"
 msgstr "<placeholder-1/> для проверки на включение в плоскости"
 
-#: xoper.xml:298(para)
+#: xoper.xml:306(para)
 msgid ""
 "As before, this chapter will make no attempt to explain how to write a join "
 "selectivity estimator function, but will just suggest that you use one of "
@@ -633,11 +635,11 @@ msgstr ""
 "можете использовать один из подходящих стандартных оценщиков: <placeholder-1/"
 ">"
 
-#: xoper.xml:315(literal)
+#: xoper.xml:323(literal)
 msgid "HASHES"
 msgstr "HASHES"
 
-#: xoper.xml:317(para)
+#: xoper.xml:325(para)
 msgid ""
 "The <literal>HASHES</literal> clause, if present, tells the system that it "
 "is permissible to use the hash join method for a join based on this "
@@ -652,7 +654,7 @@ msgstr ""
 "практике этот оператор должен выражать равенство значений некоторого типа "
 "данных или пары типов данных."
 
-#: xoper.xml:325(para)
+#: xoper.xml:333(para)
 msgid ""
 "The assumption underlying hash join is that the join operator can only "
 "return true for pairs of left and right values that hash to the same hash "
@@ -682,7 +684,7 @@ msgstr ""
 "представлены по-разному. Например, довольно легко функции с такой "
 "особенностью реализуются для хеширования целых чисел различного размера."
 
-#: xoper.xml:341(para)
+#: xoper.xml:349(para)
 msgid ""
 "To be marked <literal>HASHES</literal>, the join operator must appear in a "
 "hash index operator family. This is not enforced when you create the "
@@ -703,7 +705,7 @@ msgstr ""
 "входных данных оператора. Конечно, вы должны также определить подходящие "
 "функции хеширования, прежде чем сможете создать семейство операторов."
 
-#: xoper.xml:352(para)
+#: xoper.xml:360(para)
 msgid ""
 "Care should be exercised when preparing a hash function, because there are "
 "machine-dependent ways in which it might fail to do the right thing. For "
@@ -731,7 +733,7 @@ msgstr ""
 "дополнительные действия, чтобы для него выдавался тот же хеш, что и для "
 "положительного нуля."
 
-#: xoper.xml:367(para)
+#: xoper.xml:375(para)
 msgid ""
 "A hash-joinable operator must have a commutator (itself if the two operand "
 "data types are the same, or a related equality operator if they are "
@@ -750,7 +752,7 @@ msgstr ""
 "определялись операторы равенства для всех комбинаций этих типов данных; это "
 "способствует лучшей оптимизации."
 
-#: xoper.xml:379(para)
+#: xoper.xml:387(para)
 msgid ""
 "The function underlying a hash-joinable operator must be marked immutable or "
 "stable. If it is volatile, the system will never attempt to use the operator "
@@ -760,7 +762,7 @@ msgstr ""
 "(IMMUTABLE) или стабильной (STABLE). Если эта функция изменчивая (VOLATILE), "
 "система никогда не будет применять этот оператор для соединения по хешу."
 
-#: xoper.xml:387(para)
+#: xoper.xml:395(para)
 msgid ""
 "If a hash-joinable operator has an underlying function that is marked "
 "strict, the function must also be complete: that is, it should return true "
@@ -780,11 +782,11 @@ msgstr ""
 "должен быть NULL, либо выдать ошибку с сообщением о том, что оно не готов к "
 "результату NULL.)"
 
-#: xoper.xml:403(literal)
+#: xoper.xml:411(literal)
 msgid "MERGES"
 msgstr "MERGES"
 
-#: xoper.xml:405(para)
+#: xoper.xml:413(para)
 msgid ""
 "The <literal>MERGES</literal> clause, if present, tells the system that it "
 "is permissible to use the merge-join method for a join based on this "
@@ -799,7 +801,7 @@ msgstr ""
 "практике этот оператор должен выражать равенство значений некоторого типа "
 "данных или пары типов данных."
 
-#: xoper.xml:413(para)
+#: xoper.xml:421(para)
 msgid ""
 "Merge join is based on the idea of sorting the left- and right-hand tables "
 "into order and then scanning them in parallel. So, both data types must be "
@@ -824,7 +826,7 @@ msgstr ""
 "понадобятся только операторы сортировки, приводящие оба типа данных в "
 "логически совместимые последовательности."
 
-#: xoper.xml:428(para)
+#: xoper.xml:436(para)
 msgid ""
 "To be marked <literal>MERGES</literal>, the join operator must appear as an "
 "equality member of a <literal>btree</literal> index operator family. This is "
@@ -843,7 +845,7 @@ msgstr ""
 "операторов. Таким образом, флаг <literal>MERGES</literal> только "
 "подсказывает планировщику, что стоит обратиться к соответствующему семейству."
 
-#: xoper.xml:439(para)
+#: xoper.xml:447(para)
 msgid ""
 "A merge-joinable operator must have a commutator (itself if the two operand "
 "data types are the same, or a related equality operator if they are "
@@ -863,7 +865,7 @@ msgstr ""
 "типов данных, определялись операторы равенства для всех комбинаций этих "
 "типов данных; это способствует лучшей оптимизации."
 
-#: xoper.xml:451(para)
+#: xoper.xml:459(para)
 msgid ""
 "The function underlying a merge-joinable operator must be marked immutable "
 "or stable. If it is volatile, the system will never attempt to use the "

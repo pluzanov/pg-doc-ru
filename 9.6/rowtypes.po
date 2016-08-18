@@ -88,7 +88,7 @@ msgstr ""
 "тип команды <command>CREATE TYPE</command>, и выдаст неожиданную "
 "синтаксическую ошибку."
 
-#: rowtypes.xml:49(programlisting)
+#: rowtypes.xml:51(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE on_hand (\n"
@@ -105,7 +105,7 @@ msgstr ""
 "\n"
 "INSERT INTO on_hand VALUES (ROW('fuzzy dice', 42, 1.99), 1000);"
 
-#: rowtypes.xml:58(programlisting)
+#: rowtypes.xml:62(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION price_extension(inventory_item, integer) RETURNS numeric\n"
@@ -118,7 +118,7 @@ msgstr ""
 "\n"
 "SELECT price_extension(item, 10) FROM on_hand;"
 
-#: rowtypes.xml:46(para)
+#: rowtypes.xml:48(para)
 msgid ""
 "Having defined the types, we can use them to create tables: <placeholder-1/> "
 "or functions: <placeholder-2/>"
@@ -126,7 +126,7 @@ msgstr ""
 "Определив такие типы, мы можем использовать их в таблицах: <placeholder-1/> "
 "или функциях: <placeholder-2/>"
 
-#: rowtypes.xml:69(programlisting)
+#: rowtypes.xml:75(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE inventory_item (\n"
@@ -141,7 +141,7 @@ msgstr ""
 "    price           numeric CHECK (price &gt; 0)\n"
 ");"
 
-#: rowtypes.xml:65(para)
+#: rowtypes.xml:71(para)
 msgid ""
 "Whenever you create a table, a composite type is also automatically created, "
 "with the same name as the table, to represent the table's row type. For "
@@ -164,39 +164,40 @@ msgstr ""
 "<emphasis>не применяются</emphasis> к значениям составного типа вне таблицы. "
 "(В некоторой степени это можно обойти, используя в составных типах домены.)"
 
-#: rowtypes.xml:86(title)
+#: rowtypes.xml:94(title)
 msgid "Composite Value Input"
 msgstr "Ввод значения составного типа"
 
-#: rowtypes.xml:88(indexterm)
+#: rowtypes.xml:96(indexterm)
 msgid "<primary>composite type</primary><secondary>constant</secondary>"
 msgstr "<primary>составной тип</primary><secondary>константа</secondary>"
 
-#: rowtypes.xml:100(programlisting)
+#: rowtypes.xml:110(programlisting)
 #, no-wrap
 msgid "'(\"fuzzy dice\",42,1.99)'"
 msgstr "'(\"fuzzy dice\",42,1.99)'"
 
-#: rowtypes.xml:105(programlisting)
+#: rowtypes.xml:117(programlisting)
 #, no-wrap
 msgid "'(\"fuzzy dice\",42,)'"
 msgstr "'(\"fuzzy dice\",42,)'"
 
-#: rowtypes.xml:107(programlisting)
+#: rowtypes.xml:121(programlisting)
 #, no-wrap
 msgid "'(\"\",42,)'"
 msgstr "'(\"\",42,)'"
 
-#: rowtypes.xml:92(para)
+#: rowtypes.xml:100(para)
 msgid ""
 "To write a composite value as a literal constant, enclose the field values "
 "within parentheses and separate them by commas. You can put double quotes "
 "around any field value, and must do so if it contains commas or parentheses. "
 "(More details appear below.) Thus, the general format of a composite "
-"constant is the following: <synopsis>'( <replaceable>val1</replaceable> , "
-"<replaceable>val2</replaceable> , ... )'</synopsis> An example is: "
-"<placeholder-1/> which would be a valid value of the "
-"<literal>inventory_item</literal> type defined above. To make a field be "
+"constant is the following: <synopsis>\n"
+"'( <replaceable>val1</replaceable> , <replaceable>val2</"
+"replaceable> , ... )'\n"
+"</synopsis> An example is: <placeholder-1/> which would be a valid value of "
+"the <literal>inventory_item</literal> type defined above. To make a field be "
 "NULL, write no characters at all in its position in the list. For example, "
 "this constant specifies a NULL third field: <placeholder-2/> If you want an "
 "empty string rather than NULL, write double quotes: <placeholder-3/> Here "
@@ -206,17 +207,18 @@ msgstr ""
 "нужно заключить в круглые скобки и разделить их запятыми. Значение любого "
 "поля можно заключить в кавычки, а если оно содержит запятые или скобки, это "
 "делать обязательно. (Подробности описаны ниже.) Таким образом, в общем виде "
-"константа составного типа записывается так: "
-"<synopsis>'( <replaceable>значение1</replaceable> , <replaceable>значение2</"
-"replaceable> , ... )'</synopsis> Например, эта запись: <placeholder-1/> "
-"будет допустимой для описанного выше типа <literal>inventory_item</literal>. "
-"Чтобы присвоить NULL одному из полей, в соответствующем месте в списке нужно "
-"оставить пустое место. Например, эта константа задаёт значение для третьего "
-"поля: <placeholder-2/> Если же вместо NULL требуется вставить пустую строку, "
-"нужно записать пару кавычек: <placeholder-3/> Здесь в первом поле окажется "
-"пустая строка, а в третьем &mdash; NULL."
+"константа составного типа записывается так: <synopsis>\n"
+"'( <replaceable>значение1</replaceable> , <replaceable>значение2</"
+"replaceable> , ... )'\n"
+"</synopsis> Например, эта запись: <placeholder-1/> будет допустимой для "
+"описанного выше типа <literal>inventory_item</literal>. Чтобы присвоить NULL "
+"одному из полей, в соответствующем месте в списке нужно оставить пустое "
+"место. Например, эта константа задаёт значение для третьего поля: "
+"<placeholder-2/> Если же вместо NULL требуется вставить пустую строку, нужно "
+"записать пару кавычек: <placeholder-3/> Здесь в первом поле окажется пустая "
+"строка, а в третьем &mdash; NULL."
 
-#: rowtypes.xml:111(para)
+#: rowtypes.xml:127(para)
 msgid ""
 "(These constants are actually only a special case of the generic type "
 "constants discussed in <xref linkend=\"sql-syntax-constants-generic\"/>. The "
@@ -229,7 +231,7 @@ msgstr ""
 "передаётся процедуре преобразования составного типа. При этом может "
 "потребоваться явно указать целевой тип.)"
 
-#: rowtypes.xml:125(programlisting)
+#: rowtypes.xml:141(programlisting)
 #, no-wrap
 msgid ""
 "ROW('fuzzy dice', 42, 1.99)\n"
@@ -238,7 +240,7 @@ msgstr ""
 "ROW('fuzzy dice', 42, 1.99)\n"
 "ROW('', 42, NULL)"
 
-#: rowtypes.xml:129(programlisting)
+#: rowtypes.xml:147(programlisting)
 #, no-wrap
 msgid ""
 "('fuzzy dice', 42, 1.99)\n"
@@ -247,7 +249,7 @@ msgstr ""
 "('fuzzy dice', 42, 1.99)\n"
 "('', 42, NULL)"
 
-#: rowtypes.xml:119(para)
+#: rowtypes.xml:135(para)
 msgid ""
 "The <literal>ROW</literal> expression syntax can also be used to construct "
 "composite values. In most cases this is considerably simpler to use than the "
@@ -268,26 +270,26 @@ msgstr ""
 "более подробно рассматривается в <xref remap=\"6\" linkend=\"sql-syntax-row-"
 "constructors\"/>."
 
-#: rowtypes.xml:137(title)
+#: rowtypes.xml:157(title)
 msgid "Accessing Composite Types"
 msgstr "Обращение к составным типам"
 
-#: rowtypes.xml:147(programlisting)
+#: rowtypes.xml:167(programlisting)
 #, no-wrap
 msgid "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
 msgstr "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
 
-#: rowtypes.xml:153(programlisting)
+#: rowtypes.xml:175(programlisting)
 #, no-wrap
 msgid "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
 msgstr "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
 
-#: rowtypes.xml:158(programlisting)
+#: rowtypes.xml:182(programlisting)
 #, no-wrap
 msgid "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
 msgstr "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
 
-#: rowtypes.xml:139(para)
+#: rowtypes.xml:159(para)
 msgid ""
 "To access a field of a composite column, one writes a dot and the field "
 "name, much like selecting a field from a table name. In fact, it's so much "
@@ -316,12 +318,12 @@ msgstr ""
 "интерпретирован как ссылка на столбец <literal>item</literal>, из которого "
 "выбирается поле."
 
-#: rowtypes.xml:169(programlisting)
+#: rowtypes.xml:195(programlisting)
 #, no-wrap
 msgid "SELECT (my_func(...)).field FROM ..."
 msgstr "SELECT (my_func(...)).field FROM ..."
 
-#: rowtypes.xml:164(para)
+#: rowtypes.xml:190(para)
 msgid ""
 "Similar syntactic issues apply whenever you select a field from a composite "
 "value. For instance, to select just one field from the result of a function "
@@ -335,11 +337,11 @@ msgstr ""
 "подобное: <placeholder-1/> Без дополнительных скобок в этом запросе "
 "произойдёт синтаксическая ошибка."
 
-#: rowtypes.xml:176(title)
+#: rowtypes.xml:204(title)
 msgid "Modifying Composite Types"
 msgstr "Изменение составных типов"
 
-#: rowtypes.xml:183(programlisting)
+#: rowtypes.xml:211(programlisting)
 #, no-wrap
 msgid ""
 "INSERT INTO mytab (complex_col) VALUES((1.1,2.2));\n"
@@ -350,7 +352,7 @@ msgstr ""
 "\n"
 "UPDATE mytab SET complex_col = ROW(1.1,2.2) WHERE ...;"
 
-#: rowtypes.xml:178(para)
+#: rowtypes.xml:206(para)
 msgid ""
 "Here are some examples of the proper syntax for inserting and updating "
 "composite columns. First, inserting or updating a whole column: "
@@ -363,12 +365,12 @@ msgstr ""
 "<literal>ROW</literal>, а во втором оно есть; присутствовать или "
 "отсутствовать оно может в обоих случаях."
 
-#: rowtypes.xml:194(programlisting)
+#: rowtypes.xml:224(programlisting)
 #, no-wrap
 msgid "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
 msgstr "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
 
-#: rowtypes.xml:191(para)
+#: rowtypes.xml:221(para)
 msgid ""
 "We can update an individual subfield of a composite column: <placeholder-1/> "
 "Notice here that we don't need to (and indeed cannot) put parentheses around "
@@ -382,12 +384,12 @@ msgstr ""
 "но в ссылке на тот же столбец в выражении, находящемся по правую сторону "
 "знака равенства, скобки обязательны."
 
-#: rowtypes.xml:205(programlisting)
+#: rowtypes.xml:237(programlisting)
 #, no-wrap
 msgid "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
 msgstr "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
 
-#: rowtypes.xml:202(para)
+#: rowtypes.xml:234(para)
 msgid ""
 "And we can specify subfields as targets for <command>INSERT</command>, too: "
 "<placeholder-1/> Had we not supplied values for all the subfields of the "
@@ -397,16 +399,16 @@ msgstr ""
 "command>: <placeholder-1/> Если при этом мы не укажем значения для всех "
 "полей столбца, оставшиеся поля будут заполнены значениями NULL."
 
-#: rowtypes.xml:213(title)
+#: rowtypes.xml:247(title)
 msgid "Composite Type Input and Output Syntax"
 msgstr "Синтаксис вводимых и выводимых значений составного типа"
 
-#: rowtypes.xml:225(programlisting)
+#: rowtypes.xml:259(programlisting)
 #, no-wrap
 msgid "'(  42)'"
 msgstr "'(  42)'"
 
-#: rowtypes.xml:215(para)
+#: rowtypes.xml:249(para)
 msgid ""
 "The external text representation of a composite value consists of items that "
 "are interpreted according to the I/O conversion rules for the individual "
@@ -430,7 +432,7 @@ msgstr ""
 "элемента. Например, в записи: <placeholder-1/> пробелы будут игнорироваться, "
 "если соответствующее поле имеет целочисленный тип, но не текстовый."
 
-#: rowtypes.xml:230(para)
+#: rowtypes.xml:266(para)
 msgid ""
 "As shown previously, when writing a composite value you can write double "
 "quotes around any individual field value. You <emphasis>must</emphasis> do "
@@ -456,7 +458,7 @@ msgstr ""
 "защитив все символы в данных, которые могут быть восприняты как часть "
 "синтаксиса составного значения, с помощью спецпоследовательностей."
 
-#: rowtypes.xml:245(para)
+#: rowtypes.xml:281(para)
 msgid ""
 "A completely empty field value (no characters at all between the commas or "
 "parentheses) represents a NULL. To write a value that is an empty string "
@@ -466,7 +468,7 @@ msgstr ""
 "запятыми или скобками нет никаких символов). Чтобы ввести именно пустую "
 "строку, а не NULL, нужно написать <literal>\"\"</literal>."
 
-#: rowtypes.xml:251(para)
+#: rowtypes.xml:287(para)
 msgid ""
 "The composite output routine will put double quotes around field values if "
 "they are empty strings or contain parentheses, commas, double quotes, "
@@ -481,12 +483,12 @@ msgstr ""
 "Кавычки и обратная косая черта, заключённые в значения полей, при выводе "
 "дублируются."
 
-#: rowtypes.xml:267(programlisting)
+#: rowtypes.xml:303(programlisting)
 #, no-wrap
 msgid "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
 msgstr "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
 
-#: rowtypes.xml:260(para)
+#: rowtypes.xml:296(para)
 msgid ""
 "Remember that what you write in an SQL command will first be interpreted as "
 "a string literal, and then as a composite. This doubles the number of "
@@ -520,7 +522,7 @@ msgstr ""
 "спецсимволов строки можно заключать в доллары (см. <xref remap=\"4\" linkend="
 "\"sql-syntax-dollar-quoting\"/>)."
 
-#: rowtypes.xml:282(para)
+#: rowtypes.xml:320(para)
 msgid ""
 "The <literal>ROW</literal> constructor syntax is usually easier to work with "
 "than the composite-literal syntax when writing composite values in SQL "

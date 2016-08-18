@@ -944,7 +944,7 @@ msgstr ""
 "<placeholder-1/> Столбец <literal>age</literal> показывает количество "
 "транзакций от граничного значения XID до XID текущей транзакции."
 
-#: maintenance.xml:558(para)
+#: maintenance.xml:560(para)
 msgid ""
 "<command>VACUUM</command> normally only scans pages that have been modified "
 "since the last vacuum, but <structfield>relfrozenxid</structfield> can only "
@@ -980,7 +980,7 @@ msgstr ""
 "выполнена операция <structfield>relfrozenxid</structfield>, в скором времени "
 "для неё будет принудительно запущена автоочистка."
 
-#: maintenance.xml:584(programlisting)
+#: maintenance.xml:586(programlisting)
 #, no-wrap
 msgid ""
 "WARNING:  database \"mydb\" must be vacuumed within 177009986 transactions\n"
@@ -989,7 +989,7 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ:  база данных \"mydb\" должна быть очищена (предельное число транзакций: 177009986)\n"
 "ПОДСКАЗКА:  Во избежание отключения базы данных выполните очистку (VACUUM) всей базы \"mydb\"."
 
-#: maintenance.xml:596(programlisting)
+#: maintenance.xml:600(programlisting)
 #, no-wrap
 msgid ""
 "ERROR:  database is not accepting commands to avoid wraparound data loss in database \"mydb\"\n"
@@ -998,7 +998,7 @@ msgstr ""
 "ОШИБКА:  база данных не принимает команды во избежание потери данных из-за зацикливания в БД \"mydb\"\n"
 "ПОДСКАЗКА:  Остановите управляющий процесс (postmaster) и выполните очистку (VACUUM) базы данных в однопользовательском режиме."
 
-#: maintenance.xml:578(para)
+#: maintenance.xml:580(para)
 msgid ""
 "If for some reason autovacuum fails to clear old XIDs from a table, the "
 "system will begin to emit warning messages like this when the database's "
@@ -1039,21 +1039,21 @@ msgstr ""
 "об использовании однопользовательского режима обратитесь к странице справки "
 "по <xref linkend=\"app-postgres\"/>."
 
-#: maintenance.xml:610(title)
+#: maintenance.xml:616(title)
 msgid "Multixacts and Wraparound"
 msgstr "Мультитранзакции и зацикливание"
 
-#: maintenance.xml:612(indexterm)
+#: maintenance.xml:618(indexterm)
 msgid "<primary>MultiXactId</primary>"
 msgstr "<primary>MultiXactId</primary>"
 
-#: maintenance.xml:616(indexterm)
+#: maintenance.xml:622(indexterm)
 msgid "<primary>wraparound</primary><secondary>of multixact IDs</secondary>"
 msgstr ""
 "<primary>зацикливание</primary><secondary>идентификаторов мультитранзакций</"
 "secondary>"
 
-#: maintenance.xml:620(para)
+#: maintenance.xml:626(para)
 msgid ""
 "<firstterm>Multixact IDs</firstterm> are used to support row locking by "
 "multiple transactions. Since there is only limited space in a tuple header "
@@ -1085,7 +1085,7 @@ msgstr ""
 "Существует отдельная область, в которой содержится список членов каждой "
 "мультитранзакции, где счётчики также 32-битные и требуют должного контроля."
 
-#: maintenance.xml:638(para)
+#: maintenance.xml:644(para)
 msgid ""
 "Whenever <command>VACUUM</command> scans any part of a table, it will "
 "replace any multixact ID it encounters which is older than <xref linkend="
@@ -1114,7 +1114,7 @@ msgstr ""
 "Узнать возраст <structname>pg_class</structname>.<structfield>relminmxid</"
 "structfield> можно с помощью функции <function>mxid_age()</function>."
 
-#: maintenance.xml:654(para)
+#: maintenance.xml:660(para)
 msgid ""
 "Aggressive <command>VACUUM</command> scans, regardless of what causes them, "
 "enable advancing the value for that table. Eventually, as all tables in all "
@@ -1127,7 +1127,7 @@ msgstr ""
 "старейших значений мультитранзакций, информация о старых мультитранзакциях "
 "может быть удалена с диска."
 
-#: maintenance.xml:662(para)
+#: maintenance.xml:668(para)
 msgid ""
 "As a safety device, an aggressive vacuum scan will occur for any table whose "
 "multixact-age is greater than <xref linkend=\"guc-autovacuum-multixact-"
@@ -1146,15 +1146,15 @@ msgstr ""
 "варианта агрессивного сканирования осуществляются, даже если процесс "
 "автоочистки отключён."
 
-#: maintenance.xml:676(title)
+#: maintenance.xml:682(title)
 msgid "The Autovacuum Daemon"
 msgstr "Демон автоочистки"
 
-#: maintenance.xml:678(indexterm)
+#: maintenance.xml:684(indexterm)
 msgid "<primary>autovacuum</primary><secondary>general information</secondary>"
 msgstr "<primary>автоочистка</primary><secondary>общая информация</secondary>"
 
-#: maintenance.xml:681(para)
+#: maintenance.xml:687(para)
 msgid ""
 "<productname>PostgreSQL</productname> has an optional but highly recommended "
 "feature called <firstterm>autovacuum</firstterm>, whose purpose is to "
@@ -1177,7 +1177,7 @@ msgstr ""
 "значение <literal>true</literal>. В конфигурации по умолчанию автоочистка "
 "включена и соответствующие параметры имеют подходящие значения."
 
-#: maintenance.xml:695(para)
+#: maintenance.xml:701(para)
 msgid ""
 "The <quote>autovacuum daemon</quote> actually consists of multiple "
 "processes. There is a persistent daemon process, called the "
@@ -1215,7 +1215,7 @@ msgstr ""
 "можно установить параметр <xref linkend=\"guc-log-autovacuum-min-duration\"/"
 ">."
 
-#: maintenance.xml:715(para)
+#: maintenance.xml:721(para)
 msgid ""
 "If several large tables all become eligible for vacuuming in a short amount "
 "of time, all autovacuum workers might become occupied with vacuuming those "
@@ -1237,12 +1237,12 @@ msgstr ""
 "\"guc-max-connections\"/> или <xref linkend=\"guc-superuser-reserved-"
 "connections\"/> число выполняющихся рабочих процессов не учитывается."
 
-#: maintenance.xml:735(programlisting)
+#: maintenance.xml:741(programlisting)
 #, no-wrap
 msgid "vacuum threshold = vacuum base threshold + vacuum scale factor * number of tuples"
 msgstr "порог очистки = базовый порог очистки + коэффициент доли для очистки * количество кортежей"
 
-#: maintenance.xml:727(para)
+#: maintenance.xml:733(para)
 msgid ""
 "Tables whose <structfield>relfrozenxid</structfield> value is more than "
 "<xref linkend=\"guc-autovacuum-freeze-max-age\"/> transactions old are "
@@ -1285,12 +1285,12 @@ msgstr ""
 "увеличить значение <structfield>relfrozenxid</structfield>; в противном "
 "случае сканируются только страницы, изменённые после последней очистки."
 
-#: maintenance.xml:755(programlisting)
+#: maintenance.xml:763(programlisting)
 #, no-wrap
 msgid "analyze threshold = analyze base threshold + analyze scale factor * number of tuples"
 msgstr "порог анализа = базовый порог анализа + коэффициент доли для анализа * количество кортежей"
 
-#: maintenance.xml:753(para)
+#: maintenance.xml:761(para)
 msgid ""
 "For analyze, a similar condition is used: the threshold, defined as: "
 "<placeholder-1/> is compared to the total number of tuples inserted, "
@@ -1301,7 +1301,7 @@ msgstr ""
 "количеством кортежей добавленных, изменённых или удалённых после последнего "
 "выполнения <command>ANALYZE</command>."
 
-#: maintenance.xml:760(para)
+#: maintenance.xml:770(para)
 msgid ""
 "Temporary tables cannot be accessed by autovacuum. Therefore, appropriate "
 "vacuum and analyze operations should be performed via session SQL commands."
@@ -1309,7 +1309,7 @@ msgstr ""
 "Автоочистка не обрабатывает временные таблицы. Поэтому очистку и сбор "
 "статистики в них нужно производить с помощью SQL-команд в обычном сеансе."
 
-#: maintenance.xml:766(para)
+#: maintenance.xml:776(para)
 msgid ""
 "The default thresholds and scale factors are taken from <filename>postgresql."
 "conf</filename>, but it is possible to override them (and many other "
@@ -1330,7 +1330,7 @@ msgstr ""
 "параметры. За более подробной информацией о глобальных параметрах обратитесь "
 "к <xref remap=\"3\" linkend=\"runtime-config-autovacuum\"/>."
 
-#: maintenance.xml:778(para)
+#: maintenance.xml:788(para)
 msgid ""
 "When multiple workers are running, the autovacuum cost delay parameters (see "
 "<xref linkend=\"runtime-config-resource-vacuum-cost\"/>) are "
@@ -1350,15 +1350,15 @@ msgstr ""
 "параметров хранения <literal>autovacuum_vacuum_cost_delay</literal> и "
 "<literal>autovacuum_vacuum_cost_limit</literal>."
 
-#: maintenance.xml:793(title)
+#: maintenance.xml:803(title)
 msgid "Routine Reindexing"
 msgstr "Регулярная переиндексация"
 
-#: maintenance.xml:795(indexterm)
+#: maintenance.xml:805(indexterm)
 msgid "<primary>reindex</primary>"
 msgstr "<primary>переиндексация</primary>"
 
-#: maintenance.xml:799(para)
+#: maintenance.xml:809(para)
 msgid ""
 "In some situations it is worthwhile to rebuild indexes periodically with the "
 "<xref linkend=\"sql-reindex\"/> command or a series of individual rebuilding "
@@ -1368,7 +1368,7 @@ msgstr ""
 "команду <xref linkend=\"sql-reindex\"/> или последовательность отдельных "
 "шагов по восстановлению индексов."
 
-#: maintenance.xml:806(para)
+#: maintenance.xml:816(para)
 msgid ""
 "B-tree index pages that have become completely empty are reclaimed for re-"
 "use. However, there is still a possibility of inefficient use of space: if "
@@ -1386,7 +1386,7 @@ msgstr ""
 "расходованию пространства. В таких случаях рекомендуется периодически "
 "проводить переиндексацию."
 
-#: maintenance.xml:816(para)
+#: maintenance.xml:826(para)
 msgid ""
 "The potential for bloat in non-B-tree indexes has not been well researched. "
 "It is a good idea to periodically monitor the index's physical size when "
@@ -1396,7 +1396,7 @@ msgstr ""
 "не исследовалась. Поэтому имеет смысл периодически отслеживать физический "
 "размер индекса, когда применяется индекс такого типа."
 
-#: maintenance.xml:822(para)
+#: maintenance.xml:832(para)
 msgid ""
 "Also, for B-tree indexes, a freshly-constructed index is slightly faster to "
 "access than one that has been updated many times because logically adjacent "
@@ -1412,7 +1412,7 @@ msgstr ""
 "Поэтому периодически проводить переиндексацию стоит хотя бы для того, чтобы "
 "увеличить скорость доступа."
 
-#: maintenance.xml:830(para)
+#: maintenance.xml:840(para)
 msgid ""
 "<xref linkend=\"sql-reindex\"/> can be used safely and easily in all cases. "
 "But since the command requires an exclusive table lock, it is often "
@@ -1443,18 +1443,18 @@ msgstr ""
 "процедуру, прежде чем выполнять её, так как не все индексы можно перестроить "
 "таким образом, и предусмотрите обработку ошибок."
 
-#: maintenance.xml:850(title)
+#: maintenance.xml:860(title)
 msgid "Log File Maintenance"
 msgstr "Обслуживание журнала"
 
-#: maintenance.xml:852(indexterm)
+#: maintenance.xml:862(indexterm)
 msgid ""
 "<primary>server log</primary><secondary>log file maintenance</secondary>"
 msgstr ""
 "<primary>журнал сервера</primary><secondary>обслуживание файла журнала</"
 "secondary>"
 
-#: maintenance.xml:856(para)
+#: maintenance.xml:866(para)
 msgid ""
 "It is a good idea to save the database server's log output somewhere, rather "
 "than just discarding it via <filename>/dev/null</filename>. The log output "
@@ -1472,7 +1472,7 @@ msgstr ""
 "журнальных файлов так, чтобы новые файлы создавались, а старые удалялись "
 "через разумный промежуток времени."
 
-#: maintenance.xml:867(para)
+#: maintenance.xml:877(para)
 msgid ""
 "If you simply direct the <systemitem>stderr</systemitem> of "
 "<command>postgres</command> into a file, you will have log output, but the "
@@ -1488,7 +1488,7 @@ msgstr ""
 "productname> в среде разработки, но вряд ли такой вариант будет приемлемым в "
 "производственной среде."
 
-#: maintenance.xml:877(para)
+#: maintenance.xml:887(para)
 msgid ""
 "A better approach is to send the server's <systemitem>stderr</systemitem> "
 "output to some type of log rotation program. There is a built-in log "
@@ -1509,12 +1509,12 @@ msgstr ""
 "содержимого журнала в формате <acronym>CSV</acronym> (значения, разделённые "
 "запятыми)."
 
-#: maintenance.xml:902(programlisting)
+#: maintenance.xml:912(programlisting)
 #, no-wrap
 msgid "pg_ctl start | rotatelogs /var/log/pgsql_log 86400"
 msgstr "pg_ctl start | rotatelogs /var/log/pgsql_log 86400"
 
-#: maintenance.xml:889(para)
+#: maintenance.xml:899(para)
 msgid ""
 "Alternatively, you might prefer to use an external log rotation program if "
 "you have one that you are already using with other server software. For "
@@ -1537,7 +1537,7 @@ msgstr ""
 "<systemitem>stdout</systemitem>, так что будет достаточно просто применить "
 "конвейер, например: <placeholder-1/>"
 
-#: maintenance.xml:905(para)
+#: maintenance.xml:917(para)
 msgid ""
 "Another production-grade approach to managing log output is to send it to "
 "<application>syslog</application> and let <application>syslog</application> "
@@ -1562,7 +1562,7 @@ msgstr ""
 "<application>logrotate</application> можно настроить и для работы с "
 "журнальными файлами, которые формирует <application>syslog</application>."
 
-#: maintenance.xml:919(para)
+#: maintenance.xml:931(para)
 msgid ""
 "On many systems, however, <application>syslog</application> is not very "
 "reliable, particularly with large log messages; it might truncate or drop "
@@ -1581,7 +1581,7 @@ msgstr ""
 "literal></quote> перед именем файла в файле конфигурации "
 "<application>syslog</application>.)"
 
-#: maintenance.xml:928(para)
+#: maintenance.xml:940(para)
 msgid ""
 "Note that all the solutions described above take care of starting new log "
 "files at configurable intervals, but they do not handle deletion of old, no-"
@@ -1596,7 +1596,7 @@ msgstr ""
 "настроить программу ротации файлов так, чтобы старые файлы журналов "
 "циклически перезаписывались."
 
-#: maintenance.xml:937(para)
+#: maintenance.xml:949(para)
 msgid ""
 "<ulink url=\"http://dalibo.github.io/pgbadger/\"><productname>pgBadger</"
 "productname></ulink> is an external project that does sophisticated log file "
