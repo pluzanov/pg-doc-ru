@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -540,11 +540,11 @@ msgid "Building Indexes Concurrently"
 msgstr "Параллельное построение индексов"
 
 #: ref/create_index.xml:406(indexterm)
-msgid "<primary>index</primary><secondary>building concurrently</secondary>"
+msgid "<primary>index</primary> <secondary>building concurrently</secondary>"
 msgstr ""
-"<primary>индекс</primary><secondary>параллельное построение</secondary>"
+"<primary>индекс</primary> <secondary>параллельное построение</secondary>"
 
-#: ref/create_index.xml:410(para)
+#: ref/create_index.xml:411(para)
 msgid ""
 "Creating an index can interfere with regular operation of a database. "
 "Normally <productname>PostgreSQL</productname> locks the table to be indexed "
@@ -567,7 +567,7 @@ msgstr ""
 "заблокировать записывающие процессы на время, неприемлемое для "
 "производственной системы."
 
-#: ref/create_index.xml:422(para)
+#: ref/create_index.xml:423(para)
 msgid ""
 "<productname>PostgreSQL</productname> supports building indexes without "
 "locking out writes. This method is invoked by specifying the "
@@ -595,7 +595,7 @@ msgstr ""
 "процессор и подсистему ввода/вывода, создаваемая при построении индекса, "
 "может привести к замедлению других операций."
 
-#: ref/create_index.xml:437(para)
+#: ref/create_index.xml:438(para)
 msgid ""
 "In a concurrent index build, the index is actually entered into the system "
 "catalogs in one transaction, then two table scans occur in two more "
@@ -620,7 +620,7 @@ msgstr ""
 "применению в запросах: в худшем случае он не будет использоваться, пока "
 "существуют транзакции, начатые до начала построения индекса."
 
-#: ref/create_index.xml:459(programlisting)
+#: ref/create_index.xml:460(programlisting)
 #, no-wrap
 msgid ""
 "postgres=# \\d tab\n"
@@ -639,15 +639,15 @@ msgstr ""
 "Indexes:\n"
 "    \"idx\" btree (col) INVALID"
 
-#: ref/create_index.xml:451(para)
+#: ref/create_index.xml:452(para)
+#, fuzzy
 msgid ""
 "If a problem arises while scanning the table, such as a deadlock or a "
 "uniqueness violation in a unique index, the <command>CREATE INDEX</command> "
 "command will fail but leave behind an <quote>invalid</quote> index. This "
 "index will be ignored for querying purposes because it might be incomplete; "
 "however it will still consume update overhead. The <application>psql</"
-"application>\n"
-"    <command>\\d</command> command will report such an index as "
+"application> <command>\\d</command> command will report such an index as "
 "<literal>INVALID</literal>: <placeholder-1/> The recommended recovery method "
 "in such cases is to drop the index and try again to perform <command>CREATE "
 "INDEX CONCURRENTLY</command>. (Another possibility is to rebuild the index "
@@ -669,7 +669,7 @@ msgstr ""
 "<command>REINDEX</command> не поддерживает параллельный режим, вряд ли этот "
 "вариант будет желательным.)"
 
-#: ref/create_index.xml:477(para)
+#: ref/create_index.xml:478(para)
 msgid ""
 "Another caveat when building a unique index concurrently is that the "
 "uniqueness constraint is already being enforced against other transactions "
@@ -688,7 +688,7 @@ msgstr ""
 "сканировании происходит ошибка, <quote>нерабочий</quote> индекс оставляет в "
 "силе своё ограничение уникальности и дальше."
 
-#: ref/create_index.xml:487(para)
+#: ref/create_index.xml:488(para)
 msgid ""
 "Concurrent builds of expression indexes and partial indexes are supported. "
 "Errors occurring in the evaluation of these expressions could cause behavior "
@@ -699,7 +699,7 @@ msgstr ""
 "привести к такому же поведению, как в вышеописанных случаях с нарушением "
 "ограничений уникальности."
 
-#: ref/create_index.xml:493(para)
+#: ref/create_index.xml:494(para)
 msgid ""
 "Regular index builds permit other regular index builds on the same table to "
 "occur in parallel, but only one concurrent index build can occur on a table "
@@ -715,11 +715,11 @@ msgstr ""
 "блоке транзакции может быть выполнена обычная команда <command>CREATE INDEX</"
 "command>, но не <command>CREATE INDEX CONCURRENTLY</command>."
 
-#: ref/create_index.xml:505(title)
+#: ref/create_index.xml:506(title)
 msgid "Notes"
 msgstr "Замечания"
 
-#: ref/create_index.xml:507(para)
+#: ref/create_index.xml:508(para)
 msgid ""
 "See <xref linkend=\"indexes\"/> for information about when indexes can be "
 "used, when they are not used, and in which particular situations they can be "
@@ -729,7 +729,7 @@ msgstr ""
 "в каких конкретных ситуациях они могут быть полезны, можно найти в <xref "
 "remap=\"6\" linkend=\"indexes\"/>."
 
-#: ref/create_index.xml:514(para)
+#: ref/create_index.xml:515(para)
 msgid ""
 "Hash index operations are not presently WAL-logged, so hash indexes might "
 "need to be rebuilt with <command>REINDEX</command> after a database crash if "
@@ -748,7 +748,7 @@ msgstr ""
 "на момент времени. По этим причинам настоятельно рекомендуется не "
 "использовать их."
 
-#: ref/create_index.xml:526(para)
+#: ref/create_index.xml:527(para)
 msgid ""
 "Currently, only the B-tree, GiST, GIN, and BRIN index methods support "
 "multicolumn indexes. Up to 32 fields can be specified by default. (This "
@@ -760,7 +760,7 @@ msgstr ""
 "(Этот предел можно изменить, пересобрав <productname>PostgreSQL</"
 "productname>.) Уникальные индексы поддерживает только B-дерево."
 
-#: ref/create_index.xml:534(para)
+#: ref/create_index.xml:535(para)
 msgid ""
 "An <firstterm>operator class</firstterm> can be specified for each column of "
 "an index. The operator class identifies the operators to be used by the "
@@ -791,7 +791,7 @@ msgstr ""
 "классах операторов обратитесь к <xref remap=\"3\" linkend=\"indexes-opclass"
 "\"/> и <xref remap=\"3\" linkend=\"xindex\"/>."
 
-#: ref/create_index.xml:551(para)
+#: ref/create_index.xml:552(para)
 msgid ""
 "For index methods that support ordered scans (currently, only B-tree), the "
 "optional clauses <literal>ASC</literal>, <literal>DESC</literal>, "
@@ -822,7 +822,7 @@ msgstr ""
 "стандартное <quote>NULL вверху</quote>, в запросах, зависящих от индексов, "
 "чтобы избежать дополнительной сортировки."
 
-#: ref/create_index.xml:566(para)
+#: ref/create_index.xml:567(para)
 msgid ""
 "For most index methods, the speed of creating an index is dependent on the "
 "setting of <xref linkend=\"guc-maintenance-work-mem\"/>. Larger values will "
@@ -836,11 +836,11 @@ msgstr ""
 "заданное значение не превышает объём действительно доступной памяти, что "
 "влечёт за собой использование подкачки)."
 
-#: ref/create_index.xml:574(para)
+#: ref/create_index.xml:575(para)
 msgid "Use <xref linkend=\"sql-dropindex\"/> to remove an index."
 msgstr "Для удаления индекса применяется <xref linkend=\"sql-dropindex\"/>."
 
-#: ref/create_index.xml:579(para)
+#: ref/create_index.xml:580(para)
 msgid ""
 "Prior releases of <productname>PostgreSQL</productname> also had an R-tree "
 "index method. This method has been removed because it had no significant "
@@ -856,16 +856,16 @@ msgstr ""
 "интерпретировать как <literal>USING gist</literal>, для упрощения перевода "
 "старых баз на GiST."
 
-#: ref/create_index.xml:590(title)
+#: ref/create_index.xml:591(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/create_index.xml:595(programlisting)
+#: ref/create_index.xml:596(programlisting)
 #, no-wrap
 msgid "CREATE UNIQUE INDEX title_idx ON films (title);"
 msgstr "CREATE UNIQUE INDEX title_idx ON films (title);"
 
-#: ref/create_index.xml:592(para)
+#: ref/create_index.xml:593(para)
 msgid ""
 "To create a B-tree index on the column <literal>title</literal> in the table "
 "<literal>films</literal>: <placeholder-1/>"
@@ -873,12 +873,12 @@ msgstr ""
 "Создание индекса-B-дерева по столбцу <literal>title</literal> в таблице "
 "<literal>films</literal>: <placeholder-1/>"
 
-#: ref/create_index.xml:603(programlisting)
+#: ref/create_index.xml:604(programlisting)
 #, no-wrap
 msgid "CREATE INDEX ON films ((lower(title)));"
 msgstr "CREATE INDEX ON films ((lower(title)));"
 
-#: ref/create_index.xml:600(para)
+#: ref/create_index.xml:601(para)
 msgid ""
 "To create an index on the expression <literal>lower(title)</literal>, "
 "allowing efficient case-insensitive searches: <placeholder-1/> (In this "
@@ -890,41 +890,41 @@ msgstr ""
 "примере мы решили опустить имя индекса, чтобы имя выбрала система, например "
 "<literal>films_lower_idx</literal>.)"
 
-#: ref/create_index.xml:612(programlisting)
+#: ref/create_index.xml:613(programlisting)
 #, no-wrap
 msgid "CREATE INDEX title_idx_german ON films (title COLLATE \"de_DE\");"
 msgstr "CREATE INDEX title_idx_german ON films (title COLLATE \"de_DE\");"
 
-#: ref/create_index.xml:610(para)
+#: ref/create_index.xml:611(para)
 msgid "To create an index with non-default collation: <placeholder-1/>"
 msgstr "Создание индекса с нестандартным правилом сортировки: <placeholder-1/>"
 
-#: ref/create_index.xml:619(programlisting)
+#: ref/create_index.xml:620(programlisting)
 #, no-wrap
 msgid "CREATE INDEX title_idx_nulls_low ON films (title NULLS FIRST);"
 msgstr "CREATE INDEX title_idx_nulls_low ON films (title NULLS FIRST);"
 
-#: ref/create_index.xml:617(para)
+#: ref/create_index.xml:618(para)
 msgid ""
 "To create an index with non-default sort ordering of nulls: <placeholder-1/>"
 msgstr ""
 "Создание индекса с нестандартным порядком значений NULL: <placeholder-1/>"
 
-#: ref/create_index.xml:626(programlisting)
+#: ref/create_index.xml:627(programlisting)
 #, no-wrap
 msgid "CREATE UNIQUE INDEX title_idx ON films (title) WITH (fillfactor = 70);"
 msgstr "CREATE UNIQUE INDEX title_idx ON films (title) WITH (fillfactor = 70);"
 
-#: ref/create_index.xml:624(para)
+#: ref/create_index.xml:625(para)
 msgid "To create an index with non-default fill factor: <placeholder-1/>"
 msgstr "Создание индекса с нестандартным фактором заполнения: <placeholder-1/>"
 
-#: ref/create_index.xml:633(programlisting)
+#: ref/create_index.xml:634(programlisting)
 #, no-wrap
 msgid "CREATE INDEX gin_idx ON documents_table USING GIN (locations) WITH (fastupdate = off);"
 msgstr "CREATE INDEX gin_idx ON documents_table USING GIN (locations) WITH (fastupdate = off);"
 
-#: ref/create_index.xml:631(para)
+#: ref/create_index.xml:632(para)
 msgid ""
 "To create a <acronym>GIN</acronym> index with fast updates disabled: "
 "<placeholder-1/>"
@@ -932,12 +932,12 @@ msgstr ""
 "Создание индекса <acronym>GIN</acronym> с отключённым механизмом быстрого "
 "обновления: <placeholder-1/>"
 
-#: ref/create_index.xml:642(programlisting)
+#: ref/create_index.xml:643(programlisting)
 #, no-wrap
 msgid "CREATE INDEX code_idx ON films (code) TABLESPACE indexspace;"
 msgstr "CREATE INDEX code_idx ON films (code) TABLESPACE indexspace;"
 
-#: ref/create_index.xml:638(para)
+#: ref/create_index.xml:639(para)
 msgid ""
 "To create an index on the column <literal>code</literal> in the table "
 "<literal>films</literal> and have the index reside in the tablespace "
@@ -947,7 +947,7 @@ msgstr ""
 "<literal>films</literal> и размещение его в табличном пространстве "
 "<literal>indexspace</literal>: <placeholder-1/>"
 
-#: ref/create_index.xml:651(programlisting)
+#: ref/create_index.xml:652(programlisting)
 #, no-wrap
 msgid ""
 "CREATE INDEX pointloc\n"
@@ -960,7 +960,7 @@ msgstr ""
 "SELECT * FROM points\n"
 "    WHERE box(location,location) &amp;&amp; '(0,0),(1,1)'::box;"
 
-#: ref/create_index.xml:647(para)
+#: ref/create_index.xml:648(para)
 msgid ""
 "To create a GiST index on a point attribute so that we can efficiently use "
 "box operators on the result of the conversion function: <placeholder-1/>"
@@ -969,21 +969,21 @@ msgstr ""
 "использовать операторы box с результатом функции преобразования: "
 "<placeholder-1/>"
 
-#: ref/create_index.xml:661(programlisting)
+#: ref/create_index.xml:662(programlisting)
 #, no-wrap
 msgid "CREATE INDEX CONCURRENTLY sales_quantity_index ON sales_table (quantity);"
 msgstr "CREATE INDEX CONCURRENTLY sales_quantity_index ON sales_table (quantity);"
 
-#: ref/create_index.xml:659(para)
+#: ref/create_index.xml:660(para)
 msgid ""
 "To create an index without locking out writes to the table: <placeholder-1/>"
 msgstr "Создание индекса без блокировки записи в таблицу: <placeholder-1/>"
 
-#: ref/create_index.xml:668(title)
+#: ref/create_index.xml:669(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/create_index.xml:670(para)
+#: ref/create_index.xml:671(para)
 msgid ""
 "<command>CREATE INDEX</command> is a <productname>PostgreSQL</productname> "
 "language extension. There are no provisions for indexes in the SQL standard."
@@ -992,7 +992,7 @@ msgstr ""
 "<productname>PostgreSQL</productname>. Средства обеспечения индексов в "
 "стандарте SQL не описаны."
 
-#: ref/create_index.xml:678(title)
+#: ref/create_index.xml:679(title)
 msgid "See Also"
 msgstr "См. также"
 

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -48,11 +48,12 @@ msgid "Row Estimation Examples"
 msgstr "Примеры оценки количества строк"
 
 #: planstats.xml:26(indexterm)
-msgid "<primary>row estimation</primary><secondary>planner</secondary>"
+msgid "<primary>row estimation</primary> <secondary>planner</secondary>"
 msgstr ""
-"<primary>Оценка количества строк</primary><secondary> планировщик</secondary>"
+"<primary>Оценка количества строк</primary> <secondary> планировщик</"
+"secondary>"
 
-#: planstats.xml:30(para)
+#: planstats.xml:31(para)
 msgid ""
 "The examples shown below use tables in the <productname>PostgreSQL</"
 "productname> regression test database. The outputs shown are taken from "
@@ -69,7 +70,7 @@ msgstr ""
 "нового выполнения команды <command>ANALYZE</command> результаты "
 "незначительно изменятся."
 
-#: planstats.xml:43(programlisting)
+#: planstats.xml:44(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1;\n"
@@ -84,7 +85,7 @@ msgstr ""
 "-------------------------------------------------------------\n"
 " Seq Scan on tenk1  (cost=0.00..458.00 rows=10000 width=244)"
 
-#: planstats.xml:56(programlisting)
+#: planstats.xml:57(programlisting)
 #, no-wrap
 msgid ""
 "SELECT relpages, reltuples FROM pg_class WHERE relname = 'tenk1';\n"
@@ -99,7 +100,7 @@ msgstr ""
 "----------+-----------\n"
 "      358 |     10000"
 
-#: planstats.xml:40(para)
+#: planstats.xml:41(para)
 msgid ""
 "Let's start with a very simple query: <placeholder-1/> How the planner "
 "determines the cardinality of <structname>tenk1</structname> is covered in "
@@ -130,7 +131,7 @@ msgstr ""
 "значение <structfield>relpages</structfield> является актуальным, поэтому "
 "количество строк берётся равным <structfield>reltuples</structfield>."
 
-#: planstats.xml:79(programlisting)
+#: planstats.xml:80(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 WHERE unique1 &lt; 1000;\n"
@@ -151,7 +152,7 @@ msgstr ""
 "   -&gt;  Bitmap Index Scan on tenk1_unique1  (cost=0.00..23.80 rows=1007 width=0)\n"
 "         Index Cond: (unique1 &lt; 1000)"
 
-#: planstats.xml:101(programlisting)
+#: planstats.xml:102(programlisting)
 #, no-wrap
 msgid ""
 "SELECT histogram_bounds FROM pg_stats\n"
@@ -168,7 +169,7 @@ msgstr ""
 "------------------------------------------------------\n"
 " {0,993,1997,3050,4040,5036,5957,7057,8029,9016,9995}"
 
-#: planstats.xml:118(programlisting)
+#: planstats.xml:119(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = (1 + (1000 - bucket[2].min)/(bucket[2].max - bucket[2].min))/num_buckets\n"
@@ -179,7 +180,7 @@ msgstr ""
 "            = (1 + (1000 - 993)/(1997 - 993))/10\n"
 "            = 0.100697"
 
-#: planstats.xml:129(programlisting)
+#: planstats.xml:130(programlisting)
 #, no-wrap
 msgid ""
 "rows = rel_cardinality * selectivity\n"
@@ -190,7 +191,7 @@ msgstr ""
 "     = 10000 * 0.100697\n"
 "     = 1007  (округлённо)"
 
-#: planstats.xml:75(para)
+#: planstats.xml:76(para)
 msgid ""
 "Let's move on to an example with a range condition in its <literal>WHERE</"
 "literal> clause: <placeholder-1/> The planner examines the <literal>WHERE</"
@@ -236,7 +237,7 @@ msgstr ""
 "примерное число строк может быть рассчитано как произведение избирательности "
 "и мощности <structname>tenk1</structname>: <placeholder-4/>"
 
-#: planstats.xml:140(programlisting)
+#: planstats.xml:141(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 WHERE stringu1 = 'CRAAAA';\n"
@@ -253,7 +254,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=30 width=244)\n"
 "   Filter: (stringu1 = 'CRAAAA'::name)"
 
-#: planstats.xml:157(programlisting)
+#: planstats.xml:158(programlisting)
 #, no-wrap
 msgid ""
 "SELECT null_frac, n_distinct, most_common_vals, most_common_freqs FROM pg_stats\n"
@@ -272,7 +273,7 @@ msgstr ""
 "most_common_vals  | {EJAAAA,BBAAAA,CRAAAA,FCAAAA,FEAAAA,GSAAAA,JOAAAA,MCAAAA,NAAAAA,WGAAAA}\n"
 "most_common_freqs | {0.00333333,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003}"
 
-#: planstats.xml:172(programlisting)
+#: planstats.xml:173(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = mcf[3]\n"
@@ -281,7 +282,7 @@ msgstr ""
 "selectivity = mcf[3]\n"
 "            = 0.003"
 
-#: planstats.xml:180(programlisting)
+#: planstats.xml:181(programlisting)
 #, no-wrap
 msgid ""
 "rows = 10000 * 0.003\n"
@@ -290,7 +291,7 @@ msgstr ""
 "rows = 10000 * 0.003\n"
 "     = 30"
 
-#: planstats.xml:136(para)
+#: planstats.xml:137(para)
 msgid ""
 "Next let's consider an example with an equality condition in its "
 "<literal>WHERE</literal> clause: <placeholder-1/> Again the planner examines "
@@ -321,7 +322,7 @@ msgstr ""
 "Как и в предыдущем примере, оценка числа строк берётся как произведение "
 "мощности и избирательности <structname>tenk1</structname>: <placeholder-4/>"
 
-#: planstats.xml:190(programlisting)
+#: planstats.xml:191(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 WHERE stringu1 = 'xxx';\n"
@@ -338,7 +339,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=15 width=244)\n"
 "   Filter: (stringu1 = 'xxx'::name)"
 
-#: planstats.xml:205(programlisting)
+#: planstats.xml:206(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = (1 - sum(mvf))/(num_distinct - num_mcv)\n"
@@ -351,7 +352,7 @@ msgstr ""
 "                    0.003 + 0.003 + 0.003 + 0.003))/(676 - 10)\n"
 "            = 0.0014559"
 
-#: planstats.xml:221(programlisting)
+#: planstats.xml:222(programlisting)
 #, no-wrap
 msgid ""
 "rows = 10000 * 0.0014559\n"
@@ -360,7 +361,7 @@ msgstr ""
 "rows = 10000 * 0.0014559\n"
 "     = 15  (округлённо)"
 
-#: planstats.xml:186(para)
+#: planstats.xml:187(para)
 msgid ""
 "Now consider the same query, but with a constant that is not in the "
 "<acronym>MCV</acronym> list: <placeholder-1/> This is quite a different "
@@ -392,7 +393,7 @@ msgstr ""
 "числителя). Оценка числа строк затем производится как обычно: <placeholder-3/"
 ">"
 
-#: planstats.xml:247(programlisting)
+#: planstats.xml:248(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 WHERE stringu1 &lt; 'IAAAAA';\n"
@@ -409,7 +410,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=3077 width=244)\n"
 "   Filter: (stringu1 &lt; 'IAAAAA'::name)"
 
-#: planstats.xml:259(programlisting)
+#: planstats.xml:260(programlisting)
 #, no-wrap
 msgid ""
 "SELECT histogram_bounds FROM pg_stats\n"
@@ -426,7 +427,7 @@ msgstr ""
 "--------------------------------------------------------------------------------\n"
 " {AAAAAA,CQAAAA,FRAAAA,IBAAAA,KRAAAA,NFAAAA,PSAAAA,SGAAAA,VAAAAA,XLAAAA,ZZAAAA}"
 
-#: planstats.xml:272(programlisting)
+#: planstats.xml:273(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = sum(relevant mvfs)\n"
@@ -437,7 +438,7 @@ msgstr ""
 "            = 0.00333333 + 0.003 + 0.003 + 0.003 + 0.003 + 0.003\n"
 "            = 0.01833333"
 
-#: planstats.xml:289(programlisting)
+#: planstats.xml:290(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = mcv_selectivity + histogram_selectivity * histogram_fraction\n"
@@ -454,7 +455,7 @@ msgstr ""
 "rows        = 10000 * 0.307669\n"
 "            = 3077  (округлённо)"
 
-#: planstats.xml:227(para)
+#: planstats.xml:228(para)
 msgid ""
 "The previous example with <literal>unique1 &lt; 1000</literal> was an "
 "oversimplification of what <function>scalarltsel</function> really does; now "
@@ -535,7 +536,7 @@ msgstr ""
 "точность вследствие точного определения избирательности наиболее "
 "распространённых значений."
 
-#: planstats.xml:311(programlisting)
+#: planstats.xml:312(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 WHERE unique1 &lt; 1000 AND stringu1 = 'xxx';\n"
@@ -558,7 +559,7 @@ msgstr ""
 "   -&gt;  Bitmap Index Scan on tenk1_unique1  (cost=0.00..23.80 rows=1007 width=0)\n"
 "         Index Cond: (unique1 &lt; 1000)"
 
-#: planstats.xml:326(programlisting)
+#: planstats.xml:327(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = selectivity(unique1 &lt; 1000) * selectivity(stringu1 = 'xxx')\n"
@@ -575,7 +576,7 @@ msgstr ""
 "rows        = 10000 * 0.0001466\n"
 "            = 1  (округлённо)"
 
-#: planstats.xml:307(para)
+#: planstats.xml:308(para)
 msgid ""
 "Now let's consider a case with more than one condition in the "
 "<literal>WHERE</literal> clause: <placeholder-1/> The planner assumes that "
@@ -593,7 +594,7 @@ msgstr ""
 "условию, используемому при работе индекса; это важно, так как влияет на "
 "оценку стоимости для последующих выборок из таблицы."
 
-#: planstats.xml:344(programlisting)
+#: planstats.xml:345(programlisting)
 #, no-wrap
 msgid ""
 "EXPLAIN SELECT * FROM tenk1 t1, tenk2 t2\n"
@@ -622,7 +623,7 @@ msgstr ""
 "   -&gt;  Index Scan using tenk2_unique2 on tenk2 t2  (cost=0.00..6.27 rows=1 width=244)\n"
 "         Index Cond: (unique2 = t1.unique2)"
 
-#: planstats.xml:366(programlisting)
+#: planstats.xml:367(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = (0 + (50 - bucket[1].min)/(bucket[1].max - bucket[1].min))/num_buckets\n"
@@ -639,7 +640,7 @@ msgstr ""
 "rows        = 10000 * 0.005035\n"
 "            = 50  (округлённо)"
 
-#: planstats.xml:383(programlisting)
+#: planstats.xml:384(programlisting)
 #, no-wrap
 msgid ""
 "SELECT tablename, null_frac,n_distinct, most_common_vals FROM pg_stats\n"
@@ -658,7 +659,7 @@ msgstr ""
 " tenk1     |         0 |         -1 |\n"
 " tenk2     |         0 |         -1 |"
 
-#: planstats.xml:398(programlisting)
+#: planstats.xml:399(programlisting)
 #, no-wrap
 msgid ""
 "selectivity = (1 - null_frac1) * (1 - null_frac2) * min(1/num_distinct1, 1/num_distinct2)\n"
@@ -669,7 +670,7 @@ msgstr ""
 "            = (1 - 0) * (1 - 0) / max(10000, 10000)\n"
 "            = 0.0001"
 
-#: planstats.xml:411(programlisting)
+#: planstats.xml:412(programlisting)
 #, no-wrap
 msgid ""
 "rows = (outer_cardinality * inner_cardinality) * selectivity\n"
@@ -680,7 +681,7 @@ msgstr ""
 "     = (50 * 10000) * 0.0001\n"
 "     = 50"
 
-#: planstats.xml:341(para)
+#: planstats.xml:342(para)
 msgid ""
 "Finally we will examine a query that involves a join: <placeholder-1/> The "
 "restriction on <structname>tenk1</structname>, <literal>unique1 &lt; 50</"
@@ -726,7 +727,7 @@ msgstr ""
 "произведения двух входных значений, умноженная на избирательность: "
 "<placeholder-5/>"
 
-#: planstats.xml:418(para)
+#: planstats.xml:419(para)
 msgid ""
 "Had there been MCV lists for the two columns, <function>eqjoinsel</function> "
 "would have used direct comparison of the MCV lists to determine the join "
@@ -740,7 +741,7 @@ msgstr ""
 "MCV. Оценка остальной части данных при этом выполнялась бы представленным "
 "выше способом."
 
-#: planstats.xml:426(para)
+#: planstats.xml:427(para)
 msgid ""
 "Notice that we showed <literal>inner_cardinality</literal> as 10000, that "
 "is, the unmodified size of <structname>tenk2</structname>. It might appear "
@@ -764,7 +765,7 @@ msgstr ""
 "размера должны давать один и тот же ответ, но из-за ошибок округления и "
 "других факторов иногда они значительно различаются."
 
-#: planstats.xml:439(para)
+#: planstats.xml:440(para)
 msgid ""
 "For those interested in further details, estimation of the size of a table "
 "(before any <literal>WHERE</literal> clauses) is done in <filename>src/"

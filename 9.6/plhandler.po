@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -20,10 +20,10 @@ msgstr "Написание обработчика процедурного яз�
 
 #: plhandler.xml:7(indexterm)
 msgid ""
-"<primary>procedural language</primary><secondary>handler for</secondary>"
-msgstr "<primary>процедурный язык</primary><secondary>обработчик</secondary>"
+"<primary>procedural language</primary> <secondary>handler for</secondary>"
+msgstr "<primary>процедурный язык</primary> <secondary>обработчик</secondary>"
 
-#: plhandler.xml:11(para)
+#: plhandler.xml:12(para)
 msgid ""
 "All calls to functions that are written in a language other than the current "
 "<quote>version 1</quote> interface for compiled languages (this includes "
@@ -43,7 +43,7 @@ msgstr ""
 "интерпретируя для этого её исходный текст. В этой главе в общих чертах "
 "рассказывается, как можно написать обработчик нового процедурного языка."
 
-#: plhandler.xml:23(para)
+#: plhandler.xml:24(para)
 msgid ""
 "The call handler for a procedural language is a <quote>normal</quote> "
 "function that must be written in a compiled language such as C, using the "
@@ -63,7 +63,7 @@ msgstr ""
 "SQL. Более подробно соглашение о вызовах и динамическая загрузка кода на C "
 "описывается в <xref remap=\"6\" linkend=\"xfunc-c\"/>."
 
-#: plhandler.xml:35(para)
+#: plhandler.xml:36(para)
 msgid ""
 "The call handler is called in the same way as any other function: It "
 "receives a pointer to a <structname>FunctionCallInfoData</structname> "
@@ -94,7 +94,7 @@ msgstr ""
 "аргументов для него формируется в соответствии с объявлением целевой "
 "функции, а не обработчика вызова."
 
-#: plhandler.xml:54(para)
+#: plhandler.xml:55(para)
 msgid ""
 "It's up to the call handler to fetch the entry of the function from the "
 "<classname>pg_proc</classname> system catalog and to analyze the argument "
@@ -114,7 +114,7 @@ msgstr ""
 "и что-то другое, например, путь к файлу или иные данные, говорящие "
 "обработчику вызова, что именно делать."
 
-#: plhandler.xml:66(para)
+#: plhandler.xml:67(para)
 msgid ""
 "Often, the same function is called many times per SQL statement. A call "
 "handler can avoid repeated lookups of information about the called function "
@@ -152,7 +152,7 @@ msgstr ""
 "контекст памяти с тем, чтобы кешировать определения функций и между "
 "запросами."
 
-#: plhandler.xml:88(para)
+#: plhandler.xml:89(para)
 msgid ""
 "When a procedural-language function is invoked as a trigger, no arguments "
 "are passed in the usual way, but the <structname>FunctionCallInfoData</"
@@ -170,7 +170,7 @@ msgstr ""
 "очередь, должен каким-либо образом предоставить эту информацию функциям на "
 "этом процедурном языке."
 
-#: plhandler.xml:101(programlisting)
+#: plhandler.xml:102(programlisting)
 #, no-wrap
 msgid ""
 "#include \"postgres.h\"\n"
@@ -255,7 +255,7 @@ msgstr ""
 "    return retval;\n"
 "}"
 
-#: plhandler.xml:99(para)
+#: plhandler.xml:100(para)
 msgid ""
 "This is a template for a procedural-language handler written in C: "
 "<placeholder-1/> Only a few thousand lines of code have to be added instead "
@@ -265,7 +265,7 @@ msgstr ""
 "<placeholder-1/> Чтобы завершить код обработчика, нужно добавить лишь "
 "несколько тысяч строк вместо многоточий."
 
-#: plhandler.xml:151(programlisting)
+#: plhandler.xml:152(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION plsample_call_handler() RETURNS language_handler\n"
@@ -280,7 +280,7 @@ msgstr ""
 "CREATE LANGUAGE plsample\n"
 "    HANDLER plsample_call_handler;"
 
-#: plhandler.xml:147(para)
+#: plhandler.xml:148(para)
 msgid ""
 "After having compiled the handler function into a loadable module (see <xref "
 "linkend=\"dfunc\"/>), the following commands then register the sample "
@@ -290,7 +290,7 @@ msgstr ""
 "\"4\" linkend=\"dfunc\"/>), этот язык (plsample) можно зарегистрировать "
 "следующими командами: <placeholder-1/>"
 
-#: plhandler.xml:160(para)
+#: plhandler.xml:161(para)
 msgid ""
 "Although providing a call handler is sufficient to create a minimal "
 "procedural language, there are two other functions that can optionally be "
@@ -310,7 +310,7 @@ msgstr ""
 "кода, этот язык будет поддерживать выполнение анонимных блоков кода командой "
 "<xref linkend=\"sql-do\"/>."
 
-#: plhandler.xml:172(para)
+#: plhandler.xml:173(para)
 msgid ""
 "If a validator is provided by a procedural language, it must be declared as "
 "a function taking a single parameter of type <type>oid</type>. The "
@@ -350,7 +350,7 @@ msgstr ""
 "Выданная таким образом ошибка приведёт к откату транзакции, так что "
 "определение некорректной функции зафиксировано не будет."
 
-#: plhandler.xml:194(para)
+#: plhandler.xml:195(para)
 msgid ""
 "Validator functions should typically honor the <xref linkend=\"guc-check-"
 "function-bodies\"/> parameter: if it is turned off then any expensive or "
@@ -393,7 +393,7 @@ msgstr ""
 "опускаться, когда <varname>check_function_bodies</varname> отключён, во "
 "избежание ложных ошибок при восстановлении базы из копии."
 
-#: plhandler.xml:217(para)
+#: plhandler.xml:218(para)
 msgid ""
 "If an inline handler is provided by a procedural language, it must be "
 "declared as a function taking a single parameter of type <type>internal</"
@@ -416,7 +416,7 @@ msgstr ""
 "содержащую информацию о параметрах <command>DO</command>, в частности, текст "
 "выполняемого анонимного блока внедрённого кода."
 
-#: plhandler.xml:230(para)
+#: plhandler.xml:231(para)
 msgid ""
 "It's recommended that you wrap all these function declarations, as well as "
 "the <command>CREATE LANGUAGE</command> command itself, into an "
@@ -430,7 +430,7 @@ msgstr ""
 "<command>CREATE EXTENSION</command>. За информацией о разработке расширений "
 "обратитесь к <xref remap=\"3\" linkend=\"extend-extensions\"/>."
 
-#: plhandler.xml:239(para)
+#: plhandler.xml:240(para)
 msgid ""
 "The procedural languages included in the standard distribution are good "
 "references when trying to write your own language handler. Look into the "

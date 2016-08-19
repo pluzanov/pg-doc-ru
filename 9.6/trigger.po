@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -222,6 +222,7 @@ msgstr ""
 "обработке."
 
 #: trigger.xml:125(para)
+#, fuzzy
 msgid ""
 "If an <command>INSERT</command> contains an <literal>ON CONFLICT DO UPDATE</"
 "literal> clause, it is possible that the effects of all row-level "
@@ -243,10 +244,10 @@ msgid ""
 "ever taken). An <command>INSERT</command> with an <literal>ON CONFLICT DO "
 "UPDATE</literal> clause will execute statement-level <literal>BEFORE</"
 "literal> <command>INSERT</command> triggers first, then statement-level "
-"<literal>BEFORE</literal>\n"
-"    <command>UPDATE</command> triggers, followed by statement-level "
-"<literal>AFTER</literal> <command>UPDATE</command> triggers and finally "
-"statement-level <literal>AFTER</literal> <command>INSERT</command> triggers."
+"<literal>BEFORE</literal> <command>UPDATE</command> triggers, followed by "
+"statement-level <literal>AFTER</literal> <command>UPDATE</command> triggers "
+"and finally statement-level <literal>AFTER</literal> <command>INSERT</"
+"command> triggers."
 msgstr ""
 "Если запрос <command>INSERT</command> содержит предложение <literal>ON "
 "CONFLICT DO UPDATE</literal>, возможно совместное применение и триггеров "
@@ -477,10 +478,10 @@ msgstr ""
 
 #: trigger.xml:279(indexterm)
 msgid ""
-"<primary>trigger</primary><secondary>arguments for trigger functions</"
+"<primary>trigger</primary> <secondary>arguments for trigger functions</"
 "secondary>"
 msgstr ""
-"<primary>Триггер</primary><secondary>Аргументы для триггерных функций</"
+"<primary>Триггер</primary> <secondary>Аргументы для триггерных функций</"
 "secondary>"
 
 #: trigger.xml:278(para)
@@ -511,7 +512,7 @@ msgstr ""
 "<command>UPDATE</command> аргументы также могут использоваться для "
 "отслеживания последних сделанных изменений."
 
-#: trigger.xml:298(para)
+#: trigger.xml:299(para)
 msgid ""
 "Each programming language that supports triggers has its own method for "
 "making the trigger input data available to the trigger function. This input "
@@ -535,11 +536,11 @@ msgstr ""
 "<command>DELETE</command>. Триггеры уровня оператора в настоящее время не "
 "имеют возможностей для проверки отдельных строк, модифицированных оператором."
 
-#: trigger.xml:315(title)
+#: trigger.xml:316(title)
 msgid "Visibility of Data Changes"
 msgstr "Видимость изменений в данных"
 
-#: trigger.xml:327(para)
+#: trigger.xml:328(para)
 msgid ""
 "Statement-level triggers follow simple visibility rules: none of the changes "
 "made by a statement are visible to statement-level <literal>BEFORE</literal> "
@@ -550,7 +551,7 @@ msgstr ""
 "изменений, произведённых оператором, не видны в триггерах <literal>BEFORE</"
 "literal>, тогда как в триггерах <literal>AFTER</literal> видны все изменения."
 
-#: trigger.xml:337(para)
+#: trigger.xml:338(para)
 msgid ""
 "The data change (insertion, update, or deletion) causing the trigger to fire "
 "is naturally <emphasis>not</emphasis> visible to SQL commands executed in a "
@@ -561,7 +562,7 @@ msgstr ""
 "триггере <literal>BEFORE</literal> уровня строки, потому что это изменение "
 "ещё не произошло."
 
-#: trigger.xml:346(para)
+#: trigger.xml:347(para)
 msgid ""
 "However, SQL commands executed in a row-level <literal>BEFORE</literal> "
 "trigger <emphasis>will</emphasis> see the effects of data changes for rows "
@@ -575,7 +576,7 @@ msgstr ""
 "как порядок обработки строк в целом непредсказуемый; команда SQL, "
 "обрабатывающая множество строк, может делать это в любом порядке."
 
-#: trigger.xml:357(para)
+#: trigger.xml:358(para)
 msgid ""
 "Similarly, a row-level <literal>INSTEAD OF</literal> trigger will see the "
 "effects of data changes made by previous firings of <literal>INSTEAD OF</"
@@ -585,7 +586,7 @@ msgstr ""
 "изменения данных, внесённые при предыдущих вызовах триггера <literal>INSTEAD "
 "OF</literal> для этой же внешней команды."
 
-#: trigger.xml:365(para)
+#: trigger.xml:366(para)
 msgid ""
 "When a row-level <literal>AFTER</literal> trigger is fired, all data changes "
 "made by the outer command are already complete, and are visible to the "
@@ -595,7 +596,7 @@ msgstr ""
 "изменения сделанные оператором уже выполнены и видны в вызываемой триггерной "
 "функции."
 
-#: trigger.xml:317(para)
+#: trigger.xml:318(para)
 msgid ""
 "If you execute SQL commands in your trigger function, and these commands "
 "access the table that the trigger is for, then you need to be aware of the "
@@ -608,7 +609,7 @@ msgstr ""
 "данных, потому что они определяют, будут ли видеть эти SQL-команды изменения "
 "в данных, для которых сработал триггер. Кратко: <placeholder-1/>"
 
-#: trigger.xml:375(para)
+#: trigger.xml:376(para)
 msgid ""
 "If your trigger function is written in any of the standard procedural "
 "languages, then the above statements apply only if the function is declared "
@@ -622,7 +623,7 @@ msgstr ""
 "literal> или <literal>IMMUTABLE</literal> в любом случае не будут видеть "
 "изменений, сделанных вызывающим оператором."
 
-#: trigger.xml:383(para)
+#: trigger.xml:384(para)
 msgid ""
 "Further information about data visibility rules can be found in <xref "
 "linkend=\"spi-visibility\"/>. The example in <xref linkend=\"trigger-example"
@@ -632,15 +633,15 @@ msgstr ""
 "remap=\"6\" linkend=\"spi-visibility\"/>. Пример в <xref remap=\"6\" linkend="
 "\"trigger-example\"/> содержит демонстрацию этих правил."
 
-#: trigger.xml:391(title)
+#: trigger.xml:392(title)
 msgid "Writing Trigger Functions in C"
 msgstr "Триггерные функции на языке C"
 
-#: trigger.xml:393(indexterm)
-msgid "<primary>trigger</primary><secondary>in C</secondary>"
-msgstr "<primary>Триггер</primary><secondary>на C</secondary>"
+#: trigger.xml:394(indexterm)
+msgid "<primary>trigger</primary> <secondary>in C</secondary>"
+msgstr "<primary>Триггер</primary> <secondary>на C</secondary>"
 
-#: trigger.xml:397(para)
+#: trigger.xml:399(para)
 msgid ""
 "This section describes the low-level details of the interface to a trigger "
 "function. This information is only needed when writing trigger functions in "
@@ -657,7 +658,7 @@ msgstr ""
 "на C. В документации по каждому процедурному языку объясняется как создавать "
 "триггеры на этом языке."
 
-#: trigger.xml:407(para)
+#: trigger.xml:409(para)
 msgid ""
 "Trigger functions must use the <quote>version 1</quote> function manager "
 "interface."
@@ -665,17 +666,17 @@ msgstr ""
 "Триггерные функции должны использовать интерфейс функций <quote>версии 1</"
 "quote>."
 
-#: trigger.xml:418(programlisting)
+#: trigger.xml:420(programlisting)
 #, no-wrap
 msgid "CALLED_AS_TRIGGER(fcinfo)"
 msgstr "CALLED_AS_TRIGGER(fcinfo)"
 
-#: trigger.xml:422(programlisting)
+#: trigger.xml:424(programlisting)
 #, no-wrap
 msgid "((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, TriggerData))"
 msgstr "((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, TriggerData))"
 
-#: trigger.xml:412(para)
+#: trigger.xml:414(para)
 msgid ""
 "When a function is called by the trigger manager, it is not passed any "
 "normal arguments, but it is passed a <quote>context</quote> pointer pointing "
@@ -699,7 +700,7 @@ msgstr ""
 "<emphasis>не</emphasis> должна изменять структуру <structname>TriggerData</"
 "structname> или любые данные, которые на неё указывают."
 
-#: trigger.xml:437(programlisting)
+#: trigger.xml:439(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct TriggerData\n"
@@ -726,63 +727,63 @@ msgstr ""
 "    Buffer        tg_newtuplebuf;\n"
 "} TriggerData;"
 
-#: trigger.xml:455(structfield)
+#: trigger.xml:457(structfield)
 msgid "type"
 msgstr "type"
 
-#: trigger.xml:457(para)
+#: trigger.xml:459(para)
 msgid "Always <literal>T_TriggerData</literal>."
 msgstr "Всегда <literal>T_TriggerData</literal>."
 
-#: trigger.xml:464(structfield)
+#: trigger.xml:466(structfield)
 msgid "tg_event"
 msgstr "tg_event"
 
-#: trigger.xml:472(literal)
+#: trigger.xml:474(literal)
 msgid "TRIGGER_FIRED_BEFORE(tg_event)"
 msgstr "TRIGGER_FIRED_BEFORE(tg_event)"
 
-#: trigger.xml:474(para)
+#: trigger.xml:476(para)
 msgid "Returns true if the trigger fired before the operation."
 msgstr "Возвращает истину, если триггер сработал до операции."
 
-#: trigger.xml:481(literal)
+#: trigger.xml:483(literal)
 msgid "TRIGGER_FIRED_AFTER(tg_event)"
 msgstr "TRIGGER_FIRED_AFTER(tg_event)"
 
-#: trigger.xml:483(para)
+#: trigger.xml:485(para)
 msgid "Returns true if the trigger fired after the operation."
 msgstr "Возвращает истину, если триггер сработал после операции."
 
-#: trigger.xml:490(literal)
+#: trigger.xml:492(literal)
 msgid "TRIGGER_FIRED_INSTEAD(tg_event)"
 msgstr "TRIGGER_FIRED_INSTEAD(tg_event)"
 
-#: trigger.xml:492(para)
+#: trigger.xml:494(para)
 msgid "Returns true if the trigger fired instead of the operation."
 msgstr "Возвращает истину, если триггер сработал вместо операции."
 
-#: trigger.xml:499(literal)
+#: trigger.xml:501(literal)
 msgid "TRIGGER_FIRED_FOR_ROW(tg_event)"
 msgstr "TRIGGER_FIRED_FOR_ROW(tg_event)"
 
-#: trigger.xml:501(para)
+#: trigger.xml:503(para)
 msgid "Returns true if the trigger fired for a row-level event."
 msgstr "Возвращает истину, если триггер сработал на уровне строки."
 
-#: trigger.xml:508(literal)
+#: trigger.xml:510(literal)
 msgid "TRIGGER_FIRED_FOR_STATEMENT(tg_event)"
 msgstr "TRIGGER_FIRED_FOR_STATEMENT(tg_event)"
 
-#: trigger.xml:510(para)
+#: trigger.xml:512(para)
 msgid "Returns true if the trigger fired for a statement-level event."
 msgstr "Возвращает истину, если триггер сработал на уровне оператора."
 
-#: trigger.xml:517(literal)
+#: trigger.xml:519(literal)
 msgid "TRIGGER_FIRED_BY_INSERT(tg_event)"
 msgstr "TRIGGER_FIRED_BY_INSERT(tg_event)"
 
-#: trigger.xml:519(para)
+#: trigger.xml:521(para)
 msgid ""
 "Returns true if the trigger was fired by an <command>INSERT</command> "
 "command."
@@ -790,11 +791,11 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>INSERT</"
 "command>."
 
-#: trigger.xml:526(literal)
+#: trigger.xml:528(literal)
 msgid "TRIGGER_FIRED_BY_UPDATE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_UPDATE(tg_event)"
 
-#: trigger.xml:528(para)
+#: trigger.xml:530(para)
 msgid ""
 "Returns true if the trigger was fired by an <command>UPDATE</command> "
 "command."
@@ -802,22 +803,22 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>UPDATE</"
 "command>."
 
-#: trigger.xml:535(literal)
+#: trigger.xml:537(literal)
 msgid "TRIGGER_FIRED_BY_DELETE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_DELETE(tg_event)"
 
-#: trigger.xml:537(para)
+#: trigger.xml:539(para)
 msgid ""
 "Returns true if the trigger was fired by a <command>DELETE</command> command."
 msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>DELETE</"
 "command>."
 
-#: trigger.xml:544(literal)
+#: trigger.xml:546(literal)
 msgid "TRIGGER_FIRED_BY_TRUNCATE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_TRUNCATE(tg_event)"
 
-#: trigger.xml:546(para)
+#: trigger.xml:548(para)
 msgid ""
 "Returns true if the trigger was fired by a <command>TRUNCATE</command> "
 "command."
@@ -825,7 +826,7 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>TRUNCATE</"
 "command>."
 
-#: trigger.xml:466(para)
+#: trigger.xml:468(para)
 msgid ""
 "Describes the event for which the function is called. You can use the "
 "following macros to examine <literal>tg_event</literal>: <placeholder-1/>"
@@ -834,11 +835,11 @@ msgstr ""
 "следующие макросы для получения информации о <literal>tg_event</literal>: "
 "<placeholder-1/>"
 
-#: trigger.xml:557(structfield)
+#: trigger.xml:559(structfield)
 msgid "tg_relation"
 msgstr "tg_relation"
 
-#: trigger.xml:559(para)
+#: trigger.xml:561(para)
 msgid ""
 "A pointer to a structure describing the relation that the trigger fired for. "
 "Look at <filename>utils/rel.h</filename> for details about this structure. "
@@ -856,11 +857,11 @@ msgstr ""
 "используйте <literal>SPI_getrelname(tg_relation)</literal>, чтобы получить "
 "тип <type>char*</type> если потребуется копия имени)."
 
-#: trigger.xml:574(structfield)
+#: trigger.xml:576(structfield)
 msgid "tg_trigtuple"
 msgstr "tg_trigtuple"
 
-#: trigger.xml:576(para)
+#: trigger.xml:578(para)
 msgid ""
 "A pointer to the row for which the trigger was fired. This is the row being "
 "inserted, updated, or deleted. If this trigger was fired for an "
@@ -876,11 +877,11 @@ msgstr ""
 "вернуть из функции, только если не планируется изменять строку (в случае "
 "<command>INSERT</command>) или пропускать операцию для этой строки."
 
-#: trigger.xml:590(structfield)
+#: trigger.xml:592(structfield)
 msgid "tg_newtuple"
 msgstr "tg_newtuple"
 
-#: trigger.xml:592(para)
+#: trigger.xml:594(para)
 msgid ""
 "A pointer to the new version of the row, if the trigger was fired for an "
 "<command>UPDATE</command>, and <symbol>NULL</symbol> if it is for an "
@@ -896,11 +897,11 @@ msgstr ""
 "случае <command>UPDATE</command>, если не планируется изменять строку или "
 "пропускать операцию для этой строки."
 
-#: trigger.xml:606(structfield)
+#: trigger.xml:608(structfield)
 msgid "tg_trigger"
 msgstr "tg_trigger"
 
-#: trigger.xml:612(programlisting)
+#: trigger.xml:614(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct Trigger\n"
@@ -943,7 +944,7 @@ msgstr ""
 "    char       *tgqual;\n"
 "} Trigger;"
 
-#: trigger.xml:608(para)
+#: trigger.xml:610(para)
 msgid ""
 "A pointer to a structure of type <structname>Trigger</structname>, defined "
 "in <filename>utils/reltrigger.h</filename>: <placeholder-1/> where "
@@ -961,11 +962,11 @@ msgstr ""
 "указанные в команде <command>CREATE TRIGGER</command>. Остальные члены "
 "структуры предназначены для внутреннего использования."
 
-#: trigger.xml:645(structfield)
+#: trigger.xml:647(structfield)
 msgid "tg_trigtuplebuf"
 msgstr "tg_trigtuplebuf"
 
-#: trigger.xml:647(para)
+#: trigger.xml:649(para)
 msgid ""
 "The buffer containing <structfield>tg_trigtuple</structfield>, or "
 "<symbol>InvalidBuffer</symbol> if there is no such tuple or it is not stored "
@@ -975,11 +976,11 @@ msgstr ""
 "<symbol>InvalidBuffer</symbol> — если нет такой строки или она не хранится в "
 "дисковом буфере."
 
-#: trigger.xml:655(structfield)
+#: trigger.xml:657(structfield)
 msgid "tg_newtuplebuf"
 msgstr "tg_newtuplebuf"
 
-#: trigger.xml:657(para)
+#: trigger.xml:659(para)
 msgid ""
 "The buffer containing <structfield>tg_newtuple</structfield>, or "
 "<symbol>InvalidBuffer</symbol> if there is no such tuple or it is not stored "
@@ -989,7 +990,7 @@ msgstr ""
 "<symbol>InvalidBuffer</symbol> — если нет такой строки или она не хранится в "
 "дисковом буфере."
 
-#: trigger.xml:433(para)
+#: trigger.xml:435(para)
 msgid ""
 "<structname>struct TriggerData</structname> is defined in <filename>commands/"
 "trigger.h</filename>: <placeholder-1/> where the members are defined as "
@@ -999,7 +1000,7 @@ msgstr ""
 "<filename>commands/trigger.h</filename>: <placeholder-1/> где элементы "
 "определяются следующим образом: <placeholder-2/>"
 
-#: trigger.xml:667(para)
+#: trigger.xml:669(para)
 msgid ""
 "A trigger function must return either a <structname>HeapTuple</structname> "
 "pointer or a <symbol>NULL</symbol> pointer (<emphasis>not</emphasis> an SQL "
@@ -1016,11 +1017,11 @@ msgstr ""
 "<structfield>tg_trigtuple</structfield>, либо <structfield>tg_newtuple</"
 "structfield>."
 
-#: trigger.xml:678(title)
+#: trigger.xml:680(title)
 msgid "A Complete Trigger Example"
 msgstr "Полный пример триггера"
 
-#: trigger.xml:680(para)
+#: trigger.xml:682(para)
 msgid ""
 "Here is a very simple example of a trigger function written in C. (Examples "
 "of triggers written in procedural languages can be found in the "
@@ -1030,7 +1031,7 @@ msgstr ""
 "триггеров для процедурных языков могут быть найдены в документации на "
 "процедурные языки.)"
 
-#: trigger.xml:686(para)
+#: trigger.xml:688(para)
 msgid ""
 "The function <function>trigf</function> reports the number of rows in the "
 "table <structname>ttest</structname> and skips the actual operation if the "
@@ -1044,7 +1045,7 @@ msgstr ""
 "образом, триггер действует как ограничение <literal>NOT NULL</literal>, но "
 "не прерывает транзакцию.)"
 
-#: trigger.xml:696(programlisting)
+#: trigger.xml:698(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE ttest (\n"
@@ -1055,15 +1056,15 @@ msgstr ""
 "    x integer\n"
 ");"
 
-#: trigger.xml:694(para)
+#: trigger.xml:696(para)
 msgid "First, the table definition: <placeholder-1/>"
 msgstr "Вначале определение таблицы: <placeholder-1/>"
 
-#: trigger.xml:703(para)
+#: trigger.xml:705(para)
 msgid "This is the source code of the trigger function: <placeholder-1/>"
 msgstr "Теперь исходный код триггерной функции: <placeholder-1/>"
 
-#: trigger.xml:784(programlisting)
+#: trigger.xml:786(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION trigf() RETURNS trigger\n"
@@ -1086,7 +1087,7 @@ msgstr ""
 "CREATE TRIGGER tafter AFTER INSERT OR UPDATE OR DELETE ON ttest\n"
 "    FOR EACH ROW EXECUTE PROCEDURE trigf();"
 
-#: trigger.xml:781(para)
+#: trigger.xml:783(para)
 msgid ""
 "After you have compiled the source code (see <xref linkend=\"dfunc\"/>), "
 "declare the function and the triggers: <placeholder-1/>"
@@ -1094,7 +1095,7 @@ msgstr ""
 "После компиляции исходного кода (см. <xref remap=\"4\" linkend=\"dfunc\"/>) "
 "объявляем функцию и триггеры: <placeholder-1/>"
 
-#: trigger.xml:797(para)
+#: trigger.xml:799(para)
 msgid ""
 "Now you can test the operation of the trigger: <screen>\n"
 "=&gt; INSERT INTO ttest VALUES (NULL);\n"
@@ -1228,7 +1229,7 @@ msgstr ""
 "(0 rows)\n"
 "</screen>"
 
-#: trigger.xml:866(para)
+#: trigger.xml:868(para)
 msgid ""
 "There are more complex examples in <filename>src/test/regress/regress.c</"
 "filename> and in <xref linkend=\"contrib-spi\"/>."

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -209,7 +209,7 @@ msgstr ""
 "некоторого условия, и обнаруживает, что набор строк, удовлетворяющих "
 "условию, изменился из-за транзакции, завершившейся за это время."
 
-#: mvcc.xml:151(indexterm) mvcc.xml:562(indexterm)
+#: mvcc.xml:151(indexterm) mvcc.xml:565(indexterm)
 msgid "<primary>serialization anomaly</primary>"
 msgstr "<primary>аномалия сериализации</primary>"
 
@@ -365,17 +365,17 @@ msgstr "Уровень изоляции Read Committed"
 
 #: mvcc.xml:308(indexterm)
 msgid ""
-"<primary>transaction isolation level</primary><secondary>read committed</"
+"<primary>transaction isolation level</primary> <secondary>read committed</"
 "secondary>"
 msgstr ""
-"<primary>уровень изоляции транзакций</primary><secondary>read committed</"
+"<primary>уровень изоляции транзакций</primary> <secondary>read committed</"
 "secondary>"
 
-#: mvcc.xml:312(indexterm)
+#: mvcc.xml:313(indexterm)
 msgid "<primary>read committed</primary>"
 msgstr "<primary>read committed</primary>"
 
-#: mvcc.xml:316(para)
+#: mvcc.xml:317(para)
 msgid ""
 "<firstterm>Read Committed</firstterm> is the default isolation level in "
 "<productname>PostgreSQL</productname>. When a transaction uses this "
@@ -407,7 +407,7 @@ msgstr ""
 "зафиксируют изменения после запуска первого <command>SELECT</command>, но до "
 "запуска второго."
 
-#: mvcc.xml:334(para)
+#: mvcc.xml:335(para)
 msgid ""
 "<command>UPDATE</command>, <command>DELETE</command>, <command>SELECT FOR "
 "UPDATE</command>, and <command>SELECT FOR SHARE</command> commands behave "
@@ -450,7 +450,7 @@ msgstr ""
 "это означает, что изменённая версия строки блокируется и возвращается "
 "клиенту."
 
-#: mvcc.xml:357(para)
+#: mvcc.xml:358(para)
 msgid ""
 "<command>INSERT</command> with an <literal>ON CONFLICT DO UPDATE</literal> "
 "clause behaves similarly. In Read Committed mode, each row proposed for "
@@ -471,7 +471,7 @@ msgstr ""
 "обычным образом может не видеть <emphasis>никакую</emphasis> версию этой "
 "строки."
 
-#: mvcc.xml:368(para)
+#: mvcc.xml:369(para)
 msgid ""
 "<command>INSERT</command> with an <literal>ON CONFLICT DO NOTHING</literal> "
 "clause may have insertion not proceed for a row due to the outcome of "
@@ -483,7 +483,7 @@ msgstr ""
 "транзакции, эффект которой не виден в снимке команды <command>INSERT</"
 "command>. Это опять же имеет место только в режиме Read Committed."
 
-#: mvcc.xml:376(para)
+#: mvcc.xml:377(para)
 msgid ""
 "Because of the above rules, it is possible for an updating command to see an "
 "inconsistent snapshot: it can see the effects of concurrent updating "
@@ -519,7 +519,7 @@ msgstr ""
 "определённую строку, если она будет видеть изменённую версию строки, это не "
 "приведёт к проблемам несогласованности."
 
-#: mvcc.xml:400(para)
+#: mvcc.xml:401(para)
 msgid ""
 "More complex usage can produce undesirable results in Read Committed mode. "
 "For example, consider a <command>DELETE</command> command operating on data "
@@ -558,7 +558,7 @@ msgstr ""
 "получает освободившуюся блокировку, строка с <literal>10</literal> теперь "
 "содержит <literal>11</literal>, а это значение уже не соответствует условию."
 
-#: mvcc.xml:425(para)
+#: mvcc.xml:426(para)
 msgid ""
 "Because Read Committed mode starts each command with a new snapshot that "
 "includes all transactions committed up to that instant, subsequent commands "
@@ -574,7 +574,7 @@ msgstr ""
 "состоит в том, видит ли <emphasis>одна</emphasis> команда абсолютно "
 "согласованное состояние базы данных."
 
-#: mvcc.xml:434(para)
+#: mvcc.xml:435(para)
 msgid ""
 "The partial transaction isolation provided by Read Committed mode is "
 "adequate for many applications, and this mode is fast and simple to use; "
@@ -588,23 +588,23 @@ msgstr ""
 "выполняющим сложные запросы и изменения, могут потребоваться более строго "
 "согласованное представление данных, чем то, что даёт Read Committed."
 
-#: mvcc.xml:444(title)
+#: mvcc.xml:445(title)
 msgid "Repeatable Read Isolation Level"
 msgstr "Уровень изоляции Repeatable Read"
 
-#: mvcc.xml:446(indexterm)
+#: mvcc.xml:447(indexterm)
 msgid ""
-"<primary>transaction isolation level</primary><secondary>repeatable read</"
+"<primary>transaction isolation level</primary> <secondary>repeatable read</"
 "secondary>"
 msgstr ""
-"<primary>уровень изоляции транзакций</primary><secondary>repeatable read</"
+"<primary>уровень изоляции транзакций</primary> <secondary>repeatable read</"
 "secondary>"
 
-#: mvcc.xml:450(indexterm)
+#: mvcc.xml:452(indexterm)
 msgid "<primary>repeatable read</primary>"
 msgstr "<primary>repeatable read</primary>"
 
-#: mvcc.xml:454(para)
+#: mvcc.xml:456(para)
 msgid ""
 "The <firstterm>Repeatable Read</firstterm> isolation level only sees data "
 "committed before the transaction began; it never sees either uncommitted "
@@ -631,7 +631,7 @@ msgstr ""
 "<emphasis>минимальную</emphasis> защиту, которая должна обеспечиваться на "
 "каждом уровне изоляции."
 
-#: mvcc.xml:470(para)
+#: mvcc.xml:472(para)
 msgid ""
 "This level is different from Read Committed in that a query in a repeatable "
 "read transaction sees a snapshot as of the start of the first non-"
@@ -649,7 +649,7 @@ msgstr ""
 "и те же данные; они не видят изменений, внесённых и зафиксированных другими "
 "транзакциями после начала их текущей транзакции."
 
-#: mvcc.xml:481(para)
+#: mvcc.xml:483(para)
 msgid ""
 "Applications using this level must be prepared to retry transactions due to "
 "serialization failures."
@@ -657,7 +657,7 @@ msgstr ""
 "Приложения, использующие этот уровень, должны быть готовы повторить "
 "транзакции в случае сбоев сериализации."
 
-#: mvcc.xml:486(para)
+#: mvcc.xml:488(para)
 msgid ""
 "<command>UPDATE</command>, <command>DELETE</command>, <command>SELECT FOR "
 "UPDATE</command>, and <command>SELECT FOR SHARE</command> commands behave "
@@ -693,7 +693,7 @@ msgstr ""
 "</screen> так как транзакция уровня Repeatable Read не может изменять или "
 "блокировать строки, изменённые другими транзакциями с момента её начала."
 
-#: mvcc.xml:509(para)
+#: mvcc.xml:511(para)
 msgid ""
 "When an application receives this error message, it should abort the current "
 "transaction and retry the whole transaction from the beginning. The second "
@@ -708,7 +708,7 @@ msgstr ""
 "базы данных, так что новая версия строки вполне может использоваться в "
 "качестве отправной точки для изменения в повторной транзакции."
 
-#: mvcc.xml:518(para)
+#: mvcc.xml:520(para)
 msgid ""
 "Note that only updating transactions might need to be retried; read-only "
 "transactions will never have serialization conflicts."
@@ -717,7 +717,7 @@ msgstr ""
 "если эта транзакция изменяет данные; в транзакциях, которые только читают "
 "данные, конфликтов сериализации не бывает."
 
-#: mvcc.xml:523(para)
+#: mvcc.xml:525(para)
 msgid ""
 "The Repeatable Read mode provides a rigorous guarantee that each transaction "
 "sees a completely stable view of the database. However, this view will not "
@@ -743,7 +743,7 @@ msgstr ""
 "работающих на этом уровне изоляции, скорее всего не удастся без явных "
 "блокировок конфликтующих транзакций."
 
-#: mvcc.xml:538(para)
+#: mvcc.xml:540(para)
 msgid ""
 "Prior to <productname>PostgreSQL</productname> version 9.1, a request for "
 "the Serializable transaction isolation level provided exactly the same "
@@ -755,27 +755,27 @@ msgstr ""
 "Таким образом, чтобы сейчас получить старое поведение Serializable, нужно "
 "запрашивать режим Repeatable Read."
 
-#: mvcc.xml:548(title)
+#: mvcc.xml:550(title)
 msgid "Serializable Isolation Level"
 msgstr "Уровень изоляции Serializable"
 
-#: mvcc.xml:550(indexterm)
+#: mvcc.xml:552(indexterm)
 msgid ""
-"<primary>transaction isolation level</primary><secondary>serializable</"
+"<primary>transaction isolation level</primary> <secondary>serializable</"
 "secondary>"
 msgstr ""
-"<primary>уровень изоляции транзакций</primary><secondary>serializable</"
+"<primary>уровень изоляции транзакций</primary> <secondary>serializable</"
 "secondary>"
 
-#: mvcc.xml:554(indexterm)
+#: mvcc.xml:557(indexterm)
 msgid "<primary>serializable</primary>"
 msgstr "<primary>serializable</primary>"
 
-#: mvcc.xml:558(indexterm)
+#: mvcc.xml:561(indexterm)
 msgid "<primary>predicate locking</primary>"
 msgstr "<primary>предикатная блокировка</primary>"
 
-#: mvcc.xml:566(para)
+#: mvcc.xml:569(para)
 msgid ""
 "The <firstterm>Serializable</firstterm> isolation level provides the "
 "strictest transaction isolation. This level emulates serial transaction "
@@ -807,7 +807,7 @@ msgstr ""
 "<firstterm>аномалия сериализации</firstterm> и происходит <firstterm>сбой "
 "сериализации</firstterm>."
 
-#: mvcc.xml:586(para)
+#: mvcc.xml:589(para)
 msgid ""
 "As an example, consider a table <structname>mytab</structname>, initially "
 "containing: <screen>\n"
@@ -865,7 +865,7 @@ msgstr ""
 "вычислила бы сумму 330, а не 300, а при выполнении в обратном порядке A "
 "вычислила бы другую сумму."
 
-#: mvcc.xml:624(para)
+#: mvcc.xml:627(para)
 msgid ""
 "When relying on Serializable transactions to prevent anomalies, it is "
 "important that any data read from a permanent user table not be considered "
@@ -891,7 +891,7 @@ msgstr ""
 "отката приложения должны повторять транзакцию, пока она не будет завершена "
 "успешно."
 
-#: mvcc.xml:638(para)
+#: mvcc.xml:641(para)
 msgid ""
 "To guarantee true serializability <productname>PostgreSQL</productname> uses "
 "<firstterm>predicate locking</firstterm>, which means that it keeps locks "
@@ -924,7 +924,7 @@ msgstr ""
 "SHARE</literal>, что не только заблокирует другие транзакции, но и создаст "
 "дополнительную нагрузку на диск."
 
-#: mvcc.xml:655(para)
+#: mvcc.xml:658(para)
 msgid ""
 "Predicate locks in <productname>PostgreSQL</productname>, like in most other "
 "database systems, are based on data actually accessed by a transaction. "
@@ -968,7 +968,7 @@ msgstr ""
 "фиксирования транзакции, пока не будут завершены другие, наложившиеся на неё "
 "транзакции."
 
-#: mvcc.xml:679(para)
+#: mvcc.xml:682(para)
 msgid ""
 "Consistent use of Serializable transactions can simplify development. The "
 "guarantee that any set of successfully committed concurrent Serializable "
@@ -1009,7 +1009,7 @@ msgstr ""
 "literal> или <literal>SELECT FOR SHARE</literal>, использовать сериализуемые "
 "транзакции в ряде случаев окажется выгоднее."
 
-#: mvcc.xml:701(para)
+#: mvcc.xml:704(para)
 msgid ""
 "While <productname>PostgreSQL</productname>'s Serializable transaction "
 "isolation level only allows concurrent transactions to commit if it can "
@@ -1047,13 +1047,13 @@ msgstr ""
 "уникальности, даже когда они не наблюдались бы при последовательном "
 "выполнении этих транзакций."
 
-#: mvcc.xml:727(para)
+#: mvcc.xml:730(para)
 msgid "Declare transactions as <literal>READ ONLY</literal> when possible."
 msgstr ""
 "Объявляйте транзакции как <literal>READ ONLY</literal>, если это отражает их "
 "суть."
 
-#: mvcc.xml:732(para)
+#: mvcc.xml:735(para)
 msgid ""
 "Control the number of active connections, using a connection pool if needed. "
 "This is always an important performance consideration, but it can be "
@@ -1063,14 +1063,14 @@ msgstr ""
 "соединений. Это всегда полезно для увеличения производительности, но "
 "особенно важно это в загруженной системе с сериализуемыми транзакциями."
 
-#: mvcc.xml:740(para)
+#: mvcc.xml:743(para)
 msgid ""
 "Don't put more into a single transaction than needed for integrity purposes."
 msgstr ""
 "Заключайте в одну транзакцию не больше команд, чем необходимо для "
 "обеспечения целостности."
 
-#: mvcc.xml:746(para)
+#: mvcc.xml:749(para)
 msgid ""
 "Don't leave connections dangling <quote>idle in transaction</quote> longer "
 "than necessary. The configuration parameter <xref linkend=\"guc-idle-in-"
@@ -1082,7 +1082,7 @@ msgstr ""
 "применить параметр конфигурации <xref linkend=\"guc-idle-in-transaction-"
 "session-timeout\"/>."
 
-#: mvcc.xml:754(para)
+#: mvcc.xml:757(para)
 msgid ""
 "Eliminate explicit locks, <literal>SELECT FOR UPDATE</literal>, and "
 "<literal>SELECT FOR SHARE</literal> where no longer needed due to the "
@@ -1092,7 +1092,7 @@ msgstr ""
 "<literal>SELECT FOR SHARE</literal> там, где они не нужны благодаря защите, "
 "автоматически предоставляемой сериализуемыми транзакциями."
 
-#: mvcc.xml:761(para)
+#: mvcc.xml:764(para)
 msgid ""
 "When the system is forced to combine multiple page-level predicate locks "
 "into a single relation-level predicate lock because the predicate lock table "
@@ -1105,7 +1105,7 @@ msgstr ""
 "возрасти частота сбоев сериализации. Избежать этого можно, увеличив параметр "
 "<xref linkend=\"guc-max-pred-locks-per-transaction\"/>."
 
-#: mvcc.xml:770(para)
+#: mvcc.xml:773(para)
 msgid ""
 "A sequential scan will always necessitate a relation-level predicate lock. "
 "This can result in an increased rate of serialization failures. It may be "
@@ -1122,7 +1122,7 @@ msgstr ""
 "числа откатов и перезапусков транзакций с проигрышем от возможного менее "
 "эффективного выполнения запросов."
 
-#: mvcc.xml:721(para)
+#: mvcc.xml:724(para)
 msgid ""
 "For optimal performance when relying on Serializable transactions for "
 "concurrency control, these issues should be considered: <placeholder-1/>"
@@ -1130,15 +1130,15 @@ msgstr ""
 "Применяя сериализуемые транзакции для управления конкурентным доступом, "
 "примите к сведению следующие рекомендации: <placeholder-1/>"
 
-#: mvcc.xml:786(title)
+#: mvcc.xml:789(title)
 msgid "Explicit Locking"
 msgstr "Явные блокировки"
 
-#: mvcc.xml:788(indexterm)
+#: mvcc.xml:791(indexterm)
 msgid "<primary>lock</primary>"
 msgstr "<primary>lock</primary>"
 
-#: mvcc.xml:792(para)
+#: mvcc.xml:795(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides various lock modes to control "
 "concurrent access to data in tables. These modes can be used for application-"
@@ -1162,7 +1162,7 @@ msgstr ""
 "таблицей, так что во избежание конфликта эта команда получает исключительную "
 "блокировку для данной таблицы.)"
 
-#: mvcc.xml:805(para)
+#: mvcc.xml:808(para)
 msgid ""
 "To examine a list of the currently outstanding locks in a database server, "
 "use the <link linkend=\"view-pg-locks\"><structname>pg_locks</structname></"
@@ -1175,15 +1175,15 @@ msgstr ""
 "наблюдении за состоянием менеджера блокировок обратитесь к <xref remap=\"3\" "
 "linkend=\"monitoring\"/>."
 
-#: mvcc.xml:814(title)
+#: mvcc.xml:817(title)
 msgid "Table-level Locks"
 msgstr "Блокировки на уровне таблицы"
 
-#: mvcc.xml:816(indexterm)
+#: mvcc.xml:819(indexterm)
 msgid "<primary>LOCK</primary>"
 msgstr "<primary>LOCK</primary>"
 
-#: mvcc.xml:820(para)
+#: mvcc.xml:823(para)
 msgid ""
 "The list below shows the available lock modes and the contexts in which they "
 "are used automatically by <productname>PostgreSQL</productname>. You can "
@@ -1226,21 +1226,21 @@ msgstr ""
 "&mdash; нет (например, блокировку <literal>ACCESS SHARE</literal> могут "
 "получить сразу несколько транзакций)."
 
-#: mvcc.xml:846(title)
+#: mvcc.xml:849(title)
 msgid "Table-level Lock Modes"
 msgstr "Режимы блокировок на уровне таблицы"
 
-#: mvcc.xml:849(literal)
+#: mvcc.xml:852(literal)
 msgctxt "literal"
 msgid "ACCESS SHARE"
 msgstr "ACCESS SHARE"
 
-#: mvcc.xml:852(para)
+#: mvcc.xml:855(para)
 msgid "Conflicts with the <literal>ACCESS EXCLUSIVE</literal> lock mode only."
 msgstr ""
 "Конфликтует только с режимом блокировки <literal>ACCESS EXCLUSIVE</literal>."
 
-#: mvcc.xml:857(para)
+#: mvcc.xml:860(para)
 msgid ""
 "The <command>SELECT</command> command acquires a lock of this mode on "
 "referenced tables. In general, any query that only <emphasis>reads</"
@@ -1251,12 +1251,12 @@ msgstr ""
 "любой запрос, который только <emphasis>читает</emphasis> таблицу, но не "
 "меняет её данные."
 
-#: mvcc.xml:867(literal)
+#: mvcc.xml:870(literal)
 msgctxt "literal"
 msgid "ROW SHARE"
 msgstr "ROW SHARE"
 
-#: mvcc.xml:870(para)
+#: mvcc.xml:873(para)
 msgid ""
 "Conflicts with the <literal>EXCLUSIVE</literal> and <literal>ACCESS "
 "EXCLUSIVE</literal> lock modes."
@@ -1264,7 +1264,7 @@ msgstr ""
 "Конфликтует с режимами блокировки <literal>EXCLUSIVE</literal> и "
 "<literal>ACCESS EXCLUSIVE</literal>."
 
-#: mvcc.xml:875(para)
+#: mvcc.xml:878(para)
 msgid ""
 "The <command>SELECT FOR UPDATE</command> and <command>SELECT FOR SHARE</"
 "command> commands acquire a lock of this mode on the target table(s) (in "
@@ -1277,12 +1277,12 @@ msgstr ""
 "используется в этих запросов, но не в предложении <option>FOR UPDATE/FOR "
 "SHARE</option>)."
 
-#: mvcc.xml:888(literal)
+#: mvcc.xml:891(literal)
 msgctxt "literal"
 msgid "ROW EXCLUSIVE"
 msgstr "ROW EXCLUSIVE"
 
-#: mvcc.xml:891(para)
+#: mvcc.xml:894(para)
 msgid ""
 "Conflicts with the <literal>SHARE</literal>, <literal>SHARE ROW EXCLUSIVE</"
 "literal>, <literal>EXCLUSIVE</literal>, and <literal>ACCESS EXCLUSIVE</"
@@ -1292,7 +1292,7 @@ msgstr ""
 "ROW EXCLUSIVE</literal>, <literal>EXCLUSIVE</literal> и <literal>ACCESS "
 "EXCLUSIVE</literal>."
 
-#: mvcc.xml:897(para)
+#: mvcc.xml:900(para)
 msgid ""
 "The commands <command>UPDATE</command>, <command>DELETE</command>, and "
 "<command>INSERT</command> acquire this lock mode on the target table (in "
@@ -1306,12 +1306,12 @@ msgstr ""
 "задействованных таблиц). Вообще говоря, блокировку в этом режиме получает "
 "любая команда, которая <emphasis>изменяет данные</emphasis> в таблице."
 
-#: mvcc.xml:910(literal)
+#: mvcc.xml:913(literal)
 msgctxt "literal"
 msgid "SHARE UPDATE EXCLUSIVE"
 msgstr "SHARE UPDATE EXCLUSIVE"
 
-#: mvcc.xml:913(para)
+#: mvcc.xml:916(para)
 msgid ""
 "Conflicts with the <literal>SHARE UPDATE EXCLUSIVE</literal>, "
 "<literal>SHARE</literal>, <literal>SHARE ROW EXCLUSIVE</literal>, "
@@ -1325,7 +1325,7 @@ msgstr ""
 "режим защищает таблицу от параллельного изменения схемы и запуска процесса "
 "<command>VACUUM</command>."
 
-#: mvcc.xml:922(para)
+#: mvcc.xml:925(para)
 msgid ""
 "Acquired by <command>VACUUM</command> (without <option>FULL</option>), "
 "<command>ANALYZE</command>, <command>CREATE INDEX CONCURRENTLY</command>, "
@@ -1338,12 +1338,12 @@ msgstr ""
 "<command>ALTER TABLE</command> (за подробностями обратитесь к <xref remap="
 "\"3\" linkend=\"sql-altertable\"/>)."
 
-#: mvcc.xml:934(literal)
+#: mvcc.xml:937(literal)
 msgctxt "literal"
 msgid "SHARE"
 msgstr "SHARE"
 
-#: mvcc.xml:937(para)
+#: mvcc.xml:940(para)
 msgid ""
 "Conflicts with the <literal>ROW EXCLUSIVE</literal>, <literal>SHARE UPDATE "
 "EXCLUSIVE</literal>, <literal>SHARE ROW EXCLUSIVE</literal>, "
@@ -1355,7 +1355,7 @@ msgstr ""
 "literal>, <literal>EXCLUSIVE</literal> и <literal>ACCESS EXCLUSIVE</"
 "literal>. Этот режим защищает таблицу от параллельного изменения данных."
 
-#: mvcc.xml:945(para)
+#: mvcc.xml:948(para)
 msgid ""
 "Acquired by <command>CREATE INDEX</command> (without <option>CONCURRENTLY</"
 "option>)."
@@ -1363,12 +1363,12 @@ msgstr ""
 "Запрашивается командой <command>CREATE INDEX</command> (без параметра "
 "<option>CONCURRENTLY</option>)."
 
-#: mvcc.xml:954(literal)
+#: mvcc.xml:957(literal)
 msgctxt "literal"
 msgid "SHARE ROW EXCLUSIVE"
 msgstr "SHARE ROW EXCLUSIVE"
 
-#: mvcc.xml:957(para)
+#: mvcc.xml:960(para)
 msgid ""
 "Conflicts with the <literal>ROW EXCLUSIVE</literal>, <literal>SHARE UPDATE "
 "EXCLUSIVE</literal>, <literal>SHARE</literal>, <literal>SHARE ROW EXCLUSIVE</"
@@ -1384,7 +1384,7 @@ msgstr ""
 "параллельных изменений данных и при этом он является самоисключающим, так "
 "что такую блокировку может получить только один сеанс."
 
-#: mvcc.xml:967(para)
+#: mvcc.xml:970(para)
 msgid ""
 "Acquired by <command>CREATE TRIGGER</command> and many forms of "
 "<command>ALTER TABLE</command> (see <xref linkend=\"sql-altertable\"/>)."
@@ -1393,12 +1393,12 @@ msgstr ""
 "<command>ALTER TABLE</command> (см. <xref remap=\"4\" linkend=\"sql-"
 "altertable\"/>)."
 
-#: mvcc.xml:976(literal)
+#: mvcc.xml:979(literal)
 msgctxt "literal"
 msgid "EXCLUSIVE"
 msgstr "EXCLUSIVE"
 
-#: mvcc.xml:979(para)
+#: mvcc.xml:982(para)
 msgid ""
 "Conflicts with the <literal>ROW SHARE</literal>, <literal>ROW EXCLUSIVE</"
 "literal>, <literal>SHARE UPDATE EXCLUSIVE</literal>, <literal>SHARE</"
@@ -1416,18 +1416,18 @@ msgstr ""
 "есть параллельно с транзакцией, получившей блокировку в этой режиме, "
 "допускается только чтение таблицы."
 
-#: mvcc.xml:990(para)
+#: mvcc.xml:993(para)
 msgid "Acquired by <command>REFRESH MATERIALIZED VIEW CONCURRENTLY</command>."
 msgstr ""
 "Запрашивается командой <command>REFRESH MATERIALIZED VIEW CONCURRENTLY</"
 "command>."
 
-#: mvcc.xml:998(literal)
+#: mvcc.xml:1001(literal)
 msgctxt "literal"
 msgid "ACCESS EXCLUSIVE"
 msgstr "ACCESS EXCLUSIVE"
 
-#: mvcc.xml:1001(para)
+#: mvcc.xml:1004(para)
 msgid ""
 "Conflicts with locks of all modes (<literal>ACCESS SHARE</literal>, "
 "<literal>ROW SHARE</literal>, <literal>ROW EXCLUSIVE</literal>, "
@@ -1444,7 +1444,7 @@ msgstr ""
 "транзакции, получившей эту блокировку, никакая другая транзакция не может "
 "обращаться к таблице каким-либо способом."
 
-#: mvcc.xml:1012(para)
+#: mvcc.xml:1015(para)
 msgid ""
 "Acquired by the <command>DROP TABLE</command>, <command>TRUNCATE</command>, "
 "<command>REINDEX</command>, <command>CLUSTER</command>, <command>VACUUM "
@@ -1462,7 +1462,7 @@ msgstr ""
 "по умолчанию запрашивают блокировку и операторы <command>LOCK TABLE</"
 "command>, если явно не выбран другой режим."
 
-#: mvcc.xml:1028(para)
+#: mvcc.xml:1031(para)
 msgid ""
 "Only an <literal>ACCESS EXCLUSIVE</literal> lock blocks a <command>SELECT</"
 "command> (without <option>FOR UPDATE/SHARE</option>) statement."
@@ -1470,7 +1470,7 @@ msgstr ""
 "Только блокировка <literal>ACCESS EXCLUSIVE</literal> блокирует оператор "
 "<command>SELECT</command> (без <option>FOR UPDATE/SHARE</option>)."
 
-#: mvcc.xml:1035(para)
+#: mvcc.xml:1038(para)
 msgid ""
 "Once acquired, a lock is normally held till end of transaction. But if a "
 "lock is acquired after establishing a savepoint, the lock is released "
@@ -1488,82 +1488,82 @@ msgstr ""
 "полученных в блоке исключений <application>PL/pgSQL</application>: при "
 "выходе из блока с ошибкой такие блокировки освобождаются."
 
-#: mvcc.xml:1048(title)
+#: mvcc.xml:1051(title)
 msgid "Conflicting Lock Modes"
 msgstr "Конфликтующие режимы блокировки"
 
-#: mvcc.xml:1055(entry) mvcc.xml:1288(entry)
+#: mvcc.xml:1058(entry) mvcc.xml:1291(entry)
 msgid "Requested Lock Mode"
 msgstr "Запраши&zwsp;ваемый режим блоки&zwsp;ровки"
 
-#: mvcc.xml:1056(entry) mvcc.xml:1289(entry)
+#: mvcc.xml:1059(entry) mvcc.xml:1292(entry)
 msgid "Current Lock Mode"
 msgstr "Текущий режим блокировки"
 
-#: mvcc.xml:1059(entry) mvcc.xml:1071(entry)
+#: mvcc.xml:1062(entry) mvcc.xml:1074(entry)
 msgctxt "entry"
 msgid "ACCESS SHARE"
 msgstr "ACCESS SHARE"
 
-#: mvcc.xml:1060(entry) mvcc.xml:1082(entry)
+#: mvcc.xml:1063(entry) mvcc.xml:1085(entry)
 msgctxt "entry"
 msgid "ROW SHARE"
 msgstr "ROW SHARE"
 
-#: mvcc.xml:1061(entry) mvcc.xml:1093(entry)
+#: mvcc.xml:1064(entry) mvcc.xml:1096(entry)
 msgctxt "entry"
 msgid "ROW EXCLUSIVE"
 msgstr "ROW EXCLUSIVE"
 
-#: mvcc.xml:1062(entry) mvcc.xml:1104(entry)
+#: mvcc.xml:1065(entry) mvcc.xml:1107(entry)
 msgctxt "entry"
 msgid "SHARE UPDATE EXCLUSIVE"
 msgstr "SHARE UPDATE EXCLUSIVE"
 
-#: mvcc.xml:1063(entry) mvcc.xml:1115(entry)
+#: mvcc.xml:1066(entry) mvcc.xml:1118(entry)
 msgctxt "entry"
 msgid "SHARE"
 msgstr "SHARE"
 
-#: mvcc.xml:1064(entry) mvcc.xml:1126(entry)
+#: mvcc.xml:1067(entry) mvcc.xml:1129(entry)
 msgctxt "entry"
 msgid "SHARE ROW EXCLUSIVE"
 msgstr "SHARE ROW EXCLUSIVE"
 
-#: mvcc.xml:1065(entry) mvcc.xml:1137(entry)
+#: mvcc.xml:1068(entry) mvcc.xml:1140(entry)
 msgctxt "entry"
 msgid "EXCLUSIVE"
 msgstr "EXCLU&zwsp;SIVE"
 
-#: mvcc.xml:1066(entry) mvcc.xml:1148(entry)
+#: mvcc.xml:1069(entry) mvcc.xml:1151(entry)
 msgctxt "entry"
 msgid "ACCESS EXCLUSIVE"
 msgstr "ACCESS EXCLUSIVE"
 
-#: mvcc.xml:1079(entry) mvcc.xml:1089(entry) mvcc.xml:1090(entry)
-#: mvcc.xml:1098(entry) mvcc.xml:1099(entry) mvcc.xml:1100(entry)
-#: mvcc.xml:1101(entry) mvcc.xml:1108(entry) mvcc.xml:1109(entry)
-#: mvcc.xml:1110(entry) mvcc.xml:1111(entry) mvcc.xml:1112(entry)
-#: mvcc.xml:1118(entry) mvcc.xml:1119(entry) mvcc.xml:1121(entry)
-#: mvcc.xml:1122(entry) mvcc.xml:1123(entry) mvcc.xml:1129(entry)
-#: mvcc.xml:1130(entry) mvcc.xml:1131(entry) mvcc.xml:1132(entry)
-#: mvcc.xml:1133(entry) mvcc.xml:1134(entry) mvcc.xml:1139(entry)
-#: mvcc.xml:1140(entry) mvcc.xml:1141(entry) mvcc.xml:1142(entry)
+#: mvcc.xml:1082(entry) mvcc.xml:1092(entry) mvcc.xml:1093(entry)
+#: mvcc.xml:1101(entry) mvcc.xml:1102(entry) mvcc.xml:1103(entry)
+#: mvcc.xml:1104(entry) mvcc.xml:1111(entry) mvcc.xml:1112(entry)
+#: mvcc.xml:1113(entry) mvcc.xml:1114(entry) mvcc.xml:1115(entry)
+#: mvcc.xml:1121(entry) mvcc.xml:1122(entry) mvcc.xml:1124(entry)
+#: mvcc.xml:1125(entry) mvcc.xml:1126(entry) mvcc.xml:1132(entry)
+#: mvcc.xml:1133(entry) mvcc.xml:1134(entry) mvcc.xml:1135(entry)
+#: mvcc.xml:1136(entry) mvcc.xml:1137(entry) mvcc.xml:1142(entry)
 #: mvcc.xml:1143(entry) mvcc.xml:1144(entry) mvcc.xml:1145(entry)
-#: mvcc.xml:1149(entry) mvcc.xml:1150(entry) mvcc.xml:1151(entry)
+#: mvcc.xml:1146(entry) mvcc.xml:1147(entry) mvcc.xml:1148(entry)
 #: mvcc.xml:1152(entry) mvcc.xml:1153(entry) mvcc.xml:1154(entry)
-#: mvcc.xml:1155(entry) mvcc.xml:1156(entry) mvcc.xml:1304(entry)
-#: mvcc.xml:1310(entry) mvcc.xml:1311(entry) mvcc.xml:1316(entry)
-#: mvcc.xml:1317(entry) mvcc.xml:1318(entry) mvcc.xml:1322(entry)
-#: mvcc.xml:1323(entry) mvcc.xml:1324(entry) mvcc.xml:1325(entry)
+#: mvcc.xml:1155(entry) mvcc.xml:1156(entry) mvcc.xml:1157(entry)
+#: mvcc.xml:1158(entry) mvcc.xml:1159(entry) mvcc.xml:1307(entry)
+#: mvcc.xml:1313(entry) mvcc.xml:1314(entry) mvcc.xml:1319(entry)
+#: mvcc.xml:1320(entry) mvcc.xml:1321(entry) mvcc.xml:1325(entry)
+#: mvcc.xml:1326(entry) mvcc.xml:1327(entry) mvcc.xml:1328(entry)
 msgid "X"
 msgstr "X"
 
-#: mvcc.xml:1164(title)
+#: mvcc.xml:1167(title)
 msgid "Row-level Locks"
 msgstr "Блокировки на уровне строк"
 
-#: mvcc.xml:1166(para)
+#: mvcc.xml:1169(para)
 msgid ""
 "In addition to table-level locks, there are row-level locks, which are "
 "listed as below with the contexts in which they are used automatically by "
@@ -1585,16 +1585,16 @@ msgstr ""
 "строки. Блокировки на уровне строк блокируют только <emphasis>запись в "
 "определённые строки</emphasis>, но никак не влияют на выборку."
 
-#: mvcc.xml:1179(title)
+#: mvcc.xml:1182(title)
 msgid "Row-level Lock Modes"
 msgstr "Режимы блокировки на уровне строк"
 
-#: mvcc.xml:1182(literal)
+#: mvcc.xml:1185(literal)
 msgctxt "literal"
 msgid "FOR UPDATE"
 msgstr "FOR UPDATE"
 
-#: mvcc.xml:1185(para)
+#: mvcc.xml:1188(para)
 msgid ""
 "<literal>FOR UPDATE</literal> causes the rows retrieved by the "
 "<command>SELECT</command> statement to be locked as though for update. This "
@@ -1629,7 +1629,7 @@ msgstr ""
 "начала транзакции. Подробнее это обсуждается в <xref remap=\"6\" linkend="
 "\"applevel-consistency\"/>."
 
-#: mvcc.xml:1207(para)
+#: mvcc.xml:1210(para)
 msgid ""
 "The <literal>FOR UPDATE</literal> lock mode is also acquired by any "
 "<command>DELETE</command> on a row, and also by an <command>UPDATE</command> "
@@ -1647,12 +1647,12 @@ msgstr ""
 "частичные индексы и индексы выражений это не распространяется), но в будущем "
 "это может поменяться."
 
-#: mvcc.xml:1221(literal)
+#: mvcc.xml:1224(literal)
 msgctxt "literal"
 msgid "FOR NO KEY UPDATE"
 msgstr "FOR NO KEY UPDATE"
 
-#: mvcc.xml:1224(para)
+#: mvcc.xml:1227(para)
 msgid ""
 "Behaves similarly to <literal>FOR UPDATE</literal>, except that the lock "
 "acquired is weaker: this lock will not block <literal>SELECT FOR KEY SHARE</"
@@ -1666,12 +1666,12 @@ msgstr ""
 "режим блокировки также запрашивается любой командой <command>UPDATE</"
 "command>, которая не требует блокировки <literal>FOR UPDATE</literal>."
 
-#: mvcc.xml:1236(literal)
+#: mvcc.xml:1239(literal)
 msgctxt "literal"
 msgid "FOR SHARE"
 msgstr "FOR SHARE"
 
-#: mvcc.xml:1239(para)
+#: mvcc.xml:1242(para)
 msgid ""
 "Behaves similarly to <literal>FOR NO KEY UPDATE</literal>, except that it "
 "acquires a shared lock rather than exclusive lock on each retrieved row. A "
@@ -1689,12 +1689,12 @@ msgstr ""
 "<command>SELECT FOR NO KEY UPDATE</command>, но допускает <command>SELECT "
 "FOR SHARE</command> и <command>SELECT FOR KEY SHARE</command>."
 
-#: mvcc.xml:1254(literal)
+#: mvcc.xml:1257(literal)
 msgctxt "literal"
 msgid "FOR KEY SHARE"
 msgstr "FOR KEY SHARE"
 
-#: mvcc.xml:1257(para)
+#: mvcc.xml:1260(para)
 msgid ""
 "Behaves similarly to <literal>FOR SHARE</literal>, except that the lock is "
 "weaker: <literal>SELECT FOR UPDATE</literal> is blocked, but not "
@@ -1714,7 +1714,7 @@ msgstr ""
 "<command>SELECT FOR NO KEY UPDATE</command>, <command>SELECT FOR SHARE</"
 "command> и <command>SELECT FOR KEY SHARE</command>."
 
-#: mvcc.xml:1271(para)
+#: mvcc.xml:1274(para)
 msgid ""
 "<productname>PostgreSQL</productname> doesn't remember any information about "
 "modified rows in memory, so there is no limit on the number of rows locked "
@@ -1728,35 +1728,35 @@ msgstr ""
 "<command>SELECT FOR UPDATE</command> изменяет выбранные строки, чтобы "
 "заблокировать их, при этом происходит запись на диск."
 
-#: mvcc.xml:1281(title)
+#: mvcc.xml:1284(title)
 msgid "Conflicting Row-level Locks"
 msgstr "Конфликтующие блокировки на уровне строк"
 
-#: mvcc.xml:1292(entry) mvcc.xml:1300(entry)
+#: mvcc.xml:1295(entry) mvcc.xml:1303(entry)
 msgctxt "entry"
 msgid "FOR KEY SHARE"
 msgstr "FOR KEY SHARE"
 
-#: mvcc.xml:1293(entry) mvcc.xml:1307(entry)
+#: mvcc.xml:1296(entry) mvcc.xml:1310(entry)
 msgctxt "entry"
 msgid "FOR SHARE"
 msgstr "FOR SHARE"
 
-#: mvcc.xml:1294(entry) mvcc.xml:1314(entry)
+#: mvcc.xml:1297(entry) mvcc.xml:1317(entry)
 msgctxt "entry"
 msgid "FOR NO KEY UPDATE"
 msgstr "FOR NO KEY UPDATE"
 
-#: mvcc.xml:1295(entry) mvcc.xml:1321(entry)
+#: mvcc.xml:1298(entry) mvcc.xml:1324(entry)
 msgctxt "entry"
 msgid "FOR UPDATE"
 msgstr "FOR UPDATE"
 
-#: mvcc.xml:1333(title)
+#: mvcc.xml:1336(title)
 msgid "Page-level Locks"
 msgstr "Блокировки на уровне страниц"
 
-#: mvcc.xml:1335(para)
+#: mvcc.xml:1338(para)
 msgid ""
 "In addition to table and row locks, page-level share/exclusive locks are "
 "used to control read/write access to table pages in the shared buffer pool. "
@@ -1771,15 +1771,15 @@ msgstr ""
 "обычно можно не задумываться о блокировках страниц, здесь они упоминаются "
 "только для полноты картины."
 
-#: mvcc.xml:1346(title)
+#: mvcc.xml:1349(title)
 msgid "Deadlocks"
 msgstr "Взаимоблокировки"
 
-#: mvcc.xml:1348(indexterm)
+#: mvcc.xml:1351(indexterm)
 msgid "<primary>deadlock</primary>"
 msgstr "<primary>взаимоблокировка</primary>"
 
-#: mvcc.xml:1352(para)
+#: mvcc.xml:1355(para)
 msgid ""
 "The use of explicit locking can increase the likelihood of "
 "<firstterm>deadlocks</firstterm>, wherein two (or more) transactions each "
@@ -1805,7 +1805,7 @@ msgstr ""
 "обычно сложно предсказать, так что рассчитывать на определённое поведение не "
 "следует.)"
 
-#: mvcc.xml:1367(para)
+#: mvcc.xml:1370(para)
 msgid ""
 "Note that deadlocks can also occur as the result of row-level locks (and "
 "thus, they can occur even if explicit locking is not used). Consider the "
@@ -1855,7 +1855,7 @@ msgstr ""
 "взаимоблокировка. <productname>PostgreSQL</productname> выявляет эту "
 "ситуацию и прерывает одну из транзакций."
 
-#: mvcc.xml:1407(para)
+#: mvcc.xml:1410(para)
 msgid ""
 "The best defense against deadlocks is generally to avoid them by being "
 "certain that all applications using a database acquire locks on multiple "
@@ -1875,7 +1875,7 @@ msgstr ""
 "потребуются. Если заранее обеспечить такой порядок нельзя, взаимоблокировки "
 "можно обработать по факту, повторяя прерванные транзакции."
 
-#: mvcc.xml:1420(para)
+#: mvcc.xml:1423(para)
 msgid ""
 "So long as no deadlock situation is detected, a transaction seeking either a "
 "table-level or row-level lock will wait indefinitely for conflicting locks "
@@ -1888,19 +1888,19 @@ msgstr ""
 "неограниченное время. Это означает, что приложения не должны оставлять "
 "транзакции открытыми долгое время (например, ожидая ввода пользователя)."
 
-#: mvcc.xml:1430(title)
+#: mvcc.xml:1433(title)
 msgid "Advisory Locks"
 msgstr "Рекомендательные блокировки"
 
-#: mvcc.xml:1432(indexterm)
+#: mvcc.xml:1435(indexterm)
 msgid "<primary>advisory lock</primary>"
 msgstr "<primary>рекомендательная блокировка</primary>"
 
-#: mvcc.xml:1436(indexterm)
-msgid "<primary>lock</primary><secondary>advisory</secondary>"
-msgstr "<primary>блокировка</primary><secondary>рекомендательная</secondary>"
+#: mvcc.xml:1439(indexterm)
+msgid "<primary>lock</primary> <secondary>advisory</secondary>"
+msgstr "<primary>блокировка</primary> <secondary>рекомендательная</secondary>"
 
-#: mvcc.xml:1440(para)
+#: mvcc.xml:1444(para)
 msgid ""
 "<productname>PostgreSQL</productname> provides a means for creating locks "
 "that have application-defined meanings. These are called <firstterm>advisory "
@@ -1926,7 +1926,7 @@ msgstr ""
 "быстрее, не нагружают таблицы и автоматически ликвидируется сервером в конце "
 "сеанса."
 
-#: mvcc.xml:1455(para)
+#: mvcc.xml:1459(para)
 msgid ""
 "There are two ways to acquire an advisory lock in <productname>PostgreSQL</"
 "productname>: at session level or at transaction level. Once acquired at "
@@ -1972,7 +1972,7 @@ msgstr ""
 "зависимости от того, на каком уровне (сеанса или транзакции) установлены или "
 "запрашиваются новые блокировки."
 
-#: mvcc.xml:1480(para)
+#: mvcc.xml:1484(para)
 msgid ""
 "Like all locks in <productname>PostgreSQL</productname>, a complete list of "
 "advisory locks currently held by any session can be found in the <link "
@@ -1984,7 +1984,7 @@ msgstr ""
 "в системном представлении <link linkend=\"view-pg-locks"
 "\"><structname>pg_locks</structname></link>."
 
-#: mvcc.xml:1488(para)
+#: mvcc.xml:1492(para)
 msgid ""
 "Both advisory locks and regular locks are stored in a shared memory pool "
 "whose size is defined by the configuration variables <xref linkend=\"guc-max-"
@@ -2002,7 +2002,7 @@ msgstr ""
 "блокировок, которые может выдать сервер, ограничивается обычно десятками или "
 "сотнями тысяч в зависимости от конфигурации сервера."
 
-#: mvcc.xml:1500(para)
+#: mvcc.xml:1504(para)
 msgid ""
 "In certain cases using advisory locking methods, especially in queries "
 "involving explicit ordering and <literal>LIMIT</literal> clauses, care must "
@@ -2041,7 +2041,7 @@ msgstr ""
 "точки зрения приложения такие блокировки окажутся в подвешенном состоянии, "
 "хотя они и будут отображаться в <structname>pg_locks</structname>."
 
-#: mvcc.xml:1523(para)
+#: mvcc.xml:1527(para)
 msgid ""
 "The functions provided to manipulate advisory locks are described in <xref "
 "linkend=\"functions-advisory-locks\"/>."
@@ -2049,11 +2049,11 @@ msgstr ""
 "Функции, предназначенные для работы с рекомендательными блокировками, "
 "описаны в <xref remap=\"6\" linkend=\"functions-advisory-locks\"/>."
 
-#: mvcc.xml:1532(title)
+#: mvcc.xml:1536(title)
 msgid "Data Consistency Checks at the Application Level"
 msgstr "Проверки целостности данных на уровне приложения"
 
-#: mvcc.xml:1534(para)
+#: mvcc.xml:1538(para)
 msgid ""
 "It is very difficult to enforce business rules regarding data integrity "
 "using Read Committed transactions because the view of the data is shifting "
@@ -2065,7 +2065,7 @@ msgstr ""
 "с каждым оператором и даже один оператор может не ограничиваться своим "
 "снимком состояния в случае конфликта записи."
 
-#: mvcc.xml:1541(para)
+#: mvcc.xml:1545(para)
 msgid ""
 "While a Repeatable Read transaction has a stable view of the data throughout "
 "its execution, there is a subtle issue with using <acronym>MVCC</acronym> "
@@ -2098,7 +2098,7 @@ msgstr ""
 "транзакций легко может возникнуть цикл. И когда он возникает, проверки "
 "целостности не будут работать правильно без дополнительных мер."
 
-#: mvcc.xml:1560(para)
+#: mvcc.xml:1564(para)
 msgid ""
 "As mentioned in <xref linkend=\"xact-serializable\"/>, Serializable "
 "transactions are just Repeatable Read transactions which add nonblocking "
@@ -2113,11 +2113,11 @@ msgstr ""
 "порядке транзакций, одна из этих транзакций откатывается и этот цикл таким "
 "образом разрывается."
 
-#: mvcc.xml:1570(title)
+#: mvcc.xml:1574(title)
 msgid "Enforcing Consistency With Serializable Transactions"
 msgstr "Обеспечение согласованности в сериализуемых транзакциях"
 
-#: mvcc.xml:1572(para)
+#: mvcc.xml:1576(para)
 msgid ""
 "If the Serializable transaction isolation level is used for all writes and "
 "for all reads which need a consistent view of the data, no other effort is "
@@ -2133,7 +2133,7 @@ msgstr ""
 "обеспечения целостности, в <productname>PostgreSQL</productname> в этом "
 "смысле будут <quote>просто работать</quote>."
 
-#: mvcc.xml:1581(para)
+#: mvcc.xml:1585(para)
 msgid ""
 "When using this technique, it will avoid creating an unnecessary burden for "
 "application programmers if the application software goes through a framework "
@@ -2154,13 +2154,13 @@ msgstr ""
 "уровней изоляции, непреднамеренного или с целью обойти проверки целостности, "
 "например проверять уровень изоляции в триггерах."
 
-#: mvcc.xml:1593(para)
+#: mvcc.xml:1597(para)
 msgid "See <xref linkend=\"xact-serializable\"/> for performance suggestions."
 msgstr ""
 "Рекомендации по увеличению быстродействия приведены в <xref remap=\"6\" "
 "linkend=\"xact-serializable\"/>."
 
-#: mvcc.xml:1598(para)
+#: mvcc.xml:1602(para)
 msgid ""
 "This level of integrity protection using Serializable transactions does not "
 "yet extend to hot standby mode (<xref linkend=\"hot-standby\"/>). Because of "
@@ -2172,11 +2172,11 @@ msgstr ""
 "Поэтому там, где применяется горячий резерв, следует использовать уровень "
 "Repeatable Read и явные блокировки на главном сервере."
 
-#: mvcc.xml:1608(title)
+#: mvcc.xml:1612(title)
 msgid "Enforcing Consistency With Explicit Blocking Locks"
 msgstr "Применение явных блокировок для обеспечения согласованности"
 
-#: mvcc.xml:1610(para)
+#: mvcc.xml:1614(para)
 msgid ""
 "When non-serializable writes are possible, to ensure the current validity of "
 "a row and protect it against concurrent updates one must use <command>SELECT "
@@ -2196,7 +2196,7 @@ msgstr ""
 "TABLE</command> блокирует всю таблицу.) Это следует учитывать, перенося в "
 "<productname>PostgreSQL</productname> приложения из других СУБД."
 
-#: mvcc.xml:1623(para)
+#: mvcc.xml:1627(para)
 msgid ""
 "Also of note to those converting from other environments is the fact that "
 "<command>SELECT FOR UPDATE</command> does not ensure that a concurrent "
@@ -2224,7 +2224,7 @@ msgstr ""
 "операцию, если только для данной строки действительно не был выполнен "
 "<command>UPDATE</command>, пока транзакция владела блокировкой."
 
-#: mvcc.xml:1638(para)
+#: mvcc.xml:1642(para)
 msgid ""
 "Global validity checks require extra thought under non-serializable "
 "<acronym>MVCC</acronym>. For example, a banking application might wish to "
@@ -2268,7 +2268,7 @@ msgstr ""
 "таблице не будет незафиксированных изменений, за исключением тех, что внесла "
 "текущая транзакция."
 
-#: mvcc.xml:1661(para)
+#: mvcc.xml:1665(para)
 msgid ""
 "Note also that if one is relying on explicit locking to prevent concurrent "
 "changes, one should either use Read Committed mode, or in Repeatable Read "
@@ -2295,11 +2295,11 @@ msgstr ""
 "literal> или <literal>DELETE</literal>), так что получить явные блокировки "
 "можно до того, как он будет сформирован."
 
-#: mvcc.xml:1680(title)
+#: mvcc.xml:1684(title)
 msgid "Caveats"
 msgstr "Ограничения"
 
-#: mvcc.xml:1682(para)
+#: mvcc.xml:1686(para)
 msgid ""
 "Some DDL commands, currently only <xref linkend=\"sql-truncate\"/> and the "
 "table-rewriting forms of <xref linkend=\"sql-altertable\"/>, are not MVCC-"
@@ -2328,7 +2328,7 @@ msgstr ""
 "таблице, хотя возможно видимое несоответствие между содержимым целевой "
 "таблицы и другими таблицами в базе данных."
 
-#: mvcc.xml:1698(para)
+#: mvcc.xml:1702(para)
 msgid ""
 "Support for the Serializable transaction isolation level has not yet been "
 "added to Hot Standby replication targets (described in <xref linkend=\"hot-"
@@ -2349,20 +2349,20 @@ msgstr ""
 "состояние, не соответствующее результату последовательного выполнения "
 "транзакций на главном сервере."
 
-#: mvcc.xml:1712(title)
+#: mvcc.xml:1716(title)
 msgid "Locking and Indexes"
 msgstr "Блокировки и индексы"
 
-#: mvcc.xml:1714(indexterm)
-msgid "<primary>index</primary><secondary>locks</secondary>"
-msgstr "<primary>индексы</primary><secondary>блокировки</secondary>"
+#: mvcc.xml:1718(indexterm)
+msgid "<primary>index</primary> <secondary>locks</secondary>"
+msgstr "<primary>индексы</primary> <secondary>блокировки</secondary>"
 
-#: mvcc.xml:1728(term)
+#: mvcc.xml:1733(term)
 msgid "B-tree, <acronym>GiST</acronym> and <acronym>SP-GiST</acronym> indexes"
 msgstr ""
 "Индексы типа B-дерево, <acronym>GiST</acronym> и <acronym>SP-GiST</acronym>"
 
-#: mvcc.xml:1732(para)
+#: mvcc.xml:1737(para)
 msgid ""
 "Short-term share/exclusive page-level locks are used for read/write access. "
 "Locks are released immediately after each index row is fetched or inserted. "
@@ -2375,11 +2375,11 @@ msgstr ""
 "обеспечивают максимальное распараллеливание операций, не допуская "
 "взаимоблокировок."
 
-#: mvcc.xml:1742(term)
+#: mvcc.xml:1747(term)
 msgid "Hash indexes"
 msgstr "Хеш-индексы"
 
-#: mvcc.xml:1746(para)
+#: mvcc.xml:1751(para)
 msgid ""
 "Share/exclusive hash-bucket-level locks are used for read/write access. "
 "Locks are released after the whole bucket is processed. Bucket-level locks "
@@ -2392,11 +2392,11 @@ msgstr ""
 "не исключают взаимоблокировок, так как они сохраняются дольше, чем "
 "выполняется одна операция с индексом."
 
-#: mvcc.xml:1757(term)
+#: mvcc.xml:1762(term)
 msgid "<acronym>GIN</acronym> indexes"
 msgstr "Индексы <acronym>GIN</acronym>"
 
-#: mvcc.xml:1761(para)
+#: mvcc.xml:1766(para)
 msgid ""
 "Short-term share/exclusive page-level locks are used for read/write access. "
 "Locks are released immediately after each index row is fetched or inserted. "
@@ -2411,7 +2411,7 @@ msgstr ""
 "нескольких ключей индекса, так что GIN может проделывать целый ряд операций "
 "для одного значения."
 
-#: mvcc.xml:1718(para)
+#: mvcc.xml:1723(para)
 msgid ""
 "Though <productname>PostgreSQL</productname> provides nonblocking read/write "
 "access to table data, nonblocking read/write access is not currently offered "
@@ -2425,7 +2425,7 @@ msgstr ""
 "управляет доступом к различным типам индексов следующим образом: "
 "<placeholder-1/>"
 
-#: mvcc.xml:1774(para)
+#: mvcc.xml:1779(para)
 msgid ""
 "Currently, B-tree indexes offer the best performance for concurrent "
 "applications; since they also have more features than hash indexes, they are "

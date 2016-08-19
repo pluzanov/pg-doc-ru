@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -23,8 +23,9 @@ msgid "<primary>large object</primary>"
 msgstr "<primary>большой объект</primary>"
 
 #: lobj.xml:8(indexterm)
+#, fuzzy
 msgid "<primary>BLOB</primary><see>large object</see>"
-msgstr "<primary>BLOB</primary><see>большой объект</see>"
+msgstr "<primary>BLOB</primary> <see>большой объект</see>"
 
 #: lobj.xml:10(para)
 msgid ""
@@ -65,12 +66,12 @@ msgid "Introduction"
 msgstr "Введение"
 
 #: lobj.xml:32(indexterm)
-msgid "<primary>TOAST</primary><secondary>versus large objects</secondary>"
+msgid "<primary>TOAST</primary> <secondary>versus large objects</secondary>"
 msgstr ""
-"<primary>TOAST</primary><secondary>в сравнении с большими объектами</"
+"<primary>TOAST</primary> <secondary>в сравнении с большими объектами</"
 "secondary>"
 
-#: lobj.xml:36(para)
+#: lobj.xml:37(para)
 msgid ""
 "All large objects are stored in a single system table named <link linkend="
 "\"catalog-pg-largeobject\"><structname>pg_largeobject</structname></link>. "
@@ -87,7 +88,7 @@ msgstr ""
 "можно создавать, изменять и удалять, используя API чтения/записи, подобный "
 "стандартному API для работы с файлами."
 
-#: lobj.xml:45(para)
+#: lobj.xml:46(para)
 msgid ""
 "<productname>PostgreSQL</productname> also supports a storage system called "
 "<link linkend=\"storage-toast\"><quote><acronym>TOAST</acronym></quote></"
@@ -111,11 +112,11 @@ msgstr ""
 "по сравнению с полями <acronym>TOAST</acronym>, которые при большинстве "
 "операций считываются и записываются как единое целое."
 
-#: lobj.xml:62(title)
+#: lobj.xml:63(title)
 msgid "Implementation Features"
 msgstr "Особенности реализации"
 
-#: lobj.xml:64(para)
+#: lobj.xml:65(para)
 msgid ""
 "The large object implementation breaks large objects up into <quote>chunks</"
 "quote> and stores the chunks in rows in the database. A B-tree index "
@@ -127,7 +128,7 @@ msgstr ""
 "на запись и чтение быстрый поиск нужного фрагмента обеспечивается индексом-B-"
 "деревом в этой таблице."
 
-#: lobj.xml:72(para)
+#: lobj.xml:73(para)
 msgid ""
 "The chunks stored for a large object do not have to be contiguous. For "
 "example, if an application opens a new large object, seeks to offset "
@@ -147,7 +148,7 @@ msgstr ""
 "фрагменту. Это соответствует принятому поведению <quote>разреженных</quote> "
 "файлов в файловых системах <acronym>Unix</acronym>."
 
-#: lobj.xml:83(para)
+#: lobj.xml:84(para)
 msgid ""
 "As of <productname>PostgreSQL</productname> 9.0, large objects have an owner "
 "and a set of access permissions, which can be managed using <xref linkend="
@@ -170,11 +171,11 @@ msgstr ""
 "изменив параметр времени выполнения <xref linkend=\"guc-lo-compat-privileges"
 "\"/>."
 
-#: lobj.xml:100(title)
+#: lobj.xml:101(title)
 msgid "Client Interfaces"
 msgstr "Клиентские интерфейсы"
 
-#: lobj.xml:102(para)
+#: lobj.xml:103(para)
 msgid ""
 "This section describes the facilities that <productname>PostgreSQL</"
 "productname>'s <application>libpq</application> client interface library "
@@ -192,7 +193,7 @@ msgstr ""
 "<function>open</function>, <function>read</function>, <function>write</"
 "function>, <function>lseek</function> и т. д."
 
-#: lobj.xml:113(para)
+#: lobj.xml:114(para)
 msgid ""
 "All large object manipulation using these functions <emphasis>must</"
 "emphasis> take place within an SQL transaction block, since large object "
@@ -202,7 +203,7 @@ msgstr ""
 "<emphasis>должны</emphasis> иметь место в блоке транзакции SQL, так как "
 "дескрипторы больших объектов актуальны только во время транзакции."
 
-#: lobj.xml:120(para)
+#: lobj.xml:121(para)
 msgid ""
 "If an error occurs while executing any one of these functions, the function "
 "will return an otherwise-impossible value, typically 0 or -1. A message "
@@ -214,7 +215,7 @@ msgstr ""
 "описывающее ошибку, сохраняется в объекте соединения; получить его можно с "
 "помощью <function>PQerrorMessage</function>."
 
-#: lobj.xml:127(para)
+#: lobj.xml:128(para)
 msgid ""
 "Client applications that use these functions should include the header file "
 "<filename>libpq/libpq-fs.h</filename> and link with the <application>libpq</"
@@ -224,15 +225,15 @@ msgstr ""
 "заголовочный файл <filename>libpq/libpq-fs.h</filename> и компоноваться с "
 "библиотекой <application>libpq</application>."
 
-#: lobj.xml:134(title)
+#: lobj.xml:135(title)
 msgid "Creating a Large Object"
 msgstr "Создание большого объекта"
 
-#: lobj.xml:137(indexterm) lobj.xml:602(indexterm)
+#: lobj.xml:138(indexterm) lobj.xml:603(indexterm)
 msgid "<primary>lo_creat</primary>"
 msgstr "<primary>lo_creat</primary>"
 
-#: lobj.xml:136(para)
+#: lobj.xml:137(para)
 msgid ""
 "<placeholder-1/> The function <synopsis>\n"
 "Oid lo_creat(PGconn *conn, int mode);\n"
@@ -258,20 +259,20 @@ msgstr ""
 "(Эти константы определены в заголовочном файле <filename>libpq/libpq-fs.h</"
 "filename>.)"
 
-#: lobj.xml:157(programlisting)
+#: lobj.xml:158(programlisting)
 #, no-wrap
 msgid "inv_oid = lo_creat(conn, INV_READ|INV_WRITE);"
 msgstr "inv_oid = lo_creat(conn, INV_READ|INV_WRITE);"
 
-#: lobj.xml:155(para) lobj.xml:184(para) lobj.xml:295(para)
+#: lobj.xml:156(para) lobj.xml:185(para) lobj.xml:296(para)
 msgid "An example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: lobj.xml:163(indexterm)
+#: lobj.xml:164(indexterm)
 msgid "<primary>lo_create</primary>"
 msgstr "<primary>lo_create</primary>"
 
-#: lobj.xml:162(para)
+#: lobj.xml:163(para)
 msgid ""
 "<placeholder-1/> The function <synopsis>\n"
 "Oid lo_create(PGconn *conn, Oid lobjId);\n"
@@ -296,7 +297,7 @@ msgstr ""
 "назначенный новому большому объекту, либо <symbol>InvalidOid</symbol> (ноль) "
 "в случае ошибки."
 
-#: lobj.xml:178(para)
+#: lobj.xml:179(para)
 msgid ""
 "<function>lo_create</function> is new as of <productname>PostgreSQL</"
 "productname> 8.1; if this function is run against an older server version, "
@@ -306,31 +307,31 @@ msgstr ""
 "productname> 8.1; если попытаться выполнить её с сервером более старой "
 "версии, произойдёт ошибка и будет возвращено <symbol>InvalidOid</symbol>."
 
-#: lobj.xml:186(programlisting)
+#: lobj.xml:187(programlisting)
 #, no-wrap
 msgid "inv_oid = lo_create(conn, desired_oid);"
 msgstr "inv_oid = lo_create(conn, desired_oid);"
 
-#: lobj.xml:193(title)
+#: lobj.xml:194(title)
 msgid "Importing a Large Object"
 msgstr "Импорт большого объекта"
 
-#: lobj.xml:196(indexterm) lobj.xml:605(indexterm)
+#: lobj.xml:197(indexterm) lobj.xml:606(indexterm)
 msgid "<primary>lo_import</primary>"
 msgstr "<primary>lo_import</primary>"
 
-#: lobj.xml:195(para)
+#: lobj.xml:196(para)
+#, fuzzy
 msgid ""
 "<placeholder-1/> To import an operating system file as a large object, call "
 "<synopsis>\n"
 "Oid lo_import(PGconn *conn, const char *filename);\n"
-"</synopsis>\n"
-"     <replaceable class=\"parameter\">filename</replaceable> specifies the "
-"operating system name of the file to be imported as a large object. The "
-"return value is the OID that was assigned to the new large object, or "
-"<symbol>InvalidOid</symbol> (zero) on failure. Note that the file is read by "
-"the client interface library, not by the server; so it must exist in the "
-"client file system and be readable by the client application."
+"</synopsis> <replaceable class=\"parameter\">filename</replaceable> "
+"specifies the operating system name of the file to be imported as a large "
+"object. The return value is the OID that was assigned to the new large "
+"object, or <symbol>InvalidOid</symbol> (zero) on failure. Note that the file "
+"is read by the client interface library, not by the server; so it must exist "
+"in the client file system and be readable by the client application."
 msgstr ""
 "<placeholder-1/> Чтобы импортировать в качестве большого объекта файл "
 "операционной системы, вызовите <synopsis>\n"
@@ -344,11 +345,11 @@ msgstr ""
 "должен существовать в файловой системе на стороне клиента и быть доступным "
 "для чтения клиентскому приложению."
 
-#: lobj.xml:212(indexterm)
+#: lobj.xml:213(indexterm)
 msgid "<primary>lo_import_with_oid</primary>"
 msgstr "<primary>lo_import_with_oid</primary>"
 
-#: lobj.xml:211(para)
+#: lobj.xml:212(para)
 msgid ""
 "<placeholder-1/> The function <synopsis>\n"
 "Oid lo_import_with_oid(PGconn *conn, const char *filename, Oid lobjId);\n"
@@ -373,7 +374,7 @@ msgstr ""
 "назначенный новому большому объекту, либо <symbol>InvalidOid</symbol> (ноль) "
 "в случае ошибки."
 
-#: lobj.xml:227(para)
+#: lobj.xml:228(para)
 msgid ""
 "<function>lo_import_with_oid</function> is new as of "
 "<productname>PostgreSQL</productname> 8.4 and uses <function>lo_create</"
@@ -386,15 +387,15 @@ msgstr ""
 "её с сервером версии 8.0 или ранней, она завершится ошибкой и возвратит "
 "<symbol>InvalidOid</symbol>."
 
-#: lobj.xml:235(title)
+#: lobj.xml:236(title)
 msgid "Exporting a Large Object"
 msgstr "Экспорт большого объекта"
 
-#: lobj.xml:238(indexterm) lobj.xml:606(indexterm)
+#: lobj.xml:239(indexterm) lobj.xml:607(indexterm)
 msgid "<primary>lo_export</primary>"
 msgstr "<primary>lo_export</primary>"
 
-#: lobj.xml:237(para)
+#: lobj.xml:238(para)
 msgid ""
 "<placeholder-1/> To export a large object into an operating system file, "
 "call <synopsis>\n"
@@ -414,15 +415,15 @@ msgstr ""
 "записывается библиотекой клиентского интерфейса, а не сервером. Возвращает 1 "
 "при успешном выполнении, -1 при ошибке."
 
-#: lobj.xml:253(title)
+#: lobj.xml:254(title)
 msgid "Opening an Existing Large Object"
 msgstr "Открытие существующего большого объекта"
 
-#: lobj.xml:256(indexterm)
+#: lobj.xml:257(indexterm)
 msgid "<primary>lo_open</primary>"
 msgstr "<primary>lo_open</primary>"
 
-#: lobj.xml:255(para)
+#: lobj.xml:256(para)
 msgid ""
 "<placeholder-1/> To open an existing large object for reading or writing, "
 "call <synopsis>\n"
@@ -458,22 +459,23 @@ msgstr ""
 "<function>lo_close</function>. Этот дескриптор актуален только до завершения "
 "текущей транзакции. В случае ошибки возвращается -1."
 
-#: lobj.xml:278(para)
+#: lobj.xml:279(para)
+#, fuzzy
 msgid ""
 "The server currently does not distinguish between modes <symbol>INV_WRITE</"
-"symbol> and <symbol>INV_READ</symbol> <literal>|</literal>\n"
-"     <symbol>INV_WRITE</symbol>: you are allowed to read from the descriptor "
-"in either case. However there is a significant difference between these "
-"modes and <symbol>INV_READ</symbol> alone: with <symbol>INV_READ</symbol> "
-"you cannot write on the descriptor, and the data read from it will reflect "
-"the contents of the large object at the time of the transaction snapshot "
-"that was active when <function>lo_open</function> was executed, regardless "
-"of later writes by this or other transactions. Reading from a descriptor "
-"opened with <symbol>INV_WRITE</symbol> returns data that reflects all writes "
-"of other committed transactions as well as writes of the current "
-"transaction. This is similar to the behavior of <literal>REPEATABLE READ</"
-"literal> versus <literal>READ COMMITTED</literal> transaction modes for "
-"ordinary SQL <command>SELECT</command> commands."
+"symbol> and <symbol>INV_READ</symbol> <literal>|</literal> "
+"<symbol>INV_WRITE</symbol>: you are allowed to read from the descriptor in "
+"either case. However there is a significant difference between these modes "
+"and <symbol>INV_READ</symbol> alone: with <symbol>INV_READ</symbol> you "
+"cannot write on the descriptor, and the data read from it will reflect the "
+"contents of the large object at the time of the transaction snapshot that "
+"was active when <function>lo_open</function> was executed, regardless of "
+"later writes by this or other transactions. Reading from a descriptor opened "
+"with <symbol>INV_WRITE</symbol> returns data that reflects all writes of "
+"other committed transactions as well as writes of the current transaction. "
+"This is similar to the behavior of <literal>REPEATABLE READ</literal> versus "
+"<literal>READ COMMITTED</literal> transaction modes for ordinary SQL "
+"<command>SELECT</command> commands."
 msgstr ""
 "В настоящее время сервер не различает режимы <symbol>INV_WRITE</symbol> и "
 "<symbol>INV_READ</symbol> <literal>|</literal>\n"
@@ -490,20 +492,20 @@ msgstr ""
 "literal> и <literal>READ COMMITTED</literal> для обычных команд SQL "
 "<command>SELECT</command>."
 
-#: lobj.xml:297(programlisting)
+#: lobj.xml:298(programlisting)
 #, no-wrap
 msgid "inv_fd = lo_open(conn, inv_oid, INV_READ|INV_WRITE);"
 msgstr "inv_fd = lo_open(conn, inv_oid, INV_READ|INV_WRITE);"
 
-#: lobj.xml:304(title)
+#: lobj.xml:305(title)
 msgid "Writing Data to a Large Object"
 msgstr "Запись данных в большой объект"
 
-#: lobj.xml:307(indexterm)
+#: lobj.xml:308(indexterm)
 msgid "<primary>lo_write</primary>"
 msgstr "<primary>lo_write</primary>"
 
-#: lobj.xml:306(para)
+#: lobj.xml:307(para)
 msgid ""
 "<placeholder-1/> The function <synopsis>\n"
 "int lo_write(PGconn *conn, int fd, const char *buf, size_t len);\n"
@@ -526,7 +528,7 @@ msgstr ""
 "<parameter>len</parameter>, если только не произошла ошибка). В случае "
 "ошибки возвращается значение -1."
 
-#: lobj.xml:321(para) lobj.xml:348(para)
+#: lobj.xml:322(para) lobj.xml:349(para)
 msgid ""
 "Although the <parameter>len</parameter> parameter is declared as "
 "<type>size_t</type>, this function will reject length values larger than "
@@ -538,15 +540,15 @@ msgstr ""
 "literal>. На практике всё равно лучше передавать данные фрагментами не "
 "больше нескольких мегабайт."
 
-#: lobj.xml:330(title)
+#: lobj.xml:331(title)
 msgid "Reading Data from a Large Object"
 msgstr "Чтение данных из большого объекта"
 
-#: lobj.xml:333(indexterm)
+#: lobj.xml:334(indexterm)
 msgid "<primary>lo_read</primary>"
 msgstr "<primary>lo_read</primary>"
 
-#: lobj.xml:332(para)
+#: lobj.xml:333(para)
 msgid ""
 "<placeholder-1/> The function <synopsis>\n"
 "int lo_read(PGconn *conn, int fd, char *buf, size_t len);\n"
@@ -569,15 +571,15 @@ msgstr ""
 "<parameter>len</parameter>, если при чтении был достигнут конец объекта. В "
 "случае ошибки возвращается -1."
 
-#: lobj.xml:357(title)
+#: lobj.xml:358(title)
 msgid "Seeking in a Large Object"
 msgstr "Перемещение в большом объекте"
 
-#: lobj.xml:360(indexterm)
+#: lobj.xml:361(indexterm)
 msgid "<primary>lo_lseek</primary>"
 msgstr "<primary>lo_lseek</primary>"
 
-#: lobj.xml:359(para)
+#: lobj.xml:360(para)
 msgid ""
 "<placeholder-1/> To change the current read or write location associated "
 "with a large object descriptor, call <synopsis>\n"
@@ -602,11 +604,11 @@ msgstr ""
 "объекта). Возвращает эта функция новое положение указателя, либо -1 в случае "
 "ошибки."
 
-#: lobj.xml:377(indexterm)
+#: lobj.xml:378(indexterm)
 msgid "<primary>lo_lseek64</primary>"
 msgstr "<primary>lo_lseek64</primary>"
 
-#: lobj.xml:376(para)
+#: lobj.xml:377(para)
 msgid ""
 "<placeholder-1/> When dealing with large objects that might exceed 2GB in "
 "size, instead use <synopsis>\n"
@@ -625,7 +627,7 @@ msgstr ""
 "если новое положение указателя оказывается за границей в 2ГБ, функция "
 "<function>lo_lseek</function> выдаёт ошибку."
 
-#: lobj.xml:391(para)
+#: lobj.xml:392(para)
 msgid ""
 "<function>lo_lseek64</function> is new as of <productname>PostgreSQL</"
 "productname> 9.3. If this function is run against an older server version, "
@@ -635,15 +637,15 @@ msgstr ""
 "productname> 9.3. Если попытаться выполнить её с сервером более старой "
 "версии, произойдёт ошибка и будет возвращено -1."
 
-#: lobj.xml:400(title)
+#: lobj.xml:401(title)
 msgid "Obtaining the Seek Position of a Large Object"
 msgstr "Получение текущего положения в большом объекте"
 
-#: lobj.xml:403(indexterm)
+#: lobj.xml:404(indexterm)
 msgid "<primary>lo_tell</primary>"
 msgstr "<primary>lo_tell</primary>"
 
-#: lobj.xml:402(para)
+#: lobj.xml:403(para)
 msgid ""
 "<placeholder-1/> To obtain the current read or write location of a large "
 "object descriptor, call <synopsis>\n"
@@ -655,11 +657,11 @@ msgstr ""
 "int lo_tell(PGconn *conn, int fd);\n"
 "</synopsis> Если возникает ошибка, возвращается -1."
 
-#: lobj.xml:413(indexterm)
+#: lobj.xml:414(indexterm)
 msgid "<primary>lo_tell64</primary>"
 msgstr "<primary>lo_tell64</primary>"
 
-#: lobj.xml:412(para)
+#: lobj.xml:413(para)
 msgid ""
 "<placeholder-1/> When dealing with large objects that might exceed 2GB in "
 "size, instead use <synopsis>\n"
@@ -677,7 +679,7 @@ msgstr ""
 "<function>lo_tell</function> выдаёт ошибку, если текущее положение чтения/"
 "записи оказывается за границей в 2 ГБ."
 
-#: lobj.xml:426(para)
+#: lobj.xml:427(para)
 msgid ""
 "<function>lo_tell64</function> is new as of <productname>PostgreSQL</"
 "productname> 9.3. If this function is run against an older server version, "
@@ -687,15 +689,15 @@ msgstr ""
 "productname> 9.3. Если попытаться выполнить её с сервером более старой "
 "версии, произойдёт ошибка и будет возвращено -1."
 
-#: lobj.xml:434(title)
+#: lobj.xml:435(title)
 msgid "Truncating a Large Object"
 msgstr "Усечение большого объекта"
 
-#: lobj.xml:437(indexterm)
+#: lobj.xml:438(indexterm)
 msgid "<primary>lo_truncate</primary>"
 msgstr "<primary>lo_truncate</primary>"
 
-#: lobj.xml:436(para)
+#: lobj.xml:437(para)
 msgid ""
 "<placeholder-1/> To truncate a large object to a given length, call "
 "<synopsis>\n"
@@ -719,7 +721,7 @@ msgstr ""
 "нулевыми байтами ('\\0'). В случае успеха <function>lo_truncate</function> "
 "возвращает ноль, а при ошибке возвращается -1."
 
-#: lobj.xml:452(para)
+#: lobj.xml:453(para)
 msgid ""
 "The read/write location associated with the descriptor <parameter>fd</"
 "parameter> is not changed."
@@ -727,7 +729,7 @@ msgstr ""
 "Положение чтения/записи, связанное с дескриптором <parameter>fd</parameter>, "
 "при этом не меняется."
 
-#: lobj.xml:457(para)
+#: lobj.xml:458(para)
 msgid ""
 "Although the <parameter>len</parameter> parameter is declared as "
 "<type>size_t</type>, <function>lo_truncate</function> will reject length "
@@ -737,11 +739,11 @@ msgstr ""
 "<function>lo_truncate</function> не принимает значение длины, превышающее "
 "<literal>INT_MAX</literal>."
 
-#: lobj.xml:464(indexterm)
+#: lobj.xml:465(indexterm)
 msgid "<primary>lo_truncate64</primary>"
 msgstr "<primary>lo_truncate64</primary>"
 
-#: lobj.xml:463(para)
+#: lobj.xml:464(para)
 msgid ""
 "<placeholder-1/> When dealing with large objects that might exceed 2GB in "
 "size, instead use <synopsis>\n"
@@ -757,7 +759,7 @@ msgstr ""
 "function>, но может принимать значения <parameter>len</parameter>, "
 "превышающие 2 ГБ."
 
-#: lobj.xml:475(para)
+#: lobj.xml:476(para)
 msgid ""
 "<function>lo_truncate</function> is new as of <productname>PostgreSQL</"
 "productname> 8.3; if this function is run against an older server version, "
@@ -767,7 +769,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> 8.3; если попытаться выполнить её с "
 "сервером более старой версии, произойдёт ошибка и будет возвращено -1."
 
-#: lobj.xml:481(para)
+#: lobj.xml:482(para)
 msgid ""
 "<function>lo_truncate64</function> is new as of <productname>PostgreSQL</"
 "productname> 9.3; if this function is run against an older server version, "
@@ -777,15 +779,15 @@ msgstr ""
 "<productname>PostgreSQL</productname> 9.3; если попытаться выполнить её с "
 "сервером более старой версии, произойдёт ошибка и будет возвращено -1."
 
-#: lobj.xml:489(title)
+#: lobj.xml:490(title)
 msgid "Closing a Large Object Descriptor"
 msgstr "Закрытие дескриптора большого объекта"
 
-#: lobj.xml:492(indexterm)
+#: lobj.xml:493(indexterm)
 msgid "<primary>lo_close</primary>"
 msgstr "<primary>lo_close</primary>"
 
-#: lobj.xml:491(para)
+#: lobj.xml:492(para)
 msgid ""
 "<placeholder-1/> A large object descriptor can be closed by calling "
 "<synopsis>\n"
@@ -801,7 +803,7 @@ msgstr ""
 "возвращённый функцией <function>lo_open</function>. В случае успеха "
 "<function>lo_close</function> возвращает ноль. При ошибке возвращается -1."
 
-#: lobj.xml:503(para)
+#: lobj.xml:504(para)
 msgid ""
 "Any large object descriptors that remain open at the end of a transaction "
 "will be closed automatically."
@@ -809,15 +811,15 @@ msgstr ""
 "Все дескрипторы больших объектов, остающиеся открытыми в конце транзакции, "
 "закрываются автоматически."
 
-#: lobj.xml:510(title)
+#: lobj.xml:511(title)
 msgid "Removing a Large Object"
 msgstr "Удаление большого объекта"
 
-#: lobj.xml:513(indexterm) lobj.xml:604(indexterm)
+#: lobj.xml:514(indexterm) lobj.xml:605(indexterm)
 msgid "<primary>lo_unlink</primary>"
 msgstr "<primary>lo_unlink</primary>"
 
-#: lobj.xml:512(para)
+#: lobj.xml:513(para)
 msgid ""
 "<placeholder-1/> To remove a large object from the database, call "
 "<synopsis>\n"
@@ -832,11 +834,11 @@ msgstr ""
 "объекта, который нужно удалить. В случае успеха возвращается 1, а в случае "
 "ошибки -1."
 
-#: lobj.xml:526(title)
+#: lobj.xml:527(title)
 msgid "Server-side Functions"
 msgstr "Серверные функции"
 
-#: lobj.xml:528(para)
+#: lobj.xml:529(para)
 msgid ""
 "Server-side functions tailored for manipulating large objects from SQL are "
 "listed in <xref linkend=\"lo-funcs-table\"/>."
@@ -844,51 +846,51 @@ msgstr ""
 "Функции, предназначенные для работы с большими объектами на стороне сервера "
 "из SQL, перечислены в <xref remap=\"6\" linkend=\"lo-funcs-table\"/>."
 
-#: lobj.xml:534(title)
+#: lobj.xml:535(title)
 msgid "SQL-oriented Large Object Functions"
 msgstr "SQL-ориентированные функции для работы с большими объектами"
 
-#: lobj.xml:538(entry)
+#: lobj.xml:539(entry)
 msgid "Function"
 msgstr "Функция"
 
-#: lobj.xml:539(entry)
+#: lobj.xml:540(entry)
 msgid "Return Type"
 msgstr "Тип результата"
 
-#: lobj.xml:540(entry)
+#: lobj.xml:541(entry)
 msgid "Description"
 msgstr "Описание"
 
-#: lobj.xml:541(entry)
+#: lobj.xml:542(entry)
 msgid "Example"
 msgstr "Пример"
 
-#: lobj.xml:542(entry)
+#: lobj.xml:543(entry)
 msgid "Result"
 msgstr "Результат"
 
-#: lobj.xml:549(indexterm)
+#: lobj.xml:550(indexterm)
 msgid "<primary>lo_from_bytea</primary>"
 msgstr "<primary>lo_from_bytea</primary>"
 
-#: lobj.xml:552(parameter) lobj.xml:568(parameter) lobj.xml:583(parameter)
+#: lobj.xml:553(parameter) lobj.xml:569(parameter) lobj.xml:584(parameter)
 msgid "loid"
 msgstr "loid"
 
-#: lobj.xml:552(type) lobj.xml:554(type) lobj.xml:568(type) lobj.xml:583(type)
+#: lobj.xml:553(type) lobj.xml:555(type) lobj.xml:569(type) lobj.xml:584(type)
 msgid "oid"
 msgstr "oid"
 
-#: lobj.xml:552(parameter)
+#: lobj.xml:553(parameter)
 msgid "string"
 msgstr "string"
 
-#: lobj.xml:552(type) lobj.xml:568(type) lobj.xml:585(type)
+#: lobj.xml:553(type) lobj.xml:569(type) lobj.xml:586(type)
 msgid "bytea"
 msgstr "bytea"
 
-#: lobj.xml:552(function)
+#: lobj.xml:553(function)
 msgid ""
 "lo_from_bytea(<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>)"
@@ -896,7 +898,7 @@ msgstr ""
 "lo_from_bytea(<placeholder-1/> <placeholder-2/>, <placeholder-3/> "
 "<placeholder-4/>)"
 
-#: lobj.xml:555(entry)
+#: lobj.xml:556(entry)
 msgid ""
 "Create a large object and store data there, returning its OID. Pass "
 "<literal>0</literal> to have the system choose an OID."
@@ -904,31 +906,31 @@ msgstr ""
 "Создаёт большой объект, сохраняет в нём данные и возвращает его OID. С "
 "<literal>0</literal> система выбирает OID сама."
 
-#: lobj.xml:559(literal)
+#: lobj.xml:560(literal)
 msgid "lo_from_bytea(0, E'\\\\xffffff00')"
 msgstr "lo_from_bytea(0, E'\\\\xffffff00')"
 
-#: lobj.xml:560(literal)
+#: lobj.xml:561(literal)
 msgid "24528"
 msgstr "24528"
 
-#: lobj.xml:565(indexterm)
+#: lobj.xml:566(indexterm)
 msgid "<primary>lo_put</primary>"
 msgstr "<primary>lo_put</primary>"
 
-#: lobj.xml:568(parameter)
+#: lobj.xml:569(parameter)
 msgid "offset"
 msgstr "offset"
 
-#: lobj.xml:568(type) lobj.xml:583(type)
+#: lobj.xml:569(type) lobj.xml:584(type)
 msgid "bigint"
 msgstr "bigint"
 
-#: lobj.xml:568(parameter)
+#: lobj.xml:569(parameter)
 msgid "str"
 msgstr "str"
 
-#: lobj.xml:568(function)
+#: lobj.xml:569(function)
 msgid ""
 "lo_put(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>, "
 "<placeholder-5/> <placeholder-6/>)"
@@ -936,55 +938,55 @@ msgstr ""
 "lo_put(<placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>, "
 "<placeholder-5/> <placeholder-6/>)"
 
-#: lobj.xml:570(type)
+#: lobj.xml:571(type)
 msgid "void"
 msgstr "void"
 
-#: lobj.xml:571(entry)
+#: lobj.xml:572(entry)
 msgid "Write data at the given offset."
 msgstr "Записывает данные по заданному смещению."
 
-#: lobj.xml:574(literal)
+#: lobj.xml:575(literal)
 msgid "lo_put(24528, 1, E'\\\\xaa')"
 msgstr "lo_put(24528, 1, E'\\\\xaa')"
 
-#: lobj.xml:580(indexterm)
+#: lobj.xml:581(indexterm)
 msgid "<primary>lo_get</primary>"
 msgstr "<primary>lo_get</primary>"
 
-#: lobj.xml:583(parameter)
+#: lobj.xml:584(parameter)
 msgid "from"
 msgstr "from"
 
-#: lobj.xml:583(parameter)
+#: lobj.xml:584(parameter)
 msgid "for"
 msgstr "for"
 
-#: lobj.xml:583(type)
+#: lobj.xml:584(type)
 msgid "int"
 msgstr "int"
 
-#: lobj.xml:583(optional)
+#: lobj.xml:584(optional)
 msgid ", <placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>"
 msgstr ", <placeholder-1/> <placeholder-2/>, <placeholder-3/> <placeholder-4/>"
 
-#: lobj.xml:583(function)
+#: lobj.xml:584(function)
 msgid "lo_get(<placeholder-1/> <placeholder-2/> <placeholder-3/>)"
 msgstr "lo_get(<placeholder-1/> <placeholder-2/> <placeholder-3/>)"
 
-#: lobj.xml:586(entry)
+#: lobj.xml:587(entry)
 msgid "Extract contents or a substring thereof."
 msgstr "Извлекает содержимое подстроки."
 
-#: lobj.xml:589(literal)
+#: lobj.xml:590(literal)
 msgid "lo_get(24528, 0, 3)"
 msgstr "lo_get(24528, 0, 3)"
 
-#: lobj.xml:590(literal)
+#: lobj.xml:591(literal)
 msgid "\\xffaaff"
 msgstr "\\xffaaff"
 
-#: lobj.xml:609(programlisting)
+#: lobj.xml:610(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE image (\n"
@@ -1027,7 +1029,7 @@ msgstr ""
 "SELECT lo_export(image.raster, '/tmp/motd') FROM image\n"
 "    WHERE name = 'beautiful image';"
 
-#: lobj.xml:597(para)
+#: lobj.xml:598(para)
 msgid ""
 "There are additional server-side functions corresponding to each of the "
 "client-side functions described earlier; indeed, for the most part the "
@@ -1048,7 +1050,7 @@ msgstr ""
 "function><placeholder-4/>. Ниже приведены примеры их использования: "
 "<placeholder-5/>"
 
-#: lobj.xml:632(para)
+#: lobj.xml:633(para)
 msgid ""
 "The server-side <function>lo_import</function> and <function>lo_export</"
 "function> functions behave considerably differently from their client-side "
@@ -1068,7 +1070,7 @@ msgstr ""
 "клиентской программы. Для выполнения клиентских функций права "
 "суперпользователя не требуются."
 
-#: lobj.xml:643(para)
+#: lobj.xml:644(para)
 msgid ""
 "The functionality of <function>lo_read</function> and <function>lo_write</"
 "function> is also available via server-side calls, but the names of the "
@@ -1082,11 +1084,11 @@ msgstr ""
 "подчёркивания. Эти функции нужно вызывать по именам <function>loread</"
 "function> и <function>lowrite</function>."
 
-#: lobj.xml:654(title)
+#: lobj.xml:655(title)
 msgid "Example Program"
 msgstr "Пример программы"
 
-#: lobj.xml:656(para)
+#: lobj.xml:657(para)
 msgid ""
 "<xref linkend=\"lo-example\"/> is a sample program which shows how the large "
 "object interface in <application>libpq</application> can be used. Parts of "
@@ -1101,7 +1103,7 @@ msgstr ""
 "<filename>src/test/examples/testlo.c</filename> в дистрибутиве исходного "
 "кода."
 
-#: lobj.xml:666(title)
+#: lobj.xml:667(title)
 msgid "Large Objects with <application>libpq</application> Example Program"
 msgstr ""
 "Пример использования больших объектов с применением <application>libpq</"

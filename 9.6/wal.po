@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -418,10 +418,10 @@ msgid "<primary>WAL</primary>"
 msgstr "<primary>WAL</primary>"
 
 #: wal.xml:241(indexterm)
-msgid "<primary>transaction log</primary><see>WAL</see>"
-msgstr "<primary>журнал транзакций</primary><see>WAL</see>"
+msgid "<primary>transaction log</primary> <see>WAL</see>"
+msgstr "<primary>журнал транзакций</primary> <see>WAL</see>"
 
-#: wal.xml:245(para)
+#: wal.xml:246(para)
 msgid ""
 "<firstterm>Write-Ahead Logging</firstterm> (<acronym>WAL</acronym>) is a "
 "standard method for ensuring data integrity. A detailed description can be "
@@ -451,7 +451,7 @@ msgstr ""
 "записей журнала. (Это называется восстановлением с воспроизведением, или "
 "REDO.)"
 
-#: wal.xml:262(para)
+#: wal.xml:263(para)
 msgid ""
 "Because <acronym>WAL</acronym> restores database file contents after a "
 "crash, journaled file systems are not necessary for reliable storage of the "
@@ -473,7 +473,7 @@ msgstr ""
 "журналируемыми файловыми системами увеличивается скорость загрузки после "
 "сбоя."
 
-#: wal.xml:276(para)
+#: wal.xml:277(para)
 msgid ""
 "Using <acronym>WAL</acronym> results in a significantly reduced number of "
 "disk writes, because only the log file needs to be flushed to disk to "
@@ -497,7 +497,7 @@ msgstr ""
 "подтверждения многих транзакций достаточно одного вызова <function>fsync</"
 "function> на файл журнала."
 
-#: wal.xml:290(para)
+#: wal.xml:291(para)
 msgid ""
 "<acronym>WAL</acronym> also makes it possible to support on-line backup and "
 "point-in-time recovery, as described in <xref linkend=\"continuous-archiving"
@@ -520,19 +520,19 @@ msgstr ""
 "некоторое время назад, воспроизведение журнала WAL за этот период исправит "
 "все внутренние несоответствия."
 
-#: wal.xml:305(title)
+#: wal.xml:306(title)
 msgid "Asynchronous Commit"
 msgstr "Асинхронное подтверждение транзакций"
 
-#: wal.xml:307(indexterm)
+#: wal.xml:308(indexterm)
 msgid "<primary>synchronous commit</primary>"
 msgstr "<primary>синхронная фиксация данных</primary>"
 
-#: wal.xml:311(indexterm)
+#: wal.xml:312(indexterm)
 msgid "<primary>asynchronous commit</primary>"
 msgstr "<primary>асинхронная фиксация данных</primary>"
 
-#: wal.xml:315(para)
+#: wal.xml:316(para)
 msgid ""
 "<firstterm>Asynchronous commit</firstterm> is an option that allows "
 "transactions to complete more quickly, at the cost that the most recent "
@@ -544,7 +544,7 @@ msgstr ""
 "транзакции могут быть потеряны. Для многих приложений такой компромисс "
 "приемлем."
 
-#: wal.xml:322(para)
+#: wal.xml:323(para)
 msgid ""
 "As described in the previous section, transaction commit is normally "
 "<firstterm>synchronous</firstterm>: the server waits for the transaction's "
@@ -571,7 +571,7 @@ msgstr ""
 "на диск. Это может значительно увеличить производительность при выполнении "
 "небольших транзакций."
 
-#: wal.xml:337(para)
+#: wal.xml:338(para)
 msgid ""
 "Asynchronous commit introduces the risk of data loss. There is a short time "
 "window between the report of transaction completion to the client and the "
@@ -594,7 +594,7 @@ msgstr ""
 "случаях, таких как журналирование событий, столь серьёзная гарантия "
 "сохранности данных не нужна."
 
-#: wal.xml:350(para)
+#: wal.xml:351(para)
 msgid ""
 "The risk that is taken by using asynchronous commit is of data loss, not "
 "data corruption. If the database should crash, it will recover by replaying "
@@ -620,7 +620,7 @@ msgstr ""
 "такого, что изменения, выполненные \"A\" были потеряны, а изменения, "
 "внесённые \"B\" сохранены."
 
-#: wal.xml:364(para)
+#: wal.xml:365(para)
 msgid ""
 "The user can select the commit mode of each transaction, so that it is "
 "possible to have both synchronous and asynchronous commit transactions "
@@ -641,7 +641,7 @@ msgstr ""
 "значения <varname>synchronous_commit</varname>, которое действует на момент "
 "начала этой транзакции."
 
-#: wal.xml:376(para)
+#: wal.xml:377(para)
 msgid ""
 "Certain utility commands, for instance <command>DROP TABLE</command>, are "
 "forced to commit synchronously regardless of the setting of "
@@ -658,7 +658,7 @@ msgstr ""
 "подтверждение транзакций, такие как <command>PREPARE TRANSACTION</command>, "
 "также всегда синхронные."
 
-#: wal.xml:385(para)
+#: wal.xml:386(para)
 msgid ""
 "If the database crashes during the risk window between an asynchronous "
 "commit and the writing of the transaction's <acronym>WAL</acronym> records, "
@@ -681,7 +681,7 @@ msgstr ""
 "что WAL writer разработан так, чтобы сразу сохранять целые страницы во время "
 "периодов занятости."
 
-#: wal.xml:400(para)
+#: wal.xml:401(para)
 msgid ""
 "An immediate-mode shutdown is equivalent to a server crash, and will "
 "therefore cause loss of any unflushed asynchronous commits."
@@ -690,7 +690,7 @@ msgstr ""
 "и приведёт, таким образом, к потере всех не сохранённых асинхронных "
 "транзакций."
 
-#: wal.xml:406(para)
+#: wal.xml:407(para)
 msgid ""
 "Asynchronous commit provides behavior different from setting <xref linkend="
 "\"guc-fsync\"/> = off. <varname>fsync</varname> is a server-wide setting "
@@ -717,7 +717,7 @@ msgstr ""
 "предоставляет лучшую производительность, чем то, что можно получить "
 "выключением <varname>fsync</varname>, но без риска повреждения данных."
 
-#: wal.xml:421(para)
+#: wal.xml:422(para)
 msgid ""
 "<xref linkend=\"guc-commit-delay\"/> also sounds very similar to "
 "asynchronous commit, but it is actually a synchronous commit method (in "
@@ -743,11 +743,11 @@ msgstr ""
 "группируются для единовременной записи на диск. Это распределяет стоимость "
 "записи между несколькими транзакциями."
 
-#: wal.xml:437(title)
+#: wal.xml:438(title)
 msgid "<acronym>WAL</acronym> Configuration"
 msgstr "Настройка <acronym>WAL</acronym>"
 
-#: wal.xml:439(para)
+#: wal.xml:440(para)
 msgid ""
 "There are several <acronym>WAL</acronym>-related configuration parameters "
 "that affect database performance. This section explains their use. Consult "
@@ -759,11 +759,11 @@ msgstr ""
 "их использовании. Общую информацию об установке параметров конфигурации "
 "сервера смотрите в <xref remap=\"6\" linkend=\"runtime-config\"/>."
 
-#: wal.xml:447(indexterm)
+#: wal.xml:448(indexterm)
 msgid "<primary>checkpoint</primary>"
 msgstr "<primary>контрольная точка</primary>"
 
-#: wal.xml:446(para)
+#: wal.xml:447(para)
 msgid ""
 "<firstterm>Checkpoints</firstterm><placeholder-1/> are points in the "
 "sequence of transactions at which it is guaranteed that the heap and index "
@@ -796,7 +796,7 @@ msgstr ""
 "архивирование WAL будет завершено, сегменты журнала должны быть архивированы "
 "перед их удалением или циклической перезаписи.)"
 
-#: wal.xml:464(para)
+#: wal.xml:465(para)
 msgid ""
 "The checkpoint requirement of flushing all dirty data pages to disk can "
 "cause a significant I/O load. For this reason, checkpoint activity is "
@@ -811,7 +811,7 @@ msgstr ""
 "перед стартом следующей контрольной точки; это минимизирует потерю "
 "производительности во время прохождения контрольных точек."
 
-#: wal.xml:472(para)
+#: wal.xml:473(para)
 msgid ""
 "The server's checkpointer process automatically performs a checkpoint every "
 "so often. A checkpoint is begun every <xref linkend=\"guc-checkpoint-timeout"
@@ -839,7 +839,7 @@ msgstr ""
 "выполнить контрольную точку принудительно, воспользовавшись SQL-командой "
 "<command>CHECKPOINT</command>."
 
-#: wal.xml:489(para)
+#: wal.xml:490(para)
 msgid ""
 "Reducing <varname>checkpoint_timeout</varname> and/or <varname>max_wal_size</"
 "varname> causes checkpoints to occur more often. This allows faster after-"
@@ -867,7 +867,7 @@ msgstr ""
 "интервала записи, и в любом случае приводит к увеличению объёма обмена с "
 "диском"
 
-#: wal.xml:504(para)
+#: wal.xml:505(para)
 msgid ""
 "Checkpoints are fairly expensive, first because they require writing out all "
 "currently dirty buffers, and second because they result in extra subsequent "
@@ -900,7 +900,7 @@ msgstr ""
 "нескольких таких предупреждений, если вы не установили "
 "<varname>max_wal_size</varname> достаточно большим."
 
-#: wal.xml:522(para)
+#: wal.xml:523(para)
 msgid ""
 "To avoid flooding the I/O system with a burst of page writes, writing dirty "
 "buffers during a checkpoint is spread over a period of time. That period is "
@@ -947,7 +947,7 @@ msgstr ""
 "что приведёт к потере производительности из-за неожиданных колебаний "
 "требуемого количества сегментов WAL."
 
-#: wal.xml:548(para)
+#: wal.xml:549(para)
 msgid ""
 "On Linux and POSIX platforms <xref linkend=\"guc-checkpoint-flush-after\"/> "
 "allows to force the OS that pages written by the checkpoint should be "
@@ -968,7 +968,7 @@ msgstr ""
 "нагрузки больше <xref linkend=\"guc-shared-buffers\"/>, но меньше кеша "
 "страниц в ОС."
 
-#: wal.xml:559(para)
+#: wal.xml:560(para)
 msgid ""
 "The number of WAL segment files in <filename>pg_xlog</filename> directory "
 "depends on <varname>min_wal_size</varname>, <varname>max_wal_size</varname> "
@@ -1007,7 +1007,7 @@ msgstr ""
 "перерабатываться, даже если система простаивает и оценка использования "
 "говорит, что нужен совсем небольшой WAL."
 
-#: wal.xml:579(para)
+#: wal.xml:580(para)
 msgid ""
 "Independently of <varname>max_wal_size</varname>, <xref linkend=\"guc-wal-"
 "keep-segments\"/> + 1 most recent WAL files are kept at all times. Also, if "
@@ -1030,11 +1030,11 @@ msgstr ""
 "использующий слот репликации, даст тот же эффект (см. <xref remap=\"4\" "
 "linkend=\"streaming-replication-slots\"/>)."
 
-#: wal.xml:593(indexterm)
+#: wal.xml:594(indexterm)
 msgid "<primary>restartpoint</primary>"
 msgstr "<primary>точка перезапуска</primary>"
 
-#: wal.xml:591(para)
+#: wal.xml:592(para)
 msgid ""
 "In archive recovery or standby mode, the server periodically performs "
 "<firstterm>restartpoints</firstterm>,<placeholder-1/> which are similar to "
@@ -1072,7 +1072,7 @@ msgstr ""
 "было жёстким пределом, так что всегда следует оставлять приличный запас "
 "сверху, чтобы не остаться без свободного места на диске.)"
 
-#: wal.xml:611(para)
+#: wal.xml:612(para)
 msgid ""
 "There are two commonly used internal <acronym>WAL</acronym> functions: "
 "<function>XLogInsertRecord</function> and <function>XLogFlush</function>. "
@@ -1123,7 +1123,7 @@ msgstr ""
 "сгладить скачки во времени ответа в период сразу после каждой контрольной "
 "точки."
 
-#: wal.xml:638(para)
+#: wal.xml:639(para)
 msgid ""
 "The <xref linkend=\"guc-commit-delay\"/> parameter defines for how many "
 "microseconds a group commit leader process will sleep after acquiring a lock "
@@ -1156,7 +1156,7 @@ msgstr ""
 "в некоторых системах состояние сна может продлиться несколько дольше, чем "
 "требует параметр."
 
-#: wal.xml:656(para)
+#: wal.xml:657(para)
 msgid ""
 "Since the purpose of <varname>commit_delay</varname> is to allow the cost of "
 "each flush operation to be amortized across concurrently committing "
@@ -1205,7 +1205,7 @@ msgstr ""
 "значения параметра <varname>commit_delay</varname> может увеличить задержку "
 "транзакции настолько, что пострадает общая производительность транзакций."
 
-#: wal.xml:683(para)
+#: wal.xml:684(para)
 msgid ""
 "When <varname>commit_delay</varname> is set to zero (the default), it is "
 "still possible for a form of group commit to occur, but each group will "
@@ -1233,7 +1233,7 @@ msgstr ""
 "подсистемы. Однако при задержке из-за низкой скорости вращения диска, эта "
 "настройка может оказаться полезной даже всего при двух сеансах."
 
-#: wal.xml:700(para)
+#: wal.xml:701(para)
 msgid ""
 "The <xref linkend=\"guc-wal-sync-method\"/> parameter determines how "
 "<productname>PostgreSQL</productname> will ask the kernel to force "
@@ -1257,14 +1257,15 @@ msgstr ""
 "Обратите внимание, что данный параметр не имеет значения, если "
 "<varname>fsync</varname> выключен."
 
-#: wal.xml:714(para)
+#: wal.xml:715(para)
+#, fuzzy
 msgid ""
 "Enabling the <xref linkend=\"guc-wal-debug\"/> configuration parameter "
 "(provided that <productname>PostgreSQL</productname> has been compiled with "
 "support for it) will result in each <function>XLogInsertRecord</function> "
-"and <function>XLogFlush</function>\n"
-"   <acronym>WAL</acronym> call being logged to the server log. This option "
-"might be replaced by a more general mechanism in the future."
+"and <function>XLogFlush</function> <acronym>WAL</acronym> call being logged "
+"to the server log. This option might be replaced by a more general mechanism "
+"in the future."
 msgstr ""
 "Включение параметра конфигурации <xref linkend=\"guc-wal-debug\"/> "
 "(предоставляется, если <productname>PostgreSQL</productname> был "
@@ -1273,11 +1274,11 @@ msgstr ""
 "<function>XLogFlush</function> будут протоколироваться в журнале сервера. В "
 "будущем данный параметр может быть заменён более общим механизмом."
 
-#: wal.xml:725(title)
+#: wal.xml:726(title)
 msgid "WAL Internals"
 msgstr "Внутреннее устройство WAL"
 
-#: wal.xml:727(para)
+#: wal.xml:728(para)
 msgid ""
 "<acronym>WAL</acronym> is automatically enabled; no action is required from "
 "the administrator except ensuring that the disk-space requirements for the "
@@ -1290,7 +1291,7 @@ msgstr ""
 "выполнены все необходимые действия по тонкой настройке (см. <xref remap="
 "\"4\" linkend=\"wal-configuration\"/>)."
 
-#: wal.xml:735(para)
+#: wal.xml:736(para)
 msgid ""
 "<acronym>WAL</acronym> logs are stored in the directory <filename>pg_xlog</"
 "filename> under the data directory, as a set of segment files, normally each "
@@ -1318,7 +1319,7 @@ msgstr ""
 "увеличиваются автоматически. Эти номера не перекрываются, но пока доступные "
 "номера исчерпаются, пройдёт очень, очень долгое время."
 
-#: wal.xml:751(para)
+#: wal.xml:752(para)
 msgid ""
 "It is advantageous if the log is located on a different disk from the main "
 "database files. This can be achieved by moving the <filename>pg_xlog</"
@@ -1332,11 +1333,11 @@ msgstr ""
 "остановлен) и создать символьную ссылку из исходного места на перемещённый "
 "каталог."
 
-#: wal.xml:762(indexterm)
+#: wal.xml:763(indexterm)
 msgid "<primary>disk drive</primary>"
 msgstr "<primary>дисковое устройство</primary>"
 
-#: wal.xml:759(para)
+#: wal.xml:760(para)
 msgid ""
 "The aim of <acronym>WAL</acronym> is to ensure that the log is written "
 "before database records are altered, but this can be subverted by disk "
@@ -1357,7 +1358,7 @@ msgstr ""
 "<productname>PostgreSQL</productname>, не выдают таких ложных сообщений "
 "ядру. (См. <xref remap=\"4\" linkend=\"wal-reliability\"/>.)"
 
-#: wal.xml:772(para)
+#: wal.xml:773(para)
 msgid ""
 "After a checkpoint has been made and the log flushed, the checkpoint's "
 "position is saved in the file <filename>pg_control</filename>. Therefore, at "
@@ -1379,7 +1380,7 @@ msgstr ""
 "<xref linkend=\"guc-full-page-writes\"/>), все страницы, изменённые с "
 "момента контрольной точки будут восстановлены в целостное состояние."
 
-#: wal.xml:786(para)
+#: wal.xml:787(para)
 msgid ""
 "To deal with the case where <filename>pg_control</filename> is corrupt, we "
 "should support the possibility of scanning existing log segments in reverse "
