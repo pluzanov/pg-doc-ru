@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -1225,7 +1225,7 @@ msgstr ""
 "объектов, выберите в качестве шаблона <literal>template0</literal>, а не "
 "<literal>template1</literal>, например так: <placeholder-1/>"
 
-#: ref/pg_restore.xml:810(para)
+#: ref/pg_restore.xml:812(para)
 msgid ""
 "When restoring data to a pre-existing table and the option <option>--disable-"
 "triggers</option> is used, <application>pg_restore</application> emits "
@@ -1241,7 +1241,7 @@ msgstr ""
 "включающие эти триггеры. Если восстановление прервётся в середине, системные "
 "каталоги могут оказаться в некорректном состоянии."
 
-#: ref/pg_restore.xml:821(para)
+#: ref/pg_restore.xml:823(para)
 msgid ""
 "<application>pg_restore</application> cannot restore large objects "
 "selectively; for instance, only those for a specific table. If an archive "
@@ -1255,7 +1255,7 @@ msgstr ""
 "будут восстановлены никакие (если они были исключены параметрами <option>-L</"
 "option>, <option>-t</option> и т. п.)."
 
-#: ref/pg_restore.xml:805(para)
+#: ref/pg_restore.xml:807(para)
 msgid ""
 "The limitations of <application>pg_restore</application> are detailed below. "
 "<placeholder-1/>"
@@ -1263,7 +1263,7 @@ msgstr ""
 "Ограничения <application>pg_restore</application> описаны ниже. "
 "<placeholder-1/>"
 
-#: ref/pg_restore.xml:832(para)
+#: ref/pg_restore.xml:834(para)
 msgid ""
 "See also the <xref linkend=\"app-pgdump\"/> documentation for details on "
 "limitations of <application>pg_dump</application>."
@@ -1271,7 +1271,7 @@ msgstr ""
 "Также обратитесь к документации <xref linkend=\"app-pgdump\"/>, чтобы узнать "
 "о связанных ограничениях <application>pg_dump</application>."
 
-#: ref/pg_restore.xml:837(para)
+#: ref/pg_restore.xml:839(para)
 msgid ""
 "Once restored, it is wise to run <command>ANALYZE</command> on each restored "
 "table so the optimizer has useful statistics; see <xref linkend=\"vacuum-for-"
@@ -1283,62 +1283,64 @@ msgstr ""
 "linkend=\"vacuum-for-statistics\"/> и <xref remap=\"3\" linkend=\"autovacuum"
 "\"/>."
 
-#: ref/pg_restore.xml:848(title)
+#: ref/pg_restore.xml:850(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/pg_restore.xml:850(para)
+#: ref/pg_restore.xml:852(para)
 msgid ""
 "Assume we have dumped a database called <literal>mydb</literal> into a "
-"custom-format dump file: <screen><prompt>$</prompt> <userinput>pg_dump -Fc "
-"mydb &gt; db.dump</userinput></screen>"
+"custom-format dump file: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_dump -Fc mydb &gt; db.dump</userinput>\n"
+"</screen>"
 msgstr ""
 "Предположим, что мы выгрузили базу данных <literal>mydb</literal> в файл "
-"специального формата: <screen><prompt>$</prompt> <userinput>pg_dump -Fc mydb "
-"&gt; db.dump</userinput></screen>"
+"специального формата: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_dump -Fc mydb &gt; db.dump</userinput>\n"
+"</screen>"
 
-#: ref/pg_restore.xml:857(para)
+#: ref/pg_restore.xml:861(para)
 msgid ""
-"To drop the database and recreate it from the dump: <screen><prompt>$</"
-"prompt> <userinput>dropdb mydb</userinput>\n"
-"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput></"
-"screen> The database named in the <option>-d</option> switch can be any "
+"To drop the database and recreate it from the dump: <screen>\n"
+"<prompt>$</prompt> <userinput>dropdb mydb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput>\n"
+"</screen> The database named in the <option>-d</option> switch can be any "
 "database existing in the cluster; <application>pg_restore</application> only "
 "uses it to issue the <command>CREATE DATABASE</command> command for "
 "<literal>mydb</literal>. With <option>-C</option>, data is always restored "
 "into the database name that appears in the dump file."
 msgstr ""
-"Мы можем удалить базу данных и восстановить её из копии: <screen><prompt>$</"
-"prompt> <userinput>dropdb mydb</userinput>\n"
-"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput></"
-"screen> В аргументе <option>-d</option> можно указать любую базу данных, "
+"Мы можем удалить базу данных и восстановить её из копии: <screen>\n"
+"<prompt>$</prompt> <userinput>dropdb mydb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput>\n"
+"</screen> В аргументе <option>-d</option> можно указать любую базу данных, "
 "существующую в кластере; <application>pg_restore</application> использует "
 "её, только чтобы выполнить команду <command>CREATE DATABASE</command> для "
 "базы <literal>mydb</literal>. С параметром <option>-C</option> данные всегда "
 "восстанавливаются в базу, имя которой записано в файле архива."
 
-#: ref/pg_restore.xml:870(para)
+#: ref/pg_restore.xml:876(para)
 msgid ""
 "To reload the dump into a new database called <literal>newdb</literal>: "
-"<screen><prompt>$</prompt> <userinput>createdb -T template0 newdb</"
-"userinput>\n"
-"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput></"
-"screen> Notice we don't use <option>-C</option>, and instead connect "
+"<screen>\n"
+"<prompt>$</prompt> <userinput>createdb -T template0 newdb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput>\n"
+"</screen> Notice we don't use <option>-C</option>, and instead connect "
 "directly to the database to be restored into. Also note that we clone the "
 "new database from <literal>template0</literal> not <literal>template1</"
 "literal>, to ensure it is initially empty."
 msgstr ""
 "Восстановить данные в новую базу <literal>newdb</literal> можно так: "
-"<screen><prompt>$</prompt> <userinput>createdb -T template0 newdb</"
-"userinput>\n"
-"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput></"
-"screen> Обратите внимание, мы не используем параметр <option>-C</option>, а "
-"вместо этого подключаемся непосредственно к базе, в которую хотим "
+"<screen>\n"
+"<prompt>$</prompt> <userinput>createdb -T template0 newdb</userinput>\n"
+"<prompt>$</prompt> <userinput>pg_restore -d newdb db.dump</userinput>\n"
+"</screen> Обратите внимание, мы не используем параметр <option>-C</option>, "
+"а вместо этого подключаемся непосредственно к базе, в которую хотим "
 "восстановить данные. Также заметьте, что мы создаём базу данных из шаблона "
 "<literal>template0</literal>, а не <literal>template1</literal>, чтобы "
 "изначально она была гарантированно пустой."
 
-#: ref/pg_restore.xml:887(programlisting)
+#: ref/pg_restore.xml:897(programlisting)
 #, no-wrap
 msgid ""
 ";\n"
@@ -1383,23 +1385,26 @@ msgstr ""
 "317; 1247 17715 TYPE public composite pasha\n"
 "319; 1247 25899 DOMAIN public domain0 pasha"
 
-#: ref/pg_restore.xml:882(para)
+#: ref/pg_restore.xml:890(para)
 msgid ""
 "To reorder database items, it is first necessary to dump the table of "
-"contents of the archive: <screen><prompt>$</prompt> <userinput>pg_restore -l "
-"db.dump &gt; db.list</userinput></screen> The listing file consists of a "
-"header and one line for each item, e.g.: <placeholder-1/> Semicolons start a "
-"comment, and the numbers at the start of lines refer to the internal archive "
-"ID assigned to each item."
+"contents of the archive: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_restore -l db.dump &gt; db.list</"
+"userinput>\n"
+"</screen> The listing file consists of a header and one line for each item, "
+"e.g.: <placeholder-1/> Semicolons start a comment, and the numbers at the "
+"start of lines refer to the internal archive ID assigned to each item."
 msgstr ""
 "Чтобы переупорядочить элементы базы данных, сначала необходимо получить "
-"оглавление архива: <screen><prompt>$</prompt> <userinput>pg_restore -l db."
-"dump &gt; db.list</userinput></screen> Файл оглавления содержит заголовок и "
-"по одной строке для каждого элемента, например: <placeholder-1/> С точки с "
-"запятой начинаются комментарии, а число в начале строки обозначает "
-"внутренний идентификатор, назначаемый каждому элементу в архиве."
+"оглавление архива: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_restore -l db.dump &gt; db.list</"
+"userinput>\n"
+"</screen> Файл оглавления содержит заголовок и по одной строке для каждого "
+"элемента, например: <placeholder-1/> С точки с запятой начинаются "
+"комментарии, а число в начале строки обозначает внутренний идентификатор, "
+"назначаемый каждому элементу в архиве."
 
-#: ref/pg_restore.xml:913(programlisting)
+#: ref/pg_restore.xml:925(programlisting)
 #, no-wrap
 msgid ""
 "10; 145433 TABLE map_resolutions postgres\n"
@@ -1414,21 +1419,22 @@ msgstr ""
 "6; 145402 TABLE species_records postgres\n"
 ";8; 145416 TABLE ss_old postgres"
 
-#: ref/pg_restore.xml:911(para)
+#: ref/pg_restore.xml:923(para)
 msgid ""
 "Lines in the file can be commented out, deleted, and reordered. For example: "
 "<placeholder-1/> could be used as input to <application>pg_restore</"
-"application> and would only restore items 10 and 6, in that order: "
-"<screen><prompt>$</prompt> <userinput>pg_restore -L db.list db.dump</"
-"userinput></screen>"
+"application> and would only restore items 10 and 6, in that order: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_restore -L db.list db.dump</userinput>\n"
+"</screen>"
 msgstr ""
 "Строки в этом файле можно закомментировать, удалить или переместить. "
 "Например, список: <placeholder-1/> можно передать утилите "
 "<application>pg_restore</application>, чтобы восстановить только элементы 10 "
-"и 6 в указанном порядке: <screen><prompt>$</prompt> <userinput>pg_restore -L "
-"db.list db.dump</userinput></screen>"
+"и 6 в указанном порядке: <screen>\n"
+"<prompt>$</prompt> <userinput>pg_restore -L db.list db.dump</userinput>\n"
+"</screen>"
 
-#: ref/pg_restore.xml:925(title)
+#: ref/pg_restore.xml:941(title)
 msgid "See Also"
 msgstr "См. также"
 

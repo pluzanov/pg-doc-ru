@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -343,7 +343,7 @@ msgstr ""
 "Примеры допустимых выражений с типом <type>json</type> (или <type>jsonb</"
 "type>): <placeholder-1/>"
 
-#: json.xml:190(programlisting)
+#: json.xml:192(programlisting)
 #, no-wrap
 msgid ""
 "SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}'::json;\n"
@@ -370,7 +370,7 @@ msgstr ""
 " {\"bar\": \"baz\", \"active\": false, \"balance\": 7.77}\n"
 "(1 row)"
 
-#: json.xml:206(programlisting)
+#: json.xml:210(programlisting)
 #, no-wrap
 msgid ""
 "SELECT '{\"reading\": 1.230e-5}'::json, '{\"reading\": 1.230e-5}'::jsonb;\n"
@@ -385,7 +385,7 @@ msgstr ""
 " {\"reading\": 1.230e-5} | {\"reading\": 0.00001230}\n"
 "(1 row)"
 
-#: json.xml:185(para)
+#: json.xml:187(para)
 msgid ""
 "As previously stated, when a JSON value is input and then printed without "
 "any additional processing, <type>json</type> outputs the same text that was "
@@ -411,11 +411,11 @@ msgstr ""
 "нули дробного числа, хотя они и не имеют семантической значимости, в "
 "частности для проверки на равенство."
 
-#: json.xml:218(title)
+#: json.xml:224(title)
 msgid "Designing JSON documents effectively"
 msgstr "Эффективная организация документов JSON"
 
-#: json.xml:219(para)
+#: json.xml:225(para)
 msgid ""
 "Representing data as JSON can be considerably more flexible than the "
 "traditional relational data model, which is compelling in environments where "
@@ -438,7 +438,7 @@ msgstr ""
 "предсказуема, становится гораздо проще писать запросы, которые извлекают "
 "полезные данные из набора <quote>документов</quote> (информации) в таблице."
 
-#: json.xml:232(para)
+#: json.xml:238(para)
 msgid ""
 "JSON data is subject to the same concurrency-control considerations as any "
 "other data type when stored in a table. Although storing large documents is "
@@ -458,19 +458,19 @@ msgstr ""
 "должен собой представлять атомарный информационный блок, который, согласно "
 "бизнес-логике, нельзя разделить на меньшие, индивидуально изменяемые блоки."
 
-#: json.xml:247(title)
+#: json.xml:253(title)
 msgid "<type>jsonb</type> Containment and Existence"
 msgstr "Проверки на вхождение и существование <type>jsonb</type>"
 
-#: json.xml:248(indexterm)
-msgid "<primary>jsonb</primary><secondary>containment</secondary>"
-msgstr "<primary>jsonb</primary><secondary>вхождение</secondary>"
+#: json.xml:254(indexterm)
+msgid "<primary>jsonb</primary> <secondary>containment</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>вхождение</secondary>"
 
-#: json.xml:251(indexterm)
-msgid "<primary>jsonb</primary><secondary>existence</secondary>"
-msgstr "<primary>jsonb</primary><secondary>существование</secondary>"
+#: json.xml:258(indexterm)
+msgid "<primary>jsonb</primary> <secondary>existence</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>существование</secondary>"
 
-#: json.xml:254(para)
+#: json.xml:262(para)
 msgid ""
 "Testing <firstterm>containment</firstterm> is an important capability of "
 "<type>jsonb</type>. There is no parallel set of facilities for the "
@@ -484,7 +484,7 @@ msgstr ""
 "следующих примерах возвращается истинное значение (кроме упомянутых "
 "исключений):"
 
-#: json.xml:261(programlisting)
+#: json.xml:269(programlisting)
 #, no-wrap
 msgid ""
 "-- Simple scalar/primitive values contain only the identical value:\n"
@@ -544,7 +544,7 @@ msgstr ""
 "-- Ключ с пустым объектом на верхнем уровне входит в объект с таким ключом:\n"
 "SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb @&gt; '{\"foo\": {}}'::jsonb;"
 
-#: json.xml:290(para)
+#: json.xml:300(para)
 msgid ""
 "The general principle is that the contained object must match the containing "
 "object as to structure and data contents, possibly after discarding some non-"
@@ -560,7 +560,7 @@ msgstr ""
 "вхождение не имеет значения, а повторяющиеся элементы массива считаются "
 "только один раз."
 
-#: json.xml:300(para)
+#: json.xml:310(para)
 msgid ""
 "As a special exception to the general principle that the structures must "
 "match, an array may contain a primitive value:"
@@ -568,7 +568,7 @@ msgstr ""
 "В качестве особого исключения для требования идентичности структур, массив "
 "может содержать примитивное значение:"
 
-#: json.xml:304(programlisting)
+#: json.xml:314(programlisting)
 #, no-wrap
 msgid ""
 "-- This array contains the primitive string value:\n"
@@ -583,7 +583,7 @@ msgstr ""
 "-- Это исключение действует только в одну сторону -- здесь вхождения нет:\n"
 "SELECT '\"bar\"'::jsonb @&gt; '[\"bar\"]'::jsonb;  -- выдаёт false"
 
-#: json.xml:310(para)
+#: json.xml:322(para)
 msgid ""
 "<type>jsonb</type> also has an <firstterm>existence</firstterm> operator, "
 "which is a variation on the theme of containment: it tests whether a string "
@@ -598,7 +598,7 @@ msgstr ""
 "В следующих примерах возвращается истинное значение (кроме упомянутых "
 "исключений):"
 
-#: json.xml:317(programlisting)
+#: json.xml:329(programlisting)
 #, no-wrap
 msgid ""
 "-- String exists as array element:\n"
@@ -631,7 +631,7 @@ msgstr ""
 "-- Строка считается существующей, если она соответствует примитивной строке JSON:\n"
 "SELECT '\"foo\"'::jsonb ? 'foo';"
 
-#: json.xml:332(para)
+#: json.xml:346(para)
 msgid ""
 "JSON objects are better suited than arrays for testing containment or "
 "existence when there are many keys or elements involved, because unlike "
@@ -642,7 +642,7 @@ msgstr ""
 "или элементов подходят больше, чем массивы, так как, в отличие от массивов, "
 "они внутри оптимизируются для поиска, и поиск элемента не будет линейным."
 
-#: json.xml:348(programlisting)
+#: json.xml:362(programlisting)
 #, no-wrap
 msgid ""
 "SELECT doc-&gt;'site_name' FROM websites\n"
@@ -651,7 +651,7 @@ msgstr ""
 "SELECT doc-&gt;'site_name' FROM websites\n"
 "  WHERE doc @&gt; '{\"tags\":[{\"term\":\"paris\"}, {\"term\":\"food\"}]}';"
 
-#: json.xml:351(programlisting)
+#: json.xml:367(programlisting)
 #, no-wrap
 msgid ""
 "SELECT doc-&gt;'site_name' FROM websites\n"
@@ -660,7 +660,7 @@ msgstr ""
 "SELECT doc-&gt;'site_name' FROM websites\n"
 "  WHERE doc-&gt;'tags' @&gt; '[{\"term\":\"paris\"}, {\"term\":\"food\"}]';"
 
-#: json.xml:340(para)
+#: json.xml:354(para)
 msgid ""
 "Because JSON containment is nested, an appropriate query can skip explicit "
 "selection of sub-objects. As an example, suppose that we have a "
@@ -685,7 +685,7 @@ msgstr ""
 "добиться, например, так: <placeholder-2/> Но данный подход менее гибкий и "
 "часто также менее эффективный."
 
-#: json.xml:356(para)
+#: json.xml:374(para)
 msgid ""
 "On the other hand, the JSON existence operator is not nested: it will only "
 "look for the specified key or array element at top level of the JSON value."
@@ -694,7 +694,7 @@ msgstr ""
 "будет искать заданный ключ или элемент массива только на верхнем уровне "
 "значения JSON."
 
-#: json.xml:363(para)
+#: json.xml:381(para)
 msgid ""
 "The various containment and existence operators, along with all other JSON "
 "operators and functions are documented in <xref linkend=\"functions-json\"/>."
@@ -703,15 +703,15 @@ msgstr ""
 "и функции для работы с JSON документированы в <xref remap=\"6\" linkend="
 "\"functions-json\"/>."
 
-#: json.xml:371(title)
+#: json.xml:389(title)
 msgid "<type>jsonb</type> Indexing"
 msgstr "Индексация <type>jsonb</type>"
 
-#: json.xml:372(indexterm)
-msgid "<primary>jsonb</primary><secondary>indexes on</secondary>"
-msgstr "<primary>jsonb</primary><secondary>индексы по</secondary>"
+#: json.xml:390(indexterm)
+msgid "<primary>jsonb</primary> <secondary>indexes on</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>индексы по</secondary>"
 
-#: json.xml:376(para)
+#: json.xml:395(para)
 msgid ""
 "GIN indexes can be used to efficiently search for keys or key/value pairs "
 "occurring within a large number of <type>jsonb</type> documents (datums). "
@@ -723,17 +723,17 @@ msgstr ""
 "предоставляются два <quote>класса операторов</quote> GIN, предлагающие выбор "
 "между производительностью и гибкостью."
 
-#: json.xml:391(programlisting)
+#: json.xml:410(programlisting)
 #, no-wrap
 msgid "CREATE INDEX idxgin ON api USING GIN (jdoc);"
 msgstr "CREATE INDEX idxgin ON api USING GIN (jdoc);"
 
-#: json.xml:395(programlisting)
+#: json.xml:416(programlisting)
 #, no-wrap
 msgid "CREATE INDEX idxginp ON api USING GIN (jdoc jsonb_path_ops);"
 msgstr "CREATE INDEX idxginp ON api USING GIN (jdoc jsonb_path_ops);"
 
-#: json.xml:383(para)
+#: json.xml:402(para)
 msgid ""
 "The default GIN operator class for <type>jsonb</type> supports queries with "
 "top-level key-exists operators <literal>?</literal>, <literal>?&amp;</"
@@ -756,7 +756,7 @@ msgstr ""
 "оператора <literal>@&gt;</literal>. Пример создания индекса с этим классом "
 "операторов: <placeholder-2/>"
 
-#: json.xml:402(programlisting)
+#: json.xml:425(programlisting)
 #, no-wrap
 msgid ""
 "{\n"
@@ -791,7 +791,7 @@ msgstr ""
 "    ]\n"
 "}"
 
-#: json.xml:421(programlisting)
+#: json.xml:446(programlisting)
 #, no-wrap
 msgid ""
 "-- Find documents in which the key \"company\" has value \"Magnafone\"\n"
@@ -800,7 +800,7 @@ msgstr ""
 "-- Найти документы, в которых ключ \"company\" имеет значение \"Magnafone\"\n"
 "SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"company\": \"Magnafone\"}';"
 
-#: json.xml:426(programlisting)
+#: json.xml:453(programlisting)
 #, no-wrap
 msgid ""
 "-- Find documents in which the key \"tags\" contains key or array element \"qui\"\n"
@@ -809,12 +809,12 @@ msgstr ""
 "-- Найти документы, в которых ключ \"tags\" содержит ключ или элемент массива \"qui\"\n"
 "SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc -&gt; 'tags' ? 'qui';"
 
-#: json.xml:432(programlisting)
+#: json.xml:461(programlisting)
 #, no-wrap
 msgid "CREATE INDEX idxgintags ON api USING GIN ((jdoc -&gt; 'tags'));"
 msgstr "CREATE INDEX idxgintags ON api USING GIN ((jdoc -&gt; 'tags'));"
 
-#: json.xml:398(para)
+#: json.xml:421(para)
 msgid ""
 "Consider the example of a table that stores JSON documents retrieved from a "
 "third-party web service, with a documented schema definition. A typical "
@@ -853,7 +853,7 @@ msgstr ""
 "выражений можно узнать в <xref remap=\"6\" linkend=\"indexes-expressional\"/"
 ">.)"
 
-#: json.xml:442(programlisting)
+#: json.xml:473(programlisting)
 #, no-wrap
 msgid ""
 "-- Find documents in which the key \"tags\" contains array element \"qui\"\n"
@@ -862,7 +862,7 @@ msgstr ""
 "-- Найти документы, в которых ключ \"tags\" содержит элемент массива \"qui\"\n"
 "SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"tags\": [\"qui\"]}';"
 
-#: json.xml:440(para)
+#: json.xml:471(para)
 msgid ""
 "Another approach to querying is to exploit containment, for example: "
 "<placeholder-1/> A simple GIN index on the <structfield>jdoc</structfield> "
@@ -884,7 +884,7 @@ msgstr ""
 "индексы конкретных выражений скорее всего будут меньше и быстрее, чем "
 "простые индексы."
 
-#: json.xml:454(para)
+#: json.xml:487(para)
 msgid ""
 "Although the <literal>jsonb_path_ops</literal> operator class supports only "
 "queries with the <literal>@&gt;</literal> operator, it has notable "
@@ -904,7 +904,7 @@ msgstr ""
 "Таким образом, с ним операции поиска выполняются гораздо лучше, чем с "
 "классом операторов по умолчанию."
 
-#: json.xml:473(para)
+#: json.xml:506(para)
 msgid ""
 "For this purpose, the term <quote>value</quote> includes array elements, "
 "though JSON terminology sometimes considers array elements distinct from "
@@ -914,7 +914,7 @@ msgstr ""
 "терминологии JSON иногда элементы массивов считаются отличными от значений "
 "внутри объектов."
 
-#: json.xml:466(para)
+#: json.xml:499(para)
 msgid ""
 "The technical difference between a <literal>jsonb_ops</literal> and a "
 "<literal>jsonb_path_ops</literal> GIN index is that the former creates "
@@ -957,7 +957,7 @@ msgstr ""
 "особенно если любое одно из этих трёх значений содержится в большом "
 "количестве строк."
 
-#: json.xml:497(para)
+#: json.xml:530(para)
 msgid ""
 "A disadvantage of the <literal>jsonb_path_ops</literal> approach is that it "
 "produces no index entries for JSON structures not containing any values, "
@@ -973,64 +973,71 @@ msgstr ""
 "долго, поэтому <literal>jsonb_path_ops</literal> не очень подходит для "
 "приложений, часто выполняющих такие запросы."
 
-#: json.xml:522(programlisting)
+#: json.xml:559(programlisting)
 #, no-wrap
 msgid "{ \"aa\": 1, \"c\": 1} &gt; {\"b\": 1, \"d\": 1}"
 msgstr "{ \"aa\": 1, \"c\": 1} &gt; {\"b\": 1, \"d\": 1}"
 
-#: json.xml:506(para)
+#: json.xml:539(para)
 msgid ""
 "<type>jsonb</type> also supports <literal>btree</literal> and <literal>hash</"
 "literal> indexes. These are usually useful only if it's important to check "
 "equality of complete JSON documents. The <literal>btree</literal> ordering "
 "for <type>jsonb</type> datums is seldom of great interest, but for "
-"completeness it is: <synopsis><replaceable>Object</replaceable> &gt; "
-"<replaceable>Array</replaceable> &gt; <replaceable>Boolean</replaceable> "
-"&gt; <replaceable>Number</replaceable> &gt; <replaceable>String</"
-"replaceable> &gt; <replaceable>Null</replaceable>\n"
+"completeness it is: <synopsis>\n"
+"<replaceable>Object</replaceable> &gt; <replaceable>Array</replaceable> &gt; "
+"<replaceable>Boolean</replaceable> &gt; <replaceable>Number</replaceable> "
+"&gt; <replaceable>String</replaceable> &gt; <replaceable>Null</replaceable>\n"
 "\n"
 "<replaceable>Object with n pairs</replaceable> &gt; <replaceable>object with "
 "n - 1 pairs</replaceable>\n"
 "\n"
 "<replaceable>Array with n elements</replaceable> &gt; <replaceable>array "
-"with n - 1 elements</replaceable></synopsis> Objects with equal numbers of "
-"pairs are compared in the order: <synopsis><replaceable>key-1</replaceable>, "
-"<replaceable>value-1</replaceable>, <replaceable>key-2</replaceable> ...</"
-"synopsis> Note that object keys are compared in their storage order; in "
+"with n - 1 elements</replaceable>\n"
+"</synopsis> Objects with equal numbers of pairs are compared in the order: "
+"<synopsis>\n"
+"<replaceable>key-1</replaceable>, <replaceable>value-1</replaceable>, "
+"<replaceable>key-2</replaceable> ...\n"
+"</synopsis> Note that object keys are compared in their storage order; in "
 "particular, since shorter keys are stored before longer keys, this can lead "
 "to results that might be unintuitive, such as: <placeholder-1/> Similarly, "
-"arrays with equal numbers of elements are compared in the order: "
-"<synopsis><replaceable>element-1</replaceable>, <replaceable>element-2</"
-"replaceable> ...</synopsis> Primitive JSON values are compared using the "
-"same comparison rules as for the underlying <productname>PostgreSQL</"
-"productname> data type. Strings are compared using the default database "
-"collation."
+"arrays with equal numbers of elements are compared in the order: <synopsis>\n"
+"<replaceable>element-1</replaceable>, <replaceable>element-2</"
+"replaceable> ...\n"
+"</synopsis> Primitive JSON values are compared using the same comparison "
+"rules as for the underlying <productname>PostgreSQL</productname> data type. "
+"Strings are compared using the default database collation."
 msgstr ""
 "Тип <type>jsonb</type> также поддерживает индексы <literal>btree</literal> и "
 "<literal>hash</literal>. Они полезны, только если требуется проверять "
 "равенство JSON-документов в целом. Порядок сортировки <literal>btree</"
 "literal> для типа <type>jsonb</type> редко имеет большое значение, но для "
-"полноты он приводится ниже: <synopsis><replaceable>Объект</replaceable> &gt; "
-"<replaceable>Массив</replaceable> &gt; <replaceable>Логическое значение</"
-"replaceable> &gt; <replaceable>Число</replaceable> &gt; <replaceable>Строка</"
-"replaceable> &gt; <replaceable>Null</replaceable>\n"
+"полноты он приводится ниже: <synopsis>\n"
+"<replaceable>Объект</replaceable> &gt; <replaceable>Массив</replaceable> "
+"&gt; <replaceable>Логическое значение</replaceable> &gt; <replaceable>Число</"
+"replaceable> &gt; <replaceable>Строка</replaceable> &gt; <replaceable>Null</"
+"replaceable>\n"
 "\n"
 "<replaceable>Объект с n парами</replaceable> &gt; <replaceable>Объект с n - "
 "1 парами</replaceable>\n"
 "\n"
 "<replaceable>Массив с n элементами</replaceable> &gt; <replaceable>Массив с "
-"n - 1 элементами</replaceable></synopsis> Объекты с равным количеством пар "
-"сравниваются в таком порядке: <synopsis><replaceable>ключ-1</replaceable>, "
-"<replaceable>значение-1</replaceable>, <replaceable>ключ-2</replaceable> ..."
+"n - 1 элементами</replaceable>\n"
+"</synopsis> Объекты с равным количеством пар сравниваются в таком порядке: "
+"<synopsis>\n"
+"<replaceable>ключ-1</replaceable>, <replaceable>значение-1</replaceable>, "
+"<replaceable>ключ-2</replaceable> ...\n"
 "</synopsis> Заметьте, что ключи объектов сравниваются согласно порядку при "
 "хранении; в частности, из-за того, что короткие ключи хранятся перед "
 "длинными, результаты могут оказаться несколько не интуитивными: "
 "<placeholder-1/> Массивы с равным числом элементом упорядочиваются "
-"аналогично: <synopsis><replaceable>элемент-1</replaceable>, "
-"<replaceable>элемент-2</replaceable> ...</synopsis> Примитивные значения "
-"JSON сравниваются по тем же правилам сравнения, что и нижележащие типы "
-"данных <productname>PostgreSQL</productname>. Строки сравниваются с учётом "
-"порядка сортировки по умолчанию в текущей базе данных."
+"аналогично: <synopsis>\n"
+"<replaceable>элемент-1</replaceable>, <replaceable>элемент-2</"
+"replaceable> ...\n"
+"</synopsis> Примитивные значения JSON сравниваются по тем же правилам "
+"сравнения, что и нижележащие типы данных <productname>PostgreSQL</"
+"productname>. Строки сравниваются с учётом порядка сортировки по умолчанию в "
+"текущей базе данных."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: json.xml:0(None)

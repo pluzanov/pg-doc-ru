@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -73,7 +73,7 @@ msgstr ""
 "не могут вызываться на уровне SQL. Эти опорные функции описаны в <xref remap="
 "\"6\" linkend=\"tablesample-support-functions\"/>."
 
-#: tablesample-method.xml:38(para)
+#: tablesample-method.xml:40(para)
 msgid ""
 "In addition to function pointers, the <type>TsmRoutine</type> struct must "
 "provide these additional fields:"
@@ -81,11 +81,11 @@ msgstr ""
 "В дополнение к указателям на функции в структуре <type>TsmRoutine</type> "
 "должны задаваться следующие дополнительные поля:"
 
-#: tablesample-method.xml:45(literal)
+#: tablesample-method.xml:47(literal)
 msgid "List *parameterTypes"
 msgstr "List *parameterTypes"
 
-#: tablesample-method.xml:47(para)
+#: tablesample-method.xml:49(para)
 msgid ""
 "This is an OID list containing the data type OIDs of the parameter(s) that "
 "will be accepted by the <literal>TABLESAMPLE</literal> clause when this "
@@ -101,11 +101,11 @@ msgstr ""
 "представляющий процент выборки. Другие методы могут иметь дополнительные или "
 "иные параметры."
 
-#: tablesample-method.xml:59(literal)
+#: tablesample-method.xml:61(literal)
 msgid "bool repeatable_across_queries"
 msgstr "bool repeatable_across_queries"
 
-#: tablesample-method.xml:61(para)
+#: tablesample-method.xml:63(para)
 msgid ""
 "If <literal>true</literal>, the sampling method can deliver identical "
 "samples across successive queries, if the same parameters and "
@@ -121,11 +121,11 @@ msgstr ""
 "literal>, предложение <literal>REPEATABLE</literal> не будет приниматься с "
 "этим методом извлечения выборки."
 
-#: tablesample-method.xml:73(literal)
+#: tablesample-method.xml:75(literal)
 msgid "bool repeatable_across_scans"
 msgstr "bool repeatable_across_scans"
 
-#: tablesample-method.xml:75(para)
+#: tablesample-method.xml:77(para)
 msgid ""
 "If <literal>true</literal>, the sampling method can deliver identical "
 "samples across successive scans in the same query (assuming unchanging "
@@ -141,7 +141,7 @@ msgstr ""
 "выбирать планы, требующие неоднократного сканирования выборки, так как это "
 "может привести к несогласованному результату запроса."
 
-#: tablesample-method.xml:87(para)
+#: tablesample-method.xml:89(para)
 msgid ""
 "The <type>TsmRoutine</type> struct type is declared in <filename>src/include/"
 "access/tsmapi.h</filename>, which see for additional details."
@@ -149,7 +149,7 @@ msgstr ""
 "Тип структуры <type>TsmRoutine</type> объявлен в <filename>src/include/"
 "access/tsmapi.h</filename>, где можно найти дополнительную информацию."
 
-#: tablesample-method.xml:93(para)
+#: tablesample-method.xml:95(para)
 msgid ""
 "The table sampling methods included in the standard distribution are good "
 "references when trying to write your own. Look into the <filename>src/"
@@ -163,11 +163,11 @@ msgstr ""
 "access/tablesample</filename> дерева исходного кода, а код дополнительных "
 "методов — в подкаталоге <filename>contrib</filename>."
 
-#: tablesample-method.xml:102(title)
+#: tablesample-method.xml:104(title)
 msgid "Sampling Method Support Functions"
 msgstr "Опорные функции метода извлечения выборки"
 
-#: tablesample-method.xml:104(para)
+#: tablesample-method.xml:106(para)
 msgid ""
 "The TSM handler function returns a palloc'd <type>TsmRoutine</type> struct "
 "containing pointers to the support functions described below. Most of the "
@@ -179,7 +179,7 @@ msgstr ""
 "ниже. Большинство этих функций обязательные, но некоторые — нет, и их "
 "указатели могут быть равны NULL."
 
-#: tablesample-method.xml:112(programlisting)
+#: tablesample-method.xml:114(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -196,7 +196,7 @@ msgstr ""
 "                         BlockNumber *pages,\n"
 "                         double *tuples);"
 
-#: tablesample-method.xml:111(para)
+#: tablesample-method.xml:113(para)
 msgid ""
 "<placeholder-1/> This function is called during planning. It must estimate "
 "the number of relation pages that will be read during a sample scan, and the "
@@ -230,7 +230,7 @@ msgstr ""
 "получены во время выполнения). Параметры <literal>pages</literal> и "
 "<literal>tuples</literal> являются выходными."
 
-#: tablesample-method.xml:136(programlisting)
+#: tablesample-method.xml:140(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -241,7 +241,7 @@ msgstr ""
 "InitSampleScan (SampleScanState *node,\n"
 "                int eflags);"
 
-#: tablesample-method.xml:135(para)
+#: tablesample-method.xml:139(para)
 msgid ""
 "<placeholder-1/> Initialize for execution of a SampleScan plan node. This is "
 "called during executor startup. It should perform any initialization needed "
@@ -270,7 +270,7 @@ msgstr ""
 "настроен). Параметр <literal>eflags</literal> содержит битовые флаги, "
 "описывающие режим работы исполнителя для этого узла плана."
 
-#: tablesample-method.xml:156(para)
+#: tablesample-method.xml:162(para)
 msgid ""
 "When <literal>(eflags &amp; EXEC_FLAG_EXPLAIN_ONLY)</literal> is true, the "
 "scan will not actually be performed, so this function should only do the "
@@ -283,7 +283,7 @@ msgstr ""
 "подходящего для <command>EXPLAIN</command> и <function>EndSampleScan</"
 "function>."
 
-#: tablesample-method.xml:163(para)
+#: tablesample-method.xml:169(para)
 msgid ""
 "This function can be omitted (set the pointer to NULL), in which case "
 "<function>BeginSampleScan</function> must perform all initialization needed "
@@ -293,7 +293,7 @@ msgstr ""
 "инициализация, необходимая для метода извлечения выборки, должна иметь место "
 "в <function>BeginSampleScan</function>."
 
-#: tablesample-method.xml:170(programlisting)
+#: tablesample-method.xml:176(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -308,7 +308,7 @@ msgstr ""
 "                 int nparams,\n"
 "                 uint32 seed);"
 
-#: tablesample-method.xml:169(para)
+#: tablesample-method.xml:175(para)
 msgid ""
 "<placeholder-1/> Begin execution of a sampling scan. This is called just "
 "before the first attempt to fetch a tuple, and may be called again if the "
@@ -339,7 +339,7 @@ msgstr ""
 "либо хеш, полученный из значения <literal>REPEATABLE</literal>, если оно "
 "было передано, либо результат <literal>random()</literal> в противном случае."
 
-#: tablesample-method.xml:194(para)
+#: tablesample-method.xml:202(para)
 msgid ""
 "This function may adjust the fields <literal>node-&gt;use_bulkread</literal> "
 "and <literal>node-&gt;use_pagemode</literal>. If <literal>node-&gt;"
@@ -370,7 +370,7 @@ msgstr ""
 "результате будет выполняться меньше проверок видимости кортежей, хотя каждая "
 "проверка будет дороже, так как потребует расширенную блокировку."
 
-#: tablesample-method.xml:211(para)
+#: tablesample-method.xml:219(para)
 msgid ""
 "If the sampling method is marked <literal>repeatable_across_scans</literal>, "
 "it must be able to select the same set of tuples during a rescan as it did "
@@ -385,7 +385,7 @@ msgstr ""
 "кортежей, что и предыдущий (если параметры <literal>TABLESAMPLE</literal> и "
 "значение затравки не меняются)."
 
-#: tablesample-method.xml:221(programlisting)
+#: tablesample-method.xml:229(programlisting)
 #, no-wrap
 msgid ""
 "BlockNumber\n"
@@ -394,7 +394,7 @@ msgstr ""
 "BlockNumber\n"
 "NextSampleBlock (SampleScanState *node);"
 
-#: tablesample-method.xml:220(para)
+#: tablesample-method.xml:228(para)
 msgid ""
 "<placeholder-1/> Returns the block number of the next page to be scanned, or "
 "<literal>InvalidBlockNumber</literal> if no pages remain to be scanned."
@@ -403,7 +403,7 @@ msgstr ""
 "<literal>InvalidBlockNumber</literal>, если страниц для сканирования не "
 "осталось."
 
-#: tablesample-method.xml:228(para)
+#: tablesample-method.xml:238(para)
 msgid ""
 "This function can be omitted (set the pointer to NULL), in which case the "
 "core code will perform a sequential scan of the entire relation. Such a scan "
@@ -416,7 +416,7 @@ msgstr ""
 "полагать, что страницы отношения каждый раз просматриваются в одном и том же "
 "порядке."
 
-#: tablesample-method.xml:237(programlisting)
+#: tablesample-method.xml:247(programlisting)
 #, no-wrap
 msgid ""
 "OffsetNumber\n"
@@ -429,7 +429,7 @@ msgstr ""
 "                 BlockNumber blockno,\n"
 "                 OffsetNumber maxoffset);"
 
-#: tablesample-method.xml:236(para)
+#: tablesample-method.xml:246(para)
 msgid ""
 "<placeholder-1/> Returns the offset number of the next tuple to be sampled "
 "on the specified page, or <literal>InvalidOffsetNumber</literal> if no "
@@ -441,7 +441,7 @@ msgstr ""
 "кортежей для выборки не осталось. В <literal>maxoffset</literal> задаётся "
 "максимальный номер смещения, допустимый на этой странице."
 
-#: tablesample-method.xml:249(para)
+#: tablesample-method.xml:261(para)
 msgid ""
 "<function>NextSampleTuple</function> is not explicitly told which of the "
 "offset numbers in the range <literal>1 .. maxoffset</literal> actually "
@@ -462,7 +462,7 @@ msgstr ""
 "чтобы признак <literal>node-&gt;use_pagemode</literal> равнялся "
 "<literal>true</literal>.)"
 
-#: tablesample-method.xml:262(para)
+#: tablesample-method.xml:274(para)
 msgid ""
 "<function>NextSampleTuple</function> must <emphasis>not</emphasis> assume "
 "that <literal>blockno</literal> is the same page number returned by the most "
@@ -486,7 +486,7 @@ msgstr ""
 "этой странице, пока не будет возвращено значение "
 "<literal>InvalidOffsetNumber</literal>."
 
-#: tablesample-method.xml:276(programlisting)
+#: tablesample-method.xml:288(programlisting)
 #, no-wrap
 msgid ""
 "void\n"
@@ -495,7 +495,7 @@ msgstr ""
 "void\n"
 "EndSampleScan (SampleScanState *node);"
 
-#: tablesample-method.xml:275(para)
+#: tablesample-method.xml:287(para)
 msgid ""
 "<placeholder-1/> End the scan and release resources. It is normally not "
 "important to release palloc'd memory, but any externally-visible resources "

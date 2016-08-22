@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:32+0300\n"
+"POT-Creation-Date: 2016-08-19 11:33+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -40,21 +40,21 @@ msgstr "CREATE CAST"
 msgid "define a new cast"
 msgstr "создать приведение"
 
-#: ref/create_cast.xml:21(replaceable) ref/create_cast.xml:25(replaceable)
-#: ref/create_cast.xml:29(replaceable) ref/create_cast.xml:166(replaceable)
+#: ref/create_cast.xml:22(replaceable) ref/create_cast.xml:26(replaceable)
+#: ref/create_cast.xml:30(replaceable) ref/create_cast.xml:176(replaceable)
 msgid "source_type"
 msgstr "исходный_тип"
 
-#: ref/create_cast.xml:21(replaceable) ref/create_cast.xml:25(replaceable)
-#: ref/create_cast.xml:29(replaceable) ref/create_cast.xml:176(replaceable)
+#: ref/create_cast.xml:22(replaceable) ref/create_cast.xml:26(replaceable)
+#: ref/create_cast.xml:30(replaceable) ref/create_cast.xml:186(replaceable)
 msgid "target_type"
 msgstr "целевой_тип"
 
-#: ref/create_cast.xml:22(replaceable)
+#: ref/create_cast.xml:23(replaceable)
 msgid "function_name"
 msgstr "имя_функции"
 
-#: ref/create_cast.xml:22(replaceable)
+#: ref/create_cast.xml:23(replaceable)
 msgid "argument_type"
 msgstr "тип_аргумента"
 
@@ -85,16 +85,16 @@ msgstr ""
 "    WITH INOUT\n"
 "    [ AS ASSIGNMENT | AS IMPLICIT ]"
 
-#: ref/create_cast.xml:35(title)
+#: ref/create_cast.xml:37(title)
 msgid "Description"
 msgstr "Описание"
 
-#: ref/create_cast.xml:41(programlisting)
+#: ref/create_cast.xml:43(programlisting)
 #, no-wrap
 msgid "SELECT CAST(42 AS float8);"
 msgstr "SELECT CAST(42 AS float8);"
 
-#: ref/create_cast.xml:37(para)
+#: ref/create_cast.xml:39(para)
 msgid ""
 "<command>CREATE CAST</command> defines a new cast. A cast specifies how to "
 "perform a conversion between two data types. For example, <placeholder-1/> "
@@ -109,7 +109,7 @@ msgstr ""
 "<literal>float8(int4)</literal>. (Если подходящее приведение не определено, "
 "возникнет ошибка преобразования.)"
 
-#: ref/create_cast.xml:48(para)
+#: ref/create_cast.xml:52(para)
 msgid ""
 "Two types can be <firstterm>binary coercible</firstterm>, which means that "
 "the conversion can be performed <quote>for free</quote> without invoking any "
@@ -133,7 +133,7 @@ msgstr ""
 "выполняющая как минимум синтаксическую проверку. (Два типа, двоично-сводимые "
 "в обе стороны, также называются двоично-совместимыми.)"
 
-#: ref/create_cast.xml:63(para)
+#: ref/create_cast.xml:67(para)
 msgid ""
 "You can define a cast as an <firstterm>I/O conversion cast</firstterm> by "
 "using the <literal>WITH INOUT</literal> syntax. An I/O conversion cast is "
@@ -152,7 +152,7 @@ msgstr ""
 "вывода работает так же, как и обычное приведение с функцией; отличается "
 "только реализация."
 
-#: ref/create_cast.xml:73(para)
+#: ref/create_cast.xml:77(para)
 msgid ""
 "By default, a cast can be invoked only by an explicit cast request, that is "
 "an explicit <literal>CAST(<replaceable>x</replaceable> AS "
@@ -165,12 +165,12 @@ msgstr ""
 "<replaceable>имя_типа</replaceable>)</literal> или <replaceable>x</"
 "replaceable><literal>::</literal><replaceable>имя_типа</replaceable>."
 
-#: ref/create_cast.xml:86(programlisting)
+#: ref/create_cast.xml:90(programlisting)
 #, no-wrap
 msgid "INSERT INTO foo (f1) VALUES (42);"
 msgstr "INSERT INTO foo (f1) VALUES (42);"
 
-#: ref/create_cast.xml:81(para)
+#: ref/create_cast.xml:85(para)
 msgid ""
 "If the cast is marked <literal>AS ASSIGNMENT</literal> then it can be "
 "invoked implicitly when assigning a value to a column of the target data "
@@ -189,17 +189,17 @@ msgstr ""
 "приведений мы обычно используем термин <firstterm>приведение присваивания</"
 "firstterm>.)"
 
-#: ref/create_cast.xml:99(programlisting)
+#: ref/create_cast.xml:105(programlisting)
 #, no-wrap
 msgid "SELECT 2 + 4.0;"
 msgstr "SELECT 2 + 4.0;"
 
-#: ref/create_cast.xml:108(programlisting)
+#: ref/create_cast.xml:116(programlisting)
 #, no-wrap
 msgid "SELECT CAST ( 2 AS numeric ) + 4.0;"
 msgstr "SELECT CAST ( 2 AS numeric ) + 4.0;"
 
-#: ref/create_cast.xml:93(para)
+#: ref/create_cast.xml:99(para)
 msgid ""
 "If the cast is marked <literal>AS IMPLICIT</literal> then it can be invoked "
 "implicitly in any context, whether assignment or internally in an "
@@ -207,14 +207,13 @@ msgid ""
 "to describe this kind of cast.) For example, consider this query: "
 "<placeholder-1/> The parser initially marks the constants as being of type "
 "<type>integer</type> and <type>numeric</type> respectively. There is no "
-"<type>integer</type>\n"
-"   <literal>+</literal> <type>numeric</type> operator in the system "
-"catalogs, but there is a <type>numeric</type> <literal>+</literal> "
-"<type>numeric</type> operator. The query will therefore succeed if a cast "
-"from <type>integer</type> to <type>numeric</type> is available and is marked "
-"<literal>AS IMPLICIT</literal> &mdash; which in fact it is. The parser will "
-"apply the implicit cast and resolve the query as if it had been written "
-"<placeholder-2/>"
+"<type>integer</type> <literal>+</literal> <type>numeric</type> operator in "
+"the system catalogs, but there is a <type>numeric</type> <literal>+</"
+"literal> <type>numeric</type> operator. The query will therefore succeed if "
+"a cast from <type>integer</type> to <type>numeric</type> is available and is "
+"marked <literal>AS IMPLICIT</literal> &mdash; which in fact it is. The "
+"parser will apply the implicit cast and resolve the query as if it had been "
+"written <placeholder-2/>"
 msgstr ""
 "Если приведение помечено <literal>AS IMPLICIT</literal>, оно будет "
 "вызываться неявно в любом контексте, будь то присваивание или внутреннее "
@@ -222,16 +221,15 @@ msgstr ""
 "<firstterm>неявным приведением</firstterm>.) Например, рассмотрите этот "
 "запрос: <placeholder-1/> При разборе запроса константам сначала назначаются "
 "типы <type>integer</type> и <type>numeric</type>. Однако в системных "
-"каталогах нет оператора <type>integer</type>\n"
-"   <literal>+</literal> <type>numeric</type>, хотя есть оператор "
-"<type>numeric</type> <literal>+</literal> <type>numeric</type>. Таким "
-"образом, запрос выполнится успешно, если существует преобразование типа "
-"<type>integer</type> к <type>numeric</type> с пометкой <literal>AS IMPLICIT</"
-"literal> &mdash; и на самом деле это так. Анализатор запроса применит "
-"неявное приведение и запрос будет обработан, как если бы он был записан в "
-"виде <placeholder-2/>"
+"каталогах нет оператора <type>integer</type> <literal>+</literal> "
+"<type>numeric</type>, хотя есть оператор <type>numeric</type> <literal>+</"
+"literal> <type>numeric</type>. Таким образом, запрос выполнится успешно, "
+"если существует преобразование типа <type>integer</type> к <type>numeric</"
+"type> с пометкой <literal>AS IMPLICIT</literal> &mdash; и на самом деле это "
+"так. Анализатор запроса применит неявное приведение и запрос будет "
+"обработан, как если бы он был записан в виде <placeholder-2/>"
 
-#: ref/create_cast.xml:111(para)
+#: ref/create_cast.xml:121(para)
 msgid ""
 "Now, the catalogs also provide a cast from <type>numeric</type> to "
 "<type>integer</type>. If that cast were marked <literal>AS IMPLICIT</"
@@ -258,7 +256,7 @@ msgstr ""
 "<type>numeric</type>-и-<type>integer</type> в <type>numeric</type>; "
 "отдельного встроенного знания об этом нет."
 
-#: ref/create_cast.xml:125(para)
+#: ref/create_cast.xml:135(para)
 msgid ""
 "It is wise to be conservative about marking casts as implicit. An "
 "overabundance of implicit casting paths can cause <productname>PostgreSQL</"
@@ -284,7 +282,7 @@ msgstr ""
 "присваивания. Приведения типов разных категорий, например, <type>text</type> "
 "к <type>int4</type>, лучше делать только явными."
 
-#: ref/create_cast.xml:141(para)
+#: ref/create_cast.xml:151(para)
 msgid ""
 "Sometimes it is necessary for usability or standards-compliance reasons to "
 "provide multiple implicit casts among a set of types, resulting in ambiguity "
@@ -300,7 +298,7 @@ msgstr ""
 "типов</firstterm> и <firstterm>предпочитаемые типы</firstterm>. Подробнее "
 "это описано в <xref remap=\"6\" linkend=\"sql-createtype\"/>."
 
-#: ref/create_cast.xml:152(para)
+#: ref/create_cast.xml:162(para)
 msgid ""
 "To be able to create a cast, you must own the source or the target data type "
 "and have <literal>USAGE</literal> privilege on the other type. To create a "
@@ -314,19 +312,19 @@ msgstr ""
 "ограничение введено потому, что преобразование данных с ошибочным двоичным "
 "сведением может легко вызывать сбой сервера.)"
 
-#: ref/create_cast.xml:162(title)
+#: ref/create_cast.xml:172(title)
 msgid "Parameters"
 msgstr "Параметры"
 
-#: ref/create_cast.xml:169(para)
+#: ref/create_cast.xml:179(para)
 msgid "The name of the source data type of the cast."
 msgstr "Имя исходного типа данных для приведения."
 
-#: ref/create_cast.xml:179(para)
+#: ref/create_cast.xml:189(para)
 msgid "The name of the target data type of the cast."
 msgstr "Имя целевого типа данных для приведения."
 
-#: ref/create_cast.xml:186(term)
+#: ref/create_cast.xml:196(term)
 msgid ""
 "<replaceable>function_name</replaceable>(<replaceable>argument_type</"
 "replaceable> [, ...])"
@@ -334,7 +332,7 @@ msgstr ""
 "<replaceable>имя_функции</replaceable>(<replaceable>тип_аргумента</"
 "replaceable> [, ...])"
 
-#: ref/create_cast.xml:189(para)
+#: ref/create_cast.xml:199(para)
 msgid ""
 "The function used to perform the cast. The function name can be schema-"
 "qualified. If it is not, the function will be looked up in the schema search "
@@ -346,11 +344,11 @@ msgstr ""
 "поиска. Тип данных результата должен соответствовать целевому типу "
 "приведения. Аргументы функции рассматриваются ниже."
 
-#: ref/create_cast.xml:199(literal)
+#: ref/create_cast.xml:209(literal)
 msgid "WITHOUT FUNCTION"
 msgstr "WITHOUT FUNCTION"
 
-#: ref/create_cast.xml:202(para)
+#: ref/create_cast.xml:212(para)
 msgid ""
 "Indicates that the source type is binary-coercible to the target type, so no "
 "function is required to perform the cast."
@@ -358,11 +356,11 @@ msgstr ""
 "Обозначает, что исходный тип сводится к целевому на двоичном уровне, так что "
 "функция для приведения не требуется."
 
-#: ref/create_cast.xml:210(literal)
+#: ref/create_cast.xml:220(literal)
 msgid "WITH INOUT"
 msgstr "WITH INOUT"
 
-#: ref/create_cast.xml:213(para)
+#: ref/create_cast.xml:223(para)
 msgid ""
 "Indicates that the cast is an I/O conversion cast, performed by invoking the "
 "output function of the source data type, and passing the resulting string to "
@@ -372,25 +370,25 @@ msgstr ""
 "есть вызывается функция вывода исходного типа данных, а её результат-строка "
 "передаётся функции ввода целевого типа."
 
-#: ref/create_cast.xml:222(literal)
+#: ref/create_cast.xml:232(literal)
 msgid "AS ASSIGNMENT"
 msgstr "AS ASSIGNMENT"
 
-#: ref/create_cast.xml:225(para)
+#: ref/create_cast.xml:235(para)
 msgid ""
 "Indicates that the cast can be invoked implicitly in assignment contexts."
 msgstr ""
 "Обозначает, что приведение может вызываться неявно в контексте присваивания."
 
-#: ref/create_cast.xml:233(literal)
+#: ref/create_cast.xml:243(literal)
 msgid "AS IMPLICIT"
 msgstr "AS IMPLICIT"
 
-#: ref/create_cast.xml:236(para)
+#: ref/create_cast.xml:246(para)
 msgid "Indicates that the cast can be invoked implicitly in any context."
 msgstr "Обозначает, что приведение может вызываться неявно в любом контексте."
 
-#: ref/create_cast.xml:243(para)
+#: ref/create_cast.xml:253(para)
 msgid ""
 "Cast implementation functions can have one to three arguments. The first "
 "argument type must be identical to or binary-coercible from the cast's "
@@ -417,7 +415,7 @@ msgstr ""
 "которые должны реализовывать такие приведения. Однако создавать собственные "
 "типы данных, для которых это имело бы значение, не рекомендуется.)"
 
-#: ref/create_cast.xml:258(para)
+#: ref/create_cast.xml:268(para)
 msgid ""
 "The return type of a cast function must be identical to or binary-coercible "
 "to the cast's target type."
@@ -425,7 +423,7 @@ msgstr ""
 "Возвращаемый тип функции приведения должен быть идентичным или двоично-"
 "сводимым к целевому типу приведения."
 
-#: ref/create_cast.xml:263(para)
+#: ref/create_cast.xml:273(para)
 msgid ""
 "Ordinarily a cast must have different source and target data types. However, "
 "it is allowed to declare a cast with identical source and target types if it "
@@ -441,7 +439,7 @@ msgstr ""
 "Реализующая такое приведение функция будет сводить значение типа к значению "
 "с определённым модификатором, заданному вторым аргументом."
 
-#: ref/create_cast.xml:273(para)
+#: ref/create_cast.xml:283(para)
 msgid ""
 "When a cast has different source and target types and a function that takes "
 "more than one argument, it supports converting from one type to another and "
@@ -456,7 +454,7 @@ msgstr ""
 "два этапа: сначала выполняется преобразование типа, а затем применяется "
 "модификатор типа."
 
-#: ref/create_cast.xml:282(para)
+#: ref/create_cast.xml:292(para)
 msgid ""
 "A cast to or from a domain type currently has no effect. Casting to or from "
 "a domain uses the casts associated with its underlying type."
@@ -465,17 +463,17 @@ msgstr ""
 "осуществляется. При попытке выполнить такое приведение вместо него "
 "выполняется приведение, связанное с базовым типом домена."
 
-#: ref/create_cast.xml:290(title)
+#: ref/create_cast.xml:300(title)
 msgid "Notes"
 msgstr "Замечания"
 
-#: ref/create_cast.xml:292(para)
+#: ref/create_cast.xml:302(para)
 msgid "Use <xref linkend=\"sql-dropcast\"/> to remove user-defined casts."
 msgstr ""
 "Для удаления приведений, созданных пользователем, применяется <xref linkend="
 "\"sql-dropcast\"/>."
 
-#: ref/create_cast.xml:296(para)
+#: ref/create_cast.xml:306(para)
 msgid ""
 "Remember that if you want to be able to convert types both ways you need to "
 "declare casts both ways explicitly."
@@ -483,13 +481,13 @@ msgstr ""
 "Помните, что когда требуется преобразовывать типы в обе стороны, необходимо "
 "явно описать два приведения."
 
-#: ref/create_cast.xml:301(indexterm)
-msgid "<primary>cast</primary><secondary>I/O conversion</secondary>"
+#: ref/create_cast.xml:311(indexterm)
+msgid "<primary>cast</primary> <secondary>I/O conversion</secondary>"
 msgstr ""
-"<primary>приведение</primary><secondary>преобразование ввода/вывода</"
+"<primary>приведение</primary> <secondary>преобразование ввода/вывода</"
 "secondary>"
 
-#: ref/create_cast.xml:305(para)
+#: ref/create_cast.xml:316(para)
 msgid ""
 "It is normally not necessary to create casts between user-defined types and "
 "the standard string types (<type>text</type>, <type>varchar</type>, and "
@@ -525,7 +523,7 @@ msgstr ""
 "встроенных типов имеются подобные специфические приведения, в основном из-за "
 "требований стандарта SQL.)"
 
-#: ref/create_cast.xml:324(para)
+#: ref/create_cast.xml:335(para)
 msgid ""
 "While not required, it is recommended that you continue to follow this old "
 "convention of naming cast implementation functions after the target data "
@@ -551,7 +549,7 @@ msgstr ""
 "аргументов, ничто не мешает создать множество функций приведения разных "
 "типов к одному, названных по имени этого целевого типа."
 
-#: ref/create_cast.xml:340(para)
+#: ref/create_cast.xml:351(para)
 msgid ""
 "Actually the preceding paragraph is an oversimplification: there are two "
 "cases in which a function-call construct will be treated as a cast request "
@@ -582,7 +580,7 @@ msgstr ""
 "преобразование ввода/вывода. Это исключение позволяет вызывать "
 "преобразование ввода/вывода, используя синтаксис вызова функции."
 
-#: ref/create_cast.xml:359(para)
+#: ref/create_cast.xml:370(para)
 msgid ""
 "There is also an exception to the exception: I/O conversion casts from "
 "composite types to string types cannot be invoked using functional syntax, "
@@ -600,16 +598,16 @@ msgstr ""
 "оказалось слишком легко случайно вызвать такое приведение, тогда как имелась "
 "в виду ссылка на столбец или функцию."
 
-#: ref/create_cast.xml:373(title)
+#: ref/create_cast.xml:384(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/create_cast.xml:378(programlisting)
+#: ref/create_cast.xml:389(programlisting)
 #, no-wrap
 msgid "CREATE CAST (bigint AS int4) WITH FUNCTION int4(bigint) AS ASSIGNMENT;"
 msgstr "CREATE CAST (bigint AS int4) WITH FUNCTION int4(bigint) AS ASSIGNMENT;"
 
-#: ref/create_cast.xml:375(para)
+#: ref/create_cast.xml:386(para)
 msgid ""
 "To create an assignment cast from type <type>bigint</type> to type "
 "<type>int4</type> using the function <literal>int4(bigint)</literal>: "
@@ -619,11 +617,11 @@ msgstr ""
 "type> с помощью функции <literal>int4(bigint)</literal>: <placeholder-1/> "
 "(Это приведение уже предопределено в системе.)"
 
-#: ref/create_cast.xml:384(title)
+#: ref/create_cast.xml:397(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/create_cast.xml:386(para)
+#: ref/create_cast.xml:399(para)
 msgid ""
 "The <command>CREATE CAST</command> command conforms to the <acronym>SQL</"
 "acronym> standard, except that SQL does not make provisions for binary-"
@@ -636,11 +634,11 @@ msgstr ""
 "<literal>AS IMPLICIT</literal> тоже является расширением "
 "<productname>PostgreSQL</productname>."
 
-#: ref/create_cast.xml:398(title)
+#: ref/create_cast.xml:411(title)
 msgid "See Also"
 msgstr "См. также"
 
-#: ref/create_cast.xml:400(para)
+#: ref/create_cast.xml:413(para)
 msgid ""
 "<xref linkend=\"sql-createfunction\"/>, <xref linkend=\"sql-createtype\"/>, "
 "<xref linkend=\"sql-dropcast\"/>"

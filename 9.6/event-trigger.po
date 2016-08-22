@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-11 12:31+0300\n"
+"POT-Creation-Date: 2016-08-19 11:32+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -805,10 +805,10 @@ msgid "Writing Event Trigger Functions in C"
 msgstr "Триггерные функции событий на языке C"
 
 #: event-trigger.xml:866(indexterm)
-msgid "<primary>event trigger</primary><secondary>in C</secondary>"
-msgstr "<primary>событийный триггер</primary><secondary>на C</secondary>"
+msgid "<primary>event trigger</primary> <secondary>in C</secondary>"
+msgstr "<primary>событийный триггер</primary> <secondary>на C</secondary>"
 
-#: event-trigger.xml:870(para)
+#: event-trigger.xml:871(para)
 msgid ""
 "This section describes the low-level details of the interface to an event "
 "trigger function. This information is only needed when writing event trigger "
@@ -825,7 +825,7 @@ msgstr ""
 "триггеры событий на C. В документации по каждому процедурному языку "
 "объясняется как создавать триггеры событий на этом языке."
 
-#: event-trigger.xml:880(para)
+#: event-trigger.xml:881(para)
 msgid ""
 "Event trigger functions must use the <quote>version 1</quote> function "
 "manager interface."
@@ -833,17 +833,17 @@ msgstr ""
 "Триггерные функции событий должны использовать <quote>version 1</quote> "
 "интерфейса диспетчера функций."
 
-#: event-trigger.xml:891(programlisting)
+#: event-trigger.xml:892(programlisting)
 #, no-wrap
 msgid "CALLED_AS_EVENT_TRIGGER(fcinfo)"
 msgstr "CALLED_AS_EVENT_TRIGGER(fcinfo)"
 
-#: event-trigger.xml:893(programlisting)
+#: event-trigger.xml:896(programlisting)
 #, no-wrap
 msgid "((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, EventTriggerData))"
 msgstr "<structname>EventTriggerData</structname>"
 
-#: event-trigger.xml:885(para)
+#: event-trigger.xml:886(para)
 msgid ""
 "When a function is called by the event trigger manager, it is not passed any "
 "normal arguments, but it is passed a <quote>context</quote> pointer pointing "
@@ -868,7 +868,7 @@ msgstr ""
 "<structname>EventTriggerData</structname> или любые данные, которые на неё "
 "указывают."
 
-#: event-trigger.xml:906(programlisting)
+#: event-trigger.xml:911(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct EventTriggerData\n"
@@ -887,19 +887,19 @@ msgstr ""
 "    const char *tag;        /* тег команды */\n"
 "} EventTriggerData;"
 
-#: event-trigger.xml:918(structfield)
+#: event-trigger.xml:925(structfield)
 msgid "type"
 msgstr "type"
 
-#: event-trigger.xml:920(para)
+#: event-trigger.xml:927(para)
 msgid "Always <literal>T_EventTriggerData</literal>."
 msgstr "Всегда <literal>T_EventTriggerData</literal>."
 
-#: event-trigger.xml:927(structfield)
+#: event-trigger.xml:934(structfield)
 msgid "event"
 msgstr "event"
 
-#: event-trigger.xml:929(para)
+#: event-trigger.xml:936(para)
 msgid ""
 "Describes the event for which the function is called, one of <literal>"
 "\"ddl_command_start\"</literal>, <literal>\"ddl_command_end\"</literal>, "
@@ -912,11 +912,11 @@ msgstr ""
 "literal>. Суть этих событий описывается в <xref remap=\"6\" linkend=\"event-"
 "trigger-definition\"/>."
 
-#: event-trigger.xml:940(structfield)
+#: event-trigger.xml:947(structfield)
 msgid "parsetree"
 msgstr "parsetree"
 
-#: event-trigger.xml:942(para)
+#: event-trigger.xml:949(para)
 msgid ""
 "A pointer to the parse tree of the command. Check the PostgreSQL source code "
 "for details. The parse tree structure is subject to change without notice."
@@ -924,11 +924,11 @@ msgstr ""
 "Указатель на дерево разбора команды. Детали можно посмотреть в исходном коде "
 "PostgreSQL. Структура дерева разбора может быть изменена без предупреждений."
 
-#: event-trigger.xml:951(structfield)
+#: event-trigger.xml:958(structfield)
 msgid "tag"
 msgstr "tag"
 
-#: event-trigger.xml:953(para)
+#: event-trigger.xml:960(para)
 msgid ""
 "The command tag associated with the event for which the event trigger is "
 "run, for example <literal>\"CREATE FUNCTION\"</literal>."
@@ -936,7 +936,7 @@ msgstr ""
 "Тег команды, для которой сработал триггер события. Например <literal>"
 "\"CREATE FUNCTION\"</literal>."
 
-#: event-trigger.xml:902(para)
+#: event-trigger.xml:907(para)
 msgid ""
 "<structname>struct EventTriggerData</structname> is defined in "
 "<filename>commands/event_trigger.h</filename>: <placeholder-1/> where the "
@@ -946,7 +946,7 @@ msgstr ""
 "<filename>commands/event_trigger.h</filename>: <placeholder-1/> со "
 "следующими членами структуры: <placeholder-2/>"
 
-#: event-trigger.xml:962(para)
+#: event-trigger.xml:969(para)
 msgid ""
 "An event trigger function must return a <symbol>NULL</symbol> pointer "
 "(<emphasis>not</emphasis> an SQL null value, that is, do not set "
@@ -956,11 +956,11 @@ msgstr ""
 "(но <emphasis>не</emphasis> SQL значение null, то есть не нужно "
 "устанавливать <parameter>isNull</parameter> в истину)."
 
-#: event-trigger.xml:970(title)
+#: event-trigger.xml:977(title)
 msgid "A Complete Event Trigger Example"
 msgstr "Полный пример триггера события"
 
-#: event-trigger.xml:972(para)
+#: event-trigger.xml:979(para)
 msgid ""
 "Here is a very simple example of an event trigger function written in C. "
 "(Examples of triggers written in procedural languages can be found in the "
@@ -970,7 +970,7 @@ msgstr ""
 "(Примеры триггеров для процедурных языков могут быть найдены в документации "
 "на процедурные языки.)"
 
-#: event-trigger.xml:978(para)
+#: event-trigger.xml:985(para)
 msgid ""
 "The function <function>noddl</function> raises an exception each time it is "
 "called. The event trigger definition associated the function with the "
@@ -984,11 +984,11 @@ msgstr ""
 "которых говорилось в <xref remap=\"6\" linkend=\"event-trigger-definition\"/"
 ">)."
 
-#: event-trigger.xml:986(para)
+#: event-trigger.xml:993(para)
 msgid "This is the source code of the trigger function: <placeholder-1/>"
 msgstr "Теперь исходный код триггерной функции: <placeholder-1/>"
 
-#: event-trigger.xml:1019(programlisting)
+#: event-trigger.xml:1026(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION noddl() RETURNS event_trigger\n"
@@ -1003,7 +1003,7 @@ msgstr ""
 "CREATE EVENT TRIGGER noddl ON ddl_command_start\n"
 "    EXECUTE PROCEDURE noddl();"
 
-#: event-trigger.xml:1016(para)
+#: event-trigger.xml:1023(para)
 msgid ""
 "After you have compiled the source code (see <xref linkend=\"dfunc\"/>), "
 "declare the function and the triggers: <placeholder-1/>"
@@ -1011,9 +1011,10 @@ msgstr ""
 "После компиляции исходного кода (см. <xref remap=\"4\" linkend=\"dfunc\"/>) "
 "объявляем функцию и триггеры: <placeholder-1/>"
 
-#: event-trigger.xml:1026(para)
+#: event-trigger.xml:1035(para)
 msgid ""
-"Now you can test the operation of the trigger: <screen>=# \\dy\n"
+"Now you can test the operation of the trigger: <screen>\n"
+"=# \\dy\n"
 "                     List of event triggers\n"
 " Name  |       Event       | Owner | Enabled | Procedure | Tags\n"
 "-------+-------------------+-------+---------+-----------+------\n"
@@ -1021,9 +1022,11 @@ msgid ""
 "(1 row)\n"
 "\n"
 "=# CREATE TABLE foo(id serial);\n"
-"ERROR:  command \"CREATE TABLE\" denied</screen>"
+"ERROR:  command \"CREATE TABLE\" denied\n"
+"</screen>"
 msgstr ""
-"Теперь проверим работу триггера: <screen>=# \\dy\n"
+"Теперь проверим работу триггера: <screen>\n"
+"=# \\dy\n"
 "                     List of event triggers\n"
 " Name  |       Event       | Owner | Enabled | Procedure | Tags\n"
 "-------+-------------------+-------+---------+-----------+------\n"
@@ -1031,9 +1034,10 @@ msgstr ""
 "(1 row)\n"
 "\n"
 "=# CREATE TABLE foo(id serial);\n"
-"ERROR:  Команда \"CREATE TABLE\" отменена</screen>"
+"ERROR:  Команда \"CREATE TABLE\" отменена\n"
+"</screen>"
 
-#: event-trigger.xml:1044(programlisting)
+#: event-trigger.xml:1055(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN;\n"
@@ -1048,7 +1052,7 @@ msgstr ""
 "ALTER EVENT TRIGGER noddl ENABLE;\n"
 "COMMIT;"
 
-#: event-trigger.xml:1039(para)
+#: event-trigger.xml:1050(para)
 msgid ""
 "In this situation, in order to be able to run some DDL commands when you "
 "need to do so, you have to either drop the event trigger or disable it. It "
@@ -1061,11 +1065,11 @@ msgstr ""
 "транзакции: <placeholder-1/> (Вспомним, что триггеры событий не обрабатывают "
 "DDL-команды для самих триггеров событий.)"
 
-#: event-trigger.xml:1055(title)
+#: event-trigger.xml:1068(title)
 msgid "A Table Rewrite Event Trigger Example"
 msgstr "Пример событийного триггера, обрабатывающего перезапись таблицы"
 
-#: event-trigger.xml:1057(para)
+#: event-trigger.xml:1070(para)
 msgid ""
 "Thanks to the <literal>table_rewrite</literal> event, it is possible to "
 "implement a table rewriting policy only allowing the rewrite in maintenance "
@@ -1075,7 +1079,7 @@ msgstr ""
 "реализовать политику перезаписи таблиц, допускающую перезапись только в "
 "определённое время обслуживания."
 
-#: event-trigger.xml:1064(programlisting)
+#: event-trigger.xml:1077(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION no_rewrite()\n"
@@ -1158,7 +1162,7 @@ msgstr ""
 "                  ON table_rewrite\n"
 "   EXECUTE PROCEDURE no_rewrite();"
 
-#: event-trigger.xml:1062(para)
+#: event-trigger.xml:1075(para)
 msgid "Here's an example implementing such a policy. <placeholder-1/>"
 msgstr ""
 "Следующий пример демонстрирует реализацию такой политики. <placeholder-1/>"
