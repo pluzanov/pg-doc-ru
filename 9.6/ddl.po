@@ -4129,12 +4129,13 @@ msgstr ""
 "literal>."
 
 #: ddl.xml:2609(para)
+#, fuzzy
 msgid ""
 "A parent table cannot be dropped while any of its children remain. Neither "
 "can columns or check constraints of child tables be dropped or altered if "
 "they are inherited from any parent tables. If you wish to remove a table and "
 "all of its descendants, one easy way is to drop the parent table with the "
-"<literal>CASCADE</literal> option."
+"<literal>CASCADE</literal> option (see <xref linkend=\"ddl-depend\"/>)."
 msgstr ""
 "Родительскую таблицу нельзя удалить, пока существуют унаследованные от неё. "
 "Так же как в дочерних таблицах нельзя удалять или модифицировать столбцы или "
@@ -5549,6 +5550,7 @@ msgstr ""
 "ограничением внешнего ключа зависит от таблицы, на которую она ссылается."
 
 #: ddl.xml:3571(para)
+#, fuzzy
 msgid ""
 "To ensure the integrity of the entire database structure, "
 "<productname>PostgreSQL</productname> makes sure that you cannot drop "
@@ -5566,11 +5568,13 @@ msgid ""
 "bother deleting all the dependent objects individually, you can run: "
 "<screen>\n"
 "DROP TABLE products CASCADE;\n"
-"</screen> and all the dependent objects will be removed. In this case, it "
-"doesn't remove the orders table, it only removes the foreign key constraint. "
-"(If you want to check what <command>DROP ... CASCADE</command> will do, run "
-"<command>DROP</command> without <literal>CASCADE</literal> and read the "
-"<literal>DETAIL</literal> output.)"
+"</screen> and all the dependent objects will be removed, as will any objects "
+"that depend on them, recursively. In this case, it doesn't remove the orders "
+"table, it only removes the foreign key constraint. It stops there because "
+"nothing depends on the foreign key constraint. (If you want to check what "
+"<command>DROP ... CASCADE</command> will do, run <command>DROP</command> "
+"without <literal>CASCADE</literal> and read the <literal>DETAIL</literal> "
+"output.)"
 msgstr ""
 "Для сохранения целостности структуры всей базы данных "
 "<productname>PostgreSQL</productname> не позволяет удалять объекты, от "
@@ -5595,14 +5599,15 @@ msgstr ""
 "CASCADE</command>, запустите <command>DROP</command> без <literal>CASCADE</"
 "literal> и прочитайте <literal>ПОДРОБНОСТИ</literal> (DETAIL).)"
 
-#: ddl.xml:3597(para)
+#: ddl.xml:3599(para)
+#, fuzzy
 msgid ""
-"All <command>DROP</command> commands in <productname>PostgreSQL</"
+"Almost all <command>DROP</command> commands in <productname>PostgreSQL</"
 "productname> support specifying <literal>CASCADE</literal>. Of course, the "
 "nature of the possible dependencies varies with the type of the object. You "
 "can also write <literal>RESTRICT</literal> instead of <literal>CASCADE</"
-"literal> to get the default behavior, which is to prevent the dropping of "
-"objects that other objects depend on."
+"literal> to get the default behavior, which is to prevent dropping objects "
+"that any other objects depend on."
 msgstr ""
 "Все команды <command>DROP</command> в <productname>PostgreSQL</productname> "
 "поддерживают указание <literal>CASCADE</literal>. Конечно, вид возможных "
@@ -5611,7 +5616,7 @@ msgstr ""
 "включить поведение по умолчанию, когда объект можно удалить, только если от "
 "него не зависят никакие другие."
 
-#: ddl.xml:3607(para)
+#: ddl.xml:3609(para)
 msgid ""
 "According to the SQL standard, specifying either <literal>RESTRICT</literal> "
 "or <literal>CASCADE</literal> is required in a <command>DROP</command> "
@@ -5625,7 +5630,17 @@ msgstr ""
 "системы по умолчанию подразумевают <literal>RESTRICT</literal>, а другие — "
 "<literal>CASCADE</literal>."
 
-#: ddl.xml:3624(programlisting)
+#: ddl.xml:3619(para)
+msgid ""
+"If a <command>DROP</command> command lists multiple objects, "
+"<literal>CASCADE</literal> is only required when there are dependencies "
+"outside the specified group. For example, when saying <literal>DROP TABLE "
+"tab1, tab2</literal> the existence of a foreign key referencing "
+"<literal>tab1</literal> from <literal>tab2</literal> would not mean that "
+"<literal>CASCADE</literal> is needed to succeed."
+msgstr ""
+
+#: ddl.xml:3635(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow',\n"
@@ -5646,7 +5661,7 @@ msgstr ""
 "  'SELECT note FROM my_colors WHERE color = $1'\n"
 "  LANGUAGE SQL;"
 
-#: ddl.xml:3617(para)
+#: ddl.xml:3628(para)
 msgid ""
 "For user-defined functions, <productname>PostgreSQL</productname> tracks "
 "dependencies associated with a function's externally-visible properties, "
