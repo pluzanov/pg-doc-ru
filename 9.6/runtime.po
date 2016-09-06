@@ -323,9 +323,10 @@ msgstr ""
 "\"multibyte\"/>."
 
 #: runtime.xml:187(para)
+#, fuzzy
 msgid ""
-"Non-<literal>C</literal> and and non-<literal>POSIX</literal> locales rely "
-"on the operating system's collation library for character set ordering. This "
+"Non-<literal>C</literal> and non-<literal>POSIX</literal> locales rely on "
+"the operating system's collation library for character set ordering. This "
 "controls the ordering of keys stored in indexes. For this reason, a cluster "
 "cannot switch to an incompatible collation library version, either through "
 "snapshot restore, binary streaming replication, a different operating "
@@ -3095,17 +3096,18 @@ msgstr ""
 "может обнаружить подмену, если его не настроить дополнительно."
 
 #: runtime.xml:1916(para)
+#, fuzzy
 msgid ""
-"The simplest way to prevent spoofing for <literal>local</literal> "
-"connections is to use a Unix domain socket directory (<xref linkend=\"guc-"
-"unix-socket-directories\"/>) that has write permission only for a trusted "
-"local user. This prevents a malicious user from creating their own socket "
-"file in that directory. If you are concerned that some applications might "
-"still reference <filename>/tmp</filename> for the socket file and hence be "
-"vulnerable to spoofing, during operating system startup create a symbolic "
-"link <filename>/tmp/.s.PGSQL.5432</filename> that points to the relocated "
-"socket file. You also might need to modify your <filename>/tmp</filename> "
-"cleanup script to prevent removal of the symbolic link."
+"One way to prevent spoofing of <literal>local</literal> connections is to "
+"use a Unix domain socket directory (<xref linkend=\"guc-unix-socket-"
+"directories\"/>) that has write permission only for a trusted local user. "
+"This prevents a malicious user from creating their own socket file in that "
+"directory. If you are concerned that some applications might still reference "
+"<filename>/tmp</filename> for the socket file and hence be vulnerable to "
+"spoofing, during operating system startup create a symbolic link <filename>/"
+"tmp/.s.PGSQL.5432</filename> that points to the relocated socket file. You "
+"also might need to modify your <filename>/tmp</filename> cleanup script to "
+"prevent removal of the symbolic link."
 msgstr ""
 "Самый простой способ предотвратить подмену для <literal>локальных</literal> "
 "подключений — использовать каталог доменных сокетов Unix (<xref linkend="
@@ -3120,6 +3122,14 @@ msgstr ""
 "он не удалял эту ссылку."
 
 #: runtime.xml:1929(para)
+msgid ""
+"Another option for <literal>local</literal> connections is for clients to "
+"use <link linkend=\"libpq-connect-requirepeer\"><literal>requirepeer</"
+"literal></link> to specify the required owner of the server process "
+"connected to the socket."
+msgstr ""
+
+#: runtime.xml:1936(para)
 msgid ""
 "To prevent spoofing on TCP connections, the best solution is to use SSL "
 "certificates and make sure that clients check the server's certificate. To "
@@ -3140,15 +3150,15 @@ msgstr ""
 "него должен быть установлен соответствующий корневой сертификат (см. <xref "
 "remap=\"4\" linkend=\"libq-ssl-certificates\"/>)."
 
-#: runtime.xml:1943(title)
+#: runtime.xml:1950(title)
 msgid "Encryption Options"
 msgstr "Возможности шифрования"
 
-#: runtime.xml:1945(indexterm)
+#: runtime.xml:1952(indexterm)
 msgid "<primary>encryption</primary>"
 msgstr "<primary>шифрование</primary>"
 
-#: runtime.xml:1949(para)
+#: runtime.xml:1956(para)
 msgid ""
 "<productname>PostgreSQL</productname> offers encryption at several levels, "
 "and provides flexibility in protecting data from disclosure due to database "
@@ -3162,11 +3172,11 @@ msgstr ""
 "Шифрование может также требоваться для защиты конфиденциальных данных, "
 "например, медицинских сведений или финансовых транзакций."
 
-#: runtime.xml:1960(term)
+#: runtime.xml:1967(term)
 msgid "Password Storage Encryption"
 msgstr "Шифрование хранимых паролей"
 
-#: runtime.xml:1963(para)
+#: runtime.xml:1970(para)
 msgid ""
 "By default, database user passwords are stored as MD5 hashes, so the "
 "administrator cannot determine the actual password assigned to the user. If "
@@ -3181,11 +3191,11 @@ msgstr ""
 "кратковременно, так как клиент вычисляет и передаёт по сети только хеши "
 "паролей."
 
-#: runtime.xml:1975(term)
+#: runtime.xml:1982(term)
 msgid "Encryption For Specific Columns"
 msgstr "Шифрование избранных столбцов"
 
-#: runtime.xml:1978(para)
+#: runtime.xml:1985(para)
 msgid ""
 "The <xref linkend=\"pgcrypto\"/> module allows certain fields to be stored "
 "encrypted. This is useful if only some of the data is sensitive. The client "
@@ -3197,7 +3207,7 @@ msgstr ""
 "данные. Чтобы прочитать эти поля, клиент передаёт дешифрующий ключ, сервер "
 "расшифровывает данные и выдаёт их клиенту."
 
-#: runtime.xml:1986(para)
+#: runtime.xml:1993(para)
 msgid ""
 "The decrypted data and the decryption key are present on the server for a "
 "brief time while it is being decrypted and communicated between the client "
@@ -3210,11 +3220,11 @@ msgstr ""
 "быть перехвачены тем, кто имеет полный доступ к серверу баз данных, "
 "например, системным администратором."
 
-#: runtime.xml:1998(term)
+#: runtime.xml:2005(term)
 msgid "Data Partition Encryption"
 msgstr "Шифрование раздела данных"
 
-#: runtime.xml:2001(para)
+#: runtime.xml:2008(para)
 msgid ""
 "Storage encryption can be performed at the file system level or the block "
 "level. Linux file system encryption options include eCryptfs and EncFS, "
@@ -3229,7 +3239,7 @@ msgstr ""
 "во FreeBSD — модули GEOM, geli и gbde. Подобные возможности есть и во многих "
 "других операционных системах, включая Windows."
 
-#: runtime.xml:2010(para)
+#: runtime.xml:2017(para)
 msgid ""
 "This mechanism prevents unencrypted data from being read from the drives if "
 "the drives or the entire computer is stolen. This does not protect against "
@@ -3247,11 +3257,11 @@ msgstr ""
 "системе ключ (иногда он хранится где-то на компьютере, который выполняет "
 "монтирование)."
 
-#: runtime.xml:2024(term)
+#: runtime.xml:2031(term)
 msgid "Encrypting Passwords Across A Network"
 msgstr "Шифрование паролей при передаче по сети"
 
-#: runtime.xml:2027(para)
+#: runtime.xml:2034(para)
 msgid ""
 "The <literal>MD5</literal> authentication method double-encrypts the "
 "password on the client before sending it to the server. It first MD5-"
@@ -3271,11 +3281,11 @@ msgstr ""
 "вычисления исходного пароля, но и не даёт использовать тот же зашифрованный "
 "пароль при следующем подключении."
 
-#: runtime.xml:2042(term)
+#: runtime.xml:2049(term)
 msgid "Encrypting Data Across A Network"
 msgstr "Шифрование данных при передаче по сети"
 
-#: runtime.xml:2045(para)
+#: runtime.xml:2052(para)
 msgid ""
 "SSL connections encrypt all data sent across the network: the password, the "
 "queries, and the data returned. The <filename>pg_hba.conf</filename> file "
@@ -3294,11 +3304,11 @@ msgstr ""
 "можно применять <application>stunnel</application> и <application>SSH</"
 "application>."
 
-#: runtime.xml:2059(term)
+#: runtime.xml:2066(term)
 msgid "SSL Host Authentication"
 msgstr "Проверка подлинности сервера SSL"
 
-#: runtime.xml:2062(para)
+#: runtime.xml:2069(para)
 msgid ""
 "It is possible for both the client and server to provide SSL certificates to "
 "each other. It takes some extra configuration on each side, but this "
@@ -3318,11 +3328,11 @@ msgstr ""
 "представляется сервером и незаметно передаёт все запросы и данные между "
 "клиентом и подлинным сервером."
 
-#: runtime.xml:2077(term)
+#: runtime.xml:2084(term)
 msgid "Client-Side Encryption"
 msgstr "Шифрование на стороне клиента"
 
-#: runtime.xml:2080(para)
+#: runtime.xml:2087(para)
 msgid ""
 "If the system administrator for the server's machine cannot be trusted, it "
 "is necessary for the client to encrypt the data; this way, unencrypted data "
@@ -3336,15 +3346,15 @@ msgstr ""
 "прежде чем передавать их серверу, а получив из базы данных результаты, он "
 "расшифровывает их для использования."
 
-#: runtime.xml:2096(title)
+#: runtime.xml:2103(title)
 msgid "Secure TCP/IP Connections with SSL"
 msgstr "Защита соединений TCP/IP с применением SSL"
 
-#: runtime.xml:2098(indexterm)
+#: runtime.xml:2105(indexterm)
 msgid "<primary>SSL</primary>"
 msgstr "<primary>SSL</primary>"
 
-#: runtime.xml:2102(para)
+#: runtime.xml:2109(para)
 msgid ""
 "<productname>PostgreSQL</productname> has native support for using "
 "<acronym>SSL</acronym> connections to encrypt client/server communications "
@@ -3361,7 +3371,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> при сборке (см. <xref remap=\"4\" "
 "linkend=\"installation\"/>)."
 
-#: runtime.xml:2111(para)
+#: runtime.xml:2118(para)
 msgid ""
 "With <acronym>SSL</acronym> support compiled in, the "
 "<productname>PostgreSQL</productname> server can be started with "
@@ -3386,7 +3396,7 @@ msgstr ""
 "подключений, вы можете узнать в <xref remap=\"6\" linkend=\"auth-pg-hba-conf"
 "\"/>."
 
-#: runtime.xml:2124(para)
+#: runtime.xml:2131(para)
 msgid ""
 "<productname>PostgreSQL</productname> reads the system-wide "
 "<productname>OpenSSL</productname> configuration file. By default, this file "
@@ -3402,7 +3412,7 @@ msgstr ""
 "расположение файла конфигурации, его можно задать в переменной окружения "
 "<envar>OPENSSL_CONF</envar>."
 
-#: runtime.xml:2133(para)
+#: runtime.xml:2140(para)
 msgid ""
 "<productname>OpenSSL</productname> supports a wide range of ciphers and "
 "authentication algorithms, of varying strength. While a list of ciphers can "
@@ -3418,7 +3428,7 @@ msgstr ""
 "указав их в параметре <xref linkend=\"guc-ssl-ciphers\"/> в "
 "<filename>postgresql.conf</filename>."
 
-#: runtime.xml:2143(para)
+#: runtime.xml:2150(para)
 msgid ""
 "It is possible to have authentication without encryption overhead by using "
 "<literal>NULL-SHA</literal> or <literal>NULL-MD5</literal> ciphers. However, "
@@ -3434,7 +3444,7 @@ msgstr ""
 "дополнительную нагрузку по сравнению с проверкой подлинности. По этим "
 "причинам использовать шифры NULL не рекомендуется."
 
-#: runtime.xml:2153(para)
+#: runtime.xml:2160(para)
 msgid ""
 "To start in <acronym>SSL</acronym> mode, files containing the server "
 "certificate and private key must exist. By default, these files are expected "
@@ -3450,7 +3460,7 @@ msgstr ""
 "другие имена и местоположения файлов, задав их в конфигурационных параметрах "
 "<xref linkend=\"guc-ssl-cert-file\"/> и <xref linkend=\"guc-ssl-key-file\"/>."
 
-#: runtime.xml:2162(para)
+#: runtime.xml:2169(para)
 msgid ""
 "On Unix systems, the permissions on <filename>server.key</filename> must "
 "disallow any access to world or group; achieve this by the command "
@@ -3471,7 +3481,7 @@ msgstr ""
 "<productname>PostgreSQL</productname>, должен быть членом группы, имеющей "
 "доступ к указанным файлам сертификата и ключа."
 
-#: runtime.xml:2173(para)
+#: runtime.xml:2180(para)
 msgid ""
 "If the private key is protected with a passphrase, the server will prompt "
 "for the passphrase and will not start until it has been entered."
@@ -3479,7 +3489,7 @@ msgstr ""
 "Если закрытый ключ защищён паролем, сервер запросит пароль и не запустится, "
 "пока этот пароль не будет введён."
 
-#: runtime.xml:2179(para)
+#: runtime.xml:2186(para)
 msgid ""
 "In some cases, the server certificate might be signed by an "
 "<quote>intermediate</quote> certificate authority, rather than one that is "
@@ -3500,11 +3510,11 @@ msgstr ""
 "считают сертификат доверенным, если он подписан сертификатом, содержащимся в "
 "их собственном файле <filename>root.crt</filename>."
 
-#: runtime.xml:2191(title)
+#: runtime.xml:2198(title)
 msgid "Using Client Certificates"
 msgstr "Использование клиентских сертификатов"
 
-#: runtime.xml:2193(para)
+#: runtime.xml:2200(para)
 msgid ""
 "To require the client to supply a trusted certificate, place certificates of "
 "the certificate authorities (<acronym>CA</acronym>s) you trust in the file "
@@ -3531,7 +3541,7 @@ msgstr ""
 "сертификат, сервер будет проверять, был ли этот сертификат подписан одним из "
 "доверенным центром сертификации."
 
-#: runtime.xml:2208(para)
+#: runtime.xml:2215(para)
 msgid ""
 "If intermediate <acronym>CA</acronym>s appear in <filename>root.crt</"
 "filename>, the file must also contain certificate chains to their root "
@@ -3548,7 +3558,7 @@ msgstr ""
 "doc/83final/ba554_90007/ch04s02.html\"/> можно найти наглядные диаграммы, "
 "иллюстрирующие применение сертификатов SSL.)"
 
-#: runtime.xml:2220(para)
+#: runtime.xml:2227(para)
 msgid ""
 "The <literal>clientcert</literal> authentication option is available for all "
 "authentication methods, but only in <filename>pg_hba.conf</filename> lines "
@@ -3564,7 +3574,7 @@ msgstr ""
 "представленные клиентские сертификаты по своему файлу со списком ЦС (если он "
 "настроен) &mdash; но позволит подключаться клиентам без сертификата."
 
-#: runtime.xml:2229(para)
+#: runtime.xml:2236(para)
 msgid ""
 "Note that the server's <filename>root.crt</filename> lists the top-level CAs "
 "that are considered trusted for signing client certificates. In principle it "
@@ -3578,7 +3588,7 @@ msgstr ""
 "большинстве случаев этот ЦС также должен быть доверенным для клиентских "
 "сертификатов."
 
-#: runtime.xml:2237(para)
+#: runtime.xml:2244(para)
 msgid ""
 "If you are setting up client certificates, you may wish to use the "
 "<literal>cert</literal> authentication method, so that the certificates "
@@ -3594,11 +3604,11 @@ msgstr ""
 "(Устанавливать <literal>clientcert=1</literal> явно при использовании метода "
 "аутентификации <literal>cert</literal> не требуется.)"
 
-#: runtime.xml:2248(title) runtime.xml:2257(title)
+#: runtime.xml:2255(title) runtime.xml:2264(title)
 msgid "SSL Server File Usage"
 msgstr "Файлы, используемые SSL-сервером"
 
-#: runtime.xml:2250(para)
+#: runtime.xml:2257(para)
 msgid ""
 "<xref linkend=\"ssl-file-usage\"/> summarizes the files that are relevant to "
 "the SSL setup on the server. (The shown file names are default or typical "
@@ -3608,19 +3618,19 @@ msgstr ""
 "имеющие отношение к настройке SSL на сервере. (Здесь приведены стандартные "
 "или типичные имена файлов. В конкретной системе они могут быть другими.)"
 
-#: runtime.xml:2261(entry)
+#: runtime.xml:2268(entry)
 msgid "File"
 msgstr "Файл"
 
-#: runtime.xml:2262(entry)
+#: runtime.xml:2269(entry)
 msgid "Contents"
 msgstr "Содержимое"
 
-#: runtime.xml:2263(entry)
+#: runtime.xml:2270(entry)
 msgid "Effect"
 msgstr "Назначение"
 
-#: runtime.xml:2270(entry)
+#: runtime.xml:2277(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-cert-file\"/> (<filename>$PGDATA/server.crt</"
 "filename>)"
@@ -3628,15 +3638,15 @@ msgstr ""
 "<xref linkend=\"guc-ssl-cert-file\"/> (<filename>$PGDATA/server.crt</"
 "filename>)"
 
-#: runtime.xml:2271(entry)
+#: runtime.xml:2278(entry)
 msgid "server certificate"
 msgstr "сертификат сервера"
 
-#: runtime.xml:2272(entry)
+#: runtime.xml:2279(entry)
 msgid "sent to client to indicate server's identity"
 msgstr "отправляется клиенту для идентификации сервера"
 
-#: runtime.xml:2276(entry)
+#: runtime.xml:2283(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-key-file\"/> (<filename>$PGDATA/server.key</"
 "filename>)"
@@ -3644,11 +3654,11 @@ msgstr ""
 "<xref linkend=\"guc-ssl-key-file\"/> (<filename>$PGDATA/server.key</"
 "filename>)"
 
-#: runtime.xml:2277(entry)
+#: runtime.xml:2284(entry)
 msgid "server private key"
 msgstr "закрытый ключ сервера"
 
-#: runtime.xml:2278(entry)
+#: runtime.xml:2285(entry)
 msgid ""
 "proves server certificate was sent by the owner; does not indicate "
 "certificate owner is trustworthy"
@@ -3656,38 +3666,38 @@ msgstr ""
 "подтверждает, что сертификат сервера был передан его владельцем; не "
 "гарантирует, что его владельцу можно доверять"
 
-#: runtime.xml:2283(entry)
+#: runtime.xml:2290(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-ca-file\"/> (<filename>$PGDATA/root.crt</filename>)"
 msgstr ""
 "<xref linkend=\"guc-ssl-ca-file\"/> (<filename>$PGDATA/root.crt</filename>)"
 
-#: runtime.xml:2284(entry)
+#: runtime.xml:2291(entry)
 msgid "trusted certificate authorities"
 msgstr "сертификаты доверенных ЦС"
 
-#: runtime.xml:2285(entry)
+#: runtime.xml:2292(entry)
 msgid ""
 "checks that client certificate is signed by a trusted certificate authority"
 msgstr ""
 "позволяет проверить, что сертификат клиента подписан доверенным центром "
 "сертификации"
 
-#: runtime.xml:2290(entry)
+#: runtime.xml:2297(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-crl-file\"/> (<filename>$PGDATA/root.crl</filename>)"
 msgstr ""
 "<xref linkend=\"guc-ssl-crl-file\"/> (<filename>$PGDATA/root.crl</filename>)"
 
-#: runtime.xml:2291(entry)
+#: runtime.xml:2298(entry)
 msgid "certificates revoked by certificate authorities"
 msgstr "сертификаты, отозванные центрами сертификации"
 
-#: runtime.xml:2292(entry)
+#: runtime.xml:2299(entry)
 msgid "client certificate must not be on this list"
 msgstr "сертификат клиента должен отсутствовать в этом списке"
 
-#: runtime.xml:2299(para)
+#: runtime.xml:2306(para)
 msgid ""
 "The files <filename>server.key</filename>, <filename>server.crt</filename>, "
 "<filename>root.crt</filename>, and <filename>root.crl</filename> (or their "
@@ -3700,16 +3710,16 @@ msgstr ""
 "поэтому сервер необходимо перезапустить, чтобы изменения в них вступили в "
 "силу."
 
-#: runtime.xml:2309(title)
+#: runtime.xml:2316(title)
 msgid "Creating a Self-signed Certificate"
 msgstr "Создание самоподписанного сертификата"
 
-#: runtime.xml:2314(programlisting)
+#: runtime.xml:2321(programlisting)
 #, no-wrap
 msgid "openssl req -new -text -out server.req"
 msgstr "openssl req -new -text -out server.req"
 
-#: runtime.xml:2323(programlisting)
+#: runtime.xml:2330(programlisting)
 #, no-wrap
 msgid ""
 "openssl rsa -in privkey.pem -out server.key\n"
@@ -3718,17 +3728,17 @@ msgstr ""
 "openssl rsa -in privkey.pem -out server.key\n"
 "rm privkey.pem"
 
-#: runtime.xml:2328(programlisting)
+#: runtime.xml:2335(programlisting)
 #, no-wrap
 msgid "openssl req -x509 -in server.req -text -key server.key -out server.crt"
 msgstr "openssl req -x509 -in server.req -text -key server.key -out server.crt"
 
-#: runtime.xml:2334(programlisting)
+#: runtime.xml:2341(programlisting)
 #, no-wrap
 msgid "chmod og-rwx server.key"
 msgstr "chmod og-rwx server.key"
 
-#: runtime.xml:2311(para)
+#: runtime.xml:2318(para)
 msgid ""
 "To create a quick self-signed certificate for the server, use the following "
 "<productname>OpenSSL</productname> command: <placeholder-1/> Fill out the "
@@ -3763,7 +3773,7 @@ msgstr ""
 "закрытый ключ и сертификат сервера, можно в документации "
 "<productname>OpenSSL</productname>."
 
-#: runtime.xml:2343(para)
+#: runtime.xml:2350(para)
 msgid ""
 "A self-signed certificate can be used for testing, but a certificate signed "
 "by a certificate authority (<acronym>CA</acronym>) (either one of the global "
@@ -3778,17 +3788,17 @@ msgstr ""
 "Если все клиенты относятся к одной организации, рекомендуется использовать "
 "локальный <acronym>ЦС</acronym>."
 
-#: runtime.xml:2357(title)
+#: runtime.xml:2364(title)
 msgid "Secure TCP/IP Connections with <application>SSH</application> Tunnels"
 msgstr ""
 "Защита соединений TCP/IP с применением туннелей <application>SSH</"
 "application>"
 
-#: runtime.xml:2359(indexterm)
+#: runtime.xml:2366(indexterm)
 msgid "<primary>ssh</primary>"
 msgstr "<primary>ssh</primary>"
 
-#: runtime.xml:2363(para)
+#: runtime.xml:2370(para)
 msgid ""
 "It is possible to use <application>SSH</application> to encrypt the network "
 "connection between clients and a <productname>PostgreSQL</productname> "
@@ -3800,17 +3810,17 @@ msgstr ""
 "подходе это позволяет обеспечить должный уровень защиты сетевого трафика, "
 "даже для клиентов, не поддерживающих SSL."
 
-#: runtime.xml:2377(programlisting)
+#: runtime.xml:2384(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:localhost:5432 joe@foo.com"
 msgstr "ssh -L 63333:localhost:5432 joe@foo.com"
 
-#: runtime.xml:2390(programlisting)
+#: runtime.xml:2397(programlisting)
 #, no-wrap
 msgid "psql -h localhost -p 63333 postgres"
 msgstr "psql -h localhost -p 63333 postgres"
 
-#: runtime.xml:2371(para)
+#: runtime.xml:2378(para)
 msgid ""
 "First make sure that an <application>SSH</application> server is running "
 "properly on the same machine as the <productname>PostgreSQL</productname> "
@@ -3859,7 +3869,7 @@ msgstr ""
 "productname> не защищён. Это не должно нести какие-то дополнительные риски, "
 "так как эти серверы работают на одном компьютере."
 
-#: runtime.xml:2405(para)
+#: runtime.xml:2412(para)
 msgid ""
 "In order for the tunnel setup to succeed you must be allowed to connect via "
 "<command>ssh</command> as <literal>joe@foo.com</literal>, just as if you had "
@@ -3870,12 +3880,12 @@ msgstr ""
 "<literal>joe@foo.com</literal>, так же, как это происходит при установлении "
 "терминального подключения с помощью <command>ssh</command>."
 
-#: runtime.xml:2415(programlisting)
+#: runtime.xml:2422(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:foo.com:5432 joe@foo.com"
 msgstr "ssh -L 63333:foo.com:5432 joe@foo.com"
 
-#: runtime.xml:2413(para)
+#: runtime.xml:2420(para)
 msgid ""
 "You could also have set up the port forwarding as <placeholder-1/> but then "
 "the database server will see the connection as coming in on its <literal>foo."
@@ -3889,12 +3899,12 @@ msgstr ""
 "умолчанию не прослушивается (вследствие указания <literal>listen_addresses = "
 "'localhost'</literal>). Обычно требуется другое поведение."
 
-#: runtime.xml:2427(programlisting)
+#: runtime.xml:2434(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:db.foo.com:5432 joe@shell.foo.com"
 msgstr "ssh -L 63333:db.foo.com:5432 joe@shell.foo.com"
 
-#: runtime.xml:2424(para)
+#: runtime.xml:2431(para)
 msgid ""
 "If you have to <quote>hop</quote> to the database server via some login "
 "host, one possible setup could look like this: <placeholder-1/> Note that "
@@ -3910,7 +3920,7 @@ msgstr ""
 "вариантов конфигурации, что позволяет организовывать защиту сети разными "
 "способами. За подробностями обратитесь к документации SSH."
 
-#: runtime.xml:2440(para)
+#: runtime.xml:2447(para)
 msgid ""
 "Several other applications exist that can provide secure tunnels using a "
 "procedure similar in concept to the one just described."
@@ -3918,7 +3928,7 @@ msgstr ""
 "Существуют и другие приложения, которые могут создавать безопасные туннели, "
 "применяя по сути тот же подход, что был описан выше."
 
-#: runtime.xml:2449(title)
+#: runtime.xml:2456(title)
 msgid ""
 "Registering <application>Event Log</application> on <systemitem class="
 "\"osname\">Windows</systemitem>"
@@ -3926,12 +3936,12 @@ msgstr ""
 "Регистрация <application>журнала событий</application> в <systemitem class="
 "\"osname\">Windows</systemitem>"
 
-#: runtime.xml:2452(indexterm)
+#: runtime.xml:2459(indexterm)
 msgid "<primary>event log</primary> <secondary>event log</secondary>"
 msgstr ""
 "<primary>журнал событий</primary> <secondary>журнал событий</secondary>"
 
-#: runtime.xml:2457(para)
+#: runtime.xml:2464(para)
 msgid ""
 "To register a <systemitem class=\"osname\">Windows</systemitem> "
 "<application>event log</application> library with the operating system, "
@@ -3950,7 +3960,7 @@ msgstr ""
 "просмотра событий, относящиеся к источнику событий по умолчанию с именем "
 "<literal>PostgreSQL</literal>."
 
-#: runtime.xml:2468(para)
+#: runtime.xml:2475(para)
 msgid ""
 "To specify a different event source name (see <xref linkend=\"guc-event-"
 "source\"/>), use the <literal>/n</literal> and <literal>/i</literal> "
@@ -3966,7 +3976,7 @@ msgstr ""
 "<replaceable>каталог_библиотек_pgsql</replaceable>/pgevent.dll</userinput>\n"
 "</screen>"
 
-#: runtime.xml:2477(para)
+#: runtime.xml:2484(para)
 msgid ""
 "To unregister the <application>event log</application> library from the "
 "operating system, issue this command: <screen>\n"
@@ -3980,7 +3990,7 @@ msgstr ""
 "<replaceable>каталог_библиотек_pgsql</replaceable>/pgevent.dll</userinput>\n"
 "</screen>"
 
-#: runtime.xml:2486(para)
+#: runtime.xml:2493(para)
 msgid ""
 "To enable event logging in the database server, modify <xref linkend=\"guc-"
 "log-destination\"/> to include <literal>eventlog</literal> in "

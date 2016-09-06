@@ -201,7 +201,7 @@ msgstr "@&gt;"
 msgid "box_ops"
 msgstr "box_ops"
 
-#: spgist.xml:118(entry)
+#: spgist.xml:118(type)
 msgid "box"
 msgstr "box"
 
@@ -311,21 +311,25 @@ msgstr ""
 "для достижения уровня конкретного листа."
 
 #: spgist.xml:183(para)
+#, fuzzy
 msgid ""
 "Inner tuples are more complex, since they are branching points in the search "
 "tree. Each inner tuple contains a set of one or more <firstterm>nodes</"
 "firstterm>, which represent groups of similar leaf values. A node contains a "
-"downlink that leads to either another, lower-level inner tuple, or a short "
-"list of leaf tuples that all lie on the same index page. Each node has a "
-"<firstterm>label</firstterm> that describes it; for example, in a radix tree "
-"the node label could be the next character of the string value. Optionally, "
-"an inner tuple can have a <firstterm>prefix</firstterm> value that describes "
-"all its members. In a radix tree this could be the common prefix of the "
-"represented strings. The prefix value is not necessarily really a prefix, "
-"but can be any data needed by the operator class; for example, in a quad-"
-"tree it can store the central point that the four quadrants are measured "
-"with respect to. A quad-tree inner tuple would then also contain four nodes "
-"corresponding to the quadrants around this central point."
+"downlink that leads either to another, lower-level inner tuple, or to a "
+"short list of leaf tuples that all lie on the same index page. Each node "
+"normally has a <firstterm>label</firstterm> that describes it; for example, "
+"in a radix tree the node label could be the next character of the string "
+"value. (Alternatively, an operator class can omit the node labels, if it "
+"works with a fixed set of nodes for all inner tuples; see <xref linkend="
+"\"spgist-null-labels\"/>.) Optionally, an inner tuple can have a "
+"<firstterm>prefix</firstterm> value that describes all its members. In a "
+"radix tree this could be the common prefix of the represented strings. The "
+"prefix value is not necessarily really a prefix, but can be any data needed "
+"by the operator class; for example, in a quad-tree it can store the central "
+"point that the four quadrants are measured with respect to. A quad-tree "
+"inner tuple would then also contain four nodes corresponding to the "
+"quadrants around this central point."
 msgstr ""
 "Внутренние кортежи устроены сложнее, так как они представляют собой точки "
 "разветвления в дереве поиска. Каждый внутренний кортеж содержит набор из "
@@ -344,13 +348,15 @@ msgstr ""
 "кортеж дерева квадрантов будет также содержать четыре узла, соответствующие "
 "квадрантам вокруг этой центральной точки."
 
-#: spgist.xml:201(para)
+#: spgist.xml:204(para)
+#, fuzzy
 msgid ""
 "Some tree algorithms require knowledge of level (or depth) of the current "
 "tuple, so the <acronym>SP-GiST</acronym> core provides the possibility for "
 "operator classes to manage level counting while descending the tree. There "
 "is also support for incrementally reconstructing the represented value when "
-"that is needed."
+"that is needed, and for passing down additional data (called "
+"<firstterm>traverse values</firstterm>) during a tree descent."
 msgstr ""
 "Некоторые алгоритмы деревьев требует знания уровня (или глубины) текущего "
 "кортежа, так что ядро <acronym>SP-GiST</acronym> даёт возможность классам "
@@ -358,7 +364,7 @@ msgstr ""
 "поддержка пошагового восстановления представленного значения, когда это "
 "требуется."
 
-#: spgist.xml:210(para)
+#: spgist.xml:214(para)
 msgid ""
 "The <acronym>SP-GiST</acronym> core code takes care of null entries. "
 "Although <acronym>SP-GiST</acronym> indexes do store entries for nulls in "
@@ -376,7 +382,7 @@ msgstr ""
 "строгие и не могут возвращать положительный результат для значений NULL.) "
 "Поэтому значения NULL здесь больше обсуждаться не будут."
 
-#: spgist.xml:221(para)
+#: spgist.xml:225(para)
 msgid ""
 "There are five user-defined methods that an index operator class for "
 "<acronym>SP-GiST</acronym> must provide. All five follow the convention of "
@@ -401,15 +407,15 @@ msgstr ""
 "структурах. Выходная структура всегда обнуляется перед вызовом "
 "пользовательского метода."
 
-#: spgist.xml:235(para)
+#: spgist.xml:239(para)
 msgid "The five user-defined methods are:"
 msgstr "Пользователь должен определить следующие пять методов:"
 
-#: spgist.xml:241(function)
+#: spgist.xml:245(function)
 msgid "config"
 msgstr "config"
 
-#: spgist.xml:243(para)
+#: spgist.xml:247(para)
 msgid ""
 "Returns static information about the index implementation, including the "
 "data type OIDs of the prefix and node label data types."
@@ -417,12 +423,12 @@ msgstr ""
 "Возвращает статическую информацию о реализации индекса, включая OID типов "
 "данных префикса и метки узла."
 
-#: spgist.xml:249(programlisting)
+#: spgist.xml:253(programlisting)
 #, no-wrap
 msgid "CREATE FUNCTION my_config(internal, internal) RETURNS void ..."
 msgstr "CREATE FUNCTION my_config(internal, internal) RETURNS void ..."
 
-#: spgist.xml:256(programlisting)
+#: spgist.xml:260(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct spgConfigIn\n"
@@ -451,7 +457,7 @@ msgstr ""
 "    bool        longValuesOK;   /* Класс может принимать значения, не умещающиеся на 1 странице */\n"
 "} spgConfigOut;"
 
-#: spgist.xml:247(para)
+#: spgist.xml:251(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -472,7 +478,7 @@ msgstr ""
 "обычных классов операторов с фиксированным типом оно будет всегда содержать "
 "одно значение и поэтому его можно просто игнорировать."
 
-#: spgist.xml:276(para)
+#: spgist.xml:280(para)
 msgid ""
 "For operator classes that do not use prefixes, <structfield>prefixType</"
 "structfield> can be set to <literal>VOIDOID</literal>. Likewise, for "
@@ -496,20 +502,20 @@ msgstr ""
 "длины и класс операторов может фрагментировать длинные значения, повторяя "
 "суффиксы (см. <xref remap=\"4\" linkend=\"spgist-limits\"/>)."
 
-#: spgist.xml:292(function)
+#: spgist.xml:296(function)
 msgid "choose"
 msgstr "choose"
 
-#: spgist.xml:294(para)
+#: spgist.xml:298(para)
 msgid "Chooses a method for inserting a new value into an inner tuple."
 msgstr "Выбирает метод для добавления нового значения во внутренний кортеж."
 
-#: spgist.xml:300(programlisting)
+#: spgist.xml:304(programlisting)
 #, no-wrap
 msgid "CREATE FUNCTION my_choose(internal, internal) RETURNS void ..."
 msgstr "CREATE FUNCTION my_choose(internal, internal) RETURNS void ..."
 
-#: spgist.xml:307(programlisting)
+#: spgist.xml:311(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct spgChooseIn\n"
@@ -614,7 +620,7 @@ msgstr ""
 "    }           result;\n"
 "} spgChooseOut;"
 
-#: spgist.xml:298(para)
+#: spgist.xml:302(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -662,7 +668,7 @@ msgstr ""
 "во внутреннем кортеже, а <structfield>nodeLabels</structfield> представляет "
 "массив их меток, или NULL, если меток у них нет."
 
-#: spgist.xml:382(para)
+#: spgist.xml:386(para)
 msgid ""
 "The <function>choose</function> function can determine either that the new "
 "value matches one of the existing child nodes, or that a new child node must "
@@ -675,7 +681,7 @@ msgstr ""
 "внутренний кортеж нужно разделить, чтобы получить менее ограничивающий "
 "префикс."
 
-#: spgist.xml:390(para)
+#: spgist.xml:394(para)
 msgid ""
 "If the new value matches one of the existing child nodes, set "
 "<structfield>resultType</structfield> to <literal>spgMatchNode</literal>. "
@@ -701,7 +707,7 @@ msgstr ""
 "изменённое значение, которое должно использоваться в качестве "
 "<structfield>leafDatum</structfield> на следующем уровне."
 
-#: spgist.xml:404(para)
+#: spgist.xml:408(para)
 msgid ""
 "If a new child node must be added, set <structfield>resultType</structfield> "
 "to <literal>spgAddNode</literal>. Set <structfield>nodeLabel</structfield> "
@@ -720,7 +726,7 @@ msgstr ""
 "изменённым внутренним кортежем; в результате этого вызова должен быть "
 "получен результат <literal>spgMatchNode</literal>."
 
-#: spgist.xml:415(para)
+#: spgist.xml:419(para)
 msgid ""
 "If the new value is inconsistent with the tuple prefix, set "
 "<structfield>resultType</structfield> to <literal>spgSplitTuple</literal>. "
@@ -774,21 +780,21 @@ msgstr ""
 "который наконец вернёт <literal>spgMatchNode</literal> и позволит операции "
 "добавления перейти к уровню листьев."
 
-#: spgist.xml:448(function)
+#: spgist.xml:452(function)
 msgid "picksplit"
 msgstr "picksplit"
 
-#: spgist.xml:450(para)
+#: spgist.xml:454(para)
 msgid "Decides how to create a new inner tuple over a set of leaf tuples."
 msgstr ""
 "Выбирает, как создать новый внутренний кортеж по набору кортежей в листьях."
 
-#: spgist.xml:456(programlisting)
+#: spgist.xml:460(programlisting)
 #, no-wrap
 msgid "CREATE FUNCTION my_picksplit(internal, internal) RETURNS void ..."
 msgstr "CREATE FUNCTION my_picksplit(internal, internal) RETURNS void ..."
 
-#: spgist.xml:463(programlisting)
+#: spgist.xml:467(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct spgPickSplitIn\n"
@@ -829,7 +835,7 @@ msgstr ""
 "    Datum      *leafTupleDatums;    /* значения, помещаемые в каждый новый кортеж */\n"
 "} spgPickSplitOut;"
 
-#: spgist.xml:454(para)
+#: spgist.xml:458(para)
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -854,24 +860,24 @@ msgstr ""
 "разделять все кортежи листьев, и который станет уровнем нового внутреннего "
 "кортежа."
 
-#: spgist.xml:490(para)
+#: spgist.xml:494(para)
+#, fuzzy
 msgid ""
 "Set <structfield>hasPrefix</structfield> to indicate whether the new inner "
 "tuple should have a prefix, and if so set <structfield>prefixDatum</"
 "structfield> to the prefix value. Set <structfield>nNodes</structfield> to "
 "indicate the number of nodes that the new inner tuple will contain, and set "
-"<structfield>nodeLabels</structfield> to an array of their label values. (If "
-"the nodes do not require labels, set <structfield>nodeLabels</structfield> "
-"to NULL; see <xref linkend=\"spgist-null-labels\"/> for details.) Set "
-"<structfield>mapTuplesToNodes</structfield> to an array that gives the index "
-"(from zero) of the node that each leaf tuple should be assigned to. Set "
-"<structfield>leafTupleDatums</structfield> to an array of the values to be "
-"stored in the new leaf tuples (these will be the same as the input "
-"<structfield>datums</structfield> if the operator class does not modify "
-"datums from one level to the next). Note that the <function>picksplit</"
-"function> function is responsible for palloc'ing the "
-"<structfield>nodeLabels</structfield>, <structfield>mapTuplesToNodes</"
-"structfield> and <structfield>leafTupleDatums</structfield> arrays."
+"<structfield>nodeLabels</structfield> to an array of their label values, or "
+"to NULL if node labels are not required. Set <structfield>mapTuplesToNodes</"
+"structfield> to an array that gives the index (from zero) of the node that "
+"each leaf tuple should be assigned to. Set <structfield>leafTupleDatums</"
+"structfield> to an array of the values to be stored in the new leaf tuples "
+"(these will be the same as the input <structfield>datums</structfield> if "
+"the operator class does not modify datums from one level to the next). Note "
+"that the <function>picksplit</function> function is responsible for "
+"palloc'ing the <structfield>nodeLabels</structfield>, "
+"<structfield>mapTuplesToNodes</structfield> and "
+"<structfield>leafTupleDatums</structfield> arrays."
 msgstr ""
 "Установите признак <structfield>hasPrefix</structfield>, чтобы указать, "
 "должен ли новый внутренний кортеж иметь префикс, и если да, задайте в "
@@ -892,7 +898,7 @@ msgstr ""
 "<structfield>mapTuplesToNodes</structfield> и <structfield>leafTupleDatums</"
 "structfield>."
 
-#: spgist.xml:511(para)
+#: spgist.xml:514(para)
 msgid ""
 "If more than one leaf tuple is supplied, it is expected that the "
 "<function>picksplit</function> function will classify them into more than "
@@ -920,7 +926,7 @@ msgstr ""
 "внутренними кортежами особым образом. За дополнительными сведениями "
 "обратитесь к <xref remap=\"3\" linkend=\"spgist-all-the-same\"/>."
 
-#: spgist.xml:527(para)
+#: spgist.xml:530(para)
 msgid ""
 "<function>picksplit</function> can be applied to a single leaf tuple only in "
 "the case that the <function>config</function> function set "
@@ -939,21 +945,21 @@ msgstr ""
 "уместиться в странице. За дополнительными сведениями обратитесь к <xref "
 "remap=\"3\" linkend=\"spgist-limits\"/>."
 
-#: spgist.xml:541(function)
+#: spgist.xml:544(function)
 msgid "inner_consistent"
 msgstr "inner_consistent"
 
-#: spgist.xml:543(para)
+#: spgist.xml:546(para)
 msgid "Returns set of nodes (branches) to follow during tree search."
 msgstr "Возвращает набор узлов (ветвей), по которым надо продолжать поиск."
 
-#: spgist.xml:549(programlisting)
+#: spgist.xml:552(programlisting)
 #, no-wrap
 msgid "CREATE FUNCTION my_inner_consistent(internal, internal) RETURNS void ..."
 msgstr "CREATE FUNCTION my_inner_consistent(internal, internal) RETURNS void ..."
 
-#: spgist.xml:557(programlisting)
-#, no-wrap
+#: spgist.xml:560(programlisting)
+#, fuzzy, no-wrap
 msgid ""
 "typedef struct spgInnerConsistentIn\n"
 "{\n"
@@ -962,7 +968,7 @@ msgid ""
 "\n"
 "    Datum       reconstructedValue;     /* value reconstructed at parent */\n"
 "    void       *traversalValue; /* opclass-specific traverse value */\n"
-"    MemoryContext traversalMemoryContext;\n"
+"    MemoryContext traversalMemoryContext;   /* put new traverse values here */\n"
 "    int         level;          /* current level (counting from zero) */\n"
 "    bool        returnData;     /* original data must be returned? */\n"
 "\n"
@@ -981,7 +987,6 @@ msgid ""
 "    int        *levelAdds;      /* increment level by this much for each */\n"
 "    Datum      *reconstructedValues;    /* associated reconstructed values */\n"
 "    void      **traversalValues;        /* opclass-specific traverse values */\n"
-"\n"
 "} spgInnerConsistentOut;"
 msgstr ""
 "typedef struct spgInnerConsistentIn\n"
@@ -1013,7 +1018,8 @@ msgstr ""
 "\n"
 "} spgInnerConsistentOut;"
 
-#: spgist.xml:547(para)
+#: spgist.xml:550(para)
+#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -1034,23 +1040,24 @@ msgid ""
 "such conditions. <structfield>reconstructedValue</structfield> is the value "
 "reconstructed for the parent tuple; it is <literal>(Datum) 0</literal> at "
 "the root level or if the <function>inner_consistent</function> function did "
-"not provide a value at the parent level. <structfield>level</structfield> is "
-"the current inner tuple's level, starting at zero for the root level. "
-"<structfield>returnData</structfield> is <literal>true</literal> if "
-"reconstructed data is required for this query; this will only be so if the "
-"<function>config</function> function asserted <structfield>canReturnData</"
-"structfield>. <structfield>allTheSame</structfield> is true if the current "
-"inner tuple is marked <quote>all-the-same</quote>; in this case all the "
-"nodes have the same label (if any) and so either all or none of them match "
-"the query (see <xref linkend=\"spgist-all-the-same\"/>). "
-"<structfield>hasPrefix</structfield> is true if the current inner tuple "
-"contains a prefix; if so, <structfield>prefixDatum</structfield> is its "
-"value. <structfield>nNodes</structfield> is the number of child nodes "
+"not provide a value at the parent level. <structfield>traversalValue</"
+"structfield> is a pointer to any traverse data passed down from the previous "
+"call of <function>inner_consistent</function> on the parent index tuple, or "
+"NULL at the root level. <structfield>traversalMemoryContext</structfield> is "
+"the memory context in which to store output traverse values (see below). "
+"<structfield>level</structfield> is the current inner tuple's level, "
+"starting at zero for the root level. <structfield>returnData</structfield> "
+"is <literal>true</literal> if reconstructed data is required for this query; "
+"this will only be so if the <function>config</function> function asserted "
+"<structfield>canReturnData</structfield>. <structfield>allTheSame</"
+"structfield> is true if the current inner tuple is marked <quote>all-the-"
+"same</quote>; in this case all the nodes have the same label (if any) and so "
+"either all or none of them match the query (see <xref linkend=\"spgist-all-"
+"the-same\"/>). <structfield>hasPrefix</structfield> is true if the current "
+"inner tuple contains a prefix; if so, <structfield>prefixDatum</structfield> "
+"is its value. <structfield>nNodes</structfield> is the number of child nodes "
 "contained in the inner tuple, and <structfield>nodeLabels</structfield> is "
-"an array of their label values, or NULL if the nodes do not have labels. "
-"<structfield>traversalValue</structfield> is a pointer to data that "
-"<function>inner_consistent</function> gets when called on child nodes from "
-"an outer call of <function>inner_consistent</function> on parent nodes."
+"an array of their label values, or NULL if the nodes do not have labels."
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
 "> В первом аргументе передаётся указатель на структуру "
@@ -1092,7 +1099,8 @@ msgstr ""
 "для дочерних узлов после вызова внешней <function>inner_consistent</"
 "function> для родительских узлов."
 
-#: spgist.xml:624(para)
+#: spgist.xml:628(para)
+#, fuzzy
 msgid ""
 "<structfield>nNodes</structfield> must be set to the number of child nodes "
 "that need to be visited by the search, and <structfield>nodeNumbers</"
@@ -1103,17 +1111,20 @@ msgid ""
 "necessarily so, so an array is used.) If value reconstruction is needed, set "
 "<structfield>reconstructedValues</structfield> to an array of the values "
 "reconstructed for each child node to be visited; otherwise, leave "
-"<structfield>reconstructedValues</structfield> as NULL. Note that the "
+"<structfield>reconstructedValues</structfield> as NULL. If it is desired to "
+"pass down additional out-of-band information (<quote>traverse values</"
+"quote>) to lower levels of the tree search, set "
+"<structfield>traversalValues</structfield> to an array of the appropriate "
+"traverse values, one for each child node to be visited; otherwise, leave "
+"<structfield>traversalValues</structfield> as NULL. Note that the "
 "<function>inner_consistent</function> function is responsible for palloc'ing "
 "the <structfield>nodeNumbers</structfield>, <structfield>levelAdds</"
-"structfield> and <structfield>reconstructedValues</structfield> arrays. "
-"Sometimes accumulating some information is needed, while descending from "
-"parent to child node was happened. In this case "
-"<structfield>traversalValues</structfield> array keeps pointers to specific "
-"data you need to accumulate for every child node. Memory for "
-"<structfield>traversalValues</structfield> should be allocated in the "
-"default context, but each element of it should be allocated in "
-"<structfield>traversalMemoryContext</structfield>."
+"structfield>, <structfield>reconstructedValues</structfield>, and "
+"<structfield>traversalValues</structfield> arrays in the current memory "
+"context. However, any output traverse values pointed to by the "
+"<structfield>traversalValues</structfield> array should be allocated in "
+"<structfield>traversalMemoryContext</structfield>. Each traverse value must "
+"be a single palloc'd chunk."
 msgstr ""
 "В <structfield>nNodes</structfield> нужно записать число дочерних узлов, "
 "которые нужно посетить при поиске, а в <structfield>nodeNumbers</"
@@ -1137,20 +1148,20 @@ msgstr ""
 "выделять в обычном контексте, но каждый элемент его нужно размещать в "
 "<structfield>traversalMemoryContext</structfield>."
 
-#: spgist.xml:653(function)
+#: spgist.xml:660(function)
 msgid "leaf_consistent"
 msgstr "leaf_consistent"
 
-#: spgist.xml:655(para)
+#: spgist.xml:662(para)
 msgid "Returns true if a leaf tuple satisfies a query."
 msgstr "Возвращает true, если кортеж листа удовлетворяет запросу."
 
-#: spgist.xml:661(programlisting)
+#: spgist.xml:668(programlisting)
 #, no-wrap
 msgid "CREATE FUNCTION my_leaf_consistent(internal, internal) RETURNS bool ..."
 msgstr "CREATE FUNCTION my_leaf_consistent(internal, internal) RETURNS bool ..."
 
-#: spgist.xml:668(programlisting)
+#: spgist.xml:675(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct spgLeafConsistentIn\n"
@@ -1191,7 +1202,8 @@ msgstr ""
 "    bool        recheck;        /* true, если оператор нужно перепроверить */\n"
 "} spgLeafConsistentOut;"
 
-#: spgist.xml:659(para)
+#: spgist.xml:666(para)
+#, fuzzy
 msgid ""
 "The <acronym>SQL</acronym> declaration of the function must look like this: "
 "<placeholder-1/> The first argument is a pointer to a "
@@ -1212,13 +1224,16 @@ msgid ""
 "such conditions. <structfield>reconstructedValue</structfield> is the value "
 "reconstructed for the parent tuple; it is <literal>(Datum) 0</literal> at "
 "the root level or if the <function>inner_consistent</function> function did "
-"not provide a value at the parent level. <structfield>level</structfield> is "
-"the current leaf tuple's level, starting at zero for the root level. "
-"<structfield>returnData</structfield> is <literal>true</literal> if "
-"reconstructed data is required for this query; this will only be so if the "
-"<function>config</function> function asserted <structfield>canReturnData</"
-"structfield>. <structfield>leafDatum</structfield> is the key value stored "
-"in the current leaf tuple."
+"not provide a value at the parent level. <structfield>traversalValue</"
+"structfield> is a pointer to any traverse data passed down from the previous "
+"call of <function>inner_consistent</function> on the parent index tuple, or "
+"NULL at the root level. <structfield>level</structfield> is the current leaf "
+"tuple's level, starting at zero for the root level. <structfield>returnData</"
+"structfield> is <literal>true</literal> if reconstructed data is required "
+"for this query; this will only be so if the <function>config</function> "
+"function asserted <structfield>canReturnData</structfield>. "
+"<structfield>leafDatum</structfield> is the key value stored in the current "
+"leaf tuple."
 msgstr ""
 "В <acronym>SQL</acronym> эта функция должна объявляться так: <placeholder-1/"
 "> В первом аргументе передаётся указатель на структуру "
@@ -1248,7 +1263,7 @@ msgstr ""
 "<structfield>canReturnData</structfield>. В <structfield>leafDatum</"
 "structfield> передаётся значение ключа, записанное в текущем кортеже листа."
 
-#: spgist.xml:713(para)
+#: spgist.xml:723(para)
 msgid ""
 "The function must return <literal>true</literal> if the leaf tuple matches "
 "the query, or <literal>false</literal> if not. In the <literal>true</"
@@ -1269,7 +1284,7 @@ msgstr ""
 "неточное, так что для установления точного результата проверки нужно "
 "повторно применить оператор(ы) к актуальному кортежу данных."
 
-#: spgist.xml:727(para)
+#: spgist.xml:737(para)
 msgid ""
 "All the SP-GiST support methods are normally called in a short-lived memory "
 "context; that is, <varname>CurrentMemoryContext</varname> will be reset "
@@ -1287,7 +1302,7 @@ msgstr ""
 "утечек памяти. Но обычно метод <function>config</function> не делает ничего, "
 "кроме как присваивает константы переданной структуре параметров.)"
 
-#: spgist.xml:737(para)
+#: spgist.xml:747(para)
 msgid ""
 "If the indexed column is of a collatable data type, the index collation will "
 "be passed to all the support methods, using the standard "
@@ -1297,11 +1312,11 @@ msgstr ""
 "индекса будет передаваться всем опорным методам, используя стандартный "
 "механизм <function>PG_GET_COLLATION()</function>."
 
-#: spgist.xml:746(title)
+#: spgist.xml:756(title)
 msgid "Implementation"
 msgstr "Реализация"
 
-#: spgist.xml:748(para)
+#: spgist.xml:758(para)
 msgid ""
 "This section covers implementation details and other tricks that are useful "
 "for implementers of <acronym>SP-GiST</acronym> operator classes to know."
@@ -1310,11 +1325,11 @@ msgstr ""
 "полезно знать тем, кто будет реализовывать классы операторов <acronym>SP-"
 "GiST</acronym>."
 
-#: spgist.xml:755(title)
+#: spgist.xml:765(title)
 msgid "SP-GiST Limits"
 msgstr "Ограничения SP-GiST"
 
-#: spgist.xml:757(para)
+#: spgist.xml:767(para)
 msgid ""
 "Individual leaf tuples and inner tuples must fit on a single index page (8kB "
 "by default). Therefore, when indexing values of variable-length data types, "
@@ -1338,7 +1353,7 @@ msgstr ""
 "ядро <acronym>SP-GiST</acronym> не примет запрос на индексацию значения, "
 "которое слишком велико для одной страницы индекса."
 
-#: spgist.xml:770(para)
+#: spgist.xml:780(para)
 msgid ""
 "Likewise, it is the operator class's responsibility that inner tuples do not "
 "grow too large to fit on an index page; this limits the number of child "
@@ -1350,7 +1365,7 @@ msgstr ""
 "дочерних узлов, которые могут принадлежать одному внутреннему кортежу, а "
 "также максимальный размер значения префикса."
 
-#: spgist.xml:777(para)
+#: spgist.xml:787(para)
 msgid ""
 "Another limitation is that when an inner tuple's node points to a set of "
 "leaf tuples, those tuples must all be in the same index page. (This is a "
@@ -1376,11 +1391,11 @@ msgstr ""
 "чрезвычайным мерам, описанным в <xref remap=\"6\" linkend=\"spgist-all-the-"
 "same\"/>."
 
-#: spgist.xml:792(title)
+#: spgist.xml:802(title)
 msgid "SP-GiST Without Node Labels"
 msgstr "SP-GiST без меток узлов"
 
-#: spgist.xml:794(para)
+#: spgist.xml:804(para)
 msgid ""
 "Some tree algorithms use a fixed set of nodes for each inner tuple; for "
 "example, in a quad-tree there are always exactly four nodes corresponding to "
@@ -1407,7 +1422,7 @@ msgstr ""
 "применяться для одних внутренних кортежей и опускаться для других в том же "
 "индексе."
 
-#: spgist.xml:808(para)
+#: spgist.xml:818(para)
 msgid ""
 "When working with an inner tuple having unlabeled nodes, it is an error for "
 "<function>choose</function> to return <literal>spgAddNode</literal>, since "
@@ -1423,11 +1438,11 @@ msgstr ""
 "потому что, как ожидается, при этом потребуется действие "
 "<literal>spgAddNode</literal>."
 
-#: spgist.xml:819(title)
+#: spgist.xml:829(title)
 msgid "<quote>All-the-same</quote> Inner Tuples"
 msgstr "Внутренние кортежи <quote>все-равны</quote>"
 
-#: spgist.xml:821(para)
+#: spgist.xml:831(para)
 msgid ""
 "The <acronym>SP-GiST</acronym> core can override the results of the operator "
 "class's <function>picksplit</function> function when <function>picksplit</"
@@ -1452,7 +1467,7 @@ msgstr ""
 "<function>inner_consistent</function>, что кортеж не содержит набор узлов, "
 "который они обычно ожидают."
 
-#: spgist.xml:834(para)
+#: spgist.xml:844(para)
 msgid ""
 "When dealing with an <literal>allTheSame</literal> tuple, a "
 "<function>choose</function> result of <literal>spgMatchNode</literal> is "
@@ -1475,7 +1490,7 @@ msgstr ""
 "окажутся равны; если добавляемое значение не соответствует существующим "
 "узлам, должно выбираться действие <literal>spgSplitTuple</literal>."
 
-#: spgist.xml:846(para)
+#: spgist.xml:856(para)
 msgid ""
 "When dealing with an <literal>allTheSame</literal> tuple, the "
 "<function>inner_consistent</function> function should return either all or "
@@ -1491,17 +1506,18 @@ msgstr ""
 "обработки особого случая, в зависимости от того, как "
 "<function>inner_consistent</function> обычно воспринимает узлы."
 
-#: spgist.xml:859(title)
+#: spgist.xml:869(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: spgist.xml:861(para)
+#: spgist.xml:871(para)
+#, fuzzy
 msgid ""
 "The <productname>PostgreSQL</productname> source distribution includes "
-"several examples of index operator classes for <acronym>SP-GiST</acronym>. "
-"The core system currently provides radix trees over text columns and two "
-"types of trees over points: quad-tree and k-d tree. Look into <filename>src/"
-"backend/access/spgist/</filename> to see the code."
+"several examples of index operator classes for <acronym>SP-GiST</acronym>, "
+"as described in <xref linkend=\"spgist-builtin-opclasses-table\"/>. Look "
+"into <filename>src/backend/access/spgist/</filename> and <filename>src/"
+"backend/utils/adt/</filename> to see the code."
 msgstr ""
 "Дистрибутив исходного кода <productname>PostgreSQL</productname> содержит "
 "несколько примеров классов операторов для <acronym>SP-GiST</acronym>. Ядро "

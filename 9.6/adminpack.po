@@ -23,55 +23,238 @@ msgid "<primary>adminpack</primary>"
 msgstr "<primary>adminpack</primary>"
 
 #: adminpack.xml:11(para)
+#, fuzzy
 msgid ""
 "<filename>adminpack</filename> provides a number of support functions which "
 "<application>pgAdmin</application> and other administration and management "
 "tools can use to provide additional functionality, such as remote management "
-"of server log files."
+"of server log files. Use of all these functions is restricted to superusers."
 msgstr ""
 "Модуль <filename>adminpack</filename> предоставляет несколько "
 "вспомогательных функций, которыми могут пользоваться <application>pgAdmin</"
 "application> и другие средства администрирования и управления базами данных, "
 "например, для удалённого управления файлами журналов сервера."
 
-#: adminpack.xml:19(title)
-msgid "Functions Implemented"
-msgstr "Реализованные функции"
-
-#: adminpack.xml:25(programlisting)
-#, no-wrap
+#: adminpack.xml:19(para)
 msgid ""
-"int8 pg_catalog.pg_file_write(fname text, data text, append bool)\n"
-"bool pg_catalog.pg_file_rename(oldname text, newname text, archivename text)\n"
-"bool pg_catalog.pg_file_rename(oldname text, newname text)\n"
-"bool pg_catalog.pg_file_unlink(fname text)\n"
-"setof record pg_catalog.pg_logdir_ls()\n"
-"\n"
-"/* Renaming of existing backend functions for pgAdmin compatibility */\n"
-"int8 pg_catalog.pg_file_read(fname text, data text, append bool)\n"
-"bigint pg_catalog.pg_file_length(text)\n"
-"int4 pg_catalog.pg_logfile_rotate()"
+"The functions shown in <xref linkend=\"functions-adminpack-table\"/> provide "
+"write access to files on the machine hosting the server. (See also the "
+"functions in <xref linkend=\"functions-admin-genfile-table\"/>, which "
+"provide read-only access.) Only files within the database cluster directory "
+"can be accessed, but either a relative or absolute path is allowable."
 msgstr ""
-"int8 pg_catalog.pg_file_write(fname text, data text, append bool)\n"
-"bool pg_catalog.pg_file_rename(oldname text, newname text, archivename text)\n"
-"bool pg_catalog.pg_file_rename(oldname text, newname text)\n"
-"bool pg_catalog.pg_file_unlink(fname text)\n"
-"setof record pg_catalog.pg_logdir_ls()\n"
-"\n"
-"/* Существующие серверные функции, переименованные для совместимости с pgAdmin */\n"
-"int8 pg_catalog.pg_file_read(fname text, data text, append bool)\n"
-"bigint pg_catalog.pg_file_length(text)\n"
-"int4 pg_catalog.pg_logfile_rotate()"
 
-#: adminpack.xml:21(para)
-msgid ""
-"The functions implemented by <filename>adminpack</filename> can only be run "
-"by a superuser. Here's a list of these functions: <placeholder-1/>"
+#: adminpack.xml:29(title)
+msgid "<filename>adminpack</filename> Functions"
 msgstr ""
-"Функции, реализованные в <filename>adminpack</filename>, разрешено выполнять "
-"только суперпользователю. Список этих функций: <placeholder-1/>"
+
+#: adminpack.xml:32(entry) adminpack.xml:131(entry)
+msgid "Name"
+msgstr ""
+
+#: adminpack.xml:32(entry) adminpack.xml:131(entry)
+msgid "Return Type"
+msgstr ""
+
+#: adminpack.xml:32(entry) adminpack.xml:131(entry)
+msgid "Description"
+msgstr ""
+
+#: adminpack.xml:38(function)
+msgid "pg_catalog.pg_file_write(filename text, data text, append boolean)"
+msgstr ""
+
+#: adminpack.xml:39(type) adminpack.xml:145(type)
+msgid "bigint"
+msgstr ""
+
+#: adminpack.xml:40(entry)
+msgid "Write, or append to, a text file"
+msgstr ""
+
+#: adminpack.xml:45(optional)
+msgid ", archivename text"
+msgstr ""
+
+#: adminpack.xml:45(function)
+msgid "pg_catalog.pg_file_rename(oldname text, newname text <placeholder-1/>)"
+msgstr ""
+
+#: adminpack.xml:46(type) adminpack.xml:53(type)
+msgid "boolean"
+msgstr ""
+
+#: adminpack.xml:47(entry)
+msgid "Rename a file"
+msgstr ""
+
+#: adminpack.xml:52(function)
+msgid "pg_catalog.pg_file_unlink(filename text)"
+msgstr ""
+
+#: adminpack.xml:54(entry)
+msgid "Remove a file"
+msgstr ""
+
+#: adminpack.xml:59(function)
+msgid "pg_catalog.pg_logdir_ls()"
+msgstr ""
+
+#: adminpack.xml:60(type)
+msgid "setof record"
+msgstr ""
+
+#: adminpack.xml:61(entry)
+msgid "List the log files in the <varname>log_directory</varname> directory"
+msgstr ""
+
+#: adminpack.xml:69(indexterm)
+#, fuzzy
+msgid "<primary>pg_file_write</primary>"
+msgstr "<primary>adminpack</primary>"
+
+#: adminpack.xml:72(para)
+msgid ""
+"<function>pg_file_write</function> writes the specified <parameter>data</"
+"parameter> into the file named by <parameter>filename</parameter>. If "
+"<parameter>append</parameter> is false, the file must not already exist. If "
+"<parameter>append</parameter> is true, the file can already exist, and will "
+"be appended to if so. Returns the number of bytes written."
+msgstr ""
+
+#: adminpack.xml:80(indexterm)
+#, fuzzy
+msgid "<primary>pg_file_rename</primary>"
+msgstr "<primary>adminpack</primary>"
+
+#: adminpack.xml:83(para)
+msgid ""
+"<function>pg_file_rename</function> renames a file. If "
+"<parameter>archivename</parameter> is omitted or NULL, it simply renames "
+"<parameter>oldname</parameter> to <parameter>newname</parameter> (which must "
+"not already exist). If <parameter>archivename</parameter> is provided, it "
+"first renames <parameter>newname</parameter> to <parameter>archivename</"
+"parameter> (which must not already exist), and then renames "
+"<parameter>oldname</parameter> to <parameter>newname</parameter>. In event "
+"of failure of the second rename step, it will try to rename "
+"<parameter>archivename</parameter> back to <parameter>newname</parameter> "
+"before reporting the error. Returns true on success, false if the source "
+"file(s) are not present or not writable; other cases throw errors."
+msgstr ""
+
+#: adminpack.xml:97(indexterm)
+#, fuzzy
+msgid "<primary>pg_file_unlink</primary>"
+msgstr "<primary>adminpack</primary>"
+
+#: adminpack.xml:100(para)
+msgid ""
+"<function>pg_file_unlink</function> removes the specified file. Returns true "
+"on success, false if the specified file is not present or the "
+"<function>unlink()</function> call fails; other cases throw errors."
+msgstr ""
+
+#: adminpack.xml:106(indexterm)
+#, fuzzy
+msgid "<primary>pg_logdir_ls</primary>"
+msgstr "<primary>adminpack</primary>"
+
+#: adminpack.xml:109(para)
+msgid ""
+"<function>pg_logdir_ls</function> returns the start timestamps and path "
+"names of all the log files in the <xref linkend=\"guc-log-directory\"/> "
+"directory. The <xref linkend=\"guc-log-filename\"/> parameter must have its "
+"default setting (<literal>postgresql-%Y-%m-%d_%H%M%S.log</literal>) to use "
+"this function."
+msgstr ""
+
+#: adminpack.xml:117(para)
+msgid ""
+"The functions shown in <xref linkend=\"functions-adminpack-deprecated-table"
+"\"/> are deprecated and should not be used in new applications; instead use "
+"those shown in <xref linkend=\"functions-admin-signal-table\"/> and <xref "
+"linkend=\"functions-admin-genfile-table\"/>. These functions are provided in "
+"<filename>adminpack</filename> only for compatibility with old versions of "
+"<application>pgAdmin</application>."
+msgstr ""
+
+#: adminpack.xml:128(title)
+msgid "Deprecated <filename>adminpack</filename> Functions"
+msgstr ""
+
+#: adminpack.xml:137(function)
+msgid "pg_catalog.pg_file_read(filename text, offset bigint, nbytes bigint)"
+msgstr ""
+
+#: adminpack.xml:138(type)
+msgid "text"
+msgstr ""
+
+#: adminpack.xml:139(entry)
+msgid "Alternate name for <function>pg_read_file()</function>"
+msgstr ""
+
+#: adminpack.xml:144(function)
+msgid "pg_catalog.pg_file_length(filename text)"
+msgstr ""
+
+#: adminpack.xml:146(entry)
+msgid ""
+"Same as <structfield>size</structfield> column returned by "
+"<function>pg_stat_file()</function>"
+msgstr ""
+
+#: adminpack.xml:152(function)
+msgid "pg_catalog.pg_logfile_rotate()"
+msgstr ""
+
+#: adminpack.xml:153(type)
+msgid "integer"
+msgstr ""
+
+#: adminpack.xml:154(entry)
+msgid ""
+"Alternate name for <function>pg_rotate_logfile()</function>, but note that "
+"it returns integer 0 or 1 rather than boolean"
+msgstr ""
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: adminpack.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid "Functions Implemented"
+#~ msgstr "Реализованные функции"
+
+#~ msgid ""
+#~ "int8 pg_catalog.pg_file_write(fname text, data text, append bool)\n"
+#~ "bool pg_catalog.pg_file_rename(oldname text, newname text, archivename "
+#~ "text)\n"
+#~ "bool pg_catalog.pg_file_rename(oldname text, newname text)\n"
+#~ "bool pg_catalog.pg_file_unlink(fname text)\n"
+#~ "setof record pg_catalog.pg_logdir_ls()\n"
+#~ "\n"
+#~ "/* Renaming of existing backend functions for pgAdmin compatibility */\n"
+#~ "int8 pg_catalog.pg_file_read(fname text, data text, append bool)\n"
+#~ "bigint pg_catalog.pg_file_length(text)\n"
+#~ "int4 pg_catalog.pg_logfile_rotate()"
+#~ msgstr ""
+#~ "int8 pg_catalog.pg_file_write(fname text, data text, append bool)\n"
+#~ "bool pg_catalog.pg_file_rename(oldname text, newname text, archivename "
+#~ "text)\n"
+#~ "bool pg_catalog.pg_file_rename(oldname text, newname text)\n"
+#~ "bool pg_catalog.pg_file_unlink(fname text)\n"
+#~ "setof record pg_catalog.pg_logdir_ls()\n"
+#~ "\n"
+#~ "/* Существующие серверные функции, переименованные для совместимости с "
+#~ "pgAdmin */\n"
+#~ "int8 pg_catalog.pg_file_read(fname text, data text, append bool)\n"
+#~ "bigint pg_catalog.pg_file_length(text)\n"
+#~ "int4 pg_catalog.pg_logfile_rotate()"
+
+#~ msgid ""
+#~ "The functions implemented by <filename>adminpack</filename> can only be "
+#~ "run by a superuser. Here's a list of these functions: <placeholder-1/>"
+#~ msgstr ""
+#~ "Функции, реализованные в <filename>adminpack</filename>, разрешено "
+#~ "выполнять только суперпользователю. Список этих функций: <placeholder-1/>"
