@@ -1381,7 +1381,6 @@ msgid "<primary>pg_am</primary>"
 msgstr "<primary>pg_am</primary>"
 
 #: catalogs.xml:532(para)
-#, fuzzy
 msgid ""
 "The catalog <structname>pg_am</structname> stores information about relation "
 "access methods. There is one row for each access method supported by the "
@@ -1389,8 +1388,9 @@ msgid ""
 "index access methods are discussed in detail in <xref linkend=\"indexam\"/>."
 msgstr ""
 "В каталоге <structname>pg_am</structname> хранится информация о методах "
-"доступа индексов. Каждая строка в нём описывает один метода доступа, "
-"поддерживаемый системой. Требования для реализации методов доступа подробно "
+"доступа отношений. Каждая строка в нём описывает один метода доступа, "
+"поддерживаемый системой. В настоящее время методы доступа задаются только "
+"для индексов. Требования для реализации методов доступа индексов подробно "
 "рассматриваются в <xref remap=\"6\" linkend=\"indexam\"/>."
 
 #: catalogs.xml:541(title)
@@ -1479,15 +1479,16 @@ msgid ""
 msgstr "OID функции-обработчика, предоставляющей информацию о методе доступа"
 
 #: catalogs.xml:579(structfield)
-#, fuzzy
 msgid "amtype"
-msgstr "vartype"
+msgstr "amtype"
 
 #: catalogs.xml:582(entry)
 msgid ""
 "Currently always <literal>i</literal> to indicate an index access method; "
 "other values may be allowed in future"
 msgstr ""
+"На данный момент это всегда <literal>i</literal>, что указывает, что это "
+"метод доступа индекса; в будущем могут появиться и другие значения"
 
 #: catalogs.xml:592(para)
 msgid ""
@@ -1499,6 +1500,13 @@ msgid ""
 "access method properties; see <xref linkend=\"functions-info-catalog-table\"/"
 ">."
 msgstr ""
+"До <productname>PostgreSQL</productname> 9.6, в <structname>pg_am</"
+"structname> было много дополнительных столбцов, представляющих свойства "
+"методов доступа индексов. Теперь эти данные непосредственно видны только на "
+"уровне кода C. Однако, чтобы SQL-запросы всё же могли проверять свойства "
+"методов доступа индексов, была введена функция "
+"<function>pg_index_column_has_property()</function> и ряд связанных функций; "
+"см. <xref remap=\"4\" linkend=\"functions-info-catalog-table\"/>."
 
 #: catalogs.xml:606(structname)
 msgid "pg_amop"

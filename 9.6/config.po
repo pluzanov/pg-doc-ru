@@ -1849,7 +1849,6 @@ msgstr ""
 "запуске сервера."
 
 #: config.xml:1230(para)
-#, fuzzy
 msgid ""
 "If this is on, you should create users as <replaceable>username@dbname</"
 "replaceable>. When <replaceable>username</replaceable> is passed by a "
@@ -1859,12 +1858,12 @@ msgid ""
 "literal> within the SQL environment, you will need to quote the user name."
 msgstr ""
 "Если он включён, имена создаваемых пользователей должны иметь вид "
-"<literal>пользователь@база_данных</literal>. Когда подключающийся клиент "
-"передаёт имя <literal>пользователь</literal>, к этому имени добавляется "
-"<literal>@</literal> с именем базы данных, и сервер идентифицирует "
-"пользователя по этому полному имени. Заметьте, что для создания пользователя "
-"с именем, содержащим <literal>@</literal>, в среде SQL потребуется заключить "
-"это имя в кавычки."
+"<replaceable>имя_пользователя@база_данных</replaceable>. Когда "
+"подключающийся клиент передаёт <replaceable>имя_пользователя</replaceable>, "
+"к этому имени добавляется <literal>@</literal> с именем базы данных, и "
+"сервер идентифицирует пользователя по этому полному имени. Заметьте, что для "
+"создания пользователя с именем, содержащим <literal>@</literal>, в среде SQL "
+"потребуется заключить это имя в кавычки."
 
 #: config.xml:1240(para)
 msgid ""
@@ -3059,7 +3058,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:2005(para)
-#, fuzzy
 msgid ""
 "Sets the maximum number of workers that can be started by a single "
 "<literal>Gather</literal> node. Parallel workers are taken from the pool of "
@@ -3074,8 +3072,8 @@ msgstr ""
 "пула процессов, контролируемого параметром <xref linkend=\"guc-max-worker-"
 "processes\"/>. Учтите, что запрошенное количество рабочих процессов может "
 "быть недоступно во время выполнения. В этом случае план будет выполняться с "
-"меньшим числом процессов, что может быть неэффективно. Значение по умолчанию "
-"— 2. Значение 0 отключает параллельное выполнение запросов."
+"меньшим числом процессов, что может быть неэффективно. Значение 0 (заданное "
+"по умолчанию) отключает параллельное выполнение запросов."
 
 #: config.xml:2016(para)
 msgid ""
@@ -8366,15 +8364,16 @@ msgid "Process Title"
 msgstr "Заголовок процесса"
 
 #: config.xml:5391(para)
-#, fuzzy
 msgid ""
 "These settings control how process titles of server processes are modified. "
 "Process titles are typically viewed using programs like <application>ps</"
 "application> or, on Windows, <application>Process Explorer</application>. "
 "See <xref linkend=\"monitoring-ps\"/> for details."
 msgstr ""
+"Эти параметры влияют на то, как формируются заголовки серверных процессов. "
 "Заголовок процесса обычно можно наблюдать в программах типа <application>ps</"
-"application>, а в Windows — в <application>Process Explorer</application>."
+"application>, а в Windows — в <application>Process Explorer</application>. "
+"За подробностями обратитесь к <xref remap=\"3\" linkend=\"monitoring-ps\"/>."
 
 #: config.xml:5401(indexterm)
 msgid ""
@@ -8387,7 +8386,6 @@ msgid "<varname>cluster_name</varname> (<type>string</type>) <placeholder-1/>"
 msgstr "<varname>cluster_name</varname> (<type>string</type>) <placeholder-1/>"
 
 #: config.xml:5406(para)
-#, fuzzy
 msgid ""
 "Sets the cluster name that appears in the process title for all server "
 "processes in this cluster. The name can be any string of less than "
@@ -8399,11 +8397,11 @@ msgid ""
 "can only be set at server start."
 msgstr ""
 "Задаёт имя кластера, которое отображается в заголовке процесса для всех "
-"процессов данного кластера. Это имя может быть любой строкой не длиннее "
-"<symbol>NAMEDATALEN</symbol> символов (64 символа в стандартной сборке). В "
-"строке <varname>cluster_name</varname> могут использоваться только "
-"печатаемые ASCII-символы. Любой другой символ будет заменён символом вопроса "
-"(<literal>?</literal>). Если этот параметр содержит пустую строку "
+"серверных процессов данного кластера. Это имя может быть любой строкой не "
+"длиннее <symbol>NAMEDATALEN</symbol> символов (64 символа в стандартной "
+"сборке). В строке <varname>cluster_name</varname> могут использоваться "
+"только печатаемые ASCII-символы. Любой другой символ будет заменён символом "
+"вопроса (<literal>?</literal>). Если этот параметр содержит пустую строку "
 "<literal>''</literal> (это значение по умолчанию), никакое имя не выводится. "
 "Этот параметр можно задать только при запуске сервера."
 
@@ -8424,7 +8422,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:5426(para)
-#, fuzzy
 msgid ""
 "Enables updating of the process title every time a new SQL command is "
 "received by the server. This setting defaults to <literal>on</literal> on "
@@ -8433,9 +8430,10 @@ msgid ""
 "superusers can change this setting."
 msgstr ""
 "Включает изменение заголовка процесса при получении сервером каждой "
-"очередной команды SQL. Заголовок процесса виден в выводе команды "
-"<command>ps</command>, а в Windows он показывается в <application>Диспетчере "
-"задач</application>. Изменить этот параметр могут только суперпользователи."
+"очередной команды SQL. На большинстве платформ он включён (имеет значение "
+"<literal>on</literal>), но в Windows по умолчанию выключен (<literal>off</"
+"literal>) ввиду больших издержек на изменение этого заголовка. Изменить этот "
+"параметр могут только суперпользователи."
 
 #: config.xml:5441(title)
 msgid "Run-time Statistics"
