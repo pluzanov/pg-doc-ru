@@ -1,6 +1,6 @@
 diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/all.rules
 --- pology-0.12.ori/lang/ru/rules/all.rules	2016-05-26 07:35:51.316767762 +0300
-+++ pology-0.12/lang/ru/rules/all.rules	2016-08-10 15:20:30.687018835 +0300
++++ pology-0.12/lang/ru/rules/all.rules	2016-09-08 14:58:04.136057989 +0300
 @@ -22,6 +22,9 @@
  [медиа-[а-я]]i
  hint="-> Слова медиа... пишутся слитно"
@@ -282,17 +282,16 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  
  [«спам]i
  hint="'спам' должно быть без кавычек"
-@@ -409,6 +493,9 @@
+@@ -408,7 +492,7 @@
+ [не високосн]i
  hint="'невисокосный' пишется слитно"
  
- [ввиду]i
-+valid before=" того"
-+valid before=" такой"
-+valid after="особенно "
+-[ввиду]i
++[ввиду,? что\b]i
  hint="В контексте 'Имейте в виду, что ...', 'в виду' пишется раздельно. "
  
  [выберете]i
-@@ -416,11 +503,12 @@
+@@ -416,11 +500,12 @@
  hint="В повелительном наклонении должно быть 'выберите'"
  
  [параграф]i
@@ -306,7 +305,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Список рассылки -- это 'mailing list'. Distribution list -- это другое."
  
  [провер]i
-@@ -428,7 +516,7 @@
+@@ -428,7 +513,7 @@
  hint="'checkout' в контексте систем управления версиями -- извлечение из репозитория, переход на ревизию или смена ветки"
  
  # ошибки: "при завершение", "при чтение", "при использование", "при выполнение", ...
@@ -315,7 +314,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="неправильное использование падежей"
  
  #[[a-z]-[а-я]]i
-@@ -438,32 +526,58 @@
+@@ -438,32 +523,58 @@
  [на брауз]i
  hint="на браузерах -> в браузерах"
  
@@ -381,7 +380,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Восклицания допустимы только в играх и программах для детей"
  
  [конверти]i
-@@ -488,9 +602,10 @@
+@@ -488,9 +599,10 @@
  #   градуса, минуты и секунды от цифр не отбивают. Знак °С отбивают, как и
  #   другие обозначения единиц физ. величин, на 2 п.
  # 2. http://habrahabr.ru/post/23250/
@@ -394,7 +393,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Знак процента отделяют от числа коротким пробелом (каким именно -- читайте на l10n.lrn.ru)"
  
  # http://lists.kde.ru/pipermail/kde-russian/2008-July/012291.html
-@@ -501,6 +616,12 @@
+@@ -501,6 +613,12 @@
  [\n]
  valid msgid="\n"
  valid ctx="(qtundo-format)"
@@ -407,7 +406,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="No '(qtundo-format)' in context string, hence magic split is not available"
  
  # https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%BB%D0%B0%D1%8F%D0%BB%D0%B0%D0%BC_(%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%BE)
-@@ -513,3 +634,261 @@
+@@ -513,3 +631,268 @@
  
  # TBD: название программы "Параметры системы" склоняется? Например: "в Параметрах системы"?
  
@@ -654,6 +653,13 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +
 +[\b([а-яА-Я]+)\s(\1)(\b)[^-]]
 +hint="Повтор слова."
++
++# [<literal[^>]*>[^<]*?[а-яА-Я][^<]*</literal>]  # -- не готово для повсеместного использования
++# hint="Содержимое тега literal переводить не надо."
++
++# [[а-яА-Я]] # -- не готово для повсеместного использования
++# valid !srcref="\(literal\)"
++# hint="Содержимое тега literal переводить не надо."
 +
 +# [\)[а-яА-Я]] # Требуется уточнить правило для постоянного включения
 +# hint="Нет пробела после скобки."
@@ -936,8 +942,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
  
 diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/spell/postgres.aspell
 --- pology-0.12.ori/lang/ru/spell/postgres.aspell	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/lang/ru/spell/postgres.aspell	2016-08-10 15:24:06.399926566 +0300
-@@ -0,0 +1,564 @@
++++ pology-0.12/lang/ru/spell/postgres.aspell	2016-09-08 15:10:19.688629212 +0300
+@@ -0,0 +1,568 @@
 +personal_ws-1.1 ru 0 UTF-8
 +Агрегатор
 +БО
@@ -1197,7 +1203,9 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +неинтуитивным
 +неинтуитивных
 +неконфликтующие
++неконфликтующих
 +нелинейны
++нелокализуемой
 +неоптимизированный
 +неоптимизированных
 +неоткладываемого
@@ -1216,6 +1224,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +неприменим
 +непримитивных
 +неприхотлив
++несериализуемые
++несериализуемых
 +нескалярными
 +нескалярных
 +несканируемом
@@ -1344,8 +1354,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +предзагрузка
 +предкомпилятор
 +предкомпилятором
-+предсказуем
 +предобработки
++предсказуем
 +преобразуемое
 +преобразуемые
 +преобразующая
@@ -1553,8 +1563,8 @@ diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
                     "Missing placeholder tags in translation: %(taglist)s.",
 diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.py
 --- pology-0.12.ori/pology/remove_ru.py	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/pology/remove_ru.py	2016-08-15 08:35:38.376057172 +0300
-@@ -0,0 +1,234 @@
++++ pology-0.12/pology/remove_ru.py	2016-09-08 15:08:59.323946349 +0300
+@@ -0,0 +1,235 @@
 +# -*- coding: utf-8 -*-
 +
 +"""
@@ -1754,6 +1764,7 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Стефаном Симковичем|"\
 +u"Стивен Фрост|"\
 +u"Такахиро Итагаки|"\
++u"Такаюки Цунакава|"\
 +u"Тацуо Исии|"\
 +u"Том Лейн|"\
 +u"Томас Вондра|"\
