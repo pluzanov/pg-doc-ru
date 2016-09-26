@@ -22,7 +22,7 @@
   <xsl:param name="verbose" select="1"/>
 
   <xsl:choose>
-    <xsl:when test="$empty.local.l10n.xml">
+    <xsl:when test="false">
       <xsl:for-each select="$l10n.xml">  <!-- We need to switch context in order to make key() work -->
     <xsl:for-each select="document(key('l10n-lang', $lang)/@href)">
 
