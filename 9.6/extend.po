@@ -481,7 +481,9 @@ msgid ""
 "<application>pg_dump</application>. Such a change is usually only sensible "
 "if you concurrently make the same change in the extension's script file. "
 "(But there are special provisions for tables containing configuration data; "
-"see below.)"
+"see <xref linkend=\"extend-extensions-config-tables\"/>.) In production "
+"situations, it's generally better to create an extension update script to "
+"perform changes to extension member objects."
 msgstr ""
 "<productname>PostgreSQL</productname> не позволит удалить отдельный объект, "
 "содержащийся в расширении, кроме как при удалении всего расширения. Также "
@@ -491,11 +493,13 @@ msgstr ""
 "<application>pg_dump</application>. Такие изменения обычно разумны, только "
 "если они параллельно отражаются в файле скрипта расширения. (Для таблиц, "
 "содержащих конфигурационные данные, предусмотрены специальные средства; см. "
-"ниже.)"
+"<xref remap=\"4\" linkend=\"extend-extensions-config-tables\"/>.) В "
+"производственной среде обычно лучше создавать скрипт обновления расширения, "
+"который будет изменять относящиеся к расширению объекты."
 
-#: extend.xml:342(para)
+#: extend.xml:344(para)
 msgid ""
-"The extension script may set privileges on objects which are part of the "
+"The extension script may set privileges on objects that are part of the "
 "extension via <command>GRANT</command> and <command>REVOKE</command> "
 "statements. The final set of privileges for each object (if any are set) "
 "will be stored in the <link linkend=\"catalog-pg-init-privs"
@@ -516,7 +520,7 @@ msgstr ""
 "операторами <command>GRANT</command> и <command>REVOKE</command>, которые "
 "установят права, имевшие место в момент выгрузки."
 
-#: extend.xml:355(para)
+#: extend.xml:357(para)
 msgid ""
 "<productname>PostgreSQL</productname> does not currently support extension "
 "scripts issuing <command>CREATE POLICY</command> or <command>SECURITY LABEL</"
@@ -531,7 +535,7 @@ msgstr ""
 "<application>pg_dump</application> будет также включать в вывод все политики "
 "RLS и метки безопасности."
 
-#: extend.xml:363(para)
+#: extend.xml:365(para)
 msgid ""
 "The extension mechanism also has provisions for packaging modification "
 "scripts that adjust the definitions of the SQL objects contained in an "
@@ -552,7 +556,7 @@ msgstr ""
 "будет применить эти изменения и отследить, какая версия расширения "
 "фактически установлена в заданной базе данных."
 
-#: extend.xml:374(para)
+#: extend.xml:376(para)
 msgid ""
 "The kinds of SQL objects that can be members of an extension are shown in "
 "the description of <xref linkend=\"sql-alterextension\"/>. Notably, objects "
@@ -584,15 +588,15 @@ msgstr ""
 "расширения могут иметь, а могут не иметь основания владеть схемами, к "
 "которым относятся объекты-члены расширения."
 
-#: extend.xml:393(title)
+#: extend.xml:395(title)
 msgid "Extension Files"
 msgstr "Файлы расширений"
 
-#: extend.xml:395(indexterm)
+#: extend.xml:397(indexterm)
 msgid "<primary>control file</primary>"
 msgstr "<primary>управляющий файл</primary>"
 
-#: extend.xml:399(para)
+#: extend.xml:401(para)
 msgid ""
 "The <xref linkend=\"sql-createextension\"/> command relies on a control file "
 "for each extension, which must be named the same as the extension with a "
@@ -617,7 +621,7 @@ msgstr ""
 "умолчанию скрипт(ы) также помещается в каталог <literal>SHAREDIR/extension</"
 "literal>; но в управляющем файле можно задать и другой каталог."
 
-#: extend.xml:413(para)
+#: extend.xml:415(para)
 msgid ""
 "The file format for an extension control file is the same as for the "
 "<filename>postgresql.conf</filename> file, namely a list of "
@@ -634,15 +638,15 @@ msgstr ""
 "literal>. Все значения, отличные от единственного слова или числа, в нём "
 "должны заключаться в кавычки."
 
-#: extend.xml:422(para)
+#: extend.xml:424(para)
 msgid "A control file can set the following parameters:"
 msgstr "В управляющем файле могут устанавливаться следующие параметры:"
 
-#: extend.xml:428(term)
+#: extend.xml:430(term)
 msgid "<varname>directory</varname> (<type>string</type>)"
 msgstr "<varname>directory</varname> (<type>string</type>)"
 
-#: extend.xml:430(para)
+#: extend.xml:432(para)
 msgid ""
 "The directory containing the extension's <acronym>SQL</acronym> script "
 "file(s). Unless an absolute path is given, the name is relative to the "
@@ -654,11 +658,11 @@ msgstr ""
 "сервера <literal>SHAREDIR</literal>. По умолчанию подразумевается указание "
 "<literal>directory = 'extension'</literal>."
 
-#: extend.xml:441(term)
+#: extend.xml:443(term)
 msgid "<varname>default_version</varname> (<type>string</type>)"
 msgstr "<varname>default_version</varname> (<type>string</type>)"
 
-#: extend.xml:443(para)
+#: extend.xml:445(para)
 msgid ""
 "The default version of the extension (the one that will be installed if no "
 "version is specified in <command>CREATE EXTENSION</command>). Although this "
@@ -672,24 +676,29 @@ msgstr ""
 "EXTENSION</command> без явного указания <literal>VERSION</literal>, что вряд "
 "ли будет желаемым поведением."
 
-#: extend.xml:454(term)
+#: extend.xml:456(term)
 msgid "<varname>comment</varname> (<type>string</type>)"
 msgstr "<varname>comment</varname> (<type>string</type>)"
 
-#: extend.xml:456(para)
+#: extend.xml:458(para)
 msgid ""
-"A comment (any string) about the extension. Alternatively, the comment can "
-"be set by means of the <xref linkend=\"sql-comment\"/> command in the script "
-"file."
+"A comment (any string) about the extension. The comment is applied when "
+"initially creating an extension, but not during extension updates (since "
+"that might override user-added comments). Alternatively, the extension's "
+"comment can be set by writing a <xref linkend=\"sql-comment\"/> command in "
+"the script file."
 msgstr ""
-"Комментарий (произвольная строка) к расширению. Комментарий также можно "
-"задать посредством команды <xref linkend=\"sql-comment\"/> в файле скрипта."
+"Комментарий (произвольная строка) к расширению. Комментарий применяется при "
+"изначальном создании расширения, но не при обновлениях расширения (так как "
+"при этом мог бы заменяться комментарий, заданный пользователем). Комментарий "
+"расширения также можно задать посредством команды <xref linkend=\"sql-comment"
+"\"/> в файле скрипта."
 
-#: extend.xml:465(term)
+#: extend.xml:469(term)
 msgid "<varname>encoding</varname> (<type>string</type>)"
 msgstr "<varname>encoding</varname> (<type>string</type>)"
 
-#: extend.xml:467(para)
+#: extend.xml:471(para)
 msgid ""
 "The character set encoding used by the script file(s). This should be "
 "specified if the script files contain any non-ASCII characters. Otherwise "
@@ -699,11 +708,11 @@ msgstr ""
 "эти файлы содержат символы не из набора ASCII. По умолчанию предполагается, "
 "что эти файлы содержат текст в кодировке базы данных."
 
-#: extend.xml:476(term)
+#: extend.xml:480(term)
 msgid "<varname>module_pathname</varname> (<type>string</type>)"
 msgstr "<varname>module_pathname</varname> (<type>string</type>)"
 
-#: extend.xml:478(para)
+#: extend.xml:482(para)
 msgid ""
 "The value of this parameter will be substituted for each occurrence of "
 "<literal>MODULE_PATHNAME</literal> in the script file(s). If it is not set, "
@@ -722,11 +731,11 @@ msgstr ""
 "literal>, чтобы в скриптах не приходилось жёстко задавать имя разделяемой "
 "библиотеки."
 
-#: extend.xml:491(term)
+#: extend.xml:495(term)
 msgid "<varname>requires</varname> (<type>string</type>)"
 msgstr "<varname>requires</varname> (<type>string</type>)"
 
-#: extend.xml:493(para)
+#: extend.xml:497(para)
 msgid ""
 "A list of names of extensions that this extension depends on, for example "
 "<literal>requires = 'foo, bar'</literal>. Those extensions must be installed "
@@ -736,11 +745,11 @@ msgstr ""
 "<literal>requires = 'foo, bar'</literal>. Эти расширения должны быть уже "
 "установлены, прежде чем можно будет установить данное."
 
-#: extend.xml:502(term)
+#: extend.xml:506(term)
 msgid "<varname>superuser</varname> (<type>boolean</type>)"
 msgstr "<varname>superuser</varname> (<type>boolean</type>)"
 
-#: extend.xml:504(para)
+#: extend.xml:508(para)
 msgid ""
 "If this parameter is <literal>true</literal> (which is the default), only "
 "superusers can create the extension or update it to a new version. If it is "
@@ -753,37 +762,44 @@ msgstr ""
 "достаточно прав, необходимых для выполнения команд в установочном скрипте "
 "или скрипте обновления."
 
-#: extend.xml:515(term)
+#: extend.xml:519(term)
 msgid "<varname>relocatable</varname> (<type>boolean</type>)"
 msgstr "<varname>relocatable</varname> (<type>boolean</type>)"
 
-#: extend.xml:517(para)
+#: extend.xml:521(para)
 msgid ""
 "An extension is <firstterm>relocatable</firstterm> if it is possible to move "
 "its contained objects into a different schema after initial creation of the "
 "extension. The default is <literal>false</literal>, i.e. the extension is "
-"not relocatable. See below for more information."
+"not relocatable. See <xref linkend=\"extend-extensions-relocation\"/> for "
+"more information."
 msgstr ""
 "Расширение является <firstterm>перемещаемым</firstterm>, если относящиеся к "
 "нему объекты после создания расширения можно переместить в другую схему. По "
 "умолчанию подразумевается <literal>false</literal>, то есть расширение не "
-"считается перемещаемым. Подробнее об этом рассказывается ниже."
+"считается перемещаемым. Подробнее об этом рассказывается в <xref remap=\"6\" "
+"linkend=\"extend-extensions-relocation\"/>."
 
-#: extend.xml:528(term)
+#: extend.xml:532(term)
 msgid "<varname>schema</varname> (<type>string</type>)"
 msgstr "<varname>schema</varname> (<type>string</type>)"
 
-#: extend.xml:530(para)
+#: extend.xml:534(para)
 msgid ""
 "This parameter can only be set for non-relocatable extensions. It forces the "
-"extension to be loaded into exactly the named schema and not any other. See "
-"below for more information."
+"extension to be loaded into exactly the named schema and not any other. The "
+"<varname>schema</varname> parameter is consulted only when initially "
+"creating an extension, not during extension updates. See <xref linkend="
+"\"extend-extensions-relocation\"/> for more information."
 msgstr ""
 "Этот параметр может задаваться только для неперемещаемых расширений. Если он "
 "задан, расширение можно будет загрузить только в указанную схему и не в "
-"какую другую. Подробнее об этом рассказывается ниже."
+"какую другую. Подробнее об этом рассказывается ниже. Параметр "
+"<varname>schema</varname> учитывается только при изначальном создании "
+"расширения, но не при его обновлении. Подробнее об этом рассказывается в "
+"<xref remap=\"6\" linkend=\"extend-extensions-relocation\"/>."
 
-#: extend.xml:539(para)
+#: extend.xml:546(para)
 msgid ""
 "In addition to the primary control file <literal><replaceable>extension</"
 "replaceable>.control</literal>, an extension can have secondary control "
@@ -808,7 +824,7 @@ msgstr ""
 "<varname>directory</varname> и <varname>default_version</varname> в "
 "дополнительных управляющих файлах задать нельзя."
 
-#: extend.xml:552(para)
+#: extend.xml:559(para)
 msgid ""
 "An extension's <acronym>SQL</acronym> script files can contain any SQL "
 "commands, except for transaction control commands (<command>BEGIN</command>, "
@@ -822,28 +838,30 @@ msgstr ""
 "внутри блока транзакции (например, <command>VACUUM</command>). Это "
 "объясняется тем, что эти скрипты неявно выполняются в блоке транзакции."
 
-#: extend.xml:560(para)
+#: extend.xml:567(para)
 msgid ""
 "An extension's <acronym>SQL</acronym> script files can also contain lines "
 "beginning with <literal>\\echo</literal>, which will be ignored (treated as "
 "comments) by the extension mechanism. This provision is commonly used to "
 "throw an error if the script file is fed to <application>psql</application> "
 "rather than being loaded via <command>CREATE EXTENSION</command> (see "
-"example script below). Without that, users might accidentally load the "
-"extension's contents as <quote>loose</quote> objects rather than as an "
-"extension, a state of affairs that's a bit tedious to recover from."
+"example script in <xref linkend=\"extend-extensions-example\"/>). Without "
+"that, users might accidentally load the extension's contents as "
+"<quote>loose</quote> objects rather than as an extension, a state of affairs "
+"that's a bit tedious to recover from."
 msgstr ""
 "<acronym>SQL</acronym>-скрипты расширений также могут содержать строки, "
 "начинающиеся с <literal>\\echo</literal>, и они будут игнорироваться "
 "(восприниматься как комментарии) механизмом расширений. Это часто "
 "используется для вывода ошибки в случае, если этот скрипт выполняется в "
 "<application>psql</application>, а не загружается командой <command>CREATE "
-"EXTENSION</command> (см. пример скрипта ниже). Если такое выполнение не "
-"предотвратить, пользователи могут случайно загрузить содержимое расширения "
-"как <quote>разрозненные</quote> объекты, а не как собственно расширение, и "
+"EXTENSION</command> (см. пример скрипта в <xref remap=\"6\" linkend=\"extend-"
+"extensions-example\"/>). Если такое выполнение не предотвратить, "
+"пользователи могут случайно загрузить содержимое расширения как "
+"<quote>разрозненные</quote> объекты, а не как собственно расширение, и "
 "получить состояние, которое довольно сложно исправить."
 
-#: extend.xml:571(para)
+#: extend.xml:579(para)
 msgid ""
 "While the script files can contain any characters allowed by the specified "
 "encoding, control files should contain only plain ASCII, because there is no "
@@ -863,11 +881,11 @@ msgstr ""
 "<varname>comment</varname> в управляющем файле, а вместо этого задать "
 "комментарий командой <command>COMMENT ON EXTENSION</command> в файле скрипта."
 
-#: extend.xml:585(title)
+#: extend.xml:593(title)
 msgid "Extension Relocatability"
 msgstr "Перемещаемость расширений"
 
-#: extend.xml:587(para)
+#: extend.xml:595(para)
 msgid ""
 "Users often wish to load the objects contained in an extension into a "
 "different schema than the extension's author had in mind. There are three "
@@ -877,7 +895,7 @@ msgstr ""
 "расширении, в схему, отличную от той, что выбрал автор расширения. Насколько "
 "это поддерживает расширение, описывается одним из трёх уровней:"
 
-#: extend.xml:595(para)
+#: extend.xml:603(para)
 msgid ""
 "A fully relocatable extension can be moved into another schema at any time, "
 "even after it's been loaded into a database. This is done with the "
@@ -900,7 +918,7 @@ msgstr ""
 "языки). Чтобы пометить расширение как полностью перемещаемое, установите "
 "<literal>relocatable = true</literal> в его управляющем файле."
 
-#: extend.xml:611(para)
+#: extend.xml:619(para)
 msgid ""
 "An extension might be relocatable during installation but not afterwards. "
 "This is typically the case if the extension's script file needs to reference "
@@ -924,7 +942,7 @@ msgstr ""
 "указании <literal>SCHEMA</literal> команды <command>CREATE EXTENSION</"
 "command>."
 
-#: extend.xml:626(para)
+#: extend.xml:634(para)
 msgid ""
 "If the extension does not support relocation at all, set "
 "<literal>relocatable = false</literal> in its control file, and also set "
@@ -949,12 +967,12 @@ msgstr ""
 "хотя польза от него будет ограниченной, так как имя схемы определяется "
 "управляющим файлом."
 
-#: extend.xml:646(programlisting)
+#: extend.xml:654(programlisting)
 #, no-wrap
 msgid "SET LOCAL search_path TO @extschema@;"
 msgstr "SET LOCAL search_path TO @extschema@;"
 
-#: extend.xml:641(para)
+#: extend.xml:649(para)
 msgid ""
 "In all cases, the script file will be executed with <xref linkend=\"guc-"
 "search-path\"/> initially set to point to the target schema; that is, "
@@ -974,7 +992,7 @@ msgstr ""
 "восстанавливает предыдущее значение по завершении <command>CREATE EXTENSION</"
 "command>."
 
-#: extend.xml:655(para)
+#: extend.xml:663(para)
 msgid ""
 "The target schema is determined by the <varname>schema</varname> parameter "
 "in the control file if that is given, otherwise by the <literal>SCHEMA</"
@@ -994,7 +1012,7 @@ msgstr ""
 "схема будет создана, если она ещё не существует, но в двух других случаях "
 "она должна уже существовать."
 
-#: extend.xml:665(para)
+#: extend.xml:673(para)
 msgid ""
 "If any prerequisite extensions are listed in <varname>requires</varname> in "
 "the control file, their target schemas are appended to the initial setting "
@@ -1006,7 +1024,7 @@ msgstr ""
 "к начальному значению <varname>search_path</varname>. Благодаря этому, их "
 "объекты видны для скрипта нового расширения."
 
-#: extend.xml:672(para)
+#: extend.xml:680(para)
 msgid ""
 "Although a non-relocatable extension can contain objects spread across "
 "multiple schemas, it is usually desirable to place all the objects meant for "
@@ -1022,11 +1040,11 @@ msgstr ""
 "<varname>search_path</varname> по умолчанию в процессе создания зависимых "
 "расширений."
 
-#: extend.xml:683(title)
+#: extend.xml:691(title)
 msgid "Extension Configuration Tables"
 msgstr "Конфигурационные таблицы расширений"
 
-#: extend.xml:685(para)
+#: extend.xml:693(para)
 msgid ""
 "Some extensions include configuration tables, which contain data that might "
 "be added or changed by the user after installation of the extension. "
@@ -1045,11 +1063,11 @@ msgstr ""
 "выгружаться; в противном случае расширение будет вести себя по-другому, "
 "когда будет загружено вновь."
 
-#: extend.xml:696(indexterm)
+#: extend.xml:704(indexterm)
 msgid "<primary>pg_extension_config_dump</primary>"
 msgstr "<primary>pg_extension_config_dump</primary>"
 
-#: extend.xml:707(programlisting)
+#: extend.xml:715(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE my_config (key text, value text);\n"
@@ -1064,7 +1082,7 @@ msgstr ""
 "SELECT pg_catalog.pg_extension_config_dump('my_config', '');\n"
 "SELECT pg_catalog.pg_extension_config_dump('my_config_seq', '');"
 
-#: extend.xml:700(para)
+#: extend.xml:708(para)
 msgid ""
 "To solve this problem, an extension's script file can mark a table or a "
 "sequence it has created as a configuration relation, which will cause "
@@ -1085,7 +1103,7 @@ msgstr ""
 "последовательностей, в том числе последовательности, связанные со столбцами "
 "<type>serial</type> или <type>bigserial</type>."
 
-#: extend.xml:728(programlisting)
+#: extend.xml:736(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE my_config (key text, value text, standard_entry boolean);\n"
@@ -1096,7 +1114,7 @@ msgstr ""
 "\n"
 "SELECT pg_catalog.pg_extension_config_dump('my_config', 'WHERE NOT standard_entry');"
 
-#: extend.xml:719(para)
+#: extend.xml:727(para)
 msgid ""
 "When the second argument of <function>pg_extension_config_dump</function> is "
 "an empty string, the entire contents of the table are dumped by "
@@ -1120,7 +1138,7 @@ msgstr ""
 "можно сделать так, чтобы поле <structfield>standard_entry</structfield> "
 "содержало true только для строк, создаваемых скриптом расширения."
 
-#: extend.xml:737(para)
+#: extend.xml:745(para)
 msgid ""
 "For sequences, the second argument of <function>pg_extension_config_dump</"
 "function> has no effect."
@@ -1128,7 +1146,7 @@ msgstr ""
 "Для последовательностей второй аргумент функции "
 "<function>pg_extension_config_dump</function> не имеет значения."
 
-#: extend.xml:742(para)
+#: extend.xml:750(para)
 msgid ""
 "More complicated situations, such as initially-provided rows that might be "
 "modified by users, can be handled by creating triggers on the configuration "
@@ -1138,7 +1156,7 @@ msgstr ""
 "изначально существовавшие строки, можно создать триггеры для "
 "конфигурационной таблицы, которые корректно пометят изменённые строки."
 
-#: extend.xml:748(para)
+#: extend.xml:756(para)
 msgid ""
 "You can alter the filter condition associated with a configuration table by "
 "calling <function>pg_extension_config_dump</function> again. (This would "
@@ -1153,7 +1171,7 @@ msgstr ""
 "разорвать её связь с расширением командой <command>ALTER EXTENSION ... DROP "
 "TABLE</command>."
 
-#: extend.xml:756(para)
+#: extend.xml:764(para)
 msgid ""
 "Note that foreign key relationships between these tables will dictate the "
 "order in which the tables are dumped out by pg_dump. Specifically, pg_dump "
@@ -1173,7 +1191,7 @@ msgstr ""
 "но полученный архив нельзя будет восстановить обычным образом, потребуется "
 "вмешательство пользователя."
 
-#: extend.xml:767(para)
+#: extend.xml:775(para)
 msgid ""
 "Sequences associated with <type>serial</type> or <type>bigserial</type> "
 "columns need to be directly marked to dump their state. Marking their parent "
@@ -1184,11 +1202,11 @@ msgstr ""
 "состояние было сохранено. Для этой цели достаточно пометить только их "
 "родительское отношение."
 
-#: extend.xml:775(title)
+#: extend.xml:783(title)
 msgid "Extension Updates"
 msgstr "Обновление расширений"
 
-#: extend.xml:777(para)
+#: extend.xml:785(para)
 msgid ""
 "One advantage of the extension mechanism is that it provides convenient ways "
 "to manage updates to the SQL commands that define an extension's objects. "
@@ -1218,7 +1236,7 @@ msgstr ""
 "меняющие версию <literal>1.0</literal> расширения <literal>foo</literal> на "
 "версию <literal>1.1</literal>)."
 
-#: extend.xml:792(para)
+#: extend.xml:800(para)
 msgid ""
 "Given that a suitable update script is available, the command <command>ALTER "
 "EXTENSION UPDATE</command> will update an installed extension to the "
@@ -1236,7 +1254,7 @@ msgstr ""
 "же образом, а любые новые объекты, созданные скриптом, автоматически "
 "добавляются в расширение."
 
-#: extend.xml:802(para)
+#: extend.xml:810(para)
 msgid ""
 "If an extension has secondary control files, the control parameters that are "
 "used for an update script are those associated with the script's target "
@@ -1246,7 +1264,7 @@ msgstr ""
 "обновления применяются те параметры, которые связаны с целевой (новой) "
 "версией скрипта."
 
-#: extend.xml:808(para)
+#: extend.xml:816(para)
 msgid ""
 "The update mechanism can be used to solve an important special case: "
 "converting a <quote>loose</quote> collection of objects into an extension. "
@@ -1298,7 +1316,7 @@ msgstr ""
 "несколько предыдущих версий, которые нужно привести к стилю расширения, "
 "выберите разные фиктивные имена версий, чтобы различить их."
 
-#: extend.xml:835(para)
+#: extend.xml:843(para)
 msgid ""
 "<command>ALTER EXTENSION</command> is able to execute sequences of update "
 "script files to achieve a requested update. For example, if only "
@@ -1314,7 +1332,7 @@ msgstr ""
 "порядку, если при установленной версии <literal>1.0</literal> запрошено "
 "обновлении до версии <literal>2.0</literal>."
 
-#: extend.xml:844(para)
+#: extend.xml:852(para)
 msgid ""
 "<productname>PostgreSQL</productname> doesn't assume anything about the "
 "properties of version names: for example, it does not know whether "
@@ -1332,7 +1350,7 @@ msgstr ""
 "строка, которая не содержит <literal>--</literal> и при этом не начинается и "
 "не заканчивается символом <literal>-</literal>.)"
 
-#: extend.xml:853(para)
+#: extend.xml:861(para)
 msgid ""
 "Sometimes it is useful to provide <quote>downgrade</quote> scripts, for "
 "example <literal>foo--1.1--1.0.sql</literal> to allow reverting the changes "
@@ -1358,12 +1376,12 @@ msgstr ""
 "удаляет какие-либо незаменимые объекты, это может привести к нежелательным "
 "результатам."
 
-#: extend.xml:868(programlisting)
+#: extend.xml:876(programlisting)
 #, no-wrap
 msgid "SELECT * FROM pg_extension_update_paths('<replaceable>extension_name</replaceable>');"
 msgstr "SELECT * FROM pg_extension_update_paths('<replaceable>имя_расширения</replaceable>');"
 
-#: extend.xml:866(para)
+#: extend.xml:874(para)
 msgid ""
 "To check for unexpected update paths, use this command: <placeholder-1/> "
 "This shows each pair of distinct known version names for the specified "
@@ -1383,11 +1401,11 @@ msgstr ""
 "literal>. Если вы предпочитаете формат массива, вы можете применить "
 "<literal>regexp_split_to_array(path,'--')</literal>."
 
-#: extend.xml:882(title)
+#: extend.xml:890(title)
 msgid "Extension Example"
 msgstr "Пример расширения"
 
-#: extend.xml:884(para)
+#: extend.xml:892(para)
 msgid ""
 "Here is a complete example of an <acronym>SQL</acronym>-only extension, a "
 "two-element composite type that can store any type of value in its slots, "
@@ -1400,7 +1418,7 @@ msgstr ""
 "названные <quote>k</quote> и <quote>v</quote>. Для хранения все значения "
 "переводятся в текстовый формат (если они имеют другой формат)."
 
-#: extend.xml:891(para)
+#: extend.xml:899(para)
 msgid ""
 "The script file <filename>pair--1.0.sql</filename> looks like this: "
 "<placeholder-1/>"
@@ -1408,7 +1426,7 @@ msgstr ""
 "Файл скрипта <filename>pair--1.0.sql</filename> выглядит так: <placeholder-1/"
 ">"
 
-#: extend.xml:923(programlisting)
+#: extend.xml:931(programlisting)
 #, no-wrap
 msgid ""
 "# pair extension\n"
@@ -1421,7 +1439,7 @@ msgstr ""
 "default_version = '1.0'\n"
 "relocatable = true"
 
-#: extend.xml:920(para)
+#: extend.xml:928(para)
 msgid ""
 "The control file <filename>pair.control</filename> looks like this: "
 "<placeholder-1/>"
@@ -1429,7 +1447,7 @@ msgstr ""
 "Управляющий файл <filename>pair.control</filename> выглядит так: "
 "<placeholder-1/>"
 
-#: extend.xml:935(programlisting)
+#: extend.xml:943(programlisting)
 #, no-wrap
 msgid ""
 "EXTENSION = pair\n"
@@ -1446,7 +1464,7 @@ msgstr ""
 "PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
 "include $(PGXS)"
 
-#: extend.xml:931(para)
+#: extend.xml:939(para)
 msgid ""
 "While you hardly need a makefile to install these two files into the correct "
 "directory, you could use a <filename>Makefile</filename> containing this: "
@@ -1463,7 +1481,7 @@ msgstr ""
 "<literal>make install</literal> установит управляющий файл и скрипт в "
 "правильный каталог, который определит <application>pg_config</application>."
 
-#: extend.xml:950(para)
+#: extend.xml:958(para)
 msgid ""
 "Once the files are installed, use the <xref linkend=\"sql-createextension\"/"
 "> command to load the objects into any particular database."
@@ -1471,15 +1489,15 @@ msgstr ""
 "Когда эти файлы будут установлены, выполните команду <xref linkend=\"sql-"
 "createextension\"/>, чтобы загрузить объекты в определённую базу данных."
 
-#: extend.xml:959(title)
+#: extend.xml:967(title)
 msgid "Extension Building Infrastructure"
 msgstr "Инфраструктура сборки расширений"
 
-#: extend.xml:961(indexterm)
+#: extend.xml:969(indexterm)
 msgid "<primary>pgxs</primary>"
 msgstr "<primary>pgxs</primary>"
 
-#: extend.xml:965(para)
+#: extend.xml:973(para)
 msgid ""
 "If you are thinking about distributing your <productname>PostgreSQL</"
 "productname> extension modules, setting up a portable build system for them "
@@ -1509,7 +1527,7 @@ msgstr ""
 "Для более сложных пакетов вам придётся разработать собственную систему "
 "сборки."
 
-#: extend.xml:991(programlisting)
+#: extend.xml:999(programlisting)
 #, no-wrap
 msgid ""
 "MODULES = isbn_issn\n"
@@ -1530,7 +1548,7 @@ msgstr ""
 "PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
 "include $(PGXS)"
 
-#: extend.xml:982(para)
+#: extend.xml:990(para)
 msgid ""
 "To use the <acronym>PGXS</acronym> infrastructure for your extension, you "
 "must write a simple makefile. In the makefile, you need to set some "
@@ -1552,11 +1570,11 @@ msgstr ""
 "должны быть такими. Выше в файле вы определяете переменные или добавляете "
 "собственные правила для <application>make</application>."
 
-#: extend.xml:1011(varname)
+#: extend.xml:1019(varname)
 msgid "MODULES"
 msgstr "MODULES"
 
-#: extend.xml:1013(para)
+#: extend.xml:1021(para)
 msgid ""
 "list of shared-library objects to be built from source files with same stem "
 "(do not include library suffixes in this list)"
@@ -1565,11 +1583,11 @@ msgstr ""
 "исходных файлов с одной основой (суффиксы библиотек в этом списке не "
 "указываются)"
 
-#: extend.xml:1021(varname)
+#: extend.xml:1029(varname)
 msgid "MODULE_big"
 msgstr "MODULE_big"
 
-#: extend.xml:1023(para)
+#: extend.xml:1031(para)
 msgid ""
 "a shared library to build from multiple source files (list object files in "
 "<varname>OBJS</varname>)"
@@ -1577,22 +1595,22 @@ msgstr ""
 "разделяемая библиотека, которая должна быть собрана из нескольких исходных "
 "файлов (объектные файлы перечисляются в <varname>OBJS</varname>)"
 
-#: extend.xml:1031(varname)
+#: extend.xml:1039(varname)
 msgid "PROGRAM"
 msgstr "PROGRAM"
 
-#: extend.xml:1033(para)
+#: extend.xml:1041(para)
 msgid ""
 "an executable program to build (list object files in <varname>OBJS</varname>)"
 msgstr ""
 "исполняемая программа, которая должна быть собрана (объектные файлы "
 "перечисляются в <varname>OBJS</varname>)"
 
-#: extend.xml:1045(varname)
+#: extend.xml:1053(varname)
 msgid "EXTENSION"
 msgstr "EXTENSION"
 
-#: extend.xml:1047(para)
+#: extend.xml:1055(para)
 msgid ""
 "extension name(s); for each name you must provide an "
 "<literal><replaceable>extension</replaceable>.control</literal> file, which "
@@ -1604,11 +1622,11 @@ msgstr ""
 "будет установлен в <literal><replaceable>префикс</replaceable>/share/"
 "extension</literal>"
 
-#: extend.xml:1057(varname)
+#: extend.xml:1065(varname)
 msgid "MODULEDIR"
 msgstr "MODULEDIR"
 
-#: extend.xml:1059(para)
+#: extend.xml:1067(para)
 msgid ""
 "subdirectory of <literal><replaceable>prefix</replaceable>/share</literal> "
 "into which DATA and DOCS files should be installed (if not set, default is "
@@ -1621,11 +1639,11 @@ msgstr ""
 "<varname>EXTENSION</varname>, или <literal>contrib</literal> в противном "
 "случае)"
 
-#: extend.xml:1070(varname)
+#: extend.xml:1078(varname)
 msgid "DATA"
 msgstr "DATA"
 
-#: extend.xml:1072(para)
+#: extend.xml:1080(para)
 msgid ""
 "random files to install into <literal><replaceable>prefix</replaceable>/"
 "share/$MODULEDIR</literal>"
@@ -1633,11 +1651,11 @@ msgstr ""
 "произвольные файлы, которые должны быть установлены в "
 "<literal><replaceable>префикс</replaceable>/share/$MODULEDIR</literal>"
 
-#: extend.xml:1079(varname)
+#: extend.xml:1087(varname)
 msgid "DATA_built"
 msgstr "DATA_built"
 
-#: extend.xml:1081(para)
+#: extend.xml:1089(para)
 msgid ""
 "random files to install into <literal><replaceable>prefix</replaceable>/"
 "share/$MODULEDIR</literal>, which need to be built first"
@@ -1645,11 +1663,11 @@ msgstr ""
 "произвольные файлы, которые должны быть сначала собраны, а затем установлены "
 "в <literal><replaceable>префикс</replaceable>/share/$MODULEDIR</literal>"
 
-#: extend.xml:1090(varname)
+#: extend.xml:1098(varname)
 msgid "DATA_TSEARCH"
 msgstr "DATA_TSEARCH"
 
-#: extend.xml:1092(para)
+#: extend.xml:1100(para)
 msgid ""
 "random files to install under <literal><replaceable>prefix</replaceable>/"
 "share/tsearch_data</literal>"
@@ -1657,11 +1675,11 @@ msgstr ""
 "произвольные файлы, которые должны быть установлены в "
 "<literal><replaceable>префикс</replaceable>/share/tsearch_data</literal>"
 
-#: extend.xml:1100(varname)
+#: extend.xml:1108(varname)
 msgid "DOCS"
 msgstr "DOCS"
 
-#: extend.xml:1102(para)
+#: extend.xml:1110(para)
 msgid ""
 "random files to install under <literal><replaceable>prefix</replaceable>/doc/"
 "$MODULEDIR</literal>"
@@ -1669,11 +1687,11 @@ msgstr ""
 "произвольные файлы, которые должны быть установлены в "
 "<literal><replaceable>префикс</replaceable>/doc/$MODULEDIR</literal>"
 
-#: extend.xml:1110(varname)
+#: extend.xml:1118(varname)
 msgid "SCRIPTS"
 msgstr "SCRIPTS"
 
-#: extend.xml:1112(para)
+#: extend.xml:1120(para)
 msgid ""
 "script files (not binaries) to install into <literal><replaceable>prefix</"
 "replaceable>/bin</literal>"
@@ -1681,11 +1699,11 @@ msgstr ""
 "скрипты (не двоичные файлы), которые должны быть установлены в "
 "<literal><replaceable>префикс</replaceable>/bin</literal>"
 
-#: extend.xml:1120(varname)
+#: extend.xml:1128(varname)
 msgid "SCRIPTS_built"
 msgstr "SCRIPTS_built"
 
-#: extend.xml:1122(para)
+#: extend.xml:1130(para)
 msgid ""
 "script files (not binaries) to install into <literal><replaceable>prefix</"
 "replaceable>/bin</literal>, which need to be built first"
@@ -1693,62 +1711,62 @@ msgstr ""
 "скрипты (не двоичные файлы), которые должны быть сначала собраны, а затем "
 "установлены в <literal><replaceable>префикс</replaceable>/bin</literal>"
 
-#: extend.xml:1131(varname)
+#: extend.xml:1139(varname)
 msgid "REGRESS"
 msgstr "REGRESS"
 
-#: extend.xml:1133(para)
+#: extend.xml:1141(para)
 msgid "list of regression test cases (without suffix), see below"
 msgstr "список тестов регрессий (без суффикса), см. ниже"
 
-#: extend.xml:1140(varname)
+#: extend.xml:1148(varname)
 msgid "REGRESS_OPTS"
 msgstr "REGRESS_OPTS"
 
-#: extend.xml:1142(para)
+#: extend.xml:1150(para)
 msgid "additional switches to pass to <application>pg_regress</application>"
 msgstr ""
 "дополнительные параметры, передаваемые <application>pg_regress</application>"
 
-#: extend.xml:1149(varname)
+#: extend.xml:1157(varname)
 msgid "EXTRA_CLEAN"
 msgstr "EXTRA_CLEAN"
 
-#: extend.xml:1151(para)
+#: extend.xml:1159(para)
 msgid "extra files to remove in <literal>make clean</literal>"
 msgstr ""
 "дополнительные файлы, которые должны быть удалены при <literal>make clean</"
 "literal>"
 
-#: extend.xml:1158(varname)
+#: extend.xml:1166(varname)
 msgid "PG_CPPFLAGS"
 msgstr "PG_CPPFLAGS"
 
-#: extend.xml:1160(para)
+#: extend.xml:1168(para)
 msgid "will be added to <varname>CPPFLAGS</varname>"
 msgstr "флаги, добавляемые в <varname>CPPFLAGS</varname>"
 
-#: extend.xml:1167(varname)
+#: extend.xml:1175(varname)
 msgid "PG_LIBS"
 msgstr "PG_LIBS"
 
-#: extend.xml:1169(para)
+#: extend.xml:1177(para)
 msgid "will be added to <varname>PROGRAM</varname> link line"
 msgstr "будет добавлено в строку компоновки <varname>PROGRAM</varname>"
 
-#: extend.xml:1176(varname)
+#: extend.xml:1184(varname)
 msgid "SHLIB_LINK"
 msgstr "SHLIB_LINK"
 
-#: extend.xml:1178(para)
+#: extend.xml:1186(para)
 msgid "will be added to <varname>MODULE_big</varname> link line"
 msgstr "будет добавлено в строку компоновки <varname>MODULE_big</varname>"
 
-#: extend.xml:1185(varname)
+#: extend.xml:1193(varname)
 msgid "PG_CONFIG"
 msgstr "PG_CONFIG"
 
-#: extend.xml:1187(para)
+#: extend.xml:1195(para)
 msgid ""
 "path to <application>pg_config</application> program for the "
 "<productname>PostgreSQL</productname> installation to build against "
@@ -1760,7 +1778,7 @@ msgstr ""
 "(обычно указывается просто <literal>pg_config</literal>, и используется "
 "первый экземпляр, найденный по пути в <varname>PATH</varname>)"
 
-#: extend.xml:1006(para)
+#: extend.xml:1014(para)
 msgid ""
 "Set one of these three variables to specify what is built: <placeholder-1/> "
 "The following variables can also be set: <placeholder-2/>"
@@ -1769,7 +1787,7 @@ msgstr ""
 "<placeholder-1/> Также можно установить следующие переменные: <placeholder-2/"
 ">"
 
-#: extend.xml:1198(para)
+#: extend.xml:1206(para)
 msgid ""
 "Put this makefile as <literal>Makefile</literal> in the directory which "
 "holds your extension. Then you can do <literal>make</literal> to compile, "
@@ -1792,11 +1810,11 @@ msgstr ""
 "её экземпляру <command>pg_config</command> либо внутри сборочного файла, "
 "либо в командном файле <literal>make</literal>."
 
-#: extend.xml:1216(indexterm)
+#: extend.xml:1224(indexterm)
 msgid "<primary>VPATH</primary>"
 msgstr "<primary>VPATH</primary>"
 
-#: extend.xml:1218(programlisting)
+#: extend.xml:1226(programlisting)
 #, no-wrap
 msgid ""
 "mkdir build_dir\n"
@@ -1809,7 +1827,7 @@ msgstr ""
 "make -f /path/to/extension/source/tree/Makefile\n"
 "make -f /path/to/extension/source/tree/Makefile install"
 
-#: extend.xml:1212(para)
+#: extend.xml:1220(para)
 msgid ""
 "You can also run <literal>make</literal> in a directory outside the source "
 "tree of your extension, if you want to keep the build directory separate. "
@@ -1821,7 +1839,7 @@ msgstr ""
 "процедура называется сборкой с <placeholder-1/><firstterm>VPATH</firstterm> "
 "и выполняется так: <placeholder-2/>"
 
-#: extend.xml:1232(programlisting)
+#: extend.xml:1240(programlisting)
 #, no-wrap
 msgid ""
 "make VPATH=/path/to/extension/source/tree\n"
@@ -1830,7 +1848,7 @@ msgstr ""
 "make VPATH=/path/to/extension/source/tree\n"
 "make VPATH=/path/to/extension/source/tree install"
 
-#: extend.xml:1226(para)
+#: extend.xml:1234(para)
 msgid ""
 "Alternatively, you can set up a directory for a VPATH build in a similar way "
 "to how it is done for the core code. One way to do this is using the core "
@@ -1846,7 +1864,7 @@ msgstr ""
 "varname> для <literal>make</literal> таким образом: <placeholder-1/> Эта "
 "процедура поддерживает самые разные расположения каталогов."
 
-#: extend.xml:1239(para)
+#: extend.xml:1247(para)
 msgid ""
 "The scripts listed in the <varname>REGRESS</varname> variable are used for "
 "regression testing of your module, which can be invoked by <literal>make "
@@ -1884,7 +1902,7 @@ msgstr ""
 "вывода этот тест будет отмечен как <quote>проблемный</quote>, поэтому "
 "убедитесь, что все такие файлы присутствуют."
 
-#: extend.xml:1260(para)
+#: extend.xml:1268(para)
 msgid ""
 "The easiest way to create the expected files is to create empty files, then "
 "do a test run (which will of course report differences). Inspect the actual "
