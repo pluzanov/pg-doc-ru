@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                                xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">
 <xsl:param name="xref.with.number.and.title" select="0"></xsl:param>
-<xsl:param name="local.l10n.xml" select="document('l10n.xml')"></xsl:param>
+<xsl:variable name="extra.l10n.xml" select="document('l10n.xml')"></xsl:variable>
 
 <xsl:include href="../stylesheet-common.xsl" />
 
@@ -22,7 +22,7 @@
   <xsl:param name="verbose" select="1"/>
 
   <xsl:choose>
-    <xsl:when test="$empty.local.l10n.xml">
+    <xsl:when test="false">
       <xsl:for-each select="$l10n.xml">  <!-- We need to switch context in order to make key() work -->
     <xsl:for-each select="document(key('l10n-lang', $lang)/@href)">
 
@@ -101,7 +101,7 @@
     <xsl:for-each select="document(key('l10n-lang', $lang)/@href)">
 
       <xsl:variable name="local.localization.node"
-            select="($local.l10n.xml//l:i18n/l:l10n[@language=$lang])[1]"/>
+            select="($extra.l10n.xml//l:i18n/l:l10n[@language=$lang])[1]"/>
 
       <xsl:variable name="localization.node"
             select="key('l10n-lang', $lang)[1]"/>
@@ -154,7 +154,7 @@
       <xsl:if test="not(contains($name, '/')) and $referrer and $referrer/@remap">
         <xsl:if test="not($local.template.node/@text)">
           <xsl:message>
-            <xsl:text>No template for :"</xsl:text>
+            <xsl:text>No template for: "</xsl:text>
             <xsl:value-of select="concat($name, '_', $referrer/@remap)"/>
             <xsl:text>", context: </xsl:text>
             <xsl:value-of select="$context"/>

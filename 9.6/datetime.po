@@ -535,45 +535,75 @@ msgstr ""
 "Файл аббревиатур часовых поясов может содержать пустые строки и комментарии, "
 "начинающиеся с <literal>#</literal>. Строки, не имеющие комментариев, должны "
 "иметь один из следующих форматов: <synopsis>\n"
-"<replaceable>zone_abbreviation</replaceable> <replaceable>offset</"
+"<replaceable>аббревиатура_пояса</replaceable> <replaceable>смещение</"
 "replaceable>\n"
-"<replaceable>zone_abbreviation</replaceable> <replaceable>offset</"
+"<replaceable>аббревиатура_пояса</replaceable> <replaceable>смещение</"
 "replaceable> D\n"
-"<replaceable>zone_abbreviation</replaceable> <replaceable>time_zone_name</"
-"replaceable>\n"
-"@INCLUDE <replaceable>file_name</replaceable>\n"
+"<replaceable>аббревиатура_пояса</replaceable> "
+"<replaceable>имя_часового_пояса</replaceable>\n"
+"@INCLUDE <replaceable>имя_файла</replaceable>\n"
 "@OVERRIDE\n"
 "</synopsis>"
 
 #: datetime.xml:386(para)
 msgid ""
 "A <replaceable>zone_abbreviation</replaceable> is just the abbreviation "
-"being defined. The <replaceable>offset</replaceable> is the equivalent "
-"offset in seconds from UTC, positive being east from Greenwich and negative "
-"being west. For example, -18000 would be five hours west of Greenwich, or "
-"North American east coast standard time. <literal>D</literal> indicates that "
-"the zone name represents local daylight-savings time rather than standard "
-"time. Alternatively, a <replaceable>time_zone_name</replaceable> can be "
-"given, in which case that time zone definition is consulted, and the "
-"abbreviation's meaning in that zone is used. This alternative is recommended "
-"only for abbreviations whose meaning has historically varied, as looking up "
-"the meaning is noticeably more expensive than just using a fixed integer "
-"value."
+"being defined. An <replaceable>offset</replaceable> is an integer giving the "
+"equivalent offset in seconds from UTC, positive being east from Greenwich "
+"and negative being west. For example, -18000 would be five hours west of "
+"Greenwich, or North American east coast standard time. <literal>D</literal> "
+"indicates that the zone name represents local daylight-savings time rather "
+"than standard time."
 msgstr ""
-"<replaceable>zone_abbreviation</replaceable> является лишь определяемой "
-"аббревиатурой. <replaceable>offset</replaceable> это эквивалентная разница с "
-"UTC в секундах, положительная — к востоку от Гринвичского меридиана, "
-"отрицательная — к западу от него. Например, -18000 означало бы пять часов к "
-"западу от Гринвича, или Североамериканское восточное время. <literal>D</"
-"literal> указывает, что название пояса представляет местное летнее время, а "
-"не поясное время. В качестве альтернативы, может быть предоставлено значение "
-"<replaceable>time_zone_name</replaceable>. В этом случае предоставляется "
-"определение часового пояса, и используется значение аббревиатуры в этом "
-"поясе. Этот способ рекомендуется только для аббревиатур, значение которых "
-"изменилось, так как поиск значения заметно дороже простого использования "
-"постоянного целого значения."
+"Поле <replaceable>аббревиатура_пояса</replaceable> лишь задаёт определяемую "
+"аббревиатуру. <replaceable>Смещение</replaceable> — это целое число, "
+"задающее эквивалентное смещение от UTC в секундах, положительное — к востоку "
+"от Гринвичского меридиана, а отрицательное — к западу. Например, -18000 "
+"означало бы пять часов к западу от Гринвича, или Североамериканское "
+"восточное время. <literal>D</literal> указывает, что название пояса "
+"представляет местное летнее, а не поясное время."
 
-#: datetime.xml:401(para)
+#: datetime.xml:396(para)
+msgid ""
+"Alternatively, a <replaceable>time_zone_name</replaceable> can be given, "
+"referencing a zone name defined in the IANA timezone database. The zone's "
+"definition is consulted to see whether the abbreviation is or has been in "
+"use in that zone, and if so, the appropriate meaning is used &mdash; that "
+"is, the meaning that was currently in use at the timestamp whose value is "
+"being determined, or the meaning in use immediately before that if it wasn't "
+"current at that time, or the oldest meaning if it was used only after that "
+"time. This behavior is essential for dealing with abbreviations whose "
+"meaning has historically varied. It is also allowed to define an "
+"abbreviation in terms of a zone name in which that abbreviation does not "
+"appear; then using the abbreviation is just equivalent to writing out the "
+"zone name."
+msgstr ""
+"В качестве альтернативы может быть задано <replaceable>имя_часового_пояса</"
+"replaceable>, определённое в базе данных часовых поясов IANA. В этом случае "
+"система обращается к определению пояса, чтобы выяснить, используется или "
+"использовалась ли аббревиатура для этого пояса, и если да, действовать будет "
+"соответствующее значение &mdash; то есть, значение, действовавшее в "
+"указанный момент времени, или действовавшее непосредственно перед ним, если "
+"текущее на тот момент неизвестно, либо самое старое значение, если первое "
+"определение появилось после этого момента. Это поведение важно для тех "
+"аббревиатур, значение которых менялось в ходе истории. Также допускается "
+"определение аббревиатуры через имя часового пояса, с которым эта "
+"аббревиатура не связана; в таком случае использование аббревиатуры "
+"равнозначно написанию просто имени пояса."
+
+#: datetime.xml:412(para)
+msgid ""
+"Using a simple integer <replaceable>offset</replaceable> is preferred when "
+"defining an abbreviation whose offset from UTC has never changed, as such "
+"abbreviations are much cheaper to process than those that require consulting "
+"a time zone definition."
+msgstr ""
+"Простое целочисленное <replaceable>смещение</replaceable> предпочтительнее "
+"использовать, когда определяется аббревиатура, смещение которой от UTC "
+"никогда не менялось, так как обрабатывать подобные аббревиатуры гораздо "
+"легче, чем те, что требуют обращения к определению часового пояса."
+
+#: datetime.xml:420(para)
 msgid ""
 "The <literal>@INCLUDE</literal> syntax allows inclusion of another file in "
 "the <filename>.../share/timezonesets/</filename> directory. Inclusion can be "
@@ -583,7 +613,7 @@ msgstr ""
 "каталоге <filename>.../share/timezonesets/</filename>. Включение может быть "
 "вложенным до ограниченной глубины."
 
-#: datetime.xml:407(para)
+#: datetime.xml:426(para)
 msgid ""
 "The <literal>@OVERRIDE</literal> syntax indicates that subsequent entries in "
 "the file can override previous entries (typically, entries obtained from "
@@ -595,7 +625,7 @@ msgstr ""
 "из включённых файлов). Без этого указания конфликтующие определения "
 "аббревиатуры одного и того же часового пояса считаются ошибкой."
 
-#: datetime.xml:414(para)
+#: datetime.xml:433(para)
 msgid ""
 "In an unmodified installation, the file <filename>Default</filename> "
 "contains all the non-conflicting time zone abbreviations for most of the "
@@ -611,7 +641,7 @@ msgstr ""
 "сначала включают файл <literal>Default</literal>, а затем добавляют и "
 "изменяют аббревиатуры по мере необходимости."
 
-#: datetime.xml:422(para)
+#: datetime.xml:441(para)
 msgid ""
 "For reference purposes, a standard installation also contains files "
 "<filename>Africa.txt</filename>, <filename>America.txt</filename>, etc, "
@@ -631,7 +661,7 @@ msgstr ""
 "файлы нельзя указывать непосредственно в значении "
 "<varname>timezone_abbreviations</varname>, так как их имена включают точку."
 
-#: datetime.xml:434(para)
+#: datetime.xml:453(para)
 msgid ""
 "If an error occurs while reading the time zone abbreviation set, no new "
 "value is applied and the old set is kept. If the error occurs while starting "
@@ -641,7 +671,7 @@ msgstr ""
 "значение не применяется и сохраняется старый набор. Если ошибка возникает "
 "при запуске базы данных, происходит сбой."
 
-#: datetime.xml:442(para)
+#: datetime.xml:461(para)
 msgid ""
 "Time zone abbreviations defined in the configuration file override non-"
 "timezone meanings built into <productname>PostgreSQL</productname>. For "
@@ -658,7 +688,7 @@ msgstr ""
 "Когда этот файл активен, <literal>SAT</literal> не будет распознаваться как "
 "сокращение слова \"суббота\"."
 
-#: datetime.xml:453(para)
+#: datetime.xml:472(para)
 msgid ""
 "If you modify files in <filename>.../share/timezonesets/</filename>, it is "
 "up to you to make backups &mdash; a normal database dump will not include "
@@ -668,19 +698,19 @@ msgstr ""
 "вы можете сами выполнить резервное копирование, так как обычный дамп базы "
 "данных не содержит этот каталог."
 
-#: datetime.xml:463(title)
+#: datetime.xml:482(title)
 msgid "History of Units"
 msgstr "История единиц измерения времени"
 
-#: datetime.xml:465(indexterm)
+#: datetime.xml:484(indexterm)
 msgid "<primary>Gregorian calendar</primary>"
 msgstr "<primary>Григорианский календарь </primary>"
 
-#: datetime.xml:468(indexterm)
+#: datetime.xml:487(indexterm)
 msgid "<primary>Julian date</primary>"
 msgstr "<primary>Юлианская дата</primary>"
 
-#: datetime.xml:472(para)
+#: datetime.xml:491(para)
 msgid ""
 "The SQL standard states that <quote>Within the definition of a "
 "<quote>datetime literal</quote>, the <quote>datetime values</quote> are "
@@ -698,7 +728,7 @@ msgstr ""
 "включая годы, когда этот календарь ещё не использовался. Это правило "
 "известно как <firstterm>пролептический григорианский календарь</firstterm>."
 
-#: datetime.xml:483(para)
+#: datetime.xml:502(para)
 msgid ""
 "The Julian calendar was introduced by Julius Caesar in 45 BC. It was in "
 "common use in the Western world until the year 1582, when countries started "
@@ -712,7 +742,7 @@ msgstr ""
 "длится приблизительно 365 1/4 дня = 365,25 дня. Каждые 128 лет накапливается "
 "примерно 1 день."
 
-#: datetime.xml:492(para)
+#: datetime.xml:511(para)
 msgid ""
 "The accumulating calendar error prompted Pope Gregory XIII to reform the "
 "calendar in accordance with instructions from the Council of Trent. In the "
@@ -726,19 +756,19 @@ msgstr ""
 "дней = 365,2425 дней. Таком образом, погрешность в один день тропического "
 "года накапливается примерно за 3300 лет."
 
-#: datetime.xml:507(member)
+#: datetime.xml:526(member)
 msgid "Every year divisible by 4 is a leap year."
 msgstr "Каждый год кратный 4 является високосным."
 
-#: datetime.xml:510(member)
+#: datetime.xml:529(member)
 msgid "However, every year divisible by 100 is not a leap year."
 msgstr "Однако каждый год кратный 100 не является високосным."
 
-#: datetime.xml:513(member)
+#: datetime.xml:532(member)
 msgid "However, every year divisible by 400 is a leap year after all."
 msgstr "Тем не менее, каждый год кратный 400 всё же является високосным."
 
-#: datetime.xml:502(para)
+#: datetime.xml:521(para)
 msgid ""
 "The approximation 365+97/400 is achieved by having 97 leap years every 400 "
 "years, using the following rules: <placeholder-1/> So, 1700, 1800, 1900, "
@@ -752,7 +782,7 @@ msgstr ""
 "Но 1600, 2000 и 2400 — високосные. А в юлианском календаре високосными "
 "считаются все годы, кратные 4."
 
-#: datetime.xml:525(para)
+#: datetime.xml:544(para)
 msgid ""
 "The papal bull of February 1582 decreed that 10 days should be dropped from "
 "October 1582 so that 15 October should follow immediately after 4 October. "
@@ -799,7 +829,7 @@ msgstr ""
 "productname> применяет правила григорианского календаря ко всем датам, даже "
 "если это нарушает историческую достоверность."
 
-#: datetime.xml:559(para)
+#: datetime.xml:578(para)
 msgid ""
 "Different calendars have been developed in various parts of the world, many "
 "predating the Gregorian system. For example, the beginnings of the Chinese "
@@ -815,7 +845,7 @@ msgstr ""
 "григорианский календарь используется для официальных и коммерческих нужд. "
 "Китайский календарь используется для определения дат традиционных праздников."
 
-#: datetime.xml:573(para)
+#: datetime.xml:592(para)
 msgid ""
 "The <firstterm>Julian Date</firstterm> system is another type of calendar, "
 "unrelated to the Julian calendar though it is confusingly named similarly to "
@@ -846,7 +876,7 @@ msgstr ""
 "полудня UTC 24 ноября 4714 г. до н. э. до полудня UTC 25 ноября 4714 г. до "
 "н. э."
 
-#: datetime.xml:591(para)
+#: datetime.xml:610(para)
 msgid ""
 "Although <productname>PostgreSQL</productname> supports Julian Date notation "
 "for input and output of dates (and also uses Julian dates for some internal "
