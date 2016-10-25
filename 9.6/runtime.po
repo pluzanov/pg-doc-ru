@@ -2370,12 +2370,11 @@ msgstr ""
 "поставщику вашей системы."
 
 #: runtime.xml:1426(title)
-#, fuzzy
 msgid "Linux Huge Pages"
 msgstr "Огромные страницы в Linux"
 
 #: runtime.xml:1441(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "$ <userinput>head -1 $PGDATA/postmaster.pid</userinput>\n"
 "4170\n"
@@ -2384,10 +2383,12 @@ msgid ""
 "$ <userinput>grep ^Hugepagesize /proc/meminfo</userinput>\n"
 "Hugepagesize:       2048 kB"
 msgstr ""
-"$ <userinput>head -1 /path/to/data/directory/postmaster.pid</userinput>\n"
+"$ <userinput>head -1 $PGDATA/postmaster.pid</userinput>\n"
 "4170\n"
 "$ <userinput>grep ^VmPeak /proc/4170/status</userinput>\n"
-"VmPeak:  6490428 kB"
+"VmPeak:  6490428 kB\n"
+"$ <userinput>grep ^Hugepagesize /proc/meminfo</userinput>\n"
+"Hugepagesize:       2048 kB"
 
 #: runtime.xml:1452(programlisting)
 #, no-wrap
@@ -2395,7 +2396,6 @@ msgid "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
 msgstr "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
 
 #: runtime.xml:1428(para)
-#, fuzzy
 msgid ""
 "Using huge pages reduces overhead when using large contiguous chunks of "
 "memory, as <productname>PostgreSQL</productname> does, particularly when "
@@ -2417,28 +2417,29 @@ msgid ""
 msgstr ""
 "Использование огромных страниц снижает накладные расходы при работе с "
 "большими непрерывными блоками памяти, что характерно для "
-"<productname>PostgreSQL</productname>. Чтобы использовать эту возможность в "
-"<productname>PostgreSQL</productname>, ядро должно быть собрано с "
-"параметрами <varname>CONFIG_HUGETLBFS=y</varname> и "
-"<varname>CONFIG_HUGETLB_PAGE=y</varname>. Также вам нужно будет настроить "
-"системный параметр <varname>vm.nr_hugepages</varname>. Чтобы оценить, "
-"сколько огромных страниц потребуется для <productname>PostgreSQL</"
-"productname>, нужно запустить сервер без поддержки огромных страниц и "
-"посмотреть на значение <varname>VmPeak</varname> в файловой системе proc: "
-"<placeholder-1/> <literal>6490428</literal> / <literal>2048</literal> "
-"(размер страницы (<varname>PAGE_SIZE</varname>) в данном случае равен "
-"<literal>2 МБ</literal>) — это приблизительно <literal>3169.154</literal> "
-"огромных страниц, так что потребуется не меньше <literal>3170</literal> "
-"огромных страниц: <placeholder-2/> Иногда ядро не может выделить запрошенное "
-"количество огромных страниц сразу, поэтому может потребоваться повторить эту "
-"команду или перезагрузить систему. Чтобы изменённый параметр сохранился "
-"после перезагрузки, не забудьте записать его в <filename>/etc/sysctl.conf</"
-"filename>."
+"<productname>PostgreSQL</productname>, особенно при больших значениях <xref "
+"linkend=\"guc-shared-buffers\"/>. Чтобы можно было использовать эту "
+"возможность в <productname>PostgreSQL</productname>, ядро должно быть "
+"собрано с параметрами <varname>CONFIG_HUGETLBFS=y</varname> и "
+"<varname>CONFIG_HUGETLB_PAGE=y</varname>. Также вам понадобится настроить "
+"параметр ядра <varname>vm.nr_hugepages</varname>. Чтобы оценить требуемое "
+"количество огромных страниц, запустите <productname>PostgreSQL</productname> "
+"без поддержки огромных страниц и посмотрите на показатель <varname>VmPeak</"
+"varname> процесса postmaster, а также узнайте размер огромной страницы, "
+"воспользовавшись файловой системой <filename>/proc</filename>. Например, вы "
+"можете получить: <placeholder-1/> В данном случае <literal>6490428</"
+"literal> / <literal>2048</literal> даёт примерно <literal>3169.154</"
+"literal>, так что нам потребуется минимум <literal>3170</literal> огромных "
+"страниц, и мы можем задать это значение так: <placeholder-2/> Большее "
+"значение стоит указать, если огромные страницы будут использоваться и "
+"другими программами в этой системе. Не забудьте добавить этот параметр в "
+"<filename>/etc/sysctl.conf</filename>, чтобы он действовал и после "
+"перезагрузки."
 
 #: runtime.xml:1467(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "$ <userinput>grep Huge /proc/meminfo</userinput>"
-msgstr "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
+msgstr "$ <userinput>grep Huge /proc/meminfo</userinput>"
 
 #: runtime.xml:1461(para)
 msgid ""
@@ -2448,22 +2449,26 @@ msgid ""
 "available to convert into huge pages.) To verify the huge page allocation "
 "situation, use: <placeholder-1/>"
 msgstr ""
+"Иногда ядро не может выделить запрошенное количество огромных страниц сразу, "
+"поэтому может потребоваться повторить эту команду или перезагрузить систему. "
+"(Немедленно после перезагрузки должен быть свободен больший объём памяти для "
+"преобразования в огромные страницы.) Чтобы проверить текущую ситуацию с "
+"размещением огромных страниц, выполните: <placeholder-1/>"
 
 #: runtime.xml:1472(para)
-#, fuzzy
 msgid ""
 "It may also be necessary to give the database server's operating system user "
 "permission to use huge pages by setting <varname>vm.hugetlb_shm_group</"
 "varname> via <application>sysctl</application>, and/or give permission to "
 "lock memory with <command>ulimit -l</command>."
 msgstr ""
-"Также необходимо дать пользователю операционной системы, запускающему сервер "
-"БД, право использовать огромные страницы, установив его группу в <varname>vm."
-"hugetlb_shm_group</varname> с помощью <application>sysctl</application>, и "
-"разрешить блокировать память, выполнив <command>ulimit -l</command>."
+"Также может потребоваться дать пользователю операционной системы, "
+"запускающему сервер БД, право использовать огромные страницы, установив его "
+"группу в <varname>vm.hugetlb_shm_group</varname> с помощью "
+"<application>sysctl</application>, и/или разрешить блокировать память, "
+"выполнив <command>ulimit -l</command>."
 
 #: runtime.xml:1479(para)
-#, fuzzy
 msgid ""
 "The default behavior for huge pages in <productname>PostgreSQL</productname> "
 "is to use them when possible and to fall back to normal pages when failing. "
@@ -2473,12 +2478,12 @@ msgid ""
 "start if not enough huge pages are available."
 msgstr ""
 "По умолчанию <productname>PostgreSQL</productname> использует огромные "
-"страницы, когда считает это возможным, а в противном случае, переходит к "
+"страницы, когда считает это возможным, а в противном случае переходит к "
 "обычным страницам. Чтобы задействовать огромные страницы принудительно, "
-"можно установить для <link linkend=\"guc-huge-pages\"><varname>huge_pages</"
-"varname></link> значение <literal>on</literal>. Заметьте, что в этом случае "
-"<productname>PostgreSQL</productname> не сможет запуститься, если не получит "
-"достаточного количества огромных страниц."
+"можно установить для <xref linkend=\"guc-huge-pages\"/> значение "
+"<literal>on</literal> в <filename>postgresql.conf</filename>. Заметьте, что "
+"с таким значением <productname>PostgreSQL</productname> не сможет "
+"запуститься, если не получит достаточного количества огромных страниц."
 
 #: runtime.xml:1489(para)
 msgid ""

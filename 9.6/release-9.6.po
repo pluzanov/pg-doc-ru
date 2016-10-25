@@ -15,33 +15,34 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: release-9.6.xml:6(title)
-#, fuzzy
 msgid "Release 9.6.1"
-msgstr "Выпуск 9.6"
+msgstr "Выпуск 9.6.1"
 
 #: release-9.6.xml:9(title) release-9.6.xml:604(title)
 msgid "Release Date"
 msgstr "Дата выпуска"
 
 #: release-9.6.xml:10(simpara)
-#, fuzzy
 msgid "2016-10-27"
-msgstr "2016-09-29"
+msgstr "2016-10-27"
 
 #: release-9.6.xml:13(para)
 msgid ""
 "This release contains a variety of fixes from 9.6.0. For information about "
 "new features in the 9.6 major release, see <xref linkend=\"release-9-6\"/>."
 msgstr ""
+"В этот выпуск вошли различные исправления, внесённые после версии 9.6.0. За "
+"информацией о нововведениях версии 9.6 обратитесь к <xref remap=\"3\" "
+"linkend=\"release-9-6\"/>."
 
 #: release-9.6.xml:20(title)
-#, fuzzy
 msgid "Migration to Version 9.6.1"
-msgstr "Миграция на версию 9.6"
+msgstr "Миграция на версию 9.6.1"
 
 #: release-9.6.xml:22(para)
 msgid "A dump/restore is not required for those running 9.6.X."
 msgstr ""
+"Если используется версия 9.6.X, выгрузка/восстановление базы не требуется."
 
 #: release-9.6.xml:26(para)
 msgid ""
@@ -49,6 +50,10 @@ msgid ""
 "first two changelog entries below, then after updating you may need to take "
 "action to repair corrupted free space maps and/or visibility maps."
 msgstr ""
+"Однако, если в вашей инсталляции проявились ошибки, описанные в двух первых "
+"записях следующего списка изменений, после обновления вам может "
+"потребоваться предпринять дополнительные действия для исправления "
+"испорченных карт свободного места и/или видимости."
 
 #: release-9.6.xml:35(title) release-9.6.xml:926(title)
 msgid "Changes"
@@ -65,6 +70,8 @@ msgid ""
 "Fix WAL-logging of truncation of relation free space maps and visibility "
 "maps (Pavan Deolasee, Heikki Linnakangas)"
 msgstr ""
+"Корректировка записи в WAL отметки об очистке карт свободного пространства и "
+"видимости (Паван Деоласи, Хейкки Линнакангас)"
 
 #: release-9.6.xml:53(para)
 msgid ""
@@ -76,6 +83,14 @@ msgid ""
 "8192 bytes</quote>. Checksum failures in the visibility map are also "
 "possible, if checksumming is enabled."
 msgstr ""
+"Ранее могло получаться так, что эти файлы не восстанавливались корректно при "
+"восстановлении после сбоя или оказывались неправильными на резервном "
+"сервере. Обращение к недействительному содержимому карты свободного "
+"пространства могло повлечь попытки использовать страницы, которые были "
+"стёрты из самого отношения, что обычно приводило к ошибкам типа <quote>не "
+"удалось прочитать блок <replaceable>XXX</replaceable>: прочитано только 0 из "
+"8192 байт</quote>. Также были возможны нарушения контрольных сумм в карте "
+"видимости, при включённом механизме контрольных сумм."
 
 #: release-9.6.xml:63(para)
 msgid ""
@@ -83,6 +98,8 @@ msgid ""
 "are discussed at <ulink url=\"https://wiki.postgresql.org/wiki/"
 "Free_Space_Map_Problems\"/>."
 msgstr ""
+"Процедуры для определения наличия проблемы и её исправления рассматриваются "
+"в <ulink url=\"https://wiki.postgresql.org/wiki/Free_Space_Map_Problems\"/>."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [5afcd2aa7] 2016-09-30 20:40:55 -0400
@@ -92,6 +109,9 @@ msgid ""
 "Fix possible data corruption when <application>pg_upgrade</application> "
 "rewrites a relation visibility map into 9.6 format (Tom Lane)"
 msgstr ""
+"Предупреждение возможного повреждения данных в процессе преобразования "
+"программой <application>pg_upgrade</application> карты видимости отношения в "
+"формат 9.6 (Том Лейн)"
 
 #: release-9.6.xml:81(para)
 msgid ""
@@ -103,6 +123,14 @@ msgid ""
 "<application>pg_upgrade</application> failure due to the map file appearing "
 "to be the wrong length."
 msgstr ""
+"На машинах с порядком байт от старшего, байты новой карты видимости "
+"записывались в неправильном порядке, в результате чего карта оказывалась "
+"абсолютно некорректной. В Windows старая карта считывалась в текстовом "
+"режиме, что приводило к некорректным результатам, если в карте рядом "
+"оказывались байты, представляющие последовательность символов возврат "
+"каретки/перевод строки. Последняя ошибка практически всегда должна была "
+"приводить к сбою <application>pg_upgrade</application> из-за того, что длина "
+"файла с картой оказывалась неверной."
 
 #: release-9.6.xml:91(para)
 msgid ""
@@ -115,6 +143,15 @@ msgid ""
 "information see <ulink url=\"https://wiki.postgresql.org/wiki/"
 "Visibility_Map_Problems\"/>."
 msgstr ""
+"Если вы используете компьютер с порядок байт от старшего (таковы многие "
+"архитектуры не Intel) и применяли <application>pg_upgrade</application> для "
+"обновления баз с версии до 9.6, вы должны принять, что все карты видимости "
+"некорректны и должны быть перестроены. Для этого достаточно аннулировать "
+"карты видимости всех отношений с помощью функции "
+"<function>pg_truncate_visibility_map()</function> расширения "
+"<filename>contrib/pg_visibility</filename>. Более подробную информацию вы "
+"можете найти в <ulink url=\"https://wiki.postgresql.org/wiki/"
+"Visibility_Map_Problems\"/>."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [a6c0a5b6e] 2016-10-23 18:36:13 -0400
@@ -125,6 +162,9 @@ msgid ""
 "Don't throw serialization errors for self-conflicting insertions in "
 "<command>INSERT ... ON CONFLICT</command> (Thomas Munro, Peter Geoghegan)"
 msgstr ""
+"Предотвращение ошибок сериализации при операции добавлении данных, "
+"конфликтующей с собой же, в <command>INSERT ... ON CONFLICT</command> (Томас "
+"Мунро, Питер Геохеган)"
 
 #. Author: Heikki Linnakangas <heikki.linnakangas@iki.fi>
 #. Branch: master [d8589946d] 2016-10-17 12:13:16 +0300
@@ -134,10 +174,12 @@ msgid ""
 "Fix use-after-free hazard in execution of aggregate functions using "
 "<literal>DISTINCT</literal> (Peter Geoghegan)"
 msgstr ""
+"Ликвидация риска использования после освобождения при выполнении агрегатных "
+"функций с <literal>DISTINCT</literal> (Питер Геохеган)"
 
 #: release-9.6.xml:128(para)
 msgid "This could lead to a crash or incorrect query results."
-msgstr ""
+msgstr "Это могло приводить к отказам или некорректным результатам запросов."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [ac4a9d92f] 2016-10-09 12:49:37 -0400
@@ -147,6 +189,8 @@ msgid ""
 "Fix incorrect handling of polymorphic aggregates used as window functions "
 "(Tom Lane)"
 msgstr ""
+"Исправление обработки полиморфных агрегатных функций, используемых в "
+"качестве оконных (Том Лейн)"
 
 #: release-9.6.xml:144(para)
 msgid ""
@@ -154,6 +198,9 @@ msgid ""
 "result were of the aggregate's output type, rather than the state type. This "
 "led to errors or crashes with polymorphic transition functions."
 msgstr ""
+"Функции перехода агрегата сообщалось, что её первый аргумент и результат "
+"имеют выходной тип агрегата, а не тип состояния. Это приводило к ошибкам или "
+"сбоям в функциях перехода, связанных с полиморфными агрегатами."
 
 #. Author: Stephen Frost <sfrost@snowman.net>
 #. Branch: master [814b9e9b8] 2016-10-03 16:22:57 -0400
@@ -164,6 +211,8 @@ msgid ""
 "Fix <command>COPY</command> with a column name list from a table that has "
 "row-level security enabled (Adam Brightwell)"
 msgstr ""
+"Исправление <command>COPY</command> со списком имён столбцов из таблицы, в "
+"которой включена защита на уровне строк (Адам Брайтвелл)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [709e461be] 2016-10-20 17:17:50 -0400
@@ -177,6 +226,9 @@ msgid ""
 "Fix <command>EXPLAIN</command> to emit valid XML when <xref linkend=\"guc-"
 "track-io-timing\"/> is on (Markus Winand)"
 msgstr ""
+"Исправление <command>EXPLAIN</command>, чтобы она выдавала корректный XML, "
+"когда параметр <xref linkend=\"guc-track-io-timing\"/> включён (Маркус "
+"Винанд)"
 
 #: release-9.6.xml:180(para)
 msgid ""
@@ -184,6 +236,9 @@ msgid ""
 "such as <literal>&lt;I/O-Read-Time&gt;</literal>. That is now rendered as "
 "<literal>&lt;I-O-Read-Time&gt;</literal>."
 msgstr ""
+"Ранее вывод в формате XML содержал синтаксически некорректные теги, как "
+"например <literal>&lt;I/O-Read-Time&gt;</literal>. Сейчас выдаётся такой "
+"тег: <literal>&lt;I-O-Read-Time&gt;</literal>."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [81e82a2bd] 2016-10-13 19:46:05 -0400
@@ -194,6 +249,8 @@ msgid ""
 "Fix statistics update for <command>TRUNCATE</command> in a prepared "
 "transaction (Stas Kelvich)"
 msgstr ""
+"Исправление обновления статистики при <command>TRUNCATE</command> в "
+"подготовленной транзакции (Стас Кельвич)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [e55a946a8] 2016-10-08 19:29:27 -0400
@@ -213,6 +270,9 @@ msgid ""
 "Fix bugs in merging inherited <literal>CHECK</literal> constraints while "
 "creating or altering a table (Tom Lane, Amit Langote)"
 msgstr ""
+"Исправление ошибок при объединении наследуемых ограничений <literal>CHECK</"
+"literal> в процессе создания или изменения структуры таблицы (Том Лейн, Амит "
+"Ланготе)"
 
 #: release-9.6.xml:221(para)
 msgid ""
@@ -222,6 +282,12 @@ msgid ""
 "child. Likewise, prevent merging of a <literal>NO INHERIT</literal> child "
 "constraint with an inherited constraint."
 msgstr ""
+"Теперь одинаковые ограничения <literal>CHECK</literal> могут добавляться в "
+"родительскую и дочернюю таблицу в любом порядке. С другой стороны, слияние "
+"проверенного ограничения из родительской таблицы с непроверенным "
+"(<literal>NOT VALID</literal>) ограничением в дочерней не должно "
+"допускаться. Подобным образом, не должно допускаться слияние дочернего "
+"ненаследуемого (<literal>NO INHERIT</literal>) ограничения с наследуемым."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [6bc811c99] 2016-10-03 16:40:25 -0400
@@ -233,6 +299,9 @@ msgid ""
 "<structfield>unit</structfield> for <varname>min_wal_size</varname> and "
 "<varname>max_wal_size</varname> (Tom Lane)"
 msgstr ""
+"Вывод разумного значения в <structname>pg_settings</structname>."
+"<structfield>unit</structfield> для параметров <varname>min_wal_size</"
+"varname> и <varname>max_wal_size</varname> (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [9c4cc9e2c] 2016-10-13 00:25:48 -0400
@@ -242,12 +311,16 @@ msgid ""
 "Fix replacement of array elements in <function>jsonb_set()</function> (Tom "
 "Lane)"
 msgstr ""
+"Исправление замены элементов массива в <function>jsonb_set()</function> (Том "
+"Лейн)"
 
 #: release-9.6.xml:255(para)
 msgid ""
 "If the target is an existing JSON array element, it got deleted instead of "
 "being replaced with a new value."
 msgstr ""
+"Если целью замены был существующий элемент массива JSON, он удалялся, а не "
+"заменялся новым."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [6292c2339] 2016-10-23 15:01:24 -0400
@@ -265,6 +338,9 @@ msgid ""
 "Avoid very-low-probability data corruption due to testing tuple visibility "
 "without holding buffer lock (Thomas Munro, Peter Geoghegan, Tom Lane)"
 msgstr ""
+"Предотвращение очень маловероятного повреждения данных в результате проверки "
+"видимости кортежа без удержания блокировки буфера (Томас Мунро, Питер "
+"Геохеган, Том Лейн)"
 
 #. Author: Alvaro Herrera <alvherre@alvh.no-ip.org>
 #. Branch: master [00f15338b] 2016-10-24 09:45:48 -0300
@@ -275,12 +351,17 @@ msgid ""
 "Preserve commit timestamps across server restart (Julien Rouhaud, Craig "
 "Ringer)"
 msgstr ""
+"Сохранение времени фиксирования транзакций после перезагрузки сервера "
+"(Жульен Рохо, Крейг Рингер)"
 
 #: release-9.6.xml:294(para)
 msgid ""
 "With <xref linkend=\"guc-track-commit-timestamp\"/> turned on, old commit "
 "timestamps became inaccessible after a clean server restart."
 msgstr ""
+"При включённом параметре <xref linkend=\"guc-track-commit-timestamp\"/> "
+"старые метки времени фиксации становились недоступными после полной "
+"перезагрузки сервера."
 
 #. Author: Andres Freund <andres@anarazel.de>
 #. Branch: master [61633f790] 2016-10-03 22:11:36 -0700
@@ -292,6 +373,8 @@ msgid ""
 "Fix logical WAL decoding to work properly when a subtransaction's WAL output "
 "is large enough to spill to disk (Andres Freund)"
 msgstr ""
+"Исправление логического декодирования WAL в случаях, когда вывод WAL из "
+"подтранзакции оказывался слишком большим и вымещался на диск (Андрес Фройнд)"
 
 #. Author: Robert Haas <rhaas@postgresql.org>
 #. Branch: master [308985b0b] 2016-09-28 11:19:46 -0400
@@ -299,6 +382,8 @@ msgstr ""
 #: release-9.6.xml:320(para)
 msgid "Fix dangling-pointer problem in logical WAL decoding (Stas Kelvich)"
 msgstr ""
+"Ликвидация проблемы с недействительным указателем в механизме логического "
+"декодирования WAL (Стас Кельвич)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [cb775768e] 2016-10-13 15:06:46 -0400
@@ -310,6 +395,8 @@ msgid ""
 "Round shared-memory allocation request to a multiple of the actual huge page "
 "size when attempting to use huge pages on Linux (Tom Lane)"
 msgstr ""
+"Округление размера запроса разделяемой памяти до числа, кратного размеру "
+"огромной страницы, когда огромные страницы используются в Linux (Том Лейн)"
 
 #: release-9.6.xml:338(para)
 msgid ""
@@ -317,6 +404,9 @@ msgid ""
 "systems with atypical default huge page sizes. Except in crash-recovery "
 "cases, there were no ill effects other than a log message."
 msgstr ""
+"Это позволяет избежать возможных сбоев в <function>munmap()</function> в "
+"системах с нетипичными размерами огромных страниц. За исключением случаев "
+"краха, эти сбои проявлялись только в сообщениях в журнале."
 
 #. Author: Heikki Linnakangas <heikki.linnakangas@iki.fi>
 #. Branch: master [8bb14cdd3] 2016-10-07 12:20:39 +0300
@@ -338,12 +428,16 @@ msgid ""
 "Don't try to share SSL contexts across multiple connections in "
 "<application>libpq</application> (Heikki Linnakangas)"
 msgstr ""
+"Не пытаться разделять контекст SSL между несколькими подключениями в "
+"<application>libpq</application> (Хейкки Линнакангас)"
 
 #: release-9.6.xml:368(para)
 msgid ""
 "This led to assorted corner-case bugs, particularly when trying to use "
 "different SSL parameters for different connections."
 msgstr ""
+"Такое разделение приводило к разнообразным ошибкам, особенно при попытке "
+"использования различных параметров SSL для разных соединений."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [886f6c5cc] 2016-10-10 10:35:58 -0400
@@ -357,12 +451,16 @@ msgstr ""
 msgid ""
 "Avoid corner-case memory leak in <application>libpq</application> (Tom Lane)"
 msgstr ""
+"Предотвращение утечек памяти в особых случаях в <application>libpq</"
+"application> (Том Лейн)"
 
 #: release-9.6.xml:389(para)
 msgid ""
 "The reported problem involved leaking an error report during "
 "<function>PQreset()</function>, but there might be related cases."
 msgstr ""
+"Поступило сообщение об утечке в процессе <function>PQreset()</function>, но "
+"были возможны проявления и в связанных случаях."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [83c249200] 2016-10-03 10:07:49 -0400
@@ -373,12 +471,17 @@ msgid ""
 "In <application>pg_upgrade</application>, check library loadability in name "
 "order (Tom Lane)"
 msgstr ""
+"В <application>pg_upgrade</application> проверка загружаемости библиотек "
+"должна производиться по порядку имён (Том Лейн)"
 
 #: release-9.6.xml:407(para)
 msgid ""
 "This is a workaround to deal with cross-extension dependencies from language "
 "transform modules to their base language and data type modules."
 msgstr ""
+"Это обходное решение проблемы зависимостей между расширениями, образуемых "
+"связями модулей трансформации языков с базовыми модулями самих языков и "
+"типов данных."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [e8bdee277] 2016-10-02 14:31:28 -0400
@@ -388,6 +491,8 @@ msgid ""
 "Fix <application>pg_upgrade</application> to work correctly for extensions "
 "containing index access methods (Tom Lane)"
 msgstr ""
+"Исправление <application>pg_upgrade</application> для корректной работы с "
+"расширениями, содержащими методы доступа индексов (Том Лейн)"
 
 #: release-9.6.xml:425(para)
 msgid ""
@@ -396,18 +501,22 @@ msgid ""
 "been included in the original patch to support dynamic creation of access "
 "methods, but it was overlooked."
 msgstr ""
+"Чтобы это было возможно, для сервера была добавлена поддержка команды "
+"<command>ALTER EXTENSION ADD/DROP ACCESS METHOD</command>. Эта "
+"функциональность должна была добавляться в изначальной доработке, "
+"реализующей динамическое создание методов доступа, но этого не произошло по "
+"упущению."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [f002ed2b8] 2016-09-30 20:40:56 -0400
 #. Branch: REL9_6_STABLE [53fbeed40] 2016-09-30 20:40:27 -0400
 #: release-9.6.xml:439(para)
-#, fuzzy
 msgid ""
 "Improve error reporting in <application>pg_upgrade</application>'s file "
 "copying/linking/rewriting steps (Tom Lane, &Aacute;lvaro Herrera)"
 msgstr ""
-"Улучшение вывода ошибок в <application>initdb</application> на стадии после "
-"начальной инициализации (Том Лейн)"
+"Улучшение вывода ошибок в <application>pg_upgrade</application> при "
+"копировании/создании ссылок/перезаписи (Том Лейн, Альваро Эррера)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [4806f26f9] 2016-10-07 09:51:18 -0400
@@ -417,6 +526,8 @@ msgid ""
 "Fix <application>pg_dump</application> to work against pre-7.4 servers (Amit "
 "Langote, Tom Lane)"
 msgstr ""
+"Исправление <application>pg_dump</application> для поддержки серверов версий "
+"до 7.4 (Амит Ланготе, Том Лейн)"
 
 #. Author: Heikki Linnakangas <heikki.linnakangas@iki.fi>
 #. Branch: master [0d4d7d618] 2016-10-07 14:35:17 +0300
@@ -428,6 +539,9 @@ msgid ""
 "source-target</option> options to <application>pg_rewind</application> "
 "(Michael Banck)"
 msgstr ""
+"Недопущение одновременного указания аргументов <option>--source-server</"
+"option> и <option>--source-target</option> для <application>pg_rewind</"
+"application> (Михаэль Банк)"
 
 #. Author: Heikki Linnakangas <heikki.linnakangas@iki.fi>
 #. Branch: master [d7eb76b90] 2016-10-06 13:24:46 +0300
@@ -439,6 +553,9 @@ msgid ""
 "<varname>synchronous_commit</varname> in its session on the source server "
 "(Michael Banck, Michael Paquier)"
 msgstr ""
+"Программа <application>pg_rewind</application> должна отключать "
+"<varname>synchronous_commit</varname> в своём сеансе на исходном сервере "
+"(Михаэль Банк, Мишель Пакье)"
 
 #: release-9.6.xml:483(para)
 msgid ""
@@ -446,6 +563,9 @@ msgid ""
 "source server is using synchronous replication that is not working for some "
 "reason."
 msgstr ""
+"При этом <application>pg_rewind</application> сможет работать, даже когда на "
+"исходном сервере настроена синхронная репликация, но она по какой-то причине "
+"не функционирует."
 
 #. Author: Magnus Hagander <magnus@hagander.net>
 #. Branch: master [3d39244e6] 2016-09-30 11:22:00 +0200
@@ -458,12 +578,17 @@ msgid ""
 "In <application>pg_xlogdump</application>, retry opening new WAL segments "
 "when using <option>--follow</option> option (Magnus Hagander)"
 msgstr ""
+"В <application>pg_xlogdump</application> нужно повторять попытку открыть "
+"новый сегмент WAL, когда используется параметр <option>--follow</option> "
+"(Магнус Хагандер)"
 
 #: release-9.6.xml:504(para)
 msgid ""
 "This allows for a possible delay in the server's creation of the next "
 "segment."
 msgstr ""
+"Это позволяет справиться с возможной задержкой при создании сервером "
+"следующего сегмента."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [9a109452d] 2016-10-01 16:32:54 -0400
@@ -473,6 +598,9 @@ msgid ""
 "Fix <filename>contrib/pg_visibility</filename> to report the correct TID for "
 "a corrupt tuple that has been the subject of a rolled-back update (Tom Lane)"
 msgstr ""
+"Исправление в <filename>contrib/pg_visibility</filename>, чтобы выдавался "
+"корректный TID испорченного кортежа (ранее TID мог выдаваться некорректно "
+"вследствие изменения, впоследствии отменённого) (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [7107d58ec] 2016-10-01 13:35:13 -0400
@@ -482,6 +610,9 @@ msgid ""
 "Fix makefile dependencies so that parallel make of <application>PL/Python</"
 "application> by itself will succeed reliably (Pavel Raiskup)"
 msgstr ""
+"Исправление зависимостей в makefile, чтобы параллельная сборка "
+"<application>PL/Python</application> сама по себе выполнялась надёжно (Павел "
+"Райскуп)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [5e21b6811] 2016-10-20 15:40:07 -0400
@@ -520,6 +651,11 @@ msgid ""
 "abbreviations for some time zones in Antarctica, the former Soviet Union, "
 "and Sri Lanka."
 msgstr ""
+"Обновление данных часовых поясов до версии <application>tzdata</application> "
+"2016h, включающее изменение правил перехода на летнее время в Палестине и "
+"Турции, а также исторические изменения для Турции и некоторых регионов "
+"России. Переход к числовым аббревиатурам для некоторых часовых поясов в "
+"Антарктике, бывшем Советском Союзе и на Шри-Ланке."
 
 #: release-9.6.xml:576(para)
 msgid ""
@@ -532,6 +668,16 @@ msgid ""
 "removed abbreviations for timestamp input. But they will not be shown in the "
 "<structname>pg_timezone_names</structname> view nor used for output."
 msgstr ""
+"Ранее в базе данных часовых поясов IANA предоставлялись текстовые "
+"аббревиатуры для всех часовых поясов и иногда при этом указывались "
+"аббревиатуры, которые практически не употреблялись местным населением. "
+"Сейчас происходит процесс ухода от этой практики в пользу использования "
+"числовых смещений UTC в тех часовых поясах, где нет никаких свидетельств "
+"реального использования английской аббревиатуры. Как минимум на данном "
+"этапе, <productname>PostgreSQL</productname> продолжит принимать подобные "
+"удалённые аббревиатуры при вводе дат/времени. Но они не будут видны при "
+"просмотре представления <structname>pg_timezone_names</structname> и не "
+"будут выводиться с датами/временем."
 
 #: release-9.6.xml:588(para)
 msgid ""
@@ -539,6 +685,10 @@ msgid ""
 "mean Armenia Time. Therefore, we have changed the <literal>Default</literal> "
 "abbreviation set to interpret it as Amazon Time, thus UTC-4 not UTC+4."
 msgstr ""
+"Начиная с этого выпуска, аббревиатура <literal>AMT</literal> более не "
+"считается занятой часовым поясом Армении. Поэтому мы изменили значение этой "
+"аббревиатуры по умолчанию, чтобы она обозначала Амазонское время (Amazon "
+"Time), так что теперь она означает UTC-4, а не UTC+4."
 
 #: release-9.6.xml:601(title)
 msgid "Release 9.6"
@@ -4414,7 +4564,7 @@ msgid ""
 msgstr ""
 "Это в первую очередь пилотная реализация метода доступа вне ядра, но этот "
 "модуль может иметь и практическую пользу для запросов, производящих поиск по "
-"множеству колонок."
+"множеству столбцов."
 
 #. 2015-12-18 [33bd250f6] Cube extension kNN support
 #. 2015-12-28 [81ee726d8] Code and docs review for cube kNN support.
