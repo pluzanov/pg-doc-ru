@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
+"POT-Creation-Date: 2016-10-25 08:45+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -2370,23 +2370,27 @@ msgstr ""
 "поставщику вашей системы."
 
 #: runtime.xml:1426(title)
-msgid "Linux huge pages"
+msgid "Linux Huge Pages"
 msgstr "Огромные страницы в Linux"
 
-#: runtime.xml:1438(programlisting)
+#: runtime.xml:1441(programlisting)
 #, no-wrap
 msgid ""
-"$ <userinput>head -1 /path/to/data/directory/postmaster.pid</userinput>\n"
+"$ <userinput>head -1 $PGDATA/postmaster.pid</userinput>\n"
 "4170\n"
 "$ <userinput>grep ^VmPeak /proc/4170/status</userinput>\n"
-"VmPeak:  6490428 kB"
+"VmPeak:  6490428 kB\n"
+"$ <userinput>grep ^Hugepagesize /proc/meminfo</userinput>\n"
+"Hugepagesize:       2048 kB"
 msgstr ""
-"$ <userinput>head -1 /path/to/data/directory/postmaster.pid</userinput>\n"
+"$ <userinput>head -1 $PGDATA/postmaster.pid</userinput>\n"
 "4170\n"
 "$ <userinput>grep ^VmPeak /proc/4170/status</userinput>\n"
-"VmPeak:  6490428 kB"
+"VmPeak:  6490428 kB\n"
+"$ <userinput>grep ^Hugepagesize /proc/meminfo</userinput>\n"
+"Hugepagesize:       2048 kB"
 
-#: runtime.xml:1448(programlisting)
+#: runtime.xml:1452(programlisting)
 #, no-wrap
 msgid "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
 msgstr "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
@@ -2394,72 +2398,94 @@ msgstr "$ <userinput>sysctl -w vm.nr_hugepages=3170</userinput>"
 #: runtime.xml:1428(para)
 msgid ""
 "Using huge pages reduces overhead when using large contiguous chunks of "
-"memory, like <productname>PostgreSQL</productname> does. To enable this "
+"memory, as <productname>PostgreSQL</productname> does, particularly when "
+"using large values of <xref linkend=\"guc-shared-buffers\"/>. To use this "
 "feature in <productname>PostgreSQL</productname> you need a kernel with "
 "<varname>CONFIG_HUGETLBFS=y</varname> and <varname>CONFIG_HUGETLB_PAGE=y</"
-"varname>. You also have to tune the system setting <varname>vm.nr_hugepages</"
-"varname>. To estimate the number of necessary huge pages start "
+"varname>. You will also have to adjust the kernel setting <varname>vm."
+"nr_hugepages</varname>. To estimate the number of huge pages needed, start "
 "<productname>PostgreSQL</productname> without huge pages enabled and check "
-"the <varname>VmPeak</varname> value from the proc file system: "
-"<placeholder-1/> <literal>6490428</literal> / <literal>2048</literal> "
-"(<varname>PAGE_SIZE</varname> is <literal>2MB</literal> in this case) are "
-"roughly <literal>3169.154</literal> huge pages, so you will need at least "
-"<literal>3170</literal> huge pages: <placeholder-2/> Sometimes the kernel is "
-"not able to allocate the desired number of huge pages, so it might be "
-"necessary to repeat that command or to reboot. Don't forget to add an entry "
-"to <filename>/etc/sysctl.conf</filename> to persist this setting through "
+"the postmaster's <varname>VmPeak</varname> value, as well as the system's "
+"huge page size, using the <filename>/proc</filename> file system. This might "
+"look like: <placeholder-1/> <literal>6490428</literal> / <literal>2048</"
+"literal> gives approximately <literal>3169.154</literal>, so in this example "
+"we need at least <literal>3170</literal> huge pages, which we can set with: "
+"<placeholder-2/> A larger setting would be appropriate if other programs on "
+"the machine also need huge pages. Don't forget to add this setting to "
+"<filename>/etc/sysctl.conf</filename> so that it will be reapplied after "
 "reboots."
 msgstr ""
 "Использование огромных страниц снижает накладные расходы при работе с "
 "большими непрерывными блоками памяти, что характерно для "
-"<productname>PostgreSQL</productname>. Чтобы использовать эту возможность в "
-"<productname>PostgreSQL</productname>, ядро должно быть собрано с "
-"параметрами <varname>CONFIG_HUGETLBFS=y</varname> и "
-"<varname>CONFIG_HUGETLB_PAGE=y</varname>. Также вам нужно будет настроить "
-"системный параметр <varname>vm.nr_hugepages</varname>. Чтобы оценить, "
-"сколько огромных страниц потребуется для <productname>PostgreSQL</"
-"productname>, нужно запустить сервер без поддержки огромных страниц и "
-"посмотреть на значение <varname>VmPeak</varname> в файловой системе proc: "
-"<placeholder-1/> <literal>6490428</literal> / <literal>2048</literal> "
-"(размер страницы (<varname>PAGE_SIZE</varname>) в данном случае равен "
-"<literal>2 МБ</literal>) — это приблизительно <literal>3169.154</literal> "
-"огромных страниц, так что потребуется не меньше <literal>3170</literal> "
-"огромных страниц: <placeholder-2/> Иногда ядро не может выделить запрошенное "
-"количество огромных страниц сразу, поэтому может потребоваться повторить эту "
-"команду или перезагрузить систему. Чтобы изменённый параметр сохранился "
-"после перезагрузки, не забудьте записать его в <filename>/etc/sysctl.conf</"
-"filename>."
+"<productname>PostgreSQL</productname>, особенно при больших значениях <xref "
+"linkend=\"guc-shared-buffers\"/>. Чтобы можно было использовать эту "
+"возможность в <productname>PostgreSQL</productname>, ядро должно быть "
+"собрано с параметрами <varname>CONFIG_HUGETLBFS=y</varname> и "
+"<varname>CONFIG_HUGETLB_PAGE=y</varname>. Также вам понадобится настроить "
+"параметр ядра <varname>vm.nr_hugepages</varname>. Чтобы оценить требуемое "
+"количество огромных страниц, запустите <productname>PostgreSQL</productname> "
+"без поддержки огромных страниц и посмотрите на показатель <varname>VmPeak</"
+"varname> процесса postmaster, а также узнайте размер огромной страницы, "
+"воспользовавшись файловой системой <filename>/proc</filename>. Например, вы "
+"можете получить: <placeholder-1/> В данном случае <literal>6490428</"
+"literal> / <literal>2048</literal> даёт примерно <literal>3169.154</"
+"literal>, так что нам потребуется минимум <literal>3170</literal> огромных "
+"страниц, и мы можем задать это значение так: <placeholder-2/> Большее "
+"значение стоит указать, если огромные страницы будут использоваться и "
+"другими программами в этой системе. Не забудьте добавить этот параметр в "
+"<filename>/etc/sysctl.conf</filename>, чтобы он действовал и после "
+"перезагрузки."
 
-#: runtime.xml:1457(para)
+#: runtime.xml:1467(programlisting)
+#, no-wrap
+msgid "$ <userinput>grep Huge /proc/meminfo</userinput>"
+msgstr "$ <userinput>grep Huge /proc/meminfo</userinput>"
+
+#: runtime.xml:1461(para)
 msgid ""
-"It is also necessary to give the database server operating system user "
-"permission to use huge pages by setting <varname>vm.hugetlb_shm_group</"
-"varname> via <application>sysctl</application>, and permission to lock "
-"memory with <command>ulimit -l</command>."
+"Sometimes the kernel is not able to allocate the desired number of huge "
+"pages immediately, so it might be necessary to repeat the command or to "
+"reboot. (Immediately after a reboot, most of the machine's memory should be "
+"available to convert into huge pages.) To verify the huge page allocation "
+"situation, use: <placeholder-1/>"
 msgstr ""
-"Также необходимо дать пользователю операционной системы, запускающему сервер "
-"БД, право использовать огромные страницы, установив его группу в <varname>vm."
-"hugetlb_shm_group</varname> с помощью <application>sysctl</application>, и "
-"разрешить блокировать память, выполнив <command>ulimit -l</command>."
+"Иногда ядро не может выделить запрошенное количество огромных страниц сразу, "
+"поэтому может потребоваться повторить эту команду или перезагрузить систему. "
+"(Немедленно после перезагрузки должен быть свободен больший объём памяти для "
+"преобразования в огромные страницы.) Чтобы проверить текущую ситуацию с "
+"размещением огромных страниц, выполните: <placeholder-1/>"
 
-#: runtime.xml:1464(para)
+#: runtime.xml:1472(para)
+msgid ""
+"It may also be necessary to give the database server's operating system user "
+"permission to use huge pages by setting <varname>vm.hugetlb_shm_group</"
+"varname> via <application>sysctl</application>, and/or give permission to "
+"lock memory with <command>ulimit -l</command>."
+msgstr ""
+"Также может потребоваться дать пользователю операционной системы, "
+"запускающему сервер БД, право использовать огромные страницы, установив его "
+"группу в <varname>vm.hugetlb_shm_group</varname> с помощью "
+"<application>sysctl</application>, и/или разрешить блокировать память, "
+"выполнив <command>ulimit -l</command>."
+
+#: runtime.xml:1479(para)
 msgid ""
 "The default behavior for huge pages in <productname>PostgreSQL</productname> "
-"is to use them when possible and to fallback to normal pages when failing. "
-"To enforce the use of huge pages, you can set <link linkend=\"guc-huge-pages"
-"\"><varname>huge_pages</varname></link> to <literal>on</literal>. Note that "
-"in this case <productname>PostgreSQL</productname> will fail to start if not "
-"enough huge pages are available."
+"is to use them when possible and to fall back to normal pages when failing. "
+"To enforce the use of huge pages, you can set <xref linkend=\"guc-huge-pages"
+"\"/> to <literal>on</literal> in <filename>postgresql.conf</filename>. Note "
+"that with this setting <productname>PostgreSQL</productname> will fail to "
+"start if not enough huge pages are available."
 msgstr ""
 "По умолчанию <productname>PostgreSQL</productname> использует огромные "
-"страницы, когда считает это возможным, а в противном случае, переходит к "
+"страницы, когда считает это возможным, а в противном случае переходит к "
 "обычным страницам. Чтобы задействовать огромные страницы принудительно, "
-"можно установить для <link linkend=\"guc-huge-pages\"><varname>huge_pages</"
-"varname></link> значение <literal>on</literal>. Заметьте, что в этом случае "
-"<productname>PostgreSQL</productname> не сможет запуститься, если не получит "
-"достаточного количества огромных страниц."
+"можно установить для <xref linkend=\"guc-huge-pages\"/> значение "
+"<literal>on</literal> в <filename>postgresql.conf</filename>. Заметьте, что "
+"с таким значением <productname>PostgreSQL</productname> не сможет "
+"запуститься, если не получит достаточного количества огромных страниц."
 
-#: runtime.xml:1475(para)
+#: runtime.xml:1489(para)
 msgid ""
 "For a detailed description of the <productname>Linux</productname> huge "
 "pages feature have a look at <ulink url=\"https://www.kernel.org/doc/"
@@ -2469,23 +2495,23 @@ msgstr ""
 "productname> можно узнать в документации ядра: <ulink url=\"https://www."
 "kernel.org/doc/Documentation/vm/hugetlbpage.txt\"/>."
 
-#: runtime.xml:1486(title)
+#: runtime.xml:1500(title)
 msgid "Shutting Down the Server"
 msgstr "Выключение сервера"
 
-#: runtime.xml:1488(indexterm)
+#: runtime.xml:1502(indexterm)
 msgid "<primary>shutdown</primary>"
 msgstr "<primary>выключение</primary>"
 
-#: runtime.xml:1499(systemitem)
+#: runtime.xml:1513(systemitem)
 msgid "SIGTERM"
 msgstr "SIGTERM"
 
-#: runtime.xml:1499(indexterm)
+#: runtime.xml:1513(indexterm)
 msgid "<primary>SIGTERM</primary>"
 msgstr "<primary>SIGTERM</primary>"
 
-#: runtime.xml:1501(para)
+#: runtime.xml:1515(para)
 msgid ""
 "This is the <firstterm>Smart Shutdown</firstterm> mode. After receiving "
 "<systemitem>SIGTERM</systemitem>, the server disallows new connections, but "
@@ -2510,15 +2536,15 @@ msgstr ""
 "восстановление и потоковая репликация будут прерваны только после завершения "
 "всех обычных сеансов."
 
-#: runtime.xml:1518(systemitem)
+#: runtime.xml:1532(systemitem)
 msgid "SIGINT"
 msgstr "SIGINT"
 
-#: runtime.xml:1518(indexterm)
+#: runtime.xml:1532(indexterm)
 msgid "<primary>SIGINT</primary>"
 msgstr "<primary>SIGINT</primary>"
 
-#: runtime.xml:1520(para)
+#: runtime.xml:1534(para)
 msgid ""
 "This is the <firstterm>Fast Shutdown</firstterm> mode. The server disallows "
 "new connections and sends all existing server processes <systemitem>SIGTERM</"
@@ -2535,15 +2561,15 @@ msgstr ""
 "находится в режиме архивации, архивация прерывается, так что архив "
 "оказывается неполным."
 
-#: runtime.xml:1533(systemitem)
+#: runtime.xml:1547(systemitem)
 msgid "SIGQUIT"
 msgstr "SIGQUIT"
 
-#: runtime.xml:1533(indexterm)
+#: runtime.xml:1547(indexterm)
 msgid "<primary>SIGQUIT</primary>"
 msgstr "<primary>SIGQUIT</primary>"
 
-#: runtime.xml:1535(para)
+#: runtime.xml:1549(para)
 msgid ""
 "This is the <firstterm>Immediate Shutdown</firstterm> mode. The server will "
 "send <systemitem>SIGQUIT</systemitem> to all child processes and wait for "
@@ -2562,7 +2588,7 @@ msgstr ""
 "запущен процесс восстановления (воспроизведения изменений из журнала). Такой "
 "вариант выключения рекомендуется только в экстренных ситуациях."
 
-#: runtime.xml:1492(para)
+#: runtime.xml:1506(para)
 msgid ""
 "There are several ways to shut down the database server. You control the "
 "type of shutdown by sending different signals to the master "
@@ -2572,7 +2598,7 @@ msgstr ""
 "или иной вариант отключения, посылая разные сигналы главному процессу "
 "<command>postgres</command>. <placeholder-1/>"
 
-#: runtime.xml:1551(para)
+#: runtime.xml:1565(para)
 msgid ""
 "The <xref linkend=\"app-pg-ctl\"/> program provides a convenient interface "
 "for sending these signals to shut down the server. Alternatively, you can "
@@ -2597,7 +2623,7 @@ msgstr ""
 "userinput>\n"
 "</screen>"
 
-#: runtime.xml:1566(para)
+#: runtime.xml:1580(para)
 msgid ""
 "It is best not to use <systemitem>SIGKILL</systemitem> to shut down the "
 "server. Doing so will prevent the server from releasing shared memory and "
@@ -2615,7 +2641,7 @@ msgstr ""
 "успеет передать этот сигнал своим дочерним процессам, так что может "
 "потребоваться завершать их так же вручную."
 
-#: runtime.xml:1578(para)
+#: runtime.xml:1592(para)
 msgid ""
 "To terminate an individual session while allowing other sessions to "
 "continue, use <function>pg_terminate_backend()</function> (see <xref linkend="
@@ -2628,19 +2654,19 @@ msgstr ""
 "сигнал <systemitem>SIGTERM</systemitem> дочернему процессу, обслуживающему "
 "этот сеанс."
 
-#: runtime.xml:1588(title)
+#: runtime.xml:1602(title)
 msgid "Upgrading a <productname>PostgreSQL</productname> Cluster"
 msgstr "Обновление кластера <productname>PostgreSQL</productname>"
 
-#: runtime.xml:1590(indexterm)
+#: runtime.xml:1604(indexterm)
 msgid "<primary>upgrading</primary>"
 msgstr "<primary>обновление</primary>"
 
-#: runtime.xml:1594(indexterm)
+#: runtime.xml:1608(indexterm)
 msgid "<primary>version</primary> <secondary>compatibility</secondary>"
 msgstr "<primary>версия</primary> <secondary>совместимость</secondary>"
 
-#: runtime.xml:1599(para)
+#: runtime.xml:1613(para)
 msgid ""
 "This section discusses how to upgrade your database data from one "
 "<productname>PostgreSQL</productname> release to a newer one."
@@ -2648,7 +2674,7 @@ msgstr ""
 "В этом разделе рассказывается, как обновить ваш кластер базы данных с одной "
 "версии <productname>PostgreSQL</productname> на другую."
 
-#: runtime.xml:1604(para)
+#: runtime.xml:1618(para)
 msgid ""
 "<productname>PostgreSQL</productname> major versions are represented by the "
 "first two digit groups of the version number, e.g., 8.4. "
@@ -2672,7 +2698,7 @@ msgstr ""
 "сервере и затем запустить сервер. Каталог данных при этом не затрагивается, "
 "так что обновить корректирующую версию довольно просто."
 
-#: runtime.xml:1618(para)
+#: runtime.xml:1632(para)
 msgid ""
 "For <emphasis>major</emphasis> releases of <productname>PostgreSQL</"
 "productname>, the internal data storage format is subject to change, thus "
@@ -2689,7 +2715,7 @@ msgstr ""
 "linkend=\"pgupgrade\"/>. Также для обновления можно использовать репликацию, "
 "как описано ниже."
 
-#: runtime.xml:1627(para)
+#: runtime.xml:1641(para)
 msgid ""
 "New major versions also typically introduce some user-visible "
 "incompatibilities, so application programming changes might be required. All "
@@ -2705,7 +2731,7 @@ msgstr ""
 "при обновлении вы пропускаете несколько основных версий, обязательно "
 "прочитайте замечания к выпуску, в том числе и для каждой пропускаемой версии."
 
-#: runtime.xml:1637(para)
+#: runtime.xml:1651(para)
 msgid ""
 "Cautious users will want to test their client applications on the new "
 "version before switching over fully; therefore, it's often a good idea to "
@@ -2719,11 +2745,11 @@ msgstr ""
 "версии <productname>PostgreSQL</productname> изучите следующие области "
 "возможных изменений:"
 
-#: runtime.xml:1648(term)
+#: runtime.xml:1662(term)
 msgid "Administration"
 msgstr "Администрирование"
 
-#: runtime.xml:1650(para)
+#: runtime.xml:1664(para)
 msgid ""
 "The capabilities available for administrators to monitor and control the "
 "server often change and improve in each major release."
@@ -2731,11 +2757,11 @@ msgstr ""
 "Средства и функции, предоставляемые администраторам для наблюдения и "
 "управления сервером, часто меняются и совершенствуются в каждой новой версии."
 
-#: runtime.xml:1658(term)
+#: runtime.xml:1672(term)
 msgid "SQL"
 msgstr "SQL"
 
-#: runtime.xml:1660(para)
+#: runtime.xml:1674(para)
 msgid ""
 "Typically this includes new SQL command capabilities and not changes in "
 "behavior, unless specifically mentioned in the release notes."
@@ -2744,11 +2770,11 @@ msgstr ""
 "изменение поведения существующих, если только об этом не говорится в "
 "замечаниях к выпуску."
 
-#: runtime.xml:1668(term)
+#: runtime.xml:1682(term)
 msgid "Library API"
 msgstr "API библиотек"
 
-#: runtime.xml:1670(para)
+#: runtime.xml:1684(para)
 msgid ""
 "Typically libraries like <application>libpq</application> only add new "
 "functionality, again unless mentioned in the release notes."
@@ -2757,21 +2783,21 @@ msgstr ""
 "свою функциональность, если об обратном так же не говорится в замечаниях к "
 "выпуску."
 
-#: runtime.xml:1678(term)
+#: runtime.xml:1692(term)
 msgid "System Catalogs"
 msgstr "Системные каталоги"
 
-#: runtime.xml:1680(para)
+#: runtime.xml:1694(para)
 msgid "System catalog changes usually only affect database management tools."
 msgstr ""
 "Изменения в системных каталогах обычно влияют только на средства управления "
 "базами данных."
 
-#: runtime.xml:1687(term)
+#: runtime.xml:1701(term)
 msgid "Server C-language API"
 msgstr "API сервера для кода на C"
 
-#: runtime.xml:1689(para)
+#: runtime.xml:1703(para)
 msgid ""
 "This involves changes in the backend function API, which is written in the C "
 "programming language. Such changes affect code that references backend "
@@ -2781,11 +2807,11 @@ msgstr ""
 "программирования C. Такие изменения затрагивают код, обращающийся к "
 "служебным функциям глубоко внутри сервера."
 
-#: runtime.xml:1700(title)
+#: runtime.xml:1714(title)
 msgid "Upgrading Data via <application>pg_dumpall</application>"
 msgstr "Обновление данных с применением <application>pg_dumpall</application>"
 
-#: runtime.xml:1702(para)
+#: runtime.xml:1716(para)
 msgid ""
 "One upgrade method is to dump data from one major version of "
 "<productname>PostgreSQL</productname> and reload it in another &mdash; to do "
@@ -2806,7 +2832,7 @@ msgstr ""
 "существующим каталогом данных неправильную версию сервера, никакого вреда не "
 "будет.)"
 
-#: runtime.xml:1713(para)
+#: runtime.xml:1727(para)
 msgid ""
 "It is recommended that you use the <application>pg_dump</application> and "
 "<application>pg_dumpall</application> programs from the <emphasis>newer</"
@@ -2822,7 +2848,7 @@ msgstr ""
 "Текущие версии этих программ способны читать данные любой версии сервера, "
 "начиная с 7.0."
 
-#: runtime.xml:1722(para)
+#: runtime.xml:1736(para)
 msgid ""
 "These instructions assume that your existing installation is under the "
 "<filename>/usr/local/pgsql</filename> directory, and that the data area is "
@@ -2833,7 +2859,7 @@ msgstr ""
 "<filename>/usr/local/pgsql</filename>, а данные находятся в <filename>/usr/"
 "local/pgsql/data</filename>. Вам нужно подставить свои пути."
 
-#: runtime.xml:1731(para)
+#: runtime.xml:1745(para)
 msgid ""
 "If making a backup, make sure that your database is not being updated. This "
 "does not affect the integrity of the backup, but the changed data would of "
@@ -2850,13 +2876,13 @@ msgstr ""
 "дополнительными сведениями об управлении доступом обратитесь к <xref remap="
 "\"3\" linkend=\"client-authentication\"/>."
 
-#: runtime.xml:1742(indexterm)
+#: runtime.xml:1756(indexterm)
 msgid "<primary>pg_dumpall</primary> <secondary>use during upgrade</secondary>"
 msgstr ""
 "<primary>pg_dumpall</primary> <secondary>использование при обновлении</"
 "secondary>"
 
-#: runtime.xml:1741(para)
+#: runtime.xml:1755(para)
 msgid ""
 "<placeholder-1/> To back up your database installation, type: <screen>\n"
 "<userinput>pg_dumpall &gt; <replaceable>outputfile</replaceable></"
@@ -2868,7 +2894,7 @@ msgstr ""
 "userinput>\n"
 "</screen>"
 
-#: runtime.xml:1753(para)
+#: runtime.xml:1767(para)
 msgid ""
 "To make the backup, you can use the <application>pg_dumpall</application> "
 "command from the version you are currently running; see <xref linkend="
@@ -2893,7 +2919,7 @@ msgstr ""
 "установку как обычно, а перенести данные позже. Это также сократит время "
 "обновления."
 
-#: runtime.xml:1770(para)
+#: runtime.xml:1784(para)
 msgid ""
 "Shut down the old server: <screen>\n"
 "<userinput>pg_ctl stop</userinput>\n"
@@ -2915,7 +2941,7 @@ msgstr ""
 "</screen> Подробнее запуск и остановка сервера описаны в <xref remap=\"6\" "
 "linkend=\"runtime\"/>."
 
-#: runtime.xml:1788(para)
+#: runtime.xml:1802(para)
 msgid ""
 "If restoring from backup, rename or delete the old installation directory if "
 "it is not version-specific. It is a good idea to rename the directory, "
@@ -2936,7 +2962,7 @@ msgstr ""
 "</screen> (Этот каталог нужно переименовывать (перемещать) как единое целое, "
 "чтобы относительные пути в нём не изменились.)"
 
-#: runtime.xml:1804(para)
+#: runtime.xml:1818(para)
 msgid ""
 "Install the new version of <productname>PostgreSQL</productname> as outlined "
 "in <phrase condition=\"standalone\">the next section.</phrase> <phrase "
@@ -2947,12 +2973,12 @@ msgstr ""
 "condition=\"default\"><xref remap=\"6\" linkend=\"install-procedure\"/>.</"
 "phrase>"
 
-#: runtime.xml:1817(userinput)
+#: runtime.xml:1831(userinput)
 #, no-wrap
 msgid "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data"
 msgstr "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data"
 
-#: runtime.xml:1812(para)
+#: runtime.xml:1826(para)
 msgid ""
 "Create a new database cluster if needed. Remember that you must execute "
 "these commands while logged in to the special database user account (which "
@@ -2962,7 +2988,7 @@ msgstr ""
 "команды нужно выполнять под именем специального пользователя БД (вы уже "
 "действуете под этим именем, если производите обновление). <placeholder-1/>"
 
-#: runtime.xml:1823(para)
+#: runtime.xml:1837(para)
 msgid ""
 "Restore your previous <filename>pg_hba.conf</filename> and any "
 "<filename>postgresql.conf</filename> modifications."
@@ -2970,12 +2996,12 @@ msgstr ""
 "Перенесите изменения, внесённые в предыдущие версии <filename>pg_hba.conf</"
 "filename> и <filename>postgresql.conf</filename>."
 
-#: runtime.xml:1834(userinput)
+#: runtime.xml:1848(userinput)
 #, no-wrap
 msgid "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
 msgstr "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
 
-#: runtime.xml:1830(para)
+#: runtime.xml:1844(para)
 msgid ""
 "Start the database server, again using the special database user account: "
 "<placeholder-1/>"
@@ -2983,7 +3009,7 @@ msgstr ""
 "Запустите сервер баз данных, так же применяя учётную запись специального "
 "пользователя БД: <placeholder-1/>"
 
-#: runtime.xml:1840(para)
+#: runtime.xml:1854(para)
 msgid ""
 "Finally, restore your data from backup with: <screen>\n"
 "<userinput>/usr/local/pgsql/bin/psql -d postgres -f <replaceable>outputfile</"
@@ -2996,12 +3022,12 @@ msgstr ""
 "</screen> (При этом будет использоваться <emphasis>новый</emphasis> "
 "<application>psql</application>.)"
 
-#: runtime.xml:1855(programlisting)
+#: runtime.xml:1869(programlisting)
 #, no-wrap
 msgid "pg_dumpall -p 5432 | psql -d postgres -p 5433"
 msgstr "pg_dumpall -p 5432 | psql -d postgres -p 5433"
 
-#: runtime.xml:1850(para)
+#: runtime.xml:1864(para)
 msgid ""
 "The least downtime can be achieved by installing the new server in a "
 "different directory and running both the old and the new servers in "
@@ -3012,11 +3038,11 @@ msgstr ""
 "другой каталог и запустив параллельно оба сервера, старый и новый, с разными "
 "портами. Затем можно будет перенести данные примерно так: <placeholder-1/>"
 
-#: runtime.xml:1864(title)
+#: runtime.xml:1878(title)
 msgid "Upgrading Data via <application>pg_upgrade</application>"
 msgstr "Обновление данных с применением <application>pg_upgrade</application>"
 
-#: runtime.xml:1866(para)
+#: runtime.xml:1880(para)
 msgid ""
 "The <xref linkend=\"pgupgrade\"/> module allows an installation to be "
 "migrated in-place from one major <productname>PostgreSQL</productname> "
@@ -3037,11 +3063,11 @@ msgstr ""
 "<link linkend=\"pgupgrade\">документации</link> <application>pg_upgrade</"
 "application>."
 
-#: runtime.xml:1879(title)
+#: runtime.xml:1893(title)
 msgid "Upgrading Data via Replication"
 msgstr "Обновление данных с применением репликации"
 
-#: runtime.xml:1881(para)
+#: runtime.xml:1895(para)
 msgid ""
 "It is also possible to use certain replication methods, such as "
 "<productname>Slony</productname>, to create a standby server with the "
@@ -3066,15 +3092,15 @@ msgstr ""
 "таком переключении обновление можно осуществить, прервав работу сервера "
 "всего на несколько секунд."
 
-#: runtime.xml:1898(title)
+#: runtime.xml:1912(title)
 msgid "Preventing Server Spoofing"
 msgstr "Защита от подмены сервера"
 
-#: runtime.xml:1900(indexterm)
+#: runtime.xml:1914(indexterm)
 msgid "<primary>server spoofing</primary>"
 msgstr "<primary>подмена сервера</primary>"
 
-#: runtime.xml:1904(para)
+#: runtime.xml:1918(para)
 msgid ""
 "While the server is running, it is not possible for a malicious user to take "
 "the place of the normal database server. However, when the server is down, "
@@ -3094,7 +3120,7 @@ msgstr ""
 "пользователь может запустить сервер баз данных; клиент, со своей стороны, не "
 "может обнаружить подмену, если его не настроить дополнительно."
 
-#: runtime.xml:1916(para)
+#: runtime.xml:1930(para)
 msgid ""
 "One way to prevent spoofing of <literal>local</literal> connections is to "
 "use a Unix domain socket directory (<xref linkend=\"guc-unix-socket-"
@@ -3119,7 +3145,7 @@ msgstr ""
 "вам также придётся изменить скрипт очистки <filename>/tmp</filename>, чтобы "
 "он не удалял эту ссылку."
 
-#: runtime.xml:1929(para)
+#: runtime.xml:1943(para)
 msgid ""
 "Another option for <literal>local</literal> connections is for clients to "
 "use <link linkend=\"libpq-connect-requirepeer\"><literal>requirepeer</"
@@ -3131,7 +3157,7 @@ msgstr ""
 "\"><literal>requirepeer</literal></link> имя пользователя, который должен "
 "владеть серверным процессом, подключённым к сокету."
 
-#: runtime.xml:1936(para)
+#: runtime.xml:1950(para)
 msgid ""
 "To prevent spoofing on TCP connections, the best solution is to use SSL "
 "certificates and make sure that clients check the server's certificate. To "
@@ -3152,15 +3178,15 @@ msgstr ""
 "него должен быть установлен соответствующий корневой сертификат (см. <xref "
 "remap=\"4\" linkend=\"libq-ssl-certificates\"/>)."
 
-#: runtime.xml:1950(title)
+#: runtime.xml:1964(title)
 msgid "Encryption Options"
 msgstr "Возможности шифрования"
 
-#: runtime.xml:1952(indexterm)
+#: runtime.xml:1966(indexterm)
 msgid "<primary>encryption</primary>"
 msgstr "<primary>шифрование</primary>"
 
-#: runtime.xml:1956(para)
+#: runtime.xml:1970(para)
 msgid ""
 "<productname>PostgreSQL</productname> offers encryption at several levels, "
 "and provides flexibility in protecting data from disclosure due to database "
@@ -3174,11 +3200,11 @@ msgstr ""
 "Шифрование может также требоваться для защиты конфиденциальных данных, "
 "например, медицинских сведений или финансовых транзакций."
 
-#: runtime.xml:1967(term)
+#: runtime.xml:1981(term)
 msgid "Password Storage Encryption"
 msgstr "Шифрование хранимых паролей"
 
-#: runtime.xml:1970(para)
+#: runtime.xml:1984(para)
 msgid ""
 "By default, database user passwords are stored as MD5 hashes, so the "
 "administrator cannot determine the actual password assigned to the user. If "
@@ -3193,11 +3219,11 @@ msgstr ""
 "кратковременно, так как клиент вычисляет и передаёт по сети только хеши "
 "паролей."
 
-#: runtime.xml:1982(term)
+#: runtime.xml:1996(term)
 msgid "Encryption For Specific Columns"
 msgstr "Шифрование избранных столбцов"
 
-#: runtime.xml:1985(para)
+#: runtime.xml:1999(para)
 msgid ""
 "The <xref linkend=\"pgcrypto\"/> module allows certain fields to be stored "
 "encrypted. This is useful if only some of the data is sensitive. The client "
@@ -3209,7 +3235,7 @@ msgstr ""
 "данные. Чтобы прочитать эти поля, клиент передаёт дешифрующий ключ, сервер "
 "расшифровывает данные и выдаёт их клиенту."
 
-#: runtime.xml:1993(para)
+#: runtime.xml:2007(para)
 msgid ""
 "The decrypted data and the decryption key are present on the server for a "
 "brief time while it is being decrypted and communicated between the client "
@@ -3222,11 +3248,11 @@ msgstr ""
 "быть перехвачены тем, кто имеет полный доступ к серверу баз данных, "
 "например, системным администратором."
 
-#: runtime.xml:2005(term)
+#: runtime.xml:2019(term)
 msgid "Data Partition Encryption"
 msgstr "Шифрование раздела данных"
 
-#: runtime.xml:2008(para)
+#: runtime.xml:2022(para)
 msgid ""
 "Storage encryption can be performed at the file system level or the block "
 "level. Linux file system encryption options include eCryptfs and EncFS, "
@@ -3241,7 +3267,7 @@ msgstr ""
 "во FreeBSD — модули GEOM, geli и gbde. Подобные возможности есть и во многих "
 "других операционных системах, включая Windows."
 
-#: runtime.xml:2017(para)
+#: runtime.xml:2031(para)
 msgid ""
 "This mechanism prevents unencrypted data from being read from the drives if "
 "the drives or the entire computer is stolen. This does not protect against "
@@ -3259,11 +3285,11 @@ msgstr ""
 "системе ключ (иногда он хранится где-то на компьютере, который выполняет "
 "монтирование)."
 
-#: runtime.xml:2031(term)
+#: runtime.xml:2045(term)
 msgid "Encrypting Passwords Across A Network"
 msgstr "Шифрование паролей при передаче по сети"
 
-#: runtime.xml:2034(para)
+#: runtime.xml:2048(para)
 msgid ""
 "The <literal>MD5</literal> authentication method double-encrypts the "
 "password on the client before sending it to the server. It first MD5-"
@@ -3283,11 +3309,11 @@ msgstr ""
 "вычисления исходного пароля, но и не даёт использовать тот же зашифрованный "
 "пароль при следующем подключении."
 
-#: runtime.xml:2049(term)
+#: runtime.xml:2063(term)
 msgid "Encrypting Data Across A Network"
 msgstr "Шифрование данных при передаче по сети"
 
-#: runtime.xml:2052(para)
+#: runtime.xml:2066(para)
 msgid ""
 "SSL connections encrypt all data sent across the network: the password, the "
 "queries, and the data returned. The <filename>pg_hba.conf</filename> file "
@@ -3306,11 +3332,11 @@ msgstr ""
 "можно применять <application>stunnel</application> и <application>SSH</"
 "application>."
 
-#: runtime.xml:2066(term)
+#: runtime.xml:2080(term)
 msgid "SSL Host Authentication"
 msgstr "Проверка подлинности сервера SSL"
 
-#: runtime.xml:2069(para)
+#: runtime.xml:2083(para)
 msgid ""
 "It is possible for both the client and server to provide SSL certificates to "
 "each other. It takes some extra configuration on each side, but this "
@@ -3330,11 +3356,11 @@ msgstr ""
 "представляется сервером и незаметно передаёт все запросы и данные между "
 "клиентом и подлинным сервером."
 
-#: runtime.xml:2084(term)
+#: runtime.xml:2098(term)
 msgid "Client-Side Encryption"
 msgstr "Шифрование на стороне клиента"
 
-#: runtime.xml:2087(para)
+#: runtime.xml:2101(para)
 msgid ""
 "If the system administrator for the server's machine cannot be trusted, it "
 "is necessary for the client to encrypt the data; this way, unencrypted data "
@@ -3348,15 +3374,15 @@ msgstr ""
 "прежде чем передавать их серверу, а получив из базы данных результаты, он "
 "расшифровывает их для использования."
 
-#: runtime.xml:2103(title)
+#: runtime.xml:2117(title)
 msgid "Secure TCP/IP Connections with SSL"
 msgstr "Защита соединений TCP/IP с применением SSL"
 
-#: runtime.xml:2105(indexterm)
+#: runtime.xml:2119(indexterm)
 msgid "<primary>SSL</primary>"
 msgstr "<primary>SSL</primary>"
 
-#: runtime.xml:2109(para)
+#: runtime.xml:2123(para)
 msgid ""
 "<productname>PostgreSQL</productname> has native support for using "
 "<acronym>SSL</acronym> connections to encrypt client/server communications "
@@ -3373,7 +3399,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> при сборке (см. <xref remap=\"4\" "
 "linkend=\"installation\"/>)."
 
-#: runtime.xml:2118(para)
+#: runtime.xml:2132(para)
 msgid ""
 "With <acronym>SSL</acronym> support compiled in, the "
 "<productname>PostgreSQL</productname> server can be started with "
@@ -3398,7 +3424,7 @@ msgstr ""
 "подключений, вы можете узнать в <xref remap=\"6\" linkend=\"auth-pg-hba-conf"
 "\"/>."
 
-#: runtime.xml:2131(para)
+#: runtime.xml:2145(para)
 msgid ""
 "<productname>PostgreSQL</productname> reads the system-wide "
 "<productname>OpenSSL</productname> configuration file. By default, this file "
@@ -3414,7 +3440,7 @@ msgstr ""
 "расположение файла конфигурации, его можно задать в переменной окружения "
 "<envar>OPENSSL_CONF</envar>."
 
-#: runtime.xml:2140(para)
+#: runtime.xml:2154(para)
 msgid ""
 "<productname>OpenSSL</productname> supports a wide range of ciphers and "
 "authentication algorithms, of varying strength. While a list of ciphers can "
@@ -3430,7 +3456,7 @@ msgstr ""
 "указав их в параметре <xref linkend=\"guc-ssl-ciphers\"/> в "
 "<filename>postgresql.conf</filename>."
 
-#: runtime.xml:2150(para)
+#: runtime.xml:2164(para)
 msgid ""
 "It is possible to have authentication without encryption overhead by using "
 "<literal>NULL-SHA</literal> or <literal>NULL-MD5</literal> ciphers. However, "
@@ -3446,7 +3472,7 @@ msgstr ""
 "дополнительную нагрузку по сравнению с проверкой подлинности. По этим "
 "причинам использовать шифры NULL не рекомендуется."
 
-#: runtime.xml:2160(para)
+#: runtime.xml:2174(para)
 msgid ""
 "To start in <acronym>SSL</acronym> mode, files containing the server "
 "certificate and private key must exist. By default, these files are expected "
@@ -3462,7 +3488,7 @@ msgstr ""
 "другие имена и местоположения файлов, задав их в конфигурационных параметрах "
 "<xref linkend=\"guc-ssl-cert-file\"/> и <xref linkend=\"guc-ssl-key-file\"/>."
 
-#: runtime.xml:2169(para)
+#: runtime.xml:2183(para)
 msgid ""
 "On Unix systems, the permissions on <filename>server.key</filename> must "
 "disallow any access to world or group; achieve this by the command "
@@ -3483,7 +3509,7 @@ msgstr ""
 "<productname>PostgreSQL</productname>, должен быть членом группы, имеющей "
 "доступ к указанным файлам сертификата и ключа."
 
-#: runtime.xml:2180(para)
+#: runtime.xml:2194(para)
 msgid ""
 "If the private key is protected with a passphrase, the server will prompt "
 "for the passphrase and will not start until it has been entered."
@@ -3491,7 +3517,7 @@ msgstr ""
 "Если закрытый ключ защищён паролем, сервер запросит пароль и не запустится, "
 "пока этот пароль не будет введён."
 
-#: runtime.xml:2186(para)
+#: runtime.xml:2200(para)
 msgid ""
 "In some cases, the server certificate might be signed by an "
 "<quote>intermediate</quote> certificate authority, rather than one that is "
@@ -3512,11 +3538,11 @@ msgstr ""
 "считают сертификат доверенным, если он подписан сертификатом, содержащимся в "
 "их собственном файле <filename>root.crt</filename>."
 
-#: runtime.xml:2198(title)
+#: runtime.xml:2212(title)
 msgid "Using Client Certificates"
 msgstr "Использование клиентских сертификатов"
 
-#: runtime.xml:2200(para)
+#: runtime.xml:2214(para)
 msgid ""
 "To require the client to supply a trusted certificate, place certificates of "
 "the certificate authorities (<acronym>CA</acronym>s) you trust in the file "
@@ -3543,7 +3569,7 @@ msgstr ""
 "сертификат, сервер будет проверять, был ли этот сертификат подписан одним из "
 "доверенным центром сертификации."
 
-#: runtime.xml:2215(para)
+#: runtime.xml:2229(para)
 msgid ""
 "If intermediate <acronym>CA</acronym>s appear in <filename>root.crt</"
 "filename>, the file must also contain certificate chains to their root "
@@ -3560,7 +3586,7 @@ msgstr ""
 "doc/83final/ba554_90007/ch04s02.html\"/> можно найти наглядные диаграммы, "
 "иллюстрирующие применение сертификатов SSL.)"
 
-#: runtime.xml:2227(para)
+#: runtime.xml:2241(para)
 msgid ""
 "The <literal>clientcert</literal> authentication option is available for all "
 "authentication methods, but only in <filename>pg_hba.conf</filename> lines "
@@ -3576,7 +3602,7 @@ msgstr ""
 "представленные клиентские сертификаты по своему файлу со списком ЦС (если он "
 "настроен) &mdash; но позволит подключаться клиентам без сертификата."
 
-#: runtime.xml:2236(para)
+#: runtime.xml:2250(para)
 msgid ""
 "Note that the server's <filename>root.crt</filename> lists the top-level CAs "
 "that are considered trusted for signing client certificates. In principle it "
@@ -3590,7 +3616,7 @@ msgstr ""
 "большинстве случаев этот ЦС также должен быть доверенным для клиентских "
 "сертификатов."
 
-#: runtime.xml:2244(para)
+#: runtime.xml:2258(para)
 msgid ""
 "If you are setting up client certificates, you may wish to use the "
 "<literal>cert</literal> authentication method, so that the certificates "
@@ -3606,11 +3632,11 @@ msgstr ""
 "(Устанавливать <literal>clientcert=1</literal> явно при использовании метода "
 "аутентификации <literal>cert</literal> не требуется.)"
 
-#: runtime.xml:2255(title) runtime.xml:2264(title)
+#: runtime.xml:2269(title) runtime.xml:2278(title)
 msgid "SSL Server File Usage"
 msgstr "Файлы, используемые SSL-сервером"
 
-#: runtime.xml:2257(para)
+#: runtime.xml:2271(para)
 msgid ""
 "<xref linkend=\"ssl-file-usage\"/> summarizes the files that are relevant to "
 "the SSL setup on the server. (The shown file names are default or typical "
@@ -3620,19 +3646,19 @@ msgstr ""
 "имеющие отношение к настройке SSL на сервере. (Здесь приведены стандартные "
 "или типичные имена файлов. В конкретной системе они могут быть другими.)"
 
-#: runtime.xml:2268(entry)
+#: runtime.xml:2282(entry)
 msgid "File"
 msgstr "Файл"
 
-#: runtime.xml:2269(entry)
+#: runtime.xml:2283(entry)
 msgid "Contents"
 msgstr "Содержимое"
 
-#: runtime.xml:2270(entry)
+#: runtime.xml:2284(entry)
 msgid "Effect"
 msgstr "Назначение"
 
-#: runtime.xml:2277(entry)
+#: runtime.xml:2291(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-cert-file\"/> (<filename>$PGDATA/server.crt</"
 "filename>)"
@@ -3640,15 +3666,15 @@ msgstr ""
 "<xref linkend=\"guc-ssl-cert-file\"/> (<filename>$PGDATA/server.crt</"
 "filename>)"
 
-#: runtime.xml:2278(entry)
+#: runtime.xml:2292(entry)
 msgid "server certificate"
 msgstr "сертификат сервера"
 
-#: runtime.xml:2279(entry)
+#: runtime.xml:2293(entry)
 msgid "sent to client to indicate server's identity"
 msgstr "отправляется клиенту для идентификации сервера"
 
-#: runtime.xml:2283(entry)
+#: runtime.xml:2297(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-key-file\"/> (<filename>$PGDATA/server.key</"
 "filename>)"
@@ -3656,11 +3682,11 @@ msgstr ""
 "<xref linkend=\"guc-ssl-key-file\"/> (<filename>$PGDATA/server.key</"
 "filename>)"
 
-#: runtime.xml:2284(entry)
+#: runtime.xml:2298(entry)
 msgid "server private key"
 msgstr "закрытый ключ сервера"
 
-#: runtime.xml:2285(entry)
+#: runtime.xml:2299(entry)
 msgid ""
 "proves server certificate was sent by the owner; does not indicate "
 "certificate owner is trustworthy"
@@ -3668,38 +3694,38 @@ msgstr ""
 "подтверждает, что сертификат сервера был передан его владельцем; не "
 "гарантирует, что его владельцу можно доверять"
 
-#: runtime.xml:2290(entry)
+#: runtime.xml:2304(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-ca-file\"/> (<filename>$PGDATA/root.crt</filename>)"
 msgstr ""
 "<xref linkend=\"guc-ssl-ca-file\"/> (<filename>$PGDATA/root.crt</filename>)"
 
-#: runtime.xml:2291(entry)
+#: runtime.xml:2305(entry)
 msgid "trusted certificate authorities"
 msgstr "сертификаты доверенных ЦС"
 
-#: runtime.xml:2292(entry)
+#: runtime.xml:2306(entry)
 msgid ""
 "checks that client certificate is signed by a trusted certificate authority"
 msgstr ""
 "позволяет проверить, что сертификат клиента подписан доверенным центром "
 "сертификации"
 
-#: runtime.xml:2297(entry)
+#: runtime.xml:2311(entry)
 msgid ""
 "<xref linkend=\"guc-ssl-crl-file\"/> (<filename>$PGDATA/root.crl</filename>)"
 msgstr ""
 "<xref linkend=\"guc-ssl-crl-file\"/> (<filename>$PGDATA/root.crl</filename>)"
 
-#: runtime.xml:2298(entry)
+#: runtime.xml:2312(entry)
 msgid "certificates revoked by certificate authorities"
 msgstr "сертификаты, отозванные центрами сертификации"
 
-#: runtime.xml:2299(entry)
+#: runtime.xml:2313(entry)
 msgid "client certificate must not be on this list"
 msgstr "сертификат клиента должен отсутствовать в этом списке"
 
-#: runtime.xml:2306(para)
+#: runtime.xml:2320(para)
 msgid ""
 "The files <filename>server.key</filename>, <filename>server.crt</filename>, "
 "<filename>root.crt</filename>, and <filename>root.crl</filename> (or their "
@@ -3712,16 +3738,16 @@ msgstr ""
 "поэтому сервер необходимо перезапустить, чтобы изменения в них вступили в "
 "силу."
 
-#: runtime.xml:2316(title)
+#: runtime.xml:2330(title)
 msgid "Creating a Self-signed Certificate"
 msgstr "Создание самоподписанного сертификата"
 
-#: runtime.xml:2321(programlisting)
+#: runtime.xml:2335(programlisting)
 #, no-wrap
 msgid "openssl req -new -text -out server.req"
 msgstr "openssl req -new -text -out server.req"
 
-#: runtime.xml:2330(programlisting)
+#: runtime.xml:2344(programlisting)
 #, no-wrap
 msgid ""
 "openssl rsa -in privkey.pem -out server.key\n"
@@ -3730,17 +3756,17 @@ msgstr ""
 "openssl rsa -in privkey.pem -out server.key\n"
 "rm privkey.pem"
 
-#: runtime.xml:2335(programlisting)
+#: runtime.xml:2349(programlisting)
 #, no-wrap
 msgid "openssl req -x509 -in server.req -text -key server.key -out server.crt"
 msgstr "openssl req -x509 -in server.req -text -key server.key -out server.crt"
 
-#: runtime.xml:2341(programlisting)
+#: runtime.xml:2355(programlisting)
 #, no-wrap
 msgid "chmod og-rwx server.key"
 msgstr "chmod og-rwx server.key"
 
-#: runtime.xml:2318(para)
+#: runtime.xml:2332(para)
 msgid ""
 "To create a quick self-signed certificate for the server, use the following "
 "<productname>OpenSSL</productname> command: <placeholder-1/> Fill out the "
@@ -3775,7 +3801,7 @@ msgstr ""
 "закрытый ключ и сертификат сервера, можно в документации "
 "<productname>OpenSSL</productname>."
 
-#: runtime.xml:2350(para)
+#: runtime.xml:2364(para)
 msgid ""
 "A self-signed certificate can be used for testing, but a certificate signed "
 "by a certificate authority (<acronym>CA</acronym>) (either one of the global "
@@ -3790,17 +3816,17 @@ msgstr ""
 "Если все клиенты относятся к одной организации, рекомендуется использовать "
 "локальный <acronym>ЦС</acronym>."
 
-#: runtime.xml:2364(title)
+#: runtime.xml:2378(title)
 msgid "Secure TCP/IP Connections with <application>SSH</application> Tunnels"
 msgstr ""
 "Защита соединений TCP/IP с применением туннелей <application>SSH</"
 "application>"
 
-#: runtime.xml:2366(indexterm)
+#: runtime.xml:2380(indexterm)
 msgid "<primary>ssh</primary>"
 msgstr "<primary>ssh</primary>"
 
-#: runtime.xml:2370(para)
+#: runtime.xml:2384(para)
 msgid ""
 "It is possible to use <application>SSH</application> to encrypt the network "
 "connection between clients and a <productname>PostgreSQL</productname> "
@@ -3812,17 +3838,17 @@ msgstr ""
 "подходе это позволяет обеспечить должный уровень защиты сетевого трафика, "
 "даже для клиентов, не поддерживающих SSL."
 
-#: runtime.xml:2384(programlisting)
+#: runtime.xml:2398(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:localhost:5432 joe@foo.com"
 msgstr "ssh -L 63333:localhost:5432 joe@foo.com"
 
-#: runtime.xml:2397(programlisting)
+#: runtime.xml:2411(programlisting)
 #, no-wrap
 msgid "psql -h localhost -p 63333 postgres"
 msgstr "psql -h localhost -p 63333 postgres"
 
-#: runtime.xml:2378(para)
+#: runtime.xml:2392(para)
 msgid ""
 "First make sure that an <application>SSH</application> server is running "
 "properly on the same machine as the <productname>PostgreSQL</productname> "
@@ -3871,7 +3897,7 @@ msgstr ""
 "productname> не защищён. Это не должно нести какие-то дополнительные риски, "
 "так как эти серверы работают на одном компьютере."
 
-#: runtime.xml:2412(para)
+#: runtime.xml:2426(para)
 msgid ""
 "In order for the tunnel setup to succeed you must be allowed to connect via "
 "<command>ssh</command> as <literal>joe@foo.com</literal>, just as if you had "
@@ -3882,12 +3908,12 @@ msgstr ""
 "<literal>joe@foo.com</literal>, так же, как это происходит при установлении "
 "терминального подключения с помощью <command>ssh</command>."
 
-#: runtime.xml:2422(programlisting)
+#: runtime.xml:2436(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:foo.com:5432 joe@foo.com"
 msgstr "ssh -L 63333:foo.com:5432 joe@foo.com"
 
-#: runtime.xml:2420(para)
+#: runtime.xml:2434(para)
 msgid ""
 "You could also have set up the port forwarding as <placeholder-1/> but then "
 "the database server will see the connection as coming in on its <literal>foo."
@@ -3901,12 +3927,12 @@ msgstr ""
 "умолчанию не прослушивается (вследствие указания <literal>listen_addresses = "
 "'localhost'</literal>). Обычно требуется другое поведение."
 
-#: runtime.xml:2434(programlisting)
+#: runtime.xml:2448(programlisting)
 #, no-wrap
 msgid "ssh -L 63333:db.foo.com:5432 joe@shell.foo.com"
 msgstr "ssh -L 63333:db.foo.com:5432 joe@shell.foo.com"
 
-#: runtime.xml:2431(para)
+#: runtime.xml:2445(para)
 msgid ""
 "If you have to <quote>hop</quote> to the database server via some login "
 "host, one possible setup could look like this: <placeholder-1/> Note that "
@@ -3922,7 +3948,7 @@ msgstr ""
 "вариантов конфигурации, что позволяет организовывать защиту сети разными "
 "способами. За подробностями обратитесь к документации SSH."
 
-#: runtime.xml:2447(para)
+#: runtime.xml:2461(para)
 msgid ""
 "Several other applications exist that can provide secure tunnels using a "
 "procedure similar in concept to the one just described."
@@ -3930,7 +3956,7 @@ msgstr ""
 "Существуют и другие приложения, которые могут создавать безопасные туннели, "
 "применяя по сути тот же подход, что был описан выше."
 
-#: runtime.xml:2456(title)
+#: runtime.xml:2470(title)
 msgid ""
 "Registering <application>Event Log</application> on <systemitem class="
 "\"osname\">Windows</systemitem>"
@@ -3938,12 +3964,12 @@ msgstr ""
 "Регистрация <application>журнала событий</application> в <systemitem class="
 "\"osname\">Windows</systemitem>"
 
-#: runtime.xml:2459(indexterm)
+#: runtime.xml:2473(indexterm)
 msgid "<primary>event log</primary> <secondary>event log</secondary>"
 msgstr ""
 "<primary>журнал событий</primary> <secondary>журнал событий</secondary>"
 
-#: runtime.xml:2464(para)
+#: runtime.xml:2478(para)
 msgid ""
 "To register a <systemitem class=\"osname\">Windows</systemitem> "
 "<application>event log</application> library with the operating system, "
@@ -3962,7 +3988,7 @@ msgstr ""
 "просмотра событий, относящиеся к источнику событий по умолчанию с именем "
 "<literal>PostgreSQL</literal>."
 
-#: runtime.xml:2475(para)
+#: runtime.xml:2489(para)
 msgid ""
 "To specify a different event source name (see <xref linkend=\"guc-event-"
 "source\"/>), use the <literal>/n</literal> and <literal>/i</literal> "
@@ -3978,7 +4004,7 @@ msgstr ""
 "<replaceable>каталог_библиотек_pgsql</replaceable>/pgevent.dll</userinput>\n"
 "</screen>"
 
-#: runtime.xml:2484(para)
+#: runtime.xml:2498(para)
 msgid ""
 "To unregister the <application>event log</application> library from the "
 "operating system, issue this command: <screen>\n"
@@ -3992,7 +4018,7 @@ msgstr ""
 "<replaceable>каталог_библиотек_pgsql</replaceable>/pgevent.dll</userinput>\n"
 "</screen>"
 
-#: runtime.xml:2493(para)
+#: runtime.xml:2507(para)
 msgid ""
 "To enable event logging in the database server, modify <xref linkend=\"guc-"
 "log-destination\"/> to include <literal>eventlog</literal> in "
