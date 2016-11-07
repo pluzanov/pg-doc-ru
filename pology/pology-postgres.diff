@@ -1,6 +1,6 @@
 diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/all.rules
 --- pology-0.12.ori/lang/ru/rules/all.rules	2016-05-26 07:35:51.316767762 +0300
-+++ pology-0.12/lang/ru/rules/all.rules	2016-09-08 14:58:04.136057989 +0300
++++ pology-0.12/lang/ru/rules/all.rules	2016-11-02 10:15:42.386081367 +0300
 @@ -22,6 +22,9 @@
  [медиа-[а-я]]i
  hint="-> Слова медиа... пишутся слитно"
@@ -20,9 +20,19 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  valid before="[a-z]*="
  valid before="(nbsp|amp|reg|lt|gt|quot|deg|ge|ndash|copy|auml|mdash);"
  valid msgid="Drag&Drop"
-@@ -68,15 +71,19 @@
+@@ -56,6 +59,7 @@
+ hint="Уберите пробел на конце строки"
+ 
+ [^ ]
++id="leading-space"
+ valid msgid="^ "
+ hint="Уберите пробел в начале строки"
+ 
+@@ -67,16 +71,21 @@
+ #hint="После двоеточия должна быть строчная буква"
  
  [  ]
++id="double-space"
  valid msgid="  "
 +valid srcref="\(programlisting\)"
 +valid srcref="\(synopsis\)"
@@ -42,7 +52,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="«overwrite» переводится как «заменить»"
  
  [настройки]i
-@@ -84,39 +91,40 @@
+@@ -84,39 +93,40 @@
  valid after="средства "
  valid after="кнопку "
  valid after="при ошибке установки или "
@@ -99,7 +109,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="There's no such plural form 'настройки', use 'параметры' or something else. If you see this message but there is only 'настройки' as the genitive case of 'настройка', please, report it."
  
  [настройках]i
-@@ -146,7 +154,7 @@
+@@ -146,7 +156,7 @@
  [знач[её]к]i
  hint="орфография"
  
@@ -108,7 +118,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="keyboard shortcut, hotkey -- комбинация клавиш"
  
  [ярлык]i
-@@ -155,6 +163,10 @@
+@@ -155,6 +165,10 @@
  
  [скач]i
  valid after="^Са"
@@ -119,7 +129,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="не используем слова скачивать, скачивание и т.д."
  
  [рассклад]i
-@@ -175,14 +187,33 @@
+@@ -175,14 +189,34 @@
  [пл[еэ]йл]i
  hint="playlist -- список воспроизведения"
  
@@ -131,6 +141,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  valid after="=&"
  valid after="googl" before="\.com"
 +valid after="<screen.*" before=".*?</screen"
++valid after="@" before="\."
 +valid srcref="\(literal\)"
 +valid srcref="\(programlisting\)"
 +valid after="<literal.*" before=".*?</literal>"
@@ -154,18 +165,32 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  [не подписанн]i
  hint="'неподписанный' -- слитно (чаще всего)"
  
-@@ -195,6 +226,7 @@
+@@ -195,9 +229,11 @@
  [,[а-я]]i
  valid msgid="^Your names$"
  valid ctx="^X-KDE-Keywords$"
 +valid after="<literal.*" before=".*?</literal"
  hint="После запятой должен быть пробел."
  
- [#]
-@@ -225,6 +257,13 @@
+-[#]
++[#\s*(?=\d+)]
++id="hash-mark"
+ valid after="C" # C# programming language
+ valid after="&" # character code in HTML
+ valid after="/" # in link in HTML code
+@@ -215,6 +251,7 @@
+ valid before="if" # C/C++ preprocessor
+ valid before="endif" # C/C++ preprocessor
+ valid before="else" # C/C++ preprocessor
++valid before="[0-9A-Fa-f]{6};"
+ valid after=">" before="<" # inside of XML tag
+ valid after="color:"
+ valid after="color=\""
+@@ -224,7 +261,13 @@
+ valid msgid="New name #" msgstr="Объект #" cat="dolphin" # '#' is hardcoded in Dolphin
  valid msgid="\(# will be replaced by ascending numbers\)" msgstr="\(символ # будет заменён порядковым номером\)" cat="dolphin" # '#' is hardcoded in Dolphin
  valid msgstr="«#»" # FIXME: "before" or "after"?
- valid msgstr="^\*99#$"
+-valid msgstr="^\*99#$"
 +valid after="<screen.*" before=".*?</screen"
 +valid after="<literallayout.*" before=".*?</literallayout"
 +valid after="<literal.*" before=".*?</literal"
@@ -176,7 +201,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="заменить на '№'?"
  
  [\bне не\b]i
-@@ -259,6 +298,19 @@
+@@ -259,6 +302,19 @@
  hint="shortcut -- комбинация клавиш"
  
  [superuser]i
@@ -196,7 +221,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="superuser нужно перевести"
  
  [\bклик]i
-@@ -280,7 +332,7 @@
+@@ -280,7 +336,7 @@
  [проверьте вашу установку]i
  hint="не по-русски"
  
@@ -205,7 +230,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Ok -> ОК (русскими буквами)"
  
  [[а-яіїѣѳўє][a-z]]i
-@@ -291,12 +343,18 @@
+@@ -291,12 +347,18 @@
  hint="Рядом стоят латинская и кириллическая буквы"
  
  [\(c\)]i
@@ -224,7 +249,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="-> 'не удалось'"
  
  [mime]i
-@@ -314,12 +372,21 @@
+@@ -314,12 +376,21 @@
  
  [;']
  valid after="[0-9]px" # example: <h2 style='margin-top: 0px;'>
@@ -248,7 +273,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  valid after="и т" span="д" before="\." # "и т.д." # некоторые говорят, что "и т.д." нужно писать полностью ("и так далее")
  valid after="и т" span="п" before="\." # "и т.п."
  valid after="т" span="к" before="\." # "т.к."
-@@ -329,7 +396,20 @@
+@@ -329,7 +400,20 @@
  valid after="дюймов рт" span="с" before="т\." # дюймов рт.ст.
  valid after="дюймы рт" span="с" before="т\." # дюймы рт.ст.
  valid after="\.\." span="\.ч" before="то"
@@ -269,7 +294,25 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Поставьте пробел после точки в конце предложения"
  
  [директори]i
-@@ -388,7 +468,11 @@
+@@ -339,6 +423,7 @@
+ hint="не используем слово 'пиктограмма'"
+ 
+ [обозревател]i
++id="browser-browser"
+ hint="обозреватель [Интернета] -> веб-браузер"
+ 
+ [опц]i
+@@ -359,7 +444,8 @@
+ 
+ [x ?%]i
+ valid after=" 0" # hex number
+-hint="используйте специальных символ «×»"
++valid after="<screen.*" before=".*?</screen"
++hint="используйте специальный символ «×»"
+ 
+ [bpp]i
+ hint="нужно переводить"
+@@ -388,7 +474,11 @@
  hint="В кнопке 'Отмена' акселератор ставьте на 'т'"
  
  [ \.\.\.$]
@@ -282,7 +325,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  
  [«спам]i
  hint="'спам' должно быть без кавычек"
-@@ -408,7 +492,7 @@
+@@ -408,7 +498,7 @@
  [не високосн]i
  hint="'невисокосный' пишется слитно"
  
@@ -291,7 +334,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="В контексте 'Имейте в виду, что ...', 'в виду' пишется раздельно. "
  
  [выберете]i
-@@ -416,11 +500,12 @@
+@@ -416,11 +506,12 @@
  hint="В повелительном наклонении должно быть 'выберите'"
  
  [параграф]i
@@ -305,7 +348,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Список рассылки -- это 'mailing list'. Distribution list -- это другое."
  
  [провер]i
-@@ -428,7 +513,7 @@
+@@ -428,7 +519,7 @@
  hint="'checkout' в контексте систем управления версиями -- извлечение из репозитория, переход на ревизию или смена ветки"
  
  # ошибки: "при завершение", "при чтение", "при использование", "при выполнение", ...
@@ -314,7 +357,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="неправильное использование падежей"
  
  #[[a-z]-[а-я]]i
-@@ -438,32 +523,58 @@
+@@ -438,32 +529,59 @@
  [на брауз]i
  hint="на браузерах -> в браузерах"
  
@@ -339,6 +382,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 -[[^\.]\. [а-я]]
 -valid after="э" span="л. п" before="очты" # частое сокращение "эл. почты"
 +[(?<=[^\.])\.\s(?=[а-я])]
++id="capital-letter-first"
 +valid after="эл" before="почты" # частое сокращение "эл. почты"
 +valid after="\bсм"
 +valid after="\bСм"
@@ -354,10 +398,10 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +valid after="[тТ]. е"
 +valid after="\b[тТ]" before="е\."
 +valid after="\bмат" before="представлен"
++valid after="\b[Тт]абл" before="пространств"
 +valid after="в стиле #"
-+valid after="мин"
-+valid after="Макс"
-+valid after="макс"
++valid after="[Мм]ин"
++valid after="[Мм]акс"
  hint="Предложения пишутся с заглавной буквы"
  
  [на строке]
@@ -380,7 +424,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Восклицания допустимы только в играх и программах для детей"
  
  [конверти]i
-@@ -488,9 +599,10 @@
+@@ -488,9 +606,10 @@
  #   градуса, минуты и секунды от цифр не отбивают. Знак °С отбивают, как и
  #   другие обозначения единиц физ. величин, на 2 п.
  # 2. http://habrahabr.ru/post/23250/
@@ -393,8 +437,11 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="Знак процента отделяют от числа коротким пробелом (каким именно -- читайте на l10n.lrn.ru)"
  
  # http://lists.kde.ru/pipermail/kde-russian/2008-July/012291.html
-@@ -501,6 +613,12 @@
+@@ -499,8 +618,15 @@
+ 
+ # posieve find-messages -snmsgid:'\n' -smsgstr:'\n' -snmsgctxt:'(qtundo-format)' --skip-obsolete -snflag:fuzzy *.po
  [\n]
++id="no-magic-split"
  valid msgid="\n"
  valid ctx="(qtundo-format)"
 +valid after="<screen.*" before=".*?</screen"
@@ -406,12 +453,13 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="No '(qtundo-format)' in context string, hence magic split is not available"
  
  # https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%BB%D0%B0%D1%8F%D0%BB%D0%B0%D0%BC_(%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%BE)
-@@ -513,3 +631,268 @@
+@@ -513,3 +639,283 @@
  
  # TBD: название программы "Параметры системы" склоняется? Например: "в Параметрах системы"?
  
 +
 +[::]
++id="double-colons"
 +valid before="(&zwsp;)?[a-zA-Z]"
 +valid before="(/)?[0-9]"
 +valid before="<replaceable"
@@ -419,6 +467,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +valid before="</(literal|primary)"
 +valid srcref="\(programlisting\)"
 +valid after="<screen.*" before=".*?</screen"
++valid env="rst"
 +hint="Двойные двоеточия"
 +
 +[(?<=[а-я\.])\(]i
@@ -432,6 +481,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +hint="Не хватает пробела перед скобкой."
 +
 +[>[а-я]]i
++id="docbook-ru1"
++environment docbook
 +valid after="<(replaceable|parameter|type|optional|guimenu|guisubmenu|guimenuitem)[^>]*"
 +valid after="<(quote|citetitle)"
 +valid after="<(firstterm|acronym|foreignphrase)"
@@ -447,6 +498,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +valid after="<(screen|computeroutput)[^>]*"
 +valid after="<application[^>]*"
 +valid after="<phrase[^>]*"
++valid after="<emphasis[^>]*"
 +valid after="<placeholder-[0-9]+/"
 +valid after="</screen"
 +valid after="</synopsis"
@@ -455,6 +507,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +# <emphasis> долю </emphasis>
 + 
 +[[а-я]<(?=[a-z])]i
++id="docbook-ru2"
++environment docbook
 +valid before="placeholder-1/>$" # предполагается, что в placeholder-1 сидит тег primary
 +valid before="placeholder-1/>," # предполагается, что в placeholder-1 сидит тег primary
 +valid before="phrase condition"
@@ -464,7 +518,9 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +hint="Две точки."
 +
 +[[а-я>] \.(?=$|[^.])]
++valid after="<synopsis.*" before=".*?</synopsis"
 +valid before="NET"
++valid before="pgpass"
 +hint="Пробел перед точкой."
 +
 +[\.\s\([а-я]]
@@ -472,7 +528,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +hint="Не нужна точка или предложение в скобках должно быть с большой буквы."
 +
 +
-+[\s:($|[^:^=])]
++[\s:(?=$|[^:^=])]
 +valid after="<synopsis.*" before=".*?</synopsis"
 +valid after="<screen.*" before=".*?</screen"
 +valid after="<literal.*" before=".*?</literal"
@@ -482,6 +538,8 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +valid srcref="\(screen\)"
 +valid srcref="\(programlisting\)"
 +valid after="set"
++valid before="ref:" env="rst"
++valid before="file:" env="rst"
 +hint="Уберите пробел перед двоеточием"
 +
 +#[[а-яА-Я]] # Пока не критично - требует исправления и оригинала
@@ -513,6 +571,9 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +hint="Должно быть 'впоследствии'"
 +
 +[ --? ]
++id="mdash-required"
++valid srcref="/pgscript\.rst"
++valid srcref="\(programlisting\)"
 +valid srcref="\(literal\)"
 +valid srcref="\(programlisting\)"
 +valid srcref="\(screen\)"
@@ -627,6 +688,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +
 +[\bWAL(</[a-z]+>)?\s(файл|архив|запис|сегмент|лог|данн)]i
 +valid span="WAL запис" before="(ан|ы)"
++valid span="WAL запис" after="в " before="(ей)"
 +valid span="WAL архив" before="(ир)"
 +hint="WAL — не прилагательное, надо писать через дефис или перефразировать."
 +
@@ -677,7 +739,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +# TODO: поменять <quote>...</quote> на &laquo;...&raquo;, чтобы были кавычки-ёлочки?
 diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/rules/letter-yo.rules
 --- pology-0.12.ori/lang/ru/rules/letter-yo.rules	2016-05-26 07:35:51.304768164 +0300
-+++ pology-0.12/lang/ru/rules/letter-yo.rules	2016-08-09 10:39:32.258075493 +0300
++++ pology-0.12/lang/ru/rules/letter-yo.rules	2016-10-12 12:05:41.530077511 +0300
 @@ -13,6 +13,13 @@
  valid before="и"
  hint="Буква ё"
@@ -701,13 +763,13 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
 +valid after="хо"
 +valid after="со"
 +valid after="с" before="[ао]"
-+valid after="вы"
++valid after="[Вв]ы"
 +valid before="в[её]р"
 +valid before="ыр"
  hint="Буква ё"
  
  [ведет]i
-+valid after="вы" before="\s"
++valid after="[Вв]ы" before="\s"
 +hint="Буква ё"
 +
 +[дает]i
@@ -754,11 +816,11 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
 +hint="Буква ё"
 +
 +[несенн]i
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[несен\b]i
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[ъем]i
@@ -776,19 +838,19 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
 +hint="Буква ё"
 +
 +[веденн]
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[веден\b]
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[деленн]
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[делен\b]
-+valid after="вы"
++valid after="[Вв]ы"
 +hint="Буква ё"
 +
 +[даленн]
@@ -942,9 +1004,11 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
  
 diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/spell/postgres.aspell
 --- pology-0.12.ori/lang/ru/spell/postgres.aspell	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/lang/ru/spell/postgres.aspell	2016-09-08 15:10:19.688629212 +0300
-@@ -0,0 +1,568 @@
++++ pology-0.12/lang/ru/spell/postgres.aspell	2016-11-02 10:18:57.551783327 +0300
+@@ -0,0 +1,591 @@
 +personal_ws-1.1 ru 0 UTF-8
++Автоанализ
++Автоотступ
 +Агрегатор
 +БО
 +Восьмибитный
@@ -954,6 +1018,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +ДАЁТ
 +Двустороннее
 +Десериализует
++Запросник
 +НЕСЁТ
 +Нетипизированные
 +ОРСУБД
@@ -974,17 +1039,21 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +Юникод
 +Юникода
 +Юникоде
++автоанализ
 +автоанализа
 +автовыделении
 +автовыделения
 +автозагрузки
 +автозагрузку
 +автонастройка
++автооткат
++автоотступа
 +автоочистка
 +автоочистке
 +автоочистки
 +автоочисткой
 +автоочистку
++автоподключение
 +автосжатия
 +автоувеличением
 +автоувеличения
@@ -1014,6 +1083,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +взаимоблокировок
 +взаимозаменяем
 +визуализировать
++визуализируется
 +виртуализации
 +воспроизводимости
 +восьмибайтное
@@ -1057,7 +1127,11 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +демоверсия
 +денормализация
 +десериализации
++дефрагментации
++дефрагментация
 +дефрагментирована
++дефрагментировать
++дефрагментируется
 +диакритик
 +дозаполнение
 +журналировании
@@ -1073,6 +1147,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +заблокируется
 +заблокируются
 +заворачивания
++загружаемости
 +задействоваться
 +задействуемого
 +задействуемых
@@ -1083,6 +1158,10 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +задействуя
 +закешированные
 +замедленно
++запросник
++запросника
++запроснике
++запустились
 +запустится
 +запуститься
 +затормаживание
@@ -1119,6 +1198,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +местозаполнителей
 +местозаполнителем
 +местозаполнители
++местозаполнитель
 +местозаполнителями
 +местозаполнителях
 +метакоманд
@@ -1197,6 +1277,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +нежурналируемыми
 +нежурналируемых
 +незаархивированные
++незаархивированный
 +незаблокированные
 +незаблокированных
 +неинтерактивно
@@ -1272,6 +1353,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +переместительным
 +переподключения
 +переподключившись
++переподключится
 +переподключиться
 +перепроверяется
 +перепроверялись
@@ -1376,6 +1458,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +просканирована
 +просканированного
 +просканированную
++просканированные
 +просканированных
 +просканированы
 +просканирует
@@ -1396,6 +1479,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +пятисимвольный
 +разблокируется
 +размечивания
++расшифруются
 +регистрозависимого
 +регистрозависимое
 +регистрозависимой
@@ -1487,6 +1571,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +трёхзначное
 +трёхкратное
 +трёхсимвольное
++трёхуровневыми
 +удобоварим
 +ужесточатся
 +урегулироваться
@@ -1514,14 +1599,15 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres.aspell pology-0.12/lang/ru/
 +языкозависимые
 diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres-names.aspell pology-0.12/lang/ru/spell/postgres-names.aspell
 --- pology-0.12.ori/lang/ru/spell/postgres-names.aspell	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/lang/ru/spell/postgres-names.aspell	2016-07-25 15:05:17.629398669 +0300
-@@ -0,0 +1,24 @@
++++ pology-0.12/lang/ru/spell/postgres-names.aspell	2016-11-02 15:12:19.386415404 +0300
+@@ -0,0 +1,25 @@
 +personal_ws-1.1 ru 0 UTF-8
 +Аргоннская
 +Аргоннской
++Галисийский
 +Евклидово
-+Кормаком
 +Кодда
++Кормаком
 +Криптоком
 +Криптокоме
 +Левенштейн
@@ -1529,6 +1615,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres-names.aspell pology-0.12/la
 +Метлакалте
 +Мэллори
 +Пердью
++Постгрес
 +Скалигера
 +Тадхоуп
 +Тридентского
@@ -1539,7 +1626,6 @@ diff -u -r -N pology-0.12.ori/lang/ru/spell/postgres-names.aspell pology-0.12/la
 +Хейуорде
 +Хейуорду
 +д'Арк
-+
 diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
 --- pology-0.12.ori/pology/markup.py	2016-05-26 07:35:49.264836668 +0300
 +++ pology-0.12/pology/markup.py	2016-05-26 07:35:44.293003636 +0300
@@ -1563,8 +1649,8 @@ diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
                     "Missing placeholder tags in translation: %(taglist)s.",
 diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.py
 --- pology-0.12.ori/pology/remove_ru.py	1970-01-01 03:00:00.000000000 +0300
-+++ pology-0.12/pology/remove_ru.py	2016-09-08 15:08:59.323946349 +0300
-@@ -0,0 +1,235 @@
++++ pology-0.12/pology/remove_ru.py	2016-11-02 15:07:48.219542196 +0300
+@@ -0,0 +1,267 @@
 +# -*- coding: utf-8 -*-
 +
 +"""
@@ -1577,7 +1663,7 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +import re
 +
 +_g_re = re.compile(ur"([0-9]{4})\sг\.", re.U)
-+_num_re = re.compile(ur"([0-9i]+)-(ый|ую)", re.U)
++_num_re = re.compile(ur"([0-9i]+)-(ое|ую|ый|ым)", re.U)
 +_td_re = re.compile(ur"\bт\. д\.", re.U)
 +_tp_re = re.compile(ur"\bт\. п\.", re.U)
 +_te_re = re.compile(ur"\bт\. е\.", re.U)
@@ -1641,6 +1727,7 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Аарон Д\. Гиффорд|"\
 +u"Абхиджит Менон-Сен|"\
 +u"Адам Брайтвелл|"\
++u"Адам Х. Пендлтон|"\
 +u"Адриан фон ден Дриш|"\
 +u"Алекс Хансакер|"\
 +u"Алексей Клюкин|"\
@@ -1650,9 +1737,11 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Амул Сул|"\
 +u"Анастасия Лубенникова|"\
 +u"Андреас Карлсон|"\
++u"Андреас Пфлюг|"\
 +u"Андреас Сельтенрейх|"\
 +u"Андреас Шербаум|"\
 +u"Андрес Фройнд|"\
++u"Антонио Рико Риего|"\
 +u"Антс Аасма|"\
 +u"Арне Шеффер|"\
 +u"Атри Шарма|"\
@@ -1664,13 +1753,17 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Брюс Момджян|"\
 +u"Вик Фиринг|"\
 +u"Винаяк Покале|"\
++u"Габриэль Бартолини|"\
 +u"Гаретта А\. Уоллмена|"\
 +u"Георга Готлоба|"\
 +u"Герман Мендез Браво|"\
 +u"Гжегож Сампольски|"\
++u"Гийом Леларж|"\
 +u"Гуржит Сингх|"\
 +u"Д'Арси Дж\. М\. Каин|"\
 +u"Д\. Уитли|"\
++u"Даниэль Густафсон|"\
++u"Дейв Пейдж|"\
 +u"Джеспер Педерсен|"\
 +u"Джефф Девис|"\
 +u"Джефф Джейнс|"\
@@ -1680,6 +1773,8 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Джо Геллерштейну|"\
 +u"Джо Конвей|"\
 +u"Джолли Чен|"\
++u"Джузеппе Сакко|"\
++u"Диего А. Гил|"\
 +u"Дилип Кумар|"\
 +u"Димитри Фонтейн|"\
 +u"Дональд Чамберлин|"\
@@ -1690,11 +1785,14 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Дэвид Стил|"\
 +u"Дэйв Витек|"\
 +u"Евгению Родичеву|"\
++u"Жан-Мишель Пуре|"\
 +u"Жозефом Жюстом Скалигером|"\
 +u"Жульен Рохо|"\
 +u"Иэн Барвик|"\
++u"Йори Юото|"\
 +u"КайГай Кохей|"\
 +u"Карл Лехенбауэр|"\
++u"Карме Серда Торрес|"\
 +u"Катрин Сейр|"\
 +u"Кевин Гриттнер|"\
 +u"Киотаро Хоригучи|"\
@@ -1713,9 +1811,11 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Мануэль Матар|"\
 +u"Мариса Емерсон|"\
 +u"Мариус Тиммер|"\
++u"Марк Йитман|"\
 +u"Марк Кирквуд|"\
 +u"Марко Ненчарини|"\
 +u"Марко Тииккая|"\
++u"Маркус Винанд|"\
 +u"Маркус Нуллмейер|"\
 +u"Марселя Корнакера|"\
 +u"Марти Раудсепп|"\
@@ -1736,11 +1836,14 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Норм Уолш|"\
 +u"О'Рейли|"\
 +u"Олег Бартунов|"\
++u"Оскари Сааренмаа|"\
 +u"Паван Деоласи|"\
++u"Павел Райскуп|"\
 +u"Павел Стехуле|"\
 +u"Палле Гиргенсона|"\
 +u"Педро Химено Фортеа|"\
 +u"Петр Желинек|"\
++u"Петри Жусте|"\
 +u"Петру-Флорин Миханча|"\
 +u"Питер Геохеган|"\
 +u"Питер Маунт|"\
@@ -1750,6 +1853,7 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Пол-Хеннинг Камп|"\
 +u"Пуассона|"\
 +u"Раджив Растоги|"\
++u"Рафаэль Энричи|"\
 +u"Рахила Сьед|"\
 +u"Роберт Хаас|"\
 +u"Ронан Данклау|"\
@@ -1766,11 +1870,13 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Такахиро Итагаки|"\
 +u"Такаюки Цунакава|"\
 +u"Тацуо Исии|"\
++u"Тимом Хадсоном|"\
 +u"Том Лейн|"\
 +u"Томас Вондра|"\
 +u"Томас Мунро|"\
 +u"Фабрицио де Ройес Мелло|"\
 +u"Фабьен Коэльо|"\
++u"Франк Лупо|"\
 +u"Фудзии Масао|"\
 +u"Фуруя Осаму|"\
 +u"Фёдор Сигаев|"\
@@ -1778,6 +1884,7 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Харибабу Комми|"\
 +u"Хейкки Линнакангас|"\
 +u"Хервин Вестстрате|"\
++u"Хироси Сайто|"\
 +u"Цзин Ван|"\
 +u"Чен Хуацзюнь|"\
 +u"Шигеру Ханада|"\
@@ -1788,9 +1895,20 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +u"Эндри Ю|"\
 +u"Эндрю Гирт|"\
 +u"Эндрю Дунстан|"\
++u"Эрвин Брандштеттер|"\
++u"Эриком Янгом|"\
 +u"Эцуро Фудзита|"\
 +u"Ян Урбански|"\
 +u"Янко Рихтер|"\
++u"Канг Хе Ван|"\
++u"Рудольфс Мазурс|"\
++u"Фред ван Беммель|"\
++u"Славомир Судник|"\
++u"Маркос Альвес Т. де Азеведо|"\
++u"Хельдер М. Виейра|"\
++u"Божан Скальяч|"\
++u"Чаой, Куо|"\
++
 +#u"|"\
 +")", re.U)
 +
@@ -1802,8 +1920,8 @@ diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.p
 +    return msgstr
 diff -u -r -N pology-0.12.ori/sieve/check_docbook4.py pology-0.12/sieve/check_docbook4.py
 --- pology-0.12.ori/sieve/check_docbook4.py	2016-05-26 07:35:49.324834654 +0300
-+++ pology-0.12/sieve/check_docbook4.py	2016-07-25 13:38:45.338147657 +0300
-@@ -41,7 +41,43 @@
++++ pology-0.12/sieve/check_docbook4.py	2016-10-07 10:34:37.037375529 +0300
+@@ -41,7 +41,44 @@
          self.caller_sync = False # no need to sync catalogs to the caller
          self.caller_monitored = False # no need for monitored messages
  
@@ -1842,6 +1960,7 @@ diff -u -r -N pology-0.12.ori/sieve/check_docbook4.py pology-0.12/sieve/check_do
 +            "prod": u"\u220F",
 +            "tdot": u"\u20DB",
 +            "version": "1",
++            "productname": "P",
 +            "features-unsupported": "-",
 +            "laquo": "«",
 +            "raquo": "»"})
