@@ -1,0 +1,1381 @@
+# Copyright (C)
+# This file is distributed under the same license as the Python package.
+#
+# Alexander LAW <exclusion@gmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: pgAdmin III\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-21 14:16+0300\n"
+"PO-Revision-Date: 2016-11-02 15:17+0300\n"
+"Last-Translator: Alexander LAW <exclusion@gmail.com>\n"
+"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ../../en_US/pgscript.rst:6
+msgid "`pgScript Scripting Language Reference`:index:"
+msgstr "`Справка по языку скриптов pgScript`:index:"
+
+#: ../../en_US/pgscript.rst:12
+msgid "Overview"
+msgstr "Обзор"
+
+#: ../../en_US/pgscript.rst:14
+msgid "pgScript is composed of pgScript commands::"
+msgstr "Скрипт на языке pgScript может включать следующие команды::"
+
+#: ../../en_US/pgscript.rst:16
+msgid ""
+"pgScript command\n"
+"    : Regular PostgreSQL SQL Command (SELECT INSERT CREATE ...)\n"
+"    | Variable declaration or assignment (DECLARE SET)\n"
+"    | Control-of-flow structure (IF WHILE)\n"
+"    | Procedure (ASSERT PRINT LOG RMLINE)"
+msgstr ""
+"Команды pgScript:\n"
+"      Обычные SQL-команды PostgreSQL (SELECT INSERT CREATE ...)\n"
+"    | Объявления или присвоения переменных (DECLARE SET)\n"
+"    | Конструкции для управления выполнением (IF WHILE)\n"
+"    | Процедуры (ASSERT PRINT LOG RMLINE)"
+
+#: ../../en_US/pgscript.rst:22
+msgid ""
+"Command names (**SELECT**, **IF**, **SET**, ...) are case-insensitive and "
+"must be ended with a semi-column ``;``. Identifiers are case-sensitive."
+msgstr ""
+"Имена команд (**SELECT**, **IF**, **SET**, ...) могут записываться в любом "
+"регистре и должны заканчиваться точкой с запятой ``;``. Идентификаторы "
+"задаются с учётом регистра."
+
+#: ../../en_US/pgscript.rst:28
+msgid "Examples"
+msgstr "Примеры"
+
+#: ../../en_US/pgscript.rst:33
+msgid "Batch table creations"
+msgstr "Создание набора таблиц"
+
+#: ../../en_US/pgscript.rst:37
+msgid ""
+"DECLARE @I, @T; -- Variable names begin with a @\n"
+"SET @I = 0; -- @I is an integer\n"
+"WHILE @I &lt; 20\n"
+"BEGIN\n"
+"   SET @T = 'table' + CAST (@I AS STRING); -- Casts @I\n"
+"   CREATE TABLE @T (id integer primary key, data text);\n"
+"\n"
+"   SET @I = @I + 1;\n"
+"END"
+msgstr ""
+"DECLARE @I, @T; -- Имена переменных начинаются с @\n"
+"SET @I = 0; -- @I — это целое число\n"
+"WHILE @I &lt; 20\n"
+"BEGIN\n"
+"   SET @T = 'table' + CAST (@I AS STRING); -- Приведение @I\n"
+"   CREATE TABLE @T (id integer primary key, data text);\n"
+"\n"
+"   SET @I = @I + 1;\n"
+"END"
+
+#: ../../en_US/pgscript.rst:50
+msgid "Insert random data"
+msgstr "Добавление случайных данных"
+
+#: ../../en_US/pgscript.rst:54
+msgid ""
+"DECLARE @I, @J, @T, @G;\n"
+"SET @I = 0;\n"
+"SET @G1 = INTEGER(10, 29, 1); /* Random integer generator\n"
+"                             Unique numbers between 10 and 29 */\n"
+"SET @G2 = STRING(10, 20, 3); /* Random string generator\n"
+"                             3 words between 10 and 20 characters */\n"
+"WHILE @I &lt; 20\n"
+"BEGIN\n"
+"    SET @T = 'table' + CAST (@I AS STRING);\n"
+"\n"
+"SET @J = 0;\n"
+"    WHILE @J &lt; 20\n"
+"    BEGIN\n"
+"        INSERT INTO @T VALUES (@G1, '@G2');\n"
+"        SET @J = @J + 1;\n"
+"    END\n"
+"\n"
+"SET @I = @I + 1;\n"
+"END"
+msgstr ""
+"DECLARE @I, @J, @T, @G;\n"
+"SET @I = 0;\n"
+"SET @G1 = INTEGER(10, 29, 1); /* Генератор случайных чисел\n"
+"                             Выдаёт число от 10 до 29 */\n"
+"SET @G2 = STRING(10, 20, 3); /* Генератор случайных строк\n"
+"                             Выдаёт 3 слова от 10 до 20 символов длиной*/\n"
+"WHILE @I &lt; 20\n"
+"BEGIN\n"
+"    SET @T = 'table' + CAST (@I AS STRING);\n"
+"\n"
+"SET @J = 0;\n"
+"    WHILE @J &lt; 20\n"
+"    BEGIN\n"
+"        INSERT INTO @T VALUES (@G1, '@G2');\n"
+"        SET @J = @J + 1;\n"
+"    END\n"
+"\n"
+"SET @I = @I + 1;\n"
+"END"
+
+#: ../../en_US/pgscript.rst:77
+msgid "Batch table deletions"
+msgstr "Удаление набора таблиц"
+
+#: ../../en_US/pgscript.rst:81
+msgid ""
+"DECLARE @I, @T; -- Declaring is optional\n"
+"SET @I = 0;\n"
+"WHILE 1 -- Always true\n"
+"BEGIN\n"
+"    IF @I &gt;= 20\n"
+"      BREAK; -- Exit the loop if @I &gt; 20\n"
+"\n"
+" SET @T = 'table' + CAST (@I AS STRING);\n"
+"    DROP TABLE @T;\n"
+"\n"
+" SET @I = @I + 1;\n"
+"END"
+msgstr ""
+"DECLARE @I, @T; -- Объявлять переменные необязательно\n"
+"SET @I = 0;\n"
+"WHILE 1 -- Always true\n"
+"BEGIN\n"
+"    IF @I &gt;= 20\n"
+"      BREAK; -- Выйти из цикла, когда @I &gt; 20\n"
+"\n"
+" SET @T = 'table' + CAST (@I AS STRING);\n"
+"    DROP TABLE @T;\n"
+"\n"
+" SET @I = @I + 1;\n"
+"END"
+
+#: ../../en_US/pgscript.rst:97
+msgid "Print information on screen"
+msgstr "Вывод информации на экран"
+
+#: ../../en_US/pgscript.rst:101
+msgid ""
+"SET @PROGR@M#TITLE = 'pgScript';\n"
+"PRINT '';\n"
+"PRINT @PROGR@M#TITLE + ' features:';\n"
+"PRINT '';\n"
+"PRINT '  * Regular PostgreSQL commands';\n"
+"PRINT '  * Control-of-flow language';\n"
+"PRINT '  * Local variables';\n"
+"PRINT '  * Random data generators';</pre>"
+msgstr ""
+"SET @PROGR@M#TITLE = 'pgScript';\n"
+"PRINT '';\n"
+"PRINT @PROGR@M#TITLE + ' предлагает:';\n"
+"PRINT '';\n"
+"PRINT '  * Обычные команды PostgreSQL';\n"
+"PRINT '  * Язык управления выполнением';\n"
+"PRINT '  * Локальные переменные';\n"
+"PRINT '  * Генераторы случайных данных';</pre>"
+
+#: ../../en_US/pgscript.rst:113
+msgid "SQL Commands"
+msgstr "Команды SQL"
+
+#: ../../en_US/pgscript.rst:115
+msgid "You can run ANY PostgreSQL query from a pgScript EXCEPT those ones::"
+msgstr "В pgScript вы можете выполнять ЛЮБЫЕ запросы PostgreSQL, КРОМЕ::"
+
+#: ../../en_US/pgscript.rst:117
+msgid ""
+"BEGIN;\n"
+"END;"
+msgstr ""
+"BEGIN;\n"
+"END;"
+
+#: ../../en_US/pgscript.rst:120
+msgid ""
+"This is because **BEGIN** and **END** are used for delimiting blocks. "
+"Instead use::"
+msgstr ""
+"Это связано с тем, что слова **BEGIN** и **END** используются для разделения "
+"блоков. Вместо них применяйте::"
+
+#: ../../en_US/pgscript.rst:123
+msgid ""
+"BEGIN TRANSACTION;\n"
+"END TRANSACTION;"
+msgstr ""
+"BEGIN TRANSACTION;\n"
+"END TRANSACTION;"
+
+#: ../../en_US/pgscript.rst:126
+msgid ""
+"For a list of PostgreSQL commands: `http://www.postgresql.org/docs/8.3/"
+"interactive/sql-commands.html <http://www.postgresql.org/docs/8.3/"
+"interactive/sql-commands.html>`_"
+msgstr ""
+"Список команд PostgreSQL вы можете найти в документации: `https://"
+"postgrespro.ru/docs/postgresql/current/sql-commands.html <https://"
+"postgrespro.ru/docs/postgresql/current/sql-commands.html>`_"
+
+#: ../../en_US/pgscript.rst:131
+msgid "Variables"
+msgstr "Переменные"
+
+#: ../../en_US/pgscript.rst:133
+msgid ""
+"There are two main types of variables : simple variables and records (result "
+"sets composed of lines and columns)."
+msgstr ""
+"Есть два основных типа переменных: простые переменные и записи (наборы "
+"результатов, состоящие из строк и столбцов)."
+
+#: ../../en_US/pgscript.rst:136
+msgid ""
+"Variable names begin with a ``@`` and can be composed of letters, digits, "
+"``_``, ``#``, ``@``."
+msgstr ""
+"Имена переменных начинаются с символа ``@`` и могут содержать буквы, цифр и "
+"символы ``_``, ``#``, ``@``."
+
+#: ../../en_US/pgscript.rst:139
+msgid ""
+"Variable type is guessed automatically according to the kind of value it "
+"contains. This can be one of: number (real or integer), string, record."
+msgstr ""
+"Тип переменных выбирается автоматически по типу значения, которое в ней "
+"содержится. Это может быть число (вещественное или целое), строка или запись."
+
+#: ../../en_US/pgscript.rst:145
+msgid "Simple variables"
+msgstr "Простые переменные"
+
+#: ../../en_US/pgscript.rst:148
+msgid "Simple variable declaration"
+msgstr "Объявление простой переменной"
+
+#: ../../en_US/pgscript.rst:150
+msgid "Declaring simple variable is optional::"
+msgstr ""
+"Объявление простой переменной не является обязательным и выглядит так::"
+
+#: ../../en_US/pgscript.rst:152
+msgid ""
+"DECLARE @A, @B;\n"
+"DECLARE @VAR1;"
+msgstr ""
+"DECLARE @A, @B;\n"
+"DECLARE @VAR1;"
+
+#: ../../en_US/pgscript.rst:156
+msgid "Simple variable affectation"
+msgstr "Инициализация простой переменной"
+
+#: ../../en_US/pgscript.rst:158
+msgid ""
+"This is done with the **SET** command. The variable type depends on the "
+"value assigned to this variable::"
+msgstr ""
+"Это осуществляется с помощью команды **SET**. Тип переменной будет зависеть "
+"от значения, назначенного ей::"
+
+#: ../../en_US/pgscript.rst:161
+msgid ""
+"SET @A = 1000, @B = 2000;   -- @A and @B are <strong>integer numbers**\n"
+"SET @C = 10e1, @D = 1.5;    -- @C and @D are <strong>real numbers**\n"
+"SET @E = 'ab', @F = 'a''b'; -- @E and @F are <strong>strings**\n"
+"SET @G = \"ab\", @H = \"a\\\"b\"; -- @G and @H are <strong>strings**"
+msgstr ""
+"SET @A = 1000, @B = 2000;   -- @A и @B — **целые числа**\n"
+"SET @C = 10e1, @D = 1.5;    -- @C и @D — **вещественные числа**\n"
+"SET @E = 'ab', @F = 'a''b'; -- @E и @F — **строки**\n"
+"SET @G = \"ab\", @H = \"a\\\"b\"; -- @G и @H — **строки**"
+
+#: ../../en_US/pgscript.rst:166
+msgid ""
+"An uninitialized variable defaults to an empty string. It is possible to "
+"override variables as many times as wanted::"
+msgstr ""
+"Неинициализированная переменная считается содержащей пустую строку. Значения "
+"переменных можно переопределять сколько угодно раз:"
+
+#: ../../en_US/pgscript.rst:169
+msgid ""
+"PRINT @A;      -- Prints an empty string\n"
+"SET @A = 1000; -- @A is initialized an integer\n"
+"PRINT @A;      -- Prints 1000\n"
+"SET @A = 'ab'; -- @A becomes a string\n"
+"PRINT @A;      -- Prints ab"
+msgstr ""
+"PRINT @A;      -- Выводится пустая строка\n"
+"SET @A = 1000; -- @A получает целое значение\n"
+"PRINT @A;      -- Выводится 1000\n"
+"SET @A = 'ab'; -- @A становится строковой\n"
+"PRINT @A;      -- Выводится ab"
+
+#: ../../en_US/pgscript.rst:176 ../../en_US/pgscript.rst:567
+msgid "Data generators"
+msgstr "Генераторы данных"
+
+#: ../../en_US/pgscript.rst:178
+msgid ""
+"Data generators allows users to generate random values. There are various "
+"types of generators, each one producing different type of data. A variable "
+"initialized with a data generator behaves like a regular simple variable "
+"except that it has a different value each time it is used::"
+msgstr ""
+"Генераторы данных позволяют пользователям получать случайные значения. "
+"Генераторы бывают различных типов и отличаются они типами генерируемых "
+"данных. Переменная, проинициализированная генератором данных, ведёт себя как "
+"обычная переменная, за исключением того, что при каждом использовании она "
+"принимает новое значение::"
+
+#: ../../en_US/pgscript.rst:184
+msgid ""
+"SET @A = INTEGER(100, 200);\n"
+"PRINT @A; -- Prints an integer between 100 and 200\n"
+"PRINT @A; -- Prints another integer between 100 and 200"
+msgstr ""
+"SET @A = INTEGER(100, 200);\n"
+"PRINT @A; -- Выводится целое от 100 до 200\n"
+"PRINT @A; -- Выводится ещё одно целое от 100 до 200"
+
+#: ../../en_US/pgscript.rst:188
+msgid ""
+"A variable can contain a generator but its type is one of: number (real or "
+"integer), string. For a list of available generators and their associated "
+"type, see `generators`_."
+msgstr ""
+"Переменная может содержать генератор, но её типом будет числовой "
+"(вещественная или целая) или строка. Полный список доступных генераторов и "
+"связанных с ними типов приведён :ref:`ниже <generators>`."
+
+#: ../../en_US/pgscript.rst:195 ../../en_US/pgscript.rst:340
+msgid "Records"
+msgstr "Записи"
+
+#: ../../en_US/pgscript.rst:198
+msgid "Record declaration"
+msgstr "Объявление записи"
+
+#: ../../en_US/pgscript.rst:200
+msgid ""
+"Declaring a record is **required**. A name for each column must be specified "
+"even if they will not be used anymore afterwards::"
+msgstr ""
+"Объявлять записи **обязательно**. При этом необходимо задать имя для каждого "
+"столбца, даже для тех, что впоследствии не будут использоваться::"
+
+#: ../../en_US/pgscript.rst:203
+msgid ""
+"DECLARE @R1 { @A, @B }, @R2 { @A, @C }; -- Two records with two  columns\n"
+"DECLARE @R3 { @A, @B, @C, @D };         -- One record  with four columns"
+msgstr ""
+"DECLARE @R1 { @A, @B }, @R2 { @A, @C }; -- Две записи с двумя столбцами\n"
+"DECLARE @R3 { @A, @B, @C, @D };         -- Одна запись с четырьмя столбцами"
+
+#: ../../en_US/pgscript.rst:206
+msgid "The number of lines is dynamic: see the next section."
+msgstr "Число строк определяется динамически: см. следующий раздел."
+
+#: ../../en_US/pgscript.rst:209
+msgid "Record affectation"
+msgstr "Манипуляции с записями"
+
+#: ../../en_US/pgscript.rst:211
+msgid ""
+"To access a specific location in a record, one must use the line number "
+"(starts at 0) and can use either the column name (between quotes) or the "
+"column number (starts at 0). This specific location behaves like a simple "
+"variable. Note that a record cannot contain a record::"
+msgstr ""
+"Чтобы обратиться к определённой ячейке в записи, нужно задать номер строки "
+"(начинается с 0) и можно задать либо имя столбца (заключённое в кавычки), "
+"либо его номер (начиная с 0). Такая ссылка на ячейку действует как простая "
+"переменная. Заметьте, что запись не может содержать запись::"
+
+#: ../../en_US/pgscript.rst:216
+msgid ""
+"SET @R1[0]['@A'] = 1; -- First line &amp; first column\n"
+"SET @R1[0][0] = 1;    -- Same location\n"
+"SET @R1[4]['@B'] = 1; -- Fifth line &amp; second column\n"
+"SET @R1[0][1] = 1;    -- Same location"
+msgstr ""
+"SET @R1[0]['@A'] = 1; -- Первая строка, первый столбец\n"
+"SET @R1[0][0] = 1;    -- Та же ячейка\n"
+"SET @R1[4]['@B'] = 1; -- Пятая строка, второй столбец\n"
+"SET @R1[0][1] = 1;    -- Та же ячейка"
+
+#: ../../en_US/pgscript.rst:221
+msgid ""
+"In the above example, three empty lines are automatically inserted between "
+"the first and the fifth. Using an invalid column number or name results in "
+"an exception."
+msgstr ""
+"В показанном выше примере между первой и пятой строками автоматически "
+"вставляются три пустые строки. При попытке указать недопустимый номер "
+"столбца или имя возникает исключение."
+
+#: ../../en_US/pgscript.rst:225
+msgid ""
+"Specific location can be used as right values as well. A specific line can "
+"also be used as right value::"
+msgstr ""
+"Ссылка на ячейку может также фигурировать в правой части присваивания. Кроме "
+"того, справа может фигурировать и определённая строка записи::"
+
+#: ../../en_US/pgscript.rst:228
+msgid ""
+"SET @R1[0][0] = @R3[0][1], @A = @R2[0][0]; -- Behaves like simple variables\n"
+"SET @A = @R1[1]; -- @A becomes a record which is the first line of @R1"
+msgstr ""
+"SET @R1[0][0] = @R3[0][1], @A = @R2[0][0]; -- То же поведение, что и простых "
+"переменных\n"
+"SET @A = @R1[1]; -- @A становится записью, содержащей первую строку @R1"
+
+#: ../../en_US/pgscript.rst:231
+msgid ""
+"Remember that ``SET @R1[0][0] = @R2`` is impossible because a record cannot "
+"contain a record."
+msgstr ""
+"Помните, что запись ``SET @R1[0][0] = @R2`` невозможна, так как запись не "
+"может содержать запись."
+
+#: ../../en_US/pgscript.rst:234
+msgid ""
+"It is possible to assign a record to a variable, in this case the variable "
+"does not need to be declared::"
+msgstr ""
+"Переменной можно присвоить запись, и в этом случае объявлять переменную "
+"необязательно::"
+
+#: ../../en_US/pgscript.rst:237
+msgid "SET @A = @R3; -- @A becomes a record because it is assigned a record"
+msgstr ""
+"SET @A = @R3; -- @A становится записью, потому что ей присваивается запись"
+
+#: ../../en_US/pgscript.rst:240
+msgid "SQL queries"
+msgstr "SQL-запросы"
+
+#: ../../en_US/pgscript.rst:242
+msgid ""
+"Any SQL query executed returns a record. If the query is a ``SELECT`` query "
+"then it returns the results of the query. If it is something else then it "
+"returns a one-line record (``true``) if this is a success otherwise a zero-"
+"line record (``false``)::"
+msgstr ""
+"Выполненный SQL-запрос возвращает запись. Если это запрос ``SELECT``, то это "
+"запись с результатами запроса. Если это что-то другое, то возвращается "
+"запись с одной строкой (``true``) в случае успеха, и запись без строк "
+"(``false``) в противном случае::"
+
+#: ../../en_US/pgscript.rst:247
+msgid ""
+"SET @A = SELECT * FROM table;   -- @A is a record with the results of the "
+"query\n"
+"SET @B = INSERT INTO table ...; -- @B is a one-line record if the query "
+"succeeds"
+msgstr ""
+"SET @A = SELECT * FROM table;   -- @A — запись с результатами запроса\n"
+"SET @B = INSERT INTO table ...; -- @B — запись с одной строкой в случае "
+"успеха запроса"
+
+#: ../../en_US/pgscript.rst:251
+msgid "Record functions"
+msgstr "Функции для работы с записями"
+
+#: ../../en_US/pgscript.rst:253
+msgid "See `function2`_."
+msgstr "См. :ref:`описание функций <function2>`."
+
+#: ../../en_US/pgscript.rst:258
+msgid "Cast"
+msgstr "Приведения"
+
+#: ../../en_US/pgscript.rst:260
+msgid ""
+"It is possible to convert a variable from one type to another with the cast "
+"function::"
+msgstr ""
+"Тип переменной можно сменить с одного на другой с помощью функции "
+"приведения::"
+
+#: ../../en_US/pgscript.rst:263
+msgid ""
+"SET @A = CAST (@B AS STRING);\n"
+"SET @A = CAST (@B AS REAL);\n"
+"SET @A = CAST (@B AS INTEGER);\n"
+"SET @A = CAST (@B AS RECORD);"
+msgstr ""
+"SET @A = CAST (@B AS STRING);\n"
+"SET @A = CAST (@B AS REAL);\n"
+"SET @A = CAST (@B AS INTEGER);\n"
+"SET @A = CAST (@B AS RECORD);"
+
+#: ../../en_US/pgscript.rst:268
+msgid ""
+"When a record is converted to a string, it is converted to its flat "
+"representation. When converted to a number, the record is first converted to "
+"a string and then to a number (see string conversion for more details)."
+msgstr ""
+"Когда запись преобразуется в строку, она переводится в плоское "
+"представление. Когда она преобразуется в число, сначала она переводится в "
+"строку, а затем в число (за подробностями обратитесь к описанию "
+"преобразования строк)."
+
+#: ../../en_US/pgscript.rst:273
+msgid ""
+"When a number is converted to a string, it is converted to its string "
+"representation. When converted to a record, it is converted to a one-line-"
+"one-column record whose value is the number."
+msgstr ""
+"Когда число преобразуется в строку, оно переводится в своё текстовое "
+"представление. Когда оно преобразуется в запись, оно становится записью с "
+"одной строкой и одним столбцом, содержащим это число."
+
+#: ../../en_US/pgscript.rst:277
+msgid ""
+"When a string is converted to a number, if the string represents a number "
+"then this number is returned else an exception is thrown. When converted to "
+"a record, either the program can find a **record pattern** in the string or "
+"it converts it to a one-line-one-column record whose value is the string. A "
+"record pattern is::"
+msgstr ""
+"Когда строка преобразуется в число, то, если она представляет число, "
+"возвращается оно, а в противном случае выдаётся исключение. При "
+"преобразовании текстовой строки в запись программа может либо найти в этом "
+"столбце **шаблон записи**, либо преобразовать её в запись с одной строкой и "
+"одним столбцом, который и будет содержать начальную строку. Шаблон записи "
+"имеет следующий вид::"
+
+#: ../../en_US/pgscript.rst:283
+msgid ""
+"SET @B = '(1, \"abc\", \"ab\\\\\"\")(1, \"abc\", \"ab\\\\\"\")'; -- @B is a "
+"string\n"
+"SET @B = CAST (@B AS RECORD); @B becomes a two-line-three-column record"
+msgstr ""
+"SET @B = '(1, \"abc\", \"ab\\\\\"\")(1, \"abc\", \"ab\\\\\"\")'; -- @B — это "
+"строка\n"
+"SET @B = CAST (@B AS RECORD); @B становится записью с двумя строками и тремя "
+"столбцами"
+
+#: ../../en_US/pgscript.rst:286
+msgid ""
+"Remember a string is surrounded by simple quotes. Strings composing a record "
+"must be surrounded by double quotes which are escaped with ``\\\\`` (we "
+"double the slash because it is already a special character for the enclosing "
+"simple quotes)."
+msgstr ""
+"Помните, что строка должна заключаться в апострофы. При этом строки, "
+"составляющие запись, должны заключаться в кавычки, экранируемые символами ``"
+"\\\\`` (обратную косую черту нужно продублировать, так как она сама по себе "
+"спецсимвол для экранирования апострофов)."
+
+#: ../../en_US/pgscript.rst:294
+msgid "Operations"
+msgstr "Операции"
+
+#: ../../en_US/pgscript.rst:296
+msgid ""
+"Operations can only be performed between operands of the same type. Cast "
+"values in order to conform to this criterion."
+msgstr ""
+"Операции можно выполнить только с операндами одного типа. Для удовлетворения "
+"этого требования можно выполнить приведение значений."
+
+#: ../../en_US/pgscript.rst:299
+msgid "Comparisons result in a number which is 0 or 1."
+msgstr "Результатом сравнения является число, равное 0 или 1."
+
+#: ../../en_US/pgscript.rst:302 ../../en_US/pgscript.rst:640
+msgid "Strings"
+msgstr "Строки"
+
+#: ../../en_US/pgscript.rst:304 ../../en_US/pgscript.rst:321
+#: ../../en_US/pgscript.rst:342
+msgid "Comparisons: ``= <> > < <= >= AND OR``"
+msgstr "Сравнения: ``= <> > < <= >= AND OR``"
+
+#: ../../en_US/pgscript.rst:306
+msgid "Concatenation: ``+``"
+msgstr "Конкатенация: ``+``"
+
+#: ../../en_US/pgscript.rst:310
+msgid "SET @B = @A + 'abcdef'; -- @A must be a string and @B will be a string"
+msgstr ""
+"SET @B = @A + 'abcdef'; -- @A должна быть строковой переменной и @B будет "
+"строкой"
+
+#: ../../en_US/pgscript.rst:312
+msgid "Boolean value: non-empty string is ``true``, empty string is ``false``"
+msgstr "Логическое значение: непустая строка — ``истина``, пустая — ``ложь``"
+
+#: ../../en_US/pgscript.rst:314 ../../en_US/pgscript.rst:346
+msgid "Inverse boolean value: ``NOT``"
+msgstr "Обратное логическое значение: ``NOT``"
+
+#: ../../en_US/pgscript.rst:316
+msgid "Case-insensitive comparison: ``~=``"
+msgstr "Сравнение без учёта регистра: ``~=``"
+
+#: ../../en_US/pgscript.rst:319
+msgid "Numbers"
+msgstr "Числа"
+
+#: ../../en_US/pgscript.rst:323
+msgid "Arithmetic: ``+ - * / %``"
+msgstr "Арифметические операции: ``+ - * / %``"
+
+#: ../../en_US/pgscript.rst:327
+msgid ""
+"SET @A = CAST ('10' AS INTEGER) + 5; -- '10' string is converted to a number"
+msgstr ""
+"SET @A = CAST ('10' AS INTEGER) + 5; -- строка '10' преобразуется в число"
+
+#: ../../en_US/pgscript.rst:329
+msgid "Boolean value: 0 is ``false``, anything else is ``true``"
+msgstr "Логическое значение: 0 — ``ложь``, всё остальное — ``истина``"
+
+#: ../../en_US/pgscript.rst:331
+msgid "Inverse boolean value: ``NOT`` (note that ``NOT NOT 10 = 1``)"
+msgstr ""
+"Обратное логическое значение: ``NOT`` (заметьте, что ``NOT NOT 10 = 1``)"
+
+#: ../../en_US/pgscript.rst:333
+msgid ""
+"An arithmetic operation involving at least one real number gives a real "
+"number as a result::"
+msgstr ""
+"Арифметическая операция, в которое задействуется хотя бы одно вещественное "
+"число, выдаёт вещественное число в результате::"
+
+#: ../../en_US/pgscript.rst:336
+msgid ""
+"SET @A = 10 / 4.; -- 4. is a real so real division: @A = 2.5\n"
+"SET @A = 10 / 4;  -- 4 is an integer so integer division: @A = 2"
+msgstr ""
+"SET @A = 10 / 4.; -- 4. — вещественное число, так что деление вещественное: "
+"@A = 2.5\n"
+"SET @A = 10 / 4;  -- 4 — целое, поэтому деление целочисленное: @A = 2"
+
+#: ../../en_US/pgscript.rst:344
+msgid "Boolean value: zero-line record is ``false``, anything else is ``true``"
+msgstr ""
+"Логическое значение: запись нулевой длины — ``ложь``, всё остальное — "
+"``истина``"
+
+#: ../../en_US/pgscript.rst:348
+msgid ""
+"Comparisons for records are about inclusion and exclusion. Order of lines "
+"does not matter. ``<=`` means that each row in the left operand has a match "
+"in the right operand. ``>=`` means the opposite. ``=`` means that ``<=`` and "
+"``>=`` are both true at the same time..."
+msgstr ""
+"Операции сравнения записей оценивают вхождение и исключений значений. "
+"Порядок строк при этом не имеет значения. Условие ``<=`` истинно, если для "
+"каждой строки левого операнда находится вхождение в правом операнде. Условие "
+"``>=`` истинно в противоположном случае. Условие ``=`` истинно, когда ``<=`` "
+"и ``>=`` истинны одновременно..."
+
+#: ../../en_US/pgscript.rst:353
+msgid ""
+"Comparisons are performed on strings: even if a record contains numbers like "
+"``10`` and ``1e1`` we will have ``'10' <> '1e1'``."
+msgstr ""
+"Сравнения выполняются со строками: даже если записи содержат числа, например "
+"с числами ``10`` и ``1e1`` будет получено ``'10' <> '1e1'``."
+
+#: ../../en_US/pgscript.rst:359
+msgid "Control-of-flow structures"
+msgstr "Управление потоком выполнения"
+
+#: ../../en_US/pgscript.rst:364
+msgid "Conditional structure"
+msgstr "Конструкция условия"
+
+#: ../../en_US/pgscript.rst:368
+msgid ""
+"IF condition\n"
+"BEGIN\n"
+"    pgScript commands\n"
+"END\n"
+"ELSE\n"
+"BEGIN\n"
+"    pgScript commands\n"
+"END"
+msgstr ""
+"IF условие\n"
+"BEGIN\n"
+"    команды pgScript\n"
+"END\n"
+"ELSE\n"
+"BEGIN\n"
+"    команды pgScript\n"
+"END"
+
+#: ../../en_US/pgscript.rst:377 ../../en_US/pgscript.rst:392
+msgid ""
+"pgScript commands are optional. **BEGIN** and **END** keywords are optional "
+"if there is only one pgScript command."
+msgstr ""
+"Команды pgScript могут отсутствовать. Слова **BEGIN** и **END** являются "
+"необязательными в случае указания ровно одной команды pgScript."
+
+#: ../../en_US/pgscript.rst:383
+msgid "Loop structure"
+msgstr "Конструкция цикла"
+
+#: ../../en_US/pgscript.rst:387
+msgid ""
+"WHILE condition\n"
+"BEGIN\n"
+"    pgScript commands\n"
+"END"
+msgstr ""
+"WHILE условие\n"
+"BEGIN\n"
+"    команды pgScript\n"
+"END"
+
+#: ../../en_US/pgscript.rst:395
+msgid ""
+"**BREAK** ends the enclosing **WHILE** loop, while **CONTINUE** causes the "
+"next iteration of the loop to execute. **RETURN** behaves like **BREAK**::"
+msgstr ""
+"**BREAK** прерывает окружающий цикл **WHILE**, а **CONTINUE** запускает "
+"следующую итерацию цикла. **RETURN** действует подобно команде **BREAK**::"
+
+#: ../../en_US/pgscript.rst:399
+msgid ""
+"WHILE condition1\n"
+"BEGIN\n"
+"    IF condition2\n"
+"    BEGIN\n"
+"        BREAK;\n"
+"    END\n"
+"END"
+msgstr ""
+"WHILE условие1\n"
+"BEGIN\n"
+"    IF условие2\n"
+"    BEGIN\n"
+"        BREAK;\n"
+"    END\n"
+"END"
+
+#: ../../en_US/pgscript.rst:410
+msgid "Conditions"
+msgstr "Условия"
+
+#: ../../en_US/pgscript.rst:412
+msgid ""
+"Conditions are in fact results of operations. For example the string "
+"comparison ``'ab' = 'ac'`` will result in a number which is ``false`` (the "
+"equality is not true)::"
+msgstr ""
+"Условия на самом деле являются результатами операций. Например, сравнение "
+"строк ``'ab' = 'ac'`` даёт результат ``ложь`` (равенство не выполняется)::"
+
+#: ../../en_US/pgscript.rst:416
+msgid ""
+"IF 'ab' ~= 'AB' -- Case-insensitive comparison which result in 1 (true) "
+"which is true\n"
+"BEGIN\n"
+"    -- This happens\n"
+"END\n"
+"\n"
+"IF 0 -- false\n"
+"BEGIN\n"
+"    -- This does **not** happen\n"
+"END\n"
+"ELSE\n"
+"BEGIN\n"
+"    -- This happens\n"
+"END\n"
+"\n"
+"WHILE 1\n"
+"BEGIN\n"
+"    -- Infinite loop: use BREAK for exiting\n"
+"END"
+msgstr ""
+"IF 'ab' ~= 'AB' -- Сравнение без учёта регистра даёт результат 1 (истина)\n"
+"BEGIN\n"
+"    -- Это выполняется\n"
+"END\n"
+"\n"
+"IF 0 -- ложь\n"
+"BEGIN\n"
+"    -- Это **не** выполняется\n"
+"END\n"
+"ELSE\n"
+"BEGIN\n"
+"    -- Это выполняется\n"
+"END\n"
+"\n"
+"WHILE 1\n"
+"BEGIN\n"
+"    -- Бесконечный цикл: для выхода примените BREAK\n"
+"END"
+
+#: ../../en_US/pgscript.rst:435
+msgid ""
+"It is possible to the result of a SQL SELECT query directly as a condition. "
+"The query needs to be surrounded by parenthesis::"
+msgstr ""
+"Результат SQL-запроса SELECT можно задействовать непосредственно в условии. "
+"Для этого запрос нужно заключить в скобки::"
+
+#: ../../en_US/pgscript.rst:438
+msgid ""
+"IF (SELECT 1 FROM table)\n"
+"BEGIN\n"
+"    -- This means that table exists otherwise the condition would be false\n"
+"END"
+msgstr ""
+"IF (SELECT 1 FROM table)\n"
+"BEGIN\n"
+"    -- Это выполняется, если таблица существует, в противном случае "
+"результат условия будет ложным\n"
+"END"
+
+#: ../../en_US/pgscript.rst:446
+msgid "Additional functions and procedures"
+msgstr "Дополнительные функции и процедуры"
+
+#: ../../en_US/pgscript.rst:451
+msgid "Procedures"
+msgstr "Процедуры"
+
+#: ../../en_US/pgscript.rst:453
+msgid ""
+"Procedures do not return a result. They must be used alone on a line and "
+"cannot be assigned to a variable."
+msgstr ""
+"Процедуры не возвращают результат. Их вызов должен записываться в отдельной "
+"строке и он не может присваиваться переменной."
+
+#: ../../en_US/pgscript.rst:457
+msgid "Print"
+msgstr "Вывод"
+
+#: ../../en_US/pgscript.rst:459
+msgid "Prints an expression on the screen::"
+msgstr "Выводит выражение на экран::"
+
+#: ../../en_US/pgscript.rst:461
+msgid "PRINT 'The value of @A is' + CAST (@A AS STRING);"
+msgstr "PRINT 'Значение @A: ' + CAST (@A AS STRING);"
+
+#: ../../en_US/pgscript.rst:464
+msgid "Assert"
+msgstr "Отладочное утверждение"
+
+#: ../../en_US/pgscript.rst:466
+msgid "Throws an exception if the expression evaluated is false::"
+msgstr "Выдаёт исключение при ложном результате выражения::"
+
+#: ../../en_US/pgscript.rst:468
+msgid "ASSERT 5 &gt; 3 AND 'a' = 'a';"
+msgstr "ASSERT 5 &gt; 3 AND 'a' = 'a';"
+
+#: ../../en_US/pgscript.rst:471
+msgid "Remove line"
+msgstr "Удаление строки"
+
+#: ../../en_US/pgscript.rst:473
+msgid "Removes the specified line of a record::"
+msgstr "Удаляет определённую строку записи::"
+
+#: ../../en_US/pgscript.rst:475
+msgid "RMLINE(@R[1]); -- Removes @R second line"
+msgstr "RMLINE(@R[1]); -- Удаляет вторую строку @R"
+
+#: ../../en_US/pgscript.rst:480
+msgid "Functions"
+msgstr "Функции"
+
+#: ../../en_US/pgscript.rst:482
+msgid ""
+"Functions do return a result. Their return value can be assigned to a "
+"variable, like the ``CAST`` operation."
+msgstr ""
+"Функции возвращают результат. Возвращённое имя значение можно присвоить "
+"переменной, как результат операции ``CAST``."
+
+#: ../../en_US/pgscript.rst:486
+msgid "Trim"
+msgstr "Trim"
+
+#: ../../en_US/pgscript.rst:488
+msgid "Removes extra spaces surrounding a string::"
+msgstr "Удаляет лишние пробелы, окружающие строку::"
+
+#: ../../en_US/pgscript.rst:490
+msgid "SET @A = TRIM(' a '); -- @A = 'a'</pre>"
+msgstr "SET @A = TRIM(' a '); -- @A = 'a'</pre>"
+
+#: ../../en_US/pgscript.rst:493
+msgid "Lines"
+msgstr "Табличные строки"
+
+#: ../../en_US/pgscript.rst:495
+msgid "Gives the number of lines in a record::"
+msgstr "Возвращает число строк в записи::"
+
+#: ../../en_US/pgscript.rst:497
+msgid ""
+"IF LINES(@R) &gt; 0\n"
+"BEGIN\n"
+"    -- Process\n"
+"END"
+msgstr ""
+"IF LINES(@R) &gt; 0\n"
+"BEGIN\n"
+"    -- Обработка\n"
+"END"
+
+#: ../../en_US/pgscript.rst:503
+msgid "Columns"
+msgstr "Столбцы"
+
+#: ../../en_US/pgscript.rst:505
+msgid "Gives the number of columns in a record::"
+msgstr "Выдаёт число столбцов в записи::"
+
+#: ../../en_US/pgscript.rst:507
+msgid ""
+"IF COLUMNS(@R) &gt; 0\n"
+"BEGIN\n"
+"    -- Process\n"
+"END"
+msgstr ""
+"IF COLUMNS(@R) &gt; 0\n"
+"BEGIN\n"
+"    -- Обработка\n"
+"END"
+
+#: ../../en_US/pgscript.rst:515
+msgid "Random data generators"
+msgstr "Генераторы случайных данных"
+
+#: ../../en_US/pgscript.rst:520
+msgid "Overview of the generators"
+msgstr "Обзор генераторов"
+
+#: ../../en_US/pgscript.rst:522
+msgid ""
+"One can assign a variable (**SET**) with a random data generators. This "
+"means each time the variable will be used it will have a different value."
+msgstr ""
+"Переменной можно назначить (**SET**) генератор случайных данных. Это "
+"означает, что при каждом использовании переменной она будет иметь другое, "
+"случайное значение."
+
+#: ../../en_US/pgscript.rst:526
+msgid "However the variable is still used as usual::"
+msgstr "В остальном такая переменная используется как обычно:"
+
+#: ../../en_US/pgscript.rst:528
+msgid ""
+"SET @G = STRING(10, 20, 2);\n"
+"SET @A = @G; -- @A will hold a random string\n"
+"SET @B = @G; -- @B will hold another random string\n"
+"PRINT @G,    -- This will print another third random string"
+msgstr ""
+"SET @G = STRING(10, 20, 2);\n"
+"SET @A = @G; -- @A будет содержать случайную строку\n"
+"SET @B = @G; -- @B будет содержать другую случайную строку\n"
+"PRINT @G,    -- Эта команда выведет третью случайную строку"
+
+#: ../../en_US/pgscript.rst:536
+msgid "Sequence and seeding"
+msgstr "Последовательность и начальное значение"
+
+#: ../../en_US/pgscript.rst:538
+msgid "Common parameters for data generators are *sequence* and *seed*."
+msgstr ""
+"Для генераторов данных часто дополнительно задаются параметры "
+"*последовательность* и *затравка*."
+
+#: ../../en_US/pgscript.rst:540
+msgid ""
+"*sequence* means that a sequence of values is generated in a random order, "
+"in other words each value appears only once before the sequence starts "
+"again: this is useful for columns with a ``UNIQUE`` constraint. For example, "
+"this generator::"
+msgstr ""
+"Режим *последовательность* означает, что в случайном порядке генерируется "
+"последовательность всех значений, то есть каждое значение выдаётся только "
+"один раз, прежде чем последовательность начинает повторяться: это полезно "
+"для столбцов с ограничением ``UNIQUE``. Например, этот генератор::"
+
+#: ../../en_US/pgscript.rst:545
+msgid "SET @G = INTEGER(10, 15, 1); -- 1 means generate a sequence"
+msgstr ""
+"SET @G = INTEGER(10, 15, 1); -- 1 — означает, что будет формироваться "
+"последовательность"
+
+#: ../../en_US/pgscript.rst:547
+msgid "It can generate such values::"
+msgstr "может генерировать такие значения::"
+
+#: ../../en_US/pgscript.rst:549
+msgid "14 12 10 13 11 15 14 12 10 13 11"
+msgstr "14 12 10 13 11 15 14 12 10 13 11"
+
+#: ../../en_US/pgscript.rst:551
+msgid "Where each number appears once before the sequence starts repeating."
+msgstr ""
+"В которой каждой число выдаётся один раз, прежде чем последовательность "
+"начинает повторяться."
+
+#: ../../en_US/pgscript.rst:553
+msgid ""
+"*sequence* parameter must be an integer: if it is 0 then no sequence is "
+"generated (default) and if something other than 0 then generate a sequence."
+msgstr ""
+"В параметре *последовательность* должно передаваться целое число: если это "
+"0, последовательность не генерируется (это вариант по умолчанию), а "
+"генерируется при любом другом числе."
+
+#: ../../en_US/pgscript.rst:557
+msgid ""
+"*seed* is an integer value for initializing a generator: two generators with "
+"the same parameters and the same seed will generate **exactly** the same "
+"values."
+msgstr ""
+"В параметре *затравка* задаётся целое число для инициализации генератора: "
+"два генератора с одинаковыми параметрами и одной затравкой будут выдавать "
+"**абсолютно** одинаковые значения."
+
+#: ../../en_US/pgscript.rst:561
+msgid ""
+"*seed* must be an integer: it is used directly to initialize the random data "
+"generator."
+msgstr ""
+"*Затравка* должна быть целым числом: она используется непосредственно для "
+"инициализации генератора случайных чисел."
+
+#: ../../en_US/pgscript.rst:569
+msgid "Optional parameters are put into brackets::"
+msgstr "Необязательные параметры заключены в фигурные скобки::"
+
+# well-spelled: чс, рег, выр
+# skip-rule: double-space
+#
+#: ../../en_US/pgscript.rst:571
+msgid ""
+"Generator\n"
+" : INTEGER ( min, max, [sequence], [seed] );\n"
+" | REAL ( min, max, precision, [sequence], [seed] );\n"
+" | DATE ( min, max, [sequence], [seed] );\n"
+" | TIME ( min, max, [sequence], [seed] );\n"
+" | DATETIME ( min, max, [sequence], [seed] );\n"
+" | STRING ( min, max, [nb], [seed] );\n"
+" | REGEX ( regex, [seed] );\n"
+" | FILE ( path, [sequence], [seed], [encoding] );\n"
+" | REFERENCE ( table, column, [sequence], [seed] );"
+msgstr ""
+"Генератор:\n"
+"   INTEGER ( мин, макс, [последовательность], [затравка] );\n"
+" | REAL ( мин, макс, точность, [последовательность], [затравка] );\n"
+" | DATE ( мин, макс, [последовательность], [затравка] );\n"
+" | TIME ( мин, макс, [последовательность], [затравка] );\n"
+" | DATETIME ( мин, макс, [последовательность], [затравка] );\n"
+" | STRING ( мин, макс, [чс], [затравка] );\n"
+" | REGEX ( рег_выр, [затравка] );\n"
+" | FILE ( путь, [последовательность], [затравка], [кодировка] );\n"
+" | REFERENCE ( таблица, столбец, [последовательность], [затравка] );"
+
+#: ../../en_US/pgscript.rst:583
+msgid "Integer numbers"
+msgstr "Целые числа"
+
+#: ../../en_US/pgscript.rst:587
+msgid ""
+"INTEGER ( min, max, [sequence], [seed] );\n"
+"INTEGER ( -10, 10, 1, 123456 );"
+msgstr ""
+"INTEGER ( мин, макс, [последовательность], [затравка] );\n"
+"INTEGER ( -10, 10, 1, 123456 );"
+
+#: ../../en_US/pgscript.rst:590
+msgid ""
+"``min`` is an integer, ``max`` is an integer, ``sequence`` is an integer and "
+"``seed`` is an integer."
+msgstr ""
+"Здесь ``мин``, ``макс``, ``последовательность`` и ``затравка`` — целые числа."
+
+#: ../../en_US/pgscript.rst:594
+msgid "Real numbers"
+msgstr "Вещественные числа"
+
+#: ../../en_US/pgscript.rst:598
+msgid ""
+"REAL ( min, max, precision, [sequence], [seed] );\n"
+"REAL ( 1.5, 1.8, 2, 1 );"
+msgstr ""
+"REAL ( мин, макс, точность, [последовательность], [затравка] );\n"
+"REAL ( 1.5, 1.8, 2, 1 );"
+
+#: ../../en_US/pgscript.rst:601
+msgid ""
+"``min`` is a number, ``max`` is a number, ``precision`` is an integer that "
+"indicates the number of decimals (should be less than 30), ``sequence`` is "
+"an integer and ``seed`` is an integer."
+msgstr ""
+"Здесь ``мин`` и ``макс`` — числа, ``точность`` — целое число, задающее число "
+"десятичных знаков (должно быть меньше 30), ``последовательность`` и "
+"``затравка`` — также целые числа."
+
+#: ../../en_US/pgscript.rst:606
+msgid "Dates"
+msgstr "Даты"
+
+#: ../../en_US/pgscript.rst:610
+msgid ""
+"DATE ( min, max, [sequence], [seed] );\n"
+"DATE ( '2008-05-01', '2008-05-05', 0 );"
+msgstr ""
+"DATE ( мин, макс, [последовательность], [затравка] );\n"
+"DATE ( '2008-05-01', '2008-05-05', 0 );"
+
+#: ../../en_US/pgscript.rst:613
+msgid ""
+"``min`` is a string representing a date, ``max`` is a string representing a "
+"date, ``sequence`` is an integer and ``seed`` is an integer."
+msgstr ""
+"Здесь ``мин`` и ``макс`` — строковые представления даты, а "
+"``последовательность`` и ``затравка`` — целые числа."
+
+#: ../../en_US/pgscript.rst:617
+msgid "Times"
+msgstr "Время"
+
+#: ../../en_US/pgscript.rst:621
+msgid ""
+"TIME ( min, max, [sequence], [seed] );\n"
+"TIME ( '00:30:00', '00:30:15', 0 );"
+msgstr ""
+"TIME ( мин, макс, [последовательность], [затравка] );\n"
+"TIME ( '00:30:00', '00:30:15', 0 );"
+
+#: ../../en_US/pgscript.rst:624
+msgid ""
+"``min`` is a string representing a time, ``max`` is a string representing a "
+"time, ``sequence`` is an integer and ``seed`` is an integer."
+msgstr ""
+"Здесь ``мин`` и ``макс`` — строковые представления времени, а "
+"``последовательность`` и ``затравка`` — целые числа."
+
+#: ../../en_US/pgscript.rst:628
+msgid "Timestamps (date/times)"
+msgstr "Даты с временем"
+
+#: ../../en_US/pgscript.rst:632
+msgid ""
+"DATETIME ( min, max, [sequence], [seed] );\n"
+"DATETIME ( '2008-05-01 14:00:00', '2008-05-05 15:00:00', 1 );"
+msgstr ""
+"DATETIME ( мин, макс, [последовательность], [затравка] );\n"
+"DATETIME ( '2008-05-01 14:00:00', '2008-05-05 15:00:00', 1 );"
+
+#: ../../en_US/pgscript.rst:635
+msgid ""
+"``min`` is a string representing a timestamp, ``max`` is a string "
+"representing a timestamp, ``sequence`` is an integer and ``seed`` is an "
+"integer."
+msgstr ""
+"Здесь ``мин`` и ``макс`` — строковые представления даты с временем, а "
+"``последовательность`` и ``затравка`` — целые числа."
+
+# well-spelled: чс
+#: ../../en_US/pgscript.rst:644
+msgid ""
+"STRING ( min, max, [nb], [seed] );\n"
+"STRING ( 10, 20, 5 );"
+msgstr ""
+"STRING ( мин, макс, [чс], [затравка] );\n"
+"STRING ( 10, 20, 5 );"
+
+# well-spelled: чс
+#: ../../en_US/pgscript.rst:647
+msgid ""
+"``min`` is an integer representing the minimum length of a word, ``max`` is "
+"an integer representing the maximum length of a word, ``nb`` is an integer "
+"representing the number of words (default: ``1``) and ``seed`` is an integer."
+msgstr ""
+"Здесь ``мин`` — целое число, представляющее минимальную длину слова, "
+"``макс`` — целое, представляющее максимальную длин, ``чс`` — целое, "
+"представляющее число слов (по умолчанию: ``1``) и ``затравка`` — целое число."
+
+#: ../../en_US/pgscript.rst:652
+msgid ""
+"In the above example we generate 5 words (separated with a space) whose size "
+"is between 10 and 20 characters."
+msgstr ""
+"В показанном выше примере мы генерируем 5 слов (разделённых пробелами), "
+"размер которых варьируется от 10 до 20 символов."
+
+#: ../../en_US/pgscript.rst:656
+msgid "Strings from regular expressions"
+msgstr "Генерация строк из регулярных выражений"
+
+# well-spelled: рег, выр
+#: ../../en_US/pgscript.rst:660
+msgid ""
+"REGEX ( regex, [seed] );\n"
+"REGEX ( '[a-z]{1,3}@[0-9]{3}' );"
+msgstr ""
+"REGEX ( рег_выр, [затравка] );\n"
+"REGEX ( '[a-z]{1,3}@[0-9]{3}' );"
+
+# well-spelled: рег, выр
+#: ../../en_US/pgscript.rst:663
+msgid ""
+"``regex`` is a string representing a simplified regular expressions and "
+"``seed`` is an integer."
+msgstr ""
+"Здесь ``рег_выр`` — это строка, представляющая упрощённое регулярное "
+"выражение, а ``затравка`` — целое число."
+
+#: ../../en_US/pgscript.rst:666
+msgid "Simplified regular expressions are composed of:"
+msgstr "Упрощённые регулярные выражения состоят из:"
+
+#: ../../en_US/pgscript.rst:668
+msgid ""
+"Sets of possible characters like ``[a-z_.]`` for characters between ``a`` "
+"and ``z`` + ``_`` and ``.``"
+msgstr ""
+"Наборов возможных символов, как например, набора ``[a-z_.]``, включающего "
+"символы от ``a`` до ``z`` и ``_`` с ``.``"
+
+#: ../../en_US/pgscript.rst:670
+msgid "Single characters"
+msgstr "Одиночных символов"
+
+#: ../../en_US/pgscript.rst:672
+msgid ""
+"It is possible to specify the minimum and maximum length of the preceding "
+"set or single character:"
+msgstr ""
+"При этом возможно указать минимальную и максимальную длину предшествующего "
+"набора или повторений одиночного символа:"
+
+#: ../../en_US/pgscript.rst:675
+msgid ""
+"``{min, max}`` like ``{1,3}`` which stands for length between ``1`` and ``3``"
+msgstr ""
+"``{мин, макс}`` в виде ``{1,3}``, что будет воспринято как указание длины от "
+"``1`` до ``3``"
+
+#: ../../en_US/pgscript.rst:677
+msgid "``{min}`` like ``{3}`` which stands for length of ``3``"
+msgstr "``{мин}`` в виде ``{3}`` воспринимается как длина, равная ``3``"
+
+#: ../../en_US/pgscript.rst:678
+msgid "Default (when nothing is specified) is length of ``1``"
+msgstr "По умолчанию (когда не указано ничего) длина считается равной ``1``"
+
+#: ../../en_US/pgscript.rst:680
+msgid ""
+"Note: be careful with spaces because ``'a {3}'`` means one ``a`` followed by "
+"three spaces because the ``3`` is about the last character or set of "
+"characters which is a space in this example."
+msgstr ""
+"Замечание: будьте осторожны с пробелами, так как запись ``'a {3}'`` означает "
+"букву ``a``, за которой идут три пробела, так как ``3`` относится к "
+"последнему символу или набору символов перед ней, а это пробел в данном "
+"примере."
+
+#: ../../en_US/pgscript.rst:684
+msgid ""
+"If you need to use ``[`` ``]`` ``\\`` ``{`` or ``}``, they must be escaped "
+"because they are special characters. Remember to use **double backslash**: "
+"``'\\\\[{3}'`` for three ``[``."
+msgstr ""
+"Если вам нужно использовать ``[`` ``]`` ``\\`` ``{`` или ``}``, их нужно "
+"экранировать, так как это специальные символы. Чтобы получить три ``[``, "
+"добавьте **две обратных косых черты**: ``'\\\\[{3}'``."
+
+#: ../../en_US/pgscript.rst:689
+msgid "Strings from dictionary files"
+msgstr "Генерация строк из словарных файлов"
+
+#: ../../en_US/pgscript.rst:693
+msgid ""
+"FILE ( path, [sequence], [seed], [encoding] );\n"
+"FILE ( 'file.txt', 0, 54321, 'utf-8' );"
+msgstr ""
+"FILE ( путь, [последовательность], [затравка], [кодировка] );\n"
+"FILE ( 'file.txt', 0, 54321, 'utf-8' );"
+
+#: ../../en_US/pgscript.rst:696
+msgid ""
+"``path`` is a string representing the path to a text file, ``sequence`` is "
+"an integer, ``seed`` is an integer and ``encoding`` is a string representing "
+"the file character set (default is system encoding)."
+msgstr ""
+"Здесь ``путь`` — это строка, представляющая путь к текстовому файлу, "
+"``последовательность`` и ``затравка`` — целые числа, а ``кодировка`` — "
+"строка, представляющая набор символов, содержащихся в файле (по умолчанию "
+"выбирается системная кодировка)."
+
+#: ../../en_US/pgscript.rst:700
+msgid ""
+"This generates a random integer between 1 and the number of lines in the "
+"file and then returns that line. If the file does not exist then an "
+"exception is thrown."
+msgstr ""
+"При этом генерируется случайное целое число между 1 и числом строк в файле и "
+"возвращается эта строка. Если файл не существует, выдаётся исключение."
+
+#: ../../en_US/pgscript.rst:704
+msgid ""
+"``encoding`` supports the most known encoding like utf-8, utf-16le, "
+"utf-16be, iso-8859-1, ..."
+msgstr ""
+"В качестве ``кодировки`` поддерживаются наиболее распространённые, в "
+"частности utf-8, utf-16le, utf-16be, iso-8859-1, ..."
+
+#: ../../en_US/pgscript.rst:708
+msgid "Reference to another field"
+msgstr "Ссылка на другое поле"
+
+#: ../../en_US/pgscript.rst:712
+msgid ""
+"REFERENCE ( table, column, [sequence], [seed] );\n"
+"REFERENCE ( 'tab', 'col', 1 );"
+msgstr ""
+"REFERENCE ( таблица, столбец, [последовательность], [затравка] );\n"
+"REFERENCE ( 'tab', 'col', 1 );"
+
+#: ../../en_US/pgscript.rst:715
+msgid ""
+"``table`` is a string representing a table, ``column`` is a string "
+"representing a column of the table, ``sequence`` is an integer and ``seed`` "
+"is an integer."
+msgstr ""
+"Здесь ``таблица`` — строка, представляющая таблицу, ``столбец`` — строка, "
+"представляющая столбец этой таблицы, а ``последовательность`` и ``затравка`` "
+"— целые числа."
+
+#: ../../en_US/pgscript.rst:719
+msgid ""
+"This is useful for generating data to put into foreign-key-constrained "
+"columns."
+msgstr ""
+"Это бывает полезно для генерирования данных, помещаемых в столбцы, "
+"ограниченные внешними ключами."
