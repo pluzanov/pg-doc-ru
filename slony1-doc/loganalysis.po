@@ -1,0 +1,2128 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: loganalysis.xml:4(title)
+msgid "Log Analysis"
+msgstr ""
+
+#: loganalysis.xml:6(indexterm)
+msgid "<primary>Log analysis</primary>"
+msgstr ""
+
+#: loganalysis.xml:8(para)
+msgid ""
+"Here are some of things that you may find in your &slony1; logs, and "
+"explanations of what they mean."
+msgstr ""
+
+#: loganalysis.xml:11(title)
+msgid "CONFIG notices"
+msgstr ""
+
+#: loganalysis.xml:12(indexterm)
+msgid "<primary>Logs: CONFIG level</primary>"
+msgstr ""
+
+#: loganalysis.xml:14(para)
+msgid ""
+"These entries are pretty straightforward. They are informative messages "
+"about your configuration."
+msgstr ""
+
+#: loganalysis.xml:17(para)
+msgid ""
+"Here are some typical entries that you will probably run into in your logs: "
+"<screen>\n"
+"CONFIG main: local node id = 1\n"
+"CONFIG main: loading current cluster configuration\n"
+"CONFIG storeNode: no_id=3 no_comment='Node 3'\n"
+"CONFIG storePath: pa_server=5 pa_client=1 pa_conninfo=\"host=127.0.0.1 "
+"dbname=foo user=postgres port=6132\" pa_connretry=10\n"
+"CONFIG storeListen: li_origin=3 li_receiver=1 li_provider=3\n"
+"CONFIG storeSet: set_id=1 set_origin=1 set_comment='Set 1'\n"
+"CONFIG main: configuration complete - starting threads\n"
+"</screen>"
+msgstr ""
+
+#: loganalysis.xml:30(title)
+msgid "INFO notices"
+msgstr ""
+
+#: loganalysis.xml:31(indexterm)
+msgid "<primary>Logs: INFO level</primary>"
+msgstr ""
+
+#: loganalysis.xml:33(para)
+msgid ""
+"Events that take place that seem like they will generally be of interest are "
+"recorded at the INFO level, and, just as with CONFIG notices, are always "
+"listed."
+msgstr ""
+
+#: loganalysis.xml:39(title)
+msgid "DEBUG Notices"
+msgstr ""
+
+#: loganalysis.xml:40(indexterm)
+msgid "<primary>Logs: DEBUG level</primary>"
+msgstr ""
+
+#: loganalysis.xml:42(para)
+msgid ""
+"Debug notices are of less interest, and will quite likely only need to be "
+"shown if you are running into some problem with &slony1;."
+msgstr ""
+
+#: loganalysis.xml:47(title)
+msgid "Thread name"
+msgstr ""
+
+#: loganalysis.xml:48(indexterm)
+msgid "<primary>Logs: thread name</primary>"
+msgstr ""
+
+#: loganalysis.xml:55(term)
+msgid "localListenThread"
+msgstr ""
+
+#: loganalysis.xml:57(para)
+msgid "This is the local thread that listens for events on the local node."
+msgstr ""
+
+#: loganalysis.xml:60(term)
+msgid "remoteWorkerThread-X"
+msgstr ""
+
+#: loganalysis.xml:62(para)
+msgid ""
+"The thread processing remote events. You can expect to see one of these for "
+"each node that this node communicates with."
+msgstr ""
+
+#: loganalysis.xml:66(term)
+msgid "remoteListenThread-X"
+msgstr ""
+
+#: loganalysis.xml:68(para)
+msgid ""
+"Listens for events on a remote node database. You may expect to see one of "
+"these for each node in the cluster."
+msgstr ""
+
+#: loganalysis.xml:72(term)
+msgid "cleanupThread"
+msgstr ""
+
+#: loganalysis.xml:72(para)
+msgid ""
+"Takes care of things like vacuuming, cleaning out the confirm and event "
+"tables, and deleting old data."
+msgstr ""
+
+#: loganalysis.xml:76(term)
+msgid "syncThread"
+msgstr ""
+
+#: loganalysis.xml:76(para)
+msgid "Generates SYNC events."
+msgstr ""
+
+#: loganalysis.xml:50(para)
+msgid ""
+"Notices are always prefaced by the name of the thread from which the notice "
+"originates. You will see messages from the following threads: <placeholder-1/"
+">"
+msgstr ""
+
+#: loganalysis.xml:82(para)
+msgid ""
+"How much information they display is controlled by the <envar>log_level</"
+"envar> &lslon; parameter; ERROR/WARN/CONFIG/INFO messages will always be "
+"displayed, while choosing increasing values from 1 to 4 will lead to "
+"additional DEBUG level messages being displayed."
+msgstr ""
+
+#: loganalysis.xml:89(title)
+msgid "How to read &slony1; logs"
+msgstr ""
+
+#: loganalysis.xml:91(indexterm)
+msgid "<primary>logs: reading and understanding &slony1; logs</primary>"
+msgstr ""
+
+#: loganalysis.xml:93(para)
+msgid ""
+"Note that as far as slon is concerned, there is no <quote>master</quote> or "
+"<quote>slave.</quote> They are just nodes."
+msgstr ""
+
+#: loganalysis.xml:97(para)
+msgid ""
+"What you can expect, initially, is to see, on both nodes, some events "
+"propagating back and forth. Firstly, there should be some events published "
+"to indicate creation of the nodes and paths. If you don't see those, then "
+"the nodes aren't properly communicating with one another, and nothing else "
+"will happen..."
+msgstr ""
+
+#: loganalysis.xml:105(para)
+msgid "Create the two nodes."
+msgstr ""
+
+#: loganalysis.xml:107(para)
+msgid "No slons are running yet, so there are no logs to look at."
+msgstr ""
+
+#: loganalysis.xml:112(para)
+msgid "Start the two slons"
+msgstr ""
+
+#: loganalysis.xml:114(para)
+msgid ""
+"The logs for each will start out very quiet, as neither node has much to "
+"say, and neither node knows how to talk to another node. Each node will "
+"periodically generate a <command>SYNC</command> event, but recognize "
+"<emphasis>nothing</emphasis> about what is going on on other nodes."
+msgstr ""
+
+#: loganalysis.xml:122(para)
+msgid ""
+"Do the <xref linkend=\"stmtstorepath\"/> to set up communications paths. "
+"That will allow the nodes to start to become aware of one another."
+msgstr ""
+
+#: loganalysis.xml:126(para)
+msgid ""
+"The slon logs should now start to receive events from <quote>foreign</quote> "
+"nodes."
+msgstr ""
+
+#: loganalysis.xml:130(para)
+msgid ""
+"If you look at the contents of the tables <xref linkend=\"table.sl-node\"/> "
+"and <xref linkend=\"table.sl-path\"/> and <xref linkend=\"table.sl-listen\"/"
+">, on each node, that should give a good idea as to where things stand. "
+"Until the <xref linkend=\"slon\"/> starts, each node may only be partly "
+"configured. If there are two nodes, there should be two entries in all three "
+"of these tables once the communications configuration is set up properly. If "
+"there are fewer entries than that, well, that should give you some idea of "
+"what is missing."
+msgstr ""
+
+#: loganalysis.xml:142(para)
+msgid ""
+"You'll set up the set (<xref linkend=\"stmtcreateset\"/>), add tables (<xref "
+"linkend=\"stmtsetaddtable\"/>), and sequences (<xref linkend="
+"\"stmtsetaddsequence\"/>), and will see relevant events <xref linkend="
+"\"logaddobjects\"/> only in the logs for the origin node for the set."
+msgstr ""
+
+#: loganalysis.xml:149(para)
+msgid ""
+"Then, when you submit the <xref linkend=\"stmtsubscribeset\"/> request, the "
+"event should go to both nodes."
+msgstr ""
+
+#: loganalysis.xml:153(para)
+msgid ""
+"The origin node has little more to do, after that... The subscriber will "
+"then have a <command>COPY_SET</command> event, which will lead to logging "
+"information about adding each table and copying its data. See <xref linkend="
+"\"logsubtime\"/> for more details."
+msgstr ""
+
+#: loganalysis.xml:161(para)
+msgid "After that, you'll mainly see two sorts of behaviour:"
+msgstr ""
+
+#: loganalysis.xml:165(para)
+msgid ""
+"On the origin, there won't be too terribly much logged, just indication that "
+"some <command>SYNC</command> events are being generated and confirmed by "
+"other nodes. See <xref linkend=\"lognormalsync\"/> to see the sorts of log "
+"entries to expect."
+msgstr ""
+
+#: loganalysis.xml:171(para)
+msgid ""
+"On the subscriber, there will be reports of <command>SYNC</command> events, "
+"and that the subscriber pulls data from the provider for the relevant "
+"set(s). This will happen infrequently if there are no updates going to the "
+"origin node; it will happen frequently when the origin sees heavy updates."
+msgstr ""
+
+#: loganalysis.xml:182(title)
+msgid "Log Messages and Implications"
+msgstr ""
+
+#: loganalysis.xml:184(para)
+msgid ""
+"This section lists numerous of the error messages found in &slony1;, along "
+"with a brief explanation of implications. It is a fairly comprehensive list, "
+"only leaving out some of the <command>DEBUG4</command> messages that are "
+"almost always uninteresting."
+msgstr ""
+
+#: loganalysis.xml:190(title)
+msgid "Log Messages Associated with Log Shipping"
+msgstr ""
+
+#: loganalysis.xml:193(indexterm)
+msgid "<primary>Logs: log shipping messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:195(para)
+msgid ""
+"Most of these represent errors that come up if the <xref linkend="
+"\"logshipping\"/> functionality breaks. You may expect things to break if "
+"the filesystem being used for log shipping fills, or if permissions on that "
+"directory are wrongly set."
+msgstr ""
+
+#: loganalysis.xml:201(command)
+msgid "ERROR: remoteWorkerThread_%d: log archive failed %s - %s\\n"
+msgstr ""
+
+#: loganalysis.xml:203(para)
+msgid ""
+"This indicates that an error was encountered trying to write a log shipping "
+"file. Normally the &lslon; will retry, and hopefully succeed."
+msgstr ""
+
+#: loganalysis.xml:207(command)
+msgid "DEBUG2: remoteWorkerThread_%d: writing archive log..."
+msgstr ""
+
+#: loganalysis.xml:209(para)
+msgid ""
+"This indicates that a log shipping archive log is being written for a "
+"particular <command>SYNC</command> set."
+msgstr ""
+
+#: loganalysis.xml:211(command)
+msgid "INFO: remoteWorkerThread_%d: Run Archive Command %s"
+msgstr ""
+
+#: loganalysis.xml:213(para)
+msgid ""
+"If &lslon; has been configured (<option>-x</option> aka "
+"<envar>command_on_logarchive</envar>) to run a command after generating each "
+"log shipping archive log, this reports when that process is spawned using "
+"<function>system()</function>."
+msgstr ""
+
+#: loganalysis.xml:218(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: Could not open COPY SET archive file %s - %s"
+msgstr ""
+
+#: loganalysis.xml:221(para)
+msgid "Seems pretty self-explanatory..."
+msgstr ""
+
+#: loganalysis.xml:222(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: Could not generate COPY SET archive header %s "
+"- %s"
+msgstr ""
+
+#: loganalysis.xml:224(para)
+msgid "Probably means that we just filled up a filesystem..."
+msgstr ""
+
+#: loganalysis.xml:226(command)
+msgid ""
+"ERROR remoteWorkerThread_%d: \"update \"_slony_regress1\".sl_archive_counter "
+"set ac_num = ac_num + 1, ac_timestamp = CURRENT_TIMESTAMP; select ac_num, "
+"ac_timestamp from \"_slony_regress1\".sl_archive_counter; \" "
+"PGRES_FATAL_ERROR ERROR: could not serialize access due to concurrent update"
+msgstr ""
+
+#: loganalysis.xml:228(para)
+msgid ""
+"This may occasionally occur when using logshipping; this will typically "
+"happen if there are 3 or more nodes, and there is an attempt to concurrently "
+"process events sourced from different nodes. This does not represent any "
+"serious problem; &slony1; will retry the event which failed without the need "
+"for administrative intervention."
+msgstr ""
+
+#: loganalysis.xml:238(title)
+msgid "Log Messages - DDL scripts"
+msgstr ""
+
+#: loganalysis.xml:240(indexterm)
+msgid "<primary>Logs: DDL messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:241(para)
+msgid ""
+"The handling of DDL is somewhat fragile, as described in <xref linkend="
+"\"ddlchanges\"/>; here are both informational and error messages that may "
+"occur in the progress of an <xref linkend=\"stmtddlscript\"/> request."
+msgstr ""
+
+#: loganalysis.xml:248(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: DDL preparation failed - set %d - only on node "
+"%"
+msgstr ""
+
+#: loganalysis.xml:251(para)
+msgid ""
+"Something broke when applying a DDL script on one of the nodes. This is "
+"quite likely indicates that the node's schema differed from that on the "
+"origin; you may need to apply a change manually to the node to allow the "
+"event to proceed. The scary, scary alternative might be to delete the "
+"offending event, assuming it can't possibly work..."
+msgstr ""
+
+#: loganalysis.xml:257(command)
+msgid "SLON_CONFIG: remoteWorkerThread_%d: DDL request with %d statements"
+msgstr ""
+
+#: loganalysis.xml:258(para)
+msgid ""
+"This is informational, indicating how many SQL statements were processed."
+msgstr ""
+
+#: loganalysis.xml:259(command)
+msgid ""
+"SLON_ERROR: remoteWorkerThread_%d: DDL had invalid number of statements - %d"
+msgstr ""
+
+#: loganalysis.xml:261(para)
+msgid ""
+"Occurs if there were&lt;0 statements (which should be impossible) or &gt; "
+"MAXSTATEMENTS statements. Probably the script was bad..."
+msgstr ""
+
+#: loganalysis.xml:263(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: malloc() failure in DDL_SCRIPT - could not "
+"allocate %d bytes of memory"
+msgstr ""
+
+#: loganalysis.xml:267(para)
+msgid ""
+"This should only occur if you submit some extraordinarily large DDL script "
+"that makes a &lslon; run out of memory"
+msgstr ""
+
+#: loganalysis.xml:270(command)
+msgid "CONFIG: remoteWorkerThread_%d: DDL Statement %d: [%s]"
+msgstr ""
+
+#: loganalysis.xml:272(para)
+msgid "This lists each DDL statement as it is submitted."
+msgstr ""
+
+#: loganalysis.xml:273(command)
+msgid "ERROR: DDL Statement failed - %s"
+msgstr ""
+
+#: loganalysis.xml:275(para)
+msgid ""
+"Oh, dear, one of the DDL statements that worked on the origin failed on this "
+"remote node..."
+msgstr ""
+
+#: loganalysis.xml:278(command)
+msgid "CONFIG: DDL Statement success - %s"
+msgstr ""
+
+#: loganalysis.xml:280(para)
+msgid "All's well..."
+msgstr ""
+
+#: loganalysis.xml:282(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: Could not generate DDL archive tracker %s - %s"
+msgstr ""
+
+#: loganalysis.xml:284(para)
+msgid "Apparently the DDL script couldn't be written to a log shipping file..."
+msgstr ""
+
+#: loganalysis.xml:286(command)
+msgid "ERROR: remoteWorkerThread_%d: Could not submit DDL script %s - %s"
+msgstr ""
+
+#: loganalysis.xml:288(para)
+msgid "Couldn't write the script to a log shipping file."
+msgstr ""
+
+#: loganalysis.xml:290(command)
+msgid "ERROR: remoteWorkerThread_%d: Could not close DDL script %s - %s"
+msgstr ""
+
+#: loganalysis.xml:292(para)
+msgid "Couldn't close a log shipping file for a DDL script."
+msgstr ""
+
+#: loganalysis.xml:293(command)
+msgid "ERROR: Slony-I ddlScript_prepare(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:295(para) loganalysis.xml:299(para)
+#: loganalysis.xml:862(para) loganalysis.xml:882(para)
+msgid "Set wasn't found on this node; you probably gave the wrong ID number..."
+msgstr ""
+
+#: loganalysis.xml:297(command)
+msgid "ERROR: Slony-I ddlScript_prepare_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:301(command)
+msgid "ERROR: Slony-I: alterTableForReplication(): Table with id % not found"
+msgstr ""
+
+#: loganalysis.xml:302(para)
+msgid "Apparently the table wasn't found; could the schema be messed up?"
+msgstr ""
+
+#: loganalysis.xml:304(command)
+msgid ""
+"ERROR: Slony-I: alterTableForReplication(): Table % is already in altered "
+"state"
+msgstr ""
+
+#: loganalysis.xml:306(para)
+msgid ""
+"Curious... We're trying to set a table up for replication a "
+"<emphasis>second</emphasis> time?"
+msgstr ""
+
+#: loganalysis.xml:309(command)
+msgid "ERROR: Slony-I: alterTableRestore(): Table with id % not found"
+msgstr ""
+
+#: loganalysis.xml:311(para)
+msgid ""
+"This runs when a table is being restored to <quote>non-replicated</quote> "
+"state; apparently the replicated table wasn't found."
+msgstr ""
+
+#: loganalysis.xml:313(command)
+msgid "ERROR: Slony-I: alterTableRestore(): Table % is not in altered state"
+msgstr ""
+
+#: loganalysis.xml:315(para)
+msgid ""
+"Hmm. The table isn't in altered replicated state. That shouldn't be, if "
+"replication had been working properly..."
+msgstr ""
+
+#: loganalysis.xml:316(command)
+msgid ""
+"NOTICE: Slony-I: alterTableForReplication(): multiple instances of trigger % "
+"on table %'',"
+msgstr ""
+
+#: loganalysis.xml:318(para)
+msgid ""
+"This normally happens if you have a table that had a trigger attached to it "
+"that replication hid due to this being a subscriber node, and then you added "
+"a trigger by the same name back to replication. Now, when trying to \"fix up"
+"\" triggers, those two triggers conflict."
+msgstr ""
+
+#: loganalysis.xml:320(para)
+msgid ""
+"The DDL script will keep running and rerunning, or the UNINSTALL NODE will "
+"keep failing, until you drop the <quote>visible</quote> trigger, by hand, "
+"much as you must have added it, by hand, earlier."
+msgstr ""
+
+#: loganalysis.xml:322(command)
+msgid "ERROR: Slony-I: Unable to disable triggers"
+msgstr ""
+
+#: loganalysis.xml:323(para)
+msgid ""
+"This is the error that follows the <quote>multiple triggers</quote> problem."
+msgstr ""
+
+#: loganalysis.xml:327(title)
+msgid "Threading Issues"
+msgstr ""
+
+#: loganalysis.xml:329(indexterm)
+msgid "<primary>Logs: threading messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:331(para)
+msgid ""
+"There should not be any <quote>user-serviceable</quote> aspects to the "
+"&slony1; threading model; each &lslon; creates a well-specified set of "
+"helper threads to manage the various database connections that it requires. "
+"The only way that anything should break on the threading side is if you have "
+"not compiled &postgres; libraries to <quote>play well</quote> with "
+"threading, in which case you will be unable to compile &slony1; in the first "
+"place."
+msgstr ""
+
+#: loganalysis.xml:340(command)
+msgid "FATAL: remoteWorkerThread_%d: pthread_create() - %s"
+msgstr ""
+
+#: loganalysis.xml:342(para)
+msgid "Couldn't create a new remote worker thread."
+msgstr ""
+
+#: loganalysis.xml:344(command)
+msgid "DEBUG1 remoteWorkerThread_%d: helper thread for provider %d created"
+msgstr ""
+
+#: loganalysis.xml:346(para)
+msgid ""
+"This normally happens when the &lslon; starts: a thread is created for each "
+"node to which the local node should be listening for events."
+msgstr ""
+
+#: loganalysis.xml:348(command)
+msgid "DEBUG1: remoteWorkerThread_%d: helper thread for provider %d terminated"
+msgstr ""
+
+#: loganalysis.xml:350(para)
+msgid ""
+"If subscriptions reshape such that a node no longer provides a subscription, "
+"then the thread that works on that node can be dropped."
+msgstr ""
+
+#: loganalysis.xml:354(command)
+msgid "DEBUG1: remoteWorkerThread_%d: disconnecting from data provider %d"
+msgstr ""
+
+#: loganalysis.xml:357(para)
+msgid ""
+"A no-longer-used data provider may be dropped; if connection information is "
+"changed, the &lslon; needs to disconnect and reconnect."
+msgstr ""
+
+#: loganalysis.xml:361(command)
+msgid "DEBUG2: remoteWorkerThread_%d: ignore new events due to shutdown"
+msgstr ""
+
+#: loganalysis.xml:363(para)
+msgid "If the &lslon; is shutting down, it is futile to process more events"
+msgstr ""
+
+#: loganalysis.xml:364(command)
+msgid "DEBUG1: remoteWorkerThread_%d: node %d - no worker thread"
+msgstr ""
+
+#: loganalysis.xml:366(para)
+msgid ""
+"Curious: we can't wake up the worker thread; there probably should already "
+"be one..."
+msgstr ""
+
+#: loganalysis.xml:372(title)
+msgid "Log Entries At Subscription Time"
+msgstr ""
+
+#: loganalysis.xml:374(indexterm)
+msgid "<primary>Logs: subscription messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:376(para)
+msgid ""
+"Subscription time is quite a special time in &slony1;. If you have a large "
+"amount of data to be copied to subscribers, this may take a considerable "
+"period of time. &slony1; logs a fairly considerable amount of information "
+"about its progress, which is sure to be useful to the gentle reader. In "
+"particular, it generates log output every time it starts and finishes "
+"copying data for a given table as well as when it completes reindexing the "
+"table. That may not make a 28 hour subscription go any faster, but at least "
+"helps you have some idea of how it is progressing."
+msgstr ""
+
+#: loganalysis.xml:387(command)
+msgid "DEBUG1: copy_set %d"
+msgstr ""
+
+#: loganalysis.xml:389(para)
+msgid "This indicates the beginning of copying data for a new subscription."
+msgstr ""
+
+#: loganalysis.xml:390(command)
+msgid "ERROR: remoteWorkerThread_%d: set %d not found in runtime configuration"
+msgstr ""
+
+#: loganalysis.xml:392(para)
+msgid ""
+"&lslon; tried starting up a subscription; it couldn't find conninfo for the "
+"data source. Perhaps paths are not properly propagated?"
+msgstr ""
+
+#: loganalysis.xml:394(command)
+msgid "ERROR: remoteWorkerThread_%d: node %d has no pa_conninfo"
+msgstr ""
+
+#: loganalysis.xml:396(para)
+msgid "Apparently the conninfo configuration was <emphasis>wrong</emphasis>..."
+msgstr ""
+
+#: loganalysis.xml:399(command)
+msgid "ERROR: copy set %d cannot connect to provider DB node %d"
+msgstr ""
+
+#: loganalysis.xml:401(para)
+msgid ""
+"&lslon; couldn't connect to the provider. Is the conninfo wrong? Or perhaps "
+"authentication is misconfigured? Or perhaps the database is down?"
+msgstr ""
+
+#: loganalysis.xml:405(command)
+msgid "DEBUG1: remoteWorkerThread_%d: connected to provider DB"
+msgstr ""
+
+#: loganalysis.xml:407(para)
+msgid "Excellent: the copy set has a connection to its provider"
+msgstr ""
+
+#: loganalysis.xml:408(command)
+msgid "ERROR: Slony-I: sequenceSetValue(): sequence % not found"
+msgstr ""
+
+#: loganalysis.xml:409(para)
+msgid ""
+"Curious; the sequence object is missing. Could someone have dropped it from "
+"the schema by hand (<emphasis>e.g.</emphasis> - not using <xref linkend="
+"\"stmtddlscript\"/>)?"
+msgstr ""
+
+#: loganalysis.xml:411(command)
+msgid "ERROR: Slony-I: subscribeSet() must be called on provider"
+msgstr ""
+
+#: loganalysis.xml:412(para)
+msgid ""
+"This function should only get called on the provider node. &lslonik; "
+"normally handles this right, unless one had wrong DSNs in a &lslonik; "
+"script..."
+msgstr ""
+
+#: loganalysis.xml:415(command)
+msgid "ERROR: Slony-I: subscribeSet(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:416(para)
+msgid ""
+"Hmm. The provider node isn't aware of this set. Wrong parms to a &lslonik; "
+"script?"
+msgstr ""
+
+#: loganalysis.xml:418(command)
+msgid ""
+"ERROR: Slony-I: subscribeSet(): set origin and receiver cannot be identical"
+msgstr ""
+
+#: loganalysis.xml:419(para)
+msgid "Duh, an origin node can't subscribe to itself."
+msgstr ""
+
+#: loganalysis.xml:421(command)
+msgid ""
+"ERROR: Slony-I: subscribeSet(): set provider and receiver cannot be identical"
+msgstr ""
+
+#: loganalysis.xml:422(para)
+msgid "A receiver must subscribe to a <emphasis>different</emphasis> node..."
+msgstr ""
+
+#: loganalysis.xml:423(command)
+msgid ""
+"Slony-I: subscribeSet(): provider % is not an active forwarding node for "
+"replication set %"
+msgstr ""
+
+#: loganalysis.xml:425(para)
+msgid "You can only use a live, active, forwarding provider as a data source."
+msgstr ""
+
+#: loganalysis.xml:428(para)
+msgid ""
+"Slony-I: subscribeSet_int(): set % is not active, cannot change "
+"provider<command/>"
+msgstr ""
+
+#: loganalysis.xml:429(para)
+msgid "You can't change the provider just yet..."
+msgstr ""
+
+#: loganalysis.xml:430(command)
+msgid "Slony-I: subscribeSet_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:431(para)
+msgid "This node isn't aware of the set... Perhaps you submitted wrong parms?"
+msgstr ""
+
+#: loganalysis.xml:432(command)
+msgid "Slony-I: unsubscribeSet() must be called on receiver"
+msgstr ""
+
+#: loganalysis.xml:433(para)
+msgid "Seems obvious... This probably indicates a bad &lslonik; admin DSN..."
+msgstr ""
+
+#: loganalysis.xml:434(command)
+msgid "Slony-I: Cannot unsubscribe set % while being provider"
+msgstr ""
+
+#: loganalysis.xml:436(para)
+msgid ""
+"This should seem obvious; <xref linkend=\"stmtunsubscribeset\"/> will fail "
+"if a node has dependent subscribers for which it is the provider"
+msgstr ""
+
+#: loganalysis.xml:438(command)
+msgid "Slony-I: cleanupEvent(): Single node - deleting events&lt;%"
+msgstr ""
+
+#: loganalysis.xml:439(para)
+msgid ""
+"If there's only one node, the cleanup event will delete old events so that "
+"you don't get <quote>build-up of crud.</quote>"
+msgstr ""
+
+#: loganalysis.xml:442(command)
+msgid "Slony-I: determineIdxnameUnique(): table % not found"
+msgstr ""
+
+#: loganalysis.xml:444(para)
+msgid "Did you properly copy over the schema to a new node???"
+msgstr ""
+
+#: loganalysis.xml:445(command)
+msgid "Slony-I: table % has no primary key"
+msgstr ""
+
+#: loganalysis.xml:447(para) loganalysis.xml:451(para)
+msgid "This likely signifies a bad loading of schema..."
+msgstr ""
+
+#: loganalysis.xml:449(command)
+msgid "Slony-I: table % has no unique index %"
+msgstr ""
+
+#: loganalysis.xml:452(command)
+msgid ""
+"WARN: remoteWorkerThread_%d: transactions earlier than XID %s are still in "
+"progress"
+msgstr ""
+
+#: loganalysis.xml:455(para)
+msgid ""
+"This indicates that some old transaction is in progress from before the "
+"earliest available <command>SYNC</command> on the provider. &slony1; cannot "
+"start replicating until that transaction completes. This will repeat until "
+"thetransaction completes..."
+msgstr ""
+
+#: loganalysis.xml:458(command)
+msgid "DEBUG2: remoteWorkerThread_%d: prepare to copy table %s"
+msgstr ""
+
+#: loganalysis.xml:460(para)
+msgid ""
+"This indicates that &lslon; is beginning preparations to set up subscription "
+"for a table."
+msgstr ""
+
+#: loganalysis.xml:462(command)
+msgid "ERROR: remoteWorkerThread_%d: Could not lock table %s on subscriber"
+msgstr ""
+
+#: loganalysis.xml:464(para)
+msgid ""
+"For whatever reason, the table could not be locked, so the subscription "
+"needs to be restarted. If the problem was something like a deadlock, "
+"retrying may help. If the problem was otherwise, you may need to intervene..."
+msgstr ""
+
+#: loganalysis.xml:469(command)
+msgid ""
+"DEBUG2: remoteWorkerThread_%d: all tables for set %d found on subscriber"
+msgstr ""
+
+#: loganalysis.xml:471(para)
+msgid ""
+"An informational message indicating that the first pass through the tables "
+"found no problems..."
+msgstr ""
+
+#: loganalysis.xml:472(command)
+msgid "DEBUG2: remoteWorkerThread_%d: copy sequence %s"
+msgstr ""
+
+#: loganalysis.xml:474(para)
+msgid "Processing some sequence..."
+msgstr ""
+
+#: loganalysis.xml:475(command)
+msgid "DEBUG2: remoteWorkerThread_%d: copy table %s"
+msgstr ""
+
+#: loganalysis.xml:477(para)
+msgid "&lslon; is starting to copy a table..."
+msgstr ""
+
+#: loganalysis.xml:478(command) loganalysis.xml:488(command)
+msgid "DEBUG3: remoteWorkerThread_%d: table %s Slony-I serial key added local"
+msgstr ""
+
+#: loganalysis.xml:480(para)
+msgid "Just added new column to the table to provide surrogate primary key."
+msgstr ""
+
+#: loganalysis.xml:481(command)
+msgid ""
+"DEBUG3: remoteWorkerThread_%d: local table %s already has Slony-I serial key"
+msgstr ""
+
+#: loganalysis.xml:483(para)
+msgid "Did not need to add serial key; apparently it was already there."
+msgstr ""
+
+#: loganalysis.xml:484(command)
+msgid ""
+"DEBUG3: remoteWorkerThread_%d: table %s does not require Slony-I serial key"
+msgstr ""
+
+#: loganalysis.xml:486(para)
+msgid "Apparently this table didn't require a special serial key..."
+msgstr ""
+
+#: loganalysis.xml:489(command)
+msgid "DEBUG2: remoteWorkerThread_%d: Begin COPY of table %s"
+msgstr ""
+
+#: loganalysis.xml:491(para)
+msgid "&lslon; is about to start the COPY on both sides to copy a table..."
+msgstr ""
+
+#: loganalysis.xml:492(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: Could not generate copy_set request for %s - %s"
+msgstr ""
+
+#: loganalysis.xml:494(para)
+msgid ""
+"This indicates that the <command>delete/copy</command> requests failed on "
+"the subscriber. The &lslon; will repeat the <command>COPY_SET</command> "
+"attempt; it will probably continue to fail.."
+msgstr ""
+
+#: loganalysis.xml:499(command)
+msgid "ERROR: remoteWorkerThread_%d: copy to stdout on provider - %s %s"
+msgstr ""
+
+#: loganalysis.xml:501(para)
+msgid ""
+"Evidently something about the COPY to <filename>stdout</filename> on the "
+"provider node broke... The event will be retried..."
+msgstr ""
+
+#: loganalysis.xml:503(command)
+msgid "ERROR: remoteWorkerThread_%d: copy from stdin on local node - %s %s"
+msgstr ""
+
+#: loganalysis.xml:505(para)
+msgid ""
+"Evidently something about the COPY into the table on the subscriber node "
+"broke... The event will be retried..."
+msgstr ""
+
+#: loganalysis.xml:509(command)
+msgid "DEBUG2: remoteWorkerThread_%d: %d bytes copied for table %s"
+msgstr ""
+
+#: loganalysis.xml:511(para)
+msgid ""
+"This message indicates that the COPY of the table has completed. This is "
+"followed by running <command>ANALYZE</command> and reindexing the table on "
+"the subscriber."
+msgstr ""
+
+#: loganalysis.xml:515(command)
+msgid "DEBUG2: remoteWorkerThread_%d: %.3f seconds to copy table %s"
+msgstr ""
+
+#: loganalysis.xml:518(para)
+msgid ""
+"After this message, copying and reindexing and analyzing the table on the "
+"subscriber is complete."
+msgstr ""
+
+#: loganalysis.xml:520(command)
+msgid "DEBUG2: remoteWorkerThread_%d: set last_value of sequence %s (%s) to %s"
+msgstr ""
+
+#: loganalysis.xml:522(para)
+msgid ""
+"As should be no surprise, this indicates that a sequence has been processed "
+"on the subscriber."
+msgstr ""
+
+#: loganalysis.xml:524(command)
+msgid "DEBUG2: remoteWorkerThread_%d: %.3 seconds to copy sequences"
+msgstr ""
+
+#: loganalysis.xml:526(para)
+msgid ""
+"Summarizing the time spent processing sequences in the <command>COPY_SET</"
+"command> event."
+msgstr ""
+
+#: loganalysis.xml:528(command)
+msgid "ERROR: remoteWorkerThread_%d: query %s did not return a result"
+msgstr ""
+
+#: loganalysis.xml:530(para)
+msgid ""
+"This indicates that the query, as part of final processing of "
+"<command>COPY_SET</command>, failed. The copy will restart..."
+msgstr ""
+
+#: loganalysis.xml:532(command)
+msgid ""
+"DEBUG2: remoteWorkerThread_%d: copy_set no previous SYNC found, use enable "
+"event"
+msgstr ""
+
+#: loganalysis.xml:534(para)
+msgid ""
+"This takes place if no past SYNC event was found; the current event gets set "
+"to the event point of the <command>ENABLE_SUBSCRIPTION</command> event."
+msgstr ""
+
+#: loganalysis.xml:539(command)
+msgid "DEBUG2: remoteWorkerThread_%d: copy_set SYNC found, use event seqno %s"
+msgstr ""
+
+#: loganalysis.xml:541(para)
+msgid ""
+"This takes place if a SYNC event was found; the current event gets set as "
+"shown."
+msgstr ""
+
+#: loganalysis.xml:544(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: sl_setsync entry for set %d not found on "
+"provider"
+msgstr ""
+
+#: loganalysis.xml:546(para)
+msgid ""
+"SYNC synchronization information was expected to be drawn from an existing "
+"subscriber, but wasn't found. Something replication-breakingly-bad has "
+"probably happened..."
+msgstr ""
+
+#: loganalysis.xml:550(command)
+msgid "DEBUG1: remoteWorkerThread_%d: could not insert to sl_setsync_offline"
+msgstr ""
+
+#: loganalysis.xml:552(para)
+msgid ""
+"Oh, dear. After setting up a subscriber, and getting pretty well everything "
+"ready, some writes to a log shipping file failed. Perhaps disk filled up..."
+msgstr ""
+
+#: loganalysis.xml:556(command)
+msgid ""
+"DEBUG1: remoteWorkerThread_%d: %.3f seconds to build initial setsync status"
+msgstr ""
+
+#: loganalysis.xml:558(para)
+msgid ""
+"Indicates the total time required to get the copy_set event finalized..."
+msgstr ""
+
+#: loganalysis.xml:561(command)
+msgid "DEBUG1: remoteWorkerThread_%d: disconnected from provider DB"
+msgstr ""
+
+#: loganalysis.xml:563(para)
+msgid ""
+"At the end of a subscribe set event, the subscriber's &lslon; will "
+"disconnect from the provider, clearing out connections..."
+msgstr ""
+
+#: loganalysis.xml:568(command)
+msgid "DEBUG1: remoteWorkerThread_%d: copy_set %d done in %.3f seconds"
+msgstr ""
+
+#: loganalysis.xml:570(para)
+msgid ""
+"Indicates the total time required to complete copy_set... This indicates a "
+"successful subscription!"
+msgstr ""
+
+#: loganalysis.xml:575(title)
+msgid "Log Entries Associated with MERGE SET"
+msgstr ""
+
+#: loganalysis.xml:577(indexterm)
+msgid "<primary>Logs: MERGE SET messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:580(para)
+msgid ""
+"These various exceptions cause <xref linkend=\"stmtmergeset\"/> to be "
+"rejected; something ought to be corrected before submitting the request "
+"again."
+msgstr ""
+
+#: loganalysis.xml:584(command)
+msgid "ERROR: Slony-I: merged set ids cannot be identical"
+msgstr ""
+
+#: loganalysis.xml:586(para)
+msgid "It is illogical to try to merge a set with itself."
+msgstr ""
+
+#: loganalysis.xml:588(command)
+msgid "ERROR: Slony-I: set % not found"
+msgstr ""
+
+#: loganalysis.xml:590(para)
+msgid "A missing set cannot be merged."
+msgstr ""
+
+#: loganalysis.xml:592(command)
+msgid "ERROR: Slony-I: set % does not originate on local node"
+msgstr ""
+
+#: loganalysis.xml:594(para)
+msgid ""
+"The <xref linkend=\"stmtmergeset\"/> request must be submitted to the origin "
+"node for the sets that are to be merged."
+msgstr ""
+
+#: loganalysis.xml:597(command)
+msgid "ERROR: Slony-I: subscriber lists of set % and % are different"
+msgstr ""
+
+#: loganalysis.xml:599(para)
+msgid "Sets can only be merged if they have identical subscriber lists."
+msgstr ""
+
+#: loganalysis.xml:602(command)
+msgid "ERROR: Slony-I: set % has subscriptions in progress - cannot merge"
+msgstr ""
+
+#: loganalysis.xml:604(para)
+msgid ""
+"<xref linkend=\"stmtmergeset\"/> cannot proceed until all subscriptions have "
+"completed processing. If this message arises, that indicates that the "
+"subscriber lists <emphasis>are</emphasis> the same, but that one or more of "
+"the nodes has not yet completed setting up its subscription. It may be that "
+"waiting a short while will permit resubmitting the <xref linkend="
+"\"stmtmergeset\"/> request."
+msgstr ""
+
+#: loganalysis.xml:615(title)
+msgid "Log Entries Associated With Normal SYNC activity"
+msgstr ""
+
+#: loganalysis.xml:617(indexterm)
+msgid "<primary>Logs: routine SYNC messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:619(para)
+msgid ""
+"Some of these messages indicate exceptions, but the <quote>normal</quote> "
+"stuff represents what you should expect to see most of the time when "
+"replication is just plain working."
+msgstr ""
+
+#: loganalysis.xml:625(command)
+msgid "DEBUG2: remoteWorkerThread_%d: forward confirm %d,%s received by %d"
+msgstr ""
+
+#: loganalysis.xml:627(para)
+msgid ""
+"These events should occur frequently and routinely as nodes report "
+"confirmations of the events they receive."
+msgstr ""
+
+#: loganalysis.xml:629(command)
+msgid "DEBUG1: remoteWorkerThread_%d: SYNC %d processing"
+msgstr ""
+
+#: loganalysis.xml:631(para)
+msgid "This indicates the start of processing of a <command>SYNC</command>"
+msgstr ""
+
+#: loganalysis.xml:633(command)
+msgid "ERROR: remoteWorkerThread_%d: No pa_conninfo for data provider %d"
+msgstr ""
+
+#: loganalysis.xml:636(para)
+msgid ""
+"Oh dear, we haven't connection information to connect to the data provider. "
+"That shouldn't be possible, normally..."
+msgstr ""
+
+#: loganalysis.xml:640(command)
+msgid "ERROR: remoteListenThread_%d: timeout for event selection"
+msgstr ""
+
+#: loganalysis.xml:642(para)
+msgid ""
+"This means that the listener thread (<filename>src/slon/remote_listener.c</"
+"filename>) timed out when trying to determine what events were outstanding "
+"for it."
+msgstr ""
+
+#: loganalysis.xml:646(para)
+msgid ""
+"This could occur because network connections broke, in which case restarting "
+"the &lslon; might help."
+msgstr ""
+
+#: loganalysis.xml:648(para)
+msgid ""
+"Alternatively, this might occur because the &lslon; for this node has been "
+"broken for a long time, and there are an enormous number of entries in "
+"<envar>sl_event</envar> on this or other nodes for the node to work through, "
+"and it is taking more than <xref linkend=\"slon-config-remote-listen-timeout"
+"\"/> seconds to run the query. In older versions of &slony1;, that "
+"configuration parameter did not exist; the timeout was fixed at 300 seconds. "
+"In newer versions, you might increase that timeout in the &lslon; config "
+"file to a larger value so that it can continue to completion. And then "
+"investigate why nobody was monitoring things such that replication broke for "
+"such a long time..."
+msgstr ""
+
+#: loganalysis.xml:661(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: cannot connect to data provider %d on 'dsn'"
+msgstr ""
+
+#: loganalysis.xml:663(para)
+msgid ""
+"Oh dear, we haven't got <emphasis>correct</emphasis> connection information "
+"to connect to the data provider."
+msgstr ""
+
+#: loganalysis.xml:666(command)
+msgid "DEBUG1: remoteWorkerThread_%d: connected to data provider %d on 'dsn'"
+msgstr ""
+
+#: loganalysis.xml:668(para)
+msgid "Excellent; the &lslon; has connected to the provider."
+msgstr ""
+
+#: loganalysis.xml:670(command)
+msgid ""
+"WARN: remoteWorkerThread_%d: don't know what ev_seqno node %d confirmed for "
+"ev_origin %d"
+msgstr ""
+
+#: loganalysis.xml:672(para)
+msgid ""
+"There's no confirmation information available for this node's provider; need "
+"to abort the <command>SYNC</command> and wait a bit in hopes that that "
+"information will emerge soon..."
+msgstr ""
+
+#: loganalysis.xml:674(command)
+msgid ""
+"DEBUG1: remoteWorkerThread_%d: data provider %d only confirmed up to "
+"ev_seqno %d for ev_origin %d"
+msgstr ""
+
+#: loganalysis.xml:676(para)
+msgid ""
+"The provider for this node is a subscriber, and apparently that subscriber "
+"is a bit behind. The &lslon; will need to wait for the provider to catch up "
+"until it has <emphasis> new</emphasis> data."
+msgstr ""
+
+#: loganalysis.xml:678(command)
+msgid ""
+"DEBUG2: remoteWorkerThread_%d: data provider %d confirmed up to ev_seqno %s "
+"for ev_origin %d - OK"
+msgstr ""
+
+#: loganalysis.xml:680(para)
+msgid ""
+"All's well; the provider should have the data that the subscriber needs..."
+msgstr ""
+
+#: loganalysis.xml:682(command)
+msgid ""
+"DEBUG2: remoteWorkerThread_%d: syncing set %d with %d table(s) from provider "
+"%d"
+msgstr ""
+
+#: loganalysis.xml:684(para)
+msgid ""
+"This is declaring the plans for a <command>SYNC</command>: we have a set "
+"with some tables to process."
+msgstr ""
+
+#: loganalysis.xml:686(command)
+msgid "DEBUG2: remoteWorkerThread_%d: ssy_action_list value: %s length: %d"
+msgstr ""
+
+#: loganalysis.xml:688(para)
+msgid ""
+"This portion of the query to collect log data to be applied has been known "
+"to <quote>bloat up</quote>; this shows how it has gotten compressed..."
+msgstr ""
+
+#: loganalysis.xml:690(command)
+msgid "DEBUG2: remoteWorkerThread_%d: Didn't add OR to provider"
+msgstr ""
+
+#: loganalysis.xml:692(para)
+msgid ""
+"This indicates that there wasn't anything in a <quote>provider</quote> "
+"clause in the query to collect log data to be applied, which shouldn't be. "
+"Things are quite likely to go bad at this point..."
+msgstr ""
+
+#: loganalysis.xml:694(command)
+msgid "DEBUG2: remoteWorkerThread_%d: no sets need syncing for this event"
+msgstr ""
+
+#: loganalysis.xml:696(para)
+msgid ""
+"This will be the case for all <command>SYNC</command> events generated on "
+"nodes that are not originating replication sets. You can expect to see these "
+"messages reasonably frequently."
+msgstr ""
+
+#: loganalysis.xml:697(command)
+msgid "DEBUG3: remoteWorkerThread_%d: activate helper %d"
+msgstr ""
+
+#: loganalysis.xml:699(para)
+msgid ""
+"We're about to kick off a thread to help process <command>SYNC</command> "
+"data..."
+msgstr ""
+
+#: loganalysis.xml:701(command)
+msgid "DEBUG4: remoteWorkerThread_%d: waiting for log data"
+msgstr ""
+
+#: loganalysis.xml:703(para)
+msgid ""
+"The thread is waiting to get data to consume (e.g. - apply to the replica)."
+msgstr ""
+
+#: loganalysis.xml:705(command)
+msgid "ERROR: remoteWorkerThread_%d: %s %s - qualification was %s"
+msgstr ""
+
+#: loganalysis.xml:707(para)
+msgid ""
+"Apparently an application of replication data to the subscriber failed... "
+"This quite likely indicates some sort of serious corruption."
+msgstr ""
+
+#: loganalysis.xml:709(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d: replication query did not affect one row "
+"(cmdTuples = %s) - query was: %s qualification was: %s"
+msgstr ""
+
+#: loganalysis.xml:711(para)
+msgid ""
+"If <envar> SLON_CHECK_CMDTUPLES</envar> is set, &lslon; applies changes one "
+"tuple at a time, and verifies that each change affects exactly one tuple. "
+"Apparently that wasn't the case here, which suggests a corruption of "
+"replication. That's a rather bad thing..."
+msgstr ""
+
+#: loganalysis.xml:717(command)
+msgid "ERROR: remoteWorkerThread_%d: SYNC aborted"
+msgstr ""
+
+#: loganalysis.xml:719(para)
+msgid ""
+"The <command>SYNC</command> has been aborted. The &lslon; will likely retry "
+"this <command>SYNC</command> some time soon. If the <command>SYNC</command> "
+"continues to fail, there is some continuing problem, and replication will "
+"likely never catch up without intervention. It may be necessary to "
+"unsubscribe/resubscribe the affected slave set, or, if there is only one set "
+"on the slave node, it may be simpler to drop and recreate the slave node. If "
+"application connections may be shifted over to the master during this time, "
+"application downtime may not be necessary."
+msgstr ""
+
+#: loganalysis.xml:729(command)
+msgid "DEBUG2: remoteWorkerThread_%d: new sl_rowid_seq value: %s"
+msgstr ""
+
+#: loganalysis.xml:731(para)
+msgid "This marks the progression of this internal &slony1; sequence."
+msgstr ""
+
+#: loganalysis.xml:732(command)
+msgid "DEBUG2: remoteWorkerThread_%d: SYNC %d done in %.3f seconds"
+msgstr ""
+
+#: loganalysis.xml:734(para)
+msgid ""
+"This indicates the successful completion of a <command>SYNC</command>. "
+"Hurray!"
+msgstr ""
+
+#: loganalysis.xml:736(command)
+msgid "DEBUG1: remoteWorkerThread_%d_d:%.3f seconds delay for first row"
+msgstr ""
+
+#: loganalysis.xml:738(para)
+msgid ""
+"This indicates how long it took to get the first row from the LOG cursor "
+"that pulls in data from the sl_log tables."
+msgstr ""
+
+#: loganalysis.xml:740(command)
+msgid ""
+"ERROR: remoteWorkerThread_%d_d: large log_cmddata for actionseq %s not found"
+msgstr ""
+
+#: loganalysis.xml:742(para)
+msgid ""
+"&lslon; could not find the data for one of the <quote>very large</quote> "
+"sl_log table tuples that are pulled individually. This shouldn't happen."
+msgstr ""
+
+#: loganalysis.xml:743(command)
+msgid "DEBUG2: remoteWorkerThread_%d_d:%.3f seconds until close cursor"
+msgstr ""
+
+#: loganalysis.xml:745(para)
+msgid ""
+"This indicates how long it took to complete reading data from the LOG cursor "
+"that pulls in data from the sl_log tables."
+msgstr ""
+
+#: loganalysis.xml:746(command)
+msgid "DEBUG2: remoteWorkerThread_%d_d: inserts=%d updates=%d deletes=%d"
+msgstr ""
+
+#: loganalysis.xml:748(para)
+msgid ""
+"This reports how much activity was recorded in the current <command>SYNC</"
+"command> set."
+msgstr ""
+
+#: loganalysis.xml:750(command)
+msgid ""
+"DEBUG3: remoteWorkerThread_%d: compress_actionseq(list,subquery) Action "
+"list: %s"
+msgstr ""
+
+#: loganalysis.xml:752(para)
+msgid ""
+"This indicates a portion of the LOG cursor query that is about to be "
+"compressed. (In some cases, this could grow to <emphasis>enormous</emphasis> "
+"size, blowing up the query parser...)"
+msgstr ""
+
+#: loganalysis.xml:753(command)
+msgid "DEBUG3: remoteWorkerThread_%d: compressed actionseq subquery %s"
+msgstr ""
+
+#: loganalysis.xml:755(para)
+msgid "This indicates what that subquery compressed into."
+msgstr ""
+
+#: loganalysis.xml:760(title)
+msgid "Log Entries - Adding Objects to Sets"
+msgstr ""
+
+#: loganalysis.xml:762(indexterm)
+msgid "<primary>Logs: adding objects' messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:765(para)
+msgid ""
+"These entries will be seen on an origin node's logs at the time you are "
+"configuring a replication set; some of them will be seen on subscribers at "
+"subscription time."
+msgstr ""
+
+#: loganalysis.xml:770(command)
+msgid "ERROR: Slony-I: setAddTable_int(): table % has no index %"
+msgstr ""
+
+#: loganalysis.xml:772(para)
+msgid "Apparently a PK index was specified that is absent on this node..."
+msgstr ""
+
+#: loganalysis.xml:773(command)
+msgid "ERROR: Slony-I setAddTable_int(): table % not found"
+msgstr ""
+
+#: loganalysis.xml:775(para)
+msgid "Table wasn't found on this node; did you load the schema in properly?."
+msgstr ""
+
+#: loganalysis.xml:776(command)
+msgid "ERROR: Slony-I setAddTable_int(): table % is not a regular table"
+msgstr ""
+
+#: loganalysis.xml:778(para)
+msgid "You tried to replicate something that isn't a table; you can't do that!"
+msgstr ""
+
+#: loganalysis.xml:779(command)
+msgid "NOTICE: Slony-I setAddTable_int(): table % PK column % nullable"
+msgstr ""
+
+#: loganalysis.xml:781(para)
+msgid ""
+"You tried to replicate a table where one of the columns in the would-be "
+"primary key is allowed to be null. All PK columns must be <command>NOT NULL."
+"</command> This request is about to fail."
+msgstr ""
+
+#: loganalysis.xml:783(para)
+msgid ""
+"A check for this condition was introduced in &slony1; version 1.2. If you "
+"have a 1.1 replica, it will continue to function after upgrading to 1.2, but "
+"you will experience this complaint when you try to add new subscribers."
+msgstr ""
+
+#: loganalysis.xml:788(para)
+msgid ""
+"You can look for table/index combinations on an existing node that have "
+"NULLABLE columns in the primary key via the following query: <screen>\n"
+"select c.relname as table_name, ic.relname as index_name, att.attname, att2."
+"attnotnull\n"
+"from _cluster.sl_table t, pg_catalog.pg_class c, pg_index i, pg_catalog."
+"pg_class ic, pg_catalog.pg_attribute att, pg_catalog.pg_attribute att2\n"
+"where t.tab_reloid = c.oid \n"
+"    and t.tab_idxname = ic.relname \n"
+"    and  ic.oid = i.indexrelid\n"
+"    and att.attrelid = i.indexrelid\n"
+"    and att2.attname = att.attname\n"
+"    and att2.attrelid = c.oid\n"
+"    and att2.attnotnull = 'f';\n"
+"</screen>"
+msgstr ""
+
+#: loganalysis.xml:803(para)
+msgid ""
+"These may be rectified via submitting, for each one, a query of the form: "
+"<command> alter table mytable alter column nullablecol set not null; </"
+"command> Running this against a subscriber where the table is empty will "
+"complete very quickly. It will take longer to apply this change to a table "
+"that already contains a great deal of data, as the alteration will scan the "
+"table to verify that there are no tuples where the column is NULL."
+msgstr ""
+
+#: loganalysis.xml:814(command)
+msgid "ERROR: Slony-I setAddTable_int(): table % not replicable!"
+msgstr ""
+
+#: loganalysis.xml:816(para)
+msgid "This happens because of the NULLable PK column."
+msgstr ""
+
+#: loganalysis.xml:817(command)
+msgid "ERROR: Slony-I setAddTable_int(): table id % has already been assigned!"
+msgstr ""
+
+#: loganalysis.xml:819(para)
+msgid ""
+"The table ID value needs to be assigned uniquely in <xref linkend="
+"\"stmtsetaddtable\"/>; apparently you requested a value already in use."
+msgstr ""
+
+#: loganalysis.xml:823(command)
+msgid "ERROR: Slony-I setAddSequence(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:824(para) loganalysis.xml:832(para)
+msgid "Apparently the set you requested is not available..."
+msgstr ""
+
+#: loganalysis.xml:826(command)
+msgid "ERROR: Slony-I setAddSequence(): set % has remote origin"
+msgstr ""
+
+#: loganalysis.xml:827(para)
+msgid "You may only add things at the origin node."
+msgstr ""
+
+#: loganalysis.xml:829(command)
+msgid ""
+"ERROR: Slony-I setAddSequence(): cannot add sequence to currently subscribed "
+"set %"
+msgstr ""
+
+#: loganalysis.xml:830(para)
+msgid ""
+"Apparently the set you requested has already been subscribed. You cannot add "
+"tables/sequences to an already-subscribed set. You will need to create a new "
+"set, add the objects to that new set, and set up subscriptions to that."
+msgstr ""
+
+#: loganalysis.xml:831(command)
+msgid "ERROR: Slony-I setAddSequence_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:834(command)
+msgid "ERROR: Slony-I setAddSequence_int(): sequence % not found"
+msgstr ""
+
+#: loganalysis.xml:835(para)
+msgid ""
+"Apparently the sequence you requested is not available on this node. How did "
+"you set up the schemas on the subscribers???"
+msgstr ""
+
+#: loganalysis.xml:837(command)
+msgid "ERROR: Slony-I setAddSequence_int(): % is not a sequence"
+msgstr ""
+
+#: loganalysis.xml:838(para)
+msgid "Seems pretty obvious :-)."
+msgstr ""
+
+#: loganalysis.xml:840(command)
+msgid ""
+"ERROR: Slony-I setAddSequence_int(): sequence ID % has already been assigned"
+msgstr ""
+
+#: loganalysis.xml:841(para)
+msgid ""
+"Each sequence ID added must be unique; apparently you have reused an ID."
+msgstr ""
+
+#: loganalysis.xml:846(title)
+msgid "Logging When Moving Objects Between Sets"
+msgstr ""
+
+#: loganalysis.xml:848(indexterm)
+msgid "<primary>Logs: moving objects' messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:852(command)
+msgid "ERROR: Slony-I setMoveTable_int(): table % not found"
+msgstr ""
+
+#: loganalysis.xml:854(para)
+msgid ""
+"Table wasn't found on this node; you probably gave the wrong ID number..."
+msgstr ""
+
+#: loganalysis.xml:856(command)
+msgid "ERROR: Slony-I setMoveTable_int(): set ids cannot be identical"
+msgstr ""
+
+#: loganalysis.xml:858(para)
+msgid "Does it make sense to move a table from a set into the very same set?"
+msgstr ""
+
+#: loganalysis.xml:860(command)
+msgid "ERROR: Slony-I setMoveTable_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:864(command)
+msgid ""
+"ERROR: Slony-I setMoveTable_int(): set % does not originate on local node"
+msgstr ""
+
+#: loganalysis.xml:866(para) loganalysis.xml:886(para)
+msgid ""
+"Set wasn't found to have origin on this node; you probably gave the wrong "
+"EVENT NODE..."
+msgstr ""
+
+#: loganalysis.xml:868(command)
+msgid ""
+"ERROR: Slony-I setMoveTable_int(): subscriber lists of set % and % are "
+"different"
+msgstr ""
+
+#: loganalysis.xml:870(para) loganalysis.xml:890(para)
+msgid ""
+"You can only move objects between sets that have identical subscriber lists."
+msgstr ""
+
+#: loganalysis.xml:872(command)
+msgid "ERROR: Slony-I setMoveSequence_int(): sequence % not found"
+msgstr ""
+
+#: loganalysis.xml:874(para)
+msgid ""
+"Sequence wasn't found on this node; you probably gave the wrong ID number..."
+msgstr ""
+
+#: loganalysis.xml:876(command)
+msgid "ERROR: Slony-I setMoveSequence_int(): set ids cannot be identical"
+msgstr ""
+
+#: loganalysis.xml:878(para)
+msgid ""
+"Does it make sense to move a sequence from a set into the very same set?"
+msgstr ""
+
+#: loganalysis.xml:880(command)
+msgid "ERROR: Slony-I setMoveSequence_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:884(command)
+msgid ""
+"ERROR: Slony-I setMoveSequence_int(): set % does not originate on local node"
+msgstr ""
+
+#: loganalysis.xml:888(command)
+msgid ""
+"ERROR: Slony-I setMoveSequence_int(): subscriber lists of set % and % are "
+"different"
+msgstr ""
+
+#: loganalysis.xml:894(title)
+msgid "Issues with Dropping Objects"
+msgstr ""
+
+#: loganalysis.xml:896(indexterm)
+msgid "<primary>Logs: dropping objects' messages</primary>"
+msgstr ""
+
+#: loganalysis.xml:899(command)
+msgid "ERROR: Slony-I setDropTable(): table % not found"
+msgstr ""
+
+#: loganalysis.xml:901(para)
+msgid "Table wasn't found on this node; are you sure you had the ID right?"
+msgstr ""
+
+#: loganalysis.xml:902(command)
+msgid "ERROR: Slony-I setDropTable(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:904(para)
+msgid ""
+"The replication set wasn't found on this node; are you sure you had the ID "
+"right?"
+msgstr ""
+
+#: loganalysis.xml:905(command)
+msgid "ERROR: Slony-I setDropTable(): set % has remote origin"
+msgstr ""
+
+#: loganalysis.xml:907(para)
+msgid ""
+"The replication set doesn't originate on this node; you probably need to "
+"specify an <command>EVENT NODE</command> in the <xref linkend="
+"\"stmtsetdroptable\"/> command."
+msgstr ""
+
+#: loganalysis.xml:909(command)
+msgid "ERROR: Slony-I setDropSequence_int(): sequence % not found"
+msgstr ""
+
+#: loganalysis.xml:910(para)
+msgid "Could this sequence be in another set?"
+msgstr ""
+
+#: loganalysis.xml:912(command)
+msgid "ERROR: Slony-I setDropSequence_int(): set % not found"
+msgstr ""
+
+#: loganalysis.xml:913(para)
+msgid "Could you have gotten the set ID wrong?"
+msgstr ""
+
+#: loganalysis.xml:915(command)
+msgid ""
+"ERROR: Slony-I setDropSequence_int(): set % has origin at another node - "
+"submit this to that node"
+msgstr ""
+
+#: loganalysis.xml:917(para)
+msgid "This message seems fairly self-explanatory..."
+msgstr ""
+
+#: loganalysis.xml:922(title)
+msgid "Issues with MOVE SET, FAILOVER, DROP NODE"
+msgstr ""
+
+#: loganalysis.xml:924(indexterm)
+msgid "<primary>Logs: messages for MOVE SET, FAILOVER, DROP NODE</primary>"
+msgstr ""
+
+#: loganalysis.xml:927(para)
+msgid ""
+"Many of these errors will occur if you submit a &lslonik; script that "
+"describes a reconfiguration incompatible with your cluster's current "
+"configuration. Those will lead to the feeling: <quote>Whew, I'm glad "
+"&lslonik; caught that for me!</quote>"
+msgstr ""
+
+#: loganalysis.xml:932(para)
+msgid ""
+"Some of the others lead to a &lslon; telling itself to fall over; all "
+"<emphasis>should</emphasis> be well when you restart it, as it will read in "
+"the revised, newly-correct configuration when it starts up."
+msgstr ""
+
+#: loganalysis.xml:937(para)
+msgid ""
+"Alas, a few indicate that <quote>something bad happened,</quote> for which "
+"the resolution may not necessarily be easy. Nobody said that replication was "
+"easy, alas..."
+msgstr ""
+
+#: loganalysis.xml:942(command)
+msgid "ERROR: Slony-I: DROP_NODE cannot initiate on the dropped node"
+msgstr ""
+
+#: loganalysis.xml:944(para)
+msgid ""
+"You need to have an EVENT NODE other than the node that is to be dropped...."
+msgstr ""
+
+#: loganalysis.xml:946(command)
+msgid "ERROR: Slony-I: Node % is still configured as a data provider"
+msgstr ""
+
+#: loganalysis.xml:948(para)
+msgid ""
+"You cannot drop a node that is in use as a data provider; you need to "
+"reshape subscriptions so no nodes are dependent on it first."
+msgstr ""
+
+#: loganalysis.xml:950(command)
+msgid "ERROR: Slony-I: Node % is still origin of one or more sets"
+msgstr ""
+
+#: loganalysis.xml:952(para)
+msgid ""
+"You can't drop a node if it is the origin for a set! Use <xref linkend="
+"\"stmtmoveset\"/> or <xref linkend=\"stmtfailover\"/> first."
+msgstr ""
+
+#: loganalysis.xml:954(command)
+msgid "ERROR: Slony-I: cannot failover - node % has no path to the backup node"
+msgstr ""
+
+#: loganalysis.xml:956(para)
+msgid ""
+"You cannot failover to a node that isn't connected to all the subscribers, "
+"at least indirectly."
+msgstr ""
+
+#: loganalysis.xml:957(command)
+msgid "ERROR: Slony-I: cannot failover - node % is not subscribed to set %"
+msgstr ""
+
+#: loganalysis.xml:959(para)
+msgid ""
+"You can't failover to a node that doesn't subscribe to all the relevant sets."
+msgstr ""
+
+#: loganalysis.xml:961(command)
+msgid "ERROR: Slony-I: cannot failover - subscription for set % is not active"
+msgstr ""
+
+#: loganalysis.xml:961(para)
+msgid ""
+"If the subscription has been set up, but isn't yet active, that's still no "
+"good."
+msgstr ""
+
+#: loganalysis.xml:963(command)
+msgid "ERROR: Slony-I: cannot failover - node % is not a forwarder of set %"
+msgstr ""
+
+#: loganalysis.xml:965(para)
+msgid ""
+"You can only failover or move a set to a node that has forwarding turned on."
+msgstr ""
+
+#: loganalysis.xml:968(command)
+msgid "NOTICE: failedNode: set % has no other direct receivers - move now"
+msgstr ""
+
+#: loganalysis.xml:970(para)
+msgid ""
+"If the backup node is the only direct subscriber, then life is a bit "
+"simplified... No need to reshape any subscriptions!"
+msgstr ""
+
+#: loganalysis.xml:971(command)
+msgid ""
+"NOTICE: failedNode set % has other direct receivers - change providers only"
+msgstr ""
+
+#: loganalysis.xml:972(para)
+msgid ""
+"In this case, all direct subscribers are pointed to the backup node, and the "
+"backup node is pointed to receive from another node so it can get caught up."
+msgstr ""
+
+#: loganalysis.xml:973(command)
+msgid "NOTICE: Slony-I: Please drop schema _@CLUSTERNAME@"
+msgstr ""
+
+#: loganalysis.xml:975(para)
+msgid "A node has been uninstalled; you may need to drop the schema..."
+msgstr ""
+
+#: loganalysis.xml:981(title)
+msgid "Log Switching"
+msgstr ""
+
+#: loganalysis.xml:982(indexterm)
+msgid "<primary>Logs: log switching</primary>"
+msgstr ""
+
+#: loganalysis.xml:984(para)
+msgid ""
+"These messages relate to the new-in-1.2 facility whereby &slony1; "
+"periodically switches back and forth between storing data in "
+"<envar>sl_log_1</envar> and <envar>sl_log_2</envar>."
+msgstr ""
+
+#: loganalysis.xml:989(command)
+msgid "Slony-I: Logswitch to sl_log_2 initiated'"
+msgstr ""
+
+#: loganalysis.xml:990(para) loganalysis.xml:992(para)
+msgid ""
+"Indicates that &lslon; is in the process of switching over to this log table."
+msgstr ""
+
+#: loganalysis.xml:991(command)
+msgid "Slony-I: Logswitch to sl_log_1 initiated'"
+msgstr ""
+
+#: loganalysis.xml:993(command)
+msgid "Previous logswitch still in progress"
+msgstr ""
+
+#: loganalysis.xml:995(para)
+msgid "An attempt was made to do a log switch while one was in progress..."
+msgstr ""
+
+#: loganalysis.xml:997(command)
+msgid "ERROR: remoteWorkerThread_%d: cannot determine current log status"
+msgstr ""
+
+#: loganalysis.xml:999(para)
+msgid ""
+"The attempt to read from sl_log_status, which determines whether we're "
+"working on <envar>sl_log_1</envar> or <envar>sl_log_2</envar> got no "
+"results; that can't be a good thing, as there certainly should be data "
+"here... Replication is likely about to halt..."
+msgstr ""
+
+#: loganalysis.xml:1005(command)
+msgid "DEBUG2: remoteWorkerThread_%d: current local log_status is %d"
+msgstr ""
+
+#: loganalysis.xml:1006(para)
+msgid ""
+"This indicates which of <envar>sl_log_1</envar> and <envar>sl_log_2</envar> "
+"are being used to store replication data."
+msgstr ""
+
+#: loganalysis.xml:1011(title)
+msgid "Miscellanea"
+msgstr ""
+
+#: loganalysis.xml:1013(indexterm)
+msgid "<primary>Logs: miscellaneous</primary>"
+msgstr ""
+
+#: loganalysis.xml:1016(para)
+msgid ""
+"Perhaps these messages should be categorized further; that remains a task "
+"for the documentors."
+msgstr ""
+
+#: loganalysis.xml:1021(command)
+msgid "ERROR: Slonik version: @MODULEVERSION@ != Slony-I version in PG build %"
+msgstr ""
+
+#: loganalysis.xml:1023(para)
+msgid ""
+"This is raised in <function>checkmoduleversion()</function> if there is a "
+"mismatch between the version of &slony1; as reported by &lslonik; versus "
+"what the &postgres; build has."
+msgstr ""
+
+#: loganalysis.xml:1024(command)
+msgid "ERROR: Slony-I: registry key % is not an int4 value"
+msgstr ""
+
+#: loganalysis.xml:1026(para)
+msgid ""
+"Raised in <function>registry_get_int4()</function>, this complains if a "
+"requested value turns out to be NULL."
+msgstr ""
+
+#: loganalysis.xml:1027(command)
+msgid "ERROR: registry key % is not a text value"
+msgstr ""
+
+#: loganalysis.xml:1029(para)
+msgid ""
+"Raised in <function>registry_get_text()</function>, this complains if a "
+"requested value turns out to be NULL."
+msgstr ""
+
+#: loganalysis.xml:1030(command)
+msgid "ERROR: registry key % is not a timestamp value"
+msgstr ""
+
+#: loganalysis.xml:1032(para)
+msgid ""
+"Raised in <function>registry_get_timestamp()</function>, this complains if a "
+"requested value turns out to be NULL."
+msgstr ""
+
+#: loganalysis.xml:1033(command)
+msgid "NOTICE: Slony-I: cleanup stale sl_nodelock entry for pid=%"
+msgstr ""
+
+#: loganalysis.xml:1035(para)
+msgid ""
+"This will occur when a &lslon; starts up after another has crashed; this is "
+"routine cleanup."
+msgstr ""
+
+#: loganalysis.xml:1036(command)
+msgid "ERROR: Slony-I: This node is already initialized"
+msgstr ""
+
+#: loganalysis.xml:1038(para)
+msgid ""
+"This would typically happen if you submit <xref linkend=\"stmtstorenode\"/> "
+"against a node that has already been set up with the &slony1; schema."
+msgstr ""
+
+#: loganalysis.xml:1039(command)
+msgid "ERROR: Slony-I: node % not found"
+msgstr ""
+
+#: loganalysis.xml:1041(para)
+msgid "An attempt to mark a node not listed locally as enabled should fail..."
+msgstr ""
+
+#: loganalysis.xml:1042(command)
+msgid "ERROR: Slony-I: node % is already active"
+msgstr ""
+
+#: loganalysis.xml:1044(para)
+msgid ""
+"An attempt to mark a node already marked as active as active should fail..."
+msgstr ""
+
+#: loganalysis.xml:1045(command)
+msgid "DEBUG4: remoteWorkerThread_%d: added active set %d to provider %d"
+msgstr ""
+
+#: loganalysis.xml:1047(para)
+msgid "Indicates that this set is being provided by this provider."
+msgstr ""
+
+#: loganalysis.xml:1050(command)
+msgid "DEBUG2: remoteWorkerThread_%d: event %d ignored - unknown origin"
+msgstr ""
+
+#: loganalysis.xml:1053(para)
+msgid ""
+"Probably happens if events arrive before the <command>STORE_NODE</command> "
+"event that tells that the new node now exists..."
+msgstr ""
+
+#: loganalysis.xml:1057(command)
+msgid "WARN: remoteWorkerThread_%d: event %d ignored - origin inactive"
+msgstr ""
+
+#: loganalysis.xml:1059(para)
+msgid ""
+"This shouldn't occur now (2007) as we don't support the notion of "
+"deactivating a node..."
+msgstr ""
+
+#: loganalysis.xml:1063(command)
+msgid "DEBUG2: remoteWorkerThread_%d: event %d ignored - duplicate"
+msgstr ""
+
+#: loganalysis.xml:1065(para)
+msgid ""
+"This might be expected to happen if the event notification comes in "
+"concurrently from two sources..."
+msgstr ""
+
+#: loganalysis.xml:1068(command)
+msgid "DEBUG2: remoteWorkerThread_%d: unknown node %d"
+msgstr ""
+
+#: loganalysis.xml:1070(para)
+msgid ""
+"Happens if the &lslon; is unaware of this node; probably a sign of "
+"<command>STORE_NODE</command> requests not propagating..."
+msgstr ""
+
+#: loganalysis.xml:1074(command)
+msgid ""
+"insert or update on table \"sl_path\" violates foreign key constraint "
+"\"pa_client-no_id-ref\". DETAIL: Key (pa_client)=(2) is not present on table "
+"\"s1_node"
+msgstr ""
+
+#: loganalysis.xml:1078(para)
+msgid ""
+"This happens if you try to do <xref linkend=\"stmtsubscribeset\"/> when the "
+"node unaware of a would-be new node; probably a sign of <command>STORE_NODE</"
+"command> and <command>STORE_PATH</command> requests not propagating..."
+msgstr ""
+
+#: loganalysis.xml:1083(command)
+msgid ""
+"monitorThread: stack reallocation - size %d &gt; warning threshold of 100. "
+"Stack perhaps isn't getting processed properly by monitoring thread"
+msgstr ""
+
+#: loganalysis.xml:1085(para)
+msgid ""
+"This is liable to occur if the monitoring thread isn't properly consuming "
+"updates from the stack, so the stack is growing in memory."
+msgstr ""
+
+#: loganalysis.xml:1089(command)
+msgid "monitor_state - unable to allocate memory for actor (len %d)"
+msgstr ""
+
+#: loganalysis.xml:1091(para)
+msgid ""
+"This occurs when the &lslon; function <function>monitor_state()</function> "
+"is unable to allocate memory, which likely indicates that something has "
+"grown in memory in an unbounded way."
+msgstr ""
+
+#: loganalysis.xml:1095(para)
+msgid "Similar log entries may also occur for event types."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: loganalysis.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,806 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: monitoring.xml:4(title)
+msgid "Cluster Monitoring"
+msgstr ""
+
+#: monitoring.xml:6(indexterm)
+msgid "<primary>monitoring &slony1;</primary>"
+msgstr ""
+
+#: monitoring.xml:8(para)
+msgid ""
+"As a prelude to the discussion, it is worth pointing out that since the bulk "
+"of &slony1; functionality is implemented via running database functions and "
+"SQL queries against tables within a &slony1; schema, most of the things that "
+"one might want to monitor about replication may be found by querying tables "
+"in the schema created for the cluster in each database in the cluster."
+msgstr ""
+
+#: monitoring.xml:15(para)
+msgid ""
+"Here are some of the tables that contain information likely to be "
+"particularly interesting from a monitoring and diagnostic perspective."
+msgstr ""
+
+#: monitoring.xml:20(envar)
+msgid "sl_status"
+msgstr ""
+
+#: monitoring.xml:22(para)
+msgid ""
+"This view is the first, most obviously useful thing to look at from a "
+"monitoring perspective. It looks at the local node's events, and checks to "
+"see how quickly they are being confirmed on other nodes."
+msgstr ""
+
+#: monitoring.xml:27(para)
+msgid ""
+"The view is primarily useful to run against an origin (<quote>master</"
+"quote>) node, as it is only there where the events generated are generally "
+"expected to require interesting work to be done. The events generated on non-"
+"origin nodes tend to be <command>SYNC</command> events that require no "
+"replication work be done, and that are nearly no-ops, as a result."
+msgstr ""
+
+#: monitoring.xml:37(para)
+msgid ""
+"Contains confirmations of replication events; this may be used to infer "
+"which events have, and <emphasis>have not</emphasis> been processed."
+msgstr ""
+
+#: monitoring.xml:40(para)
+msgid ""
+"Contains information about the replication events processed on the local "
+"node."
+msgstr ""
+
+#: monitoring.xml:42(glossterm)
+msgid "&sllog1; and &sllog2;"
+msgstr ""
+
+#: monitoring.xml:48(para)
+msgid ""
+"These tables contain replicable data. On an origin node, this is the "
+"<quote>queue</quote> of data that has not necessarily been replicated "
+"everywhere. By examining the table, you may examine the details of what data "
+"is replicable."
+msgstr ""
+
+#: monitoring.xml:51(para)
+msgid "The list of nodes in the cluster."
+msgstr ""
+
+#: monitoring.xml:54(para)
+msgid ""
+"This table holds connection information indicating how &lslon; processes are "
+"to connect to remote nodes, whether to access events, or to request "
+"replication data."
+msgstr ""
+
+#: monitoring.xml:58(para)
+msgid ""
+"This configuration table indicates how nodes listen for events coming from "
+"other nodes. Usually this is automatically populated; generally you can "
+"detect configuration problems by this table being <quote>underpopulated.</"
+"quote>"
+msgstr ""
+
+#: monitoring.xml:65(para)
+msgid ""
+"A configuration table that may be used to store miscellaneous runtime data. "
+"Presently used only to manage switching between the two log tables."
+msgstr ""
+
+#: monitoring.xml:71(para)
+msgid "Contains the <quote>last value</quote> of replicated sequences."
+msgstr ""
+
+#: monitoring.xml:76(para)
+msgid ""
+"Contains definition information for replication sets, which is the mechanism "
+"used to group together related replicable tables and sequences."
+msgstr ""
+
+#: monitoring.xml:81(para)
+msgid ""
+"Contains information about the state of synchronization of each replication "
+"set, including transaction snapshot data."
+msgstr ""
+
+#: monitoring.xml:84(para)
+msgid "Indicates what subscriptions are in effect for each replication set."
+msgstr ""
+
+#: monitoring.xml:87(para)
+msgid "Contains the list of tables being replicated."
+msgstr ""
+
+#: monitoring.xml:91(title)
+msgid "test_slony_state"
+msgstr ""
+
+#: monitoring.xml:93(indexterm)
+msgid "<primary>script test_slony_state to test replication state</primary>"
+msgstr ""
+
+#: monitoring.xml:95(para)
+msgid ""
+"This invaluable script does various sorts of analysis of the state of a "
+"&slony1; cluster. Some administrators recommend running these scripts "
+"frequently (hourly seems suitable) to find problems as early as possible."
+msgstr ""
+
+#: monitoring.xml:100(para)
+msgid ""
+"You specify arguments including <option>database</option>, <option>host</"
+"option>, <option>user</option>, <option>cluster</option>, <option>password</"
+"option>, and <option>port</option> to connect to any of the nodes on a "
+"cluster. You also specify a <option>mailprog</option> command (which should "
+"be a program equivalent to <productname>Unix</productname> "
+"<application>mailx</application>) and a recipient of email."
+msgstr ""
+
+#: monitoring.xml:108(para)
+msgid ""
+"You may alternatively specify database connection parameters via the "
+"environment variables used by <application>libpq</application>, <emphasis>e."
+"g.</emphasis> - using <envar>PGPORT</envar>, <envar>PGDATABASE</envar>, "
+"<envar>PGUSER</envar>, <envar>PGSERVICE</envar>, and such."
+msgstr ""
+
+#: monitoring.xml:114(para)
+msgid ""
+"The script then rummages through <xref linkend=\"table.sl-path\"/> to find "
+"all of the nodes in the cluster, and the DSNs to allow it to, in turn, "
+"connect to each of them."
+msgstr ""
+
+#: monitoring.xml:122(para)
+msgid ""
+"Checking <xref linkend=\"table.sl-listen\"/> for some <quote>analytically "
+"determinable</quote> problems. It lists paths that are not covered."
+msgstr ""
+
+#: monitoring.xml:126(para)
+msgid "Providing a summary of events by origin node"
+msgstr ""
+
+#: monitoring.xml:128(para)
+msgid ""
+"If a node hasn't submitted any events in a while, that likely suggests a "
+"problem."
+msgstr ""
+
+#: monitoring.xml:131(para)
+msgid ""
+"Summarizes the <quote>aging</quote> of table <xref linkend=\"table.sl-confirm"
+"\"/>"
+msgstr ""
+
+#: monitoring.xml:134(para)
+msgid ""
+"If one or another of the nodes in the cluster hasn't reported back recently, "
+"that tends to lead to cleanups of tables like &sllog1;, &sllog2; and "
+"&slseqlog; not taking place."
+msgstr ""
+
+#: monitoring.xml:138(para)
+msgid "Summarizes what transactions have been running for a long time"
+msgstr ""
+
+#: monitoring.xml:141(para)
+msgid ""
+"This only works properly if the statistics collector is configured to "
+"collect command strings, as controlled by the option <option> "
+"stats_command_string = true </option> in <filename> postgresql.conf </"
+"filename>."
+msgstr ""
+
+#: monitoring.xml:146(para)
+msgid ""
+"If you have broken applications that hold connections open, this will find "
+"them."
+msgstr ""
+
+#: monitoring.xml:149(para)
+msgid ""
+"If you have broken applications that hold connections open, that has several "
+"unsalutory effects as <link linkend=\"longtxnsareevil\"> described in the "
+"FAQ</link>."
+msgstr ""
+
+#: monitoring.xml:118(para)
+msgid ""
+"For each node, the script examines the state of things, including such "
+"things as: <placeholder-1/>"
+msgstr ""
+
+#: monitoring.xml:156(para)
+msgid ""
+"The script does some diagnosis work based on parameters in the script; if "
+"you don't like the values, pick your favorites!"
+msgstr ""
+
+#: monitoring.xml:159(para)
+msgid ""
+"Note that there are two versions, one using the <quote>classic</quote> "
+"<filename>Pg.pm</filename> Perl module for accessing &postgres; databases, "
+"and one, with <filename>dbi</filename> in its name, that uses the newer Perl "
+"<function> DBI</function> interface. It is likely going to be easier to find "
+"packaging for <function>DBI</function>."
+msgstr ""
+
+#: monitoring.xml:168(title)
+msgid "&nagios; Replication Checks"
+msgstr ""
+
+#: monitoring.xml:170(indexterm)
+msgid "<primary>&nagios; for monitoring replication</primary>"
+msgstr ""
+
+#: monitoring.xml:172(para)
+msgid ""
+"The script in the <filename>tools</filename> directory called <command> "
+"psql_replication_check.pl </command> represents some of the best answers "
+"arrived at in attempts to build replication tests to plug into the <ulink "
+"url=\"http://www.nagios.org/\">&nagios;</ulink> system monitoring tool."
+msgstr ""
+
+#: monitoring.xml:178(para)
+msgid ""
+"A former script, <filename> test_slony_replication.pl</filename>, took a "
+"<quote>clever</quote> approach where a <quote>test script</quote> is "
+"periodically run, which rummages through the &slony1; configuration to find "
+"origin and subscribers, injects a change, and watches for its propagation "
+"through the system. It had two problems:"
+msgstr ""
+
+#: monitoring.xml:186(para)
+msgid ""
+"Connectivity problems to the <emphasis>single</emphasis> host where the test "
+"ran would make it look as though replication was destroyed. Overall, this "
+"monitoring approach has been fragile to numerous error conditions."
+msgstr ""
+
+#: monitoring.xml:192(para)
+msgid ""
+"&nagios; has no ability to benefit from the <quote>cleverness</quote> of "
+"automatically exploring the set of nodes. You need to set up a &nagios; "
+"monitoring rule for each and every node being monitored."
+msgstr ""
+
+#: monitoring.xml:198(para)
+msgid ""
+"The new script, <command>psql_replication_check.pl</command>, takes the "
+"minimalist approach of assuming that the system is an online system that "
+"sees regular <quote>traffic,</quote> so that you can define a view "
+"specifically for the replication test called <envar>replication_status</"
+"envar> which is expected to see regular updates. The view simply looks for "
+"the youngest <quote>transaction</quote> on the node, and lists its "
+"timestamp, age, and some bit of application information that might seem "
+"useful to see."
+msgstr ""
+
+#: monitoring.xml:210(para)
+msgid ""
+"In an inventory system, that might be the order number for the most recently "
+"processed order."
+msgstr ""
+
+#: monitoring.xml:213(para)
+msgid ""
+"In a domain registry, that might be the name of the most recently created "
+"domain."
+msgstr ""
+
+#: monitoring.xml:218(para)
+msgid ""
+"An instance of the script will need to be run for each node that is to be "
+"monitored; that is the way &nagios; works."
+msgstr ""
+
+#: monitoring.xml:223(title)
+msgid "Monitoring &slony1; using MRTG"
+msgstr ""
+
+#: monitoring.xml:225(indexterm)
+msgid "<primary>MRTG for monitoring replication</primary>"
+msgstr ""
+
+#: monitoring.xml:227(para)
+msgid ""
+"One user reported on the &slony1; mailing list how to configure <ulink url="
+"\"http://people.ee.ethz.ch/~oetiker/webtools/mrtg/\"><application> mrtg - "
+"Multi Router Traffic Grapher </application></ulink> to monitor &slony1; "
+"replication."
+msgstr ""
+
+#: monitoring.xml:232(para)
+msgid ""
+"... Since I use <application>mrtg</application> to graph data from multiple "
+"servers I use snmp (<application>net-snmp</application> to be exact). On "
+"database server, I added the following line to <application>snmpd</"
+"application> configuration:"
+msgstr ""
+
+#: monitoring.xml:237(programlisting)
+#, no-wrap
+msgid ""
+"exec replicationLagTime  /cvs/scripts/snmpReplicationLagTime.sh 2\n"
+"where <filename> /cvs/scripts/snmpReplicationLagTime.sh</filename> looks like this:"
+msgstr ""
+
+#: monitoring.xml:243(programlisting)
+#, no-wrap
+msgid ""
+"#!/bin/bash\n"
+"/home/pgdba/work/bin/psql -U pgdba -h 127.0.0.1 -p 5800 -d _DBNAME_ -qAt -c\n"
+"\"select cast(extract(epoch from st_lag_time) as int8) FROM _irr.sl_status\n"
+"WHERE st_received = $1\""
+msgstr ""
+
+#: monitoring.xml:250(para)
+msgid "Then, in mrtg configuration, add this target:"
+msgstr ""
+
+#: monitoring.xml:251(programlisting)
+#, no-wrap
+msgid ""
+"Target[db_replication_lagtime]:extOutput.3&amp;extOutput.3:public at db::30:::\n"
+"MaxBytes[db_replication_lagtime]: 400000000\n"
+"Title[db_replication_lagtime]: db: replication lag time\n"
+"PageTop[db_replication_lagtime]: &lt;H1&gt;db: replication lag time&lt;/H1&gt;\n"
+"Options[db_replication_lagtime]: gauge,nopercent,growright"
+msgstr ""
+
+#: monitoring.xml:259(para)
+msgid ""
+"Alternatively, Ismail Yenigul points out how he managed to monitor slony "
+"using <application>MRTG</application> without installing <application>SNMPD</"
+"application>."
+msgstr ""
+
+#: monitoring.xml:263(para)
+msgid "Here is the mrtg configuration"
+msgstr ""
+
+#: monitoring.xml:265(programlisting)
+#, no-wrap
+msgid ""
+"Target[db_replication_lagtime]:`/bin/snmpReplicationLagTime.sh 2`\n"
+"MaxBytes[db_replication_lagtime]: 400000000\n"
+"Title[db_replication_lagtime]: db: replication lag time\n"
+"PageTop[db_replication_lagtime]: &lt;H1&gt;db: replication lag time&lt;/H1&gt;\n"
+"Options[db_replication_lagtime]: gauge,nopercent,growright"
+msgstr ""
+
+#: monitoring.xml:273(para)
+msgid "and here is the modified version of the script"
+msgstr ""
+
+#: monitoring.xml:275(programlisting)
+#, no-wrap
+msgid ""
+"# cat /bin/snmpReplicationLagTime.sh\n"
+"#!/bin/bash\n"
+"\n"
+"output=`/usr/bin/psql -U slony -h 192.168.1.1 -d endersysecm -qAt -c\n"
+"\"select cast(extract(epoch from st_lag_time) as int8) FROM _mycluster.sl_status WHERE st_received = $1\"`\n"
+"echo $output\n"
+"echo $output\n"
+"echo \n"
+"echo\n"
+"# end of script#"
+msgstr ""
+
+#: monitoring.xml:289(para)
+msgid ""
+"MRTG expects four lines from the script, and since there are only two lines "
+"provided, the output must be padded to four lines."
+msgstr ""
+
+#: monitoring.xml:295(title)
+msgid "Bucardo-related Monitoring"
+msgstr ""
+
+#: monitoring.xml:297(indexterm)
+msgid "<primary>Bucardo monitoring</primary>"
+msgstr ""
+
+#: monitoring.xml:299(para)
+msgid ""
+"The <ulink url=\"http://bucardo.org/\"> Bucardo </ulink> replication system "
+"includes script, <command>check_postgres.pl</command>, which can monitor a "
+"variety of things about &postgres; status that includes monitoring &slony1; "
+"replication status; see <ulink url=\"http://bucardo.org/check_postgres/"
+"check_postgres.pl.html#slony_status\"> check_postgres.pl - slony_status </"
+"ulink>"
+msgstr ""
+
+#: monitoring.xml:308(command)
+msgid "search-logs.sh"
+msgstr ""
+
+#: monitoring.xml:310(indexterm)
+msgid "<primary> search &slony1; logs using search-logs.sh </primary>"
+msgstr ""
+
+#: monitoring.xml:312(para)
+msgid ""
+"This script is constructed to search for &slony1; log files at a given path "
+"(<envar>LOGHOME</envar>), based both on the naming conventions used by the "
+"<xref linkend=\"launchclusters\"/> and <xref linkend=\"slonwatchdog\"/> "
+"systems used for launching &lslon; processes."
+msgstr ""
+
+#: monitoring.xml:318(para)
+msgid ""
+"Errors, if found, are listed, by log file, and emailed to the specified user "
+"(<envar>LOGRECIPIENT</envar>); if no email address is specified, output goes "
+"to standard output."
+msgstr ""
+
+#: monitoring.xml:322(para)
+msgid ""
+"<envar>LOGTIMESTAMP</envar> allows overriding what hour to evaluate (rather "
+"than the last hour)."
+msgstr ""
+
+#: monitoring.xml:325(para)
+msgid ""
+"An administrator might run this script once an hour to monitor for "
+"replication problems."
+msgstr ""
+
+#: monitoring.xml:329(title)
+msgid "Building MediaWiki Cluster Summary"
+msgstr ""
+
+#: monitoring.xml:331(indexterm)
+msgid "<primary> generating Wiki documentation of a cluster </primary>"
+msgstr ""
+
+#: monitoring.xml:333(para)
+msgid ""
+"The script <filename>mkmediawiki.pl </filename>, in <filename>tools</"
+"filename>, may be used to generate a cluster summary compatible with the "
+"popular <ulink url=\"http://www.mediawiki.org/\"> MediaWiki </ulink> "
+"software. Note that the <option>--categories</option> permits the user to "
+"specify a set of (comma-delimited) categories with which to associate the "
+"output. If you have a series of &slony1; clusters, passing in the option "
+"<option>--categories=slony1</option> leads to the MediaWiki instance "
+"generating a category page listing all &slony1; clusters so categorized on "
+"the wiki."
+msgstr ""
+
+#: monitoring.xml:344(para)
+msgid "The gentle user might use the script as follows:"
+msgstr ""
+
+#: monitoring.xml:346(screen)
+#, no-wrap
+msgid ""
+"~/logtail.en&gt;         mvs login -d mywiki.example.info -u \"Chris Browne\" -p `cat ~/.wikipass` -w wiki/index.php                     \n"
+"Doing login with host: logtail and lang: en\n"
+"~/logtail.en&gt; perl $SLONYHOME/tools/mkmediawiki.pl --host localhost --database slonyregress1 --cluster slony_regress1 --categories=Slony-I  &gt; Slony_replication.wiki\n"
+"~/logtail.en&gt; mvs commit -m \"More sophisticated generated Slony-I cluster docs\" Slony_replication.wiki\n"
+"Doing commit Slony_replication.wiki with host: logtail and lang: en"
+msgstr ""
+
+#: monitoring.xml:354(para)
+msgid ""
+"Note that <command>mvs</command> is a client written in Perl; on <ulink url="
+"\"http://www.debian.org/\"> Debian GNU/Linux</ulink>, the relevant package "
+"is called <application>libwww-mediawiki-client-perl</application>; other "
+"systems may have a packaged version of this under some similar name."
+msgstr ""
+
+#: monitoring.xml:362(title)
+msgid "Analysis of a SYNC"
+msgstr ""
+
+#: monitoring.xml:364(indexterm)
+msgid "<primary>analysis of a SYNC</primary>"
+msgstr ""
+
+#: monitoring.xml:366(para)
+msgid ""
+"The following is (as of 2.0) an extract from the &lslon; log for node #2 in "
+"a run of <quote>test1</quote> from the regression tests."
+msgstr ""
+
+#: monitoring.xml:369(screen)
+#, no-wrap
+msgid ""
+"DEBUG2 remoteWorkerThread_1: SYNC 19 processing\n"
+"INFO   about to monitor_subscriber_query - pulling big actionid list 134885072\n"
+"INFO   remoteWorkerThread_1: syncing set 1 with 4 table(s) from provider 1\n"
+"DEBUG2  ssy_action_list length: 0\n"
+"DEBUG2 remoteWorkerThread_1: current local log_status is 0\n"
+"DEBUG2 remoteWorkerThread_1_1: current remote log_status = 0\n"
+"DEBUG1 remoteHelperThread_1_1: 0.028 seconds delay for first row\n"
+"DEBUG1 remoteHelperThread_1_1: 0.978 seconds until close cursor\n"
+"INFO   remoteHelperThread_1_1: inserts=144 updates=1084 deletes=0\n"
+"INFO   remoteWorkerThread_1: sync_helper timing:  pqexec (s/count)- provider 0.063/6 - subscriber 0.000/6\n"
+"INFO   remoteWorkerThread_1: sync_helper timing:  large tuples 0.315/288\n"
+"DEBUG2 remoteWorkerThread_1: cleanup\n"
+"INFO   remoteWorkerThread_1: SYNC 19 done in 1.272 seconds\n"
+"INFO   remoteWorkerThread_1: SYNC 19 sync_event timing:  pqexec (s/count)- provider 0.001/1 - subscriber 0.004/1 - IUD 0.972/248"
+msgstr ""
+
+#: monitoring.xml:386(para)
+msgid "Here are some notes to interpret this output:"
+msgstr ""
+
+#: monitoring.xml:389(para)
+msgid ""
+"Note the line that indicates <screen>inserts=144 updates=1084 deletes=0</"
+"screen>"
+msgstr ""
+
+#: monitoring.xml:390(para)
+msgid "This indicates how many tuples were affected by this particular SYNC."
+msgstr ""
+
+#: monitoring.xml:391(para)
+msgid ""
+"Note the line indicating <screen>0.028 seconds delay for first row</screen>"
+msgstr ""
+
+#: monitoring.xml:393(para)
+msgid ""
+"This indicates the time it took for the <screen>LOG\n"
+"cursor</screen> to get to the point of processing the first row of data. "
+"Normally, this takes a long time if the SYNC is a large one, and one "
+"requiring sorting of a sizable result set."
+msgstr ""
+
+#: monitoring.xml:398(para)
+msgid ""
+"Note the line indicating <screen>0.978 seconds until\n"
+"close cursor</screen>"
+msgstr ""
+
+#: monitoring.xml:401(para)
+msgid "This indicates how long processing took against the provider."
+msgstr ""
+
+#: monitoring.xml:404(para)
+msgid "sync_helper timing: large tuples 0.315/288"
+msgstr ""
+
+#: monitoring.xml:406(para)
+msgid ""
+"This breaks off, as a separate item, the number of large tuples (<emphasis>e."
+"g.</emphasis> - where size exceeded the configuration parameter <xref "
+"linkend=\"slon-config-max-rowsize\"/>) and where the tuples had to be "
+"processed individually."
+msgstr ""
+
+#: monitoring.xml:411(screen)
+#, no-wrap
+msgid "SYNC 19 done in 1.272 seconds"
+msgstr ""
+
+#: monitoring.xml:413(para)
+msgid ""
+"This indicates that it took 1.272 seconds, in total, to process this set of "
+"SYNCs."
+msgstr ""
+
+#: monitoring.xml:417(screen)
+#, no-wrap
+msgid "SYNC 19 sync_event timing:  pqexec (s/count)- provider 0.001/1 - subscriber 0.004/0 - IUD 0.972/248"
+msgstr ""
+
+#: monitoring.xml:419(para)
+msgid ""
+"This records information about how many queries were issued against "
+"providers and subscribers in function <function>sync_event()</function>, and "
+"how long they took."
+msgstr ""
+
+#: monitoring.xml:423(para)
+msgid ""
+"Note that 248 does not match against the numbers of inserts, updates, and "
+"deletes, described earlier, as I/U/D requests are clustered into groups of "
+"queries that are submitted via a single <function>pqexec()</function> call "
+"on the subscriber."
+msgstr ""
+
+#: monitoring.xml:429(screen)
+#, no-wrap
+msgid "sync_helper timing:  pqexec (s/count)- provider 0.063/6 - subscriber 0.000/6"
+msgstr ""
+
+#: monitoring.xml:431(para)
+msgid ""
+"This records information about how many queries were issued against "
+"providers and subscribers in function <function>sync_helper()</function>, "
+"and how long they took."
+msgstr ""
+
+#: monitoring.xml:441(title)
+msgid "Component Monitoring"
+msgstr ""
+
+#: monitoring.xml:443(para)
+msgid ""
+"There are several ways available to see what &slony1; processes are up to:"
+msgstr ""
+
+#: monitoring.xml:450(title)
+msgid "Looking at <envar>pg_stat_activity</envar> view"
+msgstr ""
+
+#: monitoring.xml:452(para)
+msgid ""
+"The standard &postgres; view <envar>pg_stat_activity</envar> indicates what "
+"the various database connections are up to."
+msgstr ""
+
+#: monitoring.xml:455(para)
+msgid ""
+"On recent versions of &postgres;, this view includes an attribute, "
+"<envar>application_name</envar>, which &slony1; components populate based on "
+"the names of their respective threads."
+msgstr ""
+
+#: monitoring.xml:460(title)
+msgid "Looking at &slcomponents; view"
+msgstr ""
+
+#: monitoring.xml:462(para)
+msgid ""
+"&slony1; has a table, &slcomponents;, introduced in &slony1; 2.1, which "
+"captures &slony1; activity for each node."
+msgstr ""
+
+#: monitoring.xml:465(screen)
+#, no-wrap
+msgid ""
+"slonyregress1@localhost-&gt;  select * from _slony_regress1.sl_components  order by co_actor;\n"
+"       co_actor       | co_pid | co_node | co_connection_pid |   co_activity    |      co_starttime      | co_event | co_eventtype\n"
+"----------------------+--------+---------+-------------------+------------------+------------------------+----------+--------------\n"
+" local_cleanup        |  24586 |       0 |             24907 | thread main loop | 2011-02-24 17:02:55+00 |          | n/a\n"
+" local_listen         |  24896 |       1 |             24900 | thread main loop | 2011-02-24 17:03:07+00 |          | n/a\n"
+" local_monitor        |  24586 |       0 |             24909 | thread main loop | 2011-02-24 17:02:55+00 |          | n/a\n"
+" local_sync           |  24517 |       0 |             24906 | thread main loop | 2011-02-24 17:03:09+00 |          | n/a\n"
+" remote listener      |  24586 |       2 |             24910 | thread main loop | 2011-02-24 17:03:03+00 |          | n/a\n"
+" remoteWorkerThread_2 |  24586 |       2 |             24908 | thread main loop | 2011-02-24 17:02:55+00 |          | n/a\n"
+"(6 rows)"
+msgstr ""
+
+#: monitoring.xml:478(para)
+msgid ""
+"This example indicates the various &slony1; threads that are typically "
+"running as part of a &lslon; process:"
+msgstr ""
+
+#: monitoring.xml:482(glossterm)
+msgid "local_cleanup"
+msgstr ""
+
+#: monitoring.xml:483(para)
+msgid ""
+"This thread periodically wakes up to trim obsolete data and (optionally) "
+"vacuum &slony1; tables"
+msgstr ""
+
+#: monitoring.xml:487(glossterm)
+msgid "local_listen"
+msgstr ""
+
+#: monitoring.xml:488(para)
+msgid ""
+"This thread listens for events taking place on the local node, and changes "
+"the &lslon;'s configuration as needed."
+msgstr ""
+
+#: monitoring.xml:491(glossterm)
+msgid "local_monitor"
+msgstr ""
+
+#: monitoring.xml:492(para)
+msgid ""
+"This thread is rather self-referential, here; it manages the queue of events "
+"to be published to the &slcomponents; table."
+msgstr ""
+
+#: monitoring.xml:495(glossterm)
+msgid "local_sync"
+msgstr ""
+
+#: monitoring.xml:496(para)
+msgid ""
+"This thread generates SYNC events on the local database. If the local "
+"database is the origin for a replication set, those SYNC events are used to "
+"propagate changes to other nodes in the cluster."
+msgstr ""
+
+#: monitoring.xml:499(glossterm)
+msgid "remote_listener"
+msgstr ""
+
+#: monitoring.xml:500(para)
+msgid ""
+"This thread listens for events on a remote node database, and queues them "
+"into the remote worker thread for that node."
+msgstr ""
+
+#: monitoring.xml:503(glossterm)
+msgid "remoteWorkerThread_2"
+msgstr ""
+
+#: monitoring.xml:504(para)
+msgid ""
+"This thread waits for events (from the remote listener thread), and takes "
+"action. This is the thread that does most of the visible work of replication."
+msgstr ""
+
+#: monitoring.xml:509(title)
+msgid "Notes On Interpreting Component Activity"
+msgstr ""
+
+#: monitoring.xml:512(para)
+msgid ""
+"Many of these will typically report, as their activity, <command>thread main "
+"loop</command>, which indicates that the thread exists, and is simply "
+"executing its main loop, waiting to have work to do."
+msgstr ""
+
+#: monitoring.xml:517(para)
+msgid ""
+"Most threads will never indicate an event or event type, as they do not "
+"process &slony1; events."
+msgstr ""
+
+#: monitoring.xml:520(para)
+msgid "<envar>local_monitor</envar> thread never reports any activity."
+msgstr ""
+
+#: monitoring.xml:523(para)
+msgid ""
+"It would be a nice idea for this thread, which manages &slcomponents;, to "
+"report in on its work. Unfortunately, the fact of adding in its own events "
+"would make it perpetually busy, as the action of processing the queue would "
+"add a monitoring entry, in effect becoming a repetitive recursive activity."
+msgstr ""
+
+#: monitoring.xml:529(para)
+msgid ""
+"It does report in when it starts up, which means you may expect that this "
+"entry indicates the time at which the &lslon; process began."
+msgstr ""
+
+#: monitoring.xml:534(para)
+msgid "Timestamps are based on the clock time of the &lslon; process."
+msgstr ""
+
+#: monitoring.xml:537(para)
+msgid ""
+"In order for the timestamps to be accurate, it is important to use NTP or "
+"similar technology to keep servers' clocks synchronized, as recommended in "
+"<xref linkend=\"requirements\"/>. If the host where a &lslon; runs has its "
+"time significantly out of sync with the database that it manages, queries "
+"against &slcomponents; may provide results that will confuse the reader."
+msgstr ""
+
+#: monitoring.xml:545(para)
+msgid "process."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: monitoring.xml:0(None)
+msgid "translator-credits"
+msgstr ""

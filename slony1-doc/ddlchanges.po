@@ -1,0 +1,258 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ddlchanges.xml:4(title)
+msgid "Database Schema Changes (DDL)"
+msgstr ""
+
+#: ddlchanges.xml:6(indexterm)
+msgid ""
+"<primary>DDL changes</primary> <secondary>database schema changes</secondary>"
+msgstr ""
+
+#: ddlchanges.xml:11(para)
+msgid ""
+"When changes are made to the database schema, <emphasis>e.g.</emphasis> - "
+"adding fields to a table, it is necessary for this to be handled rather "
+"carefully, otherwise different nodes may get rather deranged because they "
+"disagree on how particular tables are built."
+msgstr ""
+
+#: ddlchanges.xml:18(para)
+msgid ""
+"&slony1; can not automatically detect and replicate database schema changes "
+"however, &slony1; does provide facilities to assist in making database "
+"schema changes. Schema changes can be done on a replicated database either "
+"by using the &slony1; <xref linkend=\"stmtddlscript\"/> (slonik) command or "
+"by manually applying the changes to each node."
+msgstr ""
+
+#: ddlchanges.xml:26(title)
+msgid "DDL Changes with Execute Script"
+msgstr ""
+
+#: ddlchanges.xml:27(para)
+msgid ""
+"The <xref linkend=\"stmtddlscript\"/> (slonik) command allows you to submit "
+"a SQL script (that can, but is not required to) contain DDL commands. This "
+"script will be executed on the event node and then (optionally) replicated "
+"to every other node in the cluster. You should keep the following in mind "
+"when using <xref linkend=\"stmtddlscript\"/>"
+msgstr ""
+
+#: ddlchanges.xml:37(para)
+msgid ""
+"The script <emphasis>must not</emphasis> contain transaction <command>BEGIN</"
+"command> or <command>END</command> statements, as the script is already "
+"executed inside a transaction though nested transactions are allowed as long "
+"are processed within the scope of a single transaction whose <command>BEGIN</"
+"command> and <command>END</command> you do not control."
+msgstr ""
+
+#: ddlchanges.xml:44(para)
+msgid ""
+"Every object in the script must be fully qualified or have the right "
+"<command>search_path</command> set. This will avoid any namespace confusion "
+"during replication."
+msgstr ""
+
+#: ddlchanges.xml:48(para)
+msgid ""
+"If there is <emphasis>anything</emphasis> broken about the script, or about "
+"how it executes on a particular node (other than the event node), this will "
+"cause the <xref linkend=\"slon\"/> daemon for that node to panic and crash. "
+"You may see various expected messages (positive and negative) in <xref "
+"linkend=\"ddllogs\"/>. If you restart the slon, it will, most likely, try to "
+"<emphasis>repeat</emphasis> the DDL script, which will, almost certainly, "
+"fail the second time in the same way it did the first time."
+msgstr ""
+
+#: ddlchanges.xml:59(para)
+msgid ""
+"The implication of this is that it is <emphasis>vital</emphasis> that "
+"modifications not be made in a haphazard way on one node or another. The "
+"schemas must always stay in sync. If slon; fails due to a failed DDL change "
+"then you should manually (via psql) make the required changes so that the "
+"DDL change succeeds the next time slon attempts it."
+msgstr ""
+
+#: ddlchanges.xml:67(para)
+msgid ""
+"&slony1; 2.0.x and 2.1.x suffer from an issue where concurrent transactions "
+"involving the same tables as are referenced in the script might not be "
+"replayed in exactly the same order on the replica nodes. It is advisiable to "
+"not be concurrently inserting,deleting or updating rows to a table while a "
+"script changing that table (adding or deleting columns) is also running."
+msgstr ""
+
+#: ddlchanges.xml:74(para)
+msgid ""
+"&slony1; 2.2.x and higher replicate the SQL requests of an EXECUTE SCRIPT "
+"alongside other logged replication activity as part of an ordinary SYNC. "
+"Scripts that perform an <command>ALTER TABLE</command> to a replicated table "
+"are replicated in the correct order with respect to other concurrent "
+"activities on that table, and this is guaranteed because of the exclusive "
+"lock that the <command>ALTER TABLE</command> acquired on the origin node. If "
+"your EXECUTE SCRIPT does not obtain exclusive locks on all of the tables it "
+"uses, then you need to make sure that any transactions running concurrently "
+"with the script are not making changes that can adversely affect the "
+"computations in the script."
+msgstr ""
+
+#: ddlchanges.xml:86(para)
+msgid ""
+"For example, if your script performs "
+"<function>nextval('some_replicated_seq')</function>, and that sequence is "
+"concurrently being incremented by another transaction, then it is possible "
+"that when the queries are replayed on a replica, the sequence may have "
+"different values on the replica than it had on the origin."
+msgstr ""
+
+#: ddlchanges.xml:93(para)
+msgid ""
+"In addition, it is crucial that DML requests propagated by EXECUTE SCRIPT be "
+"deterministic in their behaviour, otherwise the requests may (legitimately) "
+"be processed differently on different nodes, thereby corrupting data."
+msgstr ""
+
+#: ddlchanges.xml:98(para)
+msgid ""
+"For instance, the following queries are all not deterministic, as they do "
+"not clearly indicate which of the tuples in the table will be affected:"
+msgstr ""
+
+#: ddlchanges.xml:103(para)
+msgid ""
+"Insufficiently specified <command> insert into table2 (id, data) select id, "
+"data from table1 limit 10; </command>"
+msgstr ""
+
+#: ddlchanges.xml:109(para)
+msgid ""
+"This query may legitimately take <emphasis>any</emphasis> 10 tuples from "
+"<envar>table1</envar>, no reason for it to behave the same across nodes."
+msgstr ""
+
+#: ddlchanges.xml:112(para)
+msgid ""
+"Ridiculously different behaviour <command> insert into table2 (id, data) "
+"select id, data from table1 order by random () limit 10; </command>"
+msgstr ""
+
+#: ddlchanges.xml:118(para)
+msgid ""
+"This query makes it more obvious that it could draw <emphasis>any</emphasis> "
+"10 tuples from <envar>table1</envar>, in any order."
+msgstr ""
+
+#: ddlchanges.xml:122(para)
+msgid ""
+"Node-local results <command> insert into table3 (id, data, transaction_date, "
+"value) select id, data, now(), random() from table1 order by id limit 10; </"
+"command>"
+msgstr ""
+
+#: ddlchanges.xml:128(para)
+msgid ""
+"This query will compute <function>now()</function> based on the time the "
+"query runs on each node, and values of <function>random()</function> varying "
+"each time, so that while the <command>order by id</command> clause would "
+"have eliminated the ambiguity in the earlier cases, we can be quite certain "
+"that this query will put substantially different data into <envar>table3</"
+"envar> on every node on which it is executed."
+msgstr ""
+
+#: ddlchanges.xml:146(title)
+msgid "Applying DDL Changes Directly"
+msgstr ""
+
+#: ddlchanges.xml:149(para)
+msgid ""
+"DDL changes can be applied directly on a node through an application such as "
+"<command>psql</command>. The DDL changes will not be replicated by &slony1; "
+"and therefore must be manually applied to every relevant node. The following "
+"points should be kept in mind when applying DDL changes directly."
+msgstr ""
+
+#: ddlchanges.xml:157(para)
+msgid ""
+"While DDL changes are not automatically replicated, any <command>INSERT,"
+"UPDATE,DELETE</command> statements that you execute will be captured for "
+"replication, when run against the origin node. This means that you should "
+"not include DDL changes and DML inside the same script when apply DDL "
+"directly, because the script will not behave properly when you execute it on "
+"other nodes."
+msgstr ""
+
+#: ddlchanges.xml:164(para)
+msgid ""
+"If you, instead, apply DDL using <command>EXECUTE SCRIPT</command>, it is "
+"fine to intersperse DDL and DML within the script, as &slony1; handles that "
+"appropriately."
+msgstr ""
+
+#: ddlchanges.xml:170(para)
+msgid ""
+"You are responsible for ensuring that your scripts get applied on all other "
+"nodes at the correct point in the replication stream (<emphasis>e.g.</"
+"emphasis> - on or before the appropriate SYNC event). The best way of doing "
+"this with respect to adding and deleting columns is to make sure that new "
+"columns always get added on the replica nodes first and that columns being "
+"removed are dropped from the master before they are dropped from the "
+"replicas. That way, new columns are always available on the subscriber on or "
+"before the time they will be needed, and obsolete ones remain on the "
+"subscriber until after the last possible reference to them has been "
+"replicated."
+msgstr ""
+
+#: ddlchanges.xml:182(para)
+msgid ""
+"If columns being added or dropped are mandatory (NOT NULL) or have default "
+"values, you will need to go through a longer process to ensure constraints "
+"are satisfied at each point in time on all nodes."
+msgstr ""
+
+#: ddlchanges.xml:187(para)
+msgid ""
+"For instance, if dropping a column that has a NOT NULL constraint, it may "
+"take multiple ALTER TABLE statements on each node in order to successfully "
+"accomplish this, as the constraint needs to be relaxed first."
+msgstr ""
+
+#: ddlchanges.xml:194(para)
+msgid ""
+"DDL changes that rename a replicated table do not inform &slony1; of the new "
+"table name. If you change then name of a replicated table you must allow "
+"&slony1; to find the new table name by calling <xref linkend=\"function."
+"updaterelname\"/>"
+msgstr ""
+
+#: ddlchanges.xml:202(para)
+msgid ""
+"DDL changes that alter either a primary key, a unique constraint that slony "
+"is using, or DDL changes that drop columns that come before the key or "
+"unique constraint that &slony1; is using will require &slony1; too "
+"reconfigure the arguments on the logtrigger. The function <xref linkend="
+"\"function.repair-log-triggers-only-locked-boolean\"/> will reconfigure the "
+"trigger arguments of any &slony1; log triggers that are out of date. If "
+"<option>true</option> is passed to this function it will only adjust tables "
+"that are already locked by the current transaction (if you perform your "
+"<command>alter table</command> within a transaction and then call "
+"<function>repair_log_triggers()</function> as part of the same transaction "
+"then the altered tables will be locked). If you pass <option>false</option> "
+"to this function then the function will obtain an exclusive lock on any "
+"table that needs the trigger to be reconfigured."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: ddlchanges.xml:0(None)
+msgid "translator-credits"
+msgstr ""

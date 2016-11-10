@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: security.xml:4(title)
+msgid "Security Considerations"
+msgstr ""
+
+#: security.xml:6(para)
+msgid ""
+"The simplest and most common way of deploying &slony1; has been to create a "
+"&slony1; database user account on all nodes in the system and give that "
+"account database superuser privileges. This allows &slony1; to do "
+"<quote>anything it needs.</quote>"
+msgstr ""
+
+#: security.xml:12(para)
+msgid ""
+"In some environments, this is too much privilege to give out to an automated "
+"system, so this section describes how to minimize the privileges given out."
+msgstr ""
+
+#: security.xml:16(title)
+msgid "Minimum Privileges"
+msgstr ""
+
+#: security.xml:18(para)
+msgid ""
+"The minimum privileges for running each component of &slony1; may be more "
+"specifically described."
+msgstr ""
+
+#: security.xml:23(para)
+msgid ""
+"The slonik admin connections need to connect to the database as a database "
+"superuser. As part of the installation of &slony1;, the slonik program will "
+"create C language functions in the database. This requires superuser access. "
+"Some slonik commands will enable and disable indicies which by manipulating "
+"pg_class. This also requires superuser access."
+msgstr ""
+
+#: security.xml:31(term)
+msgid "&lslon; Local Connection"
+msgstr ""
+
+#: security.xml:33(para)
+msgid ""
+"Each slon instance has a <quote>local</quote> database connection. This is "
+"the database connection that is specified on the either the slon command "
+"line or the slon configuration file."
+msgstr ""
+
+#: security.xml:38(para)
+msgid ""
+"Slon needs to connect to this database with considerable <quote>write</"
+"quote> privileges, and requires superuser access in a couple of places."
+msgstr ""
+
+#: security.xml:45(para)
+msgid ""
+"Alter <envar>pg_class</envar> to deactivate indices when preparing to "
+"<command>COPY</command> a table"
+msgstr ""
+
+#: security.xml:47(para)
+msgid "Make alterations to any of the &slony1; created tables"
+msgstr ""
+
+#: security.xml:49(para)
+msgid ""
+"Make modifications (INSERT/UPDATE/DELETE/ALTER) to all replicated tables."
+msgstr ""
+
+#: security.xml:52(para)
+msgid "set the session_replication_role to replica"
+msgstr ""
+
+#: security.xml:42(para)
+msgid "It must be able to <placeholder-1/>"
+msgstr ""
+
+#: security.xml:60(term)
+msgid "&lslon; Remote Connections"
+msgstr ""
+
+#: security.xml:69(para)
+msgid "SELECT from &slevent;"
+msgstr ""
+
+#: security.xml:71(para)
+msgid "SELECT the &sllog1; and &sllog2; tables"
+msgstr ""
+
+#: security.xml:73(para)
+msgid ""
+"SELECT any replicated tables that originate on the remote node. This is done "
+"as part of the initial <command>COPY</command> during the subscription "
+"process"
+msgstr ""
+
+#: security.xml:62(para)
+msgid ""
+"The Remote slon connection information is specified in the <xref linkend="
+"\"stmtstorepath\"/> command when adding paths. The &lslon; daemon needs to "
+"connect to remote databases with sufficient permissions to: <placeholder-1/>"
+msgstr ""
+
+#: security.xml:78(para)
+msgid ""
+"Note that this role does not have any need to modify data; it purely "
+"involves <command>SELECT</command> access."
+msgstr ""
+
+#: security.xml:86(title)
+msgid "Lowering Authority Usage from Superuser"
+msgstr ""
+
+#: security.xml:88(para)
+msgid ""
+"Traditionally, it has been stated that <quote>&slony1; needs to use "
+"superuser connections.</quote> It turns out that this is not actually true, "
+"and and if there are particular concerns about excessive use of superuser "
+"roles, it is possible to reduce the <quote>security demands</quote> of "
+"&slony1; considerably."
+msgstr ""
+
+#: security.xml:94(para)
+msgid ""
+"It is <emphasis>simplest</emphasis> to have the replication management user "
+"be a superuser, as, in that case, one need not think about what permissions "
+"to configure, but this is excessive."
+msgstr ""
+
+#: security.xml:98(para)
+msgid ""
+"There is only actually one place where &slony1; truly requires superuser "
+"access, and that is for installation (slonik) and on the local connetion "
+"slon uses."
+msgstr ""
+
+#: security.xml:106(title)
+msgid "Handling Database Authentication (Passwords)"
+msgstr ""
+
+#: security.xml:115(para)
+msgid ""
+"You can store the passwords as part of the conninfo string passed to the "
+"<xref linkend=\"stmtstorepath\"/> statement. This means that database "
+"passwords are stored inside of the database in cleartext."
+msgstr ""
+
+#: security.xml:120(para)
+msgid ""
+"You can setup a .pgpass file on each node you are running slon on. slon will "
+"then retreive the passwords from the .pgpass file. You must make sure that "
+"each node running slon have passwords for all paths."
+msgstr ""
+
+#: security.xml:107(para)
+msgid ""
+"The slon and slonik programs connect to &postgres; as a normal &postgres; "
+"client connection. How &postgres;authenticates the database connection is "
+"controlled through the normal libpq authentication options via the pg_hba."
+"conf file. See the &postgres; manual for full details. If you choose to "
+"require password authentication for &slony1; connections then you have two "
+"options on where slon can obtain the passwords from. <placeholder-1/>"
+msgstr ""
+
+#: security.xml:132(title)
+msgid "Other Good Security Practices"
+msgstr ""
+
+#: security.xml:134(para)
+msgid ""
+"In order to be able to clearly identify which logical roles are being used, "
+"it seems advisable to set up users specifically for use by replication, one "
+"or more <command>slony</command> users."
+msgstr ""
+
+#: security.xml:138(para)
+msgid ""
+"As already discussed, these users may have specific permissions attached to "
+"indicate what capabilities they are intended to have."
+msgstr ""
+
+#: security.xml:142(para)
+msgid ""
+"It is also useful for these users to be present so that system monitoring "
+"and log monitoring processes are apprised of <quote>who</quote> is doing "
+"things in the environment."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: security.xml:0(None)
+msgid "translator-credits"
+msgstr ""

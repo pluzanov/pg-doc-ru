@@ -1,0 +1,553 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: failover.xml:4(title)
+msgid "Doing switchover and failover with &slony1;"
+msgstr ""
+
+#: failover.xml:5(indexterm)
+msgid "<primary>failover</primary> <secondary>switchover</secondary>"
+msgstr ""
+
+#: failover.xml:9(title)
+msgid "Foreword"
+msgstr ""
+
+#: failover.xml:11(para)
+msgid ""
+"&slony1; is an asynchronous replication system. Because of that, it is "
+"almost certain that at the moment the current origin of a set fails, the "
+"final transactions committed at the origin will have not yet propagated to "
+"the subscribers. Systems are particularly likely to fail under heavy load; "
+"that is one of the corollaries of Murphy's Law. Therefore the principal goal "
+"is to <emphasis>prevent</emphasis> the main server from failing. The best "
+"way to do that is frequent maintenance."
+msgstr ""
+
+#: failover.xml:20(para)
+msgid ""
+"Opening the case of a running server is not exactly what we should consider "
+"a <quote>professional</quote> way to do system maintenance. And "
+"interestingly, those users who found it valuable to use replication for "
+"backup and failover purposes are the very ones that have the lowest "
+"tolerance for terms like <quote>system downtime.</quote> To help support "
+"these requirements, &slony1; not only offers failover capabilities, but also "
+"the notion of controlled origin transfer."
+msgstr ""
+
+#: failover.xml:29(para)
+msgid ""
+"It is assumed in this document that the reader is familiar with the <xref "
+"linkend=\"slonik\"/> utility and knows at least how to set up a simple 2 "
+"node replication system with &slony1;."
+msgstr ""
+
+#: failover.xml:33(title)
+msgid "Controlled Switchover"
+msgstr ""
+
+#: failover.xml:35(indexterm)
+msgid "<primary>controlled switchover</primary>"
+msgstr ""
+
+#: failover.xml:39(para)
+msgid ""
+"We assume a current <quote>origin</quote> as node1 with one "
+"<quote>subscriber</quote> as node2 (<emphasis>e.g.</emphasis> - slave). A "
+"web application on a third server is accessing the database on node1. Both "
+"databases are up and running and replication is more or less in sync. We do "
+"controlled switchover using <xref linkend=\"stmtmoveset\"/>."
+msgstr ""
+
+#: failover.xml:48(para)
+msgid ""
+"At the time of this writing switchover to another server requires the "
+"application to reconnect to the new database. So in order to avoid any "
+"complications, we simply shut down the web server. Users who use "
+"<application>pg_pool</application> for the applications database connections "
+"merely have to shut down the pool."
+msgstr ""
+
+#: failover.xml:55(para)
+msgid ""
+"What needs to be done, here, is highly dependent on the way that the "
+"application(s) that use the database are configured. The general point is "
+"thus: Applications that were connected to the old database must drop those "
+"connections and establish new connections to the database that has been "
+"promoted to the <quote>master</quote> role. There are a number of ways that "
+"this may be configured, and therefore, a number of possible methods for "
+"accomplishing the change:"
+msgstr ""
+
+#: failover.xml:65(para)
+msgid "The application may store the name of the database in a file."
+msgstr ""
+
+#: failover.xml:68(para)
+msgid ""
+"In that case, the reconfiguration may require changing the value in the "
+"file, and stopping and restarting the application to get it to point to the "
+"new location."
+msgstr ""
+
+#: failover.xml:73(para)
+msgid ""
+"A clever usage of DNS might involve creating a CNAME <ulink url=\"http://www."
+"iana.org/assignments/dns-parameters\"> DNS record </ulink> that establishes "
+"a name for the application to use to reference the node that is in the "
+"<quote>master</quote> role."
+msgstr ""
+
+#: failover.xml:78(para)
+msgid ""
+"In that case, reconfiguration would require changing the CNAME to point to "
+"the new server, and possibly restarting the application to refresh database "
+"connections."
+msgstr ""
+
+#: failover.xml:83(para)
+msgid ""
+"If you are using <application>pg_pool</application> or some similar "
+"<quote>connection pool manager,</quote> then the reconfiguration involves "
+"reconfiguring this management tool, but is otherwise similar to the DNS/"
+"CNAME example above."
+msgstr ""
+
+#: failover.xml:90(para)
+msgid ""
+"Whether or not the application that accesses the database needs to be "
+"restarted depends on how it is coded to cope with failed database "
+"connections; if, after encountering an error it tries re-opening them, then "
+"there may be no need to restart it."
+msgstr ""
+
+#: failover.xml:100(programlisting)
+#, no-wrap
+msgid ""
+"lock set (id = 1, origin = 1);\n"
+"wait for event (origin = 1, confirmed = 2, wait on=1);\n"
+"move set (id = 1, old origin = 1, new origin = 2);\n"
+"wait for event (origin = 1, confirmed = 2, wait on=1);"
+msgstr ""
+
+#: failover.xml:97(para)
+msgid ""
+"A small <xref linkend=\"slonik\"/> script executes the following commands: "
+"<placeholder-1/>"
+msgstr ""
+
+#: failover.xml:107(para)
+msgid ""
+"After these commands, the origin (master role) of data set 1 has been "
+"transferred to node2. And it is not simply transferred; it is done in a "
+"fashion such that node1 becomes a fully synchronized subscriber, actively "
+"replicating the set. So the two nodes have switched roles completely."
+msgstr ""
+
+#: failover.xml:113(para)
+msgid ""
+"After reconfiguring the web application (or <application><link linkend="
+"\"pgpool\"> pgpool </link></application>) to connect to the database on "
+"node2, the web server is restarted and resumes normal operation."
+msgstr ""
+
+#: failover.xml:118(para)
+msgid ""
+"Done in one shell script, that does the application shutdown, "
+"<application>slonik</application>, move config files and startup all "
+"together, this entire procedure is likely to take less than 10 seconds."
+msgstr ""
+
+#: failover.xml:125(para)
+msgid ""
+"You may now simply shutdown the server hosting node1 and do whatever is "
+"required to maintain the server. When <xref linkend=\"slon\"/> node1 is "
+"restarted later, it will start replicating again, and soon catch up. At this "
+"point the procedure to switch origins is executed again to restore the "
+"original configuration."
+msgstr ""
+
+#: failover.xml:132(para)
+msgid ""
+"This is the preferred way to handle things; it runs quickly, under control "
+"of the administrators, and there is no need for there to be any loss of data."
+msgstr ""
+
+#: failover.xml:136(para)
+msgid ""
+"After performing the configuration change, you should, run the &lteststate; "
+"scripts in order to validate that the cluster state remains in good order "
+"after this change."
+msgstr ""
+
+#: failover.xml:142(title)
+msgid "Failover"
+msgstr ""
+
+#: failover.xml:144(indexterm)
+msgid "<primary>failover due to system failure</primary>"
+msgstr ""
+
+#: failover.xml:148(para)
+msgid ""
+"If some more serious problem occurs on the <quote>origin</quote> server, it "
+"may be necessary to <xref linkend=\"stmtfailover\"/> to a backup server. "
+"This is a highly undesirable circumstance, as transactions <quote>committed</"
+"quote> on the origin, but not applied to the subscribers, will be lost. You "
+"may have reported these transactions as <quote>successful</quote> to outside "
+"users. As a result, failover should be considered a <emphasis>last resort</"
+"emphasis>. If the <quote>injured</quote> origin server can be brought up to "
+"the point where it can limp along long enough to do a controlled switchover, "
+"that is <emphasis>greatly</emphasis> preferable."
+msgstr ""
+
+#: failover.xml:160(para)
+msgid ""
+"&slony1; does not provide any automatic detection for failed systems. "
+"Abandoning committed transactions is a business decision that cannot be made "
+"by a database system. If someone wants to put the commands below into a "
+"script executed automatically from the network monitoring system, well ... "
+"it's <emphasis>your</emphasis> data, and it's <emphasis>your</emphasis> "
+"failover policy."
+msgstr ""
+
+#: failover.xml:171(programlisting)
+#, no-wrap
+msgid "failover (id = 1, backup node = 2);"
+msgstr ""
+
+#: failover.xml:170(para)
+msgid "The <xref linkend=\"slonik\"/> command <placeholder-1/>"
+msgstr ""
+
+#: failover.xml:176(para)
+msgid ""
+"causes node2 to assume the ownership (origin) of all sets that have node1 as "
+"their current origin. If there should happen to be additional nodes in the "
+"&slony1; cluster, all direct subscribers of node1 are instructed that this "
+"is happening. <application>Slonik</application> will also query all direct "
+"subscribers in order to determine out which node has the highest replication "
+"status (<emphasis>e.g.</emphasis> - the latest committed transaction) for "
+"each set, and the configuration will be changed in a way that node2 first "
+"applies those final before actually allowing write access to the tables."
+msgstr ""
+
+#: failover.xml:187(para)
+msgid ""
+"In addition, all nodes that subscribed directly to node1 will now use node2 "
+"as data provider for the set. This means that after the failover command "
+"succeeded, no node in the entire replication setup will receive anything "
+"from node1 any more."
+msgstr ""
+
+#: failover.xml:192(para)
+msgid ""
+"Note that in order for node 2 to be considered as a candidate for failover, "
+"it must have been set up with the <xref linkend=\"stmtsubscribeset\"/> "
+"option <command>forwarding = yes</command>, which has the effect that "
+"replication log data is collected in &sllog1;/&sllog2; on node 2. If "
+"replication log data is <emphasis>not</emphasis> being collected, then "
+"failover to that node is not possible."
+msgstr ""
+
+#: failover.xml:199(para)
+msgid ""
+"Only nodes listed in the failover_candidates view can be used as the "
+"failover target for an origin. This is discussed in further detail below."
+msgstr ""
+
+#: failover.xml:205(para)
+msgid ""
+"Reconfigure and restart the application (or <application>pgpool</"
+"application>) to cause it to reconnect to node2."
+msgstr ""
+
+#: failover.xml:209(para)
+msgid "Purge out the abandoned node"
+msgstr ""
+
+#: failover.xml:211(para)
+msgid ""
+"You will find, after the failover, that there are still a full set of "
+"references to node 1 in <xref linkend=\"table.sl-node\"/>, as well as in "
+"referring tables such as <xref linkend=\"table.sl-confirm\"/>; since data in "
+"&sllog1;/&sllog2; is still present, &slony1; cannot immediately purge out "
+"the node."
+msgstr ""
+
+#: failover.xml:222(programlisting)
+#, no-wrap
+msgid "drop node (id = 1, event node = 2);"
+msgstr ""
+
+#: failover.xml:217(para)
+msgid ""
+"After the failover is complete and all nodes have been reconfigured you can "
+"remove all remnants of node1's configuration information with the <xref "
+"linkend=\"stmtdropnode\"/> command: <placeholder-1/>"
+msgstr ""
+
+#: failover.xml:227(para)
+msgid ""
+"Supposing the failure resulted from some catastrophic failure of the "
+"hardware supporting node 1, there might be no <quote>remains</quote> left to "
+"look at. If the failure was not <quote>total</quote>, as might be the case "
+"if the node had to be abandoned due to a network communications failure, you "
+"will find that node 1 still <quote>imagines</quote> itself to be as it was "
+"before the failure. See <xref linkend=\"rebuildnode1\"/> for more details on "
+"the implications."
+msgstr ""
+
+#: failover.xml:238(para)
+msgid ""
+"After performing the configuration change, you should, as run the "
+"&lteststate; scripts in order to validate that the cluster state remains in "
+"good order after this change."
+msgstr ""
+
+#: failover.xml:248(title)
+msgid "Failover Targets"
+msgstr ""
+
+#: failover.xml:249(para)
+msgid ""
+"An origin node can only be failed over to other nodes in the cluster that "
+"are valid failover targets. The failover targets for a node must meet the "
+"following conditions"
+msgstr ""
+
+#: failover.xml:255(para)
+msgid ""
+"The failover target must be a direct subscriber of all sets that the failed "
+"node is an origin for"
+msgstr ""
+
+#: failover.xml:257(para)
+msgid ""
+"The failover target must have paths to all nodes that the failed node has "
+"paths to"
+msgstr ""
+
+#: failover.xml:260(para)
+msgid ""
+"The view sl_failover_targets displays the valid failover targets for each "
+"origin node. Clusters that have more than two nodes and would like to have "
+"the option of using failover need to be setup in such a way that valid "
+"failover targets exist for the various failure scenarios that they wish to "
+"support."
+msgstr ""
+
+#: failover.xml:270(title)
+msgid "Multiple Node Failures"
+msgstr ""
+
+#: failover.xml:276(programlisting)
+#, no-wrap
+msgid "FAILOVER (node=(id=1, backup node=3), node=(id=2, backup node=3));"
+msgstr ""
+
+#: failover.xml:271(para)
+msgid ""
+"If multiple nodes fail at the same time, maybe because an entire data-center "
+"has failed, then all failed nodes should be passed to the failover command. "
+"If we consider a cluster where node 1 the origin of a set and provides a "
+"subscription to node 2 and node 3 then node 2 provides a subscription to "
+"node 4, what should happen if both nodes 1 and 2 fail? Slony can be told "
+"about the failed nodes with the following command <placeholder-1/> This "
+"command requires that a paths exist between node 3 and 4. It will then "
+"redirect node 4 to receive the subscription from node 3."
+msgstr ""
+
+#: failover.xml:287(title)
+msgid "Automating <command> FAIL OVER </command>"
+msgstr ""
+
+#: failover.xml:289(indexterm)
+msgid "<primary>automating failover</primary>"
+msgstr ""
+
+#: failover.xml:291(para)
+msgid ""
+"If you do choose to automate <command>FAIL OVER </command>, it is important "
+"to do so <emphasis>carefully.</emphasis> You need to have good assurance "
+"that the failed node is well and truly failed, and you need to be able to "
+"assure that the failed node will not accidentally return into service, "
+"thereby allowing there to be two nodes out there able to respond in a "
+"<quote>master</quote> role."
+msgstr ""
+
+#: failover.xml:298(para)
+msgid ""
+"The problem here requiring that you <quote>shoot the failed node in the "
+"head</quote> is not fundamentally about replication or &slony1;; &slony1; "
+"handles this all reasonably gracefully, as once the node is marked as "
+"failed, the other nodes will <quote>shun</quote> it, effectively ignoring "
+"it. The problem is instead with <emphasis>your application.</emphasis> "
+"Supposing the failed node can come back up sufficiently that it can respond "
+"to application requests, <emphasis>that</emphasis> is likely to be a "
+"problem, and one that hasn't anything to do with &slony1;. The trouble is if "
+"there are two databases that can respond as if they are <quote>master</"
+"quote> systems."
+msgstr ""
+
+#: failover.xml:310(para)
+msgid ""
+"When failover occurs, there therefore needs to be a mechanism to forcibly "
+"knock the failed node off the network in order to prevent applications from "
+"getting confused. This could take place via having an SNMP interface that "
+"does some combination of the following:"
+msgstr ""
+
+#: failover.xml:317(para)
+msgid "Turns off power on the failed server."
+msgstr ""
+
+#: failover.xml:319(para)
+msgid ""
+"If care is not taken, the server may reappear when system administrators "
+"power it up."
+msgstr ""
+
+#: failover.xml:324(para)
+msgid ""
+"Modify firewall rules or other network configuration to drop the failed "
+"server's IP address from the network."
+msgstr ""
+
+#: failover.xml:327(para)
+msgid ""
+"If the server has multiple network interfaces, and therefore multiple IP "
+"addresses, this approach allows the <quote>application</quote> addresses to "
+"be dropped/deactivated, but leave <quote>administrative</quote> addresses "
+"open so that the server would remain accessible to system administrators."
+msgstr ""
+
+#: failover.xml:336(title)
+msgid "After Failover, Reconfiguring Former Origin"
+msgstr ""
+
+#: failover.xml:339(indexterm)
+msgid "<primary>rebuilding after failover</primary>"
+msgstr ""
+
+#: failover.xml:341(para)
+msgid ""
+"What happens to the failed node will depend somewhat on the nature of the "
+"catastrophe that lead to needing to fail over to another node. If the node "
+"had to be abandoned because of physical destruction of its disk storage, "
+"there will likely not be anything of interest left. On the other hand, a "
+"node might be abandoned due to the failure of a network connection, in which "
+"case the former <quote>provider</quote> can appear be functioning perfectly "
+"well. Nonetheless, once communications are restored, the fact of the "
+"<command>FAIL OVER</command> makes it mandatory that the failed node be "
+"abandoned."
+msgstr ""
+
+#: failover.xml:352(para)
+msgid ""
+"After the above failover, the data stored on node 1 will rapidly become "
+"increasingly out of sync with the rest of the nodes, and must be treated as "
+"corrupt. Therefore, the only way to get node 1 back and transfer the origin "
+"role back to it is to rebuild it from scratch as a subscriber, let it catch "
+"up, and then follow the switchover procedure."
+msgstr ""
+
+#: failover.xml:359(para)
+msgid ""
+"A good reason <emphasis>not</emphasis> to do this automatically is the fact "
+"that important updates (from a <emphasis>business</emphasis> perspective) "
+"may have been <command>commit</command>ted on the failing system. You "
+"probably want to analyze the last few transactions that made it into the "
+"failed node to see if some of them need to be reapplied on the <quote>live</"
+"quote> cluster. For instance, if someone was entering bank deposits "
+"affecting customer accounts at the time of failure, you wouldn't want to "
+"lose that information."
+msgstr ""
+
+#: failover.xml:369(para)
+msgid ""
+"It has been observed that there can be some very confusing results if a node "
+"is <quote>failed</quote> due to a persistent network outage as opposed to "
+"failure of data storage. In such a scenario, the <quote>failed</quote> node "
+"has a database in perfectly fine form; it is just that since it was cut off, "
+"it <quote>screams in silence.</quote>"
+msgstr ""
+
+#: failover.xml:376(para)
+msgid ""
+"If the network connection is repaired, that node could reappear, and as far "
+"as <emphasis>its</emphasis> configuration is concerned, all is well, and it "
+"should communicate with the rest of its &slony1; cluster."
+msgstr ""
+
+#: failover.xml:381(para)
+msgid ""
+"In <emphasis>fact</emphasis>, the only confusion taking place is on that "
+"node. The other nodes in the cluster are not confused at all; they know that "
+"this node is <quote>dead,</quote> and that they should ignore it. But there "
+"is not a way to know this by looking at the <quote>failed</quote> node."
+msgstr ""
+
+#: failover.xml:388(para)
+msgid ""
+"This points back to the design point that &slony1; is not a network "
+"monitoring tool. You need to have clear methods of communicating to "
+"applications and users what database hosts are to be used. If those methods "
+"are lacking, adding replication to the mix will worsen the potential for "
+"confusion, and failover will be a point at which there is enormous potential "
+"for confusion."
+msgstr ""
+
+#: failover.xml:396(para)
+msgid ""
+"If the database is very large, it may take many hours to recover node1 as a "
+"functioning &slony1; node; that is another reason to consider failover as an "
+"undesirable <quote>final resort.</quote>"
+msgstr ""
+
+#: failover.xml:403(title)
+msgid "Planning for Failover"
+msgstr ""
+
+#: failover.xml:404(para)
+msgid ""
+"<link linkend=\"failover\"> Failover </link> policies should be planned for "
+"ahead of time."
+msgstr ""
+
+#: failover.xml:407(para)
+msgid ""
+"Most pointedly, any node that is expected to be a failover target must have "
+"its subscription(s) set up with the option <command>FORWARD = YES</command>. "
+"Otherwise, that node is not a candidate for being promoted to origin node."
+msgstr ""
+
+#: failover.xml:412(para)
+msgid ""
+"This may simply involve thinking about what the priority lists should be of "
+"what should fail to what, as opposed to trying to automate it. But knowing "
+"what to do ahead of time cuts down on the number of mistakes made."
+msgstr ""
+
+#: failover.xml:417(para)
+msgid ""
+"At Afilias, a variety of internal <citation>The 3AM Unhappy DBA's Guide to..."
+"</citation> guides have been created to provide checklists of what to do "
+"when certain <quote>unhappy</quote> events take place. This sort of material "
+"is highly specific to the environment and the set of applications running "
+"there, so you would need to generate your own such documents. This is one of "
+"the vital components of any disaster recovery preparations."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: failover.xml:0(None)
+msgid "translator-credits"
+msgstr ""

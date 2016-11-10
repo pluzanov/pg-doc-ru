@@ -1,0 +1,1602 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: adminscripts.xml:4(title)
+msgid "&slony1; Administration Scripts"
+msgstr ""
+
+#: adminscripts.xml:6(indexterm)
+msgid "<primary>administration scripts for &slony1;</primary>"
+msgstr ""
+
+#: adminscripts.xml:8(para)
+msgid ""
+"A number of tools have grown over the course of the history of &slony1; to "
+"help users manage their clusters. This section along with the ones on <xref "
+"linkend=\"monitoring\"/> discusses them."
+msgstr ""
+
+#: adminscripts.xml:12(title)
+msgid "altperl Scripts"
+msgstr ""
+
+#: adminscripts.xml:14(indexterm)
+msgid "<primary>altperl scripts for &slony1;</primary>"
+msgstr ""
+
+#: adminscripts.xml:16(para)
+msgid ""
+"There is a set of scripts to simplify administration of set of &slony1; "
+"instances. The scripts support having arbitrary numbers of nodes. They may "
+"be installed as part of the installation process:"
+msgstr ""
+
+#: adminscripts.xml:20(command)
+msgid "./configure --with-perltools"
+msgstr ""
+
+#: adminscripts.xml:24(para)
+msgid ""
+"This will produce a number of scripts with the prefix <command>slonik_</"
+"command>. They eliminate tedium by always referring to a central "
+"configuration file for the details of your site configuration. A documented "
+"sample of this file is provided in <filename>altperl/slon_tools.conf-sample</"
+"filename>. Most also include some command line help with the \"--help\" "
+"option, making them easier to learn and use."
+msgstr ""
+
+#: adminscripts.xml:33(para)
+msgid ""
+"Most generate Slonik scripts that are printed to STDOUT. At one time, the "
+"commands were passed directly to <xref linkend=\"slonik\"/> for execution. "
+"Unfortunately, this turned out to be a pretty large calibre <quote>foot gun</"
+"quote>, as minor typos on the command line led, on a couple of occasions, to "
+"pretty calamitous actions. The savvy administrator should review the script "
+"<emphasis>before</emphasis> piping it to <xref linkend=\"slonik\"/>."
+msgstr ""
+
+#: adminscripts.xml:40(title)
+msgid "Support for Multiple Clusters"
+msgstr ""
+
+#: adminscripts.xml:41(indexterm)
+msgid "<primary>Multiple Cluster support for the altperl tools</primary>"
+msgstr ""
+
+#: adminscripts.xml:43(para)
+msgid ""
+"The UNIX environment variable <envar>SLONYNODES</envar> is used to determine "
+"what Perl configuration file will be used to control the shape of the nodes "
+"in a &slony1; cluster. If it is not provided, a default <filename>slon_tools."
+"conf</filename> location will be referenced."
+msgstr ""
+
+#: adminscripts.xml:52(para)
+msgid ""
+"<envar>$CLUSTER_NAME</envar>=orglogs; # What is the name of the replication "
+"cluster?"
+msgstr ""
+
+#: adminscripts.xml:53(para)
+msgid ""
+"<envar>$LOGDIR</envar>='/opt/OXRS/log/LOGDBS'; # What is the base directory "
+"for logs?"
+msgstr ""
+
+#: adminscripts.xml:54(para)
+msgid ""
+"<envar>$APACHE_ROTATOR</envar>=\"/opt/twcsds004/OXRS/apache/rotatelogs\"; # "
+"If set, where to find Apache log rotator"
+msgstr ""
+
+#: adminscripts.xml:55(para)
+msgid ""
+"<envar>foldCase</envar> # If set to 1, object names (including schema names) "
+"will be folded to lower case. By default, your object names will be left "
+"alone. Note that &postgres; itself folds object names to lower case; if you "
+"create a table via the command <command> CREATE TABLE SOME_THING (Id "
+"INTEGER, STudlYName text);</command>, the result will be that all of those "
+"components are forced to lower case, thus equivalent to <command> create "
+"table some_thing (id integer, studlyname text);</command>, and the name of "
+"table and, in this case, the fields will all, in fact, be lower case."
+msgstr ""
+
+#: adminscripts.xml:49(para)
+msgid "What variables are set up. <placeholder-1/>"
+msgstr ""
+
+#: adminscripts.xml:69(para)
+msgid ""
+"You then define the set of nodes that are to be replicated using a set of "
+"calls to <function>add_node()</function>."
+msgstr ""
+
+#: adminscripts.xml:73(command)
+msgid ""
+"add_node (host =&gt; '10.20.30.40', dbname =&gt; 'orglogs', port =&gt; 5437, "
+"user =&gt; 'postgres', node =&gt; 4, parent =&gt; 1);"
+msgstr ""
+
+#: adminscripts.xml:78(para)
+msgid "The set of parameters for <function>add_node()</function> are thus:"
+msgstr ""
+
+#: adminscripts.xml:80(programlisting)
+#, no-wrap
+msgid ""
+"my %PARAMS =   (host=&gt; undef,\t\t# Host name\n"
+"\t   \tdbname =&gt; 'template1',\t# database name\n"
+"\t\tport =&gt; 5432,\t\t# Port number\n"
+"\t\tuser =&gt; 'postgres',\t# user to connect as\n"
+"\t\tnode =&gt; undef,\t\t# node number\n"
+"\t\tpassword =&gt; undef,\t# password for user\n"
+"\t\tparent =&gt; 1,\t\t# which node is parent to this node\n"
+"\t\tnoforward =&gt; undef,\t# shall this node be set up to forward results?\n"
+"\t\tsslmode =&gt; undef,\t# SSL mode argument - determine\n"
+"\t\t\t\t\t# priority of SSL usage\n"
+"\t\t\t\t\t# = disable,allow,prefer,require\n"
+"\t\toptions =&gt; undef\t# extra command line options to pass to the\n"
+"\t\t\t\t\t# slon daemon\n"
+");"
+msgstr ""
+
+#: adminscripts.xml:98(title)
+msgid "Set configuration - cluster.set1, cluster.set2"
+msgstr ""
+
+#: adminscripts.xml:99(indexterm)
+msgid ""
+"<primary>cluster.set1 - replication set configuration for Perl tools</"
+"primary>"
+msgstr ""
+
+#: adminscripts.xml:101(para)
+msgid ""
+"The UNIX environment variable <envar>SLONYSET</envar> is used to determine "
+"what Perl configuration file will be used to determine what objects will be "
+"contained in a particular replication set."
+msgstr ""
+
+#: adminscripts.xml:105(para)
+msgid ""
+"Unlike <envar>SLONYNODES</envar>, which is essential for <emphasis>all</"
+"emphasis> of the <xref linkend=\"slonik\"/>-generating scripts, this only "
+"needs to be set when running <filename>create_set</filename>, as that is the "
+"only script used to control what tables will be in a particular replication "
+"set."
+msgstr ""
+
+#: adminscripts.xml:112(title)
+msgid "slonik_build_env"
+msgstr ""
+
+#: adminscripts.xml:113(indexterm)
+msgid "<primary>slonik_build_env</primary>"
+msgstr ""
+
+#: adminscripts.xml:115(para)
+msgid ""
+"Queries a database, generating output hopefully suitable for "
+"<filename>slon_tools.conf</filename> consisting of:"
+msgstr ""
+
+#: adminscripts.xml:119(para)
+msgid "a set of <function>add_node()</function> calls to configure the cluster"
+msgstr ""
+
+#: adminscripts.xml:120(para)
+msgid ""
+"The arrays <envar>@KEYEDTABLES</envar>, <envar>@SERIALTABLES</envar>, and "
+"<envar>@SEQUENCES</envar>"
+msgstr ""
+
+#: adminscripts.xml:123(para)
+msgid ""
+"Note that in &slony1; 2.0 and later, <envar>@SERIALTABLES</envar> is no "
+"longer meaningful as <xref linkend=\"stmtsetaddtable\"/> no longer supports "
+"the <envar>SERIAL</envar> option."
+msgstr ""
+
+#: adminscripts.xml:128(title)
+msgid "slonik_print_preamble"
+msgstr ""
+
+#: adminscripts.xml:129(indexterm)
+msgid "<primary>altperl print preamble</primary>"
+msgstr ""
+
+#: adminscripts.xml:131(para)
+msgid ""
+"This generates just the <quote>preamble</quote> that is required by all "
+"slonik scripts. In effect, this provides a <quote>skeleton</quote> slonik "
+"script that does not do anything."
+msgstr ""
+
+#: adminscripts.xml:136(title)
+msgid "slonik_create_set"
+msgstr ""
+
+#: adminscripts.xml:137(indexterm)
+msgid "<primary>altperl create set</primary>"
+msgstr ""
+
+#: adminscripts.xml:139(para)
+msgid ""
+"This requires <envar>SLONYSET</envar> to be set as well as "
+"<envar>SLONYNODES</envar>; it is used to generate the <command>slonik</"
+"command> script to set up a replication set consisting of a set of tables "
+"and sequences that are to be replicated."
+msgstr ""
+
+#: adminscripts.xml:145(title)
+msgid "slonik_drop_node"
+msgstr ""
+
+#: adminscripts.xml:146(indexterm)
+msgid "<primary>altperl drop node</primary>"
+msgstr ""
+
+#: adminscripts.xml:148(para)
+msgid "Generates Slonik script to drop a node from a &slony1; cluster."
+msgstr ""
+
+#: adminscripts.xml:152(title)
+msgid "slonik_drop_set"
+msgstr ""
+
+#: adminscripts.xml:153(indexterm)
+msgid "<primary>altperl drop set</primary>"
+msgstr ""
+
+#: adminscripts.xml:155(para)
+msgid ""
+"Generates Slonik script to drop a replication set (<emphasis>e.g.</emphasis> "
+"- set of tables and sequences) from a &slony1; cluster."
+msgstr ""
+
+#: adminscripts.xml:159(para)
+msgid ""
+"This represents a pretty big potential <quote>foot gun</quote> as this "
+"eliminates a replication set all at once. A typo that points it to the wrong "
+"set could be rather damaging. Compare to <xref linkend=\"slonik-unsubscribe-"
+"set\"/> and <xref linkend=\"slonik-drop-node\"/>; with both of those, "
+"attempting to drop a subscription or a node that is vital to your operations "
+"will be blocked (via a foreign key constraint violation) if there exists a "
+"downstream subscriber that would be adversely affected. In contrast, there "
+"will be no warnings or errors if you drop a set; the set will simply "
+"disappear from replication."
+msgstr ""
+
+#: adminscripts.xml:173(title)
+msgid "slonik_drop_table"
+msgstr ""
+
+#: adminscripts.xml:174(indexterm)
+msgid "<primary>altperl drop table</primary>"
+msgstr ""
+
+#: adminscripts.xml:176(para)
+msgid ""
+"Generates Slonik script to drop a table from replication. Requires, as "
+"input, the ID number of the table (available from table <envar>sl_table</"
+"envar>) that is to be dropped."
+msgstr ""
+
+#: adminscripts.xml:181(title)
+msgid "slonik_execute_script"
+msgstr ""
+
+#: adminscripts.xml:182(indexterm)
+msgid "<primary>altperl execute script</primary>"
+msgstr ""
+
+#: adminscripts.xml:184(para)
+msgid "Generates Slonik script to push DDL changes to a replication set."
+msgstr ""
+
+#: adminscripts.xml:186(title)
+msgid "slonik_failover"
+msgstr ""
+
+#: adminscripts.xml:188(indexterm)
+msgid "<primary>altperl failover</primary>"
+msgstr ""
+
+#: adminscripts.xml:189(para)
+msgid ""
+"Generates Slonik script to request failover from a dead node to some new "
+"origin"
+msgstr ""
+
+#: adminscripts.xml:191(title)
+msgid "slonik_init_cluster"
+msgstr ""
+
+#: adminscripts.xml:192(indexterm)
+msgid "<primary>altperl init cluster</primary>"
+msgstr ""
+
+#: adminscripts.xml:194(para)
+msgid ""
+"Generates Slonik script to initialize a whole &slony1; cluster, including "
+"setting up the nodes, communications paths, and the listener routing."
+msgstr ""
+
+#: adminscripts.xml:198(title)
+msgid "slonik_merge_sets"
+msgstr ""
+
+#: adminscripts.xml:199(indexterm)
+msgid "<primary>altperl merge sets</primary>"
+msgstr ""
+
+#: adminscripts.xml:201(para)
+msgid "Generates Slonik script to merge two replication sets together."
+msgstr ""
+
+#: adminscripts.xml:203(title)
+msgid "slonik_move_set"
+msgstr ""
+
+#: adminscripts.xml:205(indexterm)
+msgid "<primary>altperl move set</primary>"
+msgstr ""
+
+#: adminscripts.xml:206(para)
+msgid ""
+"Generates Slonik script to move the origin of a particular set to a "
+"different node."
+msgstr ""
+
+#: adminscripts.xml:208(title)
+msgid "replication_test"
+msgstr ""
+
+#: adminscripts.xml:209(indexterm)
+msgid "<primary>altperl replication test</primary>"
+msgstr ""
+
+#: adminscripts.xml:211(para)
+msgid "Script to test whether &slony1; is successfully replicating data."
+msgstr ""
+
+#: adminscripts.xml:214(title)
+msgid "slonik_restart_node"
+msgstr ""
+
+#: adminscripts.xml:215(indexterm)
+msgid "<primary>altperl restart node</primary>"
+msgstr ""
+
+#: adminscripts.xml:217(para)
+msgid ""
+"Generates Slonik script to request the restart of a node. This was "
+"particularly useful pre-1.0.5 when nodes could get snarled up when slon "
+"daemons died."
+msgstr ""
+
+#: adminscripts.xml:221(title)
+msgid "slonik_restart_nodes"
+msgstr ""
+
+#: adminscripts.xml:222(indexterm)
+msgid "<primary>altperl restart nodes</primary>"
+msgstr ""
+
+#: adminscripts.xml:224(para)
+msgid ""
+"Generates Slonik script to restart all nodes in the cluster. Not "
+"particularly useful."
+msgstr ""
+
+#: adminscripts.xml:227(title)
+msgid "slony_show_configuration"
+msgstr ""
+
+#: adminscripts.xml:228(indexterm)
+msgid "<primary>altperl show configuration</primary>"
+msgstr ""
+
+#: adminscripts.xml:230(para)
+msgid ""
+"Displays an overview of how the environment (e.g. - <envar>SLONYNODES</"
+"envar>) is set to configure things."
+msgstr ""
+
+#: adminscripts.xml:233(title)
+msgid "slon_kill"
+msgstr ""
+
+#: adminscripts.xml:235(indexterm)
+msgid "<primary>altperl kill slon</primary>"
+msgstr ""
+
+#: adminscripts.xml:236(para)
+msgid ""
+"Kills slony watchdog and all slon daemons for the specified set. It only "
+"works if those processes are running on the local host, of course!"
+msgstr ""
+
+#: adminscripts.xml:240(title)
+msgid "slon_start"
+msgstr ""
+
+#: adminscripts.xml:241(indexterm)
+msgid "<primary>altperl start slon</primary>"
+msgstr ""
+
+#: adminscripts.xml:243(para)
+msgid ""
+"This starts a slon daemon for the specified cluster and node, and uses "
+"slon_watchdog to keep it running."
+msgstr ""
+
+#: adminscripts.xml:246(title)
+msgid "slon_watchdog"
+msgstr ""
+
+#: adminscripts.xml:248(indexterm)
+msgid "<primary>altperl slon watchdog</primary>"
+msgstr ""
+
+#: adminscripts.xml:249(para)
+msgid "Used by <command>slon_start</command>."
+msgstr ""
+
+#: adminscripts.xml:251(title)
+msgid "slon_watchdog2"
+msgstr ""
+
+#: adminscripts.xml:252(indexterm)
+msgid "<primary>altperl slon watchdog 2</primary>"
+msgstr ""
+
+#: adminscripts.xml:254(para)
+msgid ""
+"This is a somewhat smarter watchdog; it monitors a particular &slony1; node, "
+"and restarts the slon process if it hasn't seen updates go in in 20 minutes "
+"or more."
+msgstr ""
+
+#: adminscripts.xml:258(para)
+msgid ""
+"This is helpful if there is an unreliable network connection such that the "
+"slon sometimes stops working without becoming aware of it."
+msgstr ""
+
+#: adminscripts.xml:262(title)
+msgid "slonik_store_node"
+msgstr ""
+
+#: adminscripts.xml:264(indexterm)
+msgid "<primary>altperl store node</primary>"
+msgstr ""
+
+#: adminscripts.xml:265(para)
+msgid "Adds a node to an existing cluster."
+msgstr ""
+
+#: adminscripts.xml:267(title)
+msgid "slonik_subscribe_set"
+msgstr ""
+
+#: adminscripts.xml:269(indexterm)
+msgid "<primary>altperl subscribe set</primary>"
+msgstr ""
+
+#: adminscripts.xml:270(para)
+msgid ""
+"Generates Slonik script to subscribe a particular node to a particular "
+"replication set."
+msgstr ""
+
+#: adminscripts.xml:272(title)
+msgid "slonik_uninstall_nodes"
+msgstr ""
+
+#: adminscripts.xml:273(indexterm)
+msgid "<primary>altperl unsubscribe nodes</primary>"
+msgstr ""
+
+#: adminscripts.xml:275(para)
+msgid ""
+"This goes through and drops the &slony1; schema from each node; use this if "
+"you want to destroy replication throughout a cluster. As its effects are "
+"necessarily rather destructive, this has the potential to be pretty unsafe."
+msgstr ""
+
+#: adminscripts.xml:282(title)
+msgid "slonik_unsubscribe_set"
+msgstr ""
+
+#: adminscripts.xml:283(indexterm)
+msgid "<primary>altperl unsubscribe set</primary>"
+msgstr ""
+
+#: adminscripts.xml:285(para)
+msgid "Generates Slonik script to unsubscribe a node from a replication set."
+msgstr ""
+
+#: adminscripts.xml:288(title)
+msgid "slonik_update_nodes"
+msgstr ""
+
+#: adminscripts.xml:289(indexterm)
+msgid "<primary>altperl update nodes</primary>"
+msgstr ""
+
+#: adminscripts.xml:291(para)
+msgid ""
+"Generates Slonik script to tell all the nodes to update the &slony1; "
+"functions. This will typically be needed when you upgrade from one version "
+"of &slony1; to another."
+msgstr ""
+
+#: adminscripts.xml:297(title)
+msgid "mkslonconf.sh"
+msgstr ""
+
+#: adminscripts.xml:299(indexterm)
+msgid "<primary>generating slon.conf files for &slony1;</primary>"
+msgstr ""
+
+#: adminscripts.xml:301(para)
+msgid ""
+"This is a shell script designed to rummage through a &slony1; cluster and "
+"generate a set of <filename>slon.conf</filename> files that &lslon; accesses "
+"via the <command> slon -f slon.conf </command> option."
+msgstr ""
+
+#: adminscripts.xml:306(para)
+msgid ""
+"With all of the configuration residing in a configuration file for each "
+"&lslon;, they can be invoked with minimal muss and fuss, with no risk of "
+"forgetting the <command>-a</command> option and thereby breaking a <link "
+"linkend=\"logshipping\"> log shipping </link> node."
+msgstr ""
+
+#: adminscripts.xml:312(para)
+msgid "Running it requires the following environment configuration:"
+msgstr ""
+
+#: adminscripts.xml:316(para)
+msgid ""
+"Firstly, the environment needs to be set up with suitable parameters for "
+"libpq to connect to one of the databases in the cluster. Thus, you need some "
+"suitable combination of the following environment variables set:"
+msgstr ""
+
+#: adminscripts.xml:322(envar) adminscripts.xml:609(envar)
+msgid "PGPORT"
+msgstr ""
+
+#: adminscripts.xml:323(envar) adminscripts.xml:611(envar)
+msgid "PGDATABASE"
+msgstr ""
+
+#: adminscripts.xml:324(envar)
+msgid "PGHOST"
+msgstr ""
+
+#: adminscripts.xml:325(envar) adminscripts.xml:601(envar)
+msgid "PGUSER"
+msgstr ""
+
+#: adminscripts.xml:326(envar)
+msgid "PGSERVICE"
+msgstr ""
+
+#: adminscripts.xml:331(para)
+msgid ""
+"<envar>SLONYCLUSTER</envar> - the name of the &slony1; cluster to be "
+"<quote>rummaged</quote>."
+msgstr ""
+
+#: adminscripts.xml:334(para)
+msgid ""
+"<envar>MKDESTINATION</envar> - a directory for configuration to reside in; "
+"the script will create <filename>MKDESTINATION/$SLONYCLUSTER/conf</filename> "
+"for the &lslon; configuration files, and <filename>MKDESTINATION/"
+"$SLONYCLUSTER/pid</filename> for &lslon; to store PID files in."
+msgstr ""
+
+#: adminscripts.xml:341(para)
+msgid ""
+"<envar>LOGHOME</envar> - a directory for log files to reside in; a directory "
+"of the form <command>$LOGHOME/$SLONYCLUSTER/node[number]</command> will be "
+"created for each node."
+msgstr ""
+
+#: adminscripts.xml:348(para)
+msgid ""
+"For any <quote>new</quote> nodes that it discovers, this script will create "
+"a new &lslon; conf file."
+msgstr ""
+
+#: adminscripts.xml:351(para)
+msgid ""
+"It is fair to say that there are several conditions to beware of; none of "
+"these should be greatly surprising..."
+msgstr ""
+
+#: adminscripts.xml:356(para)
+msgid ""
+"The DSN is pulled from the minimum value found for each node in "
+"<envar>sl_path</envar>. You may very well need to modify this."
+msgstr ""
+
+#: adminscripts.xml:360(para)
+msgid ""
+"Various parameters are set to default values; you may wish to customize them "
+"by hand."
+msgstr ""
+
+#: adminscripts.xml:363(para)
+msgid ""
+"If you are running &lslon; processes on multiple nodes (<emphasis>e.g.</"
+"emphasis> - as when running &slony1; across a WAN), this script will happily "
+"create fresh new config files for &lslon;s you wanted to have run on another "
+"host."
+msgstr ""
+
+#: adminscripts.xml:368(para)
+msgid "Be sure to check out what nodes it set up before restarting &lslon;s."
+msgstr ""
+
+#: adminscripts.xml:371(para)
+msgid ""
+"This would usually only cause some minor inconvenience due to, for instance, "
+"a &lslon; running at a non-preferred site, and either failing due to lack of "
+"network connectivity (in which no damage is done!) or running a bit less "
+"efficiently than it might have due to living at the wrong end of the network "
+"<quote>pipe.</quote>"
+msgstr ""
+
+#: adminscripts.xml:377(para)
+msgid ""
+"On the other hand, if you are running a log shipping node at the remote "
+"site, accidentally introducing a &lslon; that <emphasis>isn't</emphasis> "
+"collecting logs could ruin your whole week."
+msgstr ""
+
+#: adminscripts.xml:386(para)
+msgid ""
+"The file layout set up by <filename>mkslonconf.sh</filename> was "
+"specifically set up to allow managing &lslon;s across a multiplicity of "
+"clusters using the script in the following section..."
+msgstr ""
+
+#: adminscripts.xml:393(title)
+msgid "start_slon.sh"
+msgstr ""
+
+#: adminscripts.xml:395(para)
+msgid ""
+"This <filename>rc.d</filename>-style script was introduced in &slony1; "
+"version 2.0; it provides automatable ways of:"
+msgstr ""
+
+#: adminscripts.xml:399(para)
+msgid "Starting the &lslon;, via <command> start_slon.sh start </command>"
+msgstr ""
+
+#: adminscripts.xml:401(para)
+msgid ""
+"Attempts to start the &lslon;, checking first to verify that it is not "
+"already running, that configuration exists, and that the log file location "
+"is writable. Failure cases include:"
+msgstr ""
+
+#: adminscripts.xml:406(para)
+msgid ""
+"No <link linkend=\"runtime-config\"> slon runtime configuration file </link> "
+"exists,"
+msgstr ""
+
+#: adminscripts.xml:407(para)
+msgid ""
+"A &lslon; is found with the PID indicated via the runtime configuration,"
+msgstr ""
+
+#: adminscripts.xml:408(para)
+msgid "The specified <envar>SLON_LOG</envar> location is not writable."
+msgstr ""
+
+#: adminscripts.xml:409(para)
+msgid "Stopping the &lslon;, via <command> start_slon.sh stop </command>"
+msgstr ""
+
+#: adminscripts.xml:410(para)
+msgid ""
+"This fails (doing nothing) if the PID (indicated via the runtime "
+"configuration file) does not exist;"
+msgstr ""
+
+#: adminscripts.xml:411(para)
+msgid ""
+"Monitoring the status of the &lslon;, via <command> start_slon.sh status </"
+"command>"
+msgstr ""
+
+#: adminscripts.xml:412(para)
+msgid ""
+"This indicates whether or not the &lslon; is running, and, if so, prints out "
+"the process ID."
+msgstr ""
+
+#: adminscripts.xml:416(para)
+msgid ""
+"The following environment variables are used to control &lslon; "
+"configuration:"
+msgstr ""
+
+#: adminscripts.xml:419(envar)
+msgid "SLON_BIN_PATH"
+msgstr ""
+
+#: adminscripts.xml:420(para)
+msgid "This indicates where the &lslon; binary program is found."
+msgstr ""
+
+#: adminscripts.xml:421(envar)
+msgid "SLON_CONF"
+msgstr ""
+
+#: adminscripts.xml:422(para)
+msgid ""
+"This indicates the location of the <link linkend=\"runtime-config\"> slon "
+"runtime configuration file </link> that controls how the &lslon; behaves."
+msgstr ""
+
+#: adminscripts.xml:423(para)
+msgid ""
+"Note that this file is <emphasis>required</emphasis> to contain a value for "
+"<link linkend=\"slon-config-logging-pid-file\">log_pid_file</link>; that is "
+"necessary to allow this script to detect whether the &lslon; is running or "
+"not."
+msgstr ""
+
+#: adminscripts.xml:425(envar)
+msgid "SLON_LOG"
+msgstr ""
+
+#: adminscripts.xml:426(para)
+msgid ""
+"This file is the location where &lslon; log files are to be stored, if need "
+"be. There is an option <xref linkend=\"slon-config-logging-syslog\"/> for "
+"&lslon; to use <application>syslog</application> to manage logging; in that "
+"case, you may prefer to set <envar>SLON_LOG</envar> to <filename>/dev/null</"
+"filename>."
+msgstr ""
+
+#: adminscripts.xml:429(para)
+msgid ""
+"Note that these environment variables may either be set, in the script, or "
+"overridden by values passed in from the environment. The latter usage makes "
+"it easy to use this script in conjunction with the regression tests so that "
+"it is regularly tested."
+msgstr ""
+
+#: adminscripts.xml:436(title)
+msgid "launch_clusters.sh"
+msgstr ""
+
+#: adminscripts.xml:438(indexterm)
+msgid "<primary>launching &slony1; cluster using slon.conf files</primary>"
+msgstr ""
+
+#: adminscripts.xml:440(para)
+msgid ""
+"This is a shell script which uses the configuration as set up by "
+"<filename>mkslonconf.sh</filename> and is intended to support an approach to "
+"running &slony1; involving regularly (<emphasis>e.g.</emphasis> via a cron "
+"process) checking to ensure that &lslon; processes are running."
+msgstr ""
+
+#: adminscripts.xml:446(para)
+msgid "It uses the following environment variables:"
+msgstr ""
+
+#: adminscripts.xml:450(para)
+msgid ""
+"<envar>PATH</envar> which needs to contain, preferably at the beginning, a "
+"path to the &lslon; binaries that should be run."
+msgstr ""
+
+#: adminscripts.xml:454(para)
+msgid ""
+"<envar>SLHOME</envar> indicates the <quote>home</quote> directory for "
+"&lslon; configuration files; they are expected to be arranged in "
+"subdirectories, one for each cluster, with filenames of the form "
+"<filename>node1.conf</filename>, <filename>node2.conf</filename>, and such"
+msgstr ""
+
+#: adminscripts.xml:460(para)
+msgid ""
+"The script uses the command <command>find $SLHOME/$cluster/conf -name "
+"\"node[0-9]*.conf\"</command> to find &lslon; configuration files."
+msgstr ""
+
+#: adminscripts.xml:463(para)
+msgid ""
+"If you remove some of these files, or rename them so their names do not "
+"conform to the <command>find</command> command, they won't be found; that is "
+"an easy way to drop nodes out of this system."
+msgstr ""
+
+#: adminscripts.xml:468(para)
+msgid ""
+"<envar>LOGHOME </envar> indicates the <quote>home</quote> directory for log "
+"storage."
+msgstr ""
+
+#: adminscripts.xml:471(para)
+msgid ""
+"This script does not assume the use of the Apache log rotator to manage "
+"logs; in that &postgres; version 8 does its own log rotation, it seems "
+"undesirable to retain a dependancy on specific log rotation "
+"<quote>technology.</quote>"
+msgstr ""
+
+#: adminscripts.xml:476(para)
+msgid ""
+"<envar>CLUSTERS</envar> is a list of &slony1; clusters under management."
+msgstr ""
+
+#: adminscripts.xml:481(para)
+msgid ""
+"In effect, you could run this every five minutes, and it would launch any "
+"missing &lslon; processes."
+msgstr ""
+
+#: adminscripts.xml:485(title)
+msgid "Upstart Script"
+msgstr ""
+
+#: adminscripts.xml:487(indexterm)
+msgid "<primary> upstart script </primary>"
+msgstr ""
+
+#: adminscripts.xml:489(para)
+msgid ""
+"<ulink url=\"http://upstart.ubuntu.com/\"> Upstart</ulink> is a recent "
+"alternative to <application>/sbin/init</application> to handle automatically "
+"starting tasks and services when a system boots. It is particularly popular "
+"on the Ubuntu Linux distribution."
+msgstr ""
+
+#: adminscripts.xml:495(para)
+msgid ""
+"<filename> share/upstart-slon.conf-sample </filename> is a sample script for "
+"use with <application>upstart</application>. Deployment will require some "
+"customization in order to indicate where &slony1; binaries and configuration "
+"are found in a particular environment."
+msgstr ""
+
+#: adminscripts.xml:503(filename)
+msgid "slony1_extract_schema.sh"
+msgstr ""
+
+#: adminscripts.xml:505(indexterm)
+msgid "<primary>script - slony1_extract_schema.sh</primary>"
+msgstr ""
+
+#: adminscripts.xml:507(para)
+msgid ""
+"You may find that you wish to create a new node some time well after "
+"creating a cluster. The script <filename> slony1_extract_schema.sh </"
+"filename> will help you with this."
+msgstr ""
+
+#: adminscripts.xml:511(para)
+msgid "A command line might look like the following:"
+msgstr ""
+
+#: adminscripts.xml:513(command)
+msgid ""
+"PGPORT=5881 PGHOST=master.int.example.info ./slony1_extract_schema.sh "
+"payroll payroll temppayroll"
+msgstr ""
+
+#: adminscripts.xml:515(para)
+msgid "It performs the following:"
+msgstr ""
+
+#: adminscripts.xml:518(para)
+msgid ""
+"It dumps the origin node's schema, including the data in the &slony1; "
+"cluster schema."
+msgstr ""
+
+#: adminscripts.xml:520(para)
+msgid ""
+"Note that the extra environment variables <envar>PGPORT</envar> and "
+"<envar>PGHOST</envar> to indicate additional information about where the "
+"database resides."
+msgstr ""
+
+#: adminscripts.xml:524(para)
+msgid ""
+"This data is loaded into the freshly created temporary database, "
+"<envar>temppayroll</envar>"
+msgstr ""
+
+#: adminscripts.xml:525(para)
+msgid ""
+"The table and sequence OIDs in &slony1; tables are corrected to point to the "
+"temporary database's configuration."
+msgstr ""
+
+#: adminscripts.xml:526(para)
+msgid ""
+"A slonik script is run to perform <xref linkend=\"stmtuninstallnode\"/> on "
+"the temporary database. This eliminates all the special &slony1; tables, "
+"schema, and removes &slony1; triggers from replicated tables."
+msgstr ""
+
+#: adminscripts.xml:527(para)
+msgid ""
+"Finally, <application>pg_dump</application> is run against the temporary "
+"database, delivering a copy of the cleaned up schema to standard output."
+msgstr ""
+
+#: adminscripts.xml:531(title)
+msgid "slony-cluster-analysis"
+msgstr ""
+
+#: adminscripts.xml:533(indexterm)
+msgid "<primary>script - slony-cluster-analysis</primary>"
+msgstr ""
+
+#: adminscripts.xml:535(para)
+msgid ""
+"If you are running a lot of replicated databases, where there are numerous "
+"&slony1; clusters, it can get painful to track and document this. The "
+"following tools may be of some assistance in this."
+msgstr ""
+
+#: adminscripts.xml:539(para)
+msgid ""
+"<application>slony-cluster-analysis.sh</application> is a shell script "
+"intended to provide some over-time analysis of the configuration of a "
+"&slony1; cluster. You pass in the usual <application>libpq</application> "
+"environment variables (<envar>PGHOST</envar>, <envar>PGPORT</envar>, "
+"<envar>PGDATABASE</envar>, and such) to connect to a member of a &slony1; "
+"cluster, and pass the name of the cluster as an argument."
+msgstr ""
+
+#: adminscripts.xml:547(para)
+msgid "The script then does the following:"
+msgstr ""
+
+#: adminscripts.xml:549(para)
+msgid ""
+"Runs a series of queries against the &slony1; tables to get lists of nodes, "
+"paths, sets, and tables."
+msgstr ""
+
+#: adminscripts.xml:550(para)
+msgid "This is stowed in a temporary file in <filename>/tmp</filename>"
+msgstr ""
+
+#: adminscripts.xml:551(para)
+msgid ""
+"A comparison is done between the present configuration and the configuration "
+"the last time the tool was run. If the configuration differs, an email of "
+"the difference (generated using <application>diff</application>) is sent to "
+"a configurable email address."
+msgstr ""
+
+#: adminscripts.xml:552(para)
+msgid ""
+"If the configuration has changed, the old configuration file is renamed to "
+"indicate when the script noticed the change."
+msgstr ""
+
+#: adminscripts.xml:553(para)
+msgid ""
+"Ultimately, the current configuration is stowed in <envar>LOGDIR</envar> in "
+"a filename like <filename>cluster.last </filename>"
+msgstr ""
+
+#: adminscripts.xml:556(para)
+msgid ""
+"There is a sample <quote>wrapper</quote> script, <filename>slony-cluster-"
+"analysis-mass.sh</filename>, which sets things up to point to a whole bunch "
+"of &slony1; clusters."
+msgstr ""
+
+#: adminscripts.xml:560(para)
+msgid ""
+"This should make it easier for a group of DBAs to keep track of two things:"
+msgstr ""
+
+#: adminscripts.xml:565(para)
+msgid "Documenting the current state of system configuration."
+msgstr ""
+
+#: adminscripts.xml:568(para)
+msgid "Noticing when configuration changes."
+msgstr ""
+
+#: adminscripts.xml:574(title)
+msgid ""
+"Generating slonik scripts using <filename>configure-replication.sh</filename>"
+msgstr ""
+
+#: adminscripts.xml:577(indexterm)
+msgid "<primary> generate slonik scripts for a cluster </primary>"
+msgstr ""
+
+#: adminscripts.xml:579(para)
+msgid ""
+"The <filename>tools</filename> script <filename>configure-replication.sh</"
+"filename> is intended to automate generating slonik scripts to configure "
+"replication."
+msgstr ""
+
+#: adminscripts.xml:583(para)
+msgid ""
+"This script uses a number (possibly large, if your configuration needs to be "
+"particularly complex) of environment variables to determine the shape of the "
+"configuration of a cluster. It uses default values extensively, and in many "
+"cases, relatively few environment values need to be set in order to get a "
+"viable configuration."
+msgstr ""
+
+#: adminscripts.xml:590(title)
+msgid "Global Values"
+msgstr ""
+
+#: adminscripts.xml:592(para)
+msgid "There are some values that will be used universally across a cluster:"
+msgstr ""
+
+#: adminscripts.xml:596(envar)
+msgid "CLUSTER"
+msgstr ""
+
+#: adminscripts.xml:597(para)
+msgid "Name of Slony-I cluster"
+msgstr ""
+
+#: adminscripts.xml:598(envar)
+msgid "NUMNODES"
+msgstr ""
+
+#: adminscripts.xml:599(para)
+msgid "Number of nodes to set up"
+msgstr ""
+
+#: adminscripts.xml:602(para)
+msgid "name of PostgreSQL user controlling replication"
+msgstr ""
+
+#: adminscripts.xml:604(para)
+msgid ""
+"Traditionally, people have used a database superuser for this, but that is "
+"not necessary as discussed <xref linkend=\"superuser\"/>"
+msgstr ""
+
+#: adminscripts.xml:610(para)
+msgid "default port number"
+msgstr ""
+
+#: adminscripts.xml:612(para)
+msgid "default database name"
+msgstr ""
+
+#: adminscripts.xml:614(envar)
+msgid "TABLES"
+msgstr ""
+
+#: adminscripts.xml:615(para)
+msgid ""
+"a list of fully qualified table names (<emphasis>e.g.</emphasis> - complete "
+"with namespace, such as <command>public.my_table</command>)"
+msgstr ""
+
+#: adminscripts.xml:617(envar)
+msgid "SEQUENCES"
+msgstr ""
+
+#: adminscripts.xml:618(para)
+msgid ""
+"a list of fully qualified sequence names (<emphasis>e.g.</emphasis> - "
+"complete with namespace, such as <command>public.my_sequence</command>)"
+msgstr ""
+
+#: adminscripts.xml:623(para)
+msgid ""
+"Defaults are provided for <emphasis>all</emphasis> of these values, so that "
+"if you run <filename>configure-replication.sh</filename> without setting any "
+"environment variables, you will get a set of slonik scripts. They may not "
+"correspond, of course, to any database you actually want to use..."
+msgstr ""
+
+#: adminscripts.xml:631(title)
+msgid "Node-Specific Values"
+msgstr ""
+
+#: adminscripts.xml:633(para)
+msgid "For each node, there are also four environment variables; for node 1:"
+msgstr ""
+
+#: adminscripts.xml:635(envar)
+msgid "DB1"
+msgstr ""
+
+#: adminscripts.xml:636(para)
+msgid "database to connect to"
+msgstr ""
+
+#: adminscripts.xml:637(envar)
+msgid "USER1"
+msgstr ""
+
+#: adminscripts.xml:638(para)
+msgid "superuser to connect as"
+msgstr ""
+
+#: adminscripts.xml:639(envar)
+msgid "PORT1"
+msgstr ""
+
+#: adminscripts.xml:640(para)
+msgid "port"
+msgstr ""
+
+#: adminscripts.xml:641(envar)
+msgid "HOST1"
+msgstr ""
+
+#: adminscripts.xml:642(para)
+msgid "host"
+msgstr ""
+
+#: adminscripts.xml:645(para)
+msgid ""
+"It is quite likely that <envar>DB*</envar>, <envar>USER*</envar>, and "
+"<envar>PORT*</envar> should be drawn from the global <envar>PGDATABASE</"
+"envar>, <envar>PGUSER</envar>, and <envar>PGPORT</envar> values above; "
+"having the discipline of that sort of uniformity is usually a good thing."
+msgstr ""
+
+#: adminscripts.xml:651(para)
+msgid ""
+"In contrast, <envar>HOST*</envar> values should be set explicitly for "
+"<envar>HOST1</envar>, <envar>HOST2</envar>, ..., as you don't get much "
+"benefit from the redundancy replication provides if all your databases are "
+"on the same server!"
+msgstr ""
+
+#: adminscripts.xml:658(title)
+msgid "Resulting slonik scripts"
+msgstr ""
+
+#: adminscripts.xml:660(para)
+msgid ""
+"slonik config files are generated in a temp directory under <filename>/tmp</"
+"filename>. The usage is thus:"
+msgstr ""
+
+#: adminscripts.xml:665(para)
+msgid ""
+"<filename>preamble.slonik</filename> is a <quote>preamble</quote> containing "
+"connection info used by the other scripts."
+msgstr ""
+
+#: adminscripts.xml:669(para)
+msgid ""
+"Verify the info in this one closely; you may want to keep this permanently "
+"to use with future maintenance you may want to do on the cluster."
+msgstr ""
+
+#: adminscripts.xml:673(filename)
+msgid "create_nodes.slonik"
+msgstr ""
+
+#: adminscripts.xml:675(para)
+msgid ""
+"This is the first script to run; it sets up the requested nodes as being "
+"&slony1; nodes, adding in some &slony1;-specific config tables and such."
+msgstr ""
+
+#: adminscripts.xml:679(para)
+msgid "You can/should start slon processes any time after this step has run."
+msgstr ""
+
+#: adminscripts.xml:682(filename)
+msgid "store_paths.slonik"
+msgstr ""
+
+#: adminscripts.xml:684(para)
+msgid ""
+"This is the second script to run; it indicates how the &lslon;s should "
+"intercommunicate. It assumes that all &lslon;s can talk to all nodes, which "
+"may not be a valid assumption in a complexly-firewalled environment. If that "
+"assumption is untrue, you will need to modify the script to fix the paths."
+msgstr ""
+
+#: adminscripts.xml:690(filename)
+msgid "create_set.slonik"
+msgstr ""
+
+#: adminscripts.xml:692(para)
+msgid ""
+"This sets up the replication set consisting of the whole bunch of tables and "
+"sequences that make up your application's database schema."
+msgstr ""
+
+#: adminscripts.xml:696(para)
+msgid ""
+"When you run this script, all that happens is that triggers are added on the "
+"origin node (node #1) that start collecting updates; replication won't start "
+"until #5..."
+msgstr ""
+
+#: adminscripts.xml:700(para)
+msgid ""
+"There are two assumptions in this script that could be invalidated by "
+"circumstances:"
+msgstr ""
+
+#: adminscripts.xml:704(para)
+msgid "That all of the tables and sequences have been included."
+msgstr ""
+
+#: adminscripts.xml:707(para)
+msgid ""
+"This becomes invalid if new tables get added to your schema and don't get "
+"added to the <envar>TABLES</envar> list."
+msgstr ""
+
+#: adminscripts.xml:711(para)
+msgid "That all tables have been defined with primary keys."
+msgstr ""
+
+#: adminscripts.xml:714(para)
+msgid ""
+"Best practice is to always have and use true primary keys. If you have "
+"tables that require choosing a candidate primary key, you will have to "
+"modify this script by hand to accomodate that."
+msgstr ""
+
+#: adminscripts.xml:722(filename)
+msgid "subscribe_set_2.slonik"
+msgstr ""
+
+#: adminscripts.xml:724(para)
+msgid "And 3, and 4, and 5, if you set the number of nodes higher..."
+msgstr ""
+
+#: adminscripts.xml:727(para)
+msgid "This is the step that <quote>fires up</quote> replication."
+msgstr ""
+
+#: adminscripts.xml:730(para)
+msgid ""
+"The assumption that the script generator makes is that all the subscriber "
+"nodes will want to subscribe directly to the origin node. If you plan to "
+"have <quote>sub-clusters,</quote> perhaps where there is something of a "
+"<quote>master</quote> location at each data centre, you may need to revise "
+"that."
+msgstr ""
+
+#: adminscripts.xml:736(para)
+msgid ""
+"The slon processes really ought to be running by the time you attempt "
+"running this step. To do otherwise would be rather foolish."
+msgstr ""
+
+#: adminscripts.xml:744(filename)
+msgid "slon.in-profiles"
+msgstr ""
+
+#: adminscripts.xml:745(filename)
+msgid "ports/databases/slony/*"
+msgstr ""
+
+#: adminscripts.xml:745(subtitle)
+msgid "Apache-Style profiles for FreeBSD <placeholder-1/>"
+msgstr ""
+
+#: adminscripts.xml:747(indexterm)
+msgid ""
+"<primary> Apache-style profiles for FreeBSD </primary> <secondary>FreeBSD </"
+"secondary>"
+msgstr ""
+
+#: adminscripts.xml:749(para)
+msgid ""
+"In the <filename>tools</filename> area, <filename>slon.in-profiles</"
+"filename> is a script that might be used to start up &lslon; instances at "
+"the time of system startup. It is designed to interact with the FreeBSD "
+"Ports system."
+msgstr ""
+
+#: adminscripts.xml:756(filename)
+msgid "duplicate-node.sh"
+msgstr ""
+
+#: adminscripts.xml:757(indexterm)
+msgid "<primary> duplicating nodes </primary>"
+msgstr ""
+
+#: adminscripts.xml:758(para)
+msgid ""
+"In the <filename>tools</filename> area, <filename>duplicate-node.sh</"
+"filename> is a script that may be used to help create a new node that "
+"duplicates one of the ones in the cluster."
+msgstr ""
+
+#: adminscripts.xml:763(para)
+msgid "The script expects the following parameters:"
+msgstr ""
+
+#: adminscripts.xml:765(para) adminscripts.xml:824(para)
+msgid "Cluster name"
+msgstr ""
+
+#: adminscripts.xml:766(para)
+msgid "New node number"
+msgstr ""
+
+#: adminscripts.xml:767(para)
+msgid "Origin node"
+msgstr ""
+
+#: adminscripts.xml:768(para)
+msgid "Node being duplicated"
+msgstr ""
+
+#: adminscripts.xml:769(para)
+msgid "New node"
+msgstr ""
+
+#: adminscripts.xml:772(para)
+msgid ""
+"For each of the nodes specified, the script offers flags to specify "
+"<function>libpq</function>-style parameters for <envar>PGHOST</envar>, "
+"<envar>PGPORT</envar>, <envar>PGDATABASE</envar>, and <envar>PGUSER</envar>; "
+"it is expected that <filename>.pgpass</filename> will be used for storage of "
+"passwords, as is generally considered best practice. Those values may "
+"inherit from the <function>libpq</function> environment variables, if not "
+"set, which is useful when using this for testing. When <quote>used in anger,"
+"</quote> however, it is likely that nearly all of the 14 available "
+"parameters should be used."
+msgstr ""
+
+#: adminscripts.xml:783(para)
+msgid ""
+"The script prepares files, normally in <filename>/tmp</filename>, and will "
+"report the name of the directory that it creates that contain SQL and "
+"&lslonik; scripts to set up the new node."
+msgstr ""
+
+#: adminscripts.xml:789(filename)
+msgid "schema.sql"
+msgstr ""
+
+#: adminscripts.xml:790(para)
+msgid ""
+"This is drawn from the origin node, and contains the <quote>pristine</quote> "
+"database schema that must be applied first."
+msgstr ""
+
+#: adminscripts.xml:791(filename)
+msgid "slonik.preamble"
+msgstr ""
+
+#: adminscripts.xml:793(para)
+msgid ""
+"This <quote>preamble</quote> is used by the subsequent set of slonik scripts."
+msgstr ""
+
+#: adminscripts.xml:794(filename)
+msgid "step1-storenode.slonik"
+msgstr ""
+
+#: adminscripts.xml:795(para)
+msgid "A &lslonik; script to set up the new node."
+msgstr ""
+
+#: adminscripts.xml:796(filename)
+msgid "step2-storepath.slonik"
+msgstr ""
+
+#: adminscripts.xml:797(para)
+msgid ""
+"A &lslonik; script to set up path communications between the provider node "
+"and the new node."
+msgstr ""
+
+#: adminscripts.xml:798(filename)
+msgid "step3-subscribe-sets.slonik"
+msgstr ""
+
+#: adminscripts.xml:799(para)
+msgid "A &lslonik; script to request subscriptions for all replications sets."
+msgstr ""
+
+#: adminscripts.xml:802(para)
+msgid ""
+"For testing purposes, this is sufficient to get a new node working. The "
+"configuration may not necessarily reflect what is desired as a final state:"
+msgstr ""
+
+#: adminscripts.xml:805(para)
+msgid ""
+"Additional communications paths may be desirable in order to have redundancy."
+msgstr ""
+
+#: adminscripts.xml:806(para)
+msgid ""
+"It is assumed, in the generated scripts, that the new node should support "
+"forwarding; that may not be true."
+msgstr ""
+
+#: adminscripts.xml:807(para)
+msgid ""
+"It may be desirable later, after the subscription process is complete, to "
+"revise subscriptions."
+msgstr ""
+
+#: adminscripts.xml:811(title)
+msgid "slonikconfdump.sh"
+msgstr ""
+
+#: adminscripts.xml:813(indexterm)
+msgid "<primary>altperl configuration dump</primary>"
+msgstr ""
+
+#: adminscripts.xml:815(para)
+msgid ""
+"The tool <filename>tools/slonikconfdump.sh</filename> was created to help "
+"dump out a &lslonik; script to duplicate the configuration of a functioning "
+"&slony1; cluster. It should be particularly useful when upgrading &slony1; "
+"to version 2.0; see <xref linkend=\"upgrade20\"/> for more details."
+msgstr ""
+
+#: adminscripts.xml:821(para)
+msgid "It dumps out:"
+msgstr ""
+
+#: adminscripts.xml:825(para)
+msgid "Node connection information"
+msgstr ""
+
+#: adminscripts.xml:825(para)
+msgid ""
+"Note that it uses the first value it finds (<emphasis>e.g.</emphasis> - for "
+"the lowest numbered client node)."
+msgstr ""
+
+#: adminscripts.xml:826(para)
+msgid "Nodes"
+msgstr ""
+
+#: adminscripts.xml:827(para)
+msgid "Sets"
+msgstr ""
+
+#: adminscripts.xml:828(para)
+msgid "Tables"
+msgstr ""
+
+#: adminscripts.xml:829(para)
+msgid "Sequences"
+msgstr ""
+
+#: adminscripts.xml:830(para)
+msgid "Subscriptions"
+msgstr ""
+
+#: adminscripts.xml:832(para)
+msgid ""
+"Note that the subscriptions are ordered by set, then by provider, then by "
+"receiver. This ordering does not necessarily indicate the order in which "
+"subscriptions need to be applied."
+msgstr ""
+
+#: adminscripts.xml:838(para)
+msgid "It may be run as follows:"
+msgstr ""
+
+#: adminscripts.xml:839(programlisting)
+#, no-wrap
+msgid ""
+"chris@dba2:Slony-I/CMD/slony1-2.0/tools&gt; SLONYCLUSTER=slony_regress1 PGDATABASE=slonyregress1 bash slonikconfdump.sh\n"
+"# building slonik config files for cluster slony_regress1\n"
+"# generated by: slonikconfdump.sh\n"
+"# Generated on:  Tue Jun 9 17:34:12 EDT 2009\n"
+"cluster name=slony_regress1;\n"
+"include &lt;admin-conninfos.slonik&gt;;  # Draw in ADMIN CONNINFO lines\n"
+"node 1 admin conninfo='dbname=slonyregress1 host=localhost user=chris port=7083';\n"
+"node 2 admin conninfo='dbname=slonyregress2 host=localhost user=chris port=7083';\n"
+"init cluster (id=1, comment='Regress test node');\n"
+"store node (id=2, comment='node 2');\n"
+"store path (server=1, client=2, conninfo='dbname=slonyregress1 host=localhost user=chris port=7083', connretry=10);\n"
+"store path (server=2, client=1, conninfo='dbname=slonyregress2 host=localhost user=chris port=7083', connretry=10);\n"
+"create set (id=1, origin=1, comment='All test1 tables');\n"
+"set add table (id=1, set id=1, origin=1, fully qualified name='\"public\".\"table1\"', comment='accounts table, key='table1_pkey');\n"
+"set add table (id=2, set id=1, origin=1, fully qualified name='\"public\".\"table2\"', comment='public.table2, key='table2_id_key');\n"
+"set add table (id=4, set id=1, origin=1, fully qualified name='\"public\".\"table4\"', comment='a table of many types, key='table4_pkey');\n"
+"set add table (id=5, set id=1, origin=1, fully qualified name='\"public\".\"table5\"', comment='a table with composite PK strewn across the table, key='table5_pkey');\n"
+"subscribe set (id=1, provider=1, receiver=2, forward=YES);\n"
+"chris@dba2:Slony-I/CMD/slony1-2.0/tools&gt;"
+msgstr ""
+
+#: adminscripts.xml:861(para)
+msgid ""
+"The output should be reviewed before it is applied elsewhere. Particular "
+"attention should be paid to the <command>ADMIN CONNINFO</command>, as it "
+"picks the first value that it sees for each node; in a complex environment, "
+"where visibility of nodes may vary from subnet to subnet, it may not pick "
+"the right value. In addition, <command>SUBSCRIBE SET</command> statements do "
+"not necessarily indicate the order in which subscriptions need to be applied."
+msgstr ""
+
+#: adminscripts.xml:872(title)
+msgid "Parallel to Watchdog: generate_syncs.sh"
+msgstr ""
+
+#: adminscripts.xml:874(indexterm)
+msgid "<primary>generate SYNCs</primary>"
+msgstr ""
+
+#: adminscripts.xml:875(para)
+msgid ""
+"A new script for &slony1; 1.1 is <application>generate_syncs.sh</"
+"application>, which addresses the following kind of situation."
+msgstr ""
+
+#: adminscripts.xml:879(para)
+msgid ""
+"Supposing you have some possibly-flakey server where the <application>slon</"
+"application> daemon that might not run all the time, you might return from a "
+"weekend away only to discover the following situation."
+msgstr ""
+
+#: adminscripts.xml:883(para)
+msgid ""
+"On Friday night, something went <quote>bump</quote> and while the database "
+"came back up, none of the <application>slon</application> daemons survived. "
+"Your online application then saw nearly three days worth of reasonably heavy "
+"transaction load."
+msgstr ""
+
+#: adminscripts.xml:888(para)
+msgid ""
+"When you restart <application>slon</application> on Monday, it hasn't done a "
+"SYNC on the master since Friday, so that the next <quote>SYNC set</quote> "
+"comprises all of the updates between Friday and Monday. Yuck."
+msgstr ""
+
+#: adminscripts.xml:893(para)
+msgid ""
+"If you run <application>generate_syncs.sh</application> as a cron job every "
+"20 minutes, it will force in a periodic <command>SYNC</command> on the "
+"origin, which means that between Friday and Monday, the numerous updates are "
+"split into more than 100 syncs, which can be applied incrementally, making "
+"the cleanup a lot less unpleasant."
+msgstr ""
+
+#: adminscripts.xml:899(para)
+msgid ""
+"Note that if <command>SYNC</command>s <emphasis>are</emphasis> running "
+"regularly, this script won't bother doing anything."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: adminscripts.xml:0(None)
+msgid "translator-credits"
+msgstr ""

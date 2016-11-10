@@ -1,0 +1,391 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: triggers.xml:3(title)
+msgid "&slony1; Trigger Handling"
+msgstr ""
+
+#: triggers.xml:5(indexterm)
+msgid "<primary>trigger handling</primary>"
+msgstr ""
+
+#: triggers.xml:7(para)
+msgid ""
+"In &postgres; version 8.3, new functionality was added where triggers and "
+"rules may have their behaviour altered via <command>ALTER TABLE</command>, "
+"to specify the following alterations:"
+msgstr ""
+
+#: triggers.xml:13(command)
+msgid "DISABLE TRIGGER trigger_name"
+msgstr ""
+
+#: triggers.xml:14(command)
+msgid "ENABLE TRIGGER trigger_name"
+msgstr ""
+
+#: triggers.xml:15(command)
+msgid "ENABLE REPLICA TRIGGER trigger_name"
+msgstr ""
+
+#: triggers.xml:16(command)
+msgid "ENABLE ALWAYS TRIGGER trigger_name"
+msgstr ""
+
+#: triggers.xml:17(command)
+msgid "DISABLE RULE rewrite_rule_name"
+msgstr ""
+
+#: triggers.xml:18(command)
+msgid "ENABLE RULE rewrite_rule_name"
+msgstr ""
+
+#: triggers.xml:19(command)
+msgid "ENABLE REPLICA RULE rewrite_rule_name"
+msgstr ""
+
+#: triggers.xml:20(command)
+msgid "ENABLE ALWAYS RULE rewrite_rule_name"
+msgstr ""
+
+#: triggers.xml:24(para)
+msgid ""
+"A new GUC variable, <envar>session_replication_role</envar> controls whether "
+"the session is in <envar>origin</envar>, <envar>replica</envar>, or "
+"<envar>local</envar> mode, which then, in combination with the above "
+"enabling/disabling options, controls whether or not the trigger function "
+"actually runs."
+msgstr ""
+
+#: triggers.xml:30(para)
+msgid ""
+"We may characterize when triggers fire, under &slony1; replication, based on "
+"the following table; the same rules apply to &postgres; rules."
+msgstr ""
+
+#: triggers.xml:34(title)
+msgid "Trigger Behaviour"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "Trigger Form"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "When Established"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "Log Trigger"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "denyaccess Trigger"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "Action - origin"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "Action - replica"
+msgstr ""
+
+#: triggers.xml:37(entry)
+msgid "Action - local"
+msgstr ""
+
+#: triggers.xml:40(entry)
+msgid "DISABLE TRIGGER"
+msgstr ""
+
+#: triggers.xml:40(entry) triggers.xml:42(entry) triggers.xml:43(entry)
+msgid "User request"
+msgstr ""
+
+#: triggers.xml:40(entry) triggers.xml:41(entry)
+msgid "disabled on subscriber"
+msgstr ""
+
+#: triggers.xml:40(entry) triggers.xml:41(entry)
+msgid "enabled on subscriber"
+msgstr ""
+
+#: triggers.xml:40(entry) triggers.xml:41(entry) triggers.xml:42(entry)
+msgid "does not fire"
+msgstr ""
+
+#: triggers.xml:41(entry)
+msgid "ENABLE TRIGGER"
+msgstr ""
+
+#: triggers.xml:41(entry)
+msgid "Default"
+msgstr ""
+
+#: triggers.xml:41(entry) triggers.xml:42(entry) triggers.xml:43(entry)
+msgid "fires"
+msgstr ""
+
+#: triggers.xml:42(entry)
+msgid "ENABLE REPLICA TRIGGER"
+msgstr ""
+
+#: triggers.xml:42(entry) triggers.xml:43(entry)
+msgid "inappropriate"
+msgstr ""
+
+#: triggers.xml:43(entry)
+msgid "ENABLE ALWAYS TRIGGER"
+msgstr ""
+
+#: triggers.xml:48(para)
+msgid ""
+"There are, correspondingly, now, several ways in which &slony1; interacts "
+"with this. Let us outline those times that are interesting:"
+msgstr ""
+
+#: triggers.xml:54(para)
+msgid ""
+"Before replication is set up, <emphasis>every</emphasis> database starts out "
+"in <quote>origin</quote> status, and, by default, all triggers are of the "
+"<command>ENABLE TRIGGER</command> form, so they all run, as is normal in a "
+"system uninvolved in replication."
+msgstr ""
+
+#: triggers.xml:60(para)
+msgid ""
+"When a &slony1; subscription is set up, on the origin node, both the "
+"<function>logtrigger</function> and <function>denyaccess</function> triggers "
+"are added, the former being enabled, and running, the latter being disabled, "
+"so it does not run."
+msgstr ""
+
+#: triggers.xml:66(para)
+msgid ""
+"From a locking perspective, each <xref linkend=\"stmtsetaddtable\"/> request "
+"will need to briefly take out an exclusive lock on each table as it attaches "
+"these triggers, which is much the same as has always been the case with "
+"&slony1;."
+msgstr ""
+
+#: triggers.xml:72(para)
+msgid ""
+"On the subscriber, the subscription process will add the same triggers, but "
+"with the polarities <quote>reversed</quote>, to protect data from accidental "
+"corruption on subscribers."
+msgstr ""
+
+#: triggers.xml:76(para)
+msgid ""
+"From a locking perspective, again, there is not much difference from earlier "
+"&slony1; behaviour, as the subscription process, due to running "
+"<command>TRUNCATE</command>, copying data, and altering table schemas, "
+"requires <emphasis>extensive</emphasis> exclusive table locks, and the "
+"changes in trigger behaviour do not change those requirements."
+msgstr ""
+
+#: triggers.xml:86(para)
+msgid ""
+"If you restore a backup of a Slony-I node (taken by pg_dump or any other "
+"method), and drop the Slony-I namespace, this now cleanly removes all Slony-"
+"I components, leaving the database, including its schema, in a "
+"<quote>pristine</quote>, consistent fashion, ready for whatever use may be "
+"desired."
+msgstr ""
+
+#: triggers.xml:93(para)
+msgid ""
+"&rddlchanges; is now performed in quite a different way: rather than "
+"altering each replicated table to <quote>take it out of replicated mode</"
+"quote>, &slony1; instead simply shifts into the <command>local</command> "
+"status for the duration of this event."
+msgstr ""
+
+#: triggers.xml:98(para)
+msgid ""
+"On the origin, this deactivates the <function>logtrigger</function> trigger."
+msgstr ""
+
+#: triggers.xml:101(para)
+msgid ""
+"On each subscriber, this deactivates the <function>denyaccess</function> "
+"trigger."
+msgstr ""
+
+#: triggers.xml:106(para)
+msgid ""
+"At the time of invoking <xref linkend=\"stmtmoveset\"/> against the former "
+"origin, &slony1; must transform that node into a subscriber, which requires "
+"dropping the <function>lockset</function> triggers, disabling the "
+"<function>logtrigger</function> triggers, and enabling the "
+"<function>denyaccess</function> triggers."
+msgstr ""
+
+#: triggers.xml:112(para)
+msgid ""
+"At about the same time, when processing <xref linkend=\"stmtmoveset\"/> "
+"against the new origin, &slony1; must transform that node into an origin, "
+"which requires disabling the formerly active <function>denyaccess</function> "
+"triggers, and enabling the <function>logtrigger</function> triggers."
+msgstr ""
+
+#: triggers.xml:118(para)
+msgid ""
+"From a locking perspective &slony1; will need to take out exclusive locks to "
+"disable and enable the respective triggers."
+msgstr ""
+
+#: triggers.xml:125(para)
+msgid ""
+"Similarly to <xref linkend=\"stmtmoveset\"/>, <xref linkend=\"stmtfailover\"/"
+"> transforms a subscriber node into an origin, which requires disabling the "
+"formerly active <function>denyaccess</function> triggers, and enabling the "
+"<function>logtrigger</function> triggers. The locking implications are "
+"again, much the same, requiring an exclusive lock on each such table."
+msgstr ""
+
+#: triggers.xml:135(title)
+msgid "<command>TRUNCATE</command> in &postgres; 8.4+"
+msgstr ""
+
+#: triggers.xml:137(para)
+msgid ""
+"In &postgres; 8.4, triggers were augmented to support the <command>TRUNCATE</"
+"command> event. Thus, one may create a trigger which runs when one requests "
+"<command>TRUNCATE</command> on a table, as follows: <screen>\n"
+"create trigger \"_@CLUSTERNAME@_truncatetrigger\" \n"
+"   before truncate on my_table \n"
+"   for each statement \n"
+"     execute procedure @NAMESPACE@.log_truncate(22);\n"
+"</screen>"
+msgstr ""
+
+#: triggers.xml:156(function)
+msgid "log_truncate(tab_id)"
+msgstr ""
+
+#: triggers.xml:158(para)
+msgid ""
+"Running on the origin, this captures <command>TRUNCATE</command> requests, "
+"and stores them in &sllog1; and &sllog2; so that they are applied at the "
+"appropriate point on subscriber nodes."
+msgstr ""
+
+#: triggers.xml:163(function)
+msgid "truncate_deny()"
+msgstr ""
+
+#: triggers.xml:165(para)
+msgid ""
+"Running on subscriber nodes, this forbids running <command>TRUNCATE</"
+"command> directly against replicated tables on these nodes, in much the same "
+"way <function>denyAccess()</function> forbids running <command>INSERT/UPDATE/"
+"DELETE</command> directly against replicated tables."
+msgstr ""
+
+#: triggers.xml:154(para)
+msgid ""
+"Tables have an additional two triggers attached to them: <placeholder-1/>"
+msgstr ""
+
+#: triggers.xml:173(para)
+msgid ""
+"For each table, the command <command>TRUNCATE TABLE ONLY my_schema.my_table "
+"CASCADE;</command> is submitted."
+msgstr ""
+
+#: triggers.xml:181(para)
+msgid ""
+"If you have a subscriber node where additional tables have gotten attached "
+"via foreign keys to a replicated table, then running <command>TRUNCATE</"
+"command> against that parent table will also <command>TRUNCATE</command> "
+"<emphasis>all the children.</emphasis>"
+msgstr ""
+
+#: triggers.xml:193(para)
+msgid ""
+"Lead to deleting data from the child tables, this meaning the addition of "
+"<command>TRUNCATE</command> support is really no change at all;"
+msgstr ""
+
+#: triggers.xml:195(para)
+msgid ""
+"Lead to foreign keys being broken on the subscriber, causing replication to "
+"keel over."
+msgstr ""
+
+#: triggers.xml:187(para)
+msgid ""
+"Of course, it should be observed that this was a <emphasis>terribly "
+"dangerous</emphasis> thing to have done because deleting data from the "
+"parent table would already either: <placeholder-1/>"
+msgstr ""
+
+#: triggers.xml:198(para)
+msgid "(In effect, we're not really worsening things.)"
+msgstr ""
+
+#: triggers.xml:176(para)
+msgid ""
+"Various options were considered (see <ulink url=\"http://www.slony.info/"
+"bugzilla/show_bug.cgi?id=134\"> Bugzilla Bug #134 </ulink>), after which "
+"<command>CASCADE</command> was concluded to be the appropriate answer. "
+"<placeholder-1/>"
+msgstr ""
+
+#: triggers.xml:200(para)
+msgid ""
+"Note that if a request truncates several tables (<emphasis>e.g.</emphasis> - "
+"as where a table has a hierachy of children), then a request will be logged "
+"in &sllog1;/&sllog2; for each table, and the <command>TRUNCATE CASCADE</"
+"command> will <emphasis>effectively</emphasis> mean that the child tables "
+"will be truncated, first indirectly, then directly. If there is a hierarchy "
+"of 3 tables, <envar>t1</envar>, <envar>t2</envar>, and <envar>t3</envar>, "
+"then <envar>t3</envar> will get truncated three times. It's empty after the "
+"first <command>TRUNCATE</command>, so additional iterations will be cheap."
+msgstr ""
+
+#: triggers.xml:215(para)
+msgid ""
+"&postgres; 8.3 nodes will not capture <command>TRUNCATE</command> requests, "
+"neither to log the need to propagate the TRUNCATE, nor to prevent it, on "
+"either origin or replica."
+msgstr ""
+
+#: triggers.xml:220(para)
+msgid ""
+"&postgres; 8.4 nodes <emphasis>do</emphasis> capture <command>TRUNCATE</"
+"command> requests for both purposes."
+msgstr ""
+
+#: triggers.xml:224(para)
+msgid ""
+"If a &postgres; 8.4+ node captures a <command>TRUNCATE</command> request, it "
+"will apply fine against a subscriber running &postgres; 8.3."
+msgstr ""
+
+#: triggers.xml:211(para)
+msgid ""
+"If mixing &postgres; 8.3 and higher versions within a cluster: "
+"<placeholder-1/>"
+msgstr ""
+
+#: triggers.xml:149(para)
+msgid ""
+"&slony1; supports this on nodes running &postgres; 8.4 and above, as "
+"follows: <placeholder-1/>"
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: triggers.xml:0(None)
+msgid "translator-credits"
+msgstr ""

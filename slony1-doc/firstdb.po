@@ -1,0 +1,549 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: firstdb.xml:3(title)
+msgid "Replicating Your First Database"
+msgstr ""
+
+#: firstdb.xml:5(indexterm)
+msgid "<primary>replicating your first database</primary>"
+msgstr ""
+
+#: firstdb.xml:7(para)
+msgid ""
+"In this example, we will be replicating a brand new <application>pgbench</"
+"application> database. The mechanics of replicating an existing database are "
+"covered here, however we recommend that you learn how &slony1; functions by "
+"using a fresh new non-production database."
+msgstr ""
+
+#: firstdb.xml:13(para)
+msgid ""
+"Note that <application>pgbench</application> is a <quote>benchmark</quote> "
+"tool that is in the &postgres; set of <filename>contrib</filename> tools. If "
+"you build &postgres; from source, you can readily head to <filename>contrib/"
+"pgbench</filename> and do a <command>make install</command> to build and "
+"install it; you may discover that included in packaged binary &postgres; "
+"installations."
+msgstr ""
+
+#: firstdb.xml:21(para)
+msgid ""
+"pgbench creates tables with a slightly different name in &postgres; 8.3 than "
+"it does in later versions. If you are using this tutorial with &postgres; "
+"8.3 you should remove the 'pgbench_' prefix from all of the table names "
+"listed below"
+msgstr ""
+
+#: firstdb.xml:26(para)
+msgid ""
+"The &slony1; replication engine is trigger-based, allowing us to replicate "
+"databases (or portions thereof) running under the same postmaster."
+msgstr ""
+
+#: firstdb.xml:38(para)
+msgid ""
+"You have enabled access in your cluster(s) via <filename>pg_hba.conf</"
+"filename>"
+msgstr ""
+
+#: firstdb.xml:30(para)
+msgid ""
+"This example will show how to replicate the <application>pgbench</"
+"application> database running on localhost (master) to the "
+"<application>pgbench</application> slave database also running on localhost "
+"(slave). We make a couple of assumptions about your &postgres; "
+"configuration: <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:43(para)
+msgid ""
+"The <envar>REPLICATIONUSER</envar> is commonly set up to be a &postgres; "
+"superuser, perhaps an existing one such as <envar>postgres</envar>, "
+"<envar>pgsql</envar>, or one created for this purpose such as <envar>slony</"
+"envar> or <envar>replication</envar>. Traditionally, people have used a "
+"database superuser for this, but that is not necessary as discussed <xref "
+"linkend=\"superuser\"/>. If you set up a non-superuser user for this, there "
+"is more of a configuration burden in granting the specifically-required "
+"permissions."
+msgstr ""
+
+#: firstdb.xml:56(para)
+msgid "<envar>CLUSTERNAME</envar>=slony_example"
+msgstr ""
+
+#: firstdb.xml:57(para)
+msgid "<envar>MASTERDBNAME</envar>=pgbench"
+msgstr ""
+
+#: firstdb.xml:58(para)
+msgid "<envar>SLAVEDBNAME</envar>=pgbenchslave"
+msgstr ""
+
+#: firstdb.xml:59(para)
+msgid "<envar>MASTERHOST</envar>=localhost"
+msgstr ""
+
+#: firstdb.xml:60(para)
+msgid "<envar>SLAVEHOST</envar>=localhost"
+msgstr ""
+
+#: firstdb.xml:61(para)
+msgid "<envar>REPLICATIONUSER</envar>=pgsql"
+msgstr ""
+
+#: firstdb.xml:62(para)
+msgid "<envar>PGBENCHUSER</envar>=pgbench"
+msgstr ""
+
+#: firstdb.xml:53(para)
+msgid "You should also set the following shell variables: <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:69(para)
+msgid "bash, sh, ksh <command>export CLUSTERNAME=slony_example</command>"
+msgstr ""
+
+#: firstdb.xml:73(para)
+msgid "(t)csh: <command>setenv CLUSTERNAME slony_example</command>"
+msgstr ""
+
+#: firstdb.xml:65(para)
+msgid ""
+"Here are a couple of examples for setting variables in common shells: "
+"<placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:79(para)
+msgid ""
+"If you're changing these variables to use different hosts for "
+"<envar>MASTERHOST</envar> and <envar>SLAVEHOST</envar>, be sure "
+"<emphasis>not</emphasis> to use localhost for either of them. This will "
+"result in an error similar to the following:"
+msgstr ""
+
+#: firstdb.xml:84(command)
+msgid ""
+"ERROR remoteListenThread_1: db_getLocalNodeId() returned 2 - wrong database?"
+msgstr ""
+
+#: firstdb.xml:90(title)
+msgid "Creating the <application>pgbench</application> User"
+msgstr ""
+
+#: firstdb.xml:91(indexterm)
+msgid "<primary>pgbench setup</primary>"
+msgstr ""
+
+#: firstdb.xml:93(command)
+msgid "createuser -SRD $PGBENCHUSER"
+msgstr ""
+
+#: firstdb.xml:98(title)
+msgid "Preparing the Databases"
+msgstr ""
+
+#: firstdb.xml:100(programlisting)
+#, no-wrap
+msgid ""
+"createdb -O $PGBENCHUSER -h $MASTERHOST $MASTERDBNAME\n"
+"createdb -O $PGBENCHUSER -h $SLAVEHOST $SLAVEDBNAME\n"
+"pgbench -i -s 1 -U $PGBENCHUSER -h $MASTERHOST $MASTERDBNAME"
+msgstr ""
+
+#: firstdb.xml:106(para)
+msgid ""
+"One of the tables created by <application>pgbench</application>, "
+"<envar>pgbench_history</envar>, does not have a primary key. &slony1; "
+"<emphasis>requires</emphasis> that there is a suitable candidate primary key."
+msgstr ""
+
+#: firstdb.xml:111(para)
+msgid ""
+"The following SQL requests will establish a proper primary key on this table:"
+msgstr ""
+
+#: firstdb.xml:114(programlisting)
+#, no-wrap
+msgid ""
+"psql -U $PGBENCHUSER -h $MASTERHOST -d $MASTERDBNAME -c \"begin; alter table\n"
+"pgbench_history add column id serial; update history set id =\n"
+"nextval('pgbench_history_id_seq'); alter table pgbench_history add primary key(id);\n"
+"commit;\""
+msgstr ""
+
+#: firstdb.xml:127(programlisting)
+#, no-wrap
+msgid "createlang -h $MASTERHOST plpgsql $MASTERDBNAME"
+msgstr ""
+
+#: firstdb.xml:121(para)
+msgid ""
+"Because &slony1; depends on the databases having the pl/pgSQL procedural "
+"language installed, we better install it now. It is possible that you have "
+"installed pl/pgSQL into the template1 database in which case you can skip "
+"this step because it's already installed into the <envar>$MASTERDBNAME</"
+"envar>. <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:136(programlisting)
+#, no-wrap
+msgid "pg_dump -s -U $REPLICATIONUSER -h $MASTERHOST $MASTERDBNAME | psql -U $REPLICATIONUSER -h $SLAVEHOST $SLAVEDBNAME"
+msgstr ""
+
+#: firstdb.xml:132(para)
+msgid ""
+"&slony1; does not automatically copy table definitions from a master when a "
+"slave subscribes to it, so we need to import this data. We do this with "
+"<application>pg_dump</application>. <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:141(para)
+msgid ""
+"To illustrate how &slony1; allows for on the fly replication subscription, "
+"let's start up <application>pgbench</application>. If you run the "
+"<application>pgbench</application> application in the foreground of a "
+"separate terminal window, you can stop and restart it with different "
+"parameters at any time. You'll need to re-export the variables again so they "
+"are available in this session as well."
+msgstr ""
+
+#: firstdb.xml:151(programlisting)
+#, no-wrap
+msgid "pgbench -s 1 -c 5 -t 1000 -U $PGBENCHUSER -h $MASTERHOST $MASTERDBNAME"
+msgstr ""
+
+#: firstdb.xml:149(para)
+msgid ""
+"The typical command to run <application>pgbench</application> would look "
+"like: <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:156(para)
+msgid ""
+"This will run <application>pgbench</application> with 5 concurrent clients "
+"each processing 1000 transactions against the <application>pgbench</"
+"application> database running on localhost as the pgbench user."
+msgstr ""
+
+#: firstdb.xml:161(title)
+msgid "Configuring the Database For Replication."
+msgstr ""
+
+#: firstdb.xml:163(para)
+msgid ""
+"Creating the configuration tables, stored procedures, triggers and "
+"configuration is all done through the <xref linkend=\"slonik\"/> tool. It is "
+"a specialized scripting aid that mostly calls stored procedures in the "
+"master/slave (node) databases."
+msgstr ""
+
+#: firstdb.xml:168(para)
+msgid ""
+"The example that follows uses <xref linkend=\"slonik\"/> directly (or "
+"embedded directly into scripts). This is not necessarily the most pleasant "
+"way to get started; there exist tools for building <xref linkend=\"slonik\"/"
+"> scripts under the <filename>tools</filename> directory, including:"
+msgstr ""
+
+#: firstdb.xml:174(para)
+msgid ""
+"<xref linkend=\"altperl\"/> - a set of Perl scripts that build <xref linkend="
+"\"slonik\"/> scripts based on a single <filename>slon_tools.conf</filename> "
+"file."
+msgstr ""
+
+#: firstdb.xml:178(para)
+msgid ""
+"<xref linkend=\"mkslonconf\"/> - a shell script (<emphasis>e.g.</emphasis> - "
+"works with Bash) which, based either on self-contained configuration or on "
+"shell environment variables, generates a set of <xref linkend=\"slonik\"/> "
+"scripts to configure a whole cluster."
+msgstr ""
+
+#: firstdb.xml:186(title)
+msgid "Using slonik Command Directly"
+msgstr ""
+
+#: firstdb.xml:188(para)
+msgid ""
+"The traditional approach to administering slony is to craft slonik commands "
+"directly. An example of this given here."
+msgstr ""
+
+#: firstdb.xml:191(para)
+msgid ""
+"The script to create the initial configuration for the simple master-slave "
+"setup of our <application>pgbench</application> database looks like this:"
+msgstr ""
+
+#: firstdb.xml:195(programlisting)
+#, no-wrap
+msgid ""
+"#!/bin/sh\n"
+"\n"
+"slonik &lt;&lt;_EOF_\n"
+"\t#--\n"
+"\t# define the namespace the replication system uses in our example it is\n"
+"\t# slony_example\n"
+"\t#--\n"
+"\tcluster name = $CLUSTERNAME;\n"
+"\n"
+"\t#--\n"
+"\t# admin conninfo's are used by slonik to connect to the nodes one for each\n"
+"\t# node on each side of the cluster, the syntax is that of PQconnectdb in\n"
+"\t# the C-API\n"
+"\t# --\n"
+"\tnode 1 admin conninfo = 'dbname=$MASTERDBNAME host=$MASTERHOST user=$REPLICATIONUSER';\n"
+"\tnode 2 admin conninfo = 'dbname=$SLAVEDBNAME host=$SLAVEHOST user=$REPLICATIONUSER';\n"
+"\n"
+"\t#--\n"
+"\t# init the first node.  This creates the schema\n"
+"\t# _$CLUSTERNAME containing all replication system specific database\n"
+"\t# objects.\n"
+"\n"
+"\t#--\n"
+"\tinit cluster ( id=1, comment = 'Master Node');\n"
+" \n"
+"\t#--\n"
+"\t# Slony-I organizes tables into sets.  The smallest unit a node can\n"
+"\t# subscribe is a set.  The following commands create one set containing\n"
+"\t# all 4 pgbench tables.  The master or origin of the set is node 1.\n"
+"\t#--\n"
+"\tcreate set (id=1, origin=1, comment='All pgbench tables');\n"
+"\tset add table (set id=1, origin=1, id=1, fully qualified name = 'public.pgbench_accounts', comment='accounts table');\n"
+"\tset add table (set id=1, origin=1, id=2, fully qualified name = 'public.pgbench_branches', comment='branches table');\n"
+"\tset add table (set id=1, origin=1, id=3, fully qualified name = 'public.pgbench_tellers', comment='tellers table');\n"
+"\tset add table (set id=1, origin=1, id=4, fully qualified name = 'public.pgbench_history', comment='history table');\n"
+"\n"
+"\t#--\n"
+"\t# Create the second node (the slave) tell the 2 nodes how to connect to\n"
+"\t# each other and how they should listen for events.\n"
+"\t#--\n"
+"\n"
+"\tstore node (id=2, comment = 'Slave node', event node=1);\n"
+"\tstore path (server = 1, client = 2, conninfo='dbname=$MASTERDBNAME host=$MASTERHOST user=$REPLICATIONUSER');\n"
+"\tstore path (server = 2, client = 1, conninfo='dbname=$SLAVEDBNAME host=$SLAVEHOST user=$REPLICATIONUSER');\n"
+"_EOF_"
+msgstr ""
+
+#: firstdb.xml:243(para)
+msgid ""
+"Is the <application>pgbench</application> still running? If not, then start "
+"it again."
+msgstr ""
+
+#: firstdb.xml:246(para)
+msgid ""
+"At this point we have 2 databases that are fully prepared. One is the master "
+"database in which <application>pgbench</application> is busy accessing and "
+"changing rows. It's now time to start the replication daemons."
+msgstr ""
+
+#: firstdb.xml:253(programlisting)
+#, no-wrap
+msgid "slon $CLUSTERNAME \"dbname=$MASTERDBNAME user=$REPLICATIONUSER host=$MASTERHOST\""
+msgstr ""
+
+#: firstdb.xml:251(para)
+msgid ""
+"On $MASTERHOST the command to start the replication engine is <placeholder-1/"
+">"
+msgstr ""
+
+#: firstdb.xml:259(programlisting)
+#, no-wrap
+msgid "slon $CLUSTERNAME \"dbname=$SLAVEDBNAME user=$REPLICATIONUSER host=$SLAVEHOST\""
+msgstr ""
+
+#: firstdb.xml:257(para)
+msgid ""
+"Likewise we start the replication system on node 2 (the slave) "
+"<placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:263(para)
+msgid ""
+"Even though we have the <xref linkend=\"slon\"/> running on both the master "
+"and slave, and they are both spitting out diagnostics and other messages, we "
+"aren't replicating any data yet. The notices you are seeing is the "
+"synchronization of cluster configurations between the 2 <xref linkend=\"slon"
+"\"/> processes."
+msgstr ""
+
+#: firstdb.xml:273(programlisting)
+#, no-wrap
+msgid ""
+"#!/bin/sh\n"
+"slonik &lt;&lt;_EOF_\n"
+"\t # ----\n"
+"\t # This defines which namespace the replication system uses\n"
+"\t # ----\n"
+"\t cluster name = $CLUSTERNAME;\n"
+"\n"
+"\t # ----\n"
+"\t # Admin conninfo's are used by the slonik program to connect\n"
+"\t # to the node databases.  So these are the PQconnectdb arguments\n"
+"\t # that connect from the administrators workstation (where\n"
+"\t # slonik is executed).\n"
+"\t # ----\n"
+"\t node 1 admin conninfo = 'dbname=$MASTERDBNAME host=$MASTERHOST user=$REPLICATIONUSER';\n"
+"\t node 2 admin conninfo = 'dbname=$SLAVEDBNAME host=$SLAVEHOST user=$REPLICATIONUSER';\n"
+"\n"
+"\t # ----\n"
+"\t # Node 2 subscribes set 1\n"
+"\t # ----\n"
+"\t subscribe set ( id = 1, provider = 1, receiver = 2, forward = no);\n"
+"_EOF_"
+msgstr ""
+
+#: firstdb.xml:269(para)
+msgid ""
+"To start replicating the 4 <application>pgbench</application> tables (set 1) "
+"from the master (node id 1) the the slave (node id 2), execute the following "
+"script. <placeholder-1/>"
+msgstr ""
+
+#: firstdb.xml:298(para)
+msgid ""
+"Any second now, the replication daemon on <envar>$SLAVEHOST</envar> will "
+"start to copy the current content of all 4 replicated tables. While doing "
+"so, of course, the <application>pgbench</application> application will "
+"continue to modify the database. When the copy process is finished, the "
+"replication daemon on <envar>$SLAVEHOST</envar> will start to catch up by "
+"applying the accumulated replication log. It will do this in little steps, "
+"initially doing about 10 seconds worth of application work at a time. "
+"Depending on the performance of the two systems involved, the sizing of the "
+"two databases, the actual transaction load and how well the two databases "
+"are tuned and maintained, this catchup process may be a matter of minutes, "
+"hours, or eons."
+msgstr ""
+
+#: firstdb.xml:311(para)
+msgid ""
+"If you encounter problems getting this working, check over the logs for the "
+"&lslon; processes, as error messages are likely to be suggestive of the "
+"nature of the problem. The tool &lteststate; is also useful for diagnosing "
+"problems with nearly-functioning replication clusters."
+msgstr ""
+
+#: firstdb.xml:317(para)
+msgid ""
+"You have now successfully set up your first basic master/slave replication "
+"system, and the 2 databases should, once the slave has caught up, contain "
+"identical data. That's the theory, at least. In practice, it's good to build "
+"confidence by verifying that the datasets are in fact the same."
+msgstr ""
+
+#: firstdb.xml:323(para)
+msgid ""
+"The following script will create ordered dumps of the 2 databases and "
+"compare them. Make sure that <application>pgbench</application> has "
+"completed, so that there are no new updates hitting the origin node, and "
+"that your slon sessions have caught up."
+msgstr ""
+
+#: firstdb.xml:329(programlisting)
+#, no-wrap
+msgid ""
+"#!/bin/sh\n"
+"echo -n \"**** comparing sample1 ... \"\n"
+"psql -U $REPLICATIONUSER -h $MASTERHOST $MASTERDBNAME &gt;dump.tmp.1.$$ &lt;&lt;_EOF_\n"
+"\t select 'accounts:'::text, aid, bid, abalance, filler\n"
+"\t\t  from pgbench_accounts order by aid;\n"
+"\t select 'branches:'::text, bid, bbalance, filler\n"
+"\t\t  from pgbench_branches order by bid;\n"
+"\t select 'tellers:'::text, tid, bid, tbalance, filler\n"
+"\t\t  from pgbench_tellers order by tid;\n"
+"\t select 'history:'::text, tid, bid, aid, delta, mtime, filler, id\n"
+"\t\t  from pgbench_history order by id;\n"
+"_EOF_\n"
+"psql -U $REPLICATIONUSER -h $SLAVEHOST $SLAVEDBNAME &gt;dump.tmp.2.$$ &lt;&lt;_EOF_\n"
+"\t select 'accounts:'::text, aid, bid, abalance, filler\n"
+"\t\t  from pgbench_accounts order by aid;\n"
+"\t select 'branches:'::text, bid, bbalance, filler\n"
+"\t\t  from pgbench_branches order by bid;\n"
+"\t select 'tellers:'::text, tid, bid, tbalance, filler\n"
+"\t\t  from pgbench_tellers order by tid;\n"
+"\t select 'history:'::text, tid, bid, aid, delta, mtime, filler, id\n"
+"\t\t  from pgbench_history order by id;\n"
+"_EOF_\n"
+"\n"
+"if diff dump.tmp.1.$$ dump.tmp.2.$$ &gt;$CLUSTERNAME.diff ; then\n"
+"\t echo \"success - databases are equal.\"\n"
+"\t rm dump.tmp.?.$$\n"
+"\t rm $CLUSTERNAME.diff\n"
+"else\n"
+"\t echo \"FAILED - see $CLUSTERNAME.diff for database differences\"\n"
+"fi"
+msgstr ""
+
+#: firstdb.xml:362(para)
+msgid ""
+"Note that there is somewhat more sophisticated documentation of the process "
+"in the &slony1; source code tree in a file called <filename>slony-I-basic-"
+"mstr-slv.txt</filename>."
+msgstr ""
+
+#: firstdb.xml:366(para)
+msgid ""
+"If this script returns <command>FAILED</command> please contact the "
+"developers at <ulink url=\"http://slony.info/\"> http://slony.info/</ulink>. "
+"Be sure to be prepared with useful diagnostic information including the logs "
+"generated by &lslon; processes and the output of &lteststate;."
+msgstr ""
+
+#: firstdb.xml:372(title)
+msgid "Using the altperl Scripts"
+msgstr ""
+
+#: firstdb.xml:374(indexterm)
+msgid "<primary> altperl script example</primary>"
+msgstr ""
+
+#: firstdb.xml:376(para)
+msgid ""
+"Using the <xref linkend=\"altperl\"/> scripts is an alternative way to get "
+"started; it allows you to avoid writing slonik scripts, at least for some of "
+"the simple ways of configuring &slony1;. The <command>slonik_build_env</"
+"command> script will generate output providing details you need to build a "
+"<filename>slon_tools.conf</filename>, which is required by these scripts. An "
+"example <filename>slon_tools.conf</filename> is provided in the distribution "
+"to get you started. The altperl scripts all reference this central "
+"configuration file centralize cluster configuration information. Once "
+"slon_tools.conf has been created, you can proceed as follows:"
+msgstr ""
+
+#: firstdb.xml:390(programlisting)
+#, no-wrap
+msgid ""
+"# Initialize cluster:\n"
+"$ slonik_init_cluster  | slonik \n"
+"\n"
+"# Start slon  (here 1 and 2 are node numbers)\n"
+"$ slon_start 1    \n"
+"$ slon_start 2\n"
+"\n"
+"# Create Sets (here 1 is a set number)\n"
+"$ slonik_create_set 1 | slonik             \n"
+"\n"
+"# subscribe set to second node (1= set ID, 2= node ID)\n"
+"$ slonik_subscribe_set 1 2 | slonik"
+msgstr ""
+
+#: firstdb.xml:405(para)
+msgid "You have now replicated your first database."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: firstdb.xml:0(None)
+msgid "translator-credits"
+msgstr ""
