@@ -1,0 +1,216 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: locking.xml:3(title)
+msgid "Locking Issues"
+msgstr ""
+
+#: locking.xml:5(indexterm)
+msgid "<primary>locking issues</primary>"
+msgstr ""
+
+#: locking.xml:7(para)
+msgid ""
+"One of the usual merits of the use, by &postgres;, of Multi-Version "
+"Concurrency Control (<acronym>MVCC</acronym>) is that this eliminates a "
+"whole host of reasons to need to lock database objects. On some other "
+"database systems, you need to acquire a table lock in order to insert data "
+"into the table; that can <emphasis>severely</emphasis> hinder performance. "
+"On other systems, read locks can impede writes; with <acronym>MVCC</"
+"acronym>, &postgres; eliminates that whole class of locks in that <quote>old "
+"reads</quote> can access <quote>old tuples.</quote> Most of the time, this "
+"allows the gentle user of &postgres; to not need to worry very much about "
+"locks. &slony1; configuration events normally grab locks on an internal "
+"table, <envar>sl_config_lock</envar>, which should not be visible to "
+"applications unless they are performing actions on &slony1; components."
+msgstr ""
+
+#: locking.xml:22(para)
+msgid ""
+"Unfortunately, there are several sorts of &slony1; events that do require "
+"exclusive locks on &postgres; tables, with the result that modifying "
+"&slony1; configuration can bring back some of those <quote>locking "
+"irritations.</quote> In particular:"
+msgstr ""
+
+#: locking.xml:29(para)
+msgid ""
+"<link linkend=\"stmtsetaddtable\"><command>set add table</command></link>"
+msgstr ""
+
+#: locking.xml:32(para)
+msgid ""
+"A momentary exclusive table lock must be acquired on the <quote>origin</"
+"quote> node in order to add the trigger that collects updates for that "
+"table. It only needs to be acquired long enough to establish the new trigger."
+msgstr ""
+
+#: locking.xml:38(para)
+msgid "<link linkend=\"stmtmoveset\"><command> move set</command></link>"
+msgstr ""
+
+#: locking.xml:41(para)
+msgid ""
+"When a set origin is shifted from one node to another, exclusive locks must "
+"be acquired on each replicated table on both the old origin and the new "
+"origin in order to change the triggers on the tables."
+msgstr ""
+
+#: locking.xml:46(para)
+msgid "<link linkend=\"stmtlockset\"><command> lock set </command></link>"
+msgstr ""
+
+#: locking.xml:49(para)
+msgid ""
+"This operation expressly requests locks on each of the tables in a given "
+"replication set on the origin node."
+msgstr ""
+
+#: locking.xml:54(para)
+msgid "During the <command>SUBSCRIBE_SET</command> event on a new subscriber."
+msgstr ""
+
+#: locking.xml:57(para)
+msgid ""
+"<emphasis>all</emphasis> tables in the replication set will be locked via an "
+"exclusive lock for the entire duration of the process of subscription. By "
+"locking the tables early, this means that the subscription cannot fail after "
+"copying some of the data due to some other process having held on to a table."
+msgstr ""
+
+#: locking.xml:63(para)
+msgid ""
+"In any case, note that this one began with the wording <quote>on a new "
+"subscriber.</quote> The locks are applied <emphasis>on the new subscriber.</"
+"emphasis> They are <emphasis>not</emphasis> applied on the provider or on "
+"the origin."
+msgstr ""
+
+#: locking.xml:71(para)
+msgid ""
+"Each time an event is generated (including SYNC events) &slony1; obtains an "
+"exclusive lock on the sl_event table long enough to insert the event into "
+"sl_event. This is not normally an issue as &slony1; should be the only "
+"program using sl_event. However this means that any non-slony transactions "
+"that read from sl_event can cause replication to pause. If you pg_dump your "
+"database avoid dumping your Slony schemas or else pg_dump's locking will "
+"compete with Slony's own locking which could stop Slony replication for the "
+"duration of the pg_dump. Exclude the Slony schemas from pg_dump with --"
+"exclude-schema=schemaname to specifically exclude your Slony schema."
+msgstr ""
+
+#: locking.xml:86(para)
+msgid ""
+"When &slony1; locks a table that a running application later tries to access "
+"the application will be blocked waiting for the lock. It is also possible "
+"for a running application to create a deadlock situation with &slony1; when "
+"they each have obtained locks that the other is waiting for."
+msgstr ""
+
+#: locking.xml:94(para)
+msgid "Several possible solutions to this are:"
+msgstr ""
+
+#: locking.xml:98(para)
+msgid "Announce an application outage to avoid deadlocks"
+msgstr ""
+
+#: locking.xml:101(para)
+msgid ""
+"If you can temporarily block applications from using the database, that will "
+"provide a window of time during which there is nothing running against the "
+"database other than administrative processes under your control."
+msgstr ""
+
+#: locking.xml:106(para)
+msgid "Try the operation, hoping for things to work"
+msgstr ""
+
+#: locking.xml:108(para)
+msgid ""
+"Since nothing prevents applications from leaving access locks in your way, "
+"you may find yourself deadlocked. But if the number of remaining locks are "
+"small, you may be able to negotiate with users to <quote>get in edgewise.</"
+"quote>"
+msgstr ""
+
+#: locking.xml:114(para)
+msgid "Use pgpool"
+msgstr ""
+
+#: locking.xml:116(para)
+msgid ""
+"If you can use this or some similar <quote>connection broker</quote>, you "
+"may be able to tell the connection manager to stop using the database for a "
+"little while, thereby letting it <quote>block</quote> the applications for "
+"you. What would be ideal would be for the connection manager to hold up user "
+"queries for a little while so that the brief database outage looks, to them, "
+"like a period where things were running slowly."
+msgstr ""
+
+#: locking.xml:124(para)
+msgid "Rapid Outage Management"
+msgstr ""
+
+#: locking.xml:130(para)
+msgid ""
+"Modify <filename>pg_hba.conf</filename> so that only the <command>slony</"
+"command> user will have access to the database."
+msgstr ""
+
+#: locking.xml:134(para)
+msgid "Issue a <command>kill -SIGHUP</command> to the &postgres; postmaster."
+msgstr ""
+
+#: locking.xml:137(para)
+msgid ""
+"This will not kill off existing possibly-long-running queries, but will "
+"prevent new ones from coming in. There is an application impact in that "
+"incoming queries will be rejected until the end of the process."
+msgstr ""
+
+#: locking.xml:144(para)
+msgid ""
+"If <quote>all looks good,</quote> then it should be safe to proceed with the "
+"&slony1; operation."
+msgstr ""
+
+#: locking.xml:147(para)
+msgid ""
+"If some old query is lingering around, you may need to <command>kill -"
+"SIGQUIT</command> one of the &postgres; processes. This will restart the "
+"backend and kill off any lingering queries. You probably need to restart the "
+"<xref linkend=\"slon\"/> processes that attach to the node."
+msgstr ""
+
+#: locking.xml:153(para)
+msgid ""
+"At that point, it will be safe to proceed with the &slony1; operation; there "
+"will be no competing processes."
+msgstr ""
+
+#: locking.xml:156(para)
+msgid ""
+"Reset <filename>pg_hba.conf</filename> to allow other users in, and "
+"<command>kill -SIGHUP</command> the postmaster to make it reload the "
+"security configuration."
+msgstr ""
+
+#: locking.xml:126(para)
+msgid ""
+"The following procedure may minimize the period of the outage: "
+"<placeholder-1/>"
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: locking.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,3345 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: faq.xml:4(title)
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: faq.xml:6(indexterm)
+msgid "<primary>Frequently Asked Questions about &slony1;</primary>"
+msgstr ""
+
+#: faq.xml:8(title)
+msgid "&slony1; FAQ: Building and Installing &slony1;"
+msgstr ""
+
+#: faq.xml:12(para)
+msgid ""
+"I am using <productname> Frotznik Freenix 4.5</productname>, with its "
+"<acronym>FFPM</acronym> (Frotznik Freenix Package Manager) package "
+"management system. It comes with <acronym>FFPM</acronym> packages for "
+"&postgres; 7.4.7, which are what I am using for my databases, but they don't "
+"include &slony1; in the packaging. How do I add &slony1; to this?"
+msgstr ""
+
+#: faq.xml:20(para)
+msgid ""
+"<productname>Frotznik Freenix</productname> is new to me, so it's a bit "
+"dangerous to give really hard-and-fast definitive answers."
+msgstr ""
+
+#: faq.xml:24(para)
+msgid ""
+"The answers differ somewhat between the various combinations of &postgres; "
+"and &slony1; versions; the newer versions generally somewhat easier to cope "
+"with than are the older versions. In general, it is quite likely that you "
+"will need to compile &slony1; from sources; depending on versioning of both "
+"&slony1; and &postgres;, you <emphasis>may</emphasis> also need to compile "
+"&postgres; from scratch. (Whether you need to <emphasis> use </emphasis> the "
+"&postgres; compile is another matter; you probably don't...)"
+msgstr ""
+
+#: faq.xml:35(para)
+msgid ""
+"In these modern days, many people are using systems like <application><ulink "
+"url=\"http://www.puppetlabs.com/\">Puppet</ulink></application> where they "
+"expect to be able to get versions of &postgres; and &slony1; packaged up "
+"using their systems' native packaging tools (such as <application>RPM</"
+"application>, with <ulink url=\"http://yum.postgresql.org/\"> yum.postgresql."
+"org</ulink>, <application>dpkg</application> - with <ulink url=\"http://wiki."
+"postgresql.org/wiki/Apt\"> PostgreSQL packages for Debian and Ubuntu </"
+"ulink>)."
+msgstr ""
+
+#: faq.xml:46(para)
+msgid ""
+"It is possible that you will be able to find suitable pre-compiled packages "
+"for &postgres; and &slony1; for your system, if you are using a popular "
+"Linux distribution, and there is a single version of &postgres; across your "
+"cluster."
+msgstr ""
+
+#: faq.xml:51(para)
+msgid ""
+"If you are using a system distribution that has not attracted such "
+"packaging, or if you are using &slony1; to upgrade between &postgres; "
+"versions, and therefore require it compiled for multiple versions of "
+"&postgres;, it is quite likely you will need to compile &slony1; (and "
+"perhaps &postgres;) yourself."
+msgstr ""
+
+#: faq.xml:57(para)
+msgid ""
+"You will likely find it useful to consult the appropriate repository above "
+"(YUM, for RPM-based systems, and APT, for Debian derivatives) to obtain "
+"configuration to help you build packages yourself."
+msgstr ""
+
+#: faq.xml:62(para)
+msgid ""
+"In the <quote>old days</quote>, the build process was more arduous than is "
+"the case with version 2.0 and above:"
+msgstr ""
+
+#: faq.xml:67(para)
+msgid ""
+"&slony1; version 1.0.5 and earlier required having a fully configured copy "
+"of &postgres; sources available when you compile &slony1;."
+msgstr ""
+
+#: faq.xml:71(para)
+msgid ""
+"<emphasis>Hopefully</emphasis> you can make the configuration this closely "
+"match against the configuration in use by the packaged version of &postgres; "
+"by checking the configuration using the command <command> pg_config --"
+"configure</command>."
+msgstr ""
+
+#: faq.xml:76(para)
+msgid ""
+"&slony1; version 1.1 simplified this considerably; it did not require the "
+"full copy of &postgres; sources, but could, instead, refer to the various "
+"locations where &postgres; libraries, binaries, configuration, and <command> "
+"#include </command> files are located."
+msgstr ""
+
+#: faq.xml:82(para)
+msgid ""
+"&postgres; 8.0 and higher have become much easier to deal with in that a "
+"<quote>default</quote> installation includes all of the <command> #include </"
+"command> files."
+msgstr ""
+
+#: faq.xml:86(para)
+msgid ""
+"If you are using an earlier version of &postgres;, you may find it necessary "
+"to resort to a source installation if the packaged version did not install "
+"the <quote>server <command>#include</command></quote> files, which are "
+"installed by the command <command> make install-all-headers </command>."
+msgstr ""
+
+#: faq.xml:95(para)
+msgid ""
+"In effect, the <quote>worst case</quote> scenario takes place if you are "
+"using a version of &slony1; earlier than 1.1 with an <quote>elderly</quote> "
+"version of &postgres;, in which case you can expect to need to compile "
+"&postgres; from scratch in order to have everything that the &slony1; "
+"compile needs even though you are using a <quote>packaged</quote> version of "
+"&postgres;."
+msgstr ""
+
+#: faq.xml:102(para)
+msgid ""
+"If you are running a recent &postgres; and a recent &slony1;, then the "
+"codependencies can be fairly small, and you may not need extra &postgres; "
+"sources. These improvements should ease the production of &slony1; packages "
+"so that you might soon even be able to hope to avoid compiling &slony1;."
+msgstr ""
+
+#: faq.xml:113(para)
+msgid "Problem building on Fedora/x86-64"
+msgstr ""
+
+#: faq.xml:115(para)
+msgid ""
+"When trying to configure &slony1; on a Fedora x86-64 system, where "
+"<application>yum</application> was used to install the package "
+"<filename>postgresql-libs.x86_64</filename>, the following complaint comes "
+"up: <screen>\n"
+"configure: error: Your version of libpq doesn't have PQunescapeBytea\n"
+" this means that your version of PostgreSQL is lower than 7.3\n"
+" and thus not supported by Slony-I.\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:126(para)
+msgid ""
+"This happened with &postgres; 8.2.5, which is certainly rather newer than "
+"7.3."
+msgstr ""
+
+#: faq.xml:130(para)
+msgid ""
+"<application>configure</application> is looking for that symbol by compiling "
+"a little program that calls for it, and checking if the compile succeeds. On "
+"the <command>gcc</command> command line it uses <command>-lpq</command> to "
+"search for the library."
+msgstr ""
+
+#: faq.xml:136(para)
+msgid ""
+"Unfortunately, in this precise case that package is missing a symlink, from "
+"<filename>/usr/lib64/libpq.so</filename> to <filename>libpq.so.5.0</"
+"filename>; that is why it fails to link to libpq. The <emphasis>true</"
+"emphasis> problem is that the compiler failed to find a library to link to, "
+"not that libpq lacked the function call."
+msgstr ""
+
+#: faq.xml:143(para)
+msgid ""
+"Eventually, this should be addressed by those that manage the "
+"<filename>postgresql-libs.x86_64</filename> package."
+msgstr ""
+
+#: faq.xml:147(para)
+msgid ""
+"While the problem is reported with a particular system, the complaint about "
+"<quote>version lower than 7.3</quote> has been a common one, reported across "
+"various sorts of systems."
+msgstr ""
+
+#: faq.xml:151(para)
+msgid ""
+"Note that this same symptom has been a common indicatior for various similar "
+"classes of system configuration problems. Bad symlinks, bad permissions, bad "
+"behaviour on the part of your C compiler, all may potentially lead to this "
+"same error message."
+msgstr ""
+
+#: faq.xml:156(para)
+msgid ""
+"Thus, if you see this error, you need to look in the log file that is "
+"generated, <filename>config.log</filename>. Search down to near the end, and "
+"see what the <emphasis>actual</emphasis> complaint was. That will be helpful "
+"in tracking down the true root cause of the problem."
+msgstr ""
+
+#: faq.xml:168(para)
+msgid ""
+"I found conflicting types for <envar>yyleng</envar> between <filename>parser."
+"c</filename> and <filename>scan.c</filename>. In one case, it used type "
+"<type>int</type>, conflicting with <type>yy_size_t</type>. What shall I do?"
+msgstr ""
+
+#: faq.xml:173(para)
+msgid ""
+"This has been observed on <application>MacOS</application>, where "
+"<application>flex</application> (which generates <filename>scan.c</"
+"filename>) and <application>bison</application> (which generates "
+"<filename>parser.c</filename>) diverged in their handling of this variable."
+msgstr ""
+
+#: faq.xml:179(para)
+msgid ""
+"You might might <quote>hack</quote> <filename>scan.c</filename> by hand to "
+"use the matching type."
+msgstr ""
+
+#: faq.xml:180(para)
+msgid ""
+"You might select different versions of <application>bison</application> or "
+"<application>flex</application> so as to get versions whose data types match."
+msgstr ""
+
+#: faq.xml:181(para)
+msgid ""
+"Note that you may have multiple versions of <application>bison</application> "
+"or <application>flex</application> around, and might need to modify "
+"<envar>PATH</envar> in order to select the appropriate one."
+msgstr ""
+
+#: faq.xml:189(title)
+msgid "&slony1; FAQ: How Do I?"
+msgstr ""
+
+#: faq.xml:193(para)
+msgid ""
+"I need to dump a database <emphasis>without</emphasis> getting &slony1; "
+"configuration (<emphasis>e.g.</emphasis> - triggers, functions, and such)."
+msgstr ""
+
+#: faq.xml:198(para)
+msgid ""
+"Up to version 1.2, this is fairly nontrivial, requiring careful choice of "
+"nodes, and some moderately heavy <quote>procedure</quote>. One methodology "
+"has been as follows:"
+msgstr ""
+
+#: faq.xml:204(para)
+msgid ""
+"First, dump the schema from the node that has the <quote>master</quote> "
+"role. That is the only place, pre-2.0, where you can readily dump the schema "
+"using <application>pg_dump</application> and have a consistent schema. You "
+"may use the &slony1; tool <xref linkend=\"extractschema\"/> to do this."
+msgstr ""
+
+#: faq.xml:211(para)
+msgid ""
+"Take the resulting schema, which will <emphasis>not</emphasis> include the "
+"&slony1;-specific bits, and split it into two pieces:"
+msgstr ""
+
+#: faq.xml:217(para)
+msgid ""
+"Firstly, the portion comprising all of the creations of tables in the schema."
+msgstr ""
+
+#: faq.xml:220(para)
+msgid ""
+"Secondly, the portion consisting of creations of indices, constraints, and "
+"triggers."
+msgstr ""
+
+#: faq.xml:227(para)
+msgid ""
+"Pull a data dump, using <command>pg_dump --data-only</command>, of some node "
+"of your choice. It doesn't need to be for the <quote>master</quote> node. "
+"This dump will include the contents of the &slony1;-specific tables; you can "
+"discard that, or ignore it. Since the schema dump didn't contain table "
+"definitions for the &slony1; tables, they won't be loaded."
+msgstr ""
+
+#: faq.xml:229(para)
+msgid "Finally, load the three components in proper order:"
+msgstr ""
+
+#: faq.xml:231(para)
+msgid "Schema (tables)"
+msgstr ""
+
+#: faq.xml:232(para)
+msgid "Data dump"
+msgstr ""
+
+#: faq.xml:233(para)
+msgid "Remainder of the schema"
+msgstr ""
+
+#: faq.xml:241(para)
+msgid ""
+"In &slony1; 2.0, the answer becomes simpler: Just take a <command>pg_dump --"
+"exclude-schema=_Cluster</command> against <emphasis>any</emphasis> node. In "
+"2.0, the schemas are no longer <quote>clobbered</quote> on subscribers, so a "
+"straight <application>pg_dump</application> will do what you want."
+msgstr ""
+
+#: faq.xml:247(para)
+msgid ""
+"There is a small issue that will remain; the log triggers that are added to "
+"replicated tables will still be included in the dump, although the functions "
+"that they refer to are in the excluded schema. You should be prepared to "
+"find that those triggers will fail to load. You might use <command>grep -v</"
+"command> on the dump to filter out the triggers, should that prove to be a "
+"problem."
+msgstr ""
+
+#: faq.xml:258(para)
+msgid "How should I run &lslon; processes?"
+msgstr ""
+
+#: faq.xml:261(para)
+msgid ""
+"A &lslon; process is required for each database that participates in "
+"replication. There are a variety of ways of managing these processes, none "
+"strictly <quote>the best.</quote> An administrator may find one or another "
+"of these to be preferable."
+msgstr ""
+
+#: faq.xml:270(para)
+msgid ""
+"<link linkend=\"slonwatchdog\"> Perl Watchdog</link>, a script which "
+"monitors a node and restarts &lslon; for that node if it sees no activity."
+msgstr ""
+
+#: faq.xml:274(para)
+msgid ""
+"<link linkend=\"startslon\">start_slon.sh</link>, written with a view to "
+"managing the &lslon; configuration via the <link linkend=\"runtime-config\"> "
+"slon runtime configuraiton </link>."
+msgstr ""
+
+#: faq.xml:279(para)
+msgid ""
+"<link linkend=\"launchclusters\">launch_clusters.sh</link>, which can start "
+"up multiple &lslon; processes. This does a one-time startup of missing "
+"&lslon; processes, so should be run periodically using a service such as "
+"cron."
+msgstr ""
+
+#: faq.xml:285(para)
+msgid ""
+"<link linkend=\"upstartscript\"> Upstart script </link> may be used to start "
+"a &lslon; process when the system boots, suitable for systems that use "
+"Upstart for managing system services."
+msgstr ""
+
+#: faq.xml:290(para)
+msgid ""
+"<link linkend=\"bsd-ports-profile\"> BSD Ports Profile </link> provides "
+"Apache-style profiles, suitable for systems managing &slony1; using FreeBSD "
+"Ports."
+msgstr ""
+
+#: faq.xml:294(para)
+msgid ""
+"<link linkend=\"slononwindows\"> Slon on Windows </link> describes the use "
+"of &lslon; with the Windows <quote>service</quote> concept."
+msgstr ""
+
+#: faq.xml:298(para)
+msgid ""
+"Not provided, but a straightforward task, would be to create an <quote>init</"
+"quote> script suitable for Unix systems that use SysV <application>init</"
+"application>."
+msgstr ""
+
+#: faq.xml:304(para)
+msgid ""
+"A single answer will not fit all, as different operating systems have "
+"different mechanisms for dealing with persistent processes, and as "
+"administrators may wish to have one, or several &lslon; processes running on "
+"a particular server."
+msgstr ""
+
+#: faq.xml:312(para)
+msgid ""
+"I'd like to renumber the node numbers in my cluster. How can I renumber "
+"nodes?"
+msgstr ""
+
+#: faq.xml:315(para)
+msgid ""
+"The first answer is <quote>you can't do that</quote> - &slony1; node numbers "
+"are quite <quote>immutable.</quote> Node numbers are deeply woven into the "
+"fibres of the schema, by virtue of being written into virtually every table "
+"in the system, but much more importantly by virtue of being used as the "
+"basis for event propagation. The only time that it might be <quote>OK</"
+"quote> to modify a node number is at some time where we know that it is not "
+"in use, and we would need to do updates against each node in the cluster in "
+"an organized fashion."
+msgstr ""
+
+#: faq.xml:325(para)
+msgid ""
+"To do this in an automated fashion seems like a <emphasis>huge</emphasis> "
+"challenge, as it changes the structure of the very event propagation system "
+"that already needs to be working in order for such a change to propagate."
+msgstr ""
+
+#: faq.xml:330(para)
+msgid ""
+"If it is <emphasis>enormously necessary</emphasis> to renumber nodes, this "
+"might be accomplished by dropping and re-adding nodes to get rid of the node "
+"formerly using the node ID that needs to be held by another node."
+msgstr ""
+
+#: faq.xml:338(title)
+msgid "&slony1; FAQ: Impossible Things People Try"
+msgstr ""
+
+#: faq.xml:342(para)
+msgid ""
+"Can I use &slony1; to replicate changes back and forth on my database "
+"between my two offices?"
+msgstr ""
+
+#: faq.xml:345(para)
+msgid ""
+"At one level, it is <emphasis>theoretically possible</emphasis> to do "
+"something like that, if you design your application so that each office has "
+"its own distinct set of tables, and you then have some system for "
+"consolidating the data to give them some common view. However, this requires "
+"a great deal of design work to create an application that performs this "
+"consolidation."
+msgstr ""
+
+#: faq.xml:353(para)
+msgid ""
+"In practice, the term for that is <quote>multimaster replication,</quote> "
+"and &slony1; does not support <quote>multimaster replication.</quote>"
+msgstr ""
+
+#: faq.xml:361(para)
+msgid ""
+"I want to replicate all of the databases for a shared-database system I am "
+"managing. There are multiple databases, being used by my customers."
+msgstr ""
+
+#: faq.xml:365(para)
+msgid ""
+"&slony1; cannot be directly used for this, as it expects to capture changes "
+"from <emphasis>a database</emphasis>, not a set of <emphasis>several "
+"databases</emphasis>."
+msgstr ""
+
+#: faq.xml:369(para)
+msgid ""
+"For this purpose, something like &postgres; PITR (Point In Time Recovery) is "
+"likely to be much more suitable. &slony1; requires a slon process (and "
+"multiple connections) for each identifiable database, and if you have a "
+"&postgres; cluster hosting 50 or 100 databases, this will require hundreds "
+"of database connections. Typically, in <quote>shared hosting</quote> "
+"situations, DML is being managed by customers, who can change anything they "
+"like whenever <emphasis>they</emphasis> want. &slony1; does not work out "
+"well when not used in a disciplined manner."
+msgstr ""
+
+#: faq.xml:381(para)
+msgid ""
+"I want to be able to make DDL changes, and have them replicated "
+"automatically."
+msgstr ""
+
+#: faq.xml:383(para)
+msgid ""
+"&slony1; requires that <xref linkend=\"ddlchanges\"/> be planned for "
+"explicitly and carefully. &slony1; captures changes using triggers, and "
+"&postgres; does not provide a way to use triggers to capture DDL changes."
+msgstr ""
+
+#: faq.xml:385(para)
+msgid ""
+"There has been quite a bit of discussion, off and on, about how &postgres; "
+"might capture DDL changes in a way that would make triggers useful; nothing "
+"concrete has yet emerged despite several years of discussion."
+msgstr ""
+
+#: faq.xml:390(para)
+msgid ""
+"The EVENT TRIGGERs added in &postgres; 9.3 are drawing steps closer on this, "
+"but a usable solution has not yet emerged. Perhaps in 9.4..."
+msgstr ""
+
+#: faq.xml:399(para)
+msgid ""
+"I want to split my cluster into disjoint partitions that are not aware of "
+"one another. &slony1; keeps generating <xref linkend=\"listenpaths\"/> that "
+"link those partitions together."
+msgstr ""
+
+#: faq.xml:404(para)
+msgid ""
+"The notion that all nodes are aware of one another is deeply imbedded in the "
+"design of &slony1;. For instance, its handling of cleanup of obsolete data "
+"depends on being aware of whether any of the nodes are behind, and thus "
+"might still depend on older data."
+msgstr ""
+
+#: faq.xml:412(para)
+msgid ""
+"I want to change some of my node numbers. How do I <quote>rename</quote> a "
+"node to have a different node number?"
+msgstr ""
+
+#: faq.xml:414(para)
+msgid ""
+"You don't. The node number is used to coordinate inter-node communications, "
+"and changing the node ID number <quote>on the fly</quote> would make it "
+"essentially impossible to keep node configuration coordinated."
+msgstr ""
+
+#: faq.xml:418(para)
+msgid ""
+"My application uses OID attributes; is it possible to replicate tables like "
+"this?"
+msgstr ""
+
+#: faq.xml:421(para)
+msgid ""
+"It is worth noting that oids, as a regular table attribute, have been "
+"deprecated since &postgres; version 8.1, back in 2005. &slony1; has "
+"<emphasis>never</emphasis> collected oids to replicate them, and, with that "
+"functionality being deprecated, the developers do not intend to add this "
+"functionality."
+msgstr ""
+
+#: faq.xml:427(para)
+msgid ""
+"&postgres; implemented oids as a way to link its internal system tables "
+"together; to use them with application tables is considered <emphasis>poor "
+"practice</emphasis>, and it is recommended that you use sequences to "
+"populate your own ID column on application tables."
+msgstr ""
+
+#: faq.xml:433(para)
+msgid ""
+"Of course, nothing prevents you from creating a table <emphasis>without</"
+"emphasis> oids, and then add in your own application column called "
+"<envar>oid</envar>, preferably with type information <command>SERIAL NOT "
+"NULL UNIQUE</command>, which <emphasis>can</emphasis> be replicated, and "
+"which is likely to be suitable as a candidate primary key for the table."
+msgstr ""
+
+#: faq.xml:442(title)
+msgid "&slony1; FAQ: Connection Issues"
+msgstr ""
+
+#: faq.xml:445(para)
+msgid ""
+"I looked for the <envar>_clustername</envar> namespace, and it wasn't there."
+msgstr ""
+
+#: faq.xml:448(para)
+msgid ""
+"If the DSNs are wrong, then &lslon; instances can't connect to the nodes."
+msgstr ""
+
+#: faq.xml:451(para)
+msgid "This will generally lead to nodes remaining entirely untouched."
+msgstr ""
+
+#: faq.xml:453(para)
+msgid ""
+"Recheck the connection configuration. By the way, since <xref linkend=\"slon"
+"\"/> links to libpq, you could have password information stored in "
+"<filename> $HOME/.pgpass</filename>, partially filling in right/wrong "
+"authentication information there."
+msgstr ""
+
+#: faq.xml:461(para)
+msgid ""
+"I'm trying to get a slave subscribed, and get the following messages in the "
+"logs: <screen>\n"
+"DEBUG1 copy_set 1\n"
+"DEBUG1 remoteWorkerThread_1: connected to provider DB\n"
+"WARN\tremoteWorkerThread_1: transactions earlier than XID 127314958 are "
+"still in progress\n"
+"WARN\tremoteWorkerThread_1: data copy for set 1 failed - sleep 60 seconds\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:471(para)
+msgid ""
+"There is evidently some reasonably old outstanding transaction blocking "
+"&slony1; from processing the sync. You might want to take a look at pg_locks "
+"to see what's up:"
+msgstr ""
+
+#: faq.xml:475(screen)
+#, no-wrap
+msgid ""
+"sampledb=# select * from pg_locks where transaction is not null order by transaction;\n"
+" relation | database | transaction |  pid    |     mode      | granted \n"
+"----------+----------+-------------+---------+---------------+---------\n"
+"          |          |   127314921 | 2605100 | ExclusiveLock | t\n"
+"          |          |   127326504 | 5660904 | ExclusiveLock | t\n"
+"(2 rows)"
+msgstr ""
+
+#: faq.xml:484(para)
+msgid ""
+"See? 127314921 is indeed older than 127314958, and it's still running. While "
+"the situation may be undesirable, there is no error in the behaviour of "
+"&slony1;."
+msgstr ""
+
+#: faq.xml:488(para)
+msgid ""
+"A long running accounting report, a runaway search query, a "
+"<application>pg_dump</application>, all can open up transactions that may "
+"run for substantial periods of time. Until they complete, or are "
+"interrupted, you will continue to see the message <quote> data copy for set "
+"1 failed - sleep 60 seconds </quote>."
+msgstr ""
+
+#: faq.xml:494(para)
+msgid ""
+"By the way, if there is more than one database on the &postgres; cluster, "
+"and activity is taking place on the OTHER database, that will lead to there "
+"being <quote>transactions earlier than XID whatever</quote> being found to "
+"be still in progress. The fact that it's a separate database on the cluster "
+"is irrelevant; &slony1; will wait until those old transactions terminate."
+msgstr ""
+
+#: faq.xml:504(para)
+msgid ""
+"Same as the above. What I forgot to mention, as well, was that I was trying "
+"to add <emphasis>TWO</emphasis> subscribers, concurrently."
+msgstr ""
+
+#: faq.xml:508(para)
+msgid ""
+"That doesn't work out happily: &slony1; can't work on the <command>COPY</"
+"command> commands concurrently. See <filename>src/slon/remote_worker.c</"
+"filename>, function <function>copy_set()</function>"
+msgstr ""
+
+#: faq.xml:513(screen)
+#, no-wrap
+msgid ""
+"$ ps -aef | egrep '[2]605100'\n"
+"postgres 2605100  205018\t0 18:53:43  pts/3  3:13 postgres: postgres sampledb localhost COPY "
+msgstr ""
+
+#: faq.xml:518(para)
+msgid ""
+"This happens to be a <command>COPY</command> transaction involved in setting "
+"up the subscription for one of the nodes. All is well; the system is busy "
+"setting up the first subscriber; it won't start on the second one until the "
+"first one has completed subscribing. That represents one possible cause."
+msgstr ""
+
+#: faq.xml:524(para)
+msgid ""
+"This has the (perhaps unfortunate) implication that you cannot populate two "
+"slaves concurrently from a single provider. You have to subscribe one to the "
+"set, and only once it has completed setting up the subscription (copying "
+"table contents and such) can the second subscriber start setting up the "
+"subscription."
+msgstr ""
+
+#: faq.xml:531(para)
+msgid ""
+"We got bitten by something we didn't foresee when completely uninstalling a "
+"slony replication cluster from the master and slave..."
+msgstr ""
+
+#: faq.xml:535(para)
+msgid ""
+"<emphasis>MAKE SURE YOU STOP YOUR APPLICATION RUNNING AGAINST YOUR MASTER "
+"DATABASE WHEN REMOVING THE WHOLE SLONY CLUSTER</emphasis>, or at least re-"
+"cycle all your open connections after the event!"
+msgstr ""
+
+#: faq.xml:540(para)
+msgid ""
+"The connections <quote>remember</quote> or refer to OIDs which are removed "
+"by the uninstall node script. And you will get lots of errors as a result..."
+msgstr ""
+
+#: faq.xml:547(para)
+msgid ""
+"There are two notable areas of &postgres; that cache query plans and OIDs:"
+msgstr ""
+
+#: faq.xml:550(para)
+msgid "Prepared statements"
+msgstr ""
+
+#: faq.xml:551(para)
+msgid "pl/pgSQL functions"
+msgstr ""
+
+#: faq.xml:554(para)
+msgid ""
+"The problem isn't particularly a &slony1; one; it would occur any time such "
+"significant changes are made to the database schema. It shouldn't be "
+"expected to lead to data loss, but you'll see a wide range of OID-related "
+"errors."
+msgstr ""
+
+#: faq.xml:560(para)
+msgid ""
+"The problem occurs when you are using some sort of <quote>connection pool</"
+"quote> that keeps recycling old connections. If you restart the application "
+"after this, the new connections will create <emphasis>new</emphasis> query "
+"plans, and the errors will go away. If your connection pool drops the "
+"connections, and creates new ones, the new ones will have <emphasis>new</"
+"emphasis> query plans, and the errors will go away."
+msgstr ""
+
+#: faq.xml:568(para)
+msgid ""
+"In our code we drop the connection on any error we cannot map to an expected "
+"condition. This would eventually recycle all connections on such unexpected "
+"problems after just one error per connection. Of course if the error "
+"surfaces as a constraint violation which is a recognized condition, this "
+"won't help either, and if the problem is persistent, the connections will "
+"keep recycling which will drop the effect of the pooling, in the latter case "
+"the pooling code could also announce an admin to take a look..."
+msgstr ""
+
+#: faq.xml:579(para)
+msgid "I'm now the following notice in the logs:"
+msgstr ""
+
+#: faq.xml:582(screen)
+#, no-wrap
+msgid "NOTICE:  Slony-I: log switch to sl_log_2 still in progress - sl_log_1 not truncated"
+msgstr ""
+
+#: faq.xml:584(para)
+msgid ""
+"Both <envar>sl_log_1</envar> and <envar>sl_log_2</envar> are continuing to "
+"grow, and <envar>sl_log_1</envar> is never getting truncated. What's wrong?"
+msgstr ""
+
+#: faq.xml:588(para)
+msgid ""
+"Observe that it is indicated as a <emphasis>NOTICE</emphasis>, not as an "
+"<emphasis>ERROR</emphasis>, so this is an expected sort of behaviour."
+msgstr ""
+
+#: faq.xml:592(para)
+msgid ""
+"This may be symptomatic of the same issue as above with dropping "
+"replication: if there are still old connections lingering that are using old "
+"query plans that reference the old stored functions, resulting in the "
+"inserts to <envar>sl_log_1</envar>"
+msgstr ""
+
+#: faq.xml:597(para)
+msgid "Closing those connections and opening new ones will resolve the issue."
+msgstr ""
+
+#: faq.xml:602(para)
+msgid ""
+"I pointed a subscribing node to a different provider and it stopped "
+"replicating"
+msgstr ""
+
+#: faq.xml:610(para)
+msgid "Node 1 - provider"
+msgstr ""
+
+#: faq.xml:611(para)
+msgid "Node 2 - subscriber to node 1 - the node we're reinitializing"
+msgstr ""
+
+#: faq.xml:612(para)
+msgid "Node 3 - subscriber to node 2 - node that should keep replicating"
+msgstr ""
+
+#: faq.xml:605(para)
+msgid ""
+"We noticed this happening when we wanted to re-initialize a node, where we "
+"had configuration thus: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:615(para)
+msgid ""
+"The subscription for node 3 was changed to have node 1 as provider, and we "
+"did <xref linkend=\"stmtdropset\"/> /<xref linkend=\"stmtsubscribeset\"/> "
+"for node 2 to get it repopulating."
+msgstr ""
+
+#: faq.xml:619(para)
+msgid "Unfortunately, replication suddenly stopped to node 3."
+msgstr ""
+
+#: faq.xml:621(para)
+msgid ""
+"The problem was that there was not a suitable set of <quote>listener paths</"
+"quote> in <xref linkend=\"table.sl-listen\"/> to allow the events from node "
+"1 to propagate to node 3. The events were going through node 2, and blocking "
+"behind the <xref linkend=\"stmtsubscribeset\"/> event that node 2 was "
+"working on."
+msgstr ""
+
+#: faq.xml:631(programlisting)
+#, no-wrap
+msgid ""
+"cluster name = oxrslive;\n"
+" node 1 admin conninfo='host=32.85.68.220 dbname=oxrslive user=postgres port=5432';\n"
+" node 2 admin conninfo='host=32.85.68.216 dbname=oxrslive user=postgres port=5432';\n"
+" node 3 admin conninfo='host=32.85.68.244 dbname=oxrslive user=postgres port=5432';\n"
+" node 4 admin conninfo='host=10.28.103.132 dbname=oxrslive user=postgres port=5432';\n"
+"try {\n"
+"  store listen (origin = 1, receiver = 3, provider = 1);\n"
+"  store listen (origin = 3, receiver = 1, provider = 3);\n"
+"  drop listen (origin = 1, receiver = 3, provider = 2);\n"
+"  drop listen (origin = 3, receiver = 1, provider = 2);\n"
+"}"
+msgstr ""
+
+#: faq.xml:627(para)
+msgid ""
+"The following slonik script dropped out the listen paths where node 3 had to "
+"go through node 2, and added in direct listens between nodes 1 and 3. "
+"<placeholder-1/>"
+msgstr ""
+
+#: faq.xml:651(para)
+msgid ""
+"If you have multiple nodes, and cascaded subscribers, you need to be quite "
+"careful in populating the <xref linkend=\"stmtstorelisten\"/> entries, and "
+"in modifying them if the structure of the replication <quote>tree</quote> "
+"changes."
+msgstr ""
+
+#: faq.xml:657(para)
+msgid ""
+"Version 1.1 provides better tools to help manage this, and later versions of "
+"&slony1; <emphasis>hopefully</emphasis> populate the listener table "
+"automatically <emphasis>and correctly</emphasis> such that you should not "
+"encounter this problem."
+msgstr ""
+
+#: faq.xml:645(para)
+msgid ""
+"Immediately after this script was run, <command>SYNC</command> events "
+"started propagating again to node 3. This points out two principles: "
+"<placeholder-1/>"
+msgstr ""
+
+#: faq.xml:666(para)
+msgid ""
+"The issues of <quote>listener paths</quote> are discussed further at <xref "
+"linkend=\"listenpaths\"/>"
+msgstr ""
+
+#: faq.xml:672(para)
+msgid ""
+"I was starting a &lslon;, and got the following <quote>FATAL</quote> "
+"messages in its logs. What's up???"
+msgstr ""
+
+#: faq.xml:674(screen)
+#, no-wrap
+msgid ""
+"2006-03-29 16:01:34 UTC CONFIG main: slon version 1.2.0 starting up\n"
+"2006-03-29 16:01:34 UTC DEBUG2 slon: watchdog process started\n"
+"2006-03-29 16:01:34 UTC DEBUG2 slon: watchdog ready - pid = 28326\n"
+"2006-03-29 16:01:34 UTC DEBUG2 slon: worker process created - pid = 28327\n"
+"2006-03-29 16:01:34 UTC CONFIG main: local node id = 1\n"
+"2006-03-29 16:01:34 UTC DEBUG2 main: main process started\n"
+"2006-03-29 16:01:34 UTC CONFIG main: launching sched_start_mainloop\n"
+"2006-03-29 16:01:34 UTC CONFIG main: loading current cluster configuration\n"
+"2006-03-29 16:01:34 UTC CONFIG storeSet: set_id=1 set_origin=1 set_comment='test set'\n"
+"2006-03-29 16:01:34 UTC DEBUG2 sched_wakeup_node(): no_id=1 (0 threads + worker signaled)\n"
+"2006-03-29 16:01:34 UTC DEBUG2 main: last local event sequence = 7\n"
+"2006-03-29 16:01:34 UTC CONFIG main: configuration complete - starting threads\n"
+"2006-03-29 16:01:34 UTC DEBUG1 localListenThread: thread starts\n"
+"2006-03-29 16:01:34 UTC FATAL  localListenThread: \"select \"_test1538\".cleanupNodelock(); insert into \"_test1538\".sl_nodelock values (    1, 0, \"pg_catalog\".pg_backend_pid()); \" - ERROR:  duplicate key violates unique constraint \"sl_nodelock-pkey\"\n"
+"\n"
+"2006-03-29 16:01:34 UTC FATAL  Do you already have a slon running against this node?\n"
+"2006-03-29 16:01:34 UTC FATAL  Or perhaps a residual idle backend connection from a dead slon?"
+msgstr ""
+
+#: faq.xml:696(para)
+msgid ""
+"The table <envar>sl_nodelock</envar> is used as an <quote>interlock</quote> "
+"to prevent two &lslon; processes from trying to manage the same node at the "
+"same time. The &lslon; tries inserting a record into the table; it can only "
+"succeed if it is the only node manager."
+msgstr ""
+
+#: faq.xml:702(para)
+msgid ""
+"This error message is typically a sign that you have started up a second "
+"&lslon; process for a given node. The &lslon; asks the obvious question: "
+"<quote>Do you already have a slon running against this node?</quote>"
+msgstr ""
+
+#: faq.xml:707(para)
+msgid ""
+"Supposing you experience some sort of network outage, the connection between "
+"&lslon; and database may fail, and the &lslon; may figure this out long "
+"before the &postgres; instance it was connected to does. The result is that "
+"there will be some number of idle connections left on the database server, "
+"which won't be closed out until TCP/IP timeouts complete, which seems to "
+"normally take about two hours. For that two hour period, the &lslon; will "
+"try to connect, over and over, and will get the above fatal message, over "
+"and over."
+msgstr ""
+
+#: faq.xml:717(para)
+msgid ""
+"An administrator may clean this out by logging onto the server and issuing "
+"<command>kill -2</command> to any of the offending connections. "
+"Unfortunately, since the problem took place within the networking layer, "
+"neither &postgres; nor &slony1; have a direct way of detecting this."
+msgstr ""
+
+#: faq.xml:723(para)
+msgid ""
+"You can <emphasis>mostly</emphasis> avoid this by making sure that &lslon; "
+"processes always run somewhere nearby the server that each one manages. If "
+"the &lslon; runs on the same server as the database it manages, any "
+"<quote>networking failure</quote> that could interrupt local connections "
+"would be likely to be serious enough to threaten the entire server."
+msgstr ""
+
+#: faq.xml:730(para)
+msgid ""
+"It is likely that the <quote>several hours</quote> TCP timeout is rather "
+"longer than it should be in these days where people expect their servers to "
+"be pretty synchronously connected. Configuring the &postgres; to use much "
+"shorter timeouts is likely a wise idea. The relevant <filename>postgresql."
+"conf</filename> parameters are <envar>tcp_keepalives_idle</envar>, "
+"<envar>tcp_keepalives_interval</envar>, and <envar>tcp_keepalives_count</"
+"envar>. See <command>man 7 tcp</command> for more details."
+msgstr ""
+
+#: faq.xml:742(para)
+msgid "When can I shut down &lslon; processes?"
+msgstr ""
+
+#: faq.xml:744(para)
+msgid ""
+"Generally, when things are running properly, it's no big deal to shut down a "
+"&lslon; process. Each one is <quote>merely</quote> a &postgres; client, "
+"managing one node, which spawns threads to manage receiving events from "
+"other nodes."
+msgstr ""
+
+#: faq.xml:749(para)
+msgid ""
+"The <quote>event listening</quote> threads are no big deal; they are doing "
+"nothing fancier than periodically checking remote nodes to see if they have "
+"work to be done on this node. If you kill off the &lslon; these threads will "
+"be closed, which should have little or no impact on much of anything. Events "
+"generated while the &lslon; is down will be picked up when it is restarted."
+msgstr ""
+
+#: faq.xml:756(para)
+msgid ""
+"The <quote>node managing</quote> thread is a bit more interesting; most of "
+"the time, you can expect, on a subscriber, for this thread to be processing "
+"<command>SYNC</command> events. If you shut off the &lslon; during an event, "
+"the transaction will fail, and be rolled back, so that when the &lslon; "
+"restarts, it will have to go back and reprocess the event."
+msgstr ""
+
+#: faq.xml:763(para)
+msgid ""
+"The only situation where this will cause <emphasis>particular</emphasis> "
+"<quote>heartburn</quote> is if the event being processed was one which takes "
+"a long time to process, the worst case being where <command>COPY_SET</"
+"command> is doing initial processing of a large replication set."
+msgstr ""
+
+#: faq.xml:769(para)
+msgid ""
+"The other thing that <emphasis>might</emphasis> cause trouble is if the "
+"&lslon; runs fairly distant from nodes that it connects to; you could "
+"discover that database connections are left <command>idle in transaction</"
+"command>. This would normally only occur if the network connection is "
+"destroyed without either &lslon; or database being made aware of it. In that "
+"case, you may discover that <quote>zombied</quote> connections are left "
+"around for as long as two hours if you don't go in by hand and kill off the "
+"&postgres; backends. See the <link linkend=\"multipleslonconnections"
+"\">Multiple Slon Connections</link> entry for more details."
+msgstr ""
+
+#: faq.xml:780(para)
+msgid ""
+"There is one other case that could cause trouble; when the &lslon; managing "
+"the origin node is not running, no <command>SYNC</command> events run "
+"against that node. If the &lslon; stays down for an extended period of time, "
+"and something like <xref linkend=\"gensync\"/> isn't running, you could be "
+"left with <emphasis>one big <command>SYNC</command></emphasis> to process "
+"when it comes back up. But that should only be a concern if that &lslon; is "
+"down for an extended period of time; shutting it down for a few seconds "
+"shouldn't cause any great problem."
+msgstr ""
+
+#: faq.xml:792(para)
+msgid "Are there risks to shutting down the slon? How about benefits?"
+msgstr ""
+
+#: faq.xml:795(para)
+msgid ""
+"In short, if you don't have something like an 18 hour <command>COPY_SET</"
+"command> under way, it's normally not at all a big deal to take a &lslon; "
+"down for a little while, or perhaps even cycle <emphasis>all</emphasis> the "
+"&lslon; processes."
+msgstr ""
+
+#: faq.xml:802(para)
+msgid ""
+"I was trying to subscribe a set involving a multiple GB table, and it failed."
+msgstr ""
+
+#: faq.xml:803(screen)
+#, no-wrap
+msgid ""
+"Jul 31 22:52:53 dbms TICKER[70295]: [153-1] CONFIG remoteWorkerThread_3: copy table \"public\".\"images\"\n"
+"Jul 31 22:52:53 dbms TICKER[70295]: [154-1] CONFIG remoteWorkerThread_3: Begin COPY of table \"public\".\"images\"\n"
+"Jul 31 22:54:24 dbms TICKER[70295]: [155-1] ERROR  remoteWorkerThread_3: PGgetCopyData() server closed the connection unexpectedly\n"
+"Jul 31 22:54:24 dbms TICKER[70295]: [155-2]     This probably means the server terminated abnormally\n"
+"Jul 31 22:54:24 dbms TICKER[70295]: [155-3]     before or while processing the request.\n"
+"Jul 31 22:54:24 dbms TICKER[70295]: [156-1] WARN   remoteWorkerThread_3: data copy for set 1 failed 1 times - sleep 15 seconds"
+msgstr ""
+
+#: faq.xml:811(para)
+msgid "Oh, by the way, I'm using SSL-based &postgres; conenctions."
+msgstr ""
+
+#: faq.xml:812(para)
+msgid "A further examination of &postgres; logs indicated errors of the form:"
+msgstr ""
+
+#: faq.xml:813(screen)
+#, no-wrap
+msgid ""
+"Jul 31 23:00:00 tickerforum postgres[27093]: [9593-2] STATEMENT:  copy \"public\".\"images\"\n"
+"(\"post_ordinal\",\"ordinal\",\"caption\",\"image\",\"login\",\"file_type\",\"thumb\",\"thumb_width\",\"thumb_height\",\"hidden\") to stdout;\n"
+"Jul 31 23:00:00 tickerforum postgres[27093]: [9594-1] LOG:  SSL error: internal error\n"
+"Jul 31 23:00:00 tickerforum postgres[27093]: [9594-2] STATEMENT:  copy \"public\".\"images\" (\"post_ordinal\",\"ordinal\",\"caption\",\"image\",\"login\",\"file_type\",\"thumb\",\"thumb_width\",\"thumb_height\",\"hidden\") to stdout;\n"
+"Jul 31 23:00:01 tickerforum postgres[27093]: [9595-1] LOG:  SSL error: internal error"
+msgstr ""
+
+#: faq.xml:821(para)
+msgid ""
+"This demonstrates a problem with &postgres; handling of SSL connections, "
+"which is <quote>out of scope</quote> for &slony1; proper (<emphasis>e.g.</"
+"emphasis> - there's no <quote>there</quote> inside &slony1; for us to try to "
+"fix)."
+msgstr ""
+
+#: faq.xml:826(para)
+msgid ""
+"The resolution to the underlying problem will presumably be handled upstream "
+"in the &postgres; project; the workaround is to, at least for the initial "
+"<command>SUBSCRIBE SET</command> event, switch to a non-SSL &postgres; "
+"connection."
+msgstr ""
+
+#: faq.xml:834(title)
+msgid "&slony1; FAQ: Configuration Issues"
+msgstr ""
+
+#: faq.xml:837(para)
+msgid "ps finds passwords on command line"
+msgstr ""
+
+#: faq.xml:839(para)
+msgid ""
+"If I run a <command>ps</command> command, I, and everyone else, can see "
+"passwords on the command line."
+msgstr ""
+
+#: faq.xml:842(para)
+msgid ""
+"Take the passwords out of the Slony configuration, and put them into "
+"<filename>$(HOME)/.pgpass.</filename>"
+msgstr ""
+
+#: faq.xml:849(programlisting)
+#, no-wrap
+msgid ""
+"set add table (set id = 1, origin = 1, id = 27, \n"
+"               full qualified name = 'nspace.some_table', \n"
+"               key = 'key_on_whatever', \n"
+"               comment = 'Table some_table in namespace nspace with a candidate primary key');"
+msgstr ""
+
+#: faq.xml:847(para)
+msgid "Table indexes with FQ namespace names <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:856(para)
+msgid ""
+"If you have <command> key = 'nspace.key_on_whatever'</command> the request "
+"will <emphasis>FAIL</emphasis>."
+msgstr ""
+
+#: faq.xml:862(para)
+msgid ""
+"Replication has fallen behind, and it appears that the queries to draw data "
+"from &sllog1;/&sllog2; are taking a long time to pull just a few "
+"<command>SYNC</command>s."
+msgstr ""
+
+#: faq.xml:868(para)
+msgid ""
+"Until version 1.1.1, there was only one index on &sllog1;/&sllog2;, and if "
+"there were multiple replication sets, some of the columns on the index would "
+"not provide meaningful selectivity. If there is no index on column "
+"<function> log_xid</function>, consider adding it. See <filename>slony1_base."
+"sql</filename> for an example of how to create the index."
+msgstr ""
+
+#: faq.xml:877(para)
+msgid ""
+"That's not quite the end of the story; a critical query had the potential to "
+"scan the entirety of these log tables even in &slony1; 2.1. You generally "
+"want to be on the latest version of &slony1; as there have been efficiency "
+"improvements, and in this area, pretty substantial improvements."
+msgstr ""
+
+#: faq.xml:884(para)
+msgid ""
+"I need to rename a column that is in the primary key for one of my "
+"replicated tables. That seems pretty dangerous, doesn't it? I have to drop "
+"the table out of replication and recreate it, right?"
+msgstr ""
+
+#: faq.xml:890(para)
+msgid ""
+"Actually, this is a scenario which works out remarkably cleanly. &slony1; "
+"does indeed make intense use of the primary key columns, but actually does "
+"so in a manner that allows this sort of change to be made very nearly "
+"transparently."
+msgstr ""
+
+#: faq.xml:895(para)
+msgid ""
+"Suppose you revise a column name, as with the SQL DDL <command> alter table "
+"accounts alter column aid rename to cid; </command> This revises the names "
+"of the columns in the table; it <emphasis>simultaneously</emphasis> renames "
+"the names of the columns in the primary key index. The result is that the "
+"normal course of things is that altering a column name affects both aspects "
+"simultaneously on a given node."
+msgstr ""
+
+#: faq.xml:903(para)
+msgid ""
+"The <emphasis>ideal</emphasis> and proper handling of this change would "
+"involve using <xref linkend=\"stmtddlscript\"/> to deploy the alteration, "
+"which ensures it is applied at exactly the right point in the transaction "
+"stream on each node."
+msgstr ""
+
+#: faq.xml:908(para)
+msgid ""
+"Interestingly, that isn't forcibly necessary. As long as the alteration is "
+"applied on the replication set's origin before application on subscribers, "
+"things won't break irrepairably. Some <command>SYNC</command> events that do "
+"not include changes to the altered table can make it through without any "
+"difficulty... At the point that the first update to the table is drawn in by "
+"a subscriber, <emphasis>that</emphasis> is the point at which <command>SYNC</"
+"command> events will start to fail, as the provider will indicate the "
+"<quote>new</quote> set of columns whilst the subscriber still has the "
+"<quote>old</quote> ones. If you then apply the alteration to the subscriber, "
+"it can retry the <command>SYNC</command>, at which point it will, finding "
+"the <quote>new</quote> column names, work just fine."
+msgstr ""
+
+#: faq.xml:925(para)
+msgid ""
+"I had a network <quote>glitch</quote> that led to my using <xref linkend="
+"\"stmtfailover\"/> to fail over to an alternate node. The failure wasn't a "
+"disk problem that would corrupt databases; why do I need to rebuild the "
+"failed node from scratch?"
+msgstr ""
+
+#: faq.xml:930(para)
+msgid ""
+"The action of <xref linkend=\"stmtfailover\"/> is to <emphasis>abandon</"
+"emphasis> the failed node so that no more &slony1; activity goes to or from "
+"that node. As soon as that takes place, the failed node will progressively "
+"fall further and further out of sync."
+msgstr ""
+
+#: faq.xml:936(para)
+msgid ""
+"The <emphasis>big</emphasis> problem with trying to recover the failed node "
+"is that it may contain updates that never made it out of the origin. If they "
+"get retried, on the new origin, you may find that you have conflicting "
+"updates. In any case, you do have a sort of <quote>logical</quote> "
+"corruption of the data even if there never was a disk failure making it "
+"<quote>physical.</quote>"
+msgstr ""
+
+#: faq.xml:944(para)
+msgid ""
+"As discusssed in <xref linkend=\"failover\"/>, using <xref linkend="
+"\"stmtfailover\"/> should be considered a <emphasis>last resort</emphasis> "
+"as it implies that you are abandoning the origin node as being corrupted."
+msgstr ""
+
+#: faq.xml:950(para)
+msgid ""
+"After notification of a subscription on <emphasis>another</emphasis> node, "
+"replication falls over on one of the subscribers, with the following error "
+"message:"
+msgstr ""
+
+#: faq.xml:954(screen) faq.xml:1021(screen)
+#, no-wrap
+msgid ""
+"ERROR  remoteWorkerThread_1: \"begin transaction; set transaction isolation level serializable; lock table \"_livesystem\".sl_config_lock; select \"_livesystem\".enableSubscription(25506, 1, 501); notify \"_livesystem_Event\"; notify \"_livesystem_Confirm\"; insert into \"_livesystem\".sl_event     (ev_origin, ev_seqno, ev_timestamp,      ev_minxid, ev_maxxid, ev_xip, ev_type , ev_data1, ev_data2, ev_data3, ev_data4    ) values ('1', '4896546', '2005-01-23 16:08:55.037395', '1745281261', '1745281262', '', 'ENABLE_SUBSCRIPTION', '25506', '1', '501', 't'); insert into \"_livesystem\".sl_confirm      (con_origin, con_received, con_seqno, con_timestamp)    values (1, 4, '4896546', CURRENT_TIMESTAMP); commit transaction;\" PGRES_FATAL_ERROR ERROR:  insert or update on table \"sl_subscribe\" violates foreign key constraint \"sl_subscribe-sl_path-ref\"\n"
+"DETAIL:  Key (sub_provider,sub_receiver)=(1,501) is not present in table \"sl_path\"."
+msgstr ""
+
+#: faq.xml:959(para)
+msgid ""
+"This is then followed by a series of failed syncs as the <xref linkend=\"slon"
+"\"/> shuts down:"
+msgstr ""
+
+#: faq.xml:962(screen)
+#, no-wrap
+msgid ""
+"DEBUG2 remoteListenThread_1: queue event 1,4897517 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897518 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897519 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897520 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897521 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897522 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897523 SYNC"
+msgstr ""
+
+#: faq.xml:977(para)
+msgid ""
+"If you see a &lslon; shutting down with <emphasis>ignore new events due to "
+"shutdown</emphasis> log entries, you typically need to step back in the log "
+"to <emphasis>before</emphasis> they started failing to see indication of the "
+"root cause of the problem."
+msgstr ""
+
+#: faq.xml:983(para) faq.xml:1051(para)
+msgid ""
+"In this particular case, the problem was that some of the <xref linkend="
+"\"stmtstorepath\"/> commands had not yet made it to node 4 before the <xref "
+"linkend=\"stmtsubscribeset\"/> command propagated."
+msgstr ""
+
+#: faq.xml:988(para)
+msgid ""
+"This demonstrates yet another example of the need to not do things in a "
+"rush; you need to be sure things are working right <emphasis>before</"
+"emphasis> making further configuration changes."
+msgstr ""
+
+#: faq.xml:997(para)
+msgid ""
+"I just used <xref linkend=\"stmtmoveset\"/> to move the origin to a new "
+"node. Unfortunately, some subscribers are still pointing to the former "
+"origin node, so I can't take it out of service for maintenance without "
+"stopping them from getting updates. What do I do?"
+msgstr ""
+
+#: faq.xml:1003(para)
+msgid ""
+"You need to use <xref linkend=\"stmtsubscribeset\"/> to alter the "
+"subscriptions for those nodes to have them subscribe to a provider that "
+"<emphasis>will</emphasis> be sticking around during the maintenance."
+msgstr ""
+
+#: faq.xml:1008(para)
+msgid ""
+"What you <emphasis>don't</emphasis> do is to <xref linkend="
+"\"stmtunsubscribeset\"/>; that would require reloading all data for the "
+"nodes from scratch later."
+msgstr ""
+
+#: faq.xml:1017(para)
+msgid ""
+"After notification of a subscription on <emphasis>another</emphasis> node, "
+"replication falls over, starting with the following error message:"
+msgstr ""
+
+#: faq.xml:1026(para)
+msgid ""
+"This is then followed by a series of failed syncs as the <xref linkend=\"slon"
+"\"/> shuts down: <screen>\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897517 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897518 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897519 SYNC\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897520 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897521 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897522 SYNC\n"
+"DEBUG2 remoteWorker_event: ignore new events due to shutdown\n"
+"DEBUG2 remoteListenThread_1: queue event 1,4897523 SYNC\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1044(para)
+msgid ""
+"If you see a &lslon; shutting down with <emphasis>ignore new events due to "
+"shutdown</emphasis> log entries, you'll typically have to step back to "
+"<emphasis>before</emphasis> they started failing to see indication of the "
+"root cause of the problem."
+msgstr ""
+
+#: faq.xml:1056(para)
+msgid ""
+"This is yet another example of the need to not do things too terribly "
+"quickly; you need to be sure things are working right <emphasis>before</"
+"emphasis> making further configuration changes."
+msgstr ""
+
+#: faq.xml:1064(para)
+msgid "Is the ordering of tables in a set significant?"
+msgstr ""
+
+#: faq.xml:1067(para)
+msgid ""
+"Most of the time, it isn't. You might imagine it of some value to order the "
+"tables in some particular way in order that <quote>parent</quote> entries "
+"would make it in before their <quote>children</quote> in some foreign key "
+"relationship; that <emphasis>isn't</emphasis> the case since foreign key "
+"constraint triggers are turned off on subscriber nodes."
+msgstr ""
+
+#: faq.xml:1076(para)
+msgid ""
+"(Jan Wieck comments) The order of table ID's is only significant during a "
+"<xref linkend=\"stmtlockset\"/> in preparation of switchover. If that order "
+"is different from the order in which an application is acquiring its locks, "
+"it can lead to deadlocks that abort either the application or "
+"<application>slon</application>."
+msgstr ""
+
+#: faq.xml:1084(para)
+msgid ""
+"(David Parker) I ran into one other case where the ordering of tables in the "
+"set was significant: in the presence of inherited tables. If a child table "
+"appears before its parent in a set, then the initial subscription will end "
+"up deleting that child table after it has possibly already received data, "
+"because the <command>copy_set</command> logic does a <command>delete</"
+"command>, not a <command>delete only</command>, so the delete of the parent "
+"will delete the new rows in the child as well."
+msgstr ""
+
+#: faq.xml:1098(para)
+msgid ""
+"If you have a <xref linkend=\"slonik\"/> script something like this, it will "
+"hang on you and never complete, because you can't have <xref linkend="
+"\"stmtwaitevent\"/> inside a <xref linkend=\"tryblock\"/> block. A "
+"<command>try</command> block is executed as one transaction, and the event "
+"that you are waiting for can never arrive inside the scope of the "
+"transaction."
+msgstr ""
+
+#: faq.xml:1105(programlisting)
+#, no-wrap
+msgid ""
+"try {\n"
+"      echo 'Moving set 1 to node 3';\n"
+"      lock set (id=1, origin=1);\n"
+"      echo 'Set locked';\n"
+"      wait for event (origin = 1, confirmed = 3);\n"
+"      echo 'Moving set';\n"
+"      move set (id=1, old origin=1, new origin=3);\n"
+"      echo 'Set moved - waiting for event to be confirmed by node 3';\n"
+"      wait for event (origin = 1, confirmed = 3);\n"
+"      echo 'Confirmed';\n"
+"} on error {\n"
+"      echo 'Could not move set for cluster foo';\n"
+"      unlock set (id=1, origin=1);\n"
+"      exit -1;\n"
+"}"
+msgstr ""
+
+#: faq.xml:1123(para)
+msgid ""
+"You <emphasis>must not</emphasis> invoke <xref linkend=\"stmtwaitevent\"/> "
+"inside a <quote>try</quote> block."
+msgstr ""
+
+#: faq.xml:1130(para)
+msgid "Slony-I: cannot add table to currently subscribed set 1"
+msgstr ""
+
+#: faq.xml:1132(para)
+msgid ""
+"I tried to add a table to a set, and got the following message: <screen>\n"
+"\tSlony-I: cannot add table to currently subscribed set 1\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1138(para)
+msgid "You cannot add tables to sets that already have subscribers."
+msgstr ""
+
+#: faq.xml:1141(para)
+msgid ""
+"The workaround to this is to create <emphasis>ANOTHER</emphasis> set, add "
+"the new tables to that new set, subscribe the same nodes subscribing to "
+"\"set 1\" to the new set, and then merge the sets together."
+msgstr ""
+
+#: faq.xml:1148(para)
+msgid "ERROR: duplicate key violates unique constraint \"sl_table-pkey\""
+msgstr ""
+
+#: faq.xml:1151(para)
+msgid ""
+"I tried setting up a second replication set, and got the following error: "
+"<screen>\n"
+"stdin:9: Could not create subscription set 2 for oxrslive!\n"
+"stdin:11: PGRES_FATAL_ERROR select \"_oxrslive\".setAddTable(2, 1, 'public."
+"replic_test', 'replic_test__Slony-I_oxrslive_rowID_key', 'Table public."
+"replic_test without primary key');  - ERROR:  duplicate key violates unique "
+"constraint \"sl_table-pkey\"\n"
+"CONTEXT:  PL/pgSQL function \"setaddtable_int\" line 71 at SQL statement\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1159(para)
+msgid ""
+"The table IDs used in <xref linkend=\"stmtsetaddtable\"/> are required to be "
+"unique <emphasis>ACROSS ALL SETS</emphasis>. Thus, you can't restart "
+"numbering at 1 for a second set; if you are numbering them consecutively, a "
+"subsequent set has to start with IDs after where the previous set(s) left "
+"off."
+msgstr ""
+
+#: faq.xml:1167(para)
+msgid ""
+"One of my nodes fell over (&lslon; / postmaster was down) and nobody noticed "
+"for several days. Now, when the &lslon; for that node starts up, it runs for "
+"about five minutes, then terminates, with the error message: <command>ERROR: "
+"remoteListenThread_%d: timeout for event selection</command> What's wrong, "
+"and what do I do?"
+msgstr ""
+
+#: faq.xml:1174(para)
+msgid ""
+"The problem is that the listener thread (in <filename>src/slon/"
+"remote_listener.c</filename>) timed out when trying to determine what events "
+"were outstanding for that node. By default, the query will run for five "
+"minutes; if there were many days worth of outstanding events, this might "
+"take too long."
+msgstr ""
+
+#: faq.xml:1180(para)
+msgid ""
+"On versions of &slony1; before 1.1.7, 1.2.7, and 1.3, a solution was to "
+"increase the timeout in <filename>src/slon/remote_listener.c</filename>, "
+"recompile &lslon;, and retry."
+msgstr ""
+
+#: faq.xml:1185(para)
+msgid ""
+"Another would be to treat the node as having failed, and use the &lslonik; "
+"command <xref linkend=\"stmtdropnode\"/> to drop the node, and recreate it. "
+"If the database is heavily updated, it may well be cheaper to do this than "
+"it is to find a way to let it catch up."
+msgstr ""
+
+#: faq.xml:1191(para)
+msgid ""
+"In newer versions of &slony1;, there is a new configuration parameter called "
+"<xref linkend=\"slon-config-remote-listen-timeout\"/>; you'd alter the "
+"config file to increase the timeout, and try again. Of course, as mentioned "
+"above, it could be faster to drop the node and recreate it than it is to "
+"require it to catch up across a week's worth of updates..."
+msgstr ""
+
+#: faq.xml:1202(title)
+msgid "&slony1; FAQ: Performance Issues"
+msgstr ""
+
+#: faq.xml:1206(para)
+msgid ""
+"Replication has been slowing down, I'm seeing <command> FETCH 100 FROM LOG </"
+"command> queries running for a long time, &sllog1;/&sllog2; is growing, and "
+"performance is, well, generally getting steadily worse."
+msgstr ""
+
+#: faq.xml:1212(para)
+msgid ""
+"There are actually a number of possible causes for this sort of thing. There "
+"is a question involving similar pathology where the problem is that <link "
+"linkend=\"pglistenerfull\">&pglistener; grows because it is not vacuumed. </"
+"link>"
+msgstr ""
+
+#: faq.xml:1218(para)
+msgid ""
+"Another <quote> proximate cause </quote> for this growth is for there to be "
+"a connection connected to the node that sits <command> IDLE IN TRANSACTION </"
+"command> for a very long time."
+msgstr ""
+
+#: faq.xml:1222(para)
+msgid ""
+"That open transaction will have multiple negative effects, all of which will "
+"adversely affect performance:"
+msgstr ""
+
+#: faq.xml:1227(para)
+msgid ""
+"Vacuums on all tables, including &pglistener;, will not clear out dead "
+"tuples from before the start of the idle transaction."
+msgstr ""
+
+#: faq.xml:1231(para)
+msgid ""
+"The cleanup thread will be unable to clean out entries in &sllog1;, "
+"&sllog2;, and &slseqlog;, with the result that these tables will grow, "
+"ceaselessly, until the transaction is closed."
+msgstr ""
+
+#: faq.xml:1239(para)
+msgid ""
+"You can monitor for this condition inside the database only if the "
+"&postgres; <filename> postgresql.conf </filename> parameter "
+"<envar>stats_command_string</envar> is set to true. If that is set, then you "
+"may submit the query <command> select * from pg_stat_activity where "
+"current_query like '%IDLE% in transaction'; </command> which will find "
+"relevant activity."
+msgstr ""
+
+#: faq.xml:1246(para)
+msgid ""
+"You should also be able to search for <quote> idle in transaction </quote> "
+"in the process table to find processes that are thus holding on to an "
+"ancient transaction."
+msgstr ""
+
+#: faq.xml:1250(para)
+msgid ""
+"It is also possible (though rarer) for the problem to be a transaction that "
+"is, for some other reason, being held open for a very long time. The <envar> "
+"query_start </envar> time in <envar> pg_stat_activity </envar> may show you "
+"some query that has been running way too long."
+msgstr ""
+
+#: faq.xml:1256(para)
+msgid ""
+"There are plans for &postgres; to have a timeout parameter, <envar> "
+"open_idle_transaction_timeout </envar>, which would cause old transactions "
+"to time out after some period of disuse. Buggy connection pool logic is a "
+"common culprit for this sort of thing. There are plans for "
+"<productname><link linkend=\"pgpool\"> pgpool </link></productname> to "
+"provide a better alternative, eventually, where connections would be shared "
+"inside a connection pool implemented in C. You may have some more or less "
+"buggy connection pool in your Java or PHP application; if a small set of "
+"<emphasis> real </emphasis> connections are held in <productname>pgpool</"
+"productname>, that will hide from the database the fact that the application "
+"imagines that numerous of them are left idle in transaction for hours at a "
+"time."
+msgstr ""
+
+#: faq.xml:1273(para)
+msgid ""
+"After dropping a node, &sllog1;/&sllog2; aren't getting purged out anymore."
+msgstr ""
+
+#: faq.xml:1276(para)
+msgid ""
+"This is a common scenario in versions before 1.0.5, as the <quote>clean up</"
+"quote> that takes place when purging the node does not include purging out "
+"old entries from the &slony1; table, <xref linkend=\"table.sl-confirm\"/>, "
+"for the recently departed node."
+msgstr ""
+
+#: faq.xml:1282(para)
+msgid ""
+"The node is no longer around to update confirmations of what syncs have been "
+"applied on it, and therefore the cleanup thread that purges log entries "
+"thinks that it can't safely delete entries newer than the final <xref "
+"linkend=\"table.sl-confirm\"/> entry, which rather curtails the ability to "
+"purge out old logs."
+msgstr ""
+
+#: faq.xml:1288(para)
+msgid ""
+"Diagnosis: Run the following query to see if there are any <quote>phantom/"
+"obsolete/blocking</quote> <xref linkend=\"table.sl-confirm\"/> entries: "
+"<screen>\n"
+"oxrsbar=# select * from _oxrsbar.sl_confirm where con_origin not in (select "
+"no_id from _oxrsbar.sl_node) or con_received not in (select no_id from "
+"_oxrsbar.sl_node);\n"
+" con_origin | con_received | con_seqno |        "
+"con_timestamp                  \n"
+"------------+--------------+-----------+----------------------------\n"
+"          4 |          501 |     83999 | 2004-11-09 19:57:08.195969\n"
+"          1 |            2 |   3345790 | 2004-11-14 10:33:43.850265\n"
+"          2 |          501 |    102718 | 2004-11-14 10:33:47.702086\n"
+"        501 |            2 |      6577 | 2004-11-14 10:34:45.717003\n"
+"          4 |            5 |     83999 | 2004-11-14 21:11:11.111686\n"
+"          4 |            3 |     83999 | 2004-11-24 16:32:39.020194\n"
+"(6 rows)\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1305(para)
+msgid ""
+"In version 1.0.5, the <xref linkend=\"stmtdropnode\"/> function purges out "
+"entries in <xref linkend=\"table.sl-confirm\"/> for the departing node. In "
+"earlier versions, this needs to be done manually. Supposing the node number "
+"is 3, then the query would be: <screen>\n"
+"delete from _namespace.sl_confirm where con_origin = 3 or con_received = 3;\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1314(para)
+msgid ""
+"Alternatively, to go after <quote>all phantoms,</quote> you could use "
+"<screen>\n"
+"oxrsbar=# delete from _oxrsbar.sl_confirm where con_origin not in (select "
+"no_id from _oxrsbar.sl_node) or con_received not in (select no_id from "
+"_oxrsbar.sl_node);\n"
+"DELETE 6\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1320(para)
+msgid ""
+"General <quote>due diligence</quote> dictates starting with a "
+"<command>BEGIN</command>, looking at the contents of <xref linkend=\"table."
+"sl-confirm\"/> before, ensuring that only the expected records are purged, "
+"and then, only after that, confirming the change with a <command>COMMIT</"
+"command>. If you delete confirm entries for the wrong node, that could ruin "
+"your whole day."
+msgstr ""
+
+#: faq.xml:1327(para)
+msgid "You'll need to run this on each node that remains..."
+msgstr ""
+
+#: faq.xml:1334(para)
+msgid "At the time a node is dropped"
+msgstr ""
+
+#: faq.xml:1336(para)
+msgid ""
+"At the start of each <function>cleanupEvent</function> run, which is the "
+"event in which old data is purged from &sllog1;, &sllog2;, and &slseqlog;"
+msgstr ""
+
+#: faq.xml:1329(para)
+msgid ""
+"Note that as of 1.0.5, this is no longer an issue at all, as it purges "
+"unneeded entries from <xref linkend=\"table.sl-confirm\"/> in two places: "
+"<placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1345(para)
+msgid ""
+"The <application>slon</application> spent the weekend out of commission [for "
+"some reason], and it's taking a long time to get a sync through."
+msgstr ""
+
+#: faq.xml:1349(para)
+msgid ""
+"You might want to take a look at the tables &sllog1; and &sllog2; and do a "
+"summary to see if there are any really enormous &slony1; transactions in "
+"there. Up until at least 1.0.2, there needs to be a &lslon; connected to the "
+"origin in order for <command>SYNC</command> events to be generated."
+msgstr ""
+
+#: faq.xml:1355(para)
+msgid ""
+"As of 1.0.2, function <function>generate_sync_event()</function> provides an "
+"alternative as backup..."
+msgstr ""
+
+#: faq.xml:1359(para)
+msgid ""
+"If none are being generated, then all of the updates until the next one is "
+"generated will collect into one rather enormous &slony1; transaction."
+msgstr ""
+
+#: faq.xml:1363(para)
+msgid ""
+"Conclusion: Even if there is not going to be a subscriber around, you "
+"<emphasis>really</emphasis> want to have a <application>slon</application> "
+"running to service the origin node."
+msgstr ""
+
+#: faq.xml:1368(para)
+msgid ""
+"&slony1; 1.1 and later versions provide a stored procedure that allows "
+"<command>SYNC</command> counts to be updated on the origin based on a "
+"<application>cron</application> job even if there is no <xref linkend=\"slon"
+"\"/> daemon running."
+msgstr ""
+
+#: faq.xml:1373(para)
+msgid ""
+"I have submitted a <xref linkend=\"stmtmoveset\"/> / <xref linkend="
+"\"stmtddlscript\"/> request, and it seems to be stuck on one of my nodes. "
+"&slony1; logs aren't displaying any errors or warnings"
+msgstr ""
+
+#: faq.xml:1378(para)
+msgid ""
+"Is it possible that you are running <application>pg_autovacuum</"
+"application>, and it has taken out locks on some tables in the replication "
+"set? That would somewhat-invisibly block &slony1; from performing operations "
+"that require locking acquisition of exclusive locks."
+msgstr ""
+
+#: faq.xml:1384(para)
+msgid ""
+"You might check for these sorts of locks using the following query: "
+"<command> select l.*, c.relname from pg_locks l, pg_class c where c.oid = l."
+"relation ; </command>"
+msgstr ""
+
+#: faq.xml:1388(para)
+msgid ""
+"A <envar>ShareUpdateExclusiveLock</envar> lock will block the &slony1; "
+"operations that need their own exclusive locks, which are likely queued up, "
+"marked as not being granted."
+msgstr ""
+
+#: faq.xml:1395(para)
+msgid ""
+"I'm noticing in the logs that a &lslon; is frequently switching in and out "
+"of <quote>polling</quote> mode as it is frequently reporting <quote>LISTEN - "
+"switch from polling mode to use LISTEN</quote> and <quote>UNLISTEN - switch "
+"into polling mode</quote>."
+msgstr ""
+
+#: faq.xml:1401(para)
+msgid ""
+"The thresholds for switching between these modes are controlled by the "
+"configuration parameters <xref linkend=\"slon-config-sync-interval\"/> and "
+"<xref linkend=\"slon-config-sync-interval-timeout\"/>; if the timeout value "
+"(which defaults to 10000, implying 10s) is kept low, that makes it easy for "
+"the &lslon; to decide to return to <quote>listening</quote> mode. You may "
+"want to increase the value of the timeout parameter."
+msgstr ""
+
+#: faq.xml:1413(title)
+msgid "&slony1; FAQ: &slony1; Bugs in Elder Versions"
+msgstr ""
+
+#: faq.xml:1415(para)
+msgid ""
+"The &lslon; processes servicing my subscribers are growing to enormous size, "
+"challenging system resources both in terms of swap space as well as moving "
+"towards breaking past the 2GB maximum process size on my system."
+msgstr ""
+
+#: faq.xml:1420(para)
+msgid ""
+"By the way, the data that I am replicating includes some rather large "
+"records. We have records that are tens of megabytes in size. Perhaps that is "
+"somehow relevant?"
+msgstr ""
+
+#: faq.xml:1424(para)
+msgid ""
+"Yes, those very large records are at the root of the problem. The problem is "
+"that &lslon; normally draws in about 100 records at a time when a subscriber "
+"is processing the query which loads data from the provider. Thus, if the "
+"average record size is 10MB, this will draw in 1000MB of data which is then "
+"transformed into <command>INSERT</command> or <command>UPDATE</command> "
+"statements, in the &lslon; process' memory."
+msgstr ""
+
+#: faq.xml:1432(para)
+msgid "That obviously leads to &lslon; growing to a fairly tremendous size."
+msgstr ""
+
+#: faq.xml:1435(para)
+msgid ""
+"The number of records that are fetched is controlled by the value <envar> "
+"SLON_DATA_FETCH_SIZE </envar>, which is defined in the file <filename>src/"
+"slon/slon.h</filename>. The relevant extract of this is shown below."
+msgstr ""
+
+#: faq.xml:1440(programlisting)
+#, no-wrap
+msgid ""
+"#ifdef\tSLON_CHECK_CMDTUPLES\n"
+"#define SLON_COMMANDS_PER_LINE\t\t1\n"
+"#define SLON_DATA_FETCH_SIZE\t\t100\n"
+"#define SLON_WORKLINES_PER_HELPER\t(SLON_DATA_FETCH_SIZE * 4)\n"
+"#else\n"
+"#define SLON_COMMANDS_PER_LINE\t\t10\n"
+"#define SLON_DATA_FETCH_SIZE\t\t10\n"
+"#define SLON_WORKLINES_PER_HELPER\t(SLON_DATA_FETCH_SIZE * 50)\n"
+"#endif"
+msgstr ""
+
+#: faq.xml:1452(para)
+msgid ""
+"If you are experiencing this problem, you might modify the definition of "
+"<envar> SLON_DATA_FETCH_SIZE </envar>, perhaps reducing by a factor of 10, "
+"and recompile &lslon;. There are two definitions as <envar> "
+"SLON_CHECK_CMDTUPLES</envar> allows doing some extra monitoring to ensure "
+"that subscribers have not fallen out of SYNC with the provider. By default, "
+"this option is turned off, so the default modification to make is to change "
+"the second definition of <envar> SLON_DATA_FETCH_SIZE </envar> from 10 to 1."
+msgstr ""
+
+#: faq.xml:1461(para)
+msgid ""
+"In version 1.2, configuration values <xref linkend=\"slon-config-max-rowsize"
+"\"/> and <xref linkend=\"slon-config-max-largemem\"/> are associated with a "
+"new algorithm that changes the logic as follows. Rather than fetching 100 "
+"rows worth of data at a time:"
+msgstr ""
+
+#: faq.xml:1469(para)
+msgid ""
+"The <command>fetch from LOG</command> query will draw in 500 rows at a time "
+"where the size of the attributes does not exceed <xref linkend=\"slon-config-"
+"max-rowsize\"/>. With default values, this restricts this aspect of memory "
+"consumption to about 8MB."
+msgstr ""
+
+#: faq.xml:1475(para)
+msgid ""
+"Tuples with larger attributes are loaded until aggregate size exceeds the "
+"parameter <xref linkend=\"slon-config-max-largemem\"/>. By default, this "
+"restricts consumption of this sort to about 5MB. This value is not a strict "
+"upper bound; if you have a tuple with attributes 50MB in size, it forcibly "
+"<emphasis>must</emphasis> be loaded into memory. There is no way around "
+"that. But &lslon; at least won't be trying to load in 100 such records at a "
+"time, chewing up 10GB of memory by the time it's done."
+msgstr ""
+
+#: faq.xml:1486(para)
+msgid ""
+"This should alleviate problems people have been experiencing when they "
+"sporadically have series' of very large tuples."
+msgstr ""
+
+#: faq.xml:1490(para)
+msgid ""
+"In version 2.2, this is eliminated in a different way, as the log data is "
+"transported using COPY rather than via querying from a cursor, which may be "
+"expected to be a <emphasis>massive</emphasis> improvement to the \"flow "
+"control\" here."
+msgstr ""
+
+#: faq.xml:1498(para)
+msgid ""
+"I am trying to replicate <envar>UNICODE</envar> data from &postgres; 8.0 to "
+"&postgres; 8.1, and am experiencing problems."
+msgstr ""
+
+#: faq.xml:1503(para)
+msgid ""
+"&postgres; 8.1 is quite a lot more strict about what UTF-8 mappings of "
+"Unicode characters it accepts as compared to version 8.0."
+msgstr ""
+
+#: faq.xml:1507(para)
+msgid ""
+"If you intend to use &slony1; to update an older database to 8.1, and might "
+"have invalid UTF-8 values, you may be for an unpleasant surprise."
+msgstr ""
+
+#: faq.xml:1511(para)
+msgid ""
+"Let us suppose we have a database running 8.0, encoding in UTF-8. That "
+"database will accept the sequence <command>'\\060\\242'</command> as UTF-8 "
+"compliant, even though it is really not."
+msgstr ""
+
+#: faq.xml:1515(para)
+msgid ""
+"If you replicate into a &postgres; 8.1 instance, it will complain about "
+"this, either at subscribe time, where &slony1; will complain about detecting "
+"an invalid Unicode sequence during the COPY of the data, which will prevent "
+"the subscription from proceeding, or, upon adding data, later, where this "
+"will hang up replication fairly much irretrievably. (You could hack on the "
+"contents of sl_log_1, but that quickly gets <emphasis>really</emphasis> "
+"unattractive...)"
+msgstr ""
+
+#: faq.xml:1523(para)
+msgid ""
+"There have been discussions as to what might be done about this. No "
+"compelling strategy has yet emerged, as all are unattractive."
+msgstr ""
+
+#: faq.xml:1526(para)
+msgid ""
+"If you are using Unicode with &postgres; 8.0, you run a considerable risk of "
+"corrupting data."
+msgstr ""
+
+#: faq.xml:1529(para)
+msgid ""
+"If you use replication for a one-time conversion, there is a risk of failure "
+"due to the issues mentioned earlier; if that happens, it appears likely that "
+"the best answer is to fix the data on the 8.0 system, and retry."
+msgstr ""
+
+#: faq.xml:1534(para)
+msgid ""
+"In view of the risks, running replication between versions seems to be "
+"something you should not keep running any longer than is necessary to "
+"migrate to 8.1."
+msgstr ""
+
+#: faq.xml:1538(para)
+msgid ""
+"For more details, see the <ulink url=\"http://archives.postgresql.org/pgsql-"
+"hackers/2005-12/msg00181.php\"> discussion on postgresql-hackers mailing "
+"list. </ulink>."
+msgstr ""
+
+#: faq.xml:1545(para)
+msgid ""
+"I am running &slony1; 1.1 and have a 4+ node setup where there are two "
+"subscription sets, 1 and 2, that do not share any nodes. I am discovering "
+"that confirmations for set 1 never get to the nodes subscribing to set 2, "
+"and that confirmations for set 2 never get to nodes subscribing to set 1. As "
+"a result, &sllog1;/&sllog2; grow and grow, and are never purged. This was "
+"reported as &slony1; <ulink url=\"http://gborg.postgresql.org/project/slony1/"
+"bugs/bugupdate.php?1485\"> bug 1485 </ulink>."
+msgstr ""
+
+#: faq.xml:1557(para)
+msgid ""
+"Apparently the code for <function>RebuildListenEntries()</function> does not "
+"suffice for this case."
+msgstr ""
+
+#: faq.xml:1561(para)
+msgid ""
+"<function> RebuildListenEntries()</function> will be replaced in &slony1; "
+"version 1.2 with an algorithm that covers this case."
+msgstr ""
+
+#: faq.xml:1564(para)
+msgid ""
+"In the interim, you'll want to manually add some <xref linkend=\"table.sl-"
+"listen\"/> entries using <xref linkend=\"stmtstorelisten\"/> or "
+"<function>storeListen()</function>, based on the (apparently not as obsolete "
+"as we thought) principles described in <xref linkend=\"listenpaths\"/>."
+msgstr ""
+
+#: faq.xml:1574(para)
+msgid ""
+"I am finding some multibyte columns (Unicode, Big5) are being truncated a "
+"bit, clipping off the last character. Why?"
+msgstr ""
+
+#: faq.xml:1578(para)
+msgid ""
+"This was a bug present until a little after &slony1; version 1.1.0; the way "
+"in which columns were being captured by the <function>logtrigger()</"
+"function> function could clip off the last byte of a column represented in a "
+"multibyte format. Check to see that your version of <filename>src/backend/"
+"slony1_funcs.c</filename> is 1.34 or better; the patch was introduced in CVS "
+"version 1.34 of that file."
+msgstr ""
+
+#: faq.xml:1587(para)
+msgid ""
+"<ulink url=\"http://gborg.postgresql.org/project/slony1/bugs/bugupdate.php?"
+"1226\"> Bug #1226 </ulink> indicates an error condition that can come up if "
+"you have a replication set that consists solely of sequences."
+msgstr ""
+
+#: faq.xml:1593(para)
+msgid ""
+"The short answer is that having a replication set consisting only of "
+"sequences is not a best practice."
+msgstr ""
+
+#: faq.xml:1599(para)
+msgid ""
+"The problem with a sequence-only set comes up only if you have a case where "
+"the only subscriptions that are active for a particular subscriber to a "
+"particular provider are for <quote>sequence-only</quote> sets. If a node "
+"gets into that state, replication will fail, as the query that looks for "
+"data from &sllog1;/&sllog2; has no tables to find, and the query will be "
+"malformed, and fail. If a replication set <emphasis>with</emphasis> tables "
+"is added back to the mix, everything will work out fine; it just "
+"<emphasis>seems</emphasis> scary."
+msgstr ""
+
+#: faq.xml:1610(para)
+msgid "This problem should be resolved some time after &slony1; 1.1.0."
+msgstr ""
+
+#: faq.xml:1616(para)
+msgid "I need to drop a table from a replication set"
+msgstr ""
+
+#: faq.xml:1622(para)
+msgid ""
+"You could drop the whole replication set, and recreate it with just the "
+"tables that you need. Alas, that means recopying a whole lot of data, and "
+"kills the usability of the cluster on the rest of the set while that's "
+"happening."
+msgstr ""
+
+#: faq.xml:1627(para)
+msgid ""
+"If you are running 1.0.5 or later, there is the command SET DROP TABLE, "
+"which will \"do the trick.\""
+msgstr ""
+
+#: faq.xml:1638(programlisting)
+#, no-wrap
+msgid ""
+"  select _slonyschema.alterTableRestore(40);\n"
+"  select _slonyschema.tableDropKey(40);\n"
+"  delete from _slonyschema.sl_table where tab_id = 40;"
+msgstr ""
+
+#: faq.xml:1630(para)
+msgid ""
+"If you are still using 1.0.1 or 1.0.2, the <emphasis>essential functionality "
+"of <xref linkend=\"stmtsetdroptable\"/> involves the functionality in "
+"<function>droptable_int()</function>. You can fiddle this by hand by finding "
+"the table ID for the table you want to get rid of, which you can find in "
+"<xref linkend=\"table.sl-table\"/>, and then run the following three "
+"queries, on each host:</emphasis> <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1644(para)
+msgid ""
+"The schema will obviously depend on how you defined the &slony1; cluster. "
+"The table ID, in this case, 40, will need to change to the ID of the table "
+"you want to have go away."
+msgstr ""
+
+#: faq.xml:1648(para)
+msgid ""
+"You'll have to run these three queries on all of the nodes, preferably "
+"firstly on the origin node, so that the dropping of this propagates "
+"properly. Implementing this via a <xref linkend=\"slonik\"/> statement with "
+"a new &slony1; event would do that. Submitting the three queries using <xref "
+"linkend=\"stmtddlscript\"/> could do that. Also possible would be to connect "
+"to each database and submit the queries by hand."
+msgstr ""
+
+#: faq.xml:1617(para)
+msgid ""
+"This can be accomplished several ways, not all equally desirable ;-). "
+"<placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1659(para)
+msgid "I need to drop a sequence from a replication set"
+msgstr ""
+
+#: faq.xml:1661(para)
+msgid ""
+"If you are running 1.0.5 or later, there is a <xref linkend="
+"\"stmtsetdropsequence\"/> command in Slonik to allow you to do this, "
+"parallelling <xref linkend=\"stmtsetdroptable\"/>."
+msgstr ""
+
+#: faq.xml:1665(para)
+msgid "If you are running 1.0.2 or earlier, the process is a bit more manual."
+msgstr ""
+
+#: faq.xml:1667(para)
+msgid ""
+"Supposing I want to get rid of the two sequences listed below, "
+"<envar>whois_cachemgmt_seq</envar> and <envar>epp_whoi_cach_seq_</envar>, we "
+"start by needing the <envar>seq_id</envar> values. <screen>\n"
+"oxrsorg=# select * from _oxrsorg.sl_sequence  where seq_id in (93,59);\n"
+" seq_id | seq_reloid | seq_set |       seq_comment\t\t\t\t \n"
+"--------+------------+---------+-------------------------------------\n"
+"     93 |  107451516 |       1 | Sequence public.whois_cachemgmt_seq\n"
+"     59 |  107451860 |       1 | Sequence public.epp_whoi_cach_seq_\n"
+"(2 rows)\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1684(programlisting)
+#, no-wrap
+msgid ""
+"delete from _oxrsorg.sl_seqlog where seql_seqid in (93, 59);\n"
+"delete from _oxrsorg.sl_sequence where seq_id in (93,59);"
+msgstr ""
+
+#: faq.xml:1681(para)
+msgid ""
+"The data that needs to be deleted to stop Slony from continuing to replicate "
+"these are thus: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1689(para)
+msgid ""
+"Those two queries could be submitted to all of the nodes via "
+"&funddlscript; / <xref linkend=\"stmtddlscript\"/>, thus eliminating the "
+"sequence everywhere <quote>at once.</quote> Or they may be applied by hand "
+"to each of the nodes."
+msgstr ""
+
+#: faq.xml:1695(para)
+msgid ""
+"Similarly to <xref linkend=\"stmtsetdroptable\"/>, this is implemented "
+"&slony1; version 1.0.5 as <xref linkend=\"stmtsetdropsequence\"/>."
+msgstr ""
+
+#: faq.xml:1700(para)
+msgid ""
+"I set up my cluster using pgAdminIII, with cluster name <quote>MY-CLUSTER</"
+"quote>. Time has passed, and I tried using Slonik to make a configuration "
+"change, and this is failing with the following error message:"
+msgstr ""
+
+#: faq.xml:1705(programlisting)
+#, no-wrap
+msgid "ERROR: syntax error at or near -"
+msgstr ""
+
+#: faq.xml:1710(para)
+msgid ""
+"The problem here is that &slony1; expects cluster names to be valid <ulink "
+"url=\"http://www.postgresql.org/docs/8.3/static/sql-syntax-lexical.html\"> "
+"SQL Identifiers</ulink>, and &lslonik; enforces this. Unfortunately, "
+"<application>pgAdminIII</application> did not do so, and allowed using a "
+"cluster name that now causes <emphasis>a problem.</emphasis>"
+msgstr ""
+
+#: faq.xml:1717(para)
+msgid ""
+"If you have gotten into this spot, it's a problem that we mayn't be help "
+"resolve, terribly much."
+msgstr ""
+
+#: faq.xml:1720(para)
+msgid ""
+"It's <emphasis>conceivably possible</emphasis> that running the SQL command "
+"<command>alter namespace \"_My-Bad-Clustername\" rename to "
+"\"_BetterClusterName\";</command> against each database may work. That "
+"shouldn't particularly <emphasis>damage</emphasis> things!"
+msgstr ""
+
+#: faq.xml:1725(para)
+msgid ""
+"On the other hand, when the problem has been experienced, users have found "
+"they needed to drop replication and rebuild the cluster."
+msgstr ""
+
+#: faq.xml:1729(para)
+msgid ""
+"A change in version 2.0.2 is that a function runs as part of loading "
+"functions into the database which checks the validity of the cluster name. "
+"If you try to use an invalid cluster name, loading the functions will fail, "
+"with a suitable error message, which should prevent things from going wrong "
+"even if you're using tools other than &lslonik; to manage setting up the "
+"cluster."
+msgstr ""
+
+#: faq.xml:1739(title)
+msgid "&slony1; FAQ: Anachronisms - Hopefully Obsolete"
+msgstr ""
+
+#: faq.xml:1743(para)
+msgid "&lslon; does not restart after crash"
+msgstr ""
+
+#: faq.xml:1746(para)
+msgid ""
+"After an immediate stop of &postgres; (simulation of system crash) in "
+"&pglistener; a tuple with <command> relname='_${cluster_name}_Restart'</"
+"command> exists. slon doesn't start because it thinks another process is "
+"serving the cluster on this node. What can I do? The tuples can't be dropped "
+"from this relation."
+msgstr ""
+
+#: faq.xml:1753(para)
+msgid "Another slon daemon is serving this node already"
+msgstr ""
+
+#: faq.xml:1753(para)
+msgid "The logs claim that <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1756(para)
+msgid ""
+"The problem is that the system table &pglistener;, used by &postgres; to "
+"manage event notifications, contains some entries that are pointing to "
+"backends that no longer exist. The new <xref linkend=\"slon\"/> instance "
+"connects to the database, and is convinced, by the presence of these "
+"entries, that an old <application>slon</application> is still servicing this "
+"&slony1; node."
+msgstr ""
+
+#: faq.xml:1764(para)
+msgid "The <quote>trash</quote> in that table needs to be thrown away."
+msgstr ""
+
+#: faq.xml:1770(programlisting)
+#, no-wrap
+msgid ""
+"twcsds004[/opt/twcsds004/OXRS/slony-scripts]$ cat restart_org.slonik \n"
+"cluster name = oxrsorg ;\n"
+"node 1 admin conninfo = 'host=32.85.68.220 dbname=oxrsorg user=postgres port=5532';\n"
+"node 2 admin conninfo = 'host=32.85.68.216 dbname=oxrsorg user=postgres port=5532';\n"
+"node 3 admin conninfo = 'host=32.85.68.244 dbname=oxrsorg user=postgres port=5532';\n"
+"node 4 admin conninfo = 'host=10.28.103.132 dbname=oxrsorg user=postgres port=5532';\n"
+"restart node 1;\n"
+"restart node 2;\n"
+"restart node 3;\n"
+"restart node 4;"
+msgstr ""
+
+#: faq.xml:1767(para)
+msgid ""
+"It's handy to keep a slonik script similar to the following to run in such "
+"cases: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:1783(para)
+msgid ""
+"<xref linkend=\"stmtrestartnode\"/> cleans up dead notifications so that you "
+"can restart the node."
+msgstr ""
+
+#: faq.xml:1786(para)
+msgid ""
+"As of version 1.0.5, the startup process of slon looks for this condition, "
+"and automatically cleans it up."
+msgstr ""
+
+#: faq.xml:1789(para)
+msgid ""
+"As of version 8.1 of &postgres;, the functions that manipulate &pglistener; "
+"do not support this usage, so for &slony1; versions after 1.1.2 (<emphasis>e."
+"g. - </emphasis> 1.1.5), this <quote>interlock</quote> behaviour is handled "
+"via a new table, and the issue should be transparently <quote>gone.</quote>"
+msgstr ""
+
+#: faq.xml:1797(para)
+msgid "I tried the following query which did not work:"
+msgstr ""
+
+#: faq.xml:1799(programlisting)
+#, no-wrap
+msgid ""
+"sdb=# explain select query_start, current_query from pg_locks join\n"
+"pg_stat_activity on pid = procpid where granted = true and transaction\n"
+"in (select transaction from pg_locks where granted = false); \n"
+"\n"
+"ERROR: could not find hash function for hash operator 716373"
+msgstr ""
+
+#: faq.xml:1807(para)
+msgid ""
+"It appears the &slony1; <function>xxid</function> functions are claiming to "
+"be capable of hashing, but cannot actually do so."
+msgstr ""
+
+#: faq.xml:1811(para)
+msgid "What's up?"
+msgstr ""
+
+#: faq.xml:1815(para)
+msgid ""
+"&slony1; defined an XXID data type and operators on that type in order to "
+"allow manipulation of transaction IDs that are used to group together "
+"updates that are associated with the same transaction."
+msgstr ""
+
+#: faq.xml:1820(para)
+msgid ""
+"Operators were not available for &postgres; 7.3 and earlier versions; in "
+"order to support version 7.3, custom functions had to be added. The "
+"<function>=</function> operator was marked as supporting hashing, but for "
+"that to work properly, the join operator must appear in a hash index "
+"operator class. That was not defined, and as a result, queries (like the one "
+"above) that decide to use hash joins will fail."
+msgstr ""
+
+#: faq.xml:1828(para)
+msgid ""
+"This has <emphasis> not </emphasis> been considered a <quote>release-"
+"critical</quote> bug, as &slony1; does not internally generate queries "
+"likely to use hash joins. This problem shouldn't injure &slony1;'s ability "
+"to continue replicating."
+msgstr ""
+
+#: faq.xml:1833(para)
+msgid ""
+"Future releases of &slony1; (<emphasis>e.g.</emphasis> 1.0.6, 1.1) will omit "
+"the <command>HASHES</command> indicator, so that"
+msgstr ""
+
+#: faq.xml:1837(para)
+msgid ""
+"Supposing you wish to repair an existing instance, so that your own queries "
+"will not run afoul of this problem, you may do so as follows:"
+msgstr ""
+
+#: faq.xml:1841(programlisting)
+#, no-wrap
+msgid ""
+"/* cbbrowne@[local]/dba2 slony_test1=*/ \\x     \n"
+"Expanded display is on.\n"
+"/* cbbrowne@[local]/dba2 slony_test1=*/ select * from pg_operator where oprname = '=' \n"
+"and oprnamespace = (select oid from pg_namespace where nspname = 'public');\n"
+"-[ RECORD 1 ]+-------------\n"
+"oprname      | =\n"
+"oprnamespace | 2200\n"
+"oprowner     | 1\n"
+"oprkind      | b\n"
+"oprcanhash   | t\n"
+"oprleft      | 82122344\n"
+"oprright     | 82122344\n"
+"oprresult    | 16\n"
+"oprcom       | 82122365\n"
+"oprnegate    | 82122363\n"
+"oprlsortop   | 82122362\n"
+"oprrsortop   | 82122362\n"
+"oprltcmpop   | 82122362\n"
+"oprgtcmpop   | 82122360\n"
+"oprcode      | \"_T1\".xxideq\n"
+"oprrest      | eqsel\n"
+"oprjoin      | eqjoinsel\n"
+"\n"
+"/* cbbrowne@[local]/dba2 slony_test1=*/ update pg_operator set oprcanhash = 'f' where \n"
+"oprname = '=' and oprnamespace = 2200 ;\n"
+"UPDATE 1"
+msgstr ""
+
+#: faq.xml:1872(para)
+msgid ""
+"I can do a <command>pg_dump</command> and load the data back in much faster "
+"than the <command>SUBSCRIBE SET</command> runs. Why is that?"
+msgstr ""
+
+#: faq.xml:1876(para)
+msgid ""
+"&slony1; depends on there being an already existant index on the primary "
+"key, and leaves all indexes alone whilst using the &postgres; <command>COPY</"
+"command> command to load the data. Further hurting performance, the "
+"<command>COPY SET</command> event (an event that the subscription process "
+"generates) starts by deleting the contents of tables, which leaves the table "
+"full of dead tuples."
+msgstr ""
+
+#: faq.xml:1884(para)
+msgid ""
+"When you use <command>pg_dump</command> to dump the contents of a database, "
+"and then load that, creation of indexes is deferred until the very end. It "
+"is <emphasis>much</emphasis> more efficient to create indexes against the "
+"entire table, at the end, than it is to build up the index incrementally as "
+"each row is added to the table."
+msgstr ""
+
+#: faq.xml:1891(para)
+msgid ""
+"If you can drop unnecessary indices while the <command>COPY</command> takes "
+"place, that will improve performance quite a bit. If you can "
+"<command>TRUNCATE</command> tables that contain data that is about to be "
+"eliminated, that will improve performance <emphasis>a lot.</emphasis>"
+msgstr ""
+
+#: faq.xml:1897(para)
+msgid ""
+"&slony1; version 1.1.5 and later versions should handle this automatically; "
+"it <quote>thumps</quote> on the indexes in the &postgres; catalog to hide "
+"them, in much the same way triggers are hidden, and then <quote>fixes</"
+"quote> the index pointers and reindexes the table."
+msgstr ""
+
+#: faq.xml:1905(para)
+msgid "Replication Fails - Unique Constraint Violation"
+msgstr ""
+
+#: faq.xml:1907(para)
+msgid ""
+"Replication has been running for a while, successfully, when a node "
+"encounters a <quote>glitch,</quote> and replication logs are filled with "
+"repetitions of the following: <screen>\n"
+"DEBUG2 remoteWorkerThread_1: syncing set 2 with 5 table(s) from provider 1\n"
+"DEBUG2 remoteWorkerThread_1: syncing set 1 with 41 table(s) from provider 1\n"
+"DEBUG2 remoteWorkerThread_1: syncing set 5 with 1 table(s) from provider 1\n"
+"DEBUG2 remoteWorkerThread_1: syncing set 3 with 1 table(s) from provider 1\n"
+"DEBUG2 remoteHelperThread_1_1: 0.135 seconds delay for first row\n"
+"DEBUG2 remoteHelperThread_1_1: 0.343 seconds until close cursor\n"
+"ERROR  remoteWorkerThread_1: \"insert into \"_oxrsapp\".sl_log_1          "
+"(log_origin, log_xid, log_tableid,                log_actionseq, log_cmdtype,"
+"\t\tlog_cmddata) values\t  ('1', '919151224', '34', '35090538', 'D', "
+"'_rserv_ts=''9275244''');\n"
+"delete from only public.epp_domain_host where _rserv_ts='9275244';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'34', '35090539', 'D', '_rserv_ts=''9275245''');\n"
+"delete from only public.epp_domain_host where _rserv_ts='9275245';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'26', '35090540', 'D', '_rserv_ts=''24240590''');\n"
+"delete from only public.epp_domain_contact where _rserv_ts='24240590';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'26', '35090541', 'D', '_rserv_ts=''24240591''');\n"
+"delete from only public.epp_domain_contact where _rserv_ts='24240591';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'26', '35090542', 'D', '_rserv_ts=''24240589''');\n"
+"delete from only public.epp_domain_contact where _rserv_ts='24240589';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'11', '35090543', 'D', '_rserv_ts=''36968002''');\n"
+"delete from only public.epp_domain_status where _rserv_ts='36968002';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'11', '35090544', 'D', '_rserv_ts=''36968003''');\n"
+"delete from only public.epp_domain_status where _rserv_ts='36968003';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'24', '35090549', 'I', '(contact_id,status,reason,_rserv_ts) values "
+"(''6972897'',''64'','''',''31044208'')');\n"
+"insert into public.contact_status (contact_id,status,reason,_rserv_ts) "
+"values ('6972897','64','','31044208');insert into \"_oxrsapp\".sl_log_1\t  "
+"(log_origin, log_xid, log_tableid,\t\tlog_actionseq, log_cmdtype,\t"
+"\tlog_cmddata) values\t  ('1', '919151224', '24', '35090550', 'D', "
+"'_rserv_ts=''18139332''');\n"
+"delete from only public.contact_status where _rserv_ts='18139332';insert "
+"into \"_oxrsapp\".sl_log_1\t  (log_origin, log_xid, log_tableid,\t"
+"\tlog_actionseq, log_cmdtype,\t\tlog_cmddata) values\t  ('1', '919151224', "
+"'24', '35090551', 'D', '_rserv_ts=''18139333''');\n"
+"delete from only public.contact_status where _rserv_ts='18139333';\" ERROR:  "
+"duplicate key violates unique constraint \"contact_status_pkey\"\n"
+" - qualification was: \n"
+"ERROR  remoteWorkerThread_1: SYNC aborted\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:1933(para)
+msgid ""
+"The transaction rolls back, and &slony1; tries again, and again, and again. "
+"The problem is with one of the <emphasis>last</emphasis> SQL statements, the "
+"one with <command>log_cmdtype = 'I'</command>. That isn't quite obvious; "
+"what takes place is that &slony1; groups 10 update queries together to "
+"diminish the number of network round trips."
+msgstr ""
+
+#: faq.xml:1941(para)
+msgid ""
+"A <emphasis>certain</emphasis> cause for this has been difficult to arrive "
+"at."
+msgstr ""
+
+#: faq.xml:1944(para)
+msgid ""
+"By the time we notice that there is a problem, the seemingly missed delete "
+"transaction has been cleaned out of &sllog1;, so there appears to be no "
+"recovery possible. What has seemed necessary, at this point, is to drop the "
+"replication set (or even the node), and restart replication from scratch on "
+"that node."
+msgstr ""
+
+#: faq.xml:1950(para)
+msgid ""
+"In &slony1; 1.0.5, the handling of purges of &sllog1; became more "
+"conservative, refusing to purge entries that haven't been successfully "
+"synced for at least 10 minutes on all nodes. It was not certain that that "
+"would prevent the <quote>glitch</quote> from taking place, but it seemed "
+"plausible that it might leave enough &sllog1; data to be able to do "
+"something about recovering from the condition or at least diagnosing it more "
+"exactly. And perhaps the problem was that &sllog1; was being purged too "
+"aggressively, and this would resolve the issue completely."
+msgstr ""
+
+#: faq.xml:1960(para)
+msgid ""
+"It is a shame to have to reconstruct a large replication node for this; if "
+"you discover that this problem recurs, it may be an idea to break "
+"replication down into multiple sets in order to diminish the work involved "
+"in restarting replication. If only one set has broken, you may only need to "
+"unsubscribe/drop and resubscribe the one set."
+msgstr ""
+
+#: faq.xml:1967(para)
+msgid ""
+"In one case we found two lines in the SQL error message in the log file that "
+"contained <emphasis> identical </emphasis> insertions into &sllog1;. This "
+"<emphasis> ought </emphasis> to be impossible as is a primary key on "
+"&sllog1;. The latest (somewhat) punctured theory that comes from "
+"<emphasis>that</emphasis> was that perhaps this PK index has been corrupted "
+"(representing a &postgres; bug), and that perhaps the problem might be "
+"alleviated by running the query:"
+msgstr ""
+
+#: faq.xml:1975(programlisting)
+#, no-wrap
+msgid "# reindex table _slonyschema.sl_log_1;"
+msgstr ""
+
+#: faq.xml:1979(para)
+msgid ""
+"On at least one occasion, this has resolved the problem, so it is worth "
+"trying this."
+msgstr ""
+
+#: faq.xml:1983(para)
+msgid ""
+"This problem has been found to represent a &postgres; bug as opposed to one "
+"in &slony1;. Version 7.4.8 was released with two resolutions to race "
+"conditions that should resolve the issue. Thus, if you are running a version "
+"of &postgres; earlier than 7.4.8, you should consider upgrading to resolve "
+"this."
+msgstr ""
+
+#: faq.xml:1991(para)
+msgid ""
+"I started doing a backup using <application>pg_dump</application>, and "
+"suddenly Slony stops"
+msgstr ""
+
+#: faq.xml:1998(para)
+msgid ""
+"<application>pg_dump</application>, which has taken out an "
+"<command>AccessShareLock</command> on all of the tables in the database, "
+"including the &slony1; ones, and"
+msgstr ""
+
+#: faq.xml:2002(para)
+msgid ""
+"A &slony1; sync event, which wants to grab a <command>AccessExclusiveLock</"
+"command> on the table <xref linkend=\"table.sl-event\"/>."
+msgstr ""
+
+#: faq.xml:1995(para)
+msgid "Ouch. What happens here is a conflict between: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:2006(para)
+msgid ""
+"The initial query that will be blocked is thus: <screen>\n"
+"select \"_slonyschema\".createEvent('_slonyschema, 'SYNC', NULL);\t  \n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:2012(para)
+msgid ""
+"(You can see this in <envar>pg_stat_activity</envar>, if you have query "
+"display turned on in <filename>postgresql.conf</filename>)"
+msgstr ""
+
+#: faq.xml:2021(programlisting)
+#, no-wrap
+msgid ""
+"  LOCK TABLE %s.sl_event;\n"
+"  INSERT INTO %s.sl_event (...stuff...)\n"
+"  SELECT currval('%s.sl_event_seq');"
+msgstr ""
+
+#: faq.xml:2016(para)
+msgid ""
+"The actual query combination that is causing the lock is from the function "
+"<function>Slony_I_ClusterStatus()</function>, found in "
+"<filename>slony1_funcs.c</filename>, and is localized in the code that does: "
+"<placeholder-1/>"
+msgstr ""
+
+#: faq.xml:2027(para)
+msgid ""
+"The <command>LOCK</command> statement will sit there and wait until "
+"<command>pg_dump</command> (or whatever else has pretty much any kind of "
+"access lock on <xref linkend=\"table.sl-event\"/>) completes."
+msgstr ""
+
+#: faq.xml:2032(para)
+msgid ""
+"Every subsequent query submitted that touches <xref linkend=\"table.sl-event"
+"\"/> will block behind the <function>createEvent</function> call."
+msgstr ""
+
+#: faq.xml:2039(para)
+msgid ""
+"Have <application>pg_dump</application> specify the schema dumped using "
+"<option>--schema=whatever</option>, and don't try dumping the cluster's "
+"schema."
+msgstr ""
+
+#: faq.xml:2043(para)
+msgid ""
+"It would be nice to add an <option>--exclude-schema</option> option to "
+"<application>pg_dump</application> to exclude the &slony1; cluster schema. "
+"Maybe in 8.2..."
+msgstr ""
+
+#: faq.xml:2048(para)
+msgid ""
+"Note that 1.0.5 uses a more precise lock that is less exclusive that "
+"alleviates this problem."
+msgstr ""
+
+#: faq.xml:2036(para)
+msgid "There are a number of possible answers to this: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:2057(para)
+msgid ""
+"I was trying to request <xref linkend=\"stmtddlscript\"/> or <xref linkend="
+"\"stmtmoveset\"/>, and found messages as follows on one of the subscribers:"
+msgstr ""
+
+#: faq.xml:2061(screen)
+#, no-wrap
+msgid ""
+"NOTICE: Slony-I: multiple instances of trigger defrazzle on table frobozz\n"
+"NOTICE: Slony-I: multiple instances of trigger derez on table tron\n"
+"ERROR: Slony-I: Unable to disable triggers"
+msgstr ""
+
+#: faq.xml:2068(para)
+msgid ""
+"The trouble would seem to be that you have added triggers on tables whose "
+"names conflict with triggers that were hidden by &slony1;."
+msgstr ""
+
+#: faq.xml:2072(para)
+msgid ""
+"&slony1; hides triggers (save for those <quote>unhidden</quote> via <xref "
+"linkend=\"stmtstoretrigger\"/>) by repointing them to the primary key of the "
+"table. In the case of foreign key triggers, or other triggers used to do "
+"data validation, it should be quite unnecessary to run them on a subscriber, "
+"as equivalent triggers should have been invoked on the origin node. In "
+"contrast, triggers that do some form of <quote>cache invalidation</quote> "
+"are ones you might want to have run on a subscriber."
+msgstr ""
+
+#: faq.xml:2081(para)
+msgid ""
+"The <emphasis>Right Way</emphasis> to handle such triggers is normally to "
+"use <xref linkend=\"stmtstoretrigger\"/>, which tells &slony1; that a "
+"trigger should not get deactivated."
+msgstr ""
+
+#: faq.xml:2085(para)
+msgid ""
+"But some intrepid DBA might take matters into their own hands and install a "
+"trigger by hand on a subscriber, and the above condition generally has that "
+"as the cause. What to do? What to do?"
+msgstr ""
+
+#: faq.xml:2090(para)
+msgid ""
+"The answer is normally fairly simple: Drop out the <quote>extra</quote> "
+"trigger on the subscriber before the event that tries to restore them runs. "
+"Ideally, if the DBA is particularly intrepid, and aware of this issue, that "
+"should take place <emphasis>before</emphasis> there is ever a chance for the "
+"error message to appear."
+msgstr ""
+
+#: faq.xml:2097(para)
+msgid ""
+"If the DBA is not that intrepid, the answer is to connect to the offending "
+"node and drop the <quote>visible</quote> version of the trigger using the "
+"<acronym>SQL</acronym> <command>DROP TRIGGER</command> command. That should "
+"allow the event to proceed. If the event was <xref linkend=\"stmtddlscript\"/"
+">, then the <quote>not-so-intrepid</quote> DBA may need to add the trigger "
+"back, by hand, or, if they are wise, they should consider activating it "
+"using <xref linkend=\"stmtstoretrigger\"/>."
+msgstr ""
+
+#: faq.xml:2110(para)
+msgid ""
+"Behaviour - all the subscriber nodes start to fall behind the origin, and "
+"all the logs on the subscriber nodes have the following error message "
+"repeating in them (when I encountered it, there was a nice long SQL "
+"statement above each entry):"
+msgstr ""
+
+#: faq.xml:2115(screen)
+#, no-wrap
+msgid ""
+"ERROR remoteWorkerThread_1: helper 1 finished with error\n"
+"ERROR remoteWorkerThread_1: SYNC aborted"
+msgstr ""
+
+#: faq.xml:2121(para)
+msgid ""
+"Cause: you have likely issued <command>alter table</command> statements "
+"directly on the databases instead of using the slonik <xref linkend="
+"\"stmtddlscript\"/> command."
+msgstr ""
+
+#: faq.xml:2125(para)
+msgid ""
+"The solution is to rebuild the trigger on the affected table and fix the "
+"entries in &sllog1;/&sllog2; by hand."
+msgstr ""
+
+#: faq.xml:2130(para)
+msgid ""
+"You'll need to identify from either the slon logs, or the &postgres; "
+"database logs exactly which statement it is that is causing the error."
+msgstr ""
+
+#: faq.xml:2134(para)
+msgid ""
+"You need to fix the Slony-defined triggers on the table in question. This is "
+"done with the following procedure."
+msgstr ""
+
+#: faq.xml:2137(screen)
+#, no-wrap
+msgid ""
+"BEGIN;\n"
+"LOCK TABLE table_name;\n"
+"SELECT _oxrsorg.altertablerestore(tab_id);--tab_id is _slony_schema.sl_table.tab_id\n"
+"SELECT _oxrsorg.altertableforreplication(tab_id);--tab_id is _slony_schema.sl_table.tab_id\n"
+"COMMIT;"
+msgstr ""
+
+#: faq.xml:2145(para)
+msgid ""
+"You then need to find the rows in &sllog1;/&sllog2; that have bad entries "
+"and fix them. You may want to take down the slon daemons for all nodes "
+"except the master; that way, if you make a mistake, it won't immediately "
+"propagate through to the subscribers."
+msgstr ""
+
+#: faq.xml:2150(para)
+msgid "Here is an example:"
+msgstr ""
+
+#: faq.xml:2152(screen)
+#, no-wrap
+msgid ""
+"BEGIN;\n"
+"\n"
+"LOCK TABLE customer_account;\n"
+"\n"
+"SELECT _app1.altertablerestore(31);\n"
+"SELECT _app1.altertableforreplication(31);\n"
+"COMMIT;\n"
+"\n"
+"BEGIN;\n"
+"LOCK TABLE txn_log;\n"
+"\n"
+"SELECT _app1.altertablerestore(41);\n"
+"SELECT _app1.altertableforreplication(41);\n"
+"\n"
+"COMMIT;\n"
+"\n"
+"--fixing customer_account, which had an attempt to insert a \"\" into a timestamp with timezone.\n"
+"BEGIN;\n"
+"\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''60684.00'' where pkey=''49''' where log_actionseq = '67796036';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''60690.00'' where pkey=''49''' where log_actionseq = '67796194';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''60684.00'' where pkey=''49''' where log_actionseq = '67795881';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''1852.00'' where pkey=''57''' where log_actionseq = '67796403';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''87906.00'' where pkey=''8''' where log_actionseq = '68352967';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''125180.00'' where pkey=''60''' where log_actionseq = '68386951';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''125198.00'' where pkey=''60''' where log_actionseq = '68387055';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''125174.00'' where pkey=''60''' where log_actionseq = '68386682';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''125186.00'' where pkey=''60''' where log_actionseq = '68386992';\n"
+"update _app1.sl_log_1 SET log_cmddata = 'balance=''125192.00'' where pkey=''60''' where log_actionseq = '68387029';"
+msgstr ""
+
+#: faq.xml:2193(para)
+msgid ""
+"Node #1 was dropped via <xref linkend=\"stmtdropnode\"/>, and the &lslon; "
+"one of the other nodes is repeatedly failing with the error message:"
+msgstr ""
+
+#: faq.xml:2197(screen)
+#, no-wrap
+msgid ""
+"ERROR  remoteWorkerThread_3: \"begin transaction; set transaction isolation level\n"
+" serializable; lock table \"_mailermailer\".sl_config_lock; select \"_mailermailer\"\n"
+".storeListen_int(2, 1, 3); notify \"_mailermailer_Event\"; notify \"_mailermailer_C\n"
+"onfirm\"; insert into \"_mailermailer\".sl_event     (ev_origin, ev_seqno, ev_times\n"
+"tamp,      ev_minxid, ev_maxxid, ev_xip, ev_type , ev_data1, ev_data2, ev_data3\n"
+"   ) values ('3', '2215', '2005-02-18 10:30:42.529048', '3286814', '3286815', ''\n"
+", 'STORE_LISTEN', '2', '1', '3'); insert into \"_mailermailer\".sl_confirm\n"
+"(con_origin, con_received, con_seqno, con_timestamp)    values (3, 2, '2215', CU\n"
+"RRENT_TIMESTAMP); commit transaction;\" PGRES_FATAL_ERROR ERROR:  insert or updat\n"
+"e on table \"sl_listen\" violates foreign key constraint \"sl_listen-sl_path-ref\"\n"
+"DETAIL:  Key (li_provider,li_receiver)=(1,3) is not present in table \"sl_path\".\n"
+"DEBUG1 syncThread: thread done"
+msgstr ""
+
+#: faq.xml:2212(para)
+msgid ""
+"Evidently, a <xref linkend=\"stmtstorelisten\"/> request hadn't propagated "
+"yet before node 1 was dropped."
+msgstr ""
+
+#: faq.xml:2215(para)
+msgid ""
+"This points to a case where you'll need to do <quote>event surgery</quote> "
+"on one or more of the nodes. A <command>STORE_LISTEN</command> event remains "
+"outstanding that wants to add a listen path that <emphasis>cannot</emphasis> "
+"be created because node 1 and all paths pointing to node 1 have gone away."
+msgstr ""
+
+#: faq.xml:2221(para)
+msgid ""
+"Let's assume, for exposition purposes, that the remaining nodes are #2 and "
+"#3, and that the above error is being reported on node #3."
+msgstr ""
+
+#: faq.xml:2225(para)
+msgid ""
+"That implies that the event is stored on node #2, as it wouldn't be on node "
+"#3 if it had not already been processed successfully. The easiest way to "
+"cope with this situation is to delete the offending <xref linkend=\"table.sl-"
+"event\"/> entry on node #2. You'll connect to node #2's database, and search "
+"for the <command>STORE_LISTEN</command> event:"
+msgstr ""
+
+#: faq.xml:2232(command)
+msgid "select * from sl_event where ev_type = 'STORE_LISTEN';"
+msgstr ""
+
+#: faq.xml:2235(para)
+msgid "There may be several entries, only some of which need to be purged."
+msgstr ""
+
+#: faq.xml:2238(screen)
+#, no-wrap
+msgid ""
+" \n"
+"-# begin;  -- Don't straight delete them; open a transaction so you can respond to OOPS\n"
+"BEGIN;\n"
+"-# delete from sl_event where ev_type = 'STORE_LISTEN' and\n"
+"-#  (ev_data1 = '1' or ev_data2 = '1' or ev_data3 = '1');\n"
+"DELETE 3\n"
+"-# -- Seems OK...\n"
+"-# commit;\n"
+"COMMIT"
+msgstr ""
+
+#: faq.xml:2249(para)
+msgid ""
+"The next time the <application>slon</application> for node 3 starts up, it "
+"will no longer find the <quote>offensive</quote> <command>STORE_LISTEN</"
+"command> events, and replication can continue. (You may then run into some "
+"other problem where an old stored event is referring to no-longer-existant "
+"configuration...)"
+msgstr ""
+
+#: faq.xml:2259(para)
+msgid ""
+"I have a database where we have been encountering the following error "
+"message in our application:"
+msgstr ""
+
+#: faq.xml:2262(screen)
+#, no-wrap
+msgid " permission denied for sequence sl_action_seq "
+msgstr ""
+
+#: faq.xml:2264(para)
+msgid ""
+"When we traced it back, it was due to the application calling <function> "
+"lastval() </function> to capture the most recent sequence update, which "
+"happened to catch the last update to a &slony1; internal sequence."
+msgstr ""
+
+#: faq.xml:2272(para)
+msgid ""
+"&slony1; uses sequences to provide primary key values for log entries, and "
+"therefore this kind of behaviour may (perhaps regrettably!) be expected."
+msgstr ""
+
+#: faq.xml:2276(para)
+msgid ""
+"Calling <function>lastval()</function>, to <quote>anonymously</quote> get "
+"<quote>the most recently updated sequence value</quote>, rather than using "
+"<function>currval('sequence_name')</function> is an unsafe thing to do in "
+"general, as anything you might add in that uses DBMS features for logging, "
+"archiving, or replication can throw in an extra sequence update that you "
+"weren't expecting."
+msgstr ""
+
+#: faq.xml:2284(para)
+msgid ""
+"In general, use of <function>lastval()</function> doesn't seem terribly "
+"safe; using it when &slony1; (or any similar trigger-based replication "
+"system such as <application>Londiste</application> or <application>Bucardo</"
+"application>) can lead to capturing unexpected sequence updates."
+msgstr ""
+
+#: faq.xml:2295(para)
+msgid ""
+"I tried building &slony1; 1.1 and got the following error message: <screen>\n"
+"configure: error: Headers for libpqserver are not found in the "
+"includeserverdir.\n"
+"   This is the path to postgres.h. Please specify the includeserverdir with\n"
+"   --with-pgincludeserverdir=&lt;dir&gt;\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:2304(para)
+msgid ""
+"You are almost certainly running version &postgres; 7.4 or earlier, where "
+"server headers are not installed by default if you just do a <command>make "
+"install</command> of &postgres;."
+msgstr ""
+
+#: faq.xml:2308(para)
+msgid ""
+"You need to install server headers when you install &postgres; via the "
+"command <command>make install-all-headers</command>."
+msgstr ""
+
+#: faq.xml:2315(para)
+msgid ""
+"I'm trying to upgrade to a newer version of &slony1; and am running into a "
+"problem with <xref linkend=\"stmtupdatefunctions\"/>. When I run <xref "
+"linkend=\"stmtupdatefunctions\"/>, my <application>postmaster</application> "
+"falls over with a Signal 11. There aren't any seeming errors in the log "
+"files, aside from the &postgres; logs indicating that, yes indeed, the "
+"postmaster fell over."
+msgstr ""
+
+#: faq.xml:2324(para)
+msgid ""
+"I connected a debugger to the core file, and it indicates that it was trying "
+"to commit a transaction at the time of the failure."
+msgstr ""
+
+#: faq.xml:2328(para)
+msgid "By the way I'm on &postgres; 8.1.[0-3]."
+msgstr ""
+
+#: faq.xml:2331(para)
+msgid ""
+"Unfortunately, early releases of &postgres; 8.1 had a problem where if you "
+"redefined a function (such as, say, <function>upgradeSchema(text)</"
+"function>), and then, in the same transaction, ran that function, the "
+"<application>postmaster</application> would fall over, and the transaction "
+"would fail to commit."
+msgstr ""
+
+#: faq.xml:2342(para)
+msgid ""
+"Load the new functions (from <filename>slony1_funcs.sql</filename>), notably "
+"including <function>upgradeSchema(text)</function>."
+msgstr ""
+
+#: faq.xml:2343(para)
+msgid ""
+"Run <function>upgradeSchema(text)</function> to do any necessary upgrades to "
+"the database schema."
+msgstr ""
+
+#: faq.xml:2344(para)
+msgid "Notify &lslon; processes of a change of configuration."
+msgstr ""
+
+#: faq.xml:2338(para)
+msgid ""
+"The &lslonik; command <xref linkend=\"stmtupdatefunctions\"/> functions like "
+"that; it, in one transaction, tries to: <placeholder-1/>"
+msgstr ""
+
+#: faq.xml:2348(para)
+msgid ""
+"Unfortunately, on &postgres; 8.1.0, 8.1.1, 8.1.2, and 8.1.3, this conflicts "
+"with a bug where using and modifying a plpgsql function in the same "
+"transaction leads to a crash."
+msgstr ""
+
+#: faq.xml:2352(para)
+msgid "Several workarounds are available."
+msgstr ""
+
+#: faq.xml:2356(para)
+msgid ""
+"The preferred answer would be to upgrade &postgres; to 8.1.4 or some later "
+"version. Changes between minor versions do not require rebuilding databases; "
+"it should merely require copying a suitable 8.1.x build into place, and "
+"restarting the <application>postmaster</application> with the new version."
+msgstr ""
+
+#: faq.xml:2363(para)
+msgid ""
+"If that is unsuitable, it would be possible to perform the upgrade via a "
+"series of transactions, performing the equivalent of what &lslonik; does "
+"<quote>by hand</quote>:"
+msgstr ""
+
+#: faq.xml:2368(para)
+msgid ""
+"Take <filename>slony1_funcs.sql</filename> and do three replacements within "
+"it:"
+msgstr ""
+
+#: faq.xml:2371(para)
+msgid "Replace <quote>@CLUSTERNAME@</quote> with the name of the cluster"
+msgstr ""
+
+#: faq.xml:2372(para)
+msgid ""
+"Replace <quote>@MODULEVERSION@</quote> with the &slony1; version string, "
+"such as <quote>1.2.10</quote>"
+msgstr ""
+
+#: faq.xml:2373(para)
+msgid ""
+"Replace <quote>@NAMESPACE@</quote> with the <quote>double-quoted</quote> "
+"name of the cluster namespace, such as \"_MyCluster\""
+msgstr ""
+
+#: faq.xml:2376(para)
+msgid "Load that <quote>remapped</quote> set of functions into the database."
+msgstr ""
+
+#: faq.xml:2377(para)
+msgid ""
+"Run the stored function via <command>select "
+"<function>upgradeSchema('1.2.7')</function>; </command>, assuming that the "
+"previous version of &slony1; in use was version 1.2.7."
+msgstr ""
+
+#: faq.xml:2378(para)
+msgid ""
+"Restarting all &lslon; processes would probably be a wise move with this "
+"sort of <quote>surgery.</quote>"
+msgstr ""
+
+#: faq.xml:2384(para)
+msgid ""
+"Slonik fails - cannot load &postgres; library - <command>PGRES_FATAL_ERROR "
+"load '$libdir/xxid';</command>"
+msgstr ""
+
+#: faq.xml:2387(para)
+msgid ""
+"When I run the sample setup script I get an error message similar to: "
+"<command> stdin:64: PGRES_FATAL_ERROR load '$libdir/xxid'; - ERROR: LOAD: "
+"could not open file '$libdir/xxid': No such file or directory </command>"
+msgstr ""
+
+#: faq.xml:2395(para)
+msgid ""
+"Evidently, you haven't got the <filename>xxid.so</filename> library in the "
+"<envar>$libdir</envar> directory that the &postgres; instance is using. Note "
+"that the &slony1; components need to be installed in the &postgres; software "
+"installation for <emphasis>each and every one</emphasis> of the nodes, not "
+"just on the origin node."
+msgstr ""
+
+#: faq.xml:2403(para)
+msgid ""
+"This may also point to there being some other mismatch between the "
+"&postgres; binary instance and the &slony1; instance. If you compiled "
+"&slony1; yourself, on a machine that may have multiple &postgres; builds "
+"<quote>lying around,</quote> it's possible that the slon or slonik binaries "
+"are asking to load something that isn't actually in the library directory "
+"for the &postgres; database cluster that it's hitting."
+msgstr ""
+
+#: faq.xml:2411(para)
+msgid ""
+"Long and short: This points to a need to <quote>audit</quote> what "
+"installations of &postgres; and &slony1; you have in place on the "
+"machine(s). Unfortunately, just about any mismatch will cause things not to "
+"link up quite right. ..."
+msgstr ""
+
+#: faq.xml:2417(para)
+msgid ""
+"Life is simplest if you only have one set of &postgres; binaries on a given "
+"server; in that case, there isn't a <quote>wrong place</quote> in which "
+"&slony1; components might get installed. If you have several software "
+"installs, you'll have to verify that the right versions of &slony1; "
+"components are associated with the right &postgres; binaries."
+msgstr ""
+
+#: faq.xml:2425(para)
+msgid "I tried creating a CLUSTER NAME with a \"-\" in it. That didn't work."
+msgstr ""
+
+#: faq.xml:2428(para)
+msgid ""
+"&slony1; uses the same rules for unquoted identifiers as the &postgres; main "
+"parser, so no, you probably shouldn't put a \"-\" in your identifier name."
+msgstr ""
+
+#: faq.xml:2432(para)
+msgid ""
+"You may be able to defeat this by putting <quote>quotes</quote> around "
+"identifier names, but it's still liable to bite you some, so this is "
+"something that is probably not worth working around."
+msgstr ""
+
+#: faq.xml:2439(para)
+msgid ""
+"I have a &postgres; 7.2-based system that I <emphasis>really, really</"
+"emphasis> want to use &slony1; to help me upgrade it to 8.0. What is "
+"involved in getting &slony1; to work for that?"
+msgstr ""
+
+#: faq.xml:2445(para)
+msgid "Rod Taylor has reported the following..."
+msgstr ""
+
+#: faq.xml:2448(para)
+msgid "This is approximately what you need to do:"
+msgstr ""
+
+#: faq.xml:2450(para)
+msgid ""
+"Take the 7.3 templates and copy them to 7.2 -- or otherwise hardcode the "
+"version your using to pick up the 7.3 templates"
+msgstr ""
+
+#: faq.xml:2452(para)
+msgid ""
+"Remove all traces of schemas from the code and sql templates. I basically "
+"changed the \".\" to an \"_\"."
+msgstr ""
+
+#: faq.xml:2454(para)
+msgid ""
+"Bunch of work related to the XID datatype and functions. For example, Slony "
+"creates CASTs for the xid to xxid and back -- but 7.2 cannot create new "
+"casts that way so you need to edit system tables by hand. I recall creating "
+"an Operator Class and editing several functions as well."
+msgstr ""
+
+#: faq.xml:2459(para)
+msgid ""
+"sl_log_1 will have severe performance problems with any kind of data volume. "
+"This required a number of index and query changes to optimize for 7.2. 7.3 "
+"and above are quite a bit smarter in terms of optimizations they can apply."
+msgstr ""
+
+#: faq.xml:2463(para)
+msgid ""
+"Don't bother trying to make sequences work. Do them by hand after the "
+"upgrade using pg_dump and grep."
+msgstr ""
+
+#: faq.xml:2466(para)
+msgid ""
+"Of course, now that you have done all of the above, it's not compatible with "
+"standard Slony now. So you either need to implement 7.2 in a less hackish "
+"way, or you can also hack up slony to work without schemas on newer versions "
+"of &postgres; so they can talk to each other."
+msgstr ""
+
+#: faq.xml:2471(para)
+msgid ""
+"Almost immediately after getting the DB upgraded from 7.2 to 7.4, we "
+"deinstalled the hacked up Slony (by hand for the most part), and started a "
+"migration from 7.4 to 7.4 on a different machine using the regular Slony. "
+"This was primarily to ensure we didn't keep our system catalogues which had "
+"been manually fiddled with."
+msgstr ""
+
+#: faq.xml:2478(para)
+msgid ""
+"All that said, we upgraded a few hundred GB from 7.2 to 7.4 with about 30 "
+"minutes actual downtime (versus 48 hours for a dump / restore cycle) and no "
+"data loss."
+msgstr ""
+
+#: faq.xml:2484(para)
+msgid ""
+"That represents a sufficiently ugly set of <quote>hackery</quote> that the "
+"developers are exceedingly reluctant to let it anywhere near to the "
+"production code. If someone were interested in <quote>productionizing</"
+"quote> this, it would probably make sense to do so based on the &slony1; 1.0 "
+"branch, with the express plan of <emphasis>not</emphasis> trying to keep "
+"much in the way of forwards compatibility or long term maintainability of "
+"replicas."
+msgstr ""
+
+#: faq.xml:2493(para)
+msgid ""
+"You should only head down this road if you are sufficiently comfortable with "
+"&postgres; and &slony1; that you are prepared to hack pretty heavily with "
+"the code."
+msgstr ""
+
+#: faq.xml:2499(para)
+msgid ""
+"I created a <quote>superuser</quote> account, <command>slony</command>, to "
+"run replication activities. As suggested, I set it up as a superuser, via "
+"the following query: <command> update pg_shadow set usesuper = 't' where "
+"usename in ('slony', 'molly', 'dumpy'); </command> (that command also deals "
+"with other users I set up to run vacuums and backups)."
+msgstr ""
+
+#: faq.xml:2509(para)
+msgid ""
+"Unfortunately, I ran into a problem the next time I subscribed to a new set."
+msgstr ""
+
+#: faq.xml:2512(programlisting)
+#, no-wrap
+msgid ""
+"DEBUG1 copy_set 28661\n"
+"DEBUG1 remoteWorkerThread_1: connected to provider DB\n"
+"DEBUG2 remoteWorkerThread_78: forward confirm 1,594436 received by 78\n"
+"DEBUG2 remoteWorkerThread_1: copy table public.billing_discount\n"
+"ERROR  remoteWorkerThread_1: \"select \"_mycluster\".setAddTable_int(28661, 51, 'public.billing_discount', 'billing_discount_pkey', 'Table public.billing_discount with candidate primary key billing_discount_pkey'); \" PGRES_FATAL_ERROR ERROR:  permission denied for relation pg_class\n"
+"CONTEXT:  PL/pgSQL function \"altertableforreplication\" line 23 at select into variables\n"
+"PL/pgSQL function \"setaddtable_int\" line 76 at perform\n"
+"WARN   remoteWorkerThread_1: data copy for set 28661 failed - sleep 60 seconds"
+msgstr ""
+
+#: faq.xml:2523(para)
+msgid ""
+"This continues to fail, over and over, until I restarted the "
+"<application>slon</application> to connect as <command>postgres</command> "
+"instead."
+msgstr ""
+
+#: faq.xml:2528(para)
+msgid ""
+"The problem is fairly self-evident; permission is being denied on the system "
+"table, <envar>pg_class</envar>."
+msgstr ""
+
+#: faq.xml:2531(para)
+msgid "The <quote>fix</quote> is thus:"
+msgstr ""
+
+#: faq.xml:2532(programlisting)
+#, no-wrap
+msgid "update pg_shadow set usesuper = 't', usecatupd='t' where usename = 'slony';"
+msgstr ""
+
+#: faq.xml:2537(para)
+msgid "In version 8.1 and higher, you may also need the following:"
+msgstr ""
+
+#: faq.xml:2538(programlisting)
+#, no-wrap
+msgid "update pg_authid set rolcatupdate = 't', rolsuper='t' where rolname = 'slony';"
+msgstr ""
+
+#: faq.xml:2545(para)
+msgid "Some nodes start consistently falling behind"
+msgstr ""
+
+#: faq.xml:2547(para)
+msgid ""
+"I have been running &slony1; 1.2 on a node for a while, and am seeing system "
+"performance suffering."
+msgstr ""
+
+#: faq.xml:2550(para)
+msgid ""
+"I'm seeing long running queries of the form: <screen>\n"
+"\tfetch 100 from LOG;\n"
+"</screen>"
+msgstr ""
+
+#: faq.xml:2555(para)
+msgid "By the way, I'm on &postgres; 8.3."
+msgstr ""
+
+#: faq.xml:2558(para)
+msgid ""
+"This has been characteristic of &pglistener; (which is the table containing "
+"<command>NOTIFY</command> data) having plenty of dead tuples in it. That "
+"makes <command>NOTIFY</command> events take a long time, and causes the "
+"affected node to gradually fall further and further behind."
+msgstr ""
+
+#: faq.xml:2564(para)
+msgid ""
+"You quite likely need to do a <command>VACUUM FULL</command> on "
+"&pglistener;, to vigorously clean it out, and need to vacuum &pglistener; "
+"really frequently. Once every five minutes would likely be AOK."
+msgstr ""
+
+#: faq.xml:2569(para)
+msgid ""
+"Slon daemons already vacuum a bunch of tables, and <filename>cleanup_thread."
+"c</filename> contains a list of tables that are frequently vacuumed "
+"automatically. In &slony1; 1.0.2, &pglistener; is not included. In 1.0.5 and "
+"later, it is regularly vacuumed, so this should cease to be a direct issue. "
+"In version 1.2, &pglistener; will only be used when a node is only receiving "
+"events periodically, which means that the issue should mostly go away even "
+"in the presence of evil long running transactions..."
+msgstr ""
+
+#: faq.xml:2578(para)
+msgid ""
+"There is, however, still a scenario where this will still <quote>bite.</"
+"quote> Under MVCC, vacuums cannot delete tuples that were made "
+"<quote>obsolete</quote> at any time after the start time of the eldest "
+"transaction that is still open. Long running transactions will cause "
+"trouble, and should be avoided, even on subscriber nodes."
+msgstr ""
+
+#: faq.xml:2585(para)
+msgid ""
+"&postgres; 9.0 introduced a higher performance version of the LISTEN/NOTIFY "
+"feature which eliminated the table &pglistener; in favour of a memory-based "
+"queue. An upgrade to 9.0 or better would likely be useful to improve this."
+msgstr ""
+
+#: faq.xml:2590(para)
+msgid ""
+"Note that &slony1; 2.0 eliminated heavy usage of LISTEN/NOTIFY, so this "
+"particular phenomenon is restricted to versions older than that."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: faq.xml:0(None)
+msgid "translator-credits"
+msgstr ""

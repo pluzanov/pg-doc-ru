@@ -1,0 +1,167 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: performance.xml:4(title)
+msgid "Performance Considerations"
+msgstr ""
+
+#: performance.xml:5(para)
+msgid ""
+"&slony1; is a trigger based replication engine. For each row of application "
+"data you insert, update, or delete in your database &slony1; will insert an "
+"additional row into the &sllog1; or &sllog2; tables. This means that "
+"&slony1; will likely have a negative impact on your databases performance. "
+"Predicting this impact is more difficult because the amount of impact is "
+"dependent on your database workload and hardware capabilities."
+msgstr ""
+
+#: performance.xml:15(para)
+msgid "The following &slony1; operations are likely to impact performance:"
+msgstr ""
+
+#: performance.xml:20(para)
+msgid ""
+"Changing data in a replicated table will result in rows being added to "
+"&sllog1; or &sllog2;"
+msgstr ""
+
+#: performance.xml:22(para)
+msgid ""
+"When a slon daemon generates a SYNC event on each node it will need to add "
+"to the &slevent; table."
+msgstr ""
+
+#: performance.xml:24(para)
+msgid ""
+"Each remote slon daemon will need to query the &sllog1;, &sllog2; and "
+"&slevent; tables to pull the data to replicate"
+msgstr ""
+
+#: performance.xml:30(title)
+msgid "Vacuum Concerns"
+msgstr ""
+
+#: performance.xml:32(para)
+msgid ""
+"Tables &slevent; and &slconfirm; need to be regularly vacuumed because "
+"&slony1; regularly adds and deletes rows to and from these tables. The "
+"autovacuum feature of &postgres; included in 8.3 and above is the "
+"recommended way of handling vacuums. If autovacuum does is not working well, "
+"it may be configured to not vacuum the &slevent; and &slconfirm; tables. See "
+"the &postgres; documentation information on how to disable autovacuum on a "
+"per-table basis."
+msgstr ""
+
+#: performance.xml:42(para)
+msgid ""
+"<ulink url=\"http://www.postgresql.org/docs/8.3/static/routine-vacuuming."
+"html#AUTOVACUUM\">&postgres; 8.3 autovacuum </ulink>"
+msgstr ""
+
+#: performance.xml:46(para)
+msgid ""
+"Up to &postgres; 8.3, tables requiring special handling for autovacuum were "
+"captured in the system catalog <ulink url=\"http://www.postgresql.org/"
+"docs/8.3/static/catalog-pg-autovacuum.html\"> pg_autovacuum </ulink> table."
+msgstr ""
+
+#: performance.xml:52(para)
+msgid ""
+"<ulink url=\"http://www.postgresql.org/docs/9.1/static/sql-createtable."
+"html#SQL-CREATETABLE-STORAGE-PARAMETERS\"> CREATE TABLE parameters </ulink>"
+msgstr ""
+
+#: performance.xml:54(para)
+msgid ""
+"In &postgres; 8.4 and later, autovacuum control is captured as part of table "
+"<quote>storage parameters</quote> using <command>CREATE TABLE</command> or "
+"<command>ALTER TABLE</command>."
+msgstr ""
+
+#: performance.xml:61(para)
+msgid ""
+"When &slony1; detects that autovacuum has been disabled for any or all of "
+"the &slony1; tables then it will try to vacuum such tables itself as part of "
+"<function>cleanupThread</function> processing."
+msgstr ""
+
+#: performance.xml:67(para)
+msgid ""
+"Older versions of &slony1; and older versions of &postgres; had different "
+"vacuuming concerns. If your using an older version of &slony1; (prior to "
+"2.0) then you should refer to the documentation for your &slony1; version to "
+"determine applicable vacuuming concerns."
+msgstr ""
+
+#: performance.xml:73(para)
+msgid ""
+"It is generally to be expected that the use of autovacuum is to be "
+"preferred, as it allows &slony1; tables to be vacuumed as often or as seldom "
+"as their update patterns indicate. In cases where autovacuum does "
+"<emphasis>not</emphasis> provide appropriate maintenance, it seems likely "
+"that either:"
+msgstr ""
+
+#: performance.xml:81(para)
+msgid ""
+"Configuration parameters for autovacuum are poorly set, in which case the "
+"<quote>fix</quote> is to improve the configuration values, or"
+msgstr ""
+
+#: performance.xml:85(para)
+msgid ""
+"There is a bug in autovacuum, in which case it warrants fixing or improving "
+"that portion of &postgres;."
+msgstr ""
+
+#: performance.xml:91(para)
+msgid ""
+"There have been some substantial enhancements done to the autovacuum "
+"facility over the course of its history, and it is very much preferable to "
+"take advantage of those efforts rather than reinventing it, likely badly."
+msgstr ""
+
+#: performance.xml:98(title)
+msgid "Log Switching"
+msgstr ""
+
+#: performance.xml:100(para)
+msgid ""
+"&slony1; will frequently switch between &sllog1; and &sllog2; as the table "
+"into which the &slony1; triggers capture data. Once all of the transactions "
+"in one of these tables have been replicated and confirmed across the whole "
+"cluster, &slony1; will <command>TRUNCATE</command> the table. This usage of "
+"<command>TRUNCATE</command> eliminates the need to vacuum &sllog1; and "
+"&sllog2;."
+msgstr ""
+
+#: performance.xml:111(title)
+msgid "Long Running Transactions"
+msgstr ""
+
+#: performance.xml:114(para)
+msgid ""
+"Long running transactions can impact the performance of &slony1; because "
+"they prevent Log Switching from occurring. As long as your oldest "
+"transaction is open it will &sllog1; or &sllog2; from being truncated. This "
+"means that the other sl_log table will continue to grow in size. Long "
+"running transactions can also stop &slevent; and sl_confirm from being "
+"vacuumed. The table bloat that occurs due to a long running transaction will "
+"mean that queries to these tables will take longer. This can lead to "
+"replication falling behind. If replication is behind then the data in these "
+"tables has remain until that data is replicated. The increased size of the "
+"&slony1; tables can cause replication to fall even further behind."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: performance.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,218 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: startingstopping.xml:4(title)
+msgid "Starting &amp; Stopping Replication"
+msgstr ""
+
+#: startingstopping.xml:5(indexterm)
+msgid "<primary>starting &amp; stopping slon</primary>"
+msgstr ""
+
+#: startingstopping.xml:8(para)
+msgid ""
+"The <xref linkend=\"slon\"/> program is a daemon process that replicates "
+"data from one machine to another. The slon process is responsible for the "
+"following tasks"
+msgstr ""
+
+#: startingstopping.xml:14(para)
+msgid "Generating 'SYNC' events on the local database"
+msgstr ""
+
+#: startingstopping.xml:15(para)
+msgid "Processing events from remote nodes."
+msgstr ""
+
+#: startingstopping.xml:17(para)
+msgid ""
+"Applying the updates pulled from a remote database to user tables to the "
+"local database."
+msgstr ""
+
+#: startingstopping.xml:19(para)
+msgid "Performing cleanup tasks"
+msgstr ""
+
+#: startingstopping.xml:23(title)
+msgid "Deploying Slon Processes"
+msgstr ""
+
+#: startingstopping.xml:25(para)
+msgid ""
+"Each database in your cluster needs a slon process which it will act as the "
+"\"node controller\" for. The slon instance will consider itself \"local\" to "
+"that database and establish \"remote\" connections to any other databases "
+"for which a <xref linkend=\"stmtstorepath\"/> has been defined."
+msgstr ""
+
+#: startingstopping.xml:32(para)
+msgid ""
+"The slon process for a particular database does not need to run on the same "
+"server as the database. It is recommended (for performance reasons) that the "
+"network connection between slon process and \"local\" database fairly fast "
+"but this is not required. One common way of deploying &slony1; is to have "
+"the slon process running on the same node as the database it is servicing. "
+"Another common deployment is to centralize the slon processes for all of the "
+"databases in a particular data-center on a single administrative server."
+msgstr ""
+
+#: startingstopping.xml:44(para)
+msgid ""
+"It is important that the network connection between the slon processes and "
+"the database servers it talks to be reliable. If the network connection goes "
+"away at the wrong time it can leave the database connection in a \"zombied"
+"\". Restarting the slon process will repair this situation."
+msgstr ""
+
+#: startingstopping.xml:54(title)
+msgid "Starting Slon On Unix Systems"
+msgstr ""
+
+#: startingstopping.xml:55(para)
+msgid ""
+"The slon process gets installed in your &postgres; bin directory, this is "
+"the same directory that psql and the postgres binary get installed into. On "
+"a Unix system (including Linux variants) slon can be started either:"
+msgstr ""
+
+#: startingstopping.xml:61(para)
+msgid "Manually through the command line by invoking \"slon\" directly."
+msgstr ""
+
+#: startingstopping.xml:63(para)
+msgid ""
+"By using the rc.d style start_slon.sh script found in the tools directory of "
+"the &slony1; source distribution."
+msgstr ""
+
+#: startingstopping.xml:69(title)
+msgid "Invoking slon Directly"
+msgstr ""
+
+#: startingstopping.xml:72(programlisting)
+#, no-wrap
+msgid "slon slony_example 'host=localhost dbname=pgbench user=pgbench'"
+msgstr ""
+
+#: startingstopping.xml:70(para)
+msgid ""
+"To invoke slon directly you would execute the command <placeholder-1/> See "
+"<xref linkend=\"slon\"/> for information on command line options."
+msgstr ""
+
+#: startingstopping.xml:81(title)
+msgid "start_slon.sh"
+msgstr ""
+
+#: startingstopping.xml:82(para)
+msgid ""
+"To start slon via the start_slon.sh script you will first need to create a "
+"slon.conf file with the configuration options for slon. This is an example "
+"of a simple slon.conf file"
+msgstr ""
+
+#: startingstopping.xml:87(programlisting)
+#: startingstopping.xml:133(programlisting)
+#, no-wrap
+msgid ""
+"cluster_name=slony_example\n"
+"conn_info=host=localhost dbname=pgbench user=pgbench"
+msgstr ""
+
+#: startingstopping.xml:95(programlisting)
+#, no-wrap
+msgid ""
+"export SLON_BIN=/usr/local/pgsql8.3/bin/slon\n"
+"export SLON_CONF=/etc/slon/slon.conf\n"
+"export SLON_LOG=/var/log/slon.log\n"
+"/usr/local/pgsql8.3/bin/start_slon.sh start"
+msgstr ""
+
+#: startingstopping.xml:92(para)
+msgid ""
+"You would then set the <envar>SLON_CONF</envar> environment variable to "
+"point at this file and start the slon. <placeholder-1/>"
+msgstr ""
+
+#: startingstopping.xml:105(title)
+msgid "Stopping Slon On a Unix System"
+msgstr ""
+
+#: startingstopping.xml:116(programlisting)
+#, no-wrap
+msgid ""
+"export SLON_BIN=/usr/local/pgsql8.3/bin/slon\n"
+"export SLON_CONF=/etc/slon/slon.conf\n"
+"export SLON_LOG=/var/log/slon.log\n"
+"/usr/local/pgsql8.3/bin/start_slon.sh stop"
+msgstr ""
+
+#: startingstopping.xml:106(para)
+msgid ""
+"On a Unix system the slon process (called the watchdog) slon will fork "
+"creating a child slon process (called the worker) that does all the work. "
+"The watchdog monitors the worker and restarts the worker when required. To "
+"terminate slon you would send the watchdog slon (the slon process that you "
+"started) a SIGTERM. If you started slon through the start_slon.sh script "
+"then you can stop the slon via the \"stop\" command. <placeholder-1/>"
+msgstr ""
+
+#: startingstopping.xml:127(title)
+msgid "Starting Slon On a MS-Windows System"
+msgstr ""
+
+#: startingstopping.xml:128(para)
+msgid ""
+"On a MS-Windows system slon needs to be started as a service with a "
+"configuration file containing the settings for slon. An example of a "
+"configuration file is below."
+msgstr ""
+
+#: startingstopping.xml:137(para)
+msgid "You then need to add the slon service"
+msgstr ""
+
+#: startingstopping.xml:141(programlisting)
+#, no-wrap
+msgid ""
+"pgsql\\lib&gt;regsvr32 slevent.dll\n"
+"\n"
+"--\n"
+"-- running slon\n"
+"--\n"
+"pgsql\\bin&gt;slon -regservice Slony-I\n"
+"pgsql\\bin&gt;slon -addengine Slony-I slon.conf\n"
+"pgsql\\bin&gt;slon -listengines Slony-I"
+msgstr ""
+
+#: startingstopping.xml:154(title)
+msgid "Stopping slon On MS-Windows"
+msgstr ""
+
+#: startingstopping.xml:158(para)
+msgid ""
+"On MS-Windows the service manager starts slon as a service. This slon "
+"processs acts as the slon worker. The service manager will start a new slon "
+"whenever the slon worker exists. To stop slon you need to disable the "
+"service. This can be done through the service manager GUI or with the "
+"following commands"
+msgstr ""
+
+#: startingstopping.xml:166(programlisting)
+#, no-wrap
+msgid "pgsql\\bin&gt;slon -delengine Slony-I slon.conf"
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: startingstopping.xml:0(None)
+msgid "translator-credits"
+msgstr ""

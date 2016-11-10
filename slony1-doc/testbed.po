@@ -1,0 +1,891 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: testbed.xml:3(title)
+msgid "&slony1; Test Suites"
+msgstr ""
+
+#: testbed.xml:5(para)
+msgid "&slony1; has had (thus far) three test suites:"
+msgstr ""
+
+#: testbed.xml:8(para)
+msgid "Ducttape tests"
+msgstr ""
+
+#: testbed.xml:10(para)
+msgid ""
+"These were introduced as part of the original &slony1; distribution, and "
+"induced load via running <application>pgbench</application>."
+msgstr ""
+
+#: testbed.xml:14(para)
+msgid ""
+"Unfortunately, the tests required human intervention to control invocation "
+"and shutdown of tests, so running them could not be readily automated."
+msgstr ""
+
+#: testbed.xml:18(para)
+msgid "<link linkend=\"oldtestbed\"> Test bed framework </link>"
+msgstr ""
+
+#: testbed.xml:21(para)
+msgid ""
+"&slony1; version 1.1.5, introduced a test framework intended to better "
+"support automation of the tests. It eliminated the use of "
+"<application>xterm</application>, and tests were self-contained and self-"
+"controlled, so that one could run a series of tests."
+msgstr ""
+
+#: testbed.xml:26(para)
+msgid ""
+"Unfortunately, the framework did not include any way of inducing distributed "
+"load, so as to test scenarios involving sophisticated concurrent activity."
+msgstr ""
+
+#: testbed.xml:30(para)
+msgid "<link linkend=\"clustertest\"> clustertest framework </link>"
+msgstr ""
+
+#: testbed.xml:33(para)
+msgid ""
+"Introduced during testing of &slony1; version 2.0 during 2010, and released "
+"in early 2011, this framework is intended to be a better replacement for all "
+"of the preceding test frameworks."
+msgstr ""
+
+#: testbed.xml:41(title)
+msgid "Clustertest Test Framework"
+msgstr ""
+
+#: testbed.xml:43(title)
+msgid "Introduction and Overview"
+msgstr ""
+
+#: testbed.xml:45(para)
+msgid ""
+"The clustertest framework is implemented in Java, where tests are "
+"implemented in the interpreted JavaScript language. The use of Java made it "
+"much easier to implement tests involving concurrent activities, both in "
+"terms of inducing test load, and in, concurrently changing configuration of "
+"the replication cluster."
+msgstr ""
+
+#: testbed.xml:51(para)
+msgid "It consists of two physical portions:"
+msgstr ""
+
+#: testbed.xml:54(para)
+msgid "A framework, implemented in Java"
+msgstr ""
+
+#: testbed.xml:56(para)
+msgid ""
+"This software is available at <ulink url=\"https://github.com/clustertest/"
+"clustertest-framework\"> clustertest-framework @ GitHub </ulink>."
+msgstr ""
+
+#: testbed.xml:60(para)
+msgid ""
+"This framework makes use of libraries from several other open source "
+"projects:"
+msgstr ""
+
+#: testbed.xml:63(filename)
+msgid "js.jar"
+msgstr ""
+
+#: testbed.xml:65(para)
+msgid ""
+"This is for <envar>org.mozilla.javascript</envar>, the Mozilla JavaScript "
+"interpreter"
+msgstr ""
+
+#: testbed.xml:67(filename)
+msgid "junit-4.8.1.jar"
+msgstr ""
+
+#: testbed.xml:69(para)
+msgid "JUnit, a unit test framework."
+msgstr ""
+
+#: testbed.xml:71(filename)
+msgid "log4j-1.2.15.jar"
+msgstr ""
+
+#: testbed.xml:73(para)
+msgid "Log4J is a popular Java-based framework for generating event logs."
+msgstr ""
+
+#: testbed.xml:76(filename)
+msgid "postgresql-8.4-701.jdbc3.jar"
+msgstr ""
+
+#: testbed.xml:78(para)
+msgid "This is the &postgres; JDBC driver."
+msgstr ""
+
+#: testbed.xml:81(para)
+msgid ""
+"To build the framework, it is necessary to have a Java compiler and the "
+"build tool, <application>Ant</application>, installed. To build all the "
+"<filename>.jar</filename> files used by the framework, one will run the "
+"command, with output similar to the following: <screen>\n"
+"% ant jar\n"
+"Buildfile: /var/lib/postgresql/PostgreSQL/clustertest-framework/build.xml\n"
+"\n"
+"compile-common:\n"
+"    [mkdir] Created dir: /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/classes\n"
+"    [javac] /var/lib/postgresql/PostgreSQL/clustertest-framework/build."
+"xml:23: warning: 'includeantruntime' was not set, defaulting to build."
+"sysclasspath=last; set to false for repeatable builds\n"
+"\n"
+"compile-testcoordinator:\n"
+"    [javac] /var/lib/postgresql/PostgreSQL/clustertest-framework/build."
+"xml:44: warning: 'includeantruntime' was not set, defaulting to build."
+"sysclasspath=last; set to false for repeatable builds\n"
+"    [javac] Compiling 25 source files to /var/lib/postgresql/PostgreSQL/"
+"clustertest-framework/build/classes\n"
+"    [javac] Note: /var/lib/postgresql/PostgreSQL/clustertest-framework/src/"
+"info/slony/clustertest/testcoordinator/script/ClientScript.java uses or "
+"overrides a deprecated API.\n"
+"    [javac] Note: Recompile with -Xlint:deprecation for details.\n"
+"     [copy] Copying 1 file to /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/classes/info/slony/clustertest/testcoordinator\n"
+"\n"
+"jar-common:\n"
+"    [mkdir] Created dir: /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/jar\n"
+"      [jar] Building MANIFEST-only jar: /var/lib/postgresql/PostgreSQL/"
+"clustertest-framework/build/jar/clustertest-common.jar\n"
+"\n"
+"compile-client:\n"
+"    [javac] /var/lib/postgresql/PostgreSQL/clustertest-framework/build."
+"xml:30: warning: 'includeantruntime' was not set, defaulting to build."
+"sysclasspath=last; set to false for repeatable builds\n"
+"    [javac] Compiling 1 source file to /var/lib/postgresql/PostgreSQL/"
+"clustertest-framework/build/classes\n"
+"     [copy] Copying 2 files to /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/classes/info/slony/clustertest/client\n"
+"\n"
+"jar-client:\n"
+"      [jar] Building jar: /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/jar/clustertest-client.jar\n"
+"\n"
+"jar-coordinator:\n"
+"      [jar] Building jar: /var/lib/postgresql/PostgreSQL/clustertest-"
+"framework/build/jar/clustertest-coordinator.jar\n"
+"\n"
+"jar:\n"
+"\n"
+"BUILD SUCCESSFUL\n"
+"Total time: 2 seconds\n"
+"</screen>"
+msgstr ""
+
+#: testbed.xml:122(para)
+msgid ""
+"At this time, there is no <quote>regression test</quote> for the test "
+"framework; to validate that it works requires running tests that use it."
+msgstr ""
+
+#: testbed.xml:126(para)
+msgid ""
+"It includes classes supporting &postgres;- and &slony1;-specific "
+"functionality such as:"
+msgstr ""
+
+#: testbed.xml:128(classname)
+msgid "CreateDbScript"
+msgstr ""
+
+#: testbed.xml:129(para)
+msgid "Creates a database"
+msgstr ""
+
+#: testbed.xml:130(classname)
+msgid "DropDbScript"
+msgstr ""
+
+#: testbed.xml:131(para)
+msgid "Drops a database"
+msgstr ""
+
+#: testbed.xml:132(classname)
+msgid "LogShippingDaemon"
+msgstr ""
+
+#: testbed.xml:133(para)
+msgid "Starts up &slony1; logshipping daemon"
+msgstr ""
+
+#: testbed.xml:134(classname)
+msgid "LogShippingDumpScript"
+msgstr ""
+
+#: testbed.xml:135(para)
+msgid "Dumps and loads logshipping-based schema"
+msgstr ""
+
+#: testbed.xml:136(classname)
+msgid "PgCommand"
+msgstr ""
+
+#: testbed.xml:137(para)
+msgid ""
+"Run a &postgres; shell command (such as <command>psql</command>, "
+"<command>createdb</command>, and such)"
+msgstr ""
+
+#: testbed.xml:138(classname)
+msgid "PgDumpCommand"
+msgstr ""
+
+#: testbed.xml:139(para)
+msgid "Dump a &postgres; database"
+msgstr ""
+
+#: testbed.xml:140(classname)
+msgid "PsqlCommandExec"
+msgstr ""
+
+#: testbed.xml:141(para)
+msgid "Run SQL"
+msgstr ""
+
+#: testbed.xml:142(classname)
+msgid "ShellExecScript"
+msgstr ""
+
+#: testbed.xml:143(para)
+msgid "Run a shell script/command"
+msgstr ""
+
+#: testbed.xml:144(classname)
+msgid "SlonLauncher"
+msgstr ""
+
+#: testbed.xml:145(para)
+msgid "Start up a &lslon; process"
+msgstr ""
+
+#: testbed.xml:146(classname)
+msgid "SlonikScript"
+msgstr ""
+
+#: testbed.xml:147(para)
+msgid "Run a &lslonik; script"
+msgstr ""
+
+#: testbed.xml:152(para)
+msgid ""
+"Tests integrated into the &slony1; software distribution, that consist of a "
+"combination of shell scripts, JavaScript, and SQL scripts."
+msgstr ""
+
+#: testbed.xml:156(para)
+msgid ""
+"See the directory <filename>clustertest</filename> in the &slony1; software "
+"distribution, which has two sets of tests:"
+msgstr ""
+
+#: testbed.xml:167(title)
+msgid "DISORDER - DIStributed ORDER test"
+msgstr ""
+
+#: testbed.xml:169(para)
+msgid ""
+"The <emphasis>DISORDER</emphasis> or <emphasis>DIStributed ORDER</emphasis> "
+"test is intended to provide concurrency tests involving a reasonably "
+"sophisticated schema to validate various aspects of &slony1; behavior under "
+"concurrent load."
+msgstr ""
+
+#: testbed.xml:174(para)
+msgid "It consists of:"
+msgstr ""
+
+#: testbed.xml:176(para)
+msgid "A schema for an inventory management application."
+msgstr ""
+
+#: testbed.xml:177(para)
+msgid ""
+"Major objects include customers, inventory items, orders, order lines, and "
+"shipments."
+msgstr ""
+
+#: testbed.xml:179(para)
+msgid ""
+"There are foreign key relationships between the various items, as well as "
+"triggers that maintain inventory and customer balances. Some of these "
+"relationships involve <command>ON DELETE CASCADE</command>, and so some "
+"actions may induce large numbers of cascaded updates."
+msgstr ""
+
+#: testbed.xml:186(para)
+msgid ""
+"Stored procedures to induce creation of the various sorts of objects, "
+"purchases, shipments, and additions and removals of customers and products."
+msgstr ""
+
+#: testbed.xml:190(para)
+msgid ""
+"Some tests are intended to be run against replicas, validating that balances "
+"add up. We believe that &postgres; applies changes in a transactional "
+"fashion such that they will always <command>COMMIT</command> leaving the "
+"visible state consistent; certain of the tests look for inconsistencies."
+msgstr ""
+
+#: testbed.xml:196(para)
+msgid ""
+"There are JavaScript test scripts that induce all sorts of manipulations of "
+"replication clusters to validate that replication configuration changes "
+"succeed and fail as expected."
+msgstr ""
+
+#: testbed.xml:203(title)
+msgid "Configuring DISORDER"
+msgstr ""
+
+#: testbed.xml:205(para)
+msgid "DISORDER test configuration may be found in the following files:"
+msgstr ""
+
+#: testbed.xml:208(filename)
+msgid "conf/disorder.properties.sample"
+msgstr ""
+
+#: testbed.xml:210(para)
+msgid ""
+"This file contains Java style properties indicating how to connect to the "
+"various databases used by the DISORDER tests, including paths to tools such "
+"as &lslon; and &lslonik;"
+msgstr ""
+
+#: testbed.xml:214(para)
+msgid ""
+"The sample file is to be copied to <filename>conf/disorder.properties</"
+"filename>, and customized to indicate your local configuration. By using a "
+"<filename>.sample</filename> file, a developer may run tests within a Git "
+"tree, and not need to worry about their customizations interfering with the "
+"<quote>canonical</quote> sample configuration provided."
+msgstr ""
+
+#: testbed.xml:224(filename) testbed.xml:277(filename)
+msgid "conf/java.conf.sample"
+msgstr ""
+
+#: testbed.xml:226(para) testbed.xml:279(para)
+msgid ""
+"This is a shell script containing a path indicating where the clustertest "
+"Java code (<emphasis>e.g.</emphasis> - the <filename>clustertest-coordinator."
+"jar</filename> file) may be found. This is also used, indirectly to "
+"determine where additional Java .jar files such as the JDBC driver are "
+"located."
+msgstr ""
+
+#: testbed.xml:232(para)
+msgid ""
+"As with the disorder properties, above, this needs to be copied to "
+"<filename>conf/java.conf</filename>, and customized to indicate one's own "
+"local configuration."
+msgstr ""
+
+#: testbed.xml:238(filename) testbed.xml:287(filename)
+msgid "conf/log4j.properties"
+msgstr ""
+
+#: testbed.xml:240(para)
+msgid ""
+"See documentation for <application>Log4J</application> for more details as "
+"to how this is configured; the defaults provided likely do not need to be "
+"altered."
+msgstr ""
+
+#: testbed.xml:248(title)
+msgid "Regression Tests"
+msgstr ""
+
+#: testbed.xml:250(para)
+msgid ""
+"These tests represent a re-coding of the tests previously implemented as "
+"shell scripts using the clustertest framework."
+msgstr ""
+
+#: testbed.xml:253(para)
+msgid ""
+"These tests have gradually been enhanced to provide coverage of scenarios "
+"with which &slony1; has had problems; it is to be expected that new bugs may "
+"lead to the addition of further tests."
+msgstr ""
+
+#: testbed.xml:257(title)
+msgid "Configuring Regression Tests"
+msgstr ""
+
+#: testbed.xml:259(para)
+msgid ""
+"Similar to the <xref linkend=\"disorderconfig\"/> for DISORDER tests, there "
+"are three configuration parameters:"
+msgstr ""
+
+#: testbed.xml:261(filename)
+msgid "conf/slonyregress.properties.sample"
+msgstr ""
+
+#: testbed.xml:263(para)
+msgid ""
+"This file contains Java style properties indicating how to connect to the "
+"various databases used by the regression tests, including paths to tools "
+"such as &lslon; and &lslonik;"
+msgstr ""
+
+#: testbed.xml:267(para)
+msgid ""
+"The sample file is to be copied to <filename>conf/slonyregress.properties</"
+"filename>, and customized to indicate your local configuration. By using a "
+"<filename>.sample</filename> file, a developer may run tests within a Git "
+"tree, and not need to worry about their customizations interfering with the "
+"<quote>canonical</quote> sample configuration provided."
+msgstr ""
+
+#: testbed.xml:289(para)
+msgid "Identical to configuration for DISORDER."
+msgstr ""
+
+#: testbed.xml:299(title)
+msgid "&slony1; Test Bed Framework"
+msgstr ""
+
+#: testbed.xml:301(indexterm)
+msgid "<primary>test bed framework</primary>"
+msgstr ""
+
+#: testbed.xml:303(para)
+msgid ""
+"Version 1.1.5 of &slony1; introduced a common test bed framework intended to "
+"better support running a comprehensive set of tests at least somewhat "
+"automatically."
+msgstr ""
+
+#: testbed.xml:307(para)
+msgid ""
+"The new test framework is mostly written in Bourne shell, and is intended to "
+"be portable to both Bash (widely used on Linux) and Korn shell (widely found "
+"on commercial UNIX systems). The code lives in the source tree under the "
+"<filename> tests </filename> directory."
+msgstr ""
+
+#: testbed.xml:313(para)
+msgid ""
+"At present, nearly all of the tests make use of only two databases that, by "
+"default, are on a single &postgres; postmaster on one host. This is "
+"perfectly fine for those tests that involve verifying that &slony1; "
+"functions properly on various sorts of data. Those tests do things like "
+"varying date styles, and creating tables and sequences that involve unusual "
+"names to verify that quoting is being handled properly."
+msgstr ""
+
+#: testbed.xml:321(para)
+msgid ""
+"It is also possible to configure environment variables so that the "
+"replicated nodes will be placed on different database backends, optionally "
+"on remote hosts, running varying versions of &postgres;."
+msgstr ""
+
+#: testbed.xml:326(para)
+msgid "Here are some of the vital files..."
+msgstr ""
+
+#: testbed.xml:330(filename)
+msgid "run_test.sh"
+msgstr ""
+
+#: testbed.xml:334(para)
+msgid "This is the central script for running tests. Typical usage is thus:"
+msgstr ""
+
+#: testbed.xml:337(command)
+msgid "./run_test.sh"
+msgstr ""
+
+#: testbed.xml:338(screen)
+#, no-wrap
+msgid "usage ./run_test.sh testname"
+msgstr ""
+
+#: testbed.xml:342(para)
+msgid ""
+"You need to specify the subdirectory name of the test set to be run; each "
+"such set is stored in a subdirectory of <filename>tests</filename>."
+msgstr ""
+
+#: testbed.xml:346(para)
+msgid ""
+"You may need to set one or more of the following environment variables to "
+"reflect your local configuration. For instance, the writer runs "
+"<quote>test1</quote> against &postgres; 8.0.x using the following command "
+"line:"
+msgstr ""
+
+#: testbed.xml:351(screen)
+#, no-wrap
+msgid " PGBINDIR=/opt/OXRS/dbs/pgsql8/bin PGPORT=5532 PGUSER=cbbrowne ./run_test.sh test1 "
+msgstr ""
+
+#: testbed.xml:354(envar)
+msgid "PGBINDIR"
+msgstr ""
+
+#: testbed.xml:356(para)
+msgid ""
+"This determines where the test scripts look for &postgres; and &slony1; "
+"binaries. The default is <filename> /usr/local/pgsql/bin</filename>."
+msgstr ""
+
+#: testbed.xml:360(para)
+msgid ""
+"There are also variables <envar>PGBINDIR1</envar> thru <envar>PGBINDIR13</"
+"envar> which allows you to specify a separate path for each database "
+"instance. That will be particularly useful when testing interoperability of "
+"&slony1; across different versions of &postgres; on different platforms. In "
+"order to create a database of each respective version, you need to point to "
+"an <application>initdb</application> of the appropriate version."
+msgstr ""
+
+#: testbed.xml:369(envar)
+msgid "PGPORT"
+msgstr ""
+
+#: testbed.xml:370(para)
+msgid "This indicates what port the backend is on. By default, 5432 is used."
+msgstr ""
+
+#: testbed.xml:373(para)
+msgid ""
+"There are also variables <envar>PORT1</envar> thru <envar>PORT13</envar> "
+"which allow you to specify a separate port number for each database "
+"instance. That will be particularly useful when testing interoperability of "
+"&slony1; across different versions of &postgres;."
+msgstr ""
+
+#: testbed.xml:379(envar)
+msgid "PGUSER"
+msgstr ""
+
+#: testbed.xml:380(para)
+msgid ""
+"By default, the user <filename>postgres</filename> is used; this is taken as "
+"the default user ID to use for all of the databases."
+msgstr ""
+
+#: testbed.xml:384(para)
+msgid ""
+"There are also variables <envar>USER1</envar> thru <envar>USER13</envar> "
+"which allow specifying a separate user name for each database instance. The "
+"tests assume this to be a &postgres; <quote>superuser.</quote>"
+msgstr ""
+
+#: testbed.xml:389(envar)
+msgid "WEAKUSER"
+msgstr ""
+
+#: testbed.xml:390(para)
+msgid ""
+"By default, the user <filename>postgres</filename> is used; this is taken as "
+"the default user ID to use for the <xref linkend=\"stmtstorepath\"/> "
+"connections to all of the databases."
+msgstr ""
+
+#: testbed.xml:394(para)
+msgid ""
+"There are also variables <envar>WEAKUSER1</envar> thru <envar>WEAKUSER13</"
+"envar> which allow specifying a separate user name for each database "
+"instance. This user <emphasis> does not </emphasis> need to be a &postgres; "
+"<quote>superuser.</quote> This user can start out with no permissions; it "
+"winds up granted read permissions on the tables that the test uses, plus "
+"read access throughout the &slony1; schema, plus write access to one table "
+"and sequence used to manage node locks."
+msgstr ""
+
+#: testbed.xml:403(envar)
+msgid "HOST"
+msgstr ""
+
+#: testbed.xml:404(para)
+msgid "By default, <filename>localhost</filename> is used."
+msgstr ""
+
+#: testbed.xml:407(para)
+msgid ""
+"There are also variables <envar>HOST1</envar> thru <envar>HOST13</envar> "
+"which allow specifying a separate host for each database instance."
+msgstr ""
+
+#: testbed.xml:412(envar)
+msgid "DB1"
+msgstr ""
+
+#: testbed.xml:412(envar)
+msgid "DB13"
+msgstr ""
+
+#: testbed.xml:412(glossterm)
+msgid "<placeholder-1/> thru <placeholder-2/>"
+msgstr ""
+
+#: testbed.xml:414(para)
+msgid ""
+"By default, <filename>slonyregress1</filename> thru "
+"<filename>slonyregress13</filename> are used."
+msgstr ""
+
+#: testbed.xml:418(para)
+msgid ""
+"You may override these from the environment if you have some reason to use "
+"different names."
+msgstr ""
+
+#: testbed.xml:423(envar)
+msgid "ENCODING"
+msgstr ""
+
+#: testbed.xml:425(para)
+msgid ""
+"By default, <filename>UNICODE</filename> is used, so that tests can create "
+"UTF8 tables and test the multibyte capabilities."
+msgstr ""
+
+#: testbed.xml:432(envar)
+msgid "MY_MKTEMP_IS_DECREPIT"
+msgstr ""
+
+#: testbed.xml:434(para)
+msgid ""
+"If your version of Linux uses a variation of <application>mktemp</"
+"application> that does not generate a full path to the location of the "
+"desired temporary file/directory, then set this value."
+msgstr ""
+
+#: testbed.xml:442(envar)
+msgid "TMPDIR"
+msgstr ""
+
+#: testbed.xml:444(para)
+msgid ""
+"By default, the tests will generate their output in <filename>/tmp</"
+"filename>, <filename>/usr/tmp</filename>, or <filename>/var/tmp</filename>, "
+"unless you set your own value for this environment variable."
+msgstr ""
+
+#: testbed.xml:452(envar)
+msgid "SLTOOLDIR"
+msgstr ""
+
+#: testbed.xml:454(para)
+msgid ""
+"Where to look for &slony1; tools such as <application>slony1_dump.sh</"
+"application>."
+msgstr ""
+
+#: testbed.xml:460(envar)
+msgid "ARCHIVE[n]"
+msgstr ""
+
+#: testbed.xml:462(para)
+msgid ""
+"If set to <quote>true</quote>, for a particular node, which will normally "
+"get configured out of human sight in the generic-to-a-particular-test file "
+"<filename>settings.ik</filename>, then this node will be used as a data "
+"source for <xref linkend=\"logshipping\"/>, and this causes the test tools "
+"to set up a directory for the <link linkend=\"slon-config-archive-dir\"> "
+"archive_dir</link> option."
+msgstr ""
+
+#: testbed.xml:473(envar)
+msgid "LOGSHIP[n]"
+msgstr ""
+
+#: testbed.xml:475(para)
+msgid ""
+"If set to <quote>true</quote>, for a particular node, which will normally "
+"get configured out of human sight in <filename>settings.ik</filename> for a "
+"particular test, then this indicates that this node is being created via "
+"<xref linkend=\"logshipping\"/>, and a &lslon; is not required for this node."
+msgstr ""
+
+#: testbed.xml:485(envar)
+msgid "SLONCONF[n]"
+msgstr ""
+
+#: testbed.xml:487(para)
+msgid ""
+"If set to <quote>true</quote>, for a particular node, typically handled in "
+"<filename>settings.ik</filename> for a given test, then configuration will "
+"be set up in a <link linkend=\"runtime-config\"> per-node <filename>slon."
+"conf</filename> runtime config file. </link>"
+msgstr ""
+
+#: testbed.xml:495(envar)
+msgid "SLONYTESTER"
+msgstr ""
+
+#: testbed.xml:497(para)
+msgid ""
+"Email address of the person who might be contacted about the test results. "
+"This is stored in the <envar>SLONYTESTFILE</envar>, and may eventually be "
+"aggregated in some sort of buildfarm-like registry."
+msgstr ""
+
+#: testbed.xml:504(envar)
+msgid "SLONYTESTFILE"
+msgstr ""
+
+#: testbed.xml:506(para)
+msgid ""
+"File in which to store summary results from tests. Eventually, this may be "
+"used to construct a buildfarm-like repository of aggregated test results."
+msgstr ""
+
+#: testbed.xml:512(filename)
+msgid "random_number"
+msgstr ""
+
+#: testbed.xml:512(filename)
+msgid "random_string"
+msgstr ""
+
+#: testbed.xml:512(glossterm)
+msgid "<placeholder-1/> and <placeholder-2/>"
+msgstr ""
+
+#: testbed.xml:514(para)
+msgid ""
+"If you run <command>make</command> in the <filename>test</filename> "
+"directory, C programs <application>random_number</application> and "
+"<application>random_string</application> will be built which will then be "
+"used when generating random data in lieu of using shell/SQL capabilities "
+"that are much slower than the C programs."
+msgstr ""
+
+#: testbed.xml:525(para)
+msgid "Within each test, you will find the following files:"
+msgstr ""
+
+#: testbed.xml:528(filename)
+msgid "README"
+msgstr ""
+
+#: testbed.xml:530(para)
+msgid ""
+"This file contains a description of the test, and is displayed to the reader "
+"when the test is invoked."
+msgstr ""
+
+#: testbed.xml:533(filename)
+msgid "generate_dml.sh"
+msgstr ""
+
+#: testbed.xml:534(para)
+msgid "This contains script code that generates SQL to perform updates."
+msgstr ""
+
+#: testbed.xml:535(filename)
+msgid "init_add_tables.ik"
+msgstr ""
+
+#: testbed.xml:536(para)
+msgid ""
+"This is a <xref linkend=\"slonik\"/> script for adding the tables for the "
+"test to repliation."
+msgstr ""
+
+#: testbed.xml:537(filename)
+msgid "init_cluster.ik"
+msgstr ""
+
+#: testbed.xml:538(para)
+msgid "<xref linkend=\"slonik\"/> to initialize the cluster for the test."
+msgstr ""
+
+#: testbed.xml:539(filename)
+msgid "init_create_set.ik"
+msgstr ""
+
+#: testbed.xml:540(para)
+msgid ""
+"<xref linkend=\"slonik\"/> to initialize additional nodes to be used in the "
+"test."
+msgstr ""
+
+#: testbed.xml:541(filename)
+msgid "init_schema.sql"
+msgstr ""
+
+#: testbed.xml:542(para)
+msgid ""
+"An SQL script to create the tables and sequences required at the start of "
+"the test."
+msgstr ""
+
+#: testbed.xml:543(filename)
+msgid "init_data.sql"
+msgstr ""
+
+#: testbed.xml:544(para)
+msgid ""
+"An SQL script to initialize the schema with whatever state is required for "
+"the <quote>master</quote> node."
+msgstr ""
+
+#: testbed.xml:545(filename)
+msgid "init_subscribe_set.ik"
+msgstr ""
+
+#: testbed.xml:546(para)
+msgid "A <xref linkend=\"slonik\"/> script to set up subscriptions."
+msgstr ""
+
+#: testbed.xml:547(filename)
+msgid "settings.ik"
+msgstr ""
+
+#: testbed.xml:548(para)
+msgid ""
+"A shell script that is used to control the size of the cluster, how many "
+"nodes are to be created, and where the origin is."
+msgstr ""
+
+#: testbed.xml:549(filename)
+msgid "schema.diff"
+msgstr ""
+
+#: testbed.xml:550(para)
+msgid ""
+"A series of SQL queries, one per line, that are to be used to validate that "
+"the data matches across all the nodes. Note that in order to avoid spurious "
+"failures, the queries must use unambiguous <command>ORDER BY</command> "
+"clauses."
+msgstr ""
+
+#: testbed.xml:553(para)
+msgid ""
+"If there are additional test steps, such as running <xref linkend="
+"\"stmtddlscript\"/>, additional <xref linkend=\"slonik\"/> and SQL scripts "
+"may be necessary."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: testbed.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,289 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: listenpaths.xml:3(title)
+msgid "&slony1; Listen Paths"
+msgstr ""
+
+#: listenpaths.xml:5(indexterm)
+msgid "<primary>listen paths</primary>"
+msgstr ""
+
+#: listenpaths.xml:7(para)
+msgid ""
+"If you are running version &slony1; 1.1 or later it should be "
+"<emphasis>completely unnecessary</emphasis> to read this section as it "
+"introduces a way to automatically manage this part of its configuration. For "
+"earlier versions, however, it is needful."
+msgstr ""
+
+#: listenpaths.xml:14(para)
+msgid ""
+"If you have more than two or three nodes, and any degree of usage of "
+"cascaded subscribers (<emphasis>e.g.</emphasis> - subscribers that are "
+"subscribing through a subscriber node), you will have to be fairly careful "
+"about the configuration of <quote>listen paths</quote> via the Slonik <xref "
+"linkend=\"stmtstorelisten\"/> and <xref linkend=\"stmtdroplisten\"/> "
+"statements that control the contents of the table <xref linkend=\"table.sl-"
+"listen\"/>."
+msgstr ""
+
+#: listenpaths.xml:22(para)
+msgid ""
+"The <quote>listener</quote> entries in this table control where each node "
+"expects to listen in order to get events propagated from other nodes. You "
+"might think that nodes only need to listen to the <quote>parent</quote> from "
+"whom they are getting updates, but in reality, they need to be able to "
+"receive messages from <emphasis>all</emphasis> nodes in order to be able to "
+"conclude that <command>sync</command>s have been received everywhere, and "
+"that, therefore, entries in &sllog1; and &sllog2; have been applied "
+"everywhere, and can therefore be purged. this extra communication is needful "
+"so <productname>Slony-I</productname> is able to shift origins to other "
+"locations."
+msgstr ""
+
+#: listenpaths.xml:35(title)
+msgid "How Listening Can Break"
+msgstr ""
+
+#: listenpaths.xml:37(indexterm)
+msgid "<primary> listening breakage </primary>"
+msgstr ""
+
+#: listenpaths.xml:39(para)
+msgid ""
+"On one occasion, I had a need to drop a subscriber node (#2) and recreate "
+"it. That node was the data provider for another subscriber (#3) that was, in "
+"effect, a <quote>cascaded slave.</quote> Dropping the subscriber node "
+"initially didn't work, as <xref linkend=\"slonik\"/> informed me that there "
+"was a dependant node. I re-pointed the dependant node to the <quote>master</"
+"quote> node for the subscription set, which, for a while, replicated without "
+"difficulties."
+msgstr ""
+
+#: listenpaths.xml:47(para)
+msgid ""
+"I then dropped the subscription on <quote>node 2</quote>, and started "
+"resubscribing it. that raised the &slony1; <command>set_subscription</"
+"command> event, which started copying tables. at that point in time, events "
+"stopped propagating to <quote>node 3</quote>, and while it was in perfectly "
+"ok shape, no events were making it to it."
+msgstr ""
+
+#: listenpaths.xml:54(para)
+msgid ""
+"The problem was that node #3 was expecting to receive events from node #2, "
+"which was busy processing the <command>set_subscription</command> event, and "
+"was not passing anything else on."
+msgstr ""
+
+#: listenpaths.xml:58(para)
+msgid ""
+"We dropped the listener rules that caused node #3 to listen to node 2, "
+"replacing them with rules where it expected its events to come from node #1 "
+"(the origin node for the replication set). At that moment, <quote>as if by "
+"magic</quote>, node #3 started replicating again, as it discovered a place "
+"to get <command>sync</command> events."
+msgstr ""
+
+#: listenpaths.xml:64(title)
+msgid "How the Listen Configuration Should Look"
+msgstr ""
+
+#: listenpaths.xml:66(para)
+msgid ""
+"The simple cases tend to be simple to cope with. We need to instead look at "
+"a more complex node configuration."
+msgstr ""
+
+#: listenpaths.xml:69(para)
+msgid ""
+"Consider a set of nodes, 1 thru 6, where 1 is the origin, where 2-4 "
+"subscribe directly to the origin, and where 5 subscribes to 2, and 6 "
+"subscribes to 5."
+msgstr ""
+
+#: listenpaths.xml:73(para)
+msgid ""
+"Here is a <quote>listener network</quote> that indicates where each node "
+"should listen for messages coming from each other node: <screen>\n"
+"       1|   2|   3|   4|   5|   6|\n"
+"--------------------------------------------\n"
+"   1   0    2    3    4    2    2 \n"
+"   2   1    0    1    1    5    5 \n"
+"   3   1    1    0    1    1    1 \n"
+"   4   1    1    1    0    1    1 \n"
+"   5   2    2    2    2    0    6 \n"
+"   6   5    5    5    5    5    0 \n"
+"</screen>"
+msgstr ""
+
+#: listenpaths.xml:87(para)
+msgid ""
+"Row 2 indicates all of the listen rules for node 2; it gets events for nodes "
+"1, 3, and 4 through node 1, and gets events for nodes 5 and 6 from node 5."
+msgstr ""
+
+#: listenpaths.xml:91(para)
+msgid ""
+"The row of 5's at the bottom, for node 6, indicate that node 6 listens to "
+"node 5 to get events from nodes 1-5."
+msgstr ""
+
+#: listenpaths.xml:97(programlisting)
+#, no-wrap
+msgid ""
+"store listen (origin = 1, receiver = 2, provider = 1);\n"
+"store listen (origin = 1, receiver = 3, provider = 1);\n"
+"store listen (origin = 1, receiver = 4, provider = 1);\n"
+"store listen (origin = 1, receiver = 5, provider = 2);\n"
+"store listen (origin = 1, receiver = 6, provider = 5);\n"
+"store listen (origin = 2, receiver = 1, provider = 2);\n"
+"store listen (origin = 2, receiver = 3, provider = 1);\n"
+"store listen (origin = 2, receiver = 4, provider = 1);\n"
+"store listen (origin = 2, receiver = 5, provider = 2);\n"
+"store listen (origin = 2, receiver = 6, provider = 5);\n"
+"store listen (origin = 3, receiver = 1, provider = 3);\n"
+"store listen (origin = 3, receiver = 2, provider = 1);\n"
+"store listen (origin = 3, receiver = 4, provider = 1);\n"
+"store listen (origin = 3, receiver = 5, provider = 2);\n"
+"store listen (origin = 3, receiver = 6, provider = 5);\n"
+"store listen (origin = 4, receiver = 1, provider = 4);\n"
+"store listen (origin = 4, receiver = 2, provider = 1);\n"
+"store listen (origin = 4, receiver = 3, provider = 1);\n"
+"store listen (origin = 4, receiver = 5, provider = 2);\n"
+"store listen (origin = 4, receiver = 6, provider = 5);\n"
+"store listen (origin = 5, receiver = 1, provider = 2);\n"
+"store listen (origin = 5, receiver = 2, provider = 5);\n"
+"store listen (origin = 5, receiver = 3, provider = 1);\n"
+"store listen (origin = 5, receiver = 4, provider = 1);\n"
+"store listen (origin = 5, receiver = 6, provider = 5);\n"
+"store listen (origin = 6, receiver = 1, provider = 2);\n"
+"store listen (origin = 6, receiver = 2, provider = 5);\n"
+"store listen (origin = 6, receiver = 3, provider = 1);\n"
+"store listen (origin = 6, receiver = 4, provider = 1);\n"
+"store listen (origin = 6, receiver = 5, provider = 6);"
+msgstr ""
+
+#: listenpaths.xml:94(para)
+msgid ""
+"The set of slonik <command>set listen</command> statements to express this "
+"<quote>listener network</quote> are as follows: <placeholder-1/>"
+msgstr ""
+
+#: listenpaths.xml:130(para)
+msgid "How we read these listen statements is thus..."
+msgstr ""
+
+#: listenpaths.xml:132(para)
+msgid ""
+"When on the <quote>receiver</quote> node, look to the <quote>provider</"
+"quote> node to provide events coming from the <quote>origin</quote> node."
+msgstr ""
+
+#: listenpaths.xml:135(para)
+msgid ""
+"The tool <filename>init_cluster</filename> in the <filename>altperl</"
+"filename> scripts produces optimized listener networks in both the tabular "
+"form shown above as well as in the form of <xref linkend=\"slonik\"/> "
+"statements."
+msgstr ""
+
+#: listenpaths.xml:144(para)
+msgid ""
+"If you change the shape of the node set, so that the nodes subscribe "
+"differently to things, you need to drop <xref linkend=\"table.sl-listen\"/> "
+"entries and create new ones to indicate the new preferred paths between "
+"nodes. Until &slony1;1.1;, there is no automated way at this point to do "
+"this <quote>reshaping</quote>."
+msgstr ""
+
+#: listenpaths.xml:151(para)
+msgid ""
+"If you <emphasis>don't</emphasis> change the <xref linkend=\"table.sl-listen"
+"\"/> entries, events will likely continue to propagate so long as all of the "
+"nodes continue to run well. the problem will only be noticed when a node is "
+"taken down, <quote>orphaning</quote> any nodes that are listening through it."
+msgstr ""
+
+#: listenpaths.xml:157(para)
+msgid ""
+"you might have multiple replication sets that have <emphasis>different</"
+"emphasis> shapes for their respective trees of subscribers. there won't be a "
+"single <quote>best</quote> listener configuration in that case."
+msgstr ""
+
+#: listenpaths.xml:162(para)
+msgid ""
+"In order for there to be an <xref linkend=\"table.sl-listen\"/> path, there "
+"<emphasis>must</emphasis> be a series of <xref linkend=\"table.sl-path\"/> "
+"entries connecting the origin to the receiver. this means that if the "
+"contents of <xref linkend=\"table.sl-path\"/> do not express a "
+"<quote>connected</quote> network of nodes, then some nodes will not be "
+"reachable. this would typically happen, in practice, when you have two sets "
+"of nodes, one in one subnet, and another in another subnet, where there are "
+"only a couple of <quote>firewall</quote> nodes that can talk between the "
+"subnets. cut out those nodes and the subnets stop communicating."
+msgstr ""
+
+#: listenpaths.xml:140(para)
+msgid ""
+"There are three <quote>thorns</quote> in this set of roses: <placeholder-1/>"
+msgstr ""
+
+#: listenpaths.xml:178(title)
+msgid "Automated Listen Path Generation"
+msgstr ""
+
+#: listenpaths.xml:180(indexterm)
+msgid "<primary> automated listen path generation </primary>"
+msgstr ""
+
+#: listenpaths.xml:188(para)
+msgid ""
+"<xref linkend=\"table.sl-subscribe\"/> entries are the first, most vital "
+"control as to what listens to what; we <emphasis>know</emphasis> there must "
+"be a direct path between each subscriber node and its provider."
+msgstr ""
+
+#: listenpaths.xml:193(para)
+msgid ""
+"<xref linkend=\"table.sl-path\"/> entries are the second indicator; if <xref "
+"linkend=\"table.sl-subscribe\"/> has not already indicated <quote>how to "
+"listen,</quote> then a node may listen directly to the event's origin if "
+"there is a suitable <xref linkend=\"table.sl-path\"/> entry."
+msgstr ""
+
+#: listenpaths.xml:199(para)
+msgid ""
+"Lastly, if there has been no guidance thus far based on the above data "
+"sources, then nodes can listen indirectly via every node that is either a "
+"provider for the receiver, or that is using the receiver as a provider."
+msgstr ""
+
+#: listenpaths.xml:182(para)
+msgid ""
+"In &slony1; version 1.1, a heuristic scheme is introduced to automatically "
+"generate <envar>sl_listen</envar> entries. This happens, in order, based on "
+"three data sources: <placeholder-1/>"
+msgstr ""
+
+#: listenpaths.xml:206(para)
+msgid ""
+"Any time <xref linkend=\"table.sl-subscribe\"/> or <xref linkend=\"table.sl-"
+"path\"/> are modified, <function>RebuildListenEntries()</function> will be "
+"called to revise the listener paths."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: listenpaths.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: slonyupgrade.xml:4(title)
+msgid "&slony1; Upgrade"
+msgstr ""
+
+#: slonyupgrade.xml:5(indexterm)
+msgid "<primary>Upgrading between minor slony versions</primary>"
+msgstr ""
+
+#: slonyupgrade.xml:6(para)
+msgid ""
+"Minor &slony1; versions can be upgraded using the slonik <xref linkend="
+"\"stmtupdatefunctions\"/> command. This includes upgrades from 2.2.x to a "
+"newer version 2.2.y version or from 2.0.x to 2.1.y."
+msgstr ""
+
+#: slonyupgrade.xml:9(para)
+msgid ""
+"When upgrading &slony1;, the installation on all nodes in a cluster must be "
+"upgraded at once, using the &lslonik; command <xref linkend="
+"\"stmtupdatefunctions\"/>."
+msgstr ""
+
+#: slonyupgrade.xml:13(para) slonyupgrade.xml:209(para)
+msgid ""
+"While this requires temporarily stopping replication, it does not forcibly "
+"require an outage for applications that submit updates."
+msgstr ""
+
+#: slonyupgrade.xml:17(para) slonyupgrade.xml:213(para)
+msgid "The proper upgrade procedure is thus:"
+msgstr ""
+
+#: slonyupgrade.xml:19(para) slonyupgrade.xml:215(para)
+msgid ""
+"Stop the &lslon; processes on all nodes. (<emphasis>e.g.</emphasis> - old "
+"version of &lslon;)"
+msgstr ""
+
+#: slonyupgrade.xml:21(para)
+msgid "Install the new version of &lslon; software on all nodes."
+msgstr ""
+
+#: slonyupgrade.xml:23(para)
+msgid ""
+"Execute a &lslonik; script containing the command <command>update functions "
+"(id = [whatever]);</command> for each node in the cluster."
+msgstr ""
+
+#: slonyupgrade.xml:26(para) slonyupgrade.xml:224(para)
+msgid ""
+"Remember that your slonik upgrade script like all other slonik scripts must "
+"contain the proper preamble commands to function."
+msgstr ""
+
+#: slonyupgrade.xml:29(para) slonyupgrade.xml:227(para)
+msgid "Start all slons."
+msgstr ""
+
+#: slonyupgrade.xml:32(para)
+msgid ""
+"The overall operation is relatively safe: If there is any mismatch between "
+"component versions, the &lslon; will refuse to start up, which provides "
+"protection against corruption."
+msgstr ""
+
+#: slonyupgrade.xml:36(para)
+msgid ""
+"You need to be sure that the C library containing SPI trigger functions and "
+"the slony SQL files that get installed into the share directory are "
+"installed on your database server. The slony version number will be part of "
+"these files so they can be installed on your database server before the "
+"upgrade and co-exist with the old version of &slony1;"
+msgstr ""
+
+#: slonyupgrade.xml:44(title)
+msgid "Upgrade from 2.1 to 2.2"
+msgstr ""
+
+#: slonyupgrade.xml:46(para)
+msgid ""
+"In &slony1; 2.2, we change the layout of tables &sllog1; and &sllog2;. This "
+"does not prevent an in-place upgrade from version 2.1, however it does "
+"require that there be no unreplicated data lingering in &sllog1; and "
+"&sllog2;."
+msgstr ""
+
+#: slonyupgrade.xml:51(para)
+msgid ""
+"If any data remains unconfirmed, then <xref linkend=\"stmtupdatefunctions\"/"
+"> will fail with the message: <screen>\n"
+"cannot upgrade to new sl_log_N format due to existing unreplicated data\n"
+"</screen>"
+msgstr ""
+
+#: slonyupgrade.xml:59(para)
+msgid ""
+"Use <xref linkend=\"stmtlockset\"/> to lock all sets, so that no new changes "
+"are being injected into the log tables"
+msgstr ""
+
+#: slonyupgrade.xml:60(para)
+msgid ""
+"Set &lslon; parameter <xref linkend=\"slon-config-cleanup-interval\"/> to a "
+"very low value (a few seconds) so that the &lslon; cleanup thread will trim "
+"data out of &sllog1; and &sllog2; immediately"
+msgstr ""
+
+#: slonyupgrade.xml:61(para)
+msgid ""
+"Restart &lslon; for each node and let it run through a cleanup cycle to "
+"empty out &sllog1; and &sllog2; on all nodes."
+msgstr ""
+
+#: slonyupgrade.xml:63(para)
+msgid ""
+"Verify that &sllog1; and &sllog2; are empty on all nodes in the cluster."
+msgstr ""
+
+#: slonyupgrade.xml:64(para)
+msgid ""
+"Use <xref linkend=\"stmtupdatefunctions\"/> against each node to upgrade to "
+"version 2.2"
+msgstr ""
+
+#: slonyupgrade.xml:66(para)
+msgid "Use <xref linkend=\"stmtunlockset\"/> to unlock all sets"
+msgstr ""
+
+#: slonyupgrade.xml:57(para)
+msgid "A suggested approach is as follows: <placeholder-1/>"
+msgstr ""
+
+#: slonyupgrade.xml:73(title)
+msgid "Incompatibilities between 2.1 and 2.2"
+msgstr ""
+
+#: slonyupgrade.xml:75(indexterm) slonyupgrade.xml:136(indexterm)
+#: slonyupgrade.xml:158(indexterm)
+msgid "<primary>incompatibilities between versions</primary>"
+msgstr ""
+
+#: slonyupgrade.xml:76(title)
+msgid "Slony Log Tables"
+msgstr ""
+
+#: slonyupgrade.xml:77(para)
+msgid ""
+"The format of the slony log tables sl_log_1 and sl_log_2 has changed. The "
+"data to be replicated is now stored in an array of of column names and "
+"values. It was previously stored as the text that would make up the SQL "
+"command."
+msgstr ""
+
+#: slonyupgrade.xml:84(title)
+msgid "FAILOVER changes"
+msgstr ""
+
+#: slonyupgrade.xml:85(para)
+msgid ""
+"The syntax of the <xref linkend=\"stmtfailover\"/> command has changed. If "
+"multiple nodes in the cluster have failed, including subscriber-only nodes, "
+"then all failed nodes must be passed to the failover command. The rules "
+"concerning which nodes can be a failover node have also changed."
+msgstr ""
+
+#: slonyupgrade.xml:92(title)
+msgid "Reshaping subscriptions"
+msgstr ""
+
+#: slonyupgrade.xml:93(para)
+msgid ""
+"Prior to slony 2.2.0 you could use the <xref linkend=\"stmtsubscribeset\"/> "
+"command to change a subscribers provider to a different provider for a set. "
+"As of &slony1; 2.2.0 the <xref linkend=\"stmtsubscribeset\"/> command can "
+"only be used to establish an initial subscription. The <xref linkend="
+"\"stmtresubscribenode\"/> command has been introduced to change the provider "
+"node."
+msgstr ""
+
+#: slonyupgrade.xml:104(title)
+msgid "EXECUTE SCRIPT OPTIONS"
+msgstr ""
+
+#: slonyupgrade.xml:105(para)
+msgid ""
+"The <xref linkend=\"stmtddlscript\"/> command no longer accepts SET ID as a "
+"valid option."
+msgstr ""
+
+#: slonyupgrade.xml:112(title)
+msgid "LOG SHIPPING"
+msgstr ""
+
+#: slonyupgrade.xml:113(para)
+msgid ""
+"The format of the .SQL files generated for log shipping has changed. Prior "
+"to &slony1; 2.2.0 these files contained SQL INSERT/UPDATE/DELETE statements. "
+"They now contain a COPY statement that inserts these changes into a "
+"sl_log_archive table. A trigger will then apply these changes on the log "
+"shipping target."
+msgstr ""
+
+#: slonyupgrade.xml:122(title)
+msgid "Installable files are now versioned"
+msgstr ""
+
+#: slonyupgrade.xml:123(para)
+msgid ""
+"The files that get installed on database servers in the $libdir and "
+"$sharedir now have the &slony1; version number as part of the file name. For "
+"example slony1_funcs.so is now slony1_funcs.2.2.0.so and slony1_funcs.sql is "
+"now slony1_funcs.2.2.0.sql"
+msgstr ""
+
+#: slonyupgrade.xml:135(title)
+msgid "Incompatibilities between 2.0 and 2.1"
+msgstr ""
+
+#: slonyupgrade.xml:137(title)
+msgid "Automatic Wait For"
+msgstr ""
+
+#: slonyupgrade.xml:138(para)
+msgid ""
+"Slonik will now sometimes wait for previously submitted events to be "
+"confirmed before submittng additional events. This is described in <xref "
+"linkend=\"events\"/>"
+msgstr ""
+
+#: slonyupgrade.xml:145(title)
+msgid "SNMP Support"
+msgstr ""
+
+#: slonyupgrade.xml:146(para)
+msgid ""
+"In version 2.0 &slony1; could be built with SNMP support. This allowed "
+"&slony1; to send SNMP messages. This has been removed in version 2.1"
+msgstr ""
+
+#: slonyupgrade.xml:156(title)
+msgid "Incompatibilities between 1.2 and 2.0"
+msgstr ""
+
+#: slonyupgrade.xml:160(title)
+msgid "TABLE ADD KEY issue in &slony1; 2.0"
+msgstr ""
+
+#: slonyupgrade.xml:161(para)
+msgid ""
+"The TABLE ADD KEY slonik command has been removed in version 2.0. This means "
+"that all tables must have a set of columns that form a unique key for the "
+"table. If you are upgrading from a previous &slony1; version and are using a "
+"&slony1; created primary key then you will need to modify your table to have "
+"its own primary key before installing &slony1; version 2.0"
+msgstr ""
+
+#: slonyupgrade.xml:171(title)
+msgid "New Trigger Handling in &slony1; Version 2"
+msgstr ""
+
+#: slonyupgrade.xml:173(para)
+msgid ""
+"One of the major changes to &slony1; is that enabling/disabling of triggers "
+"and rules now takes place as plain SQL, supported by &postgres; 8.3+, rather "
+"than via <quote>hacking</quote> on the system catalog."
+msgstr ""
+
+#: slonyupgrade.xml:178(para)
+msgid ""
+"As a result, &slony1; users should be aware of the &postgres; syntax for "
+"<command>ALTER TABLE</command>, as that is how they can accomplish what was "
+"formerly accomplished via <xref linkend=\"stmtstoretrigger\"/> and <xref "
+"linkend=\"stmtdroptrigger\"/>."
+msgstr ""
+
+#: slonyupgrade.xml:185(title)
+msgid "SUBSCRIBE SET goes to the origin"
+msgstr ""
+
+#: slonyupgrade.xml:187(para)
+msgid ""
+"New in 2.0.5 (but not older versions of 2.0.x) is that <xref linkend="
+"\"stmtsubscribeset\"/> commands are submitted by slonik to the set origin "
+"not the provider. This means that you only need to issue <xref linkend="
+"\"stmtwaitevent\"/> on the set origin to wait for the subscription process "
+"to complete."
+msgstr ""
+
+#: slonyupgrade.xml:194(title)
+msgid "WAIT FOR EVENT requires WAIT ON"
+msgstr ""
+
+#: slonyupgrade.xml:195(para)
+msgid ""
+"With version 2.0 the WAIT FOR EVENT slonik command requires that the WAIT ON "
+"parameter be specified. Any slonik scripts that were assuming a default "
+"value will need to be modified"
+msgstr ""
+
+#: slonyupgrade.xml:202(title)
+msgid "Upgrading to &slony1; version 2.1 from version 2.0"
+msgstr ""
+
+#: slonyupgrade.xml:205(para)
+msgid ""
+"&slony1; version 2.0 can be upgraded to version 2.1 using the &lslonik; "
+"command <xref linkend=\"stmtupdatefunctions\"/>."
+msgstr ""
+
+#: slonyupgrade.xml:217(para)
+msgid ""
+"Install the new version of &slony1;; software on all nodes (including new "
+"versions of the shared functions and libraries) ."
+msgstr ""
+
+#: slonyupgrade.xml:220(para)
+msgid ""
+"Execute a &lslonik; script containing the command <command>update functions "
+"(id = [whatever]);</command> for each node in the cluster. This will alter "
+"the structure of some of the &slony1; configuration tables."
+msgstr ""
+
+#: slonyupgrade.xml:231(title)
+msgid "Upgrading to &slony1; version 2.1 from version 1.2 or earlier"
+msgstr ""
+
+#: slonyupgrade.xml:234(indexterm)
+msgid "<primary>upgrading to &slony1; version 2</primary>"
+msgstr ""
+
+#: slonyupgrade.xml:236(para)
+msgid ""
+"The version 2 branch is <emphasis>substantially</emphasis> different from "
+"earlier releases, dropping support for versions of &postgres; prior to 8.3, "
+"as in version 8.3, support for a <quote>session replication role</quote> was "
+"added, thereby eliminating the need for system catalog hacks as well as the "
+"not-entirely-well-supported <envar>xxid</envar> data type."
+msgstr ""
+
+#: slonyupgrade.xml:243(para)
+msgid ""
+"As a result of the replacement of the <envar>xxid</envar> type with a "
+"(native-to-8.3) &postgres; transaction XID type, the &lslonik; command <xref "
+"linkend=\"stmtupdatefunctions\"/> is quite inadequate to the process of "
+"upgrading earlier versions of &slony1; to version 2."
+msgstr ""
+
+#: slonyupgrade.xml:249(para)
+msgid ""
+"In version 2.0.2, we have added a new option to <xref linkend="
+"\"stmtsubscribeset\"/>, <command>OMIT COPY</command>, which allows taking an "
+"alternative approach to upgrade which amounts to:"
+msgstr ""
+
+#: slonyupgrade.xml:254(para)
+msgid "Uninstall old version of &slony1;"
+msgstr ""
+
+#: slonyupgrade.xml:255(para)
+msgid "When &slony1; uninstalls itself, catalog corruptions are fixed back up."
+msgstr ""
+
+#: slonyupgrade.xml:256(para)
+msgid "Install &slony1; version 2"
+msgstr ""
+
+#: slonyupgrade.xml:257(para)
+msgid "Resubscribe, with <command>OMIT COPY</command>"
+msgstr ""
+
+#: slonyupgrade.xml:260(para)
+msgid ""
+"There is a large <quote>foot gun</quote> here: during part of the process, "
+"&slony1; is not installed in any form, and if an application updates one or "
+"another of the databases, the resubscription, omitting copying data, will be "
+"left with data <emphasis>out of sync.</emphasis>"
+msgstr ""
+
+#: slonyupgrade.xml:266(para)
+msgid ""
+"The administrator <emphasis>must take care</emphasis>; &slony1; has no way "
+"to help ensure the integrity of the data during this process."
+msgstr ""
+
+#: slonyupgrade.xml:271(para)
+msgid ""
+"The following process is suggested to help make the upgrade process as safe "
+"as possible, given the above risks."
+msgstr ""
+
+#: slonyupgrade.xml:276(para)
+msgid ""
+"Use <xref linkend=\"slonikconfdump\"/> to generate a &lslonik; script to "
+"recreate the replication cluster."
+msgstr ""
+
+#: slonyupgrade.xml:279(para)
+msgid ""
+"Be sure to verify the <xref linkend=\"admconninfo\"/> statements, as the "
+"values are pulled are drawn from the PATH configuration, which may not "
+"necessarily be suitable for running &lslonik;."
+msgstr ""
+
+#: slonyupgrade.xml:283(para) slonyupgrade.xml:299(para)
+msgid "This step may be done before the application outage."
+msgstr ""
+
+#: slonyupgrade.xml:286(para)
+msgid ""
+"Determine what triggers have <xref linkend=\"stmtstoretrigger\"/> "
+"configuration on subscriber nodes."
+msgstr ""
+
+#: slonyupgrade.xml:290(para)
+msgid ""
+"Trigger handling has fundamentally changed between &slony1; 1.2 and 2.0."
+msgstr ""
+
+#: slonyupgrade.xml:293(para)
+msgid ""
+"Generally speaking, what needs to happen is to query <envar>sl_table</envar> "
+"on each node, and, for any triggers found in <envar>sl_table</envar>, it is "
+"likely to be appropriate to set up a script indicating either "
+"<command>ENABLE REPLICA TRIGGER</command> or <command>ENABLE ALWAYS TRIGGER</"
+"command> for these triggers."
+msgstr ""
+
+#: slonyupgrade.xml:302(para)
+msgid ""
+"Begin an application outage during which updates should no longer be applied "
+"to the database."
+msgstr ""
+
+#: slonyupgrade.xml:304(para)
+msgid ""
+"To ensure that applications cease to make changes, it would be appropriate "
+"to lock them out via modifications to <filename>pg_hba.conf</filename>"
+msgstr ""
+
+#: slonyupgrade.xml:306(para)
+msgid ""
+"Ensure replication is entirely caught up, via examination of the "
+"<envar>sl_status</envar> view, and any application data that may seem "
+"appropriate."
+msgstr ""
+
+#: slonyupgrade.xml:308(para)
+msgid "Shut down &lslon; processes."
+msgstr ""
+
+#: slonyupgrade.xml:310(para)
+msgid "Uninstall the old version of &slony1; from the database."
+msgstr ""
+
+#: slonyupgrade.xml:312(para)
+msgid ""
+"This involves running a &lslonik; script that runs <xref linkend="
+"\"stmtuninstallnode\"/> against each node in the cluster."
+msgstr ""
+
+#: slonyupgrade.xml:317(para)
+msgid "Ensure new &slony1; binaries are in place."
+msgstr ""
+
+#: slonyupgrade.xml:319(para)
+msgid ""
+"A convenient way to handle this is to have old and new in different "
+"directories alongside two &postgres; builds, stop the "
+"<application>postmaster</application>, repoint to the new directory, and "
+"restart the <application>postmaster</application>."
+msgstr ""
+
+#: slonyupgrade.xml:322(para)
+msgid "Run the script that reconfigures replication as generated earlier."
+msgstr ""
+
+#: slonyupgrade.xml:324(para)
+msgid ""
+"This script should probably be split into two portions to be run separately:"
+msgstr ""
+
+#: slonyupgrade.xml:326(para)
+msgid "Firstly, set up nodes, paths, sets, and such"
+msgstr ""
+
+#: slonyupgrade.xml:327(para)
+msgid "At this point, start up &lslon; processes"
+msgstr ""
+
+#: slonyupgrade.xml:328(para)
+msgid "Then, run the portion which runs <xref linkend=\"stmtsubscribeset\"/>"
+msgstr ""
+
+#: slonyupgrade.xml:331(para)
+msgid ""
+"Splitting the <xref linkend=\"slonikconfdump\"/> script as described above "
+"is left as an exercise for the reader."
+msgstr ""
+
+#: slonyupgrade.xml:334(para)
+msgid ""
+"If there were triggers that needed to be activated on subscriber nodes, this "
+"is the time to activate them."
+msgstr ""
+
+#: slonyupgrade.xml:335(para)
+msgid ""
+"At this point, the cluster should be back up and running, ready to be "
+"reconfigured so that applications may access it again."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: slonyupgrade.xml:0(None)
+msgid "translator-credits"
+msgstr ""

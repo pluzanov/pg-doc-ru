@@ -1,0 +1,197 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: partitioning.xml:4(title)
+msgid "Partitioning Support"
+msgstr ""
+
+#: partitioning.xml:5(indexterm)
+msgid "<primary>partitioning</primary>"
+msgstr ""
+
+#: partitioning.xml:7(para)
+msgid ""
+"&slony1; does not directly provide support for the &postgres; methodology of "
+"partitioning via inheritance, but it does not, by the same token, prevent "
+"the Gentle User from using that sort of replication scheme, and then "
+"replicating the underlying tables."
+msgstr ""
+
+#: partitioning.xml:14(para)
+msgid ""
+"One of the tests in the regression tests called <filename>testinherit</"
+"filename>, tests that &slony1; behaves as expected to replicate data across "
+"partitions. This test creates a master <envar>sales_data</envar> table, from "
+"which various children inherit:"
+msgstr ""
+
+#: partitioning.xml:21(envar)
+msgid "us_east"
+msgstr ""
+
+#: partitioning.xml:22(envar)
+msgid "us_west"
+msgstr ""
+
+#: partitioning.xml:23(envar)
+msgid "canada"
+msgstr ""
+
+#: partitioning.xml:26(para)
+msgid ""
+"The example is somewhat simplistic as it only provides rules to handle "
+"initial insertion into the respective partitions; it does not then support "
+"allowing tuples to migrate from partition to partition if they are altered "
+"via an <command>UPDATE</command> statement. On the other hand, unlike with "
+"many partitioning cases, this one permits the <quote>parent</quote> table to "
+"contain tuples."
+msgstr ""
+
+#: partitioning.xml:33(para)
+msgid "Things worth observing include:"
+msgstr ""
+
+#: partitioning.xml:36(para)
+msgid "Each partition table must be added to replication individually."
+msgstr ""
+
+#: partitioning.xml:37(para)
+msgid ""
+"&slony1; is not aware of the relationship between partitions; it simply "
+"regards them as a series of individual tables."
+msgstr ""
+
+#: partitioning.xml:41(title)
+msgid "Support for Dynamic Partition Addition"
+msgstr ""
+
+#: partitioning.xml:43(indexterm)
+msgid "<primary>partitioning: dynamic addition of partitions</primary>"
+msgstr ""
+
+#: partitioning.xml:45(para)
+msgid ""
+"One common <quote>use case</quote> of replication is to partition large data "
+"sets based on time period, whether weekly, monthly, quarterly, or annually, "
+"where there is therefore a need to periodically add a new partition."
+msgstr ""
+
+#: partitioning.xml:50(para)
+msgid ""
+"The traditional approach taken to this in &slony1; would be the following:"
+msgstr ""
+
+#: partitioning.xml:54(para)
+msgid ""
+"<xref linkend=\"stmtddlscript\"/> to add the new partition(s) on each node"
+msgstr ""
+
+#: partitioning.xml:55(para)
+msgid "<xref linkend=\"stmtcreateset\"/> to create a temporary replication set"
+msgstr ""
+
+#: partitioning.xml:56(para)
+msgid "<xref linkend=\"stmtsetaddtable\"/> to add the table(s) to that set"
+msgstr ""
+
+#: partitioning.xml:57(para)
+msgid ""
+"<xref linkend=\"stmtsubscribeset\"/>, once for each subscriber node, to set "
+"up replication of the table on each node"
+msgstr ""
+
+#: partitioning.xml:58(para)
+msgid ""
+"<xref linkend=\"stmtmergeset\"/>, once subscriptions are running, to "
+"eliminate the temporary set"
+msgstr ""
+
+#: partitioning.xml:61(para)
+msgid ""
+"In view of the fact that we can be certain that a thus-far-unused partition "
+"will be empty, we offer an alternative mechanism which evades the need to "
+"create extra replication sets and the need to submit multiple <xref linkend="
+"\"stmtsubscribeset\"/> requests. The alternative is as follows; we use <xref "
+"linkend=\"stmtddlscript\"/>, extending the DDL script thus:"
+msgstr ""
+
+#: partitioning.xml:69(para)
+msgid "Add the new partition(s) on each node"
+msgstr ""
+
+#: partitioning.xml:70(para)
+msgid ""
+"Run a &slony1; stored function to mark the new partition as being a "
+"replicated table"
+msgstr ""
+
+#: partitioning.xml:72(para)
+msgid ""
+"On the origin node, if the table is found to have tuples in it, the DDL "
+"script will be aborted, as the precondition that it be empty has been "
+"violated."
+msgstr ""
+
+#: partitioning.xml:76(para)
+msgid ""
+"On subscriber nodes, we may safely <command>TRUNCATE</command> the new table."
+msgstr ""
+
+#: partitioning.xml:80(para)
+msgid ""
+"There are several stored functions provided to support this; the Gentle User "
+"may use whichever seems preferable. The <quote>base function</quote> is "
+"<function>add_empty_table_to_replication()</function>; the others provide "
+"additional structure and validation of the arguments"
+msgstr ""
+
+#: partitioning.xml:86(function)
+msgid ""
+"add_empty_table_to_replication (set_id, tab_id, nspname, tabname, idxname, "
+"comment);"
+msgstr ""
+
+#: partitioning.xml:88(para)
+msgid ""
+"This is the <quote>base</quote> function; you must specify the set ID, table "
+"ID, namespace name, table name, index name, and a comment, and this table "
+"will be added to replication."
+msgstr ""
+
+#: partitioning.xml:92(para)
+msgid ""
+"Note that the index name is optional; if NULL, the function will look up the "
+"primary key for the table, assuming one exists, and fail if it does not "
+"exist."
+msgstr ""
+
+#: partitioning.xml:98(function)
+msgid "replicate_partition(tab_id, nspname, tabname, idxname, comment);"
+msgstr ""
+
+#: partitioning.xml:100(para)
+msgid ""
+"If it is known that the table to be replicated inherits from a replicated "
+"parent table, then this function can draw set and origin information from "
+"that parent table."
+msgstr ""
+
+#: partitioning.xml:108(para)
+msgid ""
+"As has been observed previously, &slony1; is unaware that tables are "
+"partitioned. Therefore, this approach may also be used with confidence to "
+"add any table to replication that is known to be empty."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: partitioning.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,477 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: addthings.xml:3(title)
+msgid "Modifying Things in a Replication Cluster"
+msgstr ""
+
+#: addthings.xml:5(title)
+msgid "Adding a Table To Replication"
+msgstr ""
+
+#: addthings.xml:6(indexterm)
+msgid "<primary>adding objects to replication</primary>"
+msgstr ""
+
+#: addthings.xml:7(indexterm)
+msgid "<primary> adding a table to replication </primary>"
+msgstr ""
+
+#: addthings.xml:9(para)
+msgid ""
+"After your &slony1; cluster is setup and nodes are subscribed to your "
+"replication set you can still add more tables to replication. To do this you "
+"must first create the table on each node. You can do this using psql (on "
+"each node) or using the <xref linkend=\"stmtddlscript\"/> command. Next, you "
+"should create a new replication set and add the table (or sequence) to the "
+"new replication set. Then you subscribe your subscribers to the new "
+"replictation set. Once the subscription process is finished you can merge "
+"your new replication set into the old one."
+msgstr ""
+
+#: addthings.xml:22(programlisting)
+#, no-wrap
+msgid ""
+"slonik &lt;&lt;_EOF_\n"
+"\t#--\n"
+"\t# define the namespace the replication system uses in our example it is\n"
+"\t# slony_example\n"
+"\t#--\n"
+"\tcluster name = $CLUSTERNAME;\n"
+"\n"
+"\t#--\n"
+"\t# admin conninfo's are used by slonik to connect to the nodes one for each\n"
+"\t# node on each side of the cluster, the syntax is that of PQconnectdb in\n"
+"\t# the C-API\n"
+"\t# --\n"
+"\tnode 1 admin conninfo = 'dbname=$MASTERDBNAME host=$MASTERHOST user=$REPLICATIONUSER';\n"
+"\tnode 2 admin conninfo = 'dbname=$SLAVEDBNAME host=$SLAVEHOST user=$REPLICATIONUSER';\n"
+"\n"
+"\n"
+"        create set (id=2, origin=1, comment='a second replication set');\n"
+"        set add table (set id=2, origin=1, id=5, fully qualified name = 'public.newtable', comment='some new table');\n"
+"        subscribe set(id=2, provider=1,receiver=2);\n"
+"        merge set(id=1, add id=2,origin=1);"
+msgstr ""
+
+#: addthings.xml:49(title)
+msgid "How To Add Columns To a Replicated Table"
+msgstr ""
+
+#: addthings.xml:51(indexterm)
+msgid "<primary> adding columns to a replicated table </primary>"
+msgstr ""
+
+#: addthings.xml:53(para)
+msgid ""
+"There are two approaches you can use for adding (or renaming) columns to an "
+"existing replicated table."
+msgstr ""
+
+#: addthings.xml:59(para)
+msgid "Create a SQL script with your ALTER table statements"
+msgstr ""
+
+#: addthings.xml:62(para)
+msgid ""
+"Stop any application updates to the table you are changing (ie have an "
+"outage)"
+msgstr ""
+
+#: addthings.xml:64(para)
+msgid ""
+"Use the slonik <xref linkend=\"stmtddlscript\"/> command to run your script"
+msgstr ""
+
+#: addthings.xml:56(para)
+msgid ""
+"The first approach involves you using the <xref linkend=\"stmtddlscript\"/> "
+"command. With this approach you would <placeholder-1/> Your table should now "
+"be updated on all databases in the cluster."
+msgstr ""
+
+#: addthings.xml:72(para)
+msgid ""
+"Alternatively, if you have the <link linkend=\"altperl\"> altperl scripts </"
+"link> installed, you may use <command>slonik_execute_script</command> for "
+"this purpose:"
+msgstr ""
+
+#: addthings.xml:76(command)
+msgid "slonik_execute_script [options] set# full_path_to_sql_script_file"
+msgstr ""
+
+#: addthings.xml:79(para)
+msgid ""
+"See <command>slonik_execute_script -h</command> for further options; note "
+"that this uses <xref linkend=\"stmtddlscript\"/> underneath."
+msgstr ""
+
+#: addthings.xml:83(para)
+msgid "There are a number of <quote>sharp edges</quote> to note..."
+msgstr ""
+
+#: addthings.xml:86(para)
+msgid ""
+"You absolutely <emphasis>must not</emphasis> include transaction control "
+"commands, particularly <command>BEGIN</command> and <command>COMMIT</"
+"command>, inside these DDL scripts. &slony1; wraps DDL scripts with a "
+"<command>BEGIN</command>/<command>COMMIT</command> pair; adding extra "
+"transaction control will mean that parts of the DDL will commit outside the "
+"control of &slony1;"
+msgstr ""
+
+#: addthings.xml:94(para)
+msgid ""
+"Version 2.0 of &slony1; does not explicitly lock tables when performing an "
+"execute script. To avoid some race-conditions exposed by MVCC it is "
+"important that no other transactions are altering the tables being used by "
+"the ddl script while it is running"
+msgstr ""
+
+#: addthings.xml:102(title)
+msgid "How to remove replication for a node"
+msgstr ""
+
+#: addthings.xml:104(indexterm)
+msgid "<primary>removing replication for a node</primary>"
+msgstr ""
+
+#: addthings.xml:106(para) addthings.xml:272(para)
+msgid ""
+"You will want to remove the various &slony1; components connected to the "
+"database(s)."
+msgstr ""
+
+#: addthings.xml:109(para)
+msgid ""
+"We will just consider, for now, doing this to one node. If you have multiple "
+"nodes, you will have to repeat this as many times as necessary."
+msgstr ""
+
+#: addthings.xml:113(para)
+msgid "Components to be Removed:"
+msgstr ""
+
+#: addthings.xml:116(para)
+msgid "Log Triggers / Update Denial Triggers"
+msgstr ""
+
+#: addthings.xml:119(para)
+msgid ""
+"The <quote>cluster</quote> schema containing &slony1; tables indicating the "
+"state of the node as well as various stored functions"
+msgstr ""
+
+#: addthings.xml:123(para)
+msgid "&lslon; process that manages the node"
+msgstr ""
+
+#: addthings.xml:124(para)
+msgid ""
+"Optionally, the SQL and pl/pgsql scripts and &slony1; binaries that are part "
+"of the &postgres; build. (Of course, this would make it challenging to "
+"restart replication; it is unlikely that you truly need to do this...)"
+msgstr ""
+
+#: addthings.xml:135(para)
+msgid ""
+"Stop any application updates to the table you are changing(ie have on outage)"
+msgstr ""
+
+#: addthings.xml:137(para)
+msgid ""
+"Connect to each database in the cluster (in turn) and make the required "
+"changes to the table"
+msgstr ""
+
+#: addthings.xml:141(para)
+msgid "The psql approach is only safe with &slony1; 2.0 or greater"
+msgstr ""
+
+#: addthings.xml:131(para)
+msgid ""
+"The second approach involves using psql to alter the table directly on each "
+"database in the cluster. <placeholder-1/> <placeholder-2/>"
+msgstr ""
+
+#: addthings.xml:146(indexterm)
+msgid "<primary>adding a node</primary>"
+msgstr ""
+
+#: addthings.xml:148(para)
+msgid ""
+"Things are not fundamentally different whether you are adding a brand new, "
+"fresh node, or if you had previously dropped a node and are recreating it. "
+"In either case, you are adding a node to replication."
+msgstr ""
+
+#: addthings.xml:155(title)
+msgid "Adding a Replication Node"
+msgstr ""
+
+#: addthings.xml:156(indexterm)
+msgid "<primary>adding a node to replication</primary>"
+msgstr ""
+
+#: addthings.xml:158(para)
+msgid "To add a node to the replication cluster you should"
+msgstr ""
+
+#: addthings.xml:165(programlisting)
+#, no-wrap
+msgid ""
+"createdb -h $NEWSLAVE_HOST $SLAVEDB\n"
+"pg_dump --exclude-schema=_$CLUSTERNAME -h $MASTER_HOST -s $MASTERDB | psql -h $NEWSLAVE_HOST $SLAVEDB"
+msgstr ""
+
+#: addthings.xml:163(para)
+msgid ""
+"Create a database for the node and install your application schema in it. "
+"<placeholder-1/>"
+msgstr ""
+
+#: addthings.xml:172(programlisting)
+#, no-wrap
+msgid ""
+"cluster name=testcluster;\n"
+"node 5 admin conninfo='host=slavehost dbname=slavedb user=slony password=slony';\n"
+"\n"
+"store node(id=5,comment='some slave node',event node=1);"
+msgstr ""
+
+#: addthings.xml:171(para)
+msgid ""
+"Create the node with the <xref linkend=\"stmtstorenode\"/> command "
+"<placeholder-1/>"
+msgstr ""
+
+#: addthings.xml:182(programlisting)
+#, no-wrap
+msgid ""
+"cluster name=testcluster;\n"
+"node 5 admin conninfo='host=slavehost dbname=slavedb user=slony password=slony';\n"
+"node 1 admin conninfo='host=masterhost dbname=masterdb user=slony password=slony';\n"
+"# also include the admin conninfo lines for any other nodes in your cluster.\n"
+"#\n"
+"#\n"
+"cluster name=testcluster;\n"
+"store path(server=1,client=5,conninfo='host=masterhost,dbname=masterdb,user=slony,password=slony');\n"
+"store path(server=5,client=1,conninfo='host=slavehost,dbname=masterdb,user=slony,password=slony');"
+msgstr ""
+
+#: addthings.xml:180(para)
+msgid ""
+"Create paths between the new node and its provider node with the <xref "
+"linkend=\"stmtstorepath\"/> command. <placeholder-1/>"
+msgstr ""
+
+#: addthings.xml:197(programlisting)
+#, no-wrap
+msgid ""
+"cluster name=testcluster;\n"
+"node 5 admin conninfo='host=slavehost dbname=slavedb user=slony password=slony';\n"
+"node 1 admin conninfo='host=masterhost dbname=slavedb user=slony password=slony';\n"
+"#\n"
+"# also include the admin conninfo lines for any other nodes in the cluster\n"
+"#\n"
+"#\n"
+"cluster name=testcluster;\n"
+"subscribe set(id=1,provider=1, receiver=5,forward=yes);"
+msgstr ""
+
+#: addthings.xml:196(para)
+msgid ""
+"Subscribe the new node to the relevant replication sets <placeholder-1/>"
+msgstr ""
+
+#: addthings.xml:214(title)
+msgid "Adding a Cascaded Replica"
+msgstr ""
+
+#: addthings.xml:215(para)
+msgid ""
+"In a standard &slony1; configuration all slaves(replicas) communicate "
+"directly with the master (origin). Sometimes it is more desirable to have "
+"some of your slaves(replicas) feed off of another replica. This is called a "
+"cascaded replica and is supported by &slony1; For example you might have a "
+"&slony1; cluster with 1 replication set (set id=1) and three nodes. The "
+"master (origin) for set 1 (node id=1), a node in a different data center "
+"that reads directly from the master (node id=2) and a third node in the same "
+"data center as the slave (node id=3). To the subscription sets in this "
+"configuration you need to make sure that paths exist between nodes 2 and "
+"nodes 3. Then to perform the subscription you could use the following slonik "
+"commands."
+msgstr ""
+
+#: addthings.xml:232(programlisting)
+#, no-wrap
+msgid ""
+"#Setup path between node 1==&gt;2\n"
+"store path(server=1,client=2,conninfo='host=masterhost,dbname=masterdb,user=slony,password=slony');\n"
+"store path(server=2,client=1,conninfo='host=slave2host,dbname=slave2db,user=slony,password=slony');\n"
+"\n"
+"#Setup path between node 2==&gt;3\n"
+"store path(server=3,client=2,conninfo='host=slave3host,dbname=slave3db,user=slony,password=slony');\n"
+"store path(server=2,client=3,conninfo='host=slave2host,dbname=slave2db,user=slony,password=slony');\n"
+"\n"
+"subscribe set(set id=1, provider=1, receiver=2,forward=yes);\n"
+"subscribe set (set id=1,provider=2, receiver=3,forward=yes);\n"
+"wait for event(origin=1, confirmed=all, wait on=1);"
+msgstr ""
+
+#: addthings.xml:245(para)
+msgid ""
+"In the above example we define paths from 1==&gt;2 and from 2==&gt;3 but do "
+"not define a path between nodes 1===&gt;3. If a path between node 1 and 3 "
+"was defined the data data for set 1 would still flow through node 2 because "
+"node 2 is the origin for set 1. However if node 2 were to fail nodes 1 and 3 "
+"would be unable to talk to each other unless a path between nodes 1 and "
+"nodes 3 had been defined."
+msgstr ""
+
+#: addthings.xml:254(para)
+msgid ""
+"&slony1; requires that all sets from a given origin cascade to each receiver "
+"in the same manner. If node 1 was also the origin for set 2 then set 2 would "
+"also need to go directly to node 2 and be cascaded from node 2 to node 3. "
+"Node 3 can not receive set 2 from node 1 directly if it is already receiving "
+"set 1 via node 2."
+msgstr ""
+
+#: addthings.xml:264(title)
+msgid "How do I use <link linkend=\"logshipping\">Log Shipping?</link>"
+msgstr ""
+
+#: addthings.xml:266(para)
+msgid ""
+"Discussed in the <link linkend=\"logshipping\"> Log Shipping </link> "
+"section..."
+msgstr ""
+
+#: addthings.xml:270(title)
+msgid "How To Remove Replication For a Node"
+msgstr ""
+
+#: addthings.xml:275(para)
+msgid ""
+"We will just discuss doing this to one node. If you have multiple nodes, you "
+"will have to repeat this as many times as necessary."
+msgstr ""
+
+#: addthings.xml:279(para)
+msgid ""
+"Removing slony from a node involves deleting the slony schema (tables, "
+"functions and triggers) from the node in question and telling the remaining "
+"nodes that the deleted node no longer exists. The slony <xref linkend="
+"\"stmtdropnode\"/> command does both of these items while hte <xref linkend="
+"\"stmtuninstallnode\"/> command only removes the slony schema from the node."
+msgstr ""
+
+#: addthings.xml:287(para)
+msgid ""
+"In the case of a failed node (where you used <xref linkend=\"stmtfailover\"/"
+"> to switch to another node), you may need to use <xref linkend="
+"\"stmtuninstallnode\"/> to drop out the triggers and schema and functions."
+msgstr ""
+
+#: addthings.xml:292(para)
+msgid ""
+"Removing &slony1; from a replica in versions before 2.0 is more complicated. "
+"If this applies to you then you should consult the &slony1; documentation "
+"for the version of &slony1; you are using."
+msgstr ""
+
+#: addthings.xml:302(title)
+msgid "Changing a Nodes Provider"
+msgstr ""
+
+#: addthings.xml:305(indexterm)
+msgid "<primary>reshaping subscriptions</primary>"
+msgstr ""
+
+#: addthings.xml:307(para)
+msgid ""
+"For instance, you might want subscriber node 3 to draw data from node 4 (for "
+"all sets originating on node 1), when it is presently drawing data from node "
+"2."
+msgstr ""
+
+#: addthings.xml:310(para)
+msgid ""
+"The <xref linkend=\"stmtresubscribenode\"/> command can be used to do this. "
+"For existing subscriptions it can revise the subscription information."
+msgstr ""
+
+#: addthings.xml:314(programlisting)
+#, no-wrap
+msgid "resubscribe node(origin=1, provider=4,receiver=3);"
+msgstr ""
+
+#: addthings.xml:324(title)
+msgid "Moving The Master From One Node To Another"
+msgstr ""
+
+#: addthings.xml:325(para)
+msgid ""
+"Sometimes you will want to promote one of your replicas (slaves) to become "
+"the master and at the same time turn the former master into a slave. "
+"&slony1; supports this with the <xref linkend=\"stmtmoveset\"/> command."
+msgstr ""
+
+#: addthings.xml:332(indexterm)
+msgid "<primary>moving master</primary>"
+msgstr ""
+
+#: addthings.xml:334(para)
+msgid ""
+"You must first pick a node that is connected to the former origin (otherwise "
+"it is not straightforward to reverse connections in the move to keep "
+"everything connected)."
+msgstr ""
+
+#: addthings.xml:338(para)
+msgid ""
+"Second, you must run a &lslonik; script with the command <xref linkend="
+"\"stmtlockset\"/> to lock the set on the origin node. Note that at this "
+"point you have an application outage under way, as what this does is to put "
+"triggers on the origin that rejects updates."
+msgstr ""
+
+#: addthings.xml:344(para)
+msgid ""
+"Now, submit the &lslonik; <xref linkend=\"stmtmoveset\"/> request. It's "
+"perfectly reasonable to submit both requests in the same &lslonik; script. "
+"Now, the origin gets switched over to the new origin node. If the new node "
+"is a few events behind, it may take a little while for this to take place."
+msgstr ""
+
+#: addthings.xml:350(programlisting)
+#, no-wrap
+msgid ""
+"LOCK SET(id=1,ORIGIN=1);\n"
+"MOVE SET(ID=1,OLD ORIGIN=1, NEW ORIGIN=3);\n"
+"SYNC(ID=3);\n"
+"WAIT FOR(ORIGIN=1, CONFIRMED=ALL,WAIT ON=1);"
+msgstr ""
+
+#: addthings.xml:357(para)
+msgid ""
+"It is important to stop all non-Slony application activity against all "
+"tables in the replication set before locking the sets. The move set "
+"procedure involves obtaining a lock on every table in the replication set. "
+"Other activities on these tables can result in a deadlock."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: addthings.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,3641 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: slonik_ref.xml:3(title)
+msgid "Slonik Command Summary"
+msgstr ""
+
+#: slonik_ref.xml:5(para)
+msgid ""
+"<application>Slonik</application> is a command line utility designed "
+"specifically to setup and modify configurations of the &slony1; replication "
+"system."
+msgstr ""
+
+#: slonik_ref.xml:13(title)
+msgid "General outline"
+msgstr ""
+
+#: slonik_ref.xml:15(para)
+msgid ""
+"The <application>slonik</application> commandline utility is supposed to be "
+"used embedded into shell scripts and reads commands from files or stdin (via "
+"here documents for example). Nearly all of the <emphasis>real</emphasis> "
+"configuration work is done by calling stored procedures after loading the "
+"&slony1; support base into a database. You may find documentation for those "
+"procedures in the <ulink url=\"schemadoc\">&slony1; Schema Documentation</"
+"ulink>, as well as in comments associated with them in the database."
+msgstr ""
+
+#: slonik_ref.xml:32(para)
+msgid ""
+"The stored procedures have special requirements as to on which particular "
+"node in the replication system they are called,"
+msgstr ""
+
+#: slonik_ref.xml:36(para)
+msgid ""
+"The lack of named parameters for stored procedures makes it rather difficult "
+"to do this from the <application>psql</application> prompt, and"
+msgstr ""
+
+#: slonik_ref.xml:40(para)
+msgid ""
+"<application>psql</application> lacks the ability to maintain multiple "
+"connections with open transactions."
+msgstr ""
+
+#: slonik_ref.xml:28(para)
+msgid "<application>Slonik</application> was created because: <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:48(title)
+msgid "Commands"
+msgstr ""
+
+#: slonik_ref.xml:49(para)
+msgid ""
+"The slonik command language is format free. Commands begin with keywords and "
+"are terminated with a semicolon. Most commands have a list of parameters, "
+"some of which have default values and that are therefore optional. The "
+"parameters of commands are enclosed in parentheses. Each option consists of "
+"one or more keywords, followed by an equal sign, followed by a value. "
+"Multiple options inside the parentheses are separated by commas. All "
+"keywords are case insensitive. The language should remind the reader of SQL."
+msgstr ""
+
+#: slonik_ref.xml:62(para)
+msgid "integer values"
+msgstr ""
+
+#: slonik_ref.xml:63(para)
+msgid "string literals enclosed in single quotes"
+msgstr ""
+
+#: slonik_ref.xml:64(para)
+msgid "boolean values {TRUE|ON|YES} or {FALSE|OFF|NO}"
+msgstr ""
+
+#: slonik_ref.xml:65(para)
+msgid "keywords for special cases"
+msgstr ""
+
+#: slonik_ref.xml:59(para)
+msgid "Option values may be: <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:68(title)
+msgid "Comments"
+msgstr ""
+
+#: slonik_ref.xml:69(para)
+msgid "Comments begin at a hash sign (#) and extend to the end of the line."
+msgstr ""
+
+#: slonik_ref.xml:73(title)
+msgid "Command groups"
+msgstr ""
+
+#: slonik_ref.xml:78(programlisting)
+#, no-wrap
+msgid ""
+"       try {\n"
+"       commands;\n"
+"       } \n"
+"       [on error { commands; }]\n"
+"       [on success { commands; }]\n"
+"      "
+msgstr ""
+
+#: slonik_ref.xml:74(para)
+msgid ""
+"Commands can be combined into groups of commands with optional <command>on "
+"error</command> and <command>on success</command> conditionals. The syntax "
+"for this is: <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:86(para)
+msgid ""
+"Those commands are grouped together into one transaction per participating "
+"node."
+msgstr ""
+
+#: slonik_ref.xml:89(para)
+msgid ""
+"Note that this does not enforce grouping of the actions as a single "
+"transaction on all nodes. For instance, consider the following slonik code:"
+msgstr ""
+
+#: slonik_ref.xml:92(programlisting)
+#, no-wrap
+msgid ""
+"     try {\n"
+"         execute script ( filename = '/tmp/script1.sql', event node=1);\n"
+"         execute script ( filename = '/tmp/script2.sql', event node=1);\n"
+"     }\n"
+"     "
+msgstr ""
+
+#: slonik_ref.xml:99(para)
+msgid ""
+"This <emphasis>would</emphasis> be processed within a single BEGIN/COMMIT on "
+"node 1. However, the requests are separated into two <command>DDL_SCRIPT</"
+"command> events so that each will be run individually, in separate "
+"transactions, on other nodes in the cluster."
+msgstr ""
+
+#: slonik_ref.xml:110(title)
+msgid "Slonik Meta Commands"
+msgstr ""
+
+#: slonik_ref.xml:112(para)
+msgid ""
+"The following commands may be used to somewhat abstract the definitions of "
+"components of Slonik scripts; <xref linkend=\"stmtinclude\"/> grouping "
+"configuration into central files that may be reused, and <xref linkend="
+"\"stmtdefine\"/> allowing mnemonic identifiers to replace cryptic numeric "
+"object IDs."
+msgstr ""
+
+#: slonik_ref.xml:121(refentrytitle)
+msgid "SLONIK INCLUDE"
+msgstr ""
+
+#: slonik_ref.xml:122(manvolnum) slonik_ref.xml:159(manvolnum)
+#: slonik_ref.xml:236(manvolnum) slonik_ref.xml:285(manvolnum)
+#: slonik_ref.xml:356(manvolnum) slonik_ref.xml:387(manvolnum)
+#: slonik_ref.xml:419(manvolnum) slonik_ref.xml:454(manvolnum)
+#: slonik_ref.xml:542(manvolnum) slonik_ref.xml:635(manvolnum)
+#: slonik_ref.xml:720(manvolnum) slonik_ref.xml:790(manvolnum)
+#: slonik_ref.xml:848(manvolnum) slonik_ref.xml:930(manvolnum)
+#: slonik_ref.xml:988(manvolnum) slonik_ref.xml:1066(manvolnum)
+#: slonik_ref.xml:1128(manvolnum) slonik_ref.xml:1152(manvolnum)
+#: slonik_ref.xml:1175(manvolnum) slonik_ref.xml:1256(manvolnum)
+#: slonik_ref.xml:1317(manvolnum) slonik_ref.xml:1402(manvolnum)
+#: slonik_ref.xml:1648(manvolnum) slonik_ref.xml:1753(manvolnum)
+#: slonik_ref.xml:1815(manvolnum) slonik_ref.xml:1874(manvolnum)
+#: slonik_ref.xml:1945(manvolnum) slonik_ref.xml:2021(manvolnum)
+#: slonik_ref.xml:2042(manvolnum) slonik_ref.xml:2061(manvolnum)
+#: slonik_ref.xml:2338(manvolnum) slonik_ref.xml:2410(manvolnum)
+#: slonik_ref.xml:2491(manvolnum) slonik_ref.xml:2550(manvolnum)
+#: slonik_ref.xml:2649(manvolnum) slonik_ref.xml:2766(manvolnum)
+#: slonik_ref.xml:2935(manvolnum) slonik_ref.xml:3010(manvolnum)
+#: slonik_ref.xml:3120(manvolnum) slonik_ref.xml:3179(manvolnum)
+#: slonik_ref.xml:3251(manvolnum) slonik_ref.xml:3298(manvolnum)
+#: slonik_ref.xml:3334(manvolnum) slonik_ref.xml:3390(manvolnum)
+msgid "7"
+msgstr ""
+
+#: slonik_ref.xml:124(refname)
+msgid "INCLUDE"
+msgstr ""
+
+#: slonik_ref.xml:126(refpurpose)
+msgid "pulling in slonik code from another file"
+msgstr ""
+
+#: slonik_ref.xml:130(command)
+msgid "include"
+msgstr ""
+
+#: slonik_ref.xml:131(replaceable)
+msgid "&lt;pathname&gt;"
+msgstr ""
+
+#: slonik_ref.xml:135(title) slonik_ref.xml:173(title)
+#: slonik_ref.xml:249(title) slonik_ref.xml:298(title)
+#: slonik_ref.xml:369(title) slonik_ref.xml:400(title)
+#: slonik_ref.xml:432(title) slonik_ref.xml:467(title)
+#: slonik_ref.xml:553(title) slonik_ref.xml:646(title)
+#: slonik_ref.xml:731(title) slonik_ref.xml:802(title)
+#: slonik_ref.xml:860(title) slonik_ref.xml:942(title)
+#: slonik_ref.xml:1001(title) slonik_ref.xml:1080(title)
+#: slonik_ref.xml:1188(title) slonik_ref.xml:1269(title)
+#: slonik_ref.xml:1330(title) slonik_ref.xml:1415(title)
+#: slonik_ref.xml:1662(title) slonik_ref.xml:1767(title)
+#: slonik_ref.xml:1829(title) slonik_ref.xml:1888(title)
+#: slonik_ref.xml:1959(title) slonik_ref.xml:2073(title)
+#: slonik_ref.xml:2350(title) slonik_ref.xml:2423(title)
+#: slonik_ref.xml:2502(title) slonik_ref.xml:2562(title)
+#: slonik_ref.xml:2661(title) slonik_ref.xml:2777(title)
+#: slonik_ref.xml:2946(title) slonik_ref.xml:3022(title)
+#: slonik_ref.xml:3131(title) slonik_ref.xml:3191(title)
+#: slonik_ref.xml:3262(title) slonik_ref.xml:3311(title)
+#: slonik_ref.xml:3349(title) slonik_ref.xml:3404(title)
+msgid "Description"
+msgstr ""
+
+#: slonik_ref.xml:136(para)
+msgid ""
+"This draws the specified slonik script inline into the present script. If "
+"the <option>pathname</option> specifies a relative path, <xref linkend="
+"\"slonik\"/> will search relative to the current working directory."
+msgstr ""
+
+#: slonik_ref.xml:143(para)
+msgid ""
+"Nested include files are supported. The scanner and parser report the proper "
+"file names and line numbers when they run into an error."
+msgstr ""
+
+#: slonik_ref.xml:148(title) slonik_ref.xml:191(title)
+#: slonik_ref.xml:271(title) slonik_ref.xml:338(title)
+#: slonik_ref.xml:374(title) slonik_ref.xml:405(title)
+#: slonik_ref.xml:440(title) slonik_ref.xml:500(title)
+#: slonik_ref.xml:604(title) slonik_ref.xml:675(title)
+#: slonik_ref.xml:755(title) slonik_ref.xml:820(title)
+#: slonik_ref.xml:903(title) slonik_ref.xml:963(title)
+#: slonik_ref.xml:1040(title) slonik_ref.xml:1101(title)
+#: slonik_ref.xml:1225(title) slonik_ref.xml:1289(title)
+#: slonik_ref.xml:1360(title) slonik_ref.xml:1533(title)
+#: slonik_ref.xml:1713(title) slonik_ref.xml:1785(title)
+#: slonik_ref.xml:1847(title) slonik_ref.xml:1916(title)
+#: slonik_ref.xml:1992(title) slonik_ref.xml:2205(title)
+#: slonik_ref.xml:2371(title) slonik_ref.xml:2463(title)
+#: slonik_ref.xml:2521(title) slonik_ref.xml:2610(title)
+#: slonik_ref.xml:2709(title) slonik_ref.xml:2845(title)
+#: slonik_ref.xml:2964(title) slonik_ref.xml:3067(title)
+#: slonik_ref.xml:3155(title) slonik_ref.xml:3222(title)
+#: slonik_ref.xml:3274(title) slonik_ref.xml:3316(title)
+#: slonik_ref.xml:3368(title) slonik_ref.xml:3416(title)
+msgid "Example"
+msgstr ""
+
+#: slonik_ref.xml:149(programlisting)
+#, no-wrap
+msgid ""
+"     include &lt;/tmp/preamble.slonik&gt;;\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:153(title) slonik_ref.xml:214(title)
+#: slonik_ref.xml:276(title) slonik_ref.xml:343(title)
+#: slonik_ref.xml:379(title) slonik_ref.xml:411(title)
+#: slonik_ref.xml:445(title) slonik_ref.xml:534(title)
+#: slonik_ref.xml:622(title) slonik_ref.xml:710(title)
+#: slonik_ref.xml:782(title) slonik_ref.xml:836(title)
+#: slonik_ref.xml:921(title) slonik_ref.xml:979(title)
+#: slonik_ref.xml:1057(title) slonik_ref.xml:1117(title)
+#: slonik_ref.xml:1138(title) slonik_ref.xml:1160(title)
+#: slonik_ref.xml:1246(title) slonik_ref.xml:1309(title)
+#: slonik_ref.xml:1391(title) slonik_ref.xml:1640(title)
+#: slonik_ref.xml:1745(title) slonik_ref.xml:1807(title)
+#: slonik_ref.xml:1866(title) slonik_ref.xml:1936(title)
+#: slonik_ref.xml:2012(title) slonik_ref.xml:2029(title)
+#: slonik_ref.xml:2049(title) slonik_ref.xml:2321(title)
+#: slonik_ref.xml:2401(title) slonik_ref.xml:2483(title)
+#: slonik_ref.xml:2541(title) slonik_ref.xml:2641(title)
+#: slonik_ref.xml:2755(title) slonik_ref.xml:2884(title)
+#: slonik_ref.xml:2981(title) slonik_ref.xml:3080(title)
+#: slonik_ref.xml:3173(title) slonik_ref.xml:3243(title)
+#: slonik_ref.xml:3290(title) slonik_ref.xml:3327(title)
+#: slonik_ref.xml:3383(title) slonik_ref.xml:3428(title)
+msgid "Version Information"
+msgstr ""
+
+#: slonik_ref.xml:154(para) slonik_ref.xml:215(para) slonik_ref.xml:3174(para)
+msgid "This command was introduced in &slony1; 1.1"
+msgstr ""
+
+#: slonik_ref.xml:158(refentrytitle)
+msgid "SLONIK DEFINE"
+msgstr ""
+
+#: slonik_ref.xml:161(refname)
+msgid "DEFINE"
+msgstr ""
+
+#: slonik_ref.xml:163(refpurpose)
+msgid "Defining a named symbol"
+msgstr ""
+
+#: slonik_ref.xml:167(command)
+msgid "define"
+msgstr ""
+
+#: slonik_ref.xml:168(replaceable)
+msgid "name"
+msgstr ""
+
+#: slonik_ref.xml:169(replaceable)
+msgid "value"
+msgstr ""
+
+#: slonik_ref.xml:174(para)
+msgid ""
+"This defines a named symbol. Symbol names must follow the slonik rules for "
+"constructing identifiers, by starting with a letter, followed by letters, "
+"numbers, and underscores."
+msgstr ""
+
+#: slonik_ref.xml:180(para)
+msgid ""
+"Symbol values may contain spaces and may recursively contain symbol "
+"references."
+msgstr ""
+
+#: slonik_ref.xml:185(para)
+msgid ""
+"Symbols are referenced by using a <quote>@</quote> followed by the symbol "
+"name. Note that symbol referencing is suppressed inside string literals."
+msgstr ""
+
+#: slonik_ref.xml:192(programlisting)
+#, no-wrap
+msgid ""
+"define    cluster movies;\n"
+"define    sakai   1;\n"
+"define    chen    2;\n"
+"define    fqn     fully qualified name;\n"
+"\n"
+"cluster name = @cluster;\n"
+"node @sakai admin conninfo = 'service=sakai-replication';\n"
+"node @chen  admin conninfo = 'service=chen-replication';\n"
+"define setMovies    id = 1;\n"
+"define sakaiMovies  @setMovies, origin = @sakai;\n"
+"\n"
+"create set ( @sakaiMovies, comment = 'movies' );\n"
+"\n"
+"set add table( set @sakaiMovies, id = 1, @fqn = 'public.customers', \n"
+"               comment = 'sakai customers' );\n"
+"set add table( set @sakaiMovies, id = 2, @fqn = 'public.tapes',     \n"
+"               comment = 'sakai tapes' );\n"
+"echo 'But @sakaiMovies will display as a string, and is not expanded';\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:223(title)
+msgid "Slonik Preamble Commands"
+msgstr ""
+
+#: slonik_ref.xml:225(para)
+msgid ""
+"The following commands must appear as a <quote>preamble</quote> at the "
+"beginning of each <application>slonik</application> command script. They do "
+"not cause any direct action on any of the nodes in the replication system, "
+"but affect the execution of the entire script."
+msgstr ""
+
+#: slonik_ref.xml:235(refentrytitle)
+msgid "SLONIK CLUSTER NAME"
+msgstr ""
+
+#: slonik_ref.xml:238(refname)
+msgid "CLUSTER NAME"
+msgstr ""
+
+#: slonik_ref.xml:240(refpurpose)
+msgid "preamble - identifying &slony1; cluster"
+msgstr ""
+
+#: slonik_ref.xml:244(command)
+msgid "CLUSTER NAME ="
+msgstr ""
+
+#: slonik_ref.xml:245(replaceable)
+msgid "clustername;"
+msgstr ""
+
+#: slonik_ref.xml:250(para)
+msgid ""
+"Must be the very first statement in every <application>slonik</application> "
+"script. It defines the namespace in which all &slony1; specific functions, "
+"procedures, tables and sequences are defined. The namespace name is built by "
+"prefixing the given string literal with an underscore. This namespace will "
+"be identical in all databases that participate in the same replication group."
+msgstr ""
+
+#: slonik_ref.xml:261(para)
+msgid ""
+"No user objects are supposed to live in this namespace, and the namespace is "
+"not allowed to exist prior to adding a database to the replication system. "
+"Thus, if you add a new node using <command> pg_dump -s </command> on a "
+"database that is already in the cluster of replicated databases, you will "
+"need to drop the namespace via the SQL command <command> DROP SCHEMA "
+"_testcluster CASCADE; </command>."
+msgstr ""
+
+#: slonik_ref.xml:272(programlisting)
+#, no-wrap
+msgid ""
+"     CLUSTER NAME = testcluster;\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:277(para) slonik_ref.xml:344(para) slonik_ref.xml:380(para)
+#: slonik_ref.xml:446(para) slonik_ref.xml:535(para) slonik_ref.xml:711(para)
+#: slonik_ref.xml:783(para) slonik_ref.xml:922(para) slonik_ref.xml:980(para)
+#: slonik_ref.xml:1139(para) slonik_ref.xml:1161(para)
+#: slonik_ref.xml:1247(para) slonik_ref.xml:1310(para)
+#: slonik_ref.xml:1641(para) slonik_ref.xml:1746(para)
+#: slonik_ref.xml:2030(para) slonik_ref.xml:2050(para)
+#: slonik_ref.xml:2322(para) slonik_ref.xml:2402(para)
+#: slonik_ref.xml:2484(para) slonik_ref.xml:2542(para)
+#: slonik_ref.xml:2642(para) slonik_ref.xml:2756(para)
+#: slonik_ref.xml:2982(para) slonik_ref.xml:3081(para)
+msgid "This command was introduced in &slony1; 1.0"
+msgstr ""
+
+#: slonik_ref.xml:284(refentrytitle)
+msgid "SLONIK ADMIN CONNINFO"
+msgstr ""
+
+#: slonik_ref.xml:287(refname)
+msgid "ADMIN CONNINFO"
+msgstr ""
+
+#: slonik_ref.xml:288(refpurpose)
+msgid "preamble - identifying &postgres; database"
+msgstr ""
+
+#: slonik_ref.xml:292(command)
+msgid "NODE ival ADMIN CONNINFO = 'DSN';"
+msgstr ""
+
+#: slonik_ref.xml:293(replaceable)
+msgid "ival;"
+msgstr ""
+
+#: slonik_ref.xml:294(replaceable)
+msgid "'conninfo'"
+msgstr ""
+
+#: slonik_ref.xml:299(para)
+msgid ""
+"Describes how the <application>slonik</application> utility can reach a "
+"node's database in the cluster from where it is run (likely the DBA's "
+"workstation). The conninfo string is the string agrument given to the "
+"<function>PQconnectdb()</function> libpq function."
+msgstr ""
+
+#: slonik_ref.xml:307(para)
+msgid ""
+"The <application>slonik</application> utility will not try to connect to a "
+"given database unless some subsequent command requires the connection."
+msgstr ""
+
+#: slonik_ref.xml:313(para)
+msgid ""
+"As mentioned in the original documents, &slony1; is designed as an "
+"enterprise replication system for data centers. It has been assumed "
+"throughout the entire development that the database servers and "
+"administrative workstations involved in replication and/or setup and "
+"configuration activities can use simple authentication schemes like "
+"<quote>trust</quote>. Alternatively, libpq can read passwords from "
+"<filename> .pgpass </filename>."
+msgstr ""
+
+#: slonik_ref.xml:325(para)
+msgid ""
+"If you need to change the DSN information for a node, as would happen if the "
+"IP address for a host were to change, you must submit the new information "
+"using the <xref linkend=\"stmtstorepath\"/> command, and that configuration "
+"will be propagated. Existing <application> slon </application> processes may "
+"need to be restarted in order to become aware of the configuration change."
+msgstr ""
+
+#: slonik_ref.xml:339(programlisting)
+#, no-wrap
+msgid ""
+"     NODE 1 ADMIN CONNINFO = 'dbname=testdb host=server1 user=slony';\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:352(title)
+msgid "Configuration and Action commands"
+msgstr ""
+
+#: slonik_ref.xml:355(refentrytitle)
+msgid "SLONIK ECHO"
+msgstr ""
+
+#: slonik_ref.xml:358(refname)
+msgid "ECHO"
+msgstr ""
+
+#: slonik_ref.xml:360(refpurpose)
+msgid "Generic output tool"
+msgstr ""
+
+#: slonik_ref.xml:364(command)
+msgid "echo"
+msgstr ""
+
+#: slonik_ref.xml:365(replaceable) slonik_ref.xml:463(replaceable)
+msgid "'string'"
+msgstr ""
+
+#: slonik_ref.xml:370(para)
+msgid "Prints the string literal on standard output."
+msgstr ""
+
+#: slonik_ref.xml:375(programlisting)
+#, no-wrap
+msgid ""
+"     ECHO 'Node 1 initialized successfully';\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:386(refentrytitle)
+msgid "SLONIK DATE"
+msgstr ""
+
+#: slonik_ref.xml:389(refname)
+msgid "DATE"
+msgstr ""
+
+#: slonik_ref.xml:391(refpurpose)
+msgid "Display current date"
+msgstr ""
+
+#: slonik_ref.xml:395(command)
+msgid "date"
+msgstr ""
+
+#: slonik_ref.xml:396(replaceable)
+msgid "(format)"
+msgstr ""
+
+#: slonik_ref.xml:401(para)
+msgid ""
+"Prints the current date. Accepts an optional strftime()-conformant format "
+"string."
+msgstr ""
+
+#: slonik_ref.xml:406(programlisting)
+#, no-wrap
+msgid ""
+"     DATE;\n"
+"     DATE(format='%Y-%m-%d %H:%M:%S %Z');\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:412(para)
+msgid "This command was introduced in &slony1; 2.1"
+msgstr ""
+
+#: slonik_ref.xml:418(refentrytitle)
+msgid "SLONIK EXIT"
+msgstr ""
+
+#: slonik_ref.xml:421(refname)
+msgid "EXIT"
+msgstr ""
+
+#: slonik_ref.xml:423(refpurpose)
+msgid "Terminate Slonik script with signal"
+msgstr ""
+
+#: slonik_ref.xml:427(command)
+msgid "exit"
+msgstr ""
+
+#: slonik_ref.xml:428(replaceable)
+msgid "[-]ival"
+msgstr ""
+
+#: slonik_ref.xml:433(para)
+msgid ""
+"Terminates script execution immediately, rolling back every open transaction "
+"on all database connections. The <application>slonik</application> utility "
+"will return the given value as its program termination code. Note that on "
+"Unix, exit statuses are restricted to the range 0-255."
+msgstr ""
+
+#: slonik_ref.xml:441(programlisting)
+#, no-wrap
+msgid ""
+"     EXIT 0;\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:453(refentrytitle)
+msgid "SLONIK INIT CLUSTER"
+msgstr ""
+
+#: slonik_ref.xml:457(refname)
+msgctxt "refname"
+msgid "INIT CLUSTER"
+msgstr ""
+
+#: slonik_ref.xml:458(refpurpose)
+msgid "Initialize &slony1; cluster"
+msgstr ""
+
+#: slonik_ref.xml:461(command)
+msgctxt "command"
+msgid "INIT CLUSTER"
+msgstr ""
+
+#: slonik_ref.xml:462(replaceable)
+msgid "integer"
+msgstr ""
+
+#: slonik_ref.xml:462(arg)
+msgid "ID = <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:463(arg)
+msgid "COMMENT = <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:476(literal)
+msgid "ID"
+msgstr ""
+
+#: slonik_ref.xml:477(para)
+msgid "The unique, numeric ID number of the node."
+msgstr ""
+
+#: slonik_ref.xml:480(literal)
+msgid "COMMENT = 'comment text'"
+msgstr ""
+
+#: slonik_ref.xml:481(para)
+msgid "A descriptive text added to the node entry in the table &slnode;."
+msgstr ""
+
+#: slonik_ref.xml:469(para)
+msgid ""
+"Initialize the first node in a new &slony1; replication cluster. The "
+"initialization process consists of creating the cluster namespace, loading "
+"all the base tables, functions, procedures and initializing the node, using "
+"&funinitializelocalnode; and &funenablenode;. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:489(para)
+msgid ""
+"For this process to work, the SQL scripts of the &slony1; system must be "
+"installed on the DBA workstation (the computer currently executing the "
+"<application>slonik</application> utility), while on the system where the "
+"node database is running the shared objects of the &slony1; system must be "
+"installed in the &postgres; library directory. Also the procedural language "
+"PL/pgSQL is assumed to already be installed in the target database."
+msgstr ""
+
+#: slonik_ref.xml:501(programlisting)
+#, no-wrap
+msgid ""
+"INIT CLUSTER (\n"
+"   ID = 1,\n"
+"   COMMENT = 'Node 1'\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:508(para)
+msgid ""
+"This command functions very similarly to <xref linkend=\"stmtstorenode\"/>, "
+"the difference being that <command>INIT CLUSTER </command> does not need to "
+"draw configuration from other existing nodes."
+msgstr ""
+
+#: slonik_ref.xml:514(para)
+msgid ""
+"Be aware that some objects are created that contain the cluster name as part "
+"of their name. (Notably, partial indexes on <envar>sl_log_1</envar> and "
+"<envar>sl_log_2</envar>.) As a result, <emphasis>really long</emphasis> "
+"cluster names are a bad idea, as they can make object names <quote>blow up</"
+"quote> past the typical maximum name length of 63 characters."
+msgstr ""
+
+#: slonik_ref.xml:522(title) slonik_ref.xml:609(title)
+#: slonik_ref.xml:681(title) slonik_ref.xml:760(title)
+#: slonik_ref.xml:825(title) slonik_ref.xml:910(title)
+#: slonik_ref.xml:968(title) slonik_ref.xml:1045(title)
+#: slonik_ref.xml:1106(title) slonik_ref.xml:1232(title)
+#: slonik_ref.xml:1295(title) slonik_ref.xml:1368(title)
+#: slonik_ref.xml:1624(title) slonik_ref.xml:1733(title)
+#: slonik_ref.xml:1793(title) slonik_ref.xml:1855(title)
+#: slonik_ref.xml:1925(title) slonik_ref.xml:2001(title)
+#: slonik_ref.xml:2301(title) slonik_ref.xml:2379(title)
+#: slonik_ref.xml:2471(title) slonik_ref.xml:2529(title)
+#: slonik_ref.xml:2623(title) slonik_ref.xml:2724(title)
+#: slonik_ref.xml:2859(title) slonik_ref.xml:2971(title)
+#: slonik_ref.xml:3076(title) slonik_ref.xml:3163(title)
+#: slonik_ref.xml:3231(title) slonik_ref.xml:3280(title)
+msgid "Locking Behaviour"
+msgstr ""
+
+#: slonik_ref.xml:524(para) slonik_ref.xml:611(para)
+msgid ""
+"This command creates a new namespace and configures tables therein; no "
+"public objects should be locked during the duration of this."
+msgstr ""
+
+#: slonik_ref.xml:529(title) slonik_ref.xml:616(title)
+#: slonik_ref.xml:703(title) slonik_ref.xml:777(title)
+#: slonik_ref.xml:831(title) slonik_ref.xml:916(title)
+#: slonik_ref.xml:974(title) slonik_ref.xml:1051(title)
+#: slonik_ref.xml:1111(title) slonik_ref.xml:1238(title)
+#: slonik_ref.xml:1303(title) slonik_ref.xml:1383(title)
+#: slonik_ref.xml:1633(title) slonik_ref.xml:1738(title)
+#: slonik_ref.xml:1801(title) slonik_ref.xml:1860(title)
+#: slonik_ref.xml:1930(title) slonik_ref.xml:2006(title)
+#: slonik_ref.xml:2312(title) slonik_ref.xml:2386(title)
+#: slonik_ref.xml:2478(title) slonik_ref.xml:2536(title)
+#: slonik_ref.xml:2634(title) slonik_ref.xml:2749(title)
+#: slonik_ref.xml:2878(title) slonik_ref.xml:2976(title)
+#: slonik_ref.xml:3168(title) slonik_ref.xml:3236(title)
+#: slonik_ref.xml:3285(title) slonik_ref.xml:3322(title)
+#: slonik_ref.xml:3377(title) slonik_ref.xml:3422(title)
+msgid "Slonik Event Confirmation Behaviour"
+msgstr ""
+
+#: slonik_ref.xml:530(para) slonik_ref.xml:2479(para) slonik_ref.xml:2537(para)
+#: slonik_ref.xml:2977(para) slonik_ref.xml:3169(para)
+#: slonik_ref.xml:3286(para) slonik_ref.xml:3323(para)
+#: slonik_ref.xml:3423(para)
+msgid ""
+"Slonik does not wait for event confirmations before performing this command."
+msgstr ""
+
+#: slonik_ref.xml:541(refentrytitle)
+msgid "SLONIK STORE NODE"
+msgstr ""
+
+#: slonik_ref.xml:544(refname)
+msgid "STORE NODE"
+msgstr ""
+
+#: slonik_ref.xml:545(refpurpose)
+msgid "Initialize &slony1; node"
+msgstr ""
+
+#: slonik_ref.xml:549(command)
+msgid "STORE NODE (options);"
+msgstr ""
+
+#: slonik_ref.xml:555(para)
+msgid ""
+"Initialize a new node and add it to the configuration of an existing cluster."
+msgstr ""
+
+#: slonik_ref.xml:565(literal) slonik_ref.xml:656(literal)
+#: slonik_ref.xml:741(literal) slonik_ref.xml:813(literal)
+#: slonik_ref.xml:1210(literal) slonik_ref.xml:1279(literal)
+#: slonik_ref.xml:1347(literal) slonik_ref.xml:1429(literal)
+#: slonik_ref.xml:1678(literal) slonik_ref.xml:1778(literal)
+#: slonik_ref.xml:1838(literal) slonik_ref.xml:1906(literal)
+#: slonik_ref.xml:1978(literal) slonik_ref.xml:2159(literal)
+#: slonik_ref.xml:2359(literal) slonik_ref.xml:2450(literal)
+#: slonik_ref.xml:2508(literal) slonik_ref.xml:2592(literal)
+#: slonik_ref.xml:2695(literal) slonik_ref.xml:2956(literal)
+#: slonik_ref.xml:3267(literal)
+msgid "ID = ival"
+msgstr ""
+
+#: slonik_ref.xml:566(para)
+msgid "The unique, immutable numeric ID number of the new node."
+msgstr ""
+
+#: slonik_ref.xml:569(para)
+msgid ""
+"Note that the ID is <emphasis>immutable</emphasis> because it is used as the "
+"basis for inter-node event communications."
+msgstr ""
+
+#: slonik_ref.xml:574(literal)
+msgid "COMMENT = 'description'"
+msgstr ""
+
+#: slonik_ref.xml:575(para)
+msgid "A descriptive text added to the node entry in the table &slnode;"
+msgstr ""
+
+#: slonik_ref.xml:578(literal)
+msgid "SPOOLNODE = boolean"
+msgstr ""
+
+#: slonik_ref.xml:580(para)
+msgid ""
+"Specifies that the new node is a virtual spool node for file archiving of "
+"replication log. If true, <application>slonik</application> will not attempt "
+"to initialize a database with the replication schema."
+msgstr ""
+
+#: slonik_ref.xml:586(para)
+msgid ""
+"Never use the SPOOLNODE value - no released version of &slony1; has ever "
+"behaved in the fashion described in the preceding fashion. Log shipping, as "
+"it finally emerged in 1.2.11, does not require initializing <quote>spool "
+"nodes</quote>."
+msgstr ""
+
+#: slonik_ref.xml:593(literal) slonik_ref.xml:662(literal)
+#: slonik_ref.xml:954(literal) slonik_ref.xml:2812(literal)
+#: slonik_ref.xml:3140(literal)
+msgid "EVENT NODE = ival"
+msgstr ""
+
+#: slonik_ref.xml:595(para)
+msgid ""
+"The ID of the node used to create the configuration event that tells all "
+"existing nodes about the new node. It must be the ID of a pre-existing node "
+"in the cluster, not the ID of the new node."
+msgstr ""
+
+#: slonik_ref.xml:558(para)
+msgid ""
+"The initialization process consists of creating the cluster namespace in the "
+"new node (the database itself must already exist), loading all the base "
+"tables, functions, procedures and initializing the node. The existing "
+"configuration of the rest of the cluster is copied from the <quote>event "
+"node</quote>. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:601(para)
+msgid "This uses &funinitializelocalnode; and &funenablenode;."
+msgstr ""
+
+#: slonik_ref.xml:605(programlisting)
+#, no-wrap
+msgid ""
+"     STORE NODE ( ID = 2, COMMENT = 'Node 2', EVENT NODE = 1 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:617(para) slonik_ref.xml:1052(para) slonik_ref.xml:1112(para)
+#: slonik_ref.xml:1304(para) slonik_ref.xml:1634(para)
+#: slonik_ref.xml:1739(para) slonik_ref.xml:1802(para)
+#: slonik_ref.xml:1861(para) slonik_ref.xml:1931(para)
+#: slonik_ref.xml:2007(para) slonik_ref.xml:2387(para)
+#: slonik_ref.xml:2635(para) slonik_ref.xml:2879(para)
+#: slonik_ref.xml:3237(para)
+msgid ""
+"Slonik waits for the command submitted to the previous event node to be "
+"confirmed on the specified event node before submitting this command."
+msgstr ""
+
+#: slonik_ref.xml:622(para)
+msgid ""
+"This command was introduced in &slony1; 1.0. The <envar>SPOOLNODE</envar> "
+"parameter was introduced in version 1.1, but was vestigial in that version. "
+"The described functionality for <envar>SPOOLNODE</envar> arrived in version "
+"1.2, but <envar>SPOOLNODE</envar> was not used for this purpose. In later "
+"versions, hopefully <envar>SPOOLNODE</envar> will be unavailable."
+msgstr ""
+
+#: slonik_ref.xml:629(para) slonik_ref.xml:712(para) slonik_ref.xml:2913(para)
+msgid ""
+"In version 2.0, the default value for <envar>EVENT NODE</envar> was removed, "
+"so a node must be specified."
+msgstr ""
+
+#: slonik_ref.xml:634(refentrytitle)
+msgid "SLONIK DROP NODE"
+msgstr ""
+
+#: slonik_ref.xml:637(refname)
+msgid "DROP NODE"
+msgstr ""
+
+#: slonik_ref.xml:639(refpurpose)
+msgid "Remove the node from participating in the replication"
+msgstr ""
+
+#: slonik_ref.xml:642(command)
+msgid "DROP NODE (options);"
+msgstr ""
+
+#: slonik_ref.xml:658(para)
+msgid ""
+"Node ID of the node to remove. This may be represented either by a single "
+"node id or by a quoted comma separated list of nodes"
+msgstr ""
+
+#: slonik_ref.xml:663(para)
+msgid "Node ID of the node to generate the event."
+msgstr ""
+
+#: slonik_ref.xml:648(para)
+msgid ""
+"Drop a node. This command removes the specified node entirely from the "
+"replication systems configuration. If the replication daemon is still "
+"running on that node (and processing events), it will attempt to uninstall "
+"the replication system and terminate itself. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:669(para)
+msgid "This uses &fundropnode;."
+msgstr ""
+
+#: slonik_ref.xml:671(para)
+msgid ""
+"When you invoke <command>DROP NODE</command>, one of the steps is to run "
+"<command>UNINSTALL NODE</command>."
+msgstr ""
+
+#: slonik_ref.xml:676(programlisting)
+#, no-wrap
+msgid ""
+"     DROP NODE ( ID = 2, EVENT NODE = 1 );\n"
+"\t DROP NODE (ID='3,4,5', EVENT NODE=1);\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:683(para) slonik_ref.xml:762(para)
+msgid ""
+"When dropping triggers off of application tables, this will require "
+"exclusive access to each replicated table on the node being discarded."
+msgstr ""
+
+#: slonik_ref.xml:687(title) slonik_ref.xml:766(title)
+#: slonik_ref.xml:1372(title) slonik_ref.xml:2264(title)
+#: slonik_ref.xml:2393(title) slonik_ref.xml:2733(title)
+msgid "Dangerous/Unintuitive Behaviour"
+msgstr ""
+
+#: slonik_ref.xml:688(para)
+msgid ""
+"If you are using connections that cache query plans (this is particularly "
+"common for Java application frameworks with connection pools), the "
+"connections may cache query plans that include the pre-<command>DROP NODE</"
+"command> state of things, and you will get &rmissingoids;."
+msgstr ""
+
+#: slonik_ref.xml:694(para) slonik_ref.xml:773(para)
+msgid ""
+"After dropping a node, you may also need to recycle connections in your "
+"application."
+msgstr ""
+
+#: slonik_ref.xml:697(para)
+msgid ""
+"You cannot submit this to an <command>EVENT NODE</command> that is the "
+"number of the node being dropped; the request must go to some node that will "
+"remain in the cluster."
+msgstr ""
+
+#: slonik_ref.xml:704(para)
+msgid ""
+"Slonik waits until nodes (other than the one being dropped) are caught up "
+"with non-SYNC events from all other nodes before submitting the DROP NODE "
+"command."
+msgstr ""
+
+#: slonik_ref.xml:713(para)
+msgid ""
+"In version 2.2, support for dropping multiple nodes in a single command was "
+"introduced"
+msgstr ""
+
+#: slonik_ref.xml:719(refentrytitle)
+msgid "SLONIK UNINSTALL NODE"
+msgstr ""
+
+#: slonik_ref.xml:722(refname)
+msgid "UNINSTALL NODE"
+msgstr ""
+
+#: slonik_ref.xml:724(refpurpose)
+msgid "Decommission &slony1; node"
+msgstr ""
+
+#: slonik_ref.xml:727(command)
+msgid "UNINSTALL NODE (options);"
+msgstr ""
+
+#: slonik_ref.xml:742(para)
+msgid "Node ID of the node to uninstall."
+msgstr ""
+
+#: slonik_ref.xml:733(para)
+msgid ""
+"Restores all tables to the unlocked state, with all original user triggers, "
+"constraints and rules, eventually added &slony1; specific serial key columns "
+"dropped and the &slony1; schema dropped. The node becomes a standalone "
+"database. The data is left untouched. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:747(para)
+msgid "This uses &fununinstallnode;."
+msgstr ""
+
+#: slonik_ref.xml:749(para)
+msgid ""
+"The difference between <command>UNINSTALL NODE</command> and <command>DROP "
+"NODE</command> is that all <command>UNINSTALL NODE</command> does is to "
+"remove the &slony1; configuration; it doesn't drop the node's configuration "
+"from replication."
+msgstr ""
+
+#: slonik_ref.xml:756(programlisting)
+#, no-wrap
+msgid ""
+"  UNINSTALL NODE ( ID = 2 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:767(para)
+msgid ""
+"If you are using connections that cache query plans (this is particularly "
+"common for Java application frameworks with connection pools), the "
+"connections may cache query plans that include the pre-<command>UNINSTALL "
+"NODE</command> state of things, and you will get &rmissingoids;."
+msgstr ""
+
+#: slonik_ref.xml:778(para) slonik_ref.xml:832(para) slonik_ref.xml:917(para)
+#: slonik_ref.xml:975(para)
+msgid ""
+"Slonik does not wait for event confirmations before performing this command"
+msgstr ""
+
+#: slonik_ref.xml:789(refentrytitle)
+msgid "SLONIK RESTART NODE"
+msgstr ""
+
+#: slonik_ref.xml:792(refname)
+msgid "RESTART NODE"
+msgstr ""
+
+#: slonik_ref.xml:794(refpurpose)
+msgid "Restart &slony1; node"
+msgstr ""
+
+#: slonik_ref.xml:798(command)
+msgid "RESTART NODE options;"
+msgstr ""
+
+#: slonik_ref.xml:814(para)
+msgid "Node ID of the node to restart."
+msgstr ""
+
+#: slonik_ref.xml:804(para)
+msgid ""
+"Causes an eventually running replication daemon (<application>slon</"
+"application> process) on the specified node to shutdown and restart itself. "
+"Theoretically, this command should be obsolete. In practice, TCP timeouts "
+"can delay critical configuration changes to actually happen in the case "
+"where a former forwarding node failed and needs to be bypassed by "
+"subscribers. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:821(programlisting)
+#, no-wrap
+msgid ""
+"  RESTART NODE ( ID = 2 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:827(para) slonik_ref.xml:912(para) slonik_ref.xml:970(para)
+#: slonik_ref.xml:1047(para) slonik_ref.xml:1108(para)
+#: slonik_ref.xml:1234(para) slonik_ref.xml:1370(para)
+#: slonik_ref.xml:1735(para) slonik_ref.xml:1857(para)
+#: slonik_ref.xml:1927(para) slonik_ref.xml:2003(para)
+#: slonik_ref.xml:2973(para) slonik_ref.xml:3078(para)
+#: slonik_ref.xml:3165(para) slonik_ref.xml:3282(para)
+msgid "No application-visible locking should take place."
+msgstr ""
+
+#: slonik_ref.xml:836(para)
+msgid ""
+"This command was introduced in &slony1; 1.0; frequent use became unnecessary "
+"as of version 1.0.5. There are, however, occasional cases where it is "
+"necessary to interrupt a <application>slon</application> process, and this "
+"allows this to be scripted via slonik."
+msgstr ""
+
+#: slonik_ref.xml:847(refentrytitle)
+msgid "SLONIK STORE PATH"
+msgstr ""
+
+#: slonik_ref.xml:850(refname)
+msgid "STORE PATH"
+msgstr ""
+
+#: slonik_ref.xml:852(refpurpose)
+msgid "Configure &slony1; node connection"
+msgstr ""
+
+#: slonik_ref.xml:856(command)
+msgid "STORE PATH (options);"
+msgstr ""
+
+#: slonik_ref.xml:862(para)
+msgid ""
+"Configures how the replication daemon of one node connects to the database "
+"of another node. If the replication system is supposed to use a special "
+"backbone network segment, this is the place to user the special IP addresses "
+"or hostnames. An existing configuration can be overwritten."
+msgstr ""
+
+#: slonik_ref.xml:868(para)
+msgid ""
+"The conninfo string must contain all information to connect to the database "
+"as the replication superuser. The names <quote>server</quote> or "
+"<quote>client</quote> have nothing to do with the particular role of a node "
+"within the cluster configuration. It should be simply viewed as <quote>the "
+"server</quote> has the message or data that <quote>the client is supposed to "
+"get.</quote> For a simple 2 node setup, paths into both directions must be "
+"configured."
+msgstr ""
+
+#: slonik_ref.xml:885(literal) slonik_ref.xml:948(literal)
+msgid "SERVER = ival"
+msgstr ""
+
+#: slonik_ref.xml:886(para) slonik_ref.xml:949(para)
+msgid "Node ID of the database to connect to."
+msgstr ""
+
+#: slonik_ref.xml:888(literal) slonik_ref.xml:951(literal)
+msgid "CLIENT = ival"
+msgstr ""
+
+#: slonik_ref.xml:889(para) slonik_ref.xml:952(para)
+msgid "Node ID of the replication daemon connecting."
+msgstr ""
+
+#: slonik_ref.xml:891(literal)
+msgid "CONNINFO = string"
+msgstr ""
+
+#: slonik_ref.xml:892(para)
+msgid ""
+"<function>PQconnectdb()</function> argument to establish the connection."
+msgstr ""
+
+#: slonik_ref.xml:894(literal)
+msgid "CONNRETRY = ival"
+msgstr ""
+
+#: slonik_ref.xml:895(para)
+msgid ""
+"Number of seconds to wait before another attempt to connect is made in case "
+"the server is unavailable. Default is 10."
+msgstr ""
+
+#: slonik_ref.xml:877(para)
+msgid ""
+"It does not do any harm to configure path information from every node to "
+"every other node (full cross product). The connections are not established "
+"unless they are required to actually transfer events or confirmations "
+"because of <emphasis>listen</emphasis> entries or data because of "
+"<emphasis>subscriptions</emphasis>. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:901(para)
+msgid "This uses &funstorepath;."
+msgstr ""
+
+#: slonik_ref.xml:904(programlisting)
+#, no-wrap
+msgid ""
+"STORE PATH ( SERVER = 1, CLIENT = 2, \n"
+"             CONNINFO = 'dbname=testdb host=server1 user=slony'\n"
+"           );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:929(refentrytitle)
+msgid "SLONIK DROP PATH"
+msgstr ""
+
+#: slonik_ref.xml:932(refname)
+msgid "DROP PATH"
+msgstr ""
+
+#: slonik_ref.xml:934(refpurpose)
+msgid "Delete &slony1; connection information"
+msgstr ""
+
+#: slonik_ref.xml:938(command)
+msgid "DROP PATH (options);"
+msgstr ""
+
+#: slonik_ref.xml:944(para)
+msgid ""
+"Remove the connection information between <quote>server</quote> and "
+"<quote>client</quote>."
+msgstr ""
+
+#: slonik_ref.xml:956(para)
+msgid ""
+"The ID of the node used to create the configuration event that tells all "
+"existing nodes about dropping the path. Defaults to the <quote>client</"
+"quote>, if omitted."
+msgstr ""
+
+#: slonik_ref.xml:964(programlisting)
+#, no-wrap
+msgid ""
+"  DROP PATH ( SERVER = 1, CLIENT = 2 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:987(refentrytitle)
+msgid "SLONIK STORE LISTEN"
+msgstr ""
+
+#: slonik_ref.xml:990(refname)
+msgid "STORE LISTEN"
+msgstr ""
+
+#: slonik_ref.xml:992(refpurpose)
+msgid "Configure &slony1; node to indicate where to listen for events"
+msgstr ""
+
+#: slonik_ref.xml:997(command)
+msgid "STORE LISTEN (options);"
+msgstr ""
+
+#: slonik_ref.xml:1003(para)
+msgid ""
+"A <quote>listen</quote> entry causes a node (receiver) to query an event "
+"provider for events that originate from a specific node, as well as "
+"confirmations from every existing node. It requires a <quote>path</quote> to "
+"exist so that the receiver (as client) can connect to the provider (as "
+"server)."
+msgstr ""
+
+#: slonik_ref.xml:1009(para)
+msgid ""
+"Every node in the system must listen for events from every other node in the "
+"system. As a general rule of thumb, a subscriber (see <xref linkend="
+"\"stmtsubscribeset\"/>) should listen for events of the set's origin on the "
+"same provider, where it receives the data from. In turn, the origin of the "
+"data set should listen for events from the origin in the opposite direction. "
+"A node can listen for events from one and the same origin on different "
+"providers at the same time. However, to process <command>SYNC</command> "
+"events from that origin, all data providers must have the same or higher "
+"sync status, so this will not result in any faster replication behaviour."
+msgstr ""
+
+#: slonik_ref.xml:1023(literal) slonik_ref.xml:1085(literal)
+#: slonik_ref.xml:1213(literal) slonik_ref.xml:1282(literal)
+#: slonik_ref.xml:1353(literal) slonik_ref.xml:1426(literal)
+#: slonik_ref.xml:1675(literal) slonik_ref.xml:1774(literal)
+#: slonik_ref.xml:1834(literal) slonik_ref.xml:1902(literal)
+#: slonik_ref.xml:1974(literal) slonik_ref.xml:2454(literal)
+#: slonik_ref.xml:2512(literal) slonik_ref.xml:3204(literal)
+msgid "ORIGIN = ival"
+msgstr ""
+
+#: slonik_ref.xml:1024(para) slonik_ref.xml:1086(para)
+msgid "Node ID of the event origin the receiver is listening for."
+msgstr ""
+
+#: slonik_ref.xml:1026(literal) slonik_ref.xml:1088(literal)
+#: slonik_ref.xml:2163(literal) slonik_ref.xml:3213(literal)
+msgid "PROVIDER = ival"
+msgstr ""
+
+#: slonik_ref.xml:1027(para) slonik_ref.xml:1089(para)
+msgid ""
+"Node ID of the node from which the receiver gets events that come from the "
+"origin. If not specified, default is the origin."
+msgstr ""
+
+#: slonik_ref.xml:1031(literal) slonik_ref.xml:1093(literal)
+#: slonik_ref.xml:2169(literal) slonik_ref.xml:2363(literal)
+#: slonik_ref.xml:3209(literal)
+msgid "RECEIVER = ival"
+msgstr ""
+
+#: slonik_ref.xml:1033(para) slonik_ref.xml:1095(para)
+msgid "The ID of the node receiving the events."
+msgstr ""
+
+#: slonik_ref.xml:1037(para)
+msgid "This uses &funstorelisten;."
+msgstr ""
+
+#: slonik_ref.xml:1038(para)
+msgid "For more details, see &rlistenpaths;."
+msgstr ""
+
+#: slonik_ref.xml:1041(programlisting)
+#, no-wrap
+msgid ""
+"     STORE LISTEN ( ORIGIN = 1, RECEIVER = 2, PROVIDER = 3 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1057(para)
+msgid ""
+"This command was introduced in &slony1; 1.0. As of version 1.1, you "
+"<emphasis>should</emphasis> no longer need to use this command, as listen "
+"paths are generated automatically."
+msgstr ""
+
+#: slonik_ref.xml:1065(refentrytitle)
+msgid "SLONIK DROP LISTEN"
+msgstr ""
+
+#: slonik_ref.xml:1068(refname)
+msgid "DROP LISTEN"
+msgstr ""
+
+#: slonik_ref.xml:1070(refpurpose)
+msgid "Eliminate configuration indicating how &slony1; node listens for events"
+msgstr ""
+
+#: slonik_ref.xml:1076(command)
+msgid "DROP LISTEN (options);"
+msgstr ""
+
+#: slonik_ref.xml:1082(para)
+msgid "Remove a <quote>listen</quote> configuration entry."
+msgstr ""
+
+#: slonik_ref.xml:1099(para)
+msgid "This uses &fundroplisten;."
+msgstr ""
+
+#: slonik_ref.xml:1102(programlisting)
+#, no-wrap
+msgid ""
+"     DROP LISTEN ( ORIGIN = 1, RECEIVER = 2, PROVIDER = 3 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1117(para)
+msgid ""
+"This command was introduced in &slony1; 1.0. As of version 1.1, you should "
+"not need to use it anymore."
+msgstr ""
+
+#: slonik_ref.xml:1127(refentrytitle)
+msgid "SLONIK TABLE ADD KEY"
+msgstr ""
+
+#: slonik_ref.xml:1130(refname)
+msgid "TABLE ADD KEY"
+msgstr ""
+
+#: slonik_ref.xml:1132(refpurpose)
+msgid "Add primary key for use by &slony1; for a table with no suitable key"
+msgstr ""
+
+#: slonik_ref.xml:1141(para) slonik_ref.xml:1163(para)
+#: slonik_ref.xml:2032(para) slonik_ref.xml:2052(para)
+msgid ""
+"In &slony1; version 2.0, this command is removed as obsolete because "
+"triggers are no longer <quote>messed around with</quote> in the system "
+"catalogue."
+msgstr ""
+
+#: slonik_ref.xml:1151(refentrytitle)
+msgid "SLONIK TABLE DROP KEY"
+msgstr ""
+
+#: slonik_ref.xml:1154(refname)
+msgid "TABLE DROP KEY"
+msgstr ""
+
+#: slonik_ref.xml:1156(refpurpose)
+msgid "Removes a primary key added by TABLE ADD KEY"
+msgstr ""
+
+#: slonik_ref.xml:1174(refentrytitle)
+msgid "SLONIK CREATE SET"
+msgstr ""
+
+#: slonik_ref.xml:1177(refname)
+msgid "CREATE SET"
+msgstr ""
+
+#: slonik_ref.xml:1179(refpurpose)
+msgid "Create &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1184(command)
+msgid "CREATE SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:1190(para)
+msgid ""
+"In the &slony1; replication system, replicated tables are organized in sets. "
+"As a general rule of thumb, a set should contain all the tables of one "
+"application, that have relationships. In a well designed application, this "
+"is equal to all the tables in one schema."
+msgstr ""
+
+#: slonik_ref.xml:1197(para)
+msgid ""
+"The smallest unit one node can subscribe for replication from another node "
+"is a set. A set always has an origin. In classical replication terms, that "
+"would be the <quote>master.</quote> Since in &slony1; a node can be the "
+"<quote>master</quote> over one set, while receiving replication data in the "
+"<quote>slave</quote> role for another at the same time, this terminology may "
+"easily become misleading and should therefore be replaced with <quote>set "
+"origin</quote> and <quote>subscriber</quote>."
+msgstr ""
+
+#: slonik_ref.xml:1211(para)
+msgid "ID of the set to be created."
+msgstr ""
+
+#: slonik_ref.xml:1214(para)
+msgid "Initial origin node of the set."
+msgstr ""
+
+#: slonik_ref.xml:1216(literal) slonik_ref.xml:1521(literal)
+#: slonik_ref.xml:1706(literal)
+msgid "COMMENT = 'string'"
+msgstr ""
+
+#: slonik_ref.xml:1217(para)
+msgid "A descriptive text added to the set entry."
+msgstr ""
+
+#: slonik_ref.xml:1218(para)
+msgid ""
+"If none is provided, a default value is set; <command>A replication set so "
+"boring no one thought to give it a name</command>."
+msgstr ""
+
+#: slonik_ref.xml:1223(para)
+msgid "This uses &funstoreset; ."
+msgstr ""
+
+#: slonik_ref.xml:1226(programlisting)
+#, no-wrap
+msgid ""
+"     CREATE SET ( ID = 1, \n"
+"               ORIGIN = 1,\n"
+"               COMMENT = 'Tables for ticketing system' );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1239(para)
+msgid ""
+"Slonik waits for the command submitted to the previous event node to be "
+"confirmed on the specified event node before submitting this command. Slonik "
+"will also wait until any outstanding DROP SET commands are confirmed by all "
+"nodes before it submits the CREATE SET command."
+msgstr ""
+
+#: slonik_ref.xml:1248(para)
+msgid "Until version 1.2, it would crash if no comment was provided."
+msgstr ""
+
+#: slonik_ref.xml:1255(refentrytitle)
+msgid "SLONIK DROP SET"
+msgstr ""
+
+#: slonik_ref.xml:1258(refname)
+msgid "DROP SET"
+msgstr ""
+
+#: slonik_ref.xml:1260(refpurpose)
+msgid "Discard &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1265(command)
+msgid "DROP SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:1271(para)
+msgid ""
+"Drop a set of tables from the &slony1; configuration. This automatically "
+"unsubscribes all nodes from the set and restores the original triggers and "
+"rules on all subscribers."
+msgstr ""
+
+#: slonik_ref.xml:1280(para)
+msgid "ID of the set to be dropped."
+msgstr ""
+
+#: slonik_ref.xml:1283(para)
+msgid "Current origin node of the set."
+msgstr ""
+
+#: slonik_ref.xml:1287(para)
+msgid "This uses &fundropset;."
+msgstr ""
+
+#: slonik_ref.xml:1290(programlisting)
+#, no-wrap
+msgid ""
+"  DROP SET ( ID = 5, \n"
+"             ORIGIN = 2 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1297(para)
+msgid ""
+"On each node, this will require taking out exclusive locks on each "
+"replicated table in order to modify the table schema to clean up the "
+"triggers and rules."
+msgstr ""
+
+#: slonik_ref.xml:1316(refentrytitle)
+msgid "SLONIK MERGE SET"
+msgstr ""
+
+#: slonik_ref.xml:1319(refname)
+msgid "MERGE SET"
+msgstr ""
+
+#: slonik_ref.xml:1321(refpurpose)
+msgid "Merge &slony1; replication sets together"
+msgstr ""
+
+#: slonik_ref.xml:1326(command)
+msgid "MERGE SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:1332(para)
+msgid ""
+"Merge a set of tables and sequences into another one. This function is a "
+"workaround for the problem that it is not possible to add tables/sequences "
+"to already-subscribed sets. One may create a temporary set, add the new "
+"objects to that, subscribe all nodes currently subscribed to the other set "
+"to this new one, and then merge the two together, eliminating the set ID "
+"that was being added."
+msgstr ""
+
+#: slonik_ref.xml:1341(para)
+msgid ""
+"This operation will refuse to be run if the two sets do not have "
+"<emphasis>exactly</emphasis> the same set of subscribers."
+msgstr ""
+
+#: slonik_ref.xml:1348(para)
+msgid ""
+"Unique ID of the set to contain the union of the two formerly separate sets."
+msgstr ""
+
+#: slonik_ref.xml:1350(literal)
+msgid "ADD ID = ival"
+msgstr ""
+
+#: slonik_ref.xml:1351(para)
+msgid ""
+"Unique ID of the set whose objects should be transferred into the above set."
+msgstr ""
+
+#: slonik_ref.xml:1354(para)
+msgid "Current origin node for both sets."
+msgstr ""
+
+#: slonik_ref.xml:1358(para)
+msgid "This uses &funmergeset;."
+msgstr ""
+
+#: slonik_ref.xml:1361(programlisting)
+#, no-wrap
+msgid ""
+"     # Assuming that node 1 is the origin of set 999 that has direct subscribers 2 and 3\n"
+"     SUBSCRIBE SET (ID = 999, PROVIDER = 1, RECEIVER = 2);\n"
+"     SUBSCRIBE SET (ID = 999, PROVIDER = 1, RECEIVER = 3);\n"
+"     MERGE SET ( ID = 1, ADD ID = 999, ORIGIN = 1 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1374(para)
+msgid ""
+"Merging takes place based on the configuration on the origin node. If a "
+"merge is requested while subscriptions are still being processed, this can "
+"cause in-progress subscribers' replication to break, as they'll be looking "
+"for configuration for this set which the merge request deletes. Do not be "
+"too quick to merge sets."
+msgstr ""
+
+#: slonik_ref.xml:1384(para)
+msgid ""
+"Slonik waits for the command submitted to the previous event node to be "
+"confirmed on the specified event node before submitting this command. Slonik "
+"will also wait for any in progress subscriptions involving the ADD ID to be "
+"subscribed before submitting the MERGE SET command."
+msgstr ""
+
+#: slonik_ref.xml:1391(para)
+msgid ""
+"This command was introduced in &slony1; 1.0.5. In 1.2.1, a race condition "
+"was rectified where the merge request would be submitted while subscriptions "
+"were still in process on subscribers; it refuses to merge before "
+"subscriptions are complete."
+msgstr ""
+
+#: slonik_ref.xml:1401(refentrytitle)
+msgid "SLONIK SET ADD TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1404(refname)
+msgid "SET ADD TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1406(refpurpose)
+msgid "Add a table to a &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1411(command)
+msgid "SET ADD TABLE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1423(literal) slonik_ref.xml:1671(literal)
+#: slonik_ref.xml:3136(literal)
+msgid "SET ID = ival"
+msgstr ""
+
+#: slonik_ref.xml:1424(para)
+msgid "ID of the set to which the table is to be added."
+msgstr ""
+
+#: slonik_ref.xml:1427(para)
+msgid "Origin node for the set. (Optional)"
+msgstr ""
+
+#: slonik_ref.xml:1431(para)
+msgid ""
+"Unique ID of the table. These ID's are not only used to uniquely identify "
+"the individual table within the replication system. The numeric value of "
+"this ID also determines the order in which the tables are locked in a <xref "
+"linkend=\"stmtlockset\"/> command for example. So these numbers might "
+"represent any applicable table hierarchy to make sure the "
+"<application>slonik</application> command scripts do not deadlock at any "
+"critical moment. If this parameter is omitted then slonik will check every "
+"node that it can connect to and find the highest table id being used across "
+"all nodes."
+msgstr ""
+
+#: slonik_ref.xml:1443(para)
+msgid ""
+"This ID must be unique across all sets; you cannot have two tables in the "
+"same cluster with the same ID."
+msgstr ""
+
+#: slonik_ref.xml:1447(para)
+msgid ""
+"Note that &slony1; generates an in-memory array indicating all of the fully "
+"qualified table names; if you use large table ID numbers, the sparsely-"
+"utilized array can lead to substantial wastage of memory. Each potential "
+"table ID consumes a pointer to a char, commonly costing 4 bytes per table ID "
+"on 32 bit architectures, and 8 bytes per table ID on 64 bit architectures."
+msgstr ""
+
+#: slonik_ref.xml:1457(literal) slonik_ref.xml:1691(literal)
+msgid "FULLY QUALIFIED NAME = 'string'"
+msgstr ""
+
+#: slonik_ref.xml:1458(para)
+msgid ""
+"The full table name including the name of the schema. This can be omitted if "
+"<literal>TABLES</literal> is specified instead"
+msgstr ""
+
+#: slonik_ref.xml:1463(literal)
+msgid "KEY = { 'string' | SERIAL }"
+msgstr ""
+
+#: slonik_ref.xml:1464(para)
+msgid ""
+"<emphasis>(Optional)</emphasis> The index name that covers the unique and "
+"not null set of columns to be used as the row identifier for replication "
+"purposes. Default is to use the table's primary key. The index name is "
+"<emphasis> not </emphasis> fully qualified; you must omit the namespace."
+msgstr ""
+
+#: slonik_ref.xml:1473(literal)
+msgid "TABLES = 'string'"
+msgstr ""
+
+#: slonik_ref.xml:1474(para)
+msgid ""
+"A POSIX regular expression that specifies the list of tables that should be "
+"added. This regular expression is evaluated by &postgres;against the list of "
+"fully qualified table names on the set origin to find the tables that should "
+"be added. If <literal>TABLES</literal> is omitted then <literal> FULLY "
+"QUALIFIED NAME</literal> must be specified."
+msgstr ""
+
+#: slonik_ref.xml:1489(para)
+msgid ""
+"Each table must have a <literal>PRIMARY KEY</literal> defined, and a "
+"candidate primary key will not suffice."
+msgstr ""
+
+#: slonik_ref.xml:1493(para)
+msgid "If a table is found that is already replicated, the request will fail."
+msgstr ""
+
+#: slonik_ref.xml:1496(para)
+msgid ""
+"The <literal>TABLES</literal> option needs to automatically assign table ID "
+"values, and looks through the configuration on every node specified by <xref "
+"linkend=\"admconninfo\"/>, finding the largest ID in use, and starting after "
+"that for the table IDs that it assigns."
+msgstr ""
+
+#: slonik_ref.xml:1503(para)
+msgid ""
+"It considers it a <quote>benign</quote> failure to find a node that does not "
+"yet have a &slony1; schema assigned, as that may be expected to occur if "
+"tables are configured before all the nodes have been configured using <xref "
+"linkend=\"stmtstorenode\"/>. If there is no &slony1; schema, then that node "
+"certainly hasn't contributed anything to an increase in the table IDs in use."
+msgstr ""
+
+#: slonik_ref.xml:1511(para)
+msgid ""
+"On the other hand, if a node specified by <xref linkend=\"admconninfo\"/> is "
+"not available to be queried, the request <emphasis>will fail.</emphasis>"
+msgstr ""
+
+#: slonik_ref.xml:1482(para)
+msgid ""
+"The <literal>TABLES</literal> option requires that all the tables are in "
+"<quote>good form</quote> to be replicated en masse. The request will fail, "
+"not configuring any tables for replication, if it encounters any of the "
+"following problems: <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:1522(para)
+msgid "A descriptive text added to the table entry."
+msgstr ""
+
+#: slonik_ref.xml:1524(literal)
+msgid "ADD SEQUENCES= boolean"
+msgstr ""
+
+#: slonik_ref.xml:1525(para)
+msgid ""
+"A boolean value that indicates if any sequences attached to columns in this "
+"table should also be automatically added to the replication set. This "
+"defaults to false"
+msgstr ""
+
+#: slonik_ref.xml:1417(para)
+msgid ""
+"Add an existing user table to a replication set. The set cannot currently be "
+"subscribed by any other node - that functionality is supported by the <xref "
+"linkend=\"stmtmergeset\"/> command. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:1531(para)
+msgid "This uses &funsetaddtable;."
+msgstr ""
+
+#: slonik_ref.xml:1534(programlisting)
+#, no-wrap
+msgid ""
+"SET ADD TABLE (\n"
+"    SET ID = 1,\n"
+"    ORIGIN = 1,\n"
+"    ID = 20,\n"
+"    FULLY QUALIFIED NAME = 'public.tracker_ticket',\n"
+"    COMMENT = 'Support ticket',\n"
+"    ADD SEQUENCES=false\n"
+");\n"
+"\n"
+"or \n"
+"\n"
+"SET ADD TABLE (\n"
+"    SET ID=1,\n"
+"    TABLES='public\\\\.tracker*'\n"
+");\n"
+"\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1553(title)
+msgid "Error Messages"
+msgstr ""
+
+#: slonik_ref.xml:1555(para)
+msgid ""
+"Here are some of the error messages you may encounter if adding tables "
+"incorrectly:"
+msgstr ""
+
+#: slonik_ref.xml:1559(literal)
+msgid "Slony-I: setAddTable_int: table public.my_table PK column id nullable"
+msgstr ""
+
+#: slonik_ref.xml:1561(para)
+msgid ""
+"Primary keys (or candidates thereof) are required to have all column defined "
+"as <command>NOT NULL</command>. If you have a PK candidate that has columns "
+"that are not thus restricted, &slony1; will reject the table with this "
+"message."
+msgstr ""
+
+#: slonik_ref.xml:1567(literal)
+msgid "Slony-I: setAddTable_int: table id 14 has already been assigned!"
+msgstr ""
+
+#: slonik_ref.xml:1569(para)
+msgid ""
+"The table id, stored in <envar>sl_table.tab_id</envar>, is required to be "
+"unique across all tables/nodes/sets. Apparently you have tried to reused a "
+"table ID."
+msgstr ""
+
+#: slonik_ref.xml:1574(literal)
+msgid ""
+"Slony-I: setAddTable_int(): table public.my_table has no index mt_idx_14"
+msgstr ""
+
+#: slonik_ref.xml:1576(para)
+msgid ""
+"This will normally occur with candidate primary keys; apparently the index "
+"specified is not available on this node."
+msgstr ""
+
+#: slonik_ref.xml:1580(literal)
+msgid "Slony-I: setAddTable_int(): table public.my_table not found"
+msgstr ""
+
+#: slonik_ref.xml:1582(para)
+msgid ""
+"Worse than an index missing, the whole table is missing. Apparently whatever "
+"process you were using to get the schema into place everywhere didn't work "
+"properly."
+msgstr ""
+
+#: slonik_ref.xml:1587(literal)
+msgid "Slony-I: setAddTable_int(): public.my_view is not a regular table"
+msgstr ""
+
+#: slonik_ref.xml:1589(para)
+msgid ""
+"You can only replicate (at least, using <command>SET ADD TABLE</command>) "
+"objects that are ordinary tables. That doesn't include views or indexes. "
+"(Indexes can come along for the ride, but you don't ask to replicate an "
+"index...)"
+msgstr ""
+
+#: slonik_ref.xml:1595(literal)
+msgid "Slony-I: setAddTable_int(): set 4 not found"
+msgstr ""
+
+#: slonik_ref.xml:1597(para)
+msgid "You need to define a replication set before assigning tables to it."
+msgstr ""
+
+#: slonik_ref.xml:1600(literal)
+msgid "Slony-I: setAddTable(): set 4 has remote origin"
+msgstr ""
+
+#: slonik_ref.xml:1602(para)
+msgid ""
+"This will occur if set 4 is configured with, as origin, node 1, and then you "
+"submit a <command>SET ADD TABLE</command> request involving that set to some "
+"other node than node 1. This would be expected to occur if there was some "
+"confusion in the <command>admin conninfo</command> configuration in the "
+"slonik script preamble..."
+msgstr ""
+
+#: slonik_ref.xml:1611(literal)
+msgid "Slony-I: cannot add table to currently subscribed set 1"
+msgstr ""
+
+#: slonik_ref.xml:1613(para)
+msgid ""
+"&slony1; does not support adding tables to sets that are already "
+"participating in subscriptions. Instead, you need to define a new "
+"replication set, and add any new tables to <emphasis>that</emphasis> set. "
+"You might then use <xref linkend=\"stmtmergeset\"/> to merge the new set "
+"into an existing one, if that seems appropriate."
+msgstr ""
+
+#: slonik_ref.xml:1626(para)
+msgid ""
+"On the origin node, this operation requires a brief exclusive lock on the "
+"table in order to alter it to add replication triggers. On subscriber nodes, "
+"corresponding locking takes place at the time of the <command>SUBSCRIBE_SET</"
+"command> event."
+msgstr ""
+
+#: slonik_ref.xml:1647(refentrytitle)
+msgid "SLONIK SET ADD SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1650(refname)
+msgid "SET ADD SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1652(refpurpose)
+msgid "Add a sequence to a &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1658(command)
+msgid "SET ADD SEQUENCE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1672(para)
+msgid "ID of the set to which the sequence is to be added."
+msgstr ""
+
+#: slonik_ref.xml:1676(para)
+msgid "Origin node for the set. (optional)"
+msgstr ""
+
+#: slonik_ref.xml:1680(para)
+msgid ""
+"Note that this ID needs to be unique <emphasis>across sequences</emphasis> "
+"throughout the cluster; the numbering of tables is separate, so you might "
+"have a table with ID 20 and a sequence with ID 20, and they would be "
+"recognized as separate."
+msgstr ""
+
+#: slonik_ref.xml:1680(para)
+msgid ""
+"Unique ID of the sequence. <placeholder-1/> This parameter is optional. If "
+"this parameter is omitted then slonik will check every node that it can "
+"connect to and find the highest table id being used across all nodes."
+msgstr ""
+
+#: slonik_ref.xml:1692(para)
+msgid ""
+"The full sequence name including schema name. If <literal>SEQUENCES</"
+"literal> is specified then <literal>FULLY QUALIFIED NAME</literal> should be "
+"omitted."
+msgstr ""
+
+#: slonik_ref.xml:1697(literal)
+msgid "SEQUENCES = 'string'"
+msgstr ""
+
+#: slonik_ref.xml:1698(para)
+msgid ""
+"A POSIX regular expression that matches to the sequences that should be "
+"added to the replication set. This regular expression is passed to "
+"postgresql for evaluation on the set origin against fully qualified sequence "
+"names. This parameter is optional. If <literal>FULLY QUALIFIED NAME</"
+"literal> is omitted then <literal>SEQUENCES</literal> must be specified."
+msgstr ""
+
+#: slonik_ref.xml:1707(para)
+msgid "A descriptive text added to the sequence entry."
+msgstr ""
+
+#: slonik_ref.xml:1664(para)
+msgid ""
+"Add an existing user sequence to a replication set. The set cannot currently "
+"be subscribed by any other node - that functionality is supported by the "
+"<xref linkend=\"stmtmergeset\"/> command. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:1711(para)
+msgid "This uses &funsetaddsequence;."
+msgstr ""
+
+#: slonik_ref.xml:1714(programlisting)
+#, no-wrap
+msgid ""
+"     SET ADD SEQUENCE (\n"
+"     SET ID = 1,\n"
+"     ORIGIN = 1,\n"
+"     ID = 20,\n"
+"     FULLY QUALIFIED NAME = 'public.tracker_ticket_id_seq',\n"
+"     COMMENT = 'Support ticket ID sequence'\n"
+"     );\n"
+"\n"
+"\t or\n"
+"\n"
+"\t SET ADD SEQUENCE(\n"
+"\t SET ID=1,\n"
+"\t SEQUENCES='public.tracker_ticket_id_seq'\n"
+"\t );\n"
+"\n"
+"\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1752(refentrytitle)
+msgid "SLONIK SET DROP TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1755(refname)
+msgid "SET DROP TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1757(refpurpose)
+msgid "Remove a table from a &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1763(command)
+msgid "SET DROP TABLE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1769(para)
+msgid "Drop a table from a replication set."
+msgstr ""
+
+#: slonik_ref.xml:1775(para) slonik_ref.xml:1835(para)
+#: slonik_ref.xml:1975(para)
+msgid ""
+"Origin node for the set. A future version of <application>slonik</"
+"application> might figure out this information by itself."
+msgstr ""
+
+#: slonik_ref.xml:1780(para) slonik_ref.xml:1908(para)
+msgid "Unique ID of the table."
+msgstr ""
+
+#: slonik_ref.xml:1783(para)
+msgid "This uses &funsetdroptable;."
+msgstr ""
+
+#: slonik_ref.xml:1786(programlisting)
+#, no-wrap
+msgid ""
+"     SET DROP TABLE (\n"
+"     ORIGIN = 1,\n"
+"     ID = 20\n"
+"     );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1795(para)
+msgid ""
+"This operation must acquire an exclusive lock on the table being dropped "
+"from replication in order to alter it to drop the replication trigger. On "
+"subscriber nodes, this also involves adding back any rules/triggers that "
+"have been hidden."
+msgstr ""
+
+#: slonik_ref.xml:1808(para) slonik_ref.xml:1867(para)
+#: slonik_ref.xml:1937(para) slonik_ref.xml:2013(para)
+msgid "This command was introduced in &slony1; 1.0.5"
+msgstr ""
+
+#: slonik_ref.xml:1814(refentrytitle)
+msgid "SLONIK SET DROP SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1817(refname)
+msgid "SET DROP SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1819(refpurpose)
+msgid "Remove a sequence from a &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:1825(command)
+msgid "SET DROP SEQUENCE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1840(para) slonik_ref.xml:1980(para)
+msgid "Unique ID of the sequence."
+msgstr ""
+
+#: slonik_ref.xml:1831(para)
+msgid ""
+"Drops an existing user sequence from a replication set. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:1845(para)
+msgid "This uses &funsetdropsequence;."
+msgstr ""
+
+#: slonik_ref.xml:1848(programlisting)
+#, no-wrap
+msgid ""
+"     SET DROP SEQUENCE (\n"
+"     ORIGIN = 1,\n"
+"     ID = 20\n"
+"     );"
+msgstr ""
+
+#: slonik_ref.xml:1873(refentrytitle)
+msgid "SLONIK SET MOVE TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1876(refname)
+msgid "SET MOVE TABLE"
+msgstr ""
+
+#: slonik_ref.xml:1878(refpurpose)
+msgid "Move a table from one &slony1; replication set to another"
+msgstr ""
+
+#: slonik_ref.xml:1884(command)
+msgid "SET MOVE TABLE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1893(para)
+msgid ""
+"Due to the way subscribing to new sets works make absolutely sure that the "
+"subscription of all nodes to the sets is completely processed before moving "
+"tables. Moving a table too early to a new set causes the subscriber to try "
+"and add the table already during the subscription process, which fails with "
+"a duplicate key error and breaks replication."
+msgstr ""
+
+#: slonik_ref.xml:1903(para)
+msgid ""
+"Current origin of the set. A future version of <application>slonik</"
+"application> might figure out this information by itself."
+msgstr ""
+
+#: slonik_ref.xml:1909(literal) slonik_ref.xml:1983(literal)
+msgid "NEW SET = ival"
+msgstr ""
+
+#: slonik_ref.xml:1911(para)
+msgid "Unique ID of the set to which the table should be added."
+msgstr ""
+
+#: slonik_ref.xml:1890(para)
+msgid ""
+"Change the set a table belongs to. The current set and the new set must "
+"origin on the same node and subscribed by the same nodes. <placeholder-1/> "
+"<placeholder-2/>"
+msgstr ""
+
+#: slonik_ref.xml:1914(para)
+msgid "This uses &funsetmovetable;."
+msgstr ""
+
+#: slonik_ref.xml:1917(programlisting)
+#, no-wrap
+msgid ""
+"SET MOVE TABLE (\n"
+"    ORIGIN = 1,\n"
+"    ID = 20,\n"
+"    NEW SET = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:1944(refentrytitle)
+msgid "SLONIK SET MOVE SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1947(refname)
+msgid "SET MOVE SEQUENCE"
+msgstr ""
+
+#: slonik_ref.xml:1949(refpurpose)
+msgid "Move a sequence from one &slony1; replication set to another"
+msgstr ""
+
+#: slonik_ref.xml:1955(command)
+msgid "SET MOVE SEQUENCE (options);"
+msgstr ""
+
+#: slonik_ref.xml:1966(para)
+msgid ""
+"Due to the way subscribing to new sets works make absolutely sure that the "
+"subscription of all nodes to the sets is completely processed before moving "
+"sequences. Moving a sequence too early to a new set causes the subscriber to "
+"try and add the sequence already during the subscription process, which "
+"fails with a duplicate key error and breaks replication."
+msgstr ""
+
+#: slonik_ref.xml:1985(para)
+msgid "Unique ID of the set to which the sequence should be moved."
+msgstr ""
+
+#: slonik_ref.xml:1961(para)
+msgid ""
+"Change the set a sequence belongs to. The current set and the new set must "
+"originate on the same node and subscribed by the same nodes. <placeholder-1/"
+"> <placeholder-2/>"
+msgstr ""
+
+#: slonik_ref.xml:1990(para)
+msgid "This uses &funsetmovesequence;."
+msgstr ""
+
+#: slonik_ref.xml:1993(programlisting)
+#, no-wrap
+msgid ""
+"SET MOVE SEQUENCE (\n"
+"    ORIGIN = 1,\n"
+"    ID = 20,\n"
+"    NEW SET = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2020(refentrytitle)
+msgid "SLONIK STORE TRIGGER"
+msgstr ""
+
+#: slonik_ref.xml:2023(refname)
+msgid "STORE TRIGGER"
+msgstr ""
+
+#: slonik_ref.xml:2025(refpurpose)
+msgid ""
+"Indicate that a trigger should not be disabled by &slony1; on a subscriber "
+"node"
+msgstr ""
+
+#: slonik_ref.xml:2041(refentrytitle)
+msgid "SLONIK DROP TRIGGER"
+msgstr ""
+
+#: slonik_ref.xml:2044(refname)
+msgid "DROP TRIGGER"
+msgstr ""
+
+#: slonik_ref.xml:2046(refpurpose)
+msgid ""
+"Return a trigger to default behavior, where it will not fire on subscriber "
+"nodes"
+msgstr ""
+
+#: slonik_ref.xml:2060(refentrytitle)
+msgid "SLONIK SUBSCRIBE SET"
+msgstr ""
+
+#: slonik_ref.xml:2063(refname)
+msgid "SUBSCRIBE SET"
+msgstr ""
+
+#: slonik_ref.xml:2065(refpurpose)
+msgid "Start replication of &slony1; set"
+msgstr ""
+
+#: slonik_ref.xml:2069(command)
+msgid "SUBSCRIBE SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:2075(para)
+msgid "This performs one of two actions:"
+msgstr ""
+
+#: slonik_ref.xml:2079(para)
+msgid "Initiates replication for a replication set"
+msgstr ""
+
+#: slonik_ref.xml:2080(para)
+msgid ""
+"Causes a node (subscriber) to start replicating a set of tables either from "
+"the origin or from another provider node, which must itself already be be an "
+"active, forwarding subscriber."
+msgstr ""
+
+#: slonik_ref.xml:2084(para)
+msgid ""
+"The application tables contained in the set must already exist and should "
+"ideally be empty. The current version of &slony1; will <emphasis>not</"
+"emphasis> attempt to copy the schema of the set. The replication daemon will "
+"start copying the current content of the set from the given provider and "
+"then try to catch up with any update activity that happened during that copy "
+"process. After successful subscription, the tables are guarded on the "
+"subscriber, using triggers, against accidental updates by the application."
+msgstr ""
+
+#: slonik_ref.xml:2095(para)
+msgid ""
+"If the tables on the subscriber are <emphasis>not</emphasis> empty, then the "
+"<command>COPY SET</command> event (which is part of the subscription "
+"process) may wind up doing more work than should be strictly necessary:"
+msgstr ""
+
+#: slonik_ref.xml:2102(para)
+msgid ""
+"It attempts to <command>TRUNCATE</command> the table, which will be "
+"efficient."
+msgstr ""
+
+#: slonik_ref.xml:2105(para)
+msgid ""
+"If that fails (a foreign key relationship might prevent TRUNCATE from "
+"working), it uses <command>DELETE</command> to delete all <quote>old</quote> "
+"entries in the table"
+msgstr ""
+
+#: slonik_ref.xml:2110(para)
+msgid ""
+"Those old entries clutter up the table until it is next <command>VACUUM</"
+"command>ed <emphasis>after</emphasis> the subscription process is complete"
+msgstr ""
+
+#: slonik_ref.xml:2114(para)
+msgid ""
+"The indices for the table will contain entries for the old, deleted entries, "
+"which will slow the process of inserting new entries into the index."
+msgstr ""
+
+#: slonik_ref.xml:2119(para)
+msgid ""
+"This operation can take a (potentially distinctly) non-zero period of time. "
+"If you have a great deal of data in a particular set of tables, it may take "
+"hours or even (if <quote>a great deal</quote> indicates <quote>tens or "
+"hundreds gigabytes of data</quote>) possibly multiple days for this event to "
+"complete."
+msgstr ""
+
+#: slonik_ref.xml:2126(para)
+msgid ""
+"The <command>SUBSCRIBE SET</command> request will, nonetheless, return "
+"fairly much immediately, even though the work, being handled by the "
+"<command>COPY SET</command> event, is still in progress. If you need to set "
+"up subscriptions for a set of cascading nodes, you will need to wait for "
+"each subscriber to complete subscribing before submitting requests for "
+"subscriptions that use that node as a provider."
+msgstr ""
+
+#: slonik_ref.xml:2134(programlisting)
+#, no-wrap
+msgid " Slony-I: provider 2 is not an active forwarding node for replication set 1"
+msgstr ""
+
+#: slonik_ref.xml:2138(para)
+msgid ""
+"In effect, such subscription requests will be ignored until the provider is "
+"ready."
+msgstr ""
+
+#: slonik_ref.xml:2144(para)
+msgid ""
+"Revising subscription information for already-subscribed provider/receiver "
+"pair of nodes."
+msgstr ""
+
+#: slonik_ref.xml:2146(para)
+msgid ""
+"If you need to revise subscription information for a set,provider,receiver "
+"combination you must submit the new information using this command, and the "
+"new configuration will be propagated throughout the replication network. The "
+"normal reason to revise this information is if you want to change the "
+"<literal>FORWARD</literal> status of a set on a particular receiver node. If "
+"you want to change the provider used by a particular node you should use the "
+"<xref linkend=\"stmtresubscribenode\"/> command."
+msgstr ""
+
+#: slonik_ref.xml:2160(para)
+msgid "ID of the set to subscribe"
+msgstr ""
+
+#: slonik_ref.xml:2165(para)
+msgid "Node ID of the data provider from which this node draws data."
+msgstr ""
+
+#: slonik_ref.xml:2171(para)
+msgid "Node ID of the new subscriber"
+msgstr ""
+
+#: slonik_ref.xml:2174(literal)
+msgid "FORWARD = boolean"
+msgstr ""
+
+#: slonik_ref.xml:2176(para)
+msgid ""
+"Flag whether or not the new subscriber should store the log information "
+"during replication to make it possible candidate for the provider role for "
+"future nodes. Any node that is intended to be a candidate for FAILOVER "
+"<emphasis>must</emphasis> have <command>FORWARD = yes</command>."
+msgstr ""
+
+#: slonik_ref.xml:2184(literal)
+msgid "OMIT COPY = boolean"
+msgstr ""
+
+#: slonik_ref.xml:2186(para)
+msgid ""
+"Flag whether or not the subscription process should omit doing the "
+"<command>COPY</command> of the existing data in the set. In effect, use this "
+"option indicates <quote>Trust me, the data is already in sync!</quote>"
+msgstr ""
+
+#: slonik_ref.xml:2192(para)
+msgid "This is notably useful for the following sorts of cases:"
+msgstr ""
+
+#: slonik_ref.xml:2196(para)
+msgid ""
+"Major inter-version upgrades (<emphasis>e.g. </emphasis> - as from &slony1; "
+"1.2 to 2.0) may be done quickly."
+msgstr ""
+
+#: slonik_ref.xml:2197(para)
+msgid ""
+"Cloning a <quote>master node</quote>. <xref linkend=\"stmtcloneprepare\"/>/"
+"<xref linkend=\"stmtclonefinish\"/>"
+msgstr ""
+
+#: slonik_ref.xml:2206(programlisting)
+#, no-wrap
+msgid ""
+"SUBSCRIBE SET (\n"
+"   ID = 1,\n"
+"   PROVIDER = 1,\n"
+"   RECEIVER = 3,\n"
+"   FORWARD = YES\n"
+");\n"
+"  WAIT FOR EVENT(\n"
+"    ORIGIN=1, \n"
+"    CONFIRMED=ALL,\n"
+"    WAIT ON=1\n"
+");\n"
+"     \n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2222(title)
+msgid "Forwarding Behaviour"
+msgstr ""
+
+#: slonik_ref.xml:2224(para)
+msgid ""
+"The <command>FORWARD=boolean</command> flag indicates whether the subscriber "
+"will store log information in tables &sllog1; and &sllog2;. Several "
+"implications fall from this..."
+msgstr ""
+
+#: slonik_ref.xml:2229(para)
+msgid ""
+"By storing the data in these tables on the subscriber, there is some "
+"additional processing burden. If you are certain that you would never want "
+"to <xref linkend=\"stmtmoveset\"/> or <xref linkend=\"stmtfailover\"/> to a "
+"particular subscriber, it is worth considering turning off forwarding on "
+"that node."
+msgstr ""
+
+#: slonik_ref.xml:2235(para)
+msgid ""
+"There is, however, a case where having forwarding turned off opens up a "
+"perhaps-unexpected failure condition; a rule of thumb should be that "
+"<emphasis>all nodes that connect directly to the origin</emphasis> should "
+"have forwarding turned on. Supposing one such <quote>direct subscriber</"
+"quote> has forwarding turned off, it is possible for that node to be "
+"forcibly lost in a case of failover. The problem comes if that node gets "
+"ahead of other nodes."
+msgstr ""
+
+#: slonik_ref.xml:2244(para)
+msgid ""
+"Let's suppose that the origin, node 1 is at SYNC number 88901, a non-"
+"forwarding node, node 2 has processed up to SYNC 88897, and other forwarding "
+"nodes, 3, 4, and 5, have only processed data up to SYNC 88895. At that "
+"moment, the disk system on the origin node catches fire. Node 2 has the "
+"<emphasis>data</emphasis> up to SYNC 88897, but there is no remaining node "
+"that contains, in &sllog1; or &sllog2;, the data for SYNCs 88896 and 88897, "
+"so there is no way to bring nodes 3-5 up to that point."
+msgstr ""
+
+#: slonik_ref.xml:2254(para)
+msgid ""
+"At that point, there are only two choices: To drop node 2, because there is "
+"no way to continue managing it, or to drop all nodes <emphasis>but</"
+"emphasis> 2, because there is no way to bring them up to SYNC 88897."
+msgstr ""
+
+#: slonik_ref.xml:2259(para)
+msgid ""
+"That dilemma may be avoided by making sure that all nodes directly "
+"subscribing to the origin have forwarding turned on."
+msgstr ""
+
+#: slonik_ref.xml:2268(para)
+msgid ""
+"The fact that the request returns immediately even though the subscription "
+"may take considerable time to complete may be a bit surprising."
+msgstr ""
+
+#: slonik_ref.xml:2272(para)
+msgid ""
+"Processing of the subscription involves <emphasis>two</emphasis> events; the "
+"<command>SUBSCRIBE_SET</command>, initiated on the set origin node, and an "
+"<command>ENABLE_SUBSCRIPTION</command>. This means that <xref linkend="
+"\"stmtwaitevent\"/> must be used following a SUBSCRIBE SET to wait until the "
+"last event on the set origin completes."
+msgstr ""
+
+#: slonik_ref.xml:2281(para)
+msgid ""
+"This command has <emphasis>two</emphasis> purposes; setting up subscriptions "
+"(which should be unsurprising) and <emphasis>revising subscriptions</"
+"emphasis>, which isn't so obvious to intuition."
+msgstr ""
+
+#: slonik_ref.xml:2286(para)
+msgid ""
+"New subscriptions are set up by using <command>DELETE</command> or "
+"<command>TRUNCATE</command> to empty the table on a subscriber. If you "
+"created a new node by copying data from an existing node, it might "
+"<quote>seem intuitive</quote> that that data should be kept; that is not the "
+"case - the former contents are discarded and the node is populated "
+"<emphasis>from scratch</emphasis>."
+msgstr ""
+
+#: slonik_ref.xml:2294(para)
+msgid ""
+"The <command>OMIT COPY</command> option has the potential to be a large "
+"<quote>foot gun</quote> in that it allows the administrator to push "
+"replication sets out of sync."
+msgstr ""
+
+#: slonik_ref.xml:2303(para)
+msgid ""
+"This operation does <emphasis>not</emphasis> require acquiring any locks on "
+"the provider node."
+msgstr ""
+
+#: slonik_ref.xml:2306(para)
+msgid ""
+"On the subscriber node, it will have the effect of locking every table in "
+"the replication set. In version 1.2 and later, exclusive locks are acquired "
+"at the beginning of the process."
+msgstr ""
+
+#: slonik_ref.xml:2313(para)
+msgid ""
+"Slonik waits until the provider has confirmed all outstanding configuration "
+"events from any other node before contacting the provider to determine the "
+"set origin. Slonik then waits for the command submitted to the previous "
+"event node to be confirmed on the origin before submitting this command to "
+"the origin."
+msgstr ""
+
+#: slonik_ref.xml:2323(para)
+msgid ""
+"The <command>OMIT COPY</command> option was introduced in &slony1; 2.0.3."
+msgstr ""
+
+#: slonik_ref.xml:2324(para)
+msgid ""
+"In &slony1; 2.0.5 the SUBSCRIBE SET command gets submitted directly against "
+"the set origin. Prior to this change the SUBSCRIBE SET was submitted against "
+"the provider"
+msgstr ""
+
+#: slonik_ref.xml:2328(para)
+msgid ""
+"Prior to &slony1; 2.2.0 the SUBSCRIBE SET command could be used to change "
+"the provider of an already subscribed node. As of 2.2.0 the <xref linkend="
+"\"stmtresubscribenode\"/> command must be used."
+msgstr ""
+
+#: slonik_ref.xml:2337(refentrytitle)
+msgid "SLONIK UNSUBSCRIBE SET"
+msgstr ""
+
+#: slonik_ref.xml:2340(refname)
+msgid "UNSUBSCRIBE SET"
+msgstr ""
+
+#: slonik_ref.xml:2342(refpurpose)
+msgid "End replication of &slony1; set"
+msgstr ""
+
+#: slonik_ref.xml:2346(command)
+msgid "UNSUBSCRIBE SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:2360(para)
+msgid "ID of the set to unsubscribe"
+msgstr ""
+
+#: slonik_ref.xml:2365(para)
+msgid "Node ID of the (former) subscriber"
+msgstr ""
+
+#: slonik_ref.xml:2352(para)
+msgid ""
+"Stops the subscriber from replicating the set. The tables are opened up for "
+"full access by the client application on the former subscriber. The tables "
+"are not truncated or otherwise modified. All original triggers, rules and "
+"constraints are restored. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:2372(programlisting)
+#, no-wrap
+msgid ""
+"UNSUBSCRIBE SET (\n"
+"   ID = 1,\n"
+"   RECEIVER = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2381(para)
+msgid ""
+"Exclusive locks on each replicated table will be taken out on the subscriber "
+"in order to drop replication triggers from the tables and restore other "
+"triggers/rules."
+msgstr ""
+
+#: slonik_ref.xml:2395(para)
+msgid ""
+"Resubscribing an unsubscribed set requires a <emphasis>complete fresh copy</"
+"emphasis> of data from the provider to be transferred since the tables have "
+"been subject to possible independent modifications."
+msgstr ""
+
+#: slonik_ref.xml:2409(refentrytitle)
+msgid "SLONIK LOCK SET"
+msgstr ""
+
+#: slonik_ref.xml:2412(refname)
+msgid "LOCK SET"
+msgstr ""
+
+#: slonik_ref.xml:2415(command)
+msgctxt "command"
+msgid "MOVE SET"
+msgstr ""
+
+#: slonik_ref.xml:2414(refpurpose)
+msgid "Guard &slony1; replication set to prepare for <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:2419(command)
+msgid "LOCK SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:2425(para)
+msgid ""
+"Guards a replication set against client application updates in preparation "
+"for a <xref linkend=\"stmtmoveset\"/> command."
+msgstr ""
+
+#: slonik_ref.xml:2429(para)
+msgid ""
+"This command must be the first in a possible statement group (<command>try</"
+"command>). The reason for this is that it needs to commit the changes made "
+"to the tables (adding a special trigger function) before it can wait for "
+"every concurrent transaction to finish. At the same time it cannot hold an "
+"open transaction to the same database itself since this would result in "
+"blocking itself forever."
+msgstr ""
+
+#: slonik_ref.xml:2437(para)
+msgid ""
+"Note that this is a locking operation, which means that it can get stuck "
+"behind other database activity."
+msgstr ""
+
+#: slonik_ref.xml:2451(para)
+msgid "ID of the set to lock"
+msgstr ""
+
+#: slonik_ref.xml:2456(para) slonik_ref.xml:2514(para)
+#: slonik_ref.xml:2598(para)
+msgid "Node ID of the current set origin"
+msgstr ""
+
+#: slonik_ref.xml:2440(para)
+msgid ""
+"The operation waits for transaction IDs to advance in order that data is not "
+"missed on the new origin. Thus, if you have long-running transactions "
+"running on the source node, this operation will wait for those transactions "
+"to complete. Unfortunately, if you have another database on the same "
+"postmaster as the origin node, long running transactions on that database "
+"will also be considered even though they are essentially independent. "
+"<placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:2461(para)
+msgid "This uses &funlockset;."
+msgstr ""
+
+#: slonik_ref.xml:2464(programlisting)
+#, no-wrap
+msgid ""
+"LOCK SET (\n"
+"   ID = 1,\n"
+"   ORIGIN = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2473(para)
+msgid ""
+"Exclusive locks on each replicated table will be taken out on the origin "
+"node, and triggers are added to each such table that reject table updates."
+msgstr ""
+
+#: slonik_ref.xml:2490(refentrytitle)
+msgid "SLONIK UNLOCK SET"
+msgstr ""
+
+#: slonik_ref.xml:2493(refname)
+msgid "UNLOCK SET"
+msgstr ""
+
+#: slonik_ref.xml:2495(refpurpose)
+msgid "Unlock a &slony1; set that was locked"
+msgstr ""
+
+#: slonik_ref.xml:2498(command)
+msgid "UNLOCK SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:2509(para)
+msgid "ID of the set to unlock"
+msgstr ""
+
+#: slonik_ref.xml:2504(para)
+msgid "Unlocks a previously locked set. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:2519(para)
+msgid "This uses &fununlockset;."
+msgstr ""
+
+#: slonik_ref.xml:2522(programlisting)
+#, no-wrap
+msgid ""
+"UNLOCK SET (\n"
+"   ID = 1,\n"
+"   ORIGIN = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2531(para)
+msgid ""
+"Exclusive locks on each replicated table will be taken out on the origin "
+"node, as the triggers are removed from each table that reject table updates."
+msgstr ""
+
+#: slonik_ref.xml:2549(refentrytitle)
+msgid "SLONIK MOVE SET"
+msgstr ""
+
+#: slonik_ref.xml:2552(refname)
+msgctxt "refname"
+msgid "MOVE SET"
+msgstr ""
+
+#: slonik_ref.xml:2554(refpurpose)
+msgid "Change origin of a &slony1; replication set"
+msgstr ""
+
+#: slonik_ref.xml:2558(command)
+msgid "MOVE SET (options);"
+msgstr ""
+
+#: slonik_ref.xml:2564(para)
+msgid ""
+"Changes the origin of a set from one node to another. The new origin must be "
+"a current subscriber of the set. The set must currently be locked on the old "
+"origin."
+msgstr ""
+
+#: slonik_ref.xml:2568(para)
+msgid ""
+"After this command, the set cannot be unlocked on the old origin any more. "
+"The old origin will continue as a forwarding subscriber of the set and the "
+"subscription chain from the old origin to the new origin will be reversed, "
+"hop by hop. As soon as the new origin has finished processing the event "
+"(that includes any outstanding sync events that happened before, <emphasis>i."
+"e.</emphasis> fully catching up), the new origin will take over and open all "
+"tables in the set for client application update activity."
+msgstr ""
+
+#: slonik_ref.xml:2579(para)
+msgid ""
+"This is <emphasis>not</emphasis> failover, as it requires a functioning old "
+"origin node (you needed to lock the set on the old origin). You would "
+"probably prefer to <command>MOVE SET</command> instead of <command>FAILOVER</"
+"command>, if at all possible, as <command>FAILOVER</command> winds up "
+"discarding the old origin node as being corrupted. Before <command>MOVE SET</"
+"command> will function a <command>LOCK SET</command> is needed."
+msgstr ""
+
+#: slonik_ref.xml:2593(para)
+msgid "ID of the set to transfer"
+msgstr ""
+
+#: slonik_ref.xml:2596(literal)
+msgid "OLD ORIGIN = ival"
+msgstr ""
+
+#: slonik_ref.xml:2601(literal)
+msgid "NEW ORIGIN = ival"
+msgstr ""
+
+#: slonik_ref.xml:2603(para)
+msgid "Node ID of the new set origin"
+msgstr ""
+
+#: slonik_ref.xml:2588(para)
+msgid ""
+"Note that this is a locking operation, which means that it can get stuck "
+"behind other database activity. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:2608(para)
+msgid "This uses &funmoveset;."
+msgstr ""
+
+#: slonik_ref.xml:2611(programlisting)
+#, no-wrap
+msgid ""
+"LOCK SET (\n"
+"   ID = 1,\n"
+"   ORIGIN = 1\n"
+");\n"
+"MOVE SET (\n"
+"   ID = 1,\n"
+"   OLD ORIGIN = 1,\n"
+"   NEW ORIGIN = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2625(para)
+msgid ""
+"Exclusive locks on each replicated table will be taken out on both the old "
+"origin node and the new origin node, as replication triggers are changed on "
+"both nodes: on the former origin, each table has two triggers (logtrigger "
+"and lockset) dropped and a denyaccess trigger added; on the new origin, the "
+"denyaccess trigger is dropped and a logtrigger trigger added."
+msgstr ""
+
+#: slonik_ref.xml:2648(refentrytitle)
+msgid "SLONIK FAILOVER"
+msgstr ""
+
+#: slonik_ref.xml:2651(refname)
+msgid "FAILOVER"
+msgstr ""
+
+#: slonik_ref.xml:2653(refpurpose)
+msgid "Fail a broken replication set over to a backup node"
+msgstr ""
+
+#: slonik_ref.xml:2657(command)
+msgid "FAILOVER (options);"
+msgstr ""
+
+#: slonik_ref.xml:2663(para)
+msgid ""
+"The <command>FAILOVER</command> command causes the backup node to take over "
+"all sets that currently originate on the failed node. <application>slonik</"
+"application> will contact all other direct subscribers of the failed node to "
+"determine which node has the highest sync status for each set. If another "
+"node has a higher sync status than the backup node, the replication will "
+"first be redirected so that the backup node replicates against that other "
+"node, before assuming the origin role and allowing update activity."
+msgstr ""
+
+#: slonik_ref.xml:2675(para)
+msgid ""
+"After successful failover, all former direct subscribers of the failed node "
+"become direct subscribers of the backup node. The failed node is abandoned, "
+"and can and should be removed from the configuration with <xref linkend="
+"\"stmtdropnode\"/>."
+msgstr ""
+
+#: slonik_ref.xml:2682(para)
+msgid ""
+"If multiple set origin nodes have failed, then you should tell FAILOVER "
+"about all of them in one request. This is done by passing a list like "
+"<literal>NODE=(ID=val,BACKUP NODE=val), NODE=(ID=val2, BACKUP NODE=val2)</"
+"literal> to FAILOVER."
+msgstr ""
+
+#: slonik_ref.xml:2689(para)
+msgid ""
+"Nodes that are forwarding providers can also be passed to the failover "
+"command as a failed node. The failover process will redirect the "
+"subscriptions from these nodes to the backup node."
+msgstr ""
+
+#: slonik_ref.xml:2696(para)
+msgid "ID of the failed node"
+msgstr ""
+
+#: slonik_ref.xml:2699(literal)
+msgid "BACKUP NODE = ival"
+msgstr ""
+
+#: slonik_ref.xml:2701(para)
+msgid ""
+"Node ID of the node that will take over all sets originating on the failed "
+"node"
+msgstr ""
+
+#: slonik_ref.xml:2707(para)
+msgid "This uses &funfailednode;."
+msgstr ""
+
+#: slonik_ref.xml:2710(programlisting)
+#, no-wrap
+msgid ""
+"FAILOVER (\n"
+"   ID = 1,\n"
+"   BACKUP NODE = 2\n"
+");\n"
+"\n"
+"#example of multiple nodes   \n"
+"FAILOVER(  \n"
+"   NODE=(ID=1, BACKUP NODE=2),\n"
+"   NODE=(ID=3, BACKUP NODE=4)\n"
+");\n"
+"\n"
+"\t "
+msgstr ""
+
+#: slonik_ref.xml:2726(para)
+msgid ""
+"Exclusive locks on each replicated table will be taken out on both the new "
+"origin node as replication triggers are changed. If the new origin was not "
+"completely up to date, and replication data must be drawn from some other "
+"node that is more up to date, the new origin will not become usable until "
+"those updates are complete."
+msgstr ""
+
+#: slonik_ref.xml:2734(para)
+msgid ""
+"This command will abandon the status of the failed node. There is no "
+"possibility to let the failed node join the cluster again without rebuilding "
+"it from scratch as a slave. If at all possible, you would likely prefer to "
+"use <xref linkend=\"stmtmoveset\"/> instead, as that does <emphasis>not</"
+"emphasis> abandon the failed node."
+msgstr ""
+
+#: slonik_ref.xml:2741(para)
+msgid ""
+"If a second failure occours in the middle of a FAILOVER operation then "
+"recovery might be complicated."
+msgstr ""
+
+#: slonik_ref.xml:2750(para)
+msgid ""
+"Slonik will submit the FAILOVER_EVENT without waiting but wait until the "
+"most ahead node has received confirmations of the FAILOVER_EVENT from all "
+"nodes before completing."
+msgstr ""
+
+#: slonik_ref.xml:2757(para)
+msgid ""
+"In version 2.0, the default <envar>BACKUP NODE</envar> value of 1 was "
+"removed, so it is mandatory to provide a value for this parameter"
+msgstr ""
+
+#: slonik_ref.xml:2758(para)
+msgid ""
+"In version 2.2 support was added for passing multiple nodes to a single "
+"failover command"
+msgstr ""
+
+#: slonik_ref.xml:2765(refentrytitle)
+msgid "SLONIK EXECUTE SCRIPT"
+msgstr ""
+
+#: slonik_ref.xml:2768(refname)
+msgid "EXECUTE SCRIPT"
+msgstr ""
+
+#: slonik_ref.xml:2770(refpurpose)
+msgid "Execute SQL/DDL script"
+msgstr ""
+
+#: slonik_ref.xml:2773(command)
+msgid "EXECUTE SCRIPT (options);"
+msgstr ""
+
+#: slonik_ref.xml:2779(para)
+msgid ""
+"Executes a script containing arbitrary SQL statements on all nodes that are "
+"subscribed to a set at a common controlled point within the replication "
+"transaction stream."
+msgstr ""
+
+#: slonik_ref.xml:2783(para)
+msgid ""
+"The specified event origin must be an origin of a set. The script file must "
+"not contain any <command>START</command> or <command>COMMIT TRANSACTION</"
+"command> calls but SAVEPOINTS are allowed. In addition, non-deterministic "
+"DML statements (like updating a field with <function>CURRENT_TIMESTAMP</"
+"function>) should be avoided, since the data changes done by the script will "
+"be different on each node."
+msgstr ""
+
+#: slonik_ref.xml:2793(literal)
+msgid "FILENAME = '/path/to/file'"
+msgstr ""
+
+#: slonik_ref.xml:2795(para)
+msgid ""
+"The name of the file containing the SQL script to execute. This might be a "
+"relative path, relative to the location of the <application>slonik</"
+"application> instance you are running, or, preferably, an absolute path on "
+"the system where <application>slonik</application> is to run."
+msgstr ""
+
+#: slonik_ref.xml:2800(para)
+msgid ""
+"The <emphasis>contents</emphasis> of the file are propagated as part of the "
+"replication data stream, so the file does not need to be accessible on any "
+"of the nodes."
+msgstr ""
+
+#: slonik_ref.xml:2805(literal)
+msgid "SQL = 'sql-string-to-execute'"
+msgstr ""
+
+#: slonik_ref.xml:2807(para)
+msgid ""
+"Instead of a filename the SQL statements to execute can be specified as a "
+"string literal in single quotes."
+msgstr ""
+
+#: slonik_ref.xml:2813(para)
+msgid ""
+"(Mandatory unless EXECUTE ONLY ON is given) The ID of the current origin of "
+"the set. If EXECUTE ONLY ON is given, EVENT NODE must specify the same node "
+"or be omitted."
+msgstr ""
+
+#: slonik_ref.xml:2819(literal) slonik_ref.xml:3145(literal)
+msgid "EXECUTE ONLY ON = ival"
+msgstr ""
+
+#: slonik_ref.xml:2820(para)
+msgid ""
+"(Optional) The ID of the only node to actually execute the script. This can "
+"be a single node value or a comma separated list of nodes. This option "
+"causes the script to be propagated by all nodes but executed only on the "
+"specified nodes. The default is to execute the script on all nodes that are "
+"subscribed to the set."
+msgstr ""
+
+#: slonik_ref.xml:2830(para)
+msgid "See also the warnings in &rddlchanges;."
+msgstr ""
+
+#: slonik_ref.xml:2832(para)
+msgid ""
+"Note that this is a potentially heavily-locking operation, which means that "
+"it can get stuck behind other database activity."
+msgstr ""
+
+#: slonik_ref.xml:2837(para)
+msgid ""
+"Note that if you need to make reference to the cluster name, you can use the "
+"token <command>@CLUSTERNAME@</command>; if you need to make reference to the "
+"&slony1; namespace, you can use the token <command>@NAMESPACE@</command>; "
+"both will be expanded into the appropriate replacement tokens."
+msgstr ""
+
+#: slonik_ref.xml:2843(para)
+msgid "This uses &funddlscript;."
+msgstr ""
+
+#: slonik_ref.xml:2846(programlisting)
+#, no-wrap
+msgid ""
+"EXECUTE SCRIPT (\n"
+"   FILENAME = '/tmp/changes_2008-04-01.sql',\n"
+"   EVENT NODE = 1\n"
+");\n"
+"\n"
+"EXECUTE SCRIPT (\n"
+"   FILENAME = '/tmp/changes_2008-04-01.sql',\n"
+"   EVENT NODE = 1,\n"
+"   EXECUTE ONLY ON='1,2,3'\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2861(para)
+msgid ""
+"Up until the 2.0 branch, each replicated table received an exclusive lock, "
+"on the origin node, in order to remove the replication triggers; after the "
+"DDL script completes, those locks will be cleared. In the 2.0 branch this is "
+"no longer the case. EXECUTE SCRIPT won't obtain any locks on your "
+"application tables though the script that you executing probably will."
+msgstr ""
+
+#: slonik_ref.xml:2868(para)
+msgid ""
+"After the DDL script has run on the origin node, it will then run on "
+"subscriber nodes, where replicated tables will be similarly altered to "
+"remove replication triggers, therefore requiring that exclusive locks be "
+"taken out on each node, in turn."
+msgstr ""
+
+#: slonik_ref.xml:2885(para)
+msgid "This command was introduced in &slony1; 1.0."
+msgstr ""
+
+#: slonik_ref.xml:2887(para)
+msgid ""
+"Before &slony1; version 1.2, the entire DDL script was submitted as one "
+"<function>PQexec()</function> request, with the implication that the "
+"<emphasis>entire</emphasis> script was parsed based on the state of the "
+"database before invocation of the script. This means statements later in the "
+"script cannot depend on DDL changes made by earlier statements in the same "
+"script. Thus, you cannot add a column to a table and add constraints to that "
+"column later in the same request."
+msgstr ""
+
+#: slonik_ref.xml:2896(para)
+msgid ""
+"In &slony1; version 1.2, the DDL script is split into statements, and each "
+"statement is submitted separately. As a result, it is fine for later "
+"statements to refer to objects or attributes created or modified in earlier "
+"statements. Furthermore, in version 1.2, the <command>slonik</command> "
+"output includes a listing of each statement as it is processed, on the set "
+"origin node. Similarly, the statements processed are listed in slon logs on "
+"the other nodes."
+msgstr ""
+
+#: slonik_ref.xml:2905(para)
+msgid ""
+"In &slony1; version 1.0, this would only lock the tables in the specified "
+"replication set. As of 1.1 (until 2.0), <emphasis>all replicated tables</"
+"emphasis> are locked (<emphasis>e.g.</emphasis> - triggers are removed at "
+"the start, and restored at the end). This deals with the risk that one might "
+"request DDL changes on tables in multiple replication sets. With version 2.0 "
+"no locks on application tables are obtained by &slony1;"
+msgstr ""
+
+#: slonik_ref.xml:2916(para)
+msgid ""
+"As of version 2.0.7, the log triggers on all replicated tables are checked "
+"to ensure their parameters match the primary key on the table. If they "
+"<emphasis>do not</emphasis> match, those tables that are exclusively locked "
+"as a result of the DDL request will have the triggers recreated to match the "
+"primary key. Tables that do not have an exclusive lock will <emphasis>not</"
+"emphasis> be corrected, but a warning message will be generated. The "
+"function <function>repair_log_triggers(only_locked boolean)</function> may "
+"be used manually to correct the triggers on those tables."
+msgstr ""
+
+#: slonik_ref.xml:2926(para)
+msgid ""
+"As of version 2.2 the DDL performed by an EXECUTE SCRIPT is stored in the "
+"sl_log_script table instead of sl_event."
+msgstr ""
+
+#: slonik_ref.xml:2934(refentrytitle)
+msgid "SLONIK UPDATE FUNCTIONS"
+msgstr ""
+
+#: slonik_ref.xml:2937(refname)
+msgid "UPDATE FUNCTIONS"
+msgstr ""
+
+#: slonik_ref.xml:2939(refpurpose)
+msgid "Reload stored functions"
+msgstr ""
+
+#: slonik_ref.xml:2942(command)
+msgid "UPDATE FUNCTIONS (options);"
+msgstr ""
+
+#: slonik_ref.xml:2948(para)
+msgid "Reloads stored functions for a node."
+msgstr ""
+
+#: slonik_ref.xml:2950(para)
+msgid ""
+"Reloads all stored procedure and function definitions in the &slony1; schema "
+"for the specified node. This command is usually part of the &slony1; "
+"software upgrade procedure."
+msgstr ""
+
+#: slonik_ref.xml:2958(para)
+msgid "The node to refresh."
+msgstr ""
+
+#: slonik_ref.xml:2965(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE FUNCTIONS (\n"
+"    ID = 3        # Update functions on node 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:2984(title) slonik_ref.xml:3088(title)
+msgid "Oddities"
+msgstr ""
+
+#: slonik_ref.xml:2986(para)
+msgid ""
+"Any mismatch between <xref linkend=\"slonik\"/> and the C libraries "
+"<quote>living</quote> in the &postgres; installation will result in this "
+"failing to do what is expected, and, more than likely, failing to run at "
+"all. You may <emphasis>think</emphasis> you are upgrading to version 1.1.5, "
+"but if you are running <xref linkend=\"slonik\"/> from version 1.1.2, or if "
+"you didn't restart the database with a version that has 1.1.5 libraries, and "
+"instead are referencing C stored functions from version 1.1.1, the attempt "
+"to upgrade will fail, because the sets of C functions have regularly changed "
+"between major versions."
+msgstr ""
+
+#: slonik_ref.xml:2997(para)
+msgid ""
+"Before &slony1; 1.2, the error messages that would result would be not "
+"terribly informative; what you'd find, in &postgres; logs, is some error "
+"message about being unable to load some stored function that happens to be "
+"implemented in C. As of 1.2, one of the first things done is to load a "
+"stored function to verify version numbers; it complains in a much more "
+"direct fashion if you have some versioning mismatch."
+msgstr ""
+
+#: slonik_ref.xml:3009(refentrytitle)
+msgid "SLONIK WAIT FOR EVENT"
+msgstr ""
+
+#: slonik_ref.xml:3012(refname)
+msgid "WAIT FOR EVENT"
+msgstr ""
+
+#: slonik_ref.xml:3014(refpurpose)
+msgid "Have Slonik script wait for previous event to complete"
+msgstr ""
+
+#: slonik_ref.xml:3018(command)
+msgid "WAIT FOR EVENT (options);"
+msgstr ""
+
+#: slonik_ref.xml:3024(para)
+msgid "Waits for event Confirmation."
+msgstr ""
+
+#: slonik_ref.xml:3026(para)
+msgid ""
+"<application>Slonik</application> remembers the last event generated on "
+"every node during script execution (events generated by earlier calls are "
+"currently not checked). In certain situations it is necessary that events "
+"generated on one node (such as <command>CREATE SET</command>) are processed "
+"on another node before issuing more commands (for instance, <xref linkend="
+"\"stmtsubscribeset\"/>). <command>WAIT FOR EVENT</command> may be used to "
+"cause the <application>slonik</application> script to wait for confirmation "
+"of an event, which hopefully means that the subscriber node is ready for the "
+"next action."
+msgstr ""
+
+#: slonik_ref.xml:3043(literal)
+msgid "ORIGIN = ival | ALL"
+msgstr ""
+
+#: slonik_ref.xml:3044(para)
+msgid "The origin of the event(s) to wait for."
+msgstr ""
+
+#: slonik_ref.xml:3047(literal)
+msgid "CONFIRMED = ival | ALL"
+msgstr ""
+
+#: slonik_ref.xml:3049(para)
+msgid "The node ID of the receiver that must confirm the event(s)."
+msgstr ""
+
+#: slonik_ref.xml:3052(literal)
+msgid "WAIT ON = ival"
+msgstr ""
+
+#: slonik_ref.xml:3053(para)
+msgid "The ID of the node where the &slconfirm; table is to be checked."
+msgstr ""
+
+#: slonik_ref.xml:3057(literal)
+msgid "TIMEOUT = ival"
+msgstr ""
+
+#: slonik_ref.xml:3059(para)
+msgid ""
+"The number of seconds to wait. Default is 600 (10 minutes). <command>TIMEOUT "
+"= 0</command> causes the script to wait indefinitely."
+msgstr ""
+
+#: slonik_ref.xml:3038(para)
+msgid ""
+"<command>WAIT FOR EVENT</command> must be called outside of any "
+"<command>try</command> block in order to work, since new confirm messages "
+"don't become visible within a transaction. <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:3068(programlisting)
+#, no-wrap
+msgid ""
+"WAIT FOR EVENT (\n"
+"  ORIGIN = ALL,\n"
+"  CONFIRMED = ALL,\n"
+"  WAIT ON = 1\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3083(para)
+msgid ""
+"In version 2.0, the default value for <envar>WAIT ON</envar> was removed, so "
+"a node must be specified."
+msgstr ""
+
+#: slonik_ref.xml:3088(para)
+msgid ""
+"Not all events return interesting results. For instance, many people have "
+"run afoul of problems with <xref linkend=\"stmtsubscribeset\"/>, when "
+"subscribing a new set. Be aware (and beware!) that a <xref linkend="
+"\"stmtsubscribeset\"/> request will return the event confirmation almost "
+"immediately, even though there might be several hours of work to do before "
+"the subscription is ready. The trouble with <xref linkend=\"stmtsubscribeset"
+"\"/> is that it is processed as <emphasis>two</emphasis> events, one on the "
+"origin node, with a second event, to enable the subscription, on the "
+"subscriber."
+msgstr ""
+
+#: slonik_ref.xml:3100(para)
+msgid ""
+"In order to more reliably monitor from within a <xref linkend=\"slonik\"/> "
+"script that <xref linkend=\"stmtsubscribeset\"/> is complete, you may submit "
+"a <xref linkend=\"stmtsync\"/> event after the subscription, and have the "
+"WAIT request wait on the <command>SYNC</command> event, as follows."
+msgstr ""
+
+#: slonik_ref.xml:3105(programlisting)
+#, no-wrap
+msgid ""
+"     # Assuming that node 1 is the origin for set 999 that has direct subscribers 2 and 3\n"
+"     SUBSCRIBE SET (ID = 999, PROVIDER = 1, RECEIVER = 2);\n"
+"     WAIT FOR EVENT (ORIGIN = 1, CONFIRMED = ALL, WAIT ON=1);\n"
+"     SUBSCRIBE SET (ID = 999, PROVIDER = 1, RECEIVER = 3);\n"
+"     WAIT FOR EVENT (ORIGIN = 1, CONFIRMED = ALL, WAIT ON=1);\n"
+"     MERGE SET ( ID = 1, ADD ID = 999, ORIGIN = 1 );\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3119(refentrytitle)
+msgid "SLONIK REPAIR CONFIG"
+msgstr ""
+
+#: slonik_ref.xml:3122(refname)
+msgid "REPAIR CONFIG"
+msgstr ""
+
+#: slonik_ref.xml:3124(application)
+msgid "pg_dump"
+msgstr ""
+
+#: slonik_ref.xml:3124(refpurpose)
+msgid ""
+"Resets the name-to-oid mapping of tables in a replication set, useful for "
+"restoring a node after a <placeholder-1/>."
+msgstr ""
+
+#: slonik_ref.xml:3127(command)
+msgid "REPAIR CONFIG (options);"
+msgstr ""
+
+#: slonik_ref.xml:3133(para)
+msgid "Resets name-to-oid mapping."
+msgstr ""
+
+#: slonik_ref.xml:3137(para)
+msgid "Which set to clean up after."
+msgstr ""
+
+#: slonik_ref.xml:3142(para)
+msgid "The node ID where this should be submitted."
+msgstr ""
+
+#: slonik_ref.xml:3147(para)
+msgid ""
+"The ID of the only node where the mappings are to be updated. If not "
+"specified, the default is to execute this on all nodes subscribed to the set."
+msgstr ""
+
+#: slonik_ref.xml:3156(programlisting)
+#, no-wrap
+msgid ""
+"REPAIR CONFIG (\n"
+"  SET ID = 1,\n"
+"  EVENT NODE = 2\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3178(refentrytitle)
+msgid "SLONIK RESUBSCRIBE NODE"
+msgstr ""
+
+#: slonik_ref.xml:3181(refname)
+msgid "RESUBSCRIBE NODE"
+msgstr ""
+
+#: slonik_ref.xml:3183(refpurpose)
+msgid "Change the provider of a replication set"
+msgstr ""
+
+#: slonik_ref.xml:3187(command)
+msgid "RESUBSCRIBE NODE (options);"
+msgstr ""
+
+#: slonik_ref.xml:3193(para)
+msgid ""
+"The RESUBSCRIBE NODE command will change the provider used to receive data "
+"from for all of the replication sets originating on a given node. If a "
+"subscriber node is receiving a number of replication sets with a particular "
+"node as an origin then the RESUBSCRIBE NODE command will change the provider "
+"node used by that subscriber node for all of the replication sets "
+"originating on the given origin."
+msgstr ""
+
+#: slonik_ref.xml:3205(para)
+msgid "ID of the set origin for all subscriptions to change"
+msgstr ""
+
+#: slonik_ref.xml:3211(para)
+msgid "Node ID of the subscriber"
+msgstr ""
+
+#: slonik_ref.xml:3215(para)
+msgid "Node ID of the provider"
+msgstr ""
+
+#: slonik_ref.xml:3223(programlisting)
+#, no-wrap
+msgid ""
+"RESUBSCRIBE NODE  (\n"
+"   ORIGIN = 1,\n"
+"   PROVIDER = 2,\n"
+"   RECEIVER = 3\n"
+");\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3233(para)
+msgid "None"
+msgstr ""
+
+#: slonik_ref.xml:3244(para)
+msgid "This command was introduced in &slony1; 2.2"
+msgstr ""
+
+#: slonik_ref.xml:3250(refentrytitle)
+msgid "SLONIK SYNC"
+msgstr ""
+
+#: slonik_ref.xml:3253(refname)
+msgid "SYNC"
+msgstr ""
+
+#: slonik_ref.xml:3255(refpurpose)
+msgid "Generate an ordinary SYNC event"
+msgstr ""
+
+#: slonik_ref.xml:3258(command)
+msgid "SYNC (options);"
+msgstr ""
+
+#: slonik_ref.xml:3264(para)
+msgid "Generates a SYNC event on a specified node."
+msgstr ""
+
+#: slonik_ref.xml:3268(para)
+msgid "The node on which to generate the SYNC event."
+msgstr ""
+
+#: slonik_ref.xml:3275(programlisting)
+#, no-wrap
+msgid ""
+"     SYNC (ID = 1);\n"
+"     WAIT FOR EVENT (ORIGIN = 1, CONFIRMED = 2, WAIT ON=1);\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3291(para)
+msgid "This command was introduced in &slony1; 1.1.6 / 1.2.1"
+msgstr ""
+
+#: slonik_ref.xml:3297(refentrytitle)
+msgid "SLONIK SLEEP"
+msgstr ""
+
+#: slonik_ref.xml:3300(refname)
+msgid "SLEEP"
+msgstr ""
+
+#: slonik_ref.xml:3302(function)
+msgid "sleep()"
+msgstr ""
+
+#: slonik_ref.xml:3302(refpurpose)
+msgid "Sleep using system <placeholder-1/>"
+msgstr ""
+
+#: slonik_ref.xml:3306(command)
+msgid "sleep"
+msgstr ""
+
+#: slonik_ref.xml:3307(replaceable)
+msgid "seconds"
+msgstr ""
+
+#: slonik_ref.xml:3312(para)
+msgid "Sleeps for the specified number of seconds."
+msgstr ""
+
+#: slonik_ref.xml:3317(programlisting)
+#, no-wrap
+msgid ""
+"     sleep (seconds = 5);\n"
+"    "
+msgstr ""
+
+#: slonik_ref.xml:3328(para)
+msgid "This command was introduced in &slony1; 1.1.6 / 1.2.1."
+msgstr ""
+
+#: slonik_ref.xml:3333(refentrytitle)
+msgid "SLONIK CLONE PREPARE"
+msgstr ""
+
+#: slonik_ref.xml:3336(refname)
+msgid "CLONE PREPARE"
+msgstr ""
+
+#: slonik_ref.xml:3338(refpurpose)
+msgid "Prepare for cloning a node."
+msgstr ""
+
+#: slonik_ref.xml:3342(command)
+msgid "clone prepare"
+msgstr ""
+
+#: slonik_ref.xml:3343(replaceable) slonik_ref.xml:3399(replaceable)
+msgid "id"
+msgstr ""
+
+#: slonik_ref.xml:3344(replaceable) slonik_ref.xml:3400(replaceable)
+msgid "provider"
+msgstr ""
+
+#: slonik_ref.xml:3345(replaceable)
+msgid "comment"
+msgstr ""
+
+#: slonik_ref.xml:3350(para)
+msgid "Prepares for cloning a specified subscriber node."
+msgstr ""
+
+#: slonik_ref.xml:3354(para)
+msgid ""
+"This duplicates the <quote>provider</quote> node's configuration under a new "
+"node ID in preparation for the node to be copied via standard database tools."
+msgstr ""
+
+#: slonik_ref.xml:3360(para)
+msgid ""
+"Note that in order that we be certain that this new node be consistent with "
+"all nodes, it is important to issue a SYNC event against every node aside "
+"from the provider and wait to start copying the provider database at least "
+"until all those SYNC events have been confirmed by the provider. Otherwise, "
+"it is possible for the clone to miss some events."
+msgstr ""
+
+#: slonik_ref.xml:3369(programlisting)
+#, no-wrap
+msgid ""
+"     clone prepare (id = 33, provider = 22, comment='Clone 33');\n"
+"     sync (id=11);\n"
+"     sync (id=22);\n"
+"     "
+msgstr ""
+
+#: slonik_ref.xml:3378(para)
+msgid ""
+"Slonik will wait until the node being cloned (the provider) is caught up "
+"with all other nodes before submitting the clone prepare command"
+msgstr ""
+
+#: slonik_ref.xml:3384(para) slonik_ref.xml:3429(para)
+msgid "This command was introduced in &slony1; 2.0."
+msgstr ""
+
+#: slonik_ref.xml:3389(refentrytitle)
+msgid "SLONIK CLONE FINISH"
+msgstr ""
+
+#: slonik_ref.xml:3392(refname)
+msgid "CLONE FINISH"
+msgstr ""
+
+#: slonik_ref.xml:3394(refpurpose)
+msgid "Complete cloning a node."
+msgstr ""
+
+#: slonik_ref.xml:3398(command)
+msgid "clone finish"
+msgstr ""
+
+#: slonik_ref.xml:3405(para)
+msgid "Finishes cloning a specified node."
+msgstr ""
+
+#: slonik_ref.xml:3409(para)
+msgid ""
+"This completes the work done by <xref linkend=\"stmtcloneprepare\"/>, "
+"establishing confirmation data for the new <quote>clone</quote> based on the "
+"status found for the <quote>provider</quote> node."
+msgstr ""
+
+#: slonik_ref.xml:3417(programlisting)
+#, no-wrap
+msgid ""
+"     clone finish (id = 33, provider = 22);\n"
+"    "
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: slonik_ref.xml:0(None)
+msgid "translator-credits"
+msgstr ""

@@ -1,0 +1,737 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: versionupgrade.xml:3(title)
+msgid "Using &slony1; for &postgres; Upgrades"
+msgstr ""
+
+#: versionupgrade.xml:5(indexterm)
+msgid "<primary>version upgrades for &postgres; using &slony1;</primary>"
+msgstr ""
+
+#: versionupgrade.xml:8(para)
+msgid ""
+"A number of people have found &slony1; useful for helping perform upgrades "
+"between major &postgres; releases (<emphasis> e.g.</emphasis> which mandates "
+"running <application>initdb</application> to create a new database instance) "
+"without requiring a substantial downtime."
+msgstr ""
+
+#: versionupgrade.xml:25(para) versionupgrade.xml:46(para)
+msgid "Stop all applications that might modify the data"
+msgstr ""
+
+#: versionupgrade.xml:26(para)
+msgid ""
+"Start the <application>pg_dump</application>, and load that into the new "
+"database"
+msgstr ""
+
+#: versionupgrade.xml:27(para)
+msgid "Wait 40 hours for the dump/load to complete"
+msgstr ""
+
+#: versionupgrade.xml:28(para)
+msgid "Point <quote>write</quote> applications to the new database"
+msgstr ""
+
+#: versionupgrade.xml:15(para)
+msgid ""
+"The <quote>simple</quote> way that one might imagine doing such an upgrade "
+"would involve running <application>pg_dump</application> on the database "
+"running the older version, and then submit the results into a "
+"<application>psql</application> session connected to a database instance "
+"running the newer version. Unfortunately, the time consumed from start to "
+"end, for this approach, may be prohibitive. For a database containing 40GB "
+"of data with numerous indices, the process required involves: <placeholder-1/"
+">"
+msgstr ""
+
+#: versionupgrade.xml:31(para)
+msgid "And note that this approach led to a 40 hour outage."
+msgstr ""
+
+#: versionupgrade.xml:33(para)
+msgid ""
+"&slony1; offers an opportunity to replace that long outage with one as "
+"little as a few seconds long. The approach required is to create a &slony1; "
+"replica in the new version. It is possible that it may take considerably "
+"longer than 40h to create that replica, however, establishing that replica "
+"requires no outage, and once it's there, it can be kept very nearly up to "
+"date."
+msgstr ""
+
+#: versionupgrade.xml:49(para)
+msgid ""
+"Lock the set against client application updates using <xref linkend="
+"\"stmtlockset\"/>"
+msgstr ""
+
+#: versionupgrade.xml:52(para)
+msgid ""
+"Submit the Slonik command <xref linkend=\"stmtmoveset\"/> to shift the "
+"origin from the old database to the new one"
+msgstr ""
+
+#: versionupgrade.xml:56(para)
+msgid "Point the applications to the new database"
+msgstr ""
+
+#: versionupgrade.xml:40(para)
+msgid ""
+"When it comes time to switch over to the new database, the portion of the "
+"procedure that requires an application <quote>outage</quote> is a lot less "
+"time consuming: <placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:59(para)
+msgid ""
+"This procedure should only need to take a very short time, likely based more "
+"on how much time is required to reconfigure your applications than anything "
+"else. If you can automate all of these steps, the outage may conceivably be "
+"a second or less. If manual handling is necessary, then it is likely to take "
+"somewhere between a few seconds and a few minutes."
+msgstr ""
+
+#: versionupgrade.xml:66(para)
+msgid ""
+"Note that after the origin has been shifted, updates are replicated back "
+"into the <emphasis>old</emphasis> database. If you discover that due to some "
+"unforeseen, untested condition, your application is somehow unhappy "
+"connecting to the new database, you may readily use <xref linkend="
+"\"stmtmoveset\"/> again to reverse the process to shift the origin back to "
+"the old database."
+msgstr ""
+
+#: versionupgrade.xml:84(para)
+msgid "One running the new version of &postgres;"
+msgstr ""
+
+#: versionupgrade.xml:85(para)
+msgid "One running the old version of &postgres;"
+msgstr ""
+
+#: versionupgrade.xml:80(para)
+msgid ""
+"Prepare <emphasis> two </emphasis> &slony1; replicas of the database: "
+"<placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:88(para)
+msgid ""
+"Thus, you have <emphasis>three</emphasis> nodes, one running the new version "
+"of &postgres;, and the other two the old version."
+msgstr ""
+
+#: versionupgrade.xml:92(para)
+msgid ""
+"Note that this imposes a need to have &slony1; built against <emphasis>both</"
+"emphasis> databases (<emphasis>e.g.</emphasis> - at the very least, the "
+"binaries for the stored procedures need to have been compiled against both "
+"versions of &postgres;)."
+msgstr ""
+
+#: versionupgrade.xml:99(para)
+msgid ""
+"Once they are roughly <quote>in sync</quote>, stop all applications that "
+"might modify the data"
+msgstr ""
+
+#: versionupgrade.xml:102(para)
+msgid ""
+"Allow them to get in sync, then <command>stop</command> the "
+"<application>slon</application> daemon that has been feeding the subscriber "
+"running the old version of &postgres;"
+msgstr ""
+
+#: versionupgrade.xml:107(para)
+msgid ""
+"You may want to use <xref linkend=\"stmtuninstallnode\"/> to decommission "
+"this node, making it into a standalone database, or merely kill the "
+"<application>slon</application>, depending on how permanent you want this "
+"all to be."
+msgstr ""
+
+#: versionupgrade.xml:112(para)
+msgid ""
+"Then use <xref linkend=\"stmtmoveset\"/> to shift the origin, as before."
+msgstr ""
+
+#: versionupgrade.xml:73(para)
+msgid ""
+"If you consider it particularly vital to be able to shift back to the old "
+"database in its state at the time of the changeover, so as to be able to "
+"outright roll back the whole change, and would like as well the ability to "
+"shift back to the old version (with any updates since the changeover), the "
+"following steps would accomplish that: <placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:117(para)
+msgid ""
+"Supposing a <quote>small</quote> disaster strikes, you might recover back to "
+"the node running the old database that has been seeing updates come through; "
+"if you run into larger problems, you would have to abandon the two nodes and "
+"go to the one which had been shut off."
+msgstr ""
+
+#: versionupgrade.xml:127(para)
+msgid ""
+"&slony1; does not support versions of &postgres; older than 7.3.3 because it "
+"needs namespace support that did not solidify until that time. Rod Taylor "
+"<quote>hacked up</quote> a version of &slony1; to work on 7.2 by allowing "
+"the &slony1; objects to live in the global schema. He found it pretty "
+"fiddly, and that some queries weren't very efficient (the &postgres; query "
+"optimizer has improved <emphasis>considerably</emphasis> since 7.2), but "
+"that this was more workable for him than other replication systems such as "
+"<productname>eRServer</productname>. &postgres; 7.2 will <emphasis>never</"
+"emphasis> be supported by any official &slony1; release."
+msgstr ""
+
+#: versionupgrade.xml:122(para)
+msgid ""
+"This isn't to say that it is routine to have the sorts of problems that "
+"would mandate such a <quote>paranoid</quote> procedure; people worried about "
+"process risk assessments can be reassured if you have choices like this. "
+"<placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:139(title)
+msgid "Example: Upgrading a single database with no existing replication"
+msgstr ""
+
+#: versionupgrade.xml:141(para)
+msgid ""
+"This example shows names, IP addresses, ports, etc to describe in detail "
+"what is going on"
+msgstr ""
+
+#: versionupgrade.xml:145(title)
+msgid "The Environment"
+msgstr ""
+
+#: versionupgrade.xml:146(programlisting)
+#, no-wrap
+msgid ""
+"\t\tDatabase machine:\n"
+"\t\t\tname = rome \n"
+"\t\t\tip = 192.168.1.23\n"
+"\t\t\tOS: Ubuntu 6.06 LTS\n"
+"\t\t\tpostgres user = postgres, group postgres\n"
+"\t\t\t\n"
+"\t\tCurrent PostgreSQL \n"
+"\t\t\tVersion = 8.2.3 \n"
+"\t\t\tPort 5432\n"
+"\t\t\tInstalled at: /data/pgsql-8.2.3\n"
+"\t\t\tData directory: /data/pgsql-8.2.3/data\n"
+"\t\t\tDatabase to be moved: mydb\n"
+"\t\t\t\n"
+"\t\tNew PostgreSQL installation\n"
+"\t\t\tVersion = 8.3.3\n"
+"\t\t\tPort 5433\n"
+"\t\t\tInstalled at: /data/pgsql-8.3.3\n"
+"\t\t\tData directory: /data/pgsql-8.3.3/data\n"
+"\t\t\t\n"
+"\t\tSlony Version to be used = 1.2.14\n"
+"    "
+msgstr ""
+
+#: versionupgrade.xml:170(title)
+msgid "Installing &slony1;"
+msgstr ""
+
+#: versionupgrade.xml:172(para)
+msgid ""
+"How to install &slony1; is covered quite well in other parts of the "
+"documentation (<xref linkend=\"installation\"/>); we will just provide a "
+"quick guide here."
+msgstr ""
+
+#: versionupgrade.xml:177(programlisting)
+#, no-wrap
+msgid ""
+"       wget http://main.slony.info/downloads/1.2/source/slony1-1.2.14.tar.bz2\n"
+"      "
+msgstr ""
+
+#: versionupgrade.xml:181(para)
+msgid "Unpack and build as root with"
+msgstr ""
+
+#: versionupgrade.xml:182(programlisting)
+#, no-wrap
+msgid ""
+"\t\ttar xjf slony1-1.2.14.tar.bz2\n"
+"\t\tcd slony1-1.2.14\n"
+"\t\t./configure --prefix=/data/pgsql-8.2.3 --with-perltools=/data/pgsql-8.2.3/slony --with-pgconfigdir=/data/pgsql-8.2.3/bin\n"
+"\t\tmake clean\n"
+"\t\tmake\n"
+"\t\tmake install\n"
+"\t\tchown -R postgres:postgres /data/pgsq-8.2.3 \n"
+"\t\tmkdir /var/log/slony\n"
+"\t\tchown -R postgres:postgres /var/log/slony\n"
+"      "
+msgstr ""
+
+#: versionupgrade.xml:194(para)
+msgid ""
+"Then repeat this for the 8.3.3 build. A very important step is the "
+"<command>make clean</command>; it is not so important the first time, but "
+"when building the second time, it is essential to clean out the old "
+"binaries, otherwise the binaries will not match the &postgres; 8.3.3 build "
+"with the result that &slony1; will not work there."
+msgstr ""
+
+#: versionupgrade.xml:203(title)
+msgid "Creating the slon_tools.conf"
+msgstr ""
+
+#: versionupgrade.xml:211(para)
+msgid "All the nodes and their details (IPs, ports, db, user, password)"
+msgstr ""
+
+#: versionupgrade.xml:215(para)
+msgid "All the tables to be replicated"
+msgstr ""
+
+#: versionupgrade.xml:218(para)
+msgid "All the sequences to be replicated"
+msgstr ""
+
+#: versionupgrade.xml:221(para)
+msgid "How the tables and sequences are arranged in sets"
+msgstr ""
+
+#: versionupgrade.xml:205(para)
+msgid ""
+"The slon_tools.conf is <emphasis>the</emphasis> configuration file. It "
+"contain all all the configuration information such as: <placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:225(para)
+msgid ""
+"Make a copy of <filename>/data/pgsql-8.2.3/etc/slon_tools.conf-sample</"
+"filename> to <filename>slon_tools.conf</filename> and open it. The comments "
+"in this file are fairly self explanatory. Since this is a one time "
+"replication you will generally not need to split into multiple sets. On a "
+"production machine running with 500 tables and 100 sequences, putting them "
+"all in a single set has worked fine."
+msgstr ""
+
+#: versionupgrade.xml:233(para)
+msgid "A few modifications to do:"
+msgstr ""
+
+#: versionupgrade.xml:236(para)
+msgid ""
+"In our case we only need 2 nodes so delete the <command>add_node</command> "
+"for 3 and 4."
+msgstr ""
+
+#: versionupgrade.xml:240(para)
+msgid ""
+"<envar>pkeyedtables</envar> entry need to be updated with your tables that "
+"have a primary key. If your tables are spread across multiple schemas, then "
+"you need to qualify the table name with the schema (schema.tablename)"
+msgstr ""
+
+#: versionupgrade.xml:246(para)
+msgid ""
+"<envar>keyedtables</envar> entries need to be updated with any tables that "
+"match the comment (with good schema design, there should not be any)."
+msgstr ""
+
+#: versionupgrade.xml:252(para)
+msgid ""
+"<envar>serialtables</envar> (if you have any; as it says, it is wise to "
+"avoid this)."
+msgstr ""
+
+#: versionupgrade.xml:255(para)
+msgid "<envar>sequences</envar> needs to be updated with your sequences."
+msgstr ""
+
+#: versionupgrade.xml:259(para)
+msgid "Remove the whole set2 entry (as we are only using set1)"
+msgstr ""
+
+#: versionupgrade.xml:264(programlisting)
+#, no-wrap
+msgid ""
+"$CLUSTER_NAME = 'replication';\n"
+"$LOGDIR = '/var/log/slony';\n"
+"$MASTERNODE = 1;\n"
+"\n"
+"    add_node(node     =&gt; 1,\n"
+"\t     host     =&gt; 'rome',\n"
+"\t     dbname   =&gt; 'mydb',\n"
+"\t     port     =&gt; 5432,\n"
+"\t     user     =&gt; 'postgres',\n"
+"         password =&gt; '');\n"
+"\n"
+"    add_node(node     =&gt; 2,\n"
+"\t     host     =&gt; 'rome',\n"
+"\t     dbname   =&gt; 'mydb',\n"
+"\t     port     =&gt; 5433,\n"
+"\t     user     =&gt; 'postgres',\n"
+"         password =&gt; '');\n"
+"\n"
+"$SLONY_SETS = {\n"
+"    \"set1\" =&gt; {\n"
+"\t\"set_id\" =&gt; 1,\n"
+"\t\"table_id\"    =&gt; 1,\n"
+"\t\"sequence_id\" =&gt; 1,\n"
+"        \"pkeyedtables\" =&gt; [\n"
+"\t\t\t   'mytable1',\n"
+"\t\t\t   'mytable2',\n"
+"\t\t\t   'otherschema.mytable3',\n"
+"\t\t\t   'otherschema.mytable4',\n"
+"\t\t\t   'otherschema.mytable5',\n"
+"\t\t\t   'mytable6',\n"
+"\t\t\t   'mytable7',\n"
+"\t\t\t   'mytable8',\n"
+"\t\t\t   ],\n"
+"\n"
+"\t\t\"sequences\" =&gt; [\n"
+"\t\t\t   'mytable1_sequence1',\n"
+"   \t\t\t   'mytable1_sequence2',\n"
+"\t\t\t   'otherschema.mytable3_sequence1',\n"
+"   \t\t\t   'mytable6_sequence1',\n"
+"   \t\t\t   'mytable7_sequence1',\n"
+"   \t\t\t   'mytable7_sequence2',\n"
+"\t\t\t],\n"
+"    },\n"
+"\n"
+"};\n"
+"\n"
+"1;\n"
+"      "
+msgstr ""
+
+#: versionupgrade.xml:262(para)
+msgid ""
+"This is what it look like with all comments stripped out: <placeholder-1/>"
+msgstr ""
+
+#: versionupgrade.xml:314(para)
+msgid ""
+"As can be seen this database is pretty small with only 8 tables and 6 "
+"sequences. Now copy your <filename>slon_tools.conf</filename> into "
+"<filename>/data/pgsql-8.2.3/etc/</filename> and <filename>/data/pgsql-8.3.3/"
+"etc/</filename>"
+msgstr ""
+
+#: versionupgrade.xml:322(title)
+msgid "Preparing the new &postgres; instance"
+msgstr ""
+
+#: versionupgrade.xml:323(para)
+msgid ""
+"You now have a fresh second instance of &postgres; running on port 5433 on "
+"the same machine. Now is time to prepare to receive &slony1; replication "
+"data."
+msgstr ""
+
+#: versionupgrade.xml:328(para)
+msgid ""
+"Slony does not replicate roles, so first create all the users on the new "
+"instance so it is identical in terms of roles/groups"
+msgstr ""
+
+#: versionupgrade.xml:333(para)
+msgid ""
+"Create your db in the same encoding as original db, in my case UTF8 "
+"<command>/data/pgsql-8.3.3/bin/createdb -E UNICODE -p5433 mydb</command>"
+msgstr ""
+
+#: versionupgrade.xml:341(para)
+msgid ""
+"&slony1; replicates data, not schemas, so take a dump of your schema "
+"<command>/data/pgsql-8.2.3/bin/pg_dump -s mydb &gt; /tmp/mydb.schema</"
+"command> and then import it on the new instance. <command>cat /tmp/mydb."
+"schema | /data/pgsql-8.3.3/bin/psql -p5433 mydb</command>"
+msgstr ""
+
+#: versionupgrade.xml:352(para)
+msgid "The new database is now ready to start receiving replication data"
+msgstr ""
+
+#: versionupgrade.xml:357(title)
+msgid "Initiating &slony1; Replication"
+msgstr ""
+
+#: versionupgrade.xml:358(para)
+msgid ""
+"This is the point where we start changing your current production database "
+"by adding a new schema to it that contains all the &slony1; replication "
+"information"
+msgstr ""
+
+#: versionupgrade.xml:361(para)
+msgid ""
+"The first thing to do is to initialize the &slony1; schema. Do the following "
+"as, in the example, the postgres user."
+msgstr ""
+
+#: versionupgrade.xml:364(para)
+msgid ""
+"All commands starting with <command>slonik</command> does not do anything "
+"themself they only generate command output that can be interpreted by the "
+"slonik binary. So issuing any of the scripts starting with slonik_ will not "
+"do anything to your database. Also by default the slonik_ scripts will look "
+"for your slon_tools.conf in your etc directory of the postgresSQL directory. "
+"In my case <filename>/data/pgsql-8.x.x/etc</filename> depending on which you "
+"are working on."
+msgstr ""
+
+#: versionupgrade.xml:373(command)
+msgid "/data/pgsql-8.2.3/slony/slonik_init_cluster &gt; /tmp/init.txt"
+msgstr ""
+
+#: versionupgrade.xml:376(para)
+msgid "open /tmp/init.txt and it should look like something like this"
+msgstr ""
+
+#: versionupgrade.xml:378(programlisting)
+#, no-wrap
+msgid ""
+"# INIT CLUSTER\n"
+"cluster name = replication;\n"
+" node 1 admin conninfo='host=rome dbname=mydb user=postgres port=5432';\n"
+" node 2 admin conninfo='host=rome dbname=mydb user=postgres port=5433';\n"
+"  init cluster (id = 1, comment = 'Node 1 - mydb@rome');\n"
+"\n"
+"# STORE NODE\n"
+"  store node (id = 2, event node = 1, comment = 'Node 2 - mydb@rome');\n"
+"  echo 'Set up replication nodes';\n"
+"\n"
+"# STORE PATH\n"
+"  echo 'Next: configure paths for each node/origin';\n"
+"  store path (server = 1, client = 2, conninfo = 'host=rome dbname=mydb user=postgres port=5432');\n"
+"  store path (server = 2, client = 1, conninfo = 'host=rome dbname=mydb user=postgres port=5433');\n"
+"  echo 'Replication nodes prepared';\n"
+"  echo 'Please start a slon replication daemon for each node';\n"
+"     \n"
+"    "
+msgstr ""
+
+#: versionupgrade.xml:397(para)
+msgid ""
+"The first section indicates node information and the initialization of the "
+"cluster, then it adds the second node to the cluster and finally stores "
+"communications paths for both nodes in the slony schema."
+msgstr ""
+
+#: versionupgrade.xml:401(para)
+msgid ""
+"Now is time to execute the command: <command>cat /tmp/init.txt | /data/"
+"pgsql-8.2.3/bin/slonik</command>"
+msgstr ""
+
+#: versionupgrade.xml:405(para)
+msgid ""
+"This will run pretty quickly and give you some output to indicate success."
+msgstr ""
+
+#: versionupgrade.xml:407(para)
+msgid ""
+"If things do fail, the most likely reasons would be database permissions, "
+"<filename>pg_hba.conf</filename> settings, or typos in <filename>slon_tools."
+"conf</filename>. Look over your problem and solve it. If slony schemas were "
+"created but it still failed you can issue the script "
+"<command>slonik_uninstall_nodes</command> to clean things up. In the worst "
+"case you may connect to each database and issue <command>drop schema "
+"_replication cascade;</command> to clean up."
+msgstr ""
+
+#: versionupgrade.xml:419(title)
+msgid "The slon daemon"
+msgstr ""
+
+#: versionupgrade.xml:421(para)
+msgid ""
+"As the result from the last command told us, we should now be starting a "
+"slon replication daemon for each node! The slon daemon is what makes the "
+"replication work. All transfers and all work is done by the slon daemon. One "
+"is needed for each node. So in our case we need one for the 8.2.3 "
+"installation and one for the 8.3.3."
+msgstr ""
+
+#: versionupgrade.xml:428(para)
+msgid ""
+"to start one for 8.2.3 you would do: <command>/data/pgsql-8.2.3/slony/"
+"slon_start 1 --nowatchdog</command> This would start the daemon for node 1, "
+"the --nowatchdog since we are running a very small replication we do not "
+"need any watchdogs that keep an eye on the slon process if it stays up etc."
+msgstr ""
+
+#: versionupgrade.xml:434(para)
+msgid ""
+"if it says started successfully have a look in the log file at /var/log/"
+"slony/slony1/node1/ It will show that the process was started ok"
+msgstr ""
+
+#: versionupgrade.xml:438(para)
+msgid ""
+"We need to start one for 8.3.3 as well. <command><command>/data/pgsql-8.3.3/"
+"slony/slon_start 2 --nowatchdog</command></command>"
+msgstr ""
+
+#: versionupgrade.xml:442(para)
+msgid ""
+"If it says it started successfully have a look in the log file at /var/log/"
+"slony/slony1/node2/ It will show that the process was started ok"
+msgstr ""
+
+#: versionupgrade.xml:447(title)
+msgid "Adding the replication set"
+msgstr ""
+
+#: versionupgrade.xml:448(para)
+msgid ""
+"We now need to let the slon replication know which tables and sequences it "
+"is to replicate. We need to create the set."
+msgstr ""
+
+#: versionupgrade.xml:450(para)
+msgid ""
+"Issue the following: <command>/data/pgsql-8.2.3/slony/slonik_create_set set1 "
+"&gt; /tmp/createset.txt</command>"
+msgstr ""
+
+#: versionupgrade.xml:456(para)
+msgid ""
+"<filename> /tmp/createset.txt</filename> may be quite lengthy depending on "
+"how many tables; in any case, take a quick look and it should make sense as "
+"it defines all the tables and sequences to be replicated"
+msgstr ""
+
+#: versionupgrade.xml:460(para)
+msgid ""
+"If you are happy with the result send the file to the slonik for execution "
+"<command>cat /tmp/createset.txt | /data/pgsql-8.2.3/bin/slonik </command> "
+"You will see quite a lot rolling by, one entry for each table."
+msgstr ""
+
+#: versionupgrade.xml:467(para)
+msgid "You now have defined what is to be replicated"
+msgstr ""
+
+#: versionupgrade.xml:470(title)
+msgid "Subscribing all the data"
+msgstr ""
+
+#: versionupgrade.xml:471(para)
+msgid ""
+"The final step is to get all the data onto the new database. It is simply "
+"done using the subscribe script. <command>data/pgsql-8.2.3/slony/"
+"slonik_subscribe_set 1 2 &gt; /tmp/subscribe.txt</command> the first is the "
+"ID of the set, second is which node that is to subscribe."
+msgstr ""
+
+#: versionupgrade.xml:481(programlisting)
+#, no-wrap
+msgid ""
+" cluster name = replication;\n"
+" node 1 admin conninfo='host=rome dbname=mydb user=postgres port=5432';\n"
+" node 2 admin conninfo='host=rome dbname=mydb user=postgres port=5433';\n"
+"  try {\n"
+"    subscribe set (id = 1, provider = 1, receiver = 2, forward = yes);\n"
+"  }\n"
+"  on error {\n"
+"    exit 1;\n"
+"  }\n"
+"  echo 'Subscribed nodes to set 1';\n"
+"     "
+msgstr ""
+
+#: versionupgrade.xml:479(para)
+msgid ""
+"will look something like this: <placeholder-1/> send it to the slonik "
+"<command>cat /tmp/subscribe.txt | /data/pgsql-8.2.3/bin/slonik </command>"
+msgstr ""
+
+#: versionupgrade.xml:497(para)
+msgid ""
+"The replication will now start. It will copy everything in tables/sequneces "
+"that were in the set. understandable this can take quite some time, all "
+"depending on the size of db and power of the machine."
+msgstr ""
+
+#: versionupgrade.xml:501(para)
+msgid ""
+"One way to keep track of the progress would be to do the following: "
+"<command>tail -f /var/log/slony/slony1/node2/log | grep -i copy </command> "
+"The slony logging is pretty verbose and doing it this way will let you know "
+"how the copying is going. At some point it will say \"copy completed "
+"sucessfully in xxx seconds\" when you do get this it is done!"
+msgstr ""
+
+#: versionupgrade.xml:510(para)
+msgid ""
+"Once this is done it will start trying to catch up with all data that has "
+"come in since the replication was started. You can easily view the progress "
+"of this in the database. Go to the master database, in the replication "
+"schema there is a view called sl_status. It is pretty self explanatory. The "
+"field of most interest is the \"st_lag_num_events\" this declare how many "
+"slony events behind the node is. 0 is best. but it all depends how active "
+"your db is. The field next to it st_lag_time is an estimation how much in "
+"time it is lagging behind. Take this with a grain of salt. The actual events "
+"is a more accurate messure of lag."
+msgstr ""
+
+#: versionupgrade.xml:520(para)
+msgid "You now have a fully replicated database"
+msgstr ""
+
+#: versionupgrade.xml:523(title)
+msgid "Switching over"
+msgstr ""
+
+#: versionupgrade.xml:524(para)
+msgid ""
+"Our database is fully replicated and its keeping up. There are few different "
+"options for doing the actual switch over it all depends on how much time you "
+"got to work with, down time vs. data loss ratio. the most brute force fast "
+"way of doing it would be"
+msgstr ""
+
+#: versionupgrade.xml:531(para)
+msgid ""
+"First modify the postgresql.conf file for the 8.3.3 to use port 5432 so that "
+"it is ready for the restart"
+msgstr ""
+
+#: versionupgrade.xml:535(para)
+msgid ""
+"From this point you will have down time. shutdown the 8.2.3 postgreSQL "
+"installation"
+msgstr ""
+
+#: versionupgrade.xml:539(para)
+msgid "restart the 8.3.3 postgreSQL installation. It should come up ok."
+msgstr ""
+
+#: versionupgrade.xml:543(para)
+msgid ""
+"drop all the slony stuff from the 8.3.3 installation login psql to the 8.3.3 "
+"and issue <command>drop schema _replication cascade;</command>"
+msgstr ""
+
+#: versionupgrade.xml:550(para)
+msgid ""
+"You have now upgraded to 8.3.3 with, hopefully, minimal down time. This "
+"procedure represents roughly the simplest way to do this."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: versionupgrade.xml:0(None)
+msgid "translator-credits"
+msgstr ""

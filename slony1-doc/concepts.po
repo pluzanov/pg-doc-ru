@@ -1,0 +1,445 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: concepts.xml:212(None)
+msgid "@@image: 'complexenv.png'; md5=THIS FILE DOESN'T EXIST"
+msgstr ""
+
+#: concepts.xml:4(title)
+msgid "&slony1; Concepts"
+msgstr ""
+
+#: concepts.xml:6(indexterm)
+msgid "<primary>concepts and terminology</primary>"
+msgstr ""
+
+#: concepts.xml:8(para)
+msgid ""
+"In order to set up a set of &slony1; replicas, it is necessary to understand "
+"the following major abstractions that it uses:"
+msgstr ""
+
+#: concepts.xml:12(para)
+msgctxt "para"
+msgid "Cluster"
+msgstr ""
+
+#: concepts.xml:13(para)
+msgctxt "para"
+msgid "Node"
+msgstr ""
+
+#: concepts.xml:14(para)
+msgctxt "para"
+msgid "Replication Set"
+msgstr ""
+
+#: concepts.xml:15(para)
+msgctxt "para"
+msgid "Origin, Providers and Subscribers"
+msgstr ""
+
+#: concepts.xml:16(para)
+msgid "slon daemons"
+msgstr ""
+
+#: concepts.xml:17(para)
+msgid "slonik configuration processor"
+msgstr ""
+
+#: concepts.xml:20(para)
+msgid "It is also worth knowing the meanings of certain Russian words:"
+msgstr ""
+
+#: concepts.xml:22(para)
+msgid "slon is Russian for <quote>elephant</quote>"
+msgstr ""
+
+#: concepts.xml:23(para)
+msgid ""
+"slony is the plural of slon, and therefore refers to a group of elephants"
+msgstr ""
+
+#: concepts.xml:24(para)
+msgid "slonik is Russian for <quote>little elephant</quote>"
+msgstr ""
+
+#: concepts.xml:27(para)
+msgid ""
+"The use of these terms in &slony1; is a <quote>tip of the hat</quote> to "
+"Vadim Mikheev, who was responsible for the <application>rserv</application> "
+"prototype which inspired some of the algorithms used in &slony1;."
+msgstr ""
+
+#: concepts.xml:33(title)
+msgctxt "title"
+msgid "Cluster"
+msgstr ""
+
+#: concepts.xml:34(indexterm)
+msgid "<primary>cluster</primary>"
+msgstr ""
+
+#: concepts.xml:38(para)
+msgid ""
+"In &slony1; terms, a <quote>cluster</quote> is a named set of &postgres; "
+"database instances; replication takes place between those databases."
+msgstr ""
+
+#: concepts.xml:42(para)
+msgid ""
+"The cluster name is specified in each and every Slonik script via the "
+"directive:"
+msgstr ""
+
+#: concepts.xml:43(programlisting)
+#, no-wrap
+msgid "cluster name = something;"
+msgstr ""
+
+#: concepts.xml:47(para)
+msgid ""
+"If the Cluster name is <envar>something</envar>, then &slony1; will create, "
+"in each database instance in the cluster, the namespace/schema "
+"<envar>_something.</envar>"
+msgstr ""
+
+#: concepts.xml:51(title)
+msgctxt "title"
+msgid "Node"
+msgstr ""
+
+#: concepts.xml:52(indexterm)
+msgid "<primary>node</primary>"
+msgstr ""
+
+#: concepts.xml:56(para)
+msgid ""
+"A &slony1; Node is a named &postgres; database that will be participating in "
+"replication."
+msgstr ""
+
+#: concepts.xml:59(para)
+msgid ""
+"It is defined, near the beginning of each Slonik script, using the directive:"
+msgstr ""
+
+#: concepts.xml:60(programlisting)
+#, no-wrap
+msgid " NODE 1 ADMIN CONNINFO = 'dbname=testdb host=server1 user=slony';"
+msgstr ""
+
+#: concepts.xml:64(para)
+msgid ""
+"The <xref linkend=\"admconninfo\"/> information indicates database "
+"connection information that will ultimately be passed to the "
+"<function>PQconnectdb()</function> libpq function."
+msgstr ""
+
+#: concepts.xml:68(para)
+msgid "Thus, a &slony1; cluster consists of:"
+msgstr ""
+
+#: concepts.xml:70(para)
+msgid "A cluster name"
+msgstr ""
+
+#: concepts.xml:71(para)
+msgid ""
+"A set of &slony1; nodes, each of which has a namespace based on that cluster "
+"name"
+msgstr ""
+
+#: concepts.xml:74(title)
+msgctxt "title"
+msgid "Replication Set"
+msgstr ""
+
+#: concepts.xml:75(indexterm)
+msgid "<primary>replication set</primary>"
+msgstr ""
+
+#: concepts.xml:79(para)
+msgid ""
+"A replication set is defined as a set of tables and sequences that are to be "
+"replicated between nodes in a &slony1; cluster."
+msgstr ""
+
+#: concepts.xml:82(para)
+msgid ""
+"You may have several sets, and the <quote>flow</quote> of replication does "
+"not need to be identical between those sets."
+msgstr ""
+
+#: concepts.xml:86(title)
+msgctxt "title"
+msgid "Origin, Providers and Subscribers"
+msgstr ""
+
+#: concepts.xml:87(indexterm)
+msgid "<primary>origin node</primary>"
+msgstr ""
+
+#: concepts.xml:90(indexterm)
+msgid "<primary>provider node</primary>"
+msgstr ""
+
+#: concepts.xml:94(para)
+msgid ""
+"Each replication set has some origin node, which is the <emphasis>only</"
+"emphasis> place where user applications are permitted to modify data in the "
+"tables that are being replicated. This might also be termed the "
+"<quote>master provider</quote>; it is the main place from which data is "
+"provided."
+msgstr ""
+
+#: concepts.xml:100(indexterm)
+msgid "<primary>subscriber node</primary>"
+msgstr ""
+
+#: concepts.xml:104(para)
+msgid ""
+"Other nodes in the cluster subscribe to the replication set, indicating that "
+"they want to receive the data."
+msgstr ""
+
+#: concepts.xml:107(para)
+msgid ""
+"The origin node will never be considered a <quote>subscriber.</quote> "
+"(Ignoring the case where the cluster is reshaped, and the origin is "
+"expressly shifted to another node.) But &slony1; supports the notion of "
+"cascaded subscriptions, that is, a node that is subscribed to some set may "
+"also behave as a <quote>provider</quote> to other nodes in the cluster for "
+"that replication set."
+msgstr ""
+
+#: concepts.xml:116(title)
+msgid "slon Daemon"
+msgstr ""
+
+#: concepts.xml:118(indexterm)
+msgid "<primary>slon daemon</primary>"
+msgstr ""
+
+#: concepts.xml:120(para)
+msgid ""
+"For each node in the cluster, there will be a <xref linkend=\"slon\"/> "
+"process to manage replication activity for that node."
+msgstr ""
+
+#: concepts.xml:124(para)
+msgid ""
+"<xref linkend=\"slon\"/> is a program implemented in C that processes "
+"replication events. There are two main sorts of events:"
+msgstr ""
+
+#: concepts.xml:129(para)
+msgid "Configuration events"
+msgstr ""
+
+#: concepts.xml:131(para)
+msgid ""
+"These normally occur when a <xref linkend=\"slonik\"/> script is run, and "
+"submit updates to the configuration of the cluster."
+msgstr ""
+
+#: concepts.xml:135(para)
+msgid "<command>SYNC</command> events"
+msgstr ""
+
+#: concepts.xml:137(para)
+msgid ""
+"Updates to the tables that are replicated are grouped together into "
+"<command>SYNC</command>s; these groups of transactions are applied together "
+"to the subscriber nodes."
+msgstr ""
+
+#: concepts.xml:144(title)
+msgid "slonik Configuration Processor"
+msgstr ""
+
+#: concepts.xml:146(indexterm)
+msgid "<primary>slonik configuration processor</primary>"
+msgstr ""
+
+#: concepts.xml:148(para)
+msgid ""
+"The <xref linkend=\"slonik\"/> command processor processes scripts in a "
+"<quote>little language</quote> that are used to submit events to update the "
+"configuration of a &slony1; cluster. This includes such things as adding and "
+"removing nodes, modifying communications paths, adding or removing "
+"subscriptions."
+msgstr ""
+
+#: concepts.xml:157(title)
+msgid "&slony1; Path Communications"
+msgstr ""
+
+#: concepts.xml:159(indexterm)
+msgid "<primary>communication paths</primary>"
+msgstr ""
+
+#: concepts.xml:166(para)
+msgid ""
+"<xref linkend=\"admconninfo\"/> - controlling how a <xref linkend=\"slonik\"/"
+"> script accesses the various nodes."
+msgstr ""
+
+#: concepts.xml:169(para)
+msgid ""
+"These connections are the ones that go from your <quote>administrative "
+"workstation</quote> to all of the nodes in a &slony1; cluster."
+msgstr ""
+
+#: concepts.xml:173(para)
+msgid ""
+"It is <emphasis>vital</emphasis> that you have connections from the central "
+"location where you run <xref linkend=\"slonik\"/> to each and every node in "
+"the network. These connections are only used briefly, to submit the few "
+"<acronym>SQL</acronym> requests required to control the administration of "
+"the cluster."
+msgstr ""
+
+#: concepts.xml:179(para)
+msgid ""
+"Since these communications paths are only used briefly, it may be quite "
+"reasonable to <quote>hack together</quote> temporary connections using SSH "
+"tunnelling."
+msgstr ""
+
+#: concepts.xml:183(para)
+msgid "The &lslon; DSN parameter."
+msgstr ""
+
+#: concepts.xml:185(para)
+msgid ""
+"The DSN parameter passed to each &lslon; indicates what network path should "
+"be used to get from the &lslon; process to the database that it manages."
+msgstr ""
+
+#: concepts.xml:189(para)
+msgid ""
+"<xref linkend=\"stmtstorepath\"/> - controlling how &lslon; daemons "
+"communicate with remote nodes. These paths are stored in <xref linkend="
+"\"table.sl-path\"/>."
+msgstr ""
+
+#: concepts.xml:193(para)
+msgid ""
+"You forcibly <emphasis>need</emphasis> to have a path between each "
+"subscriber node and its provider; other paths are optional, and will not be "
+"used unless a listen path in <xref linkend=\"table.sl-listen\"/>. is needed "
+"that uses that particular path."
+msgstr ""
+
+#: concepts.xml:161(para)
+msgid ""
+"&slony1; uses &postgres; DSNs in three contexts to establish access to "
+"databases: <placeholder-1/>"
+msgstr ""
+
+#: concepts.xml:201(para)
+msgid ""
+"The distinctions and possible complexities of paths are not normally an "
+"issue for people with simple networks where all the hosts can see one "
+"another via a comparatively <quote>global</quote> set of network addresses. "
+"In contrast, it matters rather a lot for those with complex firewall "
+"configurations, nodes at multiple locations, and the issue where nodes may "
+"not be able to all talk to one another via a uniform set of network "
+"addresses."
+msgstr ""
+
+#: concepts.xml:213(phrase)
+msgid "Symmetric Multisites"
+msgstr ""
+
+#: concepts.xml:209(para)
+msgid ""
+"Consider the attached diagram, which describes a set of six nodes "
+"<placeholder-1/>"
+msgstr ""
+
+#: concepts.xml:218(para)
+msgid ""
+"DB1 and DB2 are databases residing in a secure <quote>database layer,</"
+"quote> firewalled against outside access except from specifically controlled "
+"locations."
+msgstr ""
+
+#: concepts.xml:222(para)
+msgid "Let's suppose that DB1 is the origin node for the replication system."
+msgstr ""
+
+#: concepts.xml:225(para)
+msgid ""
+"DB3 resides in a <quote>DMZ</quote> at the same site; it is intended to be "
+"used as a &slony1; <quote>provider</quote> for remote locations."
+msgstr ""
+
+#: concepts.xml:228(para)
+msgid ""
+"DB4 is a counterpart to DB3 in a <quote>DMZ</quote> at a secondary/failover "
+"site. Its job, in the present configuration, is to <quote>feed</quote> "
+"servers in the secure database layers at the secondary site."
+msgstr ""
+
+#: concepts.xml:232(para)
+msgid ""
+"DB5 and DB6 are counterparts to DB1 and DB2, but are, at present, configured "
+"as subscribers."
+msgstr ""
+
+#: concepts.xml:235(para)
+msgid ""
+"Supposing disaster were to strike at the <quote>primary</quote> site, the "
+"secondary site would be well-equipped to take over servicing the "
+"applications that use this data."
+msgstr ""
+
+#: concepts.xml:239(para)
+msgid ""
+"The symmetry of the configuration means that if you had <emphasis>two</"
+"emphasis> transactional applications needing protection from failure, it "
+"would be straightforward to have additional replication sets so that each "
+"site is normally <quote>primary</quote> for one application, and where "
+"destruction of one site could be addressed by consolidating services at the "
+"remaining site."
+msgstr ""
+
+#: concepts.xml:250(title)
+msgid "SSH tunnelling"
+msgstr ""
+
+#: concepts.xml:251(para)
+msgid ""
+"If a direct connection to &postgres; can not be established because of a "
+"firewall then you can establish an ssh tunnel that &slony1; can operate over."
+msgstr ""
+
+#: concepts.xml:256(para)
+msgid ""
+"SSH tunnels can be configured by passing the <option>w</option> to SSH. This "
+"enables forwarding &postgres; traffic where a local port is forwarded across "
+"a connection, encrypted and compressed, using <application>SSH</application>"
+msgstr ""
+
+#: concepts.xml:262(para)
+msgid ""
+"See the <application>ssh</application> documentation for details on how to "
+"configure and use SSH tunnels."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: concepts.xml:0(None)
+msgid "translator-credits"
+msgstr ""

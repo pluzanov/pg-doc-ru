@@ -1,0 +1,557 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-11-10 14:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: slon.xml:5(application) slon.xml:10(application)
+msgid "slon"
+msgstr ""
+
+#: slon.xml:6(manvolnum)
+msgid "1"
+msgstr ""
+
+#: slon.xml:7(refmiscinfo)
+msgid "Application"
+msgstr ""
+
+#: slon.xml:11(refpurpose)
+msgid "&slony1; daemon"
+msgstr ""
+
+#: slon.xml:19(indexterm)
+msgid "<primary>slon</primary>"
+msgstr ""
+
+#: slon.xml:18(command)
+msgid "slon <placeholder-1/>"
+msgstr ""
+
+#: slon.xml:23(replaceable)
+msgid "option"
+msgstr ""
+
+#: slon.xml:24(replaceable)
+msgid "clustername"
+msgstr ""
+
+#: slon.xml:25(replaceable)
+msgid "conninfo"
+msgstr ""
+
+#: slon.xml:30(title)
+msgid "Description"
+msgstr ""
+
+#: slon.xml:31(para)
+msgid ""
+"<application>slon</application> is the daemon application that <quote>runs</"
+"quote> &slony1; replication. A <application>slon</application> instance must "
+"be run for each node in a &slony1; cluster."
+msgstr ""
+
+#: slon.xml:40(title)
+msgid "Options"
+msgstr ""
+
+#: slon.xml:44(option)
+msgid "-d"
+msgstr ""
+
+#: slon.xml:44(replaceable)
+msgid "log_level"
+msgstr ""
+
+#: slon.xml:46(para)
+msgid ""
+"The <envar>log_level</envar> specifies which levels of debugging messages "
+"<application>slon</application> should display when logging its activity."
+msgstr ""
+
+#: slon.xml:54(para)
+msgid "Fatal"
+msgstr ""
+
+#: slon.xml:55(para)
+msgid "Error"
+msgstr ""
+
+#: slon.xml:56(para)
+msgid "Warn"
+msgstr ""
+
+#: slon.xml:57(para)
+msgid "Config"
+msgstr ""
+
+#: slon.xml:58(para)
+msgid "Info"
+msgstr ""
+
+#: slon.xml:59(para)
+msgid "Debug1"
+msgstr ""
+
+#: slon.xml:60(para)
+msgid "Debug2"
+msgstr ""
+
+#: slon.xml:61(para)
+msgid "Debug3"
+msgstr ""
+
+#: slon.xml:62(para)
+msgid "Debug4"
+msgstr ""
+
+#: slon.xml:51(para)
+msgid "The nine levels of logging are: <placeholder-1/>"
+msgstr ""
+
+#: slon.xml:66(para)
+msgid ""
+"The first five non-debugging log levels (from Fatal to Info) are "
+"<emphasis>always</emphasis> displayed in the logs. In early versions of "
+"&slony1;, the <quote>suggested</quote> <envar>log_level</envar> value was 2, "
+"which would list output at all levels down to debugging level 2. In &slony1; "
+"version 2, it is recommended to set <envar>log_level</envar> to 0; most of "
+"the consistently interesting log information is generated at levels higher "
+"than that."
+msgstr ""
+
+#: slon.xml:79(option)
+msgid "-s"
+msgstr ""
+
+#: slon.xml:79(replaceable)
+msgid "SYNC check interval"
+msgstr ""
+
+#: slon.xml:82(para)
+msgid ""
+"The <envar>sync_interval</envar>, measured in milliseconds, indicates how "
+"often <application>slon</application> should check to see if a "
+"<command>SYNC</command> should be introduced. Default is 2000 ms. The main "
+"loop in <function>sync_Thread_main()</function> sleeps for intervals of "
+"<envar>sync_interval</envar> milliseconds between iterations."
+msgstr ""
+
+#: slon.xml:91(para)
+msgid ""
+"Short sync check intervals keep the origin on a <quote>short leash</quote>, "
+"updating its subscribers more frequently. If you have replicated sequences "
+"that are frequently updated <emphasis>without</emphasis> there being tables "
+"that are affected, this keeps there from being times when only sequences are "
+"updated, and therefore <emphasis>no</emphasis> syncs take place"
+msgstr ""
+
+#: slon.xml:101(para)
+msgid ""
+"If the node is not an origin for any replication set, so no updates are "
+"coming in, it is somewhat wasteful for this value to be much less the "
+"<envar>sync_interval_timeout</envar> value."
+msgstr ""
+
+#: slon.xml:111(option)
+msgid "-t"
+msgstr ""
+
+#: slon.xml:111(replaceable)
+msgid "SYNC interval timeout"
+msgstr ""
+
+#: slon.xml:115(para)
+msgid ""
+"At the end of each <envar>sync_interval_timeout</envar> timeout period, a "
+"<command>SYNC</command> will be generated on the <quote>local</quote> node "
+"even if there has been no replicable data updated that would have caused a "
+"<command>SYNC</command> to be generated."
+msgstr ""
+
+#: slon.xml:122(para)
+msgid ""
+"If application activity ceases, whether because the application is shut "
+"down, or because human users have gone home and stopped introducing updates, "
+"the &lslon; will iterate away, waking up every <envar>sync_interval</envar> "
+"milliseconds, and, as no updates are being made, no <command>SYNC</command> "
+"events would be generated. Without this timeout parameter, <emphasis>no</"
+"emphasis> <command>SYNC</command> events would be generated, and it would "
+"appear that replication was falling behind."
+msgstr ""
+
+#: slon.xml:132(para)
+msgid ""
+"The <envar>sync_interval_timeout</envar> value will lead to eventually "
+"generating a <command>SYNC</command>, even though there was no real "
+"replication work to be done. The lower that this parameter is set, the more "
+"frequently &lslon; will generate <command>SYNC</command> events when the "
+"application is not generating replicable activity; this will have two "
+"effects:"
+msgstr ""
+
+#: slon.xml:140(para)
+msgid "The system will do more replication work."
+msgstr ""
+
+#: slon.xml:142(para)
+msgid ""
+"(Of course, since there is no application load on the database, and no data "
+"to replicate, this load will be very easy to handle."
+msgstr ""
+
+#: slon.xml:146(para)
+msgid "Replication will appear to be kept more <quote>up to date.</quote>"
+msgstr ""
+
+#: slon.xml:149(para)
+msgid ""
+"(Of course, since there is no replicable activity going on, being "
+"<quote>more up to date</quote> is something of a mirage.)"
+msgstr ""
+
+#: slon.xml:155(para)
+msgid ""
+"Default is 10000 ms and maximum is 120000 ms. By default, you can expect "
+"each node to <quote>report in</quote> with a <command>SYNC</command> every "
+"10 seconds."
+msgstr ""
+
+#: slon.xml:160(para)
+msgid ""
+"Note that <command>SYNC</command> events are also generated on subscriber "
+"nodes. Since they are not actually generating any data to replicate to other "
+"nodes, these <command>SYNC</command> events are of not terribly much value."
+msgstr ""
+
+#: slon.xml:170(option)
+msgid "-g"
+msgstr ""
+
+#: slon.xml:170(replaceable)
+msgid "group size"
+msgstr ""
+
+#: slon.xml:172(para)
+msgid ""
+"This controls the maximum <command>SYNC</command> group size, "
+"<envar>sync_group_maxsize</envar>; defaults to 6. Thus, if a particular node "
+"is behind by 200 <command>SYNC</command>s, it will try to group them "
+"together into groups of a maximum size of <envar>sync_group_maxsize</envar>. "
+"This can be expected to reduce transaction overhead due to having fewer "
+"transactions to <command>COMMIT</command>."
+msgstr ""
+
+#: slon.xml:181(para)
+msgid ""
+"The default of 6 is probably suitable for small systems that can devote only "
+"very limited bits of memory to <application>slon</application>. If you have "
+"plenty of memory, it would be reasonable to increase this, as it will "
+"increase the amount of work done in each transaction, and will allow a "
+"subscriber that is behind by a lot to catch up more quickly."
+msgstr ""
+
+#: slon.xml:189(para)
+msgid ""
+"Slon processes usually stay pretty small; even with large value for this "
+"option, <application>slon</application> would be expected to only grow to a "
+"few MB in size."
+msgstr ""
+
+#: slon.xml:194(para)
+msgid ""
+"The big advantage in increasing this parameter comes from cutting down on "
+"the number of transaction <command>COMMIT</command>s; moving from 1 to 2 "
+"will provide considerable benefit, but the benefits will progressively fall "
+"off once the transactions being processed get to be reasonably large. There "
+"isn't likely to be a material difference in performance between 80 and 90; "
+"at that point, whether <quote>bigger is better</quote> will depend on "
+"whether the bigger set of <command>SYNC</command>s makes the <envar>LOG</"
+"envar> cursor behave badly due to consuming more memory and requiring more "
+"time to sortt."
+msgstr ""
+
+#: slon.xml:207(para)
+msgid ""
+"In &slony1; version 1.0, <application>slon</application> will always attempt "
+"to group <command>SYNC</command>s together to this maximum, which "
+"<emphasis>won't</emphasis> be ideal if replication has been somewhat "
+"destabilized by there being very large updates (<emphasis>e.g.</emphasis> - "
+"a single transaction that updates hundreds of thousands of rows) or by "
+"<command>SYNC</command>s being disrupted on an origin node with the result "
+"that there are a few <command>SYNC</command>s that are very large. You might "
+"run into the problem that grouping together some very large <command>SYNC</"
+"command>s knocks over a <application>slon</application> process. When it "
+"picks up again, it will try to process the same large grouped set of "
+"<command>SYNC</command>s, and run into the same problem over and over until "
+"an administrator interrupts this and changes the <option>-g</option> value "
+"to break this <quote>deadlock.</quote>"
+msgstr ""
+
+#: slon.xml:224(para)
+msgid ""
+"In &slony1; version 1.1 and later versions, the <application>slon</"
+"application> instead adaptively <quote>ramps up</quote> from doing 1 "
+"<command>SYNC</command> at a time towards the maximum group size. As a "
+"result, if there are a couple of <command>SYNC</command>s that cause "
+"problems, the <application>slon</application> will (with any relevant "
+"watchdog assistance) always be able to get to the point where it processes "
+"the troublesome <command>SYNC</command>s one by one, hopefully making "
+"operator assistance unnecessary."
+msgstr ""
+
+#: slon.xml:239(option)
+msgid "-o"
+msgstr ""
+
+#: slon.xml:239(replaceable)
+msgid "desired sync time"
+msgstr ""
+
+#: slon.xml:240(para)
+msgid ""
+"A <quote>maximum</quote> time planned for grouped <command>SYNC</command>s."
+msgstr ""
+
+#: slon.xml:242(para)
+msgid ""
+"If replication is running behind, slon will gradually increase the numbers "
+"of <command>SYNC</command>s grouped together, targeting that (based on the "
+"time taken for the <emphasis>last</emphasis> group of <command>SYNC</"
+"command>s) they shouldn't take more than the specified "
+"<envar>desired_sync_time</envar> value."
+msgstr ""
+
+#: slon.xml:249(para)
+msgid ""
+"The default value for <envar>desired_sync_time</envar> is 60000ms, equal to "
+"one minute."
+msgstr ""
+
+#: slon.xml:252(para)
+msgid ""
+"That way, you can expect (or at least hope!) that you'll get a "
+"<command>COMMIT</command> roughly once per minute."
+msgstr ""
+
+#: slon.xml:255(para)
+msgid ""
+"It isn't <emphasis>totally</emphasis> predictable, as it is entirely "
+"possible for someone to request a <emphasis>very large update,</emphasis> "
+"all as one transaction, that can <quote>blow up</quote> the length of the "
+"resulting <command>SYNC</command> to be nearly arbitrarily long. In such a "
+"case, the heuristic will back off for the <emphasis>next</emphasis> group."
+msgstr ""
+
+#: slon.xml:263(para)
+msgid ""
+"The overall effect is to improve <productname>Slony-I</productname>'s "
+"ability to cope with variations in traffic. By starting with 1 "
+"<command>SYNC</command>, and gradually moving to more, even if there turn "
+"out to be variations large enough to cause <productname>PostgreSQL</"
+"productname> backends to crash, <productname>Slony-I</productname> will back "
+"off down to start with one sync at a time, if need be, so that if it is at "
+"all possible for replication to progress, it will."
+msgstr ""
+
+#: slon.xml:275(option)
+msgid "-c"
+msgstr ""
+
+#: slon.xml:275(replaceable)
+msgid "cleanup cycles"
+msgstr ""
+
+#: slon.xml:277(para)
+msgid ""
+"The value <envar>vac_frequency</envar> indicates how often to "
+"<command>VACUUM</command> in cleanup cycles."
+msgstr ""
+
+#: slon.xml:281(para)
+msgid ""
+"Set this to zero to disable <application>slon</application>-initiated "
+"vacuuming. If you are using something like <application>pg_autovacuum</"
+"application> to initiate vacuums, you may not need for slon to initiate "
+"vacuums itself. If you are not, there are some tables <productname>Slony-I</"
+"productname> uses that collect a <emphasis>lot</emphasis> of dead tuples "
+"that should be vacuumed frequently, notably &pglistener;."
+msgstr ""
+
+#: slon.xml:292(para)
+msgid ""
+"In &slony1; version 1.1, this changes a little; the cleanup thread tracks, "
+"from iteration to iteration, the earliest transaction ID still active in the "
+"system. If this doesn't change, from one iteration to the next, then an old "
+"transaction is still active, and therefore a <command>VACUUM</command> will "
+"do no good. The cleanup thread instead merely does an <command>ANALYZE</"
+"command> on these tables to update the statistics in <envar>pg_statistics</"
+"envar>."
+msgstr ""
+
+#: slon.xml:305(option)
+msgid "-p"
+msgstr ""
+
+#: slon.xml:305(replaceable)
+msgid "PID filename"
+msgstr ""
+
+#: slon.xml:307(para)
+msgid ""
+"<envar>pid_file</envar> contains the filename in which the PID (process ID) "
+"of the <application>slon</application> is stored."
+msgstr ""
+
+#: slon.xml:312(para)
+msgid ""
+"This may make it easier to construct scripts to monitor multiple "
+"<application>slon</application> processes running on a single host."
+msgstr ""
+
+#: slon.xml:321(option)
+msgid "-f"
+msgstr ""
+
+#: slon.xml:321(replaceable)
+msgid "config file"
+msgstr ""
+
+#: slon.xml:323(para)
+msgid "File from which to read <application>slon</application> configuration."
+msgstr ""
+
+#: slon.xml:327(para)
+msgid ""
+"This configuration is discussed further in <link linkend=\"runtime-config"
+"\">Slon Run-time Configuration</link>. If there are to be a complex set of "
+"configuration parameters, or if there are parameters you do not wish to be "
+"visible in the process environment variables (such as passwords), it may be "
+"convenient to draw many or all parameters from a configuration file. You "
+"might either put common parameters for all slon processes in a commonly-used "
+"configuration file, allowing the command line to specify little other than "
+"the connection info. Alternatively, you might create a configuration file "
+"for each node."
+msgstr ""
+
+#: slon.xml:341(option)
+msgid "-a"
+msgstr ""
+
+#: slon.xml:341(replaceable)
+msgid "archive directory"
+msgstr ""
+
+#: slon.xml:343(para)
+msgid ""
+"<envar>archive_dir</envar> indicates a directory in which to place a "
+"sequence of <command>SYNC</command> archive files for use in &logshiplink; "
+"mode."
+msgstr ""
+
+#: slon.xml:353(option)
+msgid "-x"
+msgstr ""
+
+#: slon.xml:353(replaceable)
+msgid "command to run on log archive"
+msgstr ""
+
+#: slon.xml:355(para)
+msgid ""
+"<envar>command_on_logarchive</envar> indicates a command to be run each time "
+"a SYNC file is successfully generated."
+msgstr ""
+
+#: slon.xml:360(para)
+msgid ""
+"See more details on <xref linkend=\"slon-config-command-on-logarchive\"/>."
+msgstr ""
+
+#: slon.xml:366(option)
+msgid "-q"
+msgstr ""
+
+#: slon.xml:366(replaceable)
+msgid "quit based on SYNC provider"
+msgstr ""
+
+#: slon.xml:368(para)
+msgid ""
+"<envar>quit_sync_provider</envar> indicates which provider's worker thread "
+"should be watched in order to terminate after a certain event. This must be "
+"used in conjunction with the <option>-r</option> option below..."
+msgstr ""
+
+#: slon.xml:375(para)
+msgid ""
+"This allows you to have a <application>slon</application> stop replicating "
+"after a certain point."
+msgstr ""
+
+#: slon.xml:381(option)
+msgid "-r"
+msgstr ""
+
+#: slon.xml:381(replaceable)
+msgid "quit at event number"
+msgstr ""
+
+#: slon.xml:383(para)
+msgid ""
+"<envar>quit_sync_finalsync</envar> indicates the event number after which "
+"the remote worker thread for the provider above should terminate. This must "
+"be used in conjunction with the <option>-q</option> option above..."
+msgstr ""
+
+#: slon.xml:393(option)
+msgid "-l"
+msgstr ""
+
+#: slon.xml:393(replaceable)
+msgid "lag interval"
+msgstr ""
+
+#: slon.xml:395(para)
+msgid ""
+"<envar>lag_interval</envar> indicates an interval value such as <command> 3 "
+"minutes </command> or <command> 4 hours </command> or <command> 2 days </"
+"command> that indicates that this node is to lag its providers by the "
+"specified interval of time. This causes events to be ignored until they "
+"reach the age corresponding to the interval."
+msgstr ""
+
+#: slon.xml:404(para)
+msgid ""
+"There is a concommittant downside to this lag; events that require all nodes "
+"to synchronize, as typically happens with <xref linkend=\"stmtfailover\"/> "
+"and <xref linkend=\"stmtmoveset\"/>, will have to wait for this lagging node."
+msgstr ""
+
+#: slon.xml:410(para)
+msgid ""
+"That might not be ideal behaviour at failover time, or at the time when you "
+"want to run <xref linkend=\"stmtddlscript\"/>."
+msgstr ""
+
+#: slon.xml:419(title)
+msgid "Exit Status"
+msgstr ""
+
+#: slon.xml:420(para)
+msgid ""
+"<application>slon</application> returns 0 to the shell if it finished "
+"normally. It returns via <function>exit(-1)</function> (which will likely "
+"provide a return value of either 127 or 255, depending on your system) if it "
+"encounters any fatal error."
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: slon.xml:0(None)
+msgid "translator-credits"
+msgstr ""
