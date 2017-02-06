@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
+"POT-Creation-Date: 2017-02-06 11:19+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -56,7 +56,7 @@ msgstr "Здесь <placeholder-1/>:"
 msgid "connlimit"
 msgstr "предел_подключений"
 
-#: ref/create_role.xml:37(replaceable) ref/create_role.xml:208(replaceable)
+#: ref/create_role.xml:37(replaceable) ref/create_role.xml:211(replaceable)
 msgid "password"
 msgstr "пароль"
 
@@ -66,13 +66,13 @@ msgstr "дата_время"
 
 #: ref/create_role.xml:39(replaceable) ref/create_role.xml:40(replaceable)
 #: ref/create_role.xml:41(replaceable) ref/create_role.xml:42(replaceable)
-#: ref/create_role.xml:43(replaceable) ref/create_role.xml:260(replaceable)
-#: ref/create_role.xml:272(replaceable) ref/create_role.xml:281(replaceable)
-#: ref/create_role.xml:292(replaceable) ref/create_role.xml:304(replaceable)
+#: ref/create_role.xml:43(replaceable) ref/create_role.xml:257(replaceable)
+#: ref/create_role.xml:269(replaceable) ref/create_role.xml:278(replaceable)
+#: ref/create_role.xml:289(replaceable) ref/create_role.xml:301(replaceable)
 msgid "role_name"
 msgstr "имя_роли"
 
-#: ref/create_role.xml:44(replaceable) ref/create_role.xml:314(replaceable)
+#: ref/create_role.xml:44(replaceable) ref/create_role.xml:311(replaceable)
 msgid "uid"
 msgstr "uid"
 
@@ -339,17 +339,21 @@ msgstr "CONNECTION LIMIT"
 #: ref/create_role.xml:200(para)
 msgid ""
 "If role can log in, this specifies how many concurrent connections the role "
-"can make. -1 (the default) means no limit."
+"can make. -1 (the default) means no limit. Note that only normal connections "
+"are counted towards this limit. Neither prepared transactions nor background "
+"worker connections are counted towards this limit."
 msgstr ""
-"Если роли разрешён вход, этот параметр определяет максимальное число "
-"одновременных подключений, разрешённых для этой роли. Значение -1 (по "
-"умолчанию) отключает ограничение."
+"Если роли разрешён вход, этот параметр определяет, сколько параллельных "
+"подключений может установить роль. Значение -1 (по умолчанию) снимает "
+"ограничение. Заметьте, что под это ограничение подпадают только обычные "
+"подключения. Ни подготовленные транзакции, ни соединения фоновых рабочих "
+"процессов в расчёт не берутся."
 
-#: ref/create_role.xml:208(literal)
+#: ref/create_role.xml:211(literal)
 msgid "PASSWORD"
 msgstr "PASSWORD"
 
-#: ref/create_role.xml:210(para)
+#: ref/create_role.xml:213(para)
 msgid ""
 "Sets the role's password. (A password is only of use for roles having the "
 "<literal>LOGIN</literal> attribute, but you can nonetheless define one for "
@@ -367,15 +371,15 @@ msgstr ""
 "паролю. При желании пароль NULL можно установить явно, указав "
 "<literal>PASSWORD NULL</literal>."
 
-#: ref/create_role.xml:224(literal)
+#: ref/create_role.xml:227(literal)
 msgid "ENCRYPTED"
 msgstr "ENCRYPTED"
 
-#: ref/create_role.xml:225(literal)
+#: ref/create_role.xml:228(literal)
 msgid "UNENCRYPTED"
 msgstr "UNENCRYPTED"
 
-#: ref/create_role.xml:227(para)
+#: ref/create_role.xml:230(para)
 msgid ""
 "These key words control whether the password is stored encrypted in the "
 "system catalogs. (If neither is specified, the default behavior is "
@@ -395,16 +399,7 @@ msgstr ""
 "система не может расшифровать зашифрованный пароль). Это позволяет выгружать/"
 "загружать зашифрованные пароли при экспорте/импорте данных."
 
-#: ref/create_role.xml:240(para)
-msgid ""
-"Note that older clients might lack support for the MD5 authentication "
-"mechanism that is needed to work with passwords that are stored encrypted."
-msgstr ""
-"Учтите, что старые клиенты могут не поддерживать механизм проверки "
-"подлинности с MD5, необходимый для использования паролей, хранящихся в "
-"зашифрованном виде."
-
-#: ref/create_role.xml:249(term)
+#: ref/create_role.xml:246(term)
 msgid ""
 "<literal>VALID UNTIL</literal> '<replaceable class=\"parameter\">timestamp</"
 "replaceable>'"
@@ -412,7 +407,7 @@ msgstr ""
 "<literal>VALID UNTIL</literal> '<replaceable class=\"parameter\">дата_время</"
 "replaceable>'"
 
-#: ref/create_role.xml:251(para)
+#: ref/create_role.xml:248(para)
 msgid ""
 "The <literal>VALID UNTIL</literal> clause sets a date and time after which "
 "the role's password is no longer valid. If this clause is omitted the "
@@ -422,11 +417,11 @@ msgstr ""
 "которого пароль роли перестаёт действовать. Если это предложение "
 "отсутствует, срок действия пароля будет неограниченным."
 
-#: ref/create_role.xml:260(literal)
+#: ref/create_role.xml:257(literal)
 msgid "IN ROLE"
 msgstr "IN ROLE"
 
-#: ref/create_role.xml:262(para)
+#: ref/create_role.xml:259(para)
 msgid ""
 "The <literal>IN ROLE</literal> clause lists one or more existing roles to "
 "which the new role will be immediately added as a new member. (Note that "
@@ -438,11 +433,11 @@ msgstr ""
 "(Заметьте, что добавить новую роль с правами администратора таким образом "
 "нельзя; для этого надо отдельно выполнить команду <command>GRANT</command>.)"
 
-#: ref/create_role.xml:272(literal)
+#: ref/create_role.xml:269(literal)
 msgid "IN GROUP"
 msgstr "IN GROUP"
 
-#: ref/create_role.xml:274(para)
+#: ref/create_role.xml:271(para)
 msgid ""
 "<literal>IN GROUP</literal> is an obsolete spelling of <literal>IN ROLE</"
 "literal>."
@@ -450,11 +445,11 @@ msgstr ""
 "<literal>IN GROUP</literal> — устаревшее написание предложения <literal>IN "
 "ROLE</literal>."
 
-#: ref/create_role.xml:281(literal)
+#: ref/create_role.xml:278(literal)
 msgid "ROLE"
 msgstr "ROLE"
 
-#: ref/create_role.xml:283(para)
+#: ref/create_role.xml:280(para)
 msgid ""
 "The <literal>ROLE</literal> clause lists one or more existing roles which "
 "are automatically added as members of the new role. (This in effect makes "
@@ -464,11 +459,11 @@ msgstr ""
 "существующих ролей, которые автоматически становятся членами создаваемой "
 "роли. (По сути таким образом новая роль становится <quote>группой</quote>.)"
 
-#: ref/create_role.xml:292(literal)
+#: ref/create_role.xml:289(literal)
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: ref/create_role.xml:294(para)
+#: ref/create_role.xml:291(para)
 msgid ""
 "The <literal>ADMIN</literal> clause is like <literal>ROLE</literal>, but the "
 "named roles are added to the new role <literal>WITH ADMIN OPTION</literal>, "
@@ -478,11 +473,11 @@ msgstr ""
 "перечисленные в нём роли включаются в новую роль с атрибутом <literal>WITH "
 "ADMIN OPTION</literal>, что даёт им право включать в эту роль другие роли."
 
-#: ref/create_role.xml:304(literal)
+#: ref/create_role.xml:301(literal)
 msgid "USER"
 msgstr "USER"
 
-#: ref/create_role.xml:306(para)
+#: ref/create_role.xml:303(para)
 msgid ""
 "The <literal>USER</literal> clause is an obsolete spelling of the "
 "<literal>ROLE</literal> clause."
@@ -490,11 +485,11 @@ msgstr ""
 "Предложение <literal>USER</literal> является устаревшим написанием "
 "предложения <literal>ROLE</literal>."
 
-#: ref/create_role.xml:314(literal)
+#: ref/create_role.xml:311(literal)
 msgid "SYSID"
 msgstr "SYSID"
 
-#: ref/create_role.xml:316(para)
+#: ref/create_role.xml:313(para)
 msgid ""
 "The <literal>SYSID</literal> clause is ignored, but is accepted for "
 "backwards compatibility."
@@ -502,11 +497,11 @@ msgstr ""
 "Предложение <literal>SYSID</literal> игнорируется, но принимается для "
 "обратной совместимости."
 
-#: ref/create_role.xml:326(title)
+#: ref/create_role.xml:323(title)
 msgid "Notes"
 msgstr "Замечания"
 
-#: ref/create_role.xml:328(para)
+#: ref/create_role.xml:325(para)
 msgid ""
 "Use <xref linkend=\"sql-alterrole\"/> to change the attributes of a role, "
 "and <xref linkend=\"sql-droprole\"/> to remove a role. All the attributes "
@@ -518,7 +513,7 @@ msgstr ""
 "заданные в <command>CREATE ROLE</command>, могут быть изменены позднее "
 "командами <command>ALTER ROLE</command>."
 
-#: ref/create_role.xml:336(para)
+#: ref/create_role.xml:333(para)
 msgid ""
 "The preferred way to add and remove members of roles that are being used as "
 "groups is to use <xref linkend=\"sql-grant\"/> and <xref linkend=\"sql-revoke"
@@ -528,7 +523,7 @@ msgstr ""
 "рекомендуется использовать <xref linkend=\"sql-grant\"/> и <xref linkend="
 "\"sql-revoke\"/>."
 
-#: ref/create_role.xml:343(para)
+#: ref/create_role.xml:340(para)
 msgid ""
 "The <literal>VALID UNTIL</literal> clause defines an expiration time for a "
 "password only, not for the role <foreignphrase>per se</foreignphrase>. In "
@@ -539,7 +534,7 @@ msgstr ""
 "пароля, но не роли как таковой. В частности, ограничение срока пароля не "
 "действует при входе пользователя без проверки подлинности по паролю."
 
-#: ref/create_role.xml:350(para)
+#: ref/create_role.xml:347(para)
 msgid ""
 "The <literal>INHERIT</literal> attribute governs inheritance of grantable "
 "privileges (that is, access privileges for database objects and role "
@@ -560,7 +555,7 @@ msgstr ""
 "данных, необходимо переключиться на эту роль, выполнив <xref linkend=\"sql-"
 "set-role\"/>."
 
-#: ref/create_role.xml:362(para)
+#: ref/create_role.xml:359(para)
 msgid ""
 "The <literal>INHERIT</literal> attribute is the default for reasons of "
 "backwards compatibility: in prior releases of <productname>PostgreSQL</"
@@ -574,7 +569,7 @@ msgstr ""
 "были включены. Однако <literal>NOINHERIT</literal> по смыслу ближе к тому, "
 "что описано в стандарте SQL."
 
-#: ref/create_role.xml:370(para)
+#: ref/create_role.xml:367(para)
 msgid ""
 "Be careful with the <literal>CREATEROLE</literal> privilege. There is no "
 "concept of inheritance for the privileges of a <literal>CREATEROLE</literal>-"
@@ -598,7 +593,7 @@ msgstr ""
 "Поэтому роль с правом <literal>CREATEROLE</literal> следует воспринимать как "
 "роль почти суперпользователя."
 
-#: ref/create_role.xml:383(para)
+#: ref/create_role.xml:380(para)
 msgid ""
 "<productname>PostgreSQL</productname> includes a program <xref linkend=\"app-"
 "createuser\"/> that has the same functionality as <command>CREATE ROLE</"
@@ -610,7 +605,7 @@ msgstr ""
 "<command>CREATE ROLE</command> (на самом деле она вызывает эту команду), но "
 "может запускаться в командной оболочке."
 
-#: ref/create_role.xml:390(para)
+#: ref/create_role.xml:387(para)
 msgid ""
 "The <literal>CONNECTION LIMIT</literal> option is only enforced "
 "approximately; if two new sessions start at about the same time when just "
@@ -623,7 +618,7 @@ msgstr ""
 "случиться, что будут отклонены оба подключения. Кроме того, это ограничение "
 "не распространяется на суперпользователей."
 
-#: ref/create_role.xml:397(para)
+#: ref/create_role.xml:394(para)
 msgid ""
 "Caution must be exercised when specifying an unencrypted password with this "
 "command. The password will be transmitted to the server in cleartext, and it "
@@ -640,28 +635,28 @@ msgstr ""
 "<command>\\password</command>, с помощью которой можно безопасно сменить "
 "пароль позже."
 
-#: ref/create_role.xml:411(title)
+#: ref/create_role.xml:408(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/create_role.xml:415(programlisting)
+#: ref/create_role.xml:412(programlisting)
 #, no-wrap
 msgid "CREATE ROLE jonathan LOGIN;"
 msgstr "CREATE ROLE jonathan LOGIN;"
 
-#: ref/create_role.xml:413(para)
+#: ref/create_role.xml:410(para)
 msgid ""
 "Create a role that can log in, but don't give it a password: <placeholder-1/>"
 msgstr ""
 "Создание роли, для которой разрешён вход, но не задан пароль: <placeholder-1/"
 ">"
 
-#: ref/create_role.xml:422(programlisting)
+#: ref/create_role.xml:419(programlisting)
 #, no-wrap
 msgid "CREATE USER davide WITH PASSWORD 'jw8s0F4';"
 msgstr "CREATE USER davide WITH PASSWORD 'jw8s0F4';"
 
-#: ref/create_role.xml:420(para)
+#: ref/create_role.xml:417(para)
 msgid ""
 "Create a role with a password: <placeholder-1/> (<command>CREATE USER</"
 "command> is the same as <command>CREATE ROLE</command> except that it "
@@ -671,12 +666,12 @@ msgstr ""
 "действует так же, как <command>CREATE ROLE</command>, но подразумевает ещё и "
 "атрибут <literal>LOGIN</literal>.)"
 
-#: ref/create_role.xml:434(programlisting)
+#: ref/create_role.xml:431(programlisting)
 #, no-wrap
 msgid "CREATE ROLE miriam WITH LOGIN PASSWORD 'jw8s0F4' VALID UNTIL '2005-01-01';"
 msgstr "CREATE ROLE miriam WITH LOGIN PASSWORD 'jw8s0F4' VALID UNTIL '2005-01-01';"
 
-#: ref/create_role.xml:429(para)
+#: ref/create_role.xml:426(para)
 msgid ""
 "Create a role with a password that is valid until the end of 2004. After one "
 "second has ticked in 2005, the password is no longer valid. <placeholder-1/>"
@@ -684,23 +679,23 @@ msgstr ""
 "Создание роли с паролем, действующим до конца 2004 г., то есть пароль "
 "перестаёт действовать в первую же секунду 2005 г. <placeholder-1/>"
 
-#: ref/create_role.xml:441(programlisting)
+#: ref/create_role.xml:438(programlisting)
 #, no-wrap
 msgid "CREATE ROLE admin WITH CREATEDB CREATEROLE;"
 msgstr "CREATE ROLE admin WITH CREATEDB CREATEROLE;"
 
-#: ref/create_role.xml:439(para)
+#: ref/create_role.xml:436(para)
 msgid ""
 "Create a role that can create databases and manage roles: <placeholder-1/>"
 msgstr ""
 "Создание роли, которая может создавать базы данных и управлять ролями: "
 "<placeholder-1/>"
 
-#: ref/create_role.xml:447(title)
+#: ref/create_role.xml:444(title)
 msgid "Compatibility"
 msgstr "Совместимость"
 
-#: ref/create_role.xml:449(para)
+#: ref/create_role.xml:446(para)
 msgid ""
 "The <command>CREATE ROLE</command> statement is in the SQL standard, but the "
 "standard only requires the syntax <synopsis>\n"
@@ -718,7 +713,7 @@ msgstr ""
 "другие параметры <command>CREATE ROLE</command> относятся к расширениям "
 "<productname>PostgreSQL</productname>."
 
-#: ref/create_role.xml:460(para)
+#: ref/create_role.xml:457(para)
 msgid ""
 "The SQL standard defines the concepts of users and roles, but it regards "
 "them as distinct concepts and leaves all commands defining users to be "
@@ -733,7 +728,7 @@ msgstr ""
 "productname> мы решили объединить пользователей и роли в единую сущность, "
 "так что роли получили дополнительные атрибуты, не описанные в стандарте."
 
-#: ref/create_role.xml:469(para)
+#: ref/create_role.xml:466(para)
 msgid ""
 "The behavior specified by the SQL standard is most closely approximated by "
 "giving users the <literal>NOINHERIT</literal> attribute, while roles are "
@@ -743,7 +738,7 @@ msgstr ""
 "если создавать пользователей с атрибутом <literal>NOINHERIT</literal>, а "
 "роли — с атрибутом <literal>INHERIT</literal>."
 
-#: ref/create_role.xml:477(title)
+#: ref/create_role.xml:474(title)
 msgid "See Also"
 msgstr "См. также"
 
@@ -751,3 +746,19 @@ msgstr "См. также"
 #: ref/create_role.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "If role can log in, this specifies how many concurrent connections the "
+#~ "role can make. -1 (the default) means no limit."
+#~ msgstr ""
+#~ "Если роли разрешён вход, этот параметр определяет максимальное число "
+#~ "одновременных подключений, разрешённых для этой роли. Значение -1 (по "
+#~ "умолчанию) отключает ограничение."
+
+#~ msgid ""
+#~ "Note that older clients might lack support for the MD5 authentication "
+#~ "mechanism that is needed to work with passwords that are stored encrypted."
+#~ msgstr ""
+#~ "Учтите, что старые клиенты могут не поддерживать механизм проверки "
+#~ "подлинности с MD5, необходимый для использования паролей, хранящихся в "
+#~ "зашифрованном виде."

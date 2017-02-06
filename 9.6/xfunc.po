@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
+"POT-Creation-Date: 2017-02-06 11:19+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -638,26 +638,31 @@ msgstr ""
 msgid ""
 "Notice the use of the syntax <literal>$1.salary</literal> to select one "
 "field of the argument row value. Also notice how the calling "
-"<command>SELECT</command> command uses <literal>*</literal> to select the "
-"entire current row of a table as a composite value. The table row can "
-"alternatively be referenced using just the table name, like this: <screen>\n"
+"<command>SELECT</command> command uses <replaceable>table_name</"
+"replaceable><literal>.*</literal> to select the entire current row of a "
+"table as a composite value. The table row can alternatively be referenced "
+"using just the table name, like this: <screen>\n"
 "SELECT name, double_salary(emp) AS dream\n"
 "    FROM emp\n"
 "    WHERE emp.cubicle ~= point '(2,1)';\n"
-"</screen> but this usage is deprecated since it's easy to get confused."
+"</screen> but this usage is deprecated since it's easy to get confused. (See "
+"<xref linkend=\"rowtypes-usage\"/> for details about these two notations for "
+"the composite value of a table row.)"
 msgstr ""
-"Обратите внимание на запись <literal>$1.salary</literal>, позволяющую "
-"выбрать одно поле из значения строки аргумента. Также заметьте, что в "
-"вызывающей команде <command>SELECT</command> указание <literal>*</literal> "
-"выбирает всю текущую строку таблицы как составное значение. На строку "
-"таблицы можно сослаться и просто по имени таблицы, например так: <screen>\n"
+"Обратите внимание на запись <literal>$1.salary</literal> позволяющую выбрать "
+"одно поле из значения строки аргумента. Также заметьте, что в вызывающей "
+"команде <command>SELECT</command> указание <replaceable>имя_таблицы</"
+"replaceable><literal>.*</literal> выбирает всю текущую строку таблицы как "
+"составное значение. На строку таблицы можно сослаться и просто по имени "
+"таблицы, например так: <screen>\n"
 "SELECT name, double_salary(emp) AS dream\n"
 "    FROM emp\n"
 "    WHERE emp.cubicle ~= point '(2,1)';\n"
 "</screen> Однако это использование считается устаревшим, так как провоцирует "
-"путаницу."
+"путаницу. (Подробнее эти две записи составных значений строки таблицы "
+"описаны в <xref remap=\"6\" linkend=\"rowtypes-usage\"/>.)"
 
-#: xfunc.xml:411(para)
+#: xfunc.xml:413(para)
 msgid ""
 "Sometimes it is handy to construct a composite argument value on-the-fly. "
 "This can be done with the <literal>ROW</literal> construct. For example, we "
@@ -673,7 +678,7 @@ msgstr ""
 "    FROM emp;\n"
 "</screen>"
 
-#: xfunc.xml:426(programlisting)
+#: xfunc.xml:428(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION new_emp() RETURNS emp AS $$\n"
@@ -690,7 +695,7 @@ msgstr ""
 "        point '(2,2)' AS cubicle;\n"
 "$$ LANGUAGE SQL;"
 
-#: xfunc.xml:421(para)
+#: xfunc.xml:423(para)
 msgid ""
 "It is also possible to build a function that returns a composite type. This "
 "is an example of a function that returns a single <type>emp</type> row: "
@@ -703,7 +708,7 @@ msgstr ""
 "примере мы задали для каждого атрибута постоянное значение, но вместо этих "
 "констант можно подставить любые вычисления."
 
-#: xfunc.xml:445(para)
+#: xfunc.xml:447(para)
 msgid ""
 "The select list order in the query must be exactly the same as that in which "
 "the columns appear in the table associated with the composite type. (Naming "
@@ -713,7 +718,7 @@ msgstr ""
 "порядком следования столбцов в таблице, связанной с составным типом. (Имена "
 "столбцов, как показывает пример выше, для системы значения не имеют.)"
 
-#: xfunc.xml:453(para)
+#: xfunc.xml:455(para)
 msgid ""
 "You must typecast the expressions to match the definition of the composite "
 "type, or you will get errors like this: <screen>\n"
@@ -732,13 +737,13 @@ msgstr ""
 "</screen>(ОШИБКА:  функция, объявленная как возвращающая emp, возвращает "
 "varchar вместо text в столбце 1)"
 
-#: xfunc.xml:440(para)
+#: xfunc.xml:442(para)
 msgid "Note two important things about defining the function: <placeholder-1/>"
 msgstr ""
 "Учтите два важных требования относительно определения функции: "
 "<placeholder-1/>"
 
-#: xfunc.xml:469(programlisting)
+#: xfunc.xml:471(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION new_emp() RETURNS emp AS $$\n"
@@ -749,7 +754,7 @@ msgstr ""
 "    SELECT ROW('None', 1000.0, 25, '(2,2)')::emp;\n"
 "$$ LANGUAGE SQL;"
 
-#: xfunc.xml:466(para)
+#: xfunc.xml:468(para)
 msgid ""
 "A different way to define the same function is: <placeholder-1/> Here we "
 "wrote a <command>SELECT</command> that returns just a single column of the "
@@ -765,15 +770,16 @@ msgstr ""
 "нам нужно вычислить результат, вызывая другую функцию, которая возвращает "
 "нужное составное значение."
 
-#: xfunc.xml:482(para)
+#: xfunc.xml:484(para)
 msgid ""
-"We could call this function directly in either of two ways: <screen>\n"
+"We could call this function directly either by using it in a value "
+"expression: <screen>\n"
 "SELECT new_emp();\n"
 "\n"
 "         new_emp\n"
 "--------------------------\n"
 " (None,1000.0,25,\"(2,2)\")\n"
-"\n"
+"</screen> or by calling it as a table function: <screen>\n"
 "SELECT * FROM new_emp();\n"
 "\n"
 " name | salary | age | cubicle\n"
@@ -782,22 +788,23 @@ msgid ""
 "</screen> The second way is described more fully in <xref linkend=\"xfunc-"
 "sql-table-functions\"/>."
 msgstr ""
-"Мы можем вызвать эту функцию напрямую двумя способами: <screen>\n"
+"Мы можем вызывать эту функцию напрямую, либо указав её в выражении значения: "
+"<screen>\n"
 "SELECT new_emp();\n"
 "\n"
 "         new_emp\n"
 "--------------------------\n"
 " (None,1000.0,25,\"(2,2)\")\n"
-"\n"
+"</screen> либо обратившись к ней, как к табличной функции: <screen>\n"
 "SELECT * FROM new_emp();\n"
 "\n"
 " name | salary | age | cubicle\n"
 "------+--------+-----+---------\n"
 " None | 1000.0 |  25 | (2,2)\n"
-"</screen> Второй способ описан более подробно в <xref remap=\"6\" linkend="
+"</screen> Второй способ более подробно описан в <xref remap=\"6\" linkend="
 "\"xfunc-sql-table-functions\"/>."
 
-#: xfunc.xml:503(para)
+#: xfunc.xml:510(para)
 msgid ""
 "When you use a function that returns a composite type, you might want only "
 "one field (attribute) from its result. You can do that with syntax like "
@@ -834,93 +841,29 @@ msgstr ""
 "</screen>\n"
 "(ОШИБКА:  синтаксическая ошибка (примерное положение: \".\"))"
 
-#: xfunc.xml:527(para)
+#: xfunc.xml:534(para)
 msgid ""
-"Another option is to use functional notation for extracting an attribute. "
-"The simple way to explain this is that we can use the notations "
-"<literal><replaceable>attribute</replaceable>(<replaceable>table</"
-"replaceable>)</literal> and <literal><replaceable>table</replaceable>."
-"<replaceable>attribute</replaceable></literal> interchangeably. <screen>\n"
-"SELECT name(new_emp());\n"
-"\n"
-" name\n"
-"------\n"
-" None\n"
-"</screen> <screen>\n"
-"-- This is the same as:\n"
-"-- SELECT emp.name AS youngster FROM emp WHERE emp.age &lt; 30;\n"
-"\n"
-"SELECT name(emp) AS youngster FROM emp WHERE age(emp) &lt; 30;\n"
-"\n"
-" youngster\n"
-"-----------\n"
-" Sam\n"
-" Andy\n"
-"</screen>"
-msgstr ""
-"В качестве ещё одного варианта можно использовать функциональную запись для "
-"извлечения атрибута. Проще всего это можно объяснить, отметив, что записи "
-"<literal><replaceable>атрибут</replaceable>(<replaceable>таблица</"
-"replaceable>)</literal> и <literal><replaceable>таблица</replaceable>."
-"<replaceable>атрибут</replaceable></literal> взаимозаменяемы. <screen>\n"
-"SELECT name(new_emp());\n"
-"\n"
-" name\n"
-"------\n"
-" None\n"
-"</screen> <screen>\n"
-"-- Это то же самое:\n"
-"-- SELECT emp.name AS youngster FROM emp WHERE emp.age &lt; 30;\n"
-"\n"
-"SELECT name(emp) AS youngster FROM emp WHERE age(emp) &lt; 30;\n"
-"\n"
-" youngster\n"
-"-----------\n"
-" Sam\n"
-" Andy\n"
-"</screen>"
-
-#: xfunc.xml:561(indexterm)
-msgid "<primary>computed field</primary>"
-msgstr "<primary>вычисляемое поле</primary>"
-
-#: xfunc.xml:564(indexterm)
-msgid "<primary>field</primary> <secondary>computed</secondary>"
-msgstr "<primary>поле</primary> <secondary>вычисляемое</secondary>"
-
-#: xfunc.xml:557(para)
-msgid ""
-"The equivalence between functional notation and attribute notation makes it "
-"possible to use functions on composite types to emulate <quote>computed "
-"fields</quote>. <placeholder-1/> <placeholder-2/> For example, using the "
-"previous definition for <literal>double_salary(emp)</literal>, we can write "
+"Another option is to use functional notation for extracting an attribute: "
 "<screen>\n"
-"SELECT emp.name, emp.double_salary FROM emp;\n"
-"</screen> An application using this wouldn't need to be directly aware that "
-"<literal>double_salary</literal> isn't a real column of the table. (You can "
-"also emulate computed fields with views.)"
+"SELECT name(new_emp());\n"
+"\n"
+" name\n"
+"------\n"
+" None\n"
+"</screen> As explained in <xref linkend=\"rowtypes-usage\"/>, the field "
+"notation and functional notation are equivalent."
 msgstr ""
-"Равнозначность функциональной записи и записи с атрибутом позволяет "
-"использовать функции с составными типами для имитации <quote>вычисляемых "
-"полей</quote>. <placeholder-1/> <placeholder-2/> Например, используя "
-"предыдущее определение <literal>double_salary(emp)</literal>, мы можем "
-"записать <screen>\n"
-"SELECT emp.name, emp.double_salary FROM emp;\n"
-"</screen> Приложению, использующему такой запрос, не обязательно определённо "
-"знать, что <literal>double_salary</literal> — это не настоящий столбец "
-"таблицы. (Вычисляемые поля также можно имитировать в представлениях.)"
+"Функциональную запись также можно использовать и для извлечения атрибутов: "
+"<screen>\n"
+"SELECT name(new_emp());\n"
+"\n"
+" name\n"
+"------\n"
+" None\n"
+"</screen> Как рассказывалось в <xref remap=\"6\" linkend=\"rowtypes-usage\"/"
+">, запись с указанием поля и функциональная запись являются равнозначными."
 
-#: xfunc.xml:580(para)
-msgid ""
-"Because of this behavior, it's unwise to give a function that takes a single "
-"composite-type argument the same name as any of the fields of that composite "
-"type."
-msgstr ""
-"Вследствие такого поведения, функции, которая принимает один аргумент "
-"составного типа, не стоит давать имя, совпадающее с именем одного из полей "
-"этого составного типа."
-
-#: xfunc.xml:587(para)
+#: xfunc.xml:549(para)
 msgid ""
 "Another way to use a function returning a composite type is to pass the "
 "result to another function that accepts the correct row type as input: "
@@ -950,25 +893,15 @@ msgstr ""
 "(1 row)\n"
 "</screen>"
 
-#: xfunc.xml:604(para)
-msgid ""
-"Still another way to use a function that returns a composite type is to call "
-"it as a table function, as described in <xref linkend=\"xfunc-sql-table-"
-"functions\"/>."
-msgstr ""
-"И ещё один способ использовать функцию, возвращающую составной тип — вызвать "
-"её как табличную функцию, как описано в <xref remap=\"6\" linkend=\"xfunc-"
-"sql-table-functions\"/>."
-
-#: xfunc.xml:612(title)
+#: xfunc.xml:568(title)
 msgid "<acronym>SQL</acronym> Functions with Output Parameters"
 msgstr "Функции <acronym>SQL</acronym> с выходными параметрами"
 
-#: xfunc.xml:614(indexterm)
+#: xfunc.xml:570(indexterm)
 msgid "<primary>function</primary> <secondary>output parameter</secondary>"
 msgstr "<primary>функция</primary> <secondary>выходной параметр</secondary>"
 
-#: xfunc.xml:619(para)
+#: xfunc.xml:575(para)
 msgid ""
 "An alternative way of describing a function's results is to define it with "
 "<firstterm>output parameters</firstterm>, as in this example: <screen>\n"
@@ -1048,7 +981,7 @@ msgstr ""
 "столбцов анонимного составного типа. (Если вы опустите имя выходного "
 "параметра, система выберет имя сама.)"
 
-#: xfunc.xml:671(para)
+#: xfunc.xml:627(para)
 msgid ""
 "Notice that output parameters are not included in the calling argument list "
 "when invoking such a function from SQL. This is because "
@@ -1071,7 +1004,7 @@ msgstr ""
 "DROP FUNCTION sum_n_product (int, int);\n"
 "</screen>"
 
-#: xfunc.xml:686(para)
+#: xfunc.xml:642(para)
 msgid ""
 "Parameters can be marked as <literal>IN</literal> (the default), "
 "<literal>OUT</literal>, <literal>INOUT</literal>, or <literal>VARIADIC</"
@@ -1087,19 +1020,19 @@ msgstr ""
 "типа записи результата). Параметры <literal>VARIADIC</literal> являются "
 "входными, но обрабатывается специальным образом, как описано далее."
 
-#: xfunc.xml:698(title)
+#: xfunc.xml:654(title)
 msgid "<acronym>SQL</acronym> Functions with Variable Numbers of Arguments"
 msgstr "Функции <acronym>SQL</acronym> с переменным числом аргументов"
 
-#: xfunc.xml:700(indexterm)
+#: xfunc.xml:656(indexterm)
 msgid "<primary>function</primary> <secondary>variadic</secondary>"
 msgstr "<primary>функция</primary> <secondary>переменные параметры</secondary>"
 
-#: xfunc.xml:705(indexterm)
+#: xfunc.xml:661(indexterm)
 msgid "<primary>variadic function</primary>"
 msgstr "<primary>функция с переменными параметрами</primary>"
 
-#: xfunc.xml:709(para)
+#: xfunc.xml:665(para)
 msgid ""
 "<acronym>SQL</acronym> functions can be declared to accept variable numbers "
 "of arguments, so long as all the <quote>optional</quote> arguments are of "
@@ -1149,7 +1082,7 @@ msgstr ""
 "<literal>VARIADIC</literal> соответствуют одно или несколько вхождений типа "
 "его элемента, но не его собственного типа."
 
-#: xfunc.xml:743(para)
+#: xfunc.xml:699(para)
 msgid ""
 "Sometimes it is useful to be able to pass an already-constructed array to a "
 "variadic function; this is particularly handy when one variadic function "
@@ -1171,7 +1104,7 @@ msgstr ""
 "массива. <literal>VARIADIC</literal> можно добавить только к последнему "
 "фактическому аргументу вызова функции."
 
-#: xfunc.xml:759(para)
+#: xfunc.xml:715(para)
 msgid ""
 "Specifying <literal>VARIADIC</literal> in the call is also the only way to "
 "pass an empty array to a variadic function, for example: <screen>\n"
@@ -1191,7 +1124,7 @@ msgstr ""
 "<literal>mleast</literal>, но без параметров, если вы хотите выполнять такие "
 "вызовы.)"
 
-#: xfunc.xml:773(para)
+#: xfunc.xml:729(para)
 msgid ""
 "The array element parameters generated from a variadic parameter are treated "
 "as not having any names of their own. This means it is not possible to call "
@@ -1216,11 +1149,11 @@ msgstr ""
 "SELECT mleast(arr =&gt; ARRAY[10, -1, 5, 4.4]);\n"
 "</screen>"
 
-#: xfunc.xml:794(title)
+#: xfunc.xml:750(title)
 msgid "<acronym>SQL</acronym> Functions with Default Values for Arguments"
 msgstr "Функции <acronym>SQL</acronym> со значениями аргументов по умолчанию"
 
-#: xfunc.xml:796(indexterm)
+#: xfunc.xml:752(indexterm)
 msgid ""
 "<primary>function</primary> <secondary>default values for arguments</"
 "secondary>"
@@ -1228,7 +1161,7 @@ msgstr ""
 "<primary>функция</primary> <secondary>значения аргументов по умолчанию</"
 "secondary>"
 
-#: xfunc.xml:801(para)
+#: xfunc.xml:757(para)
 msgid ""
 "Functions can be declared with default values for some or all input "
 "arguments. The default values are inserted whenever the function is called "
@@ -1248,7 +1181,7 @@ msgstr ""
 "ограничение, оно всё же остаётся в силе, чтобы позиционные ссылки на "
 "аргументы оставались действительными.)"
 
-#: xfunc.xml:812(para)
+#: xfunc.xml:768(para)
 msgid ""
 "For example: <screen>\n"
 "CREATE FUNCTION foo(a int, b int DEFAULT 2, c int DEFAULT 3)\n"
@@ -1313,11 +1246,11 @@ msgstr ""
 "</screen> (ОШИБКА: функция foo() не существует) Вместо ключевого слова "
 "<literal>DEFAULT</literal> можно использовать знак <literal>=</literal>."
 
-#: xfunc.xml:849(title)
+#: xfunc.xml:805(title)
 msgid "<acronym>SQL</acronym> Functions as Table Sources"
 msgstr "Функции <acronym>SQL</acronym>, порождающие таблицы"
 
-#: xfunc.xml:851(para)
+#: xfunc.xml:807(para)
 msgid ""
 "All SQL functions can be used in the <literal>FROM</literal> clause of a "
 "query, but it is particularly useful for functions returning composite "
@@ -1332,7 +1265,7 @@ msgstr ""
 "с одним столбцом. Если же функция объявлена как возвращающая составной тип, "
 "она возвращает таблицу со столбцами для каждого атрибута составного типа."
 
-#: xfunc.xml:860(para)
+#: xfunc.xml:816(para)
 msgid ""
 "Here is an example: <screen>\n"
 "CREATE TABLE foo (fooid int, foosubid int, fooname text);\n"
@@ -1372,7 +1305,7 @@ msgstr ""
 "</screen> Как показывает этот пример, мы можем работать со столбцами "
 "результата функции так же, как если бы это были столбцы обычной таблицы."
 
-#: xfunc.xml:885(para)
+#: xfunc.xml:841(para)
 msgid ""
 "Note that we only got one row out of the function. This is because we did "
 "not use <literal>SETOF</literal>. That is described in the next section."
@@ -1381,15 +1314,15 @@ msgstr ""
 "объясняется тем, что мы не использовали указание <literal>SETOF</literal>. "
 "Оно описывается в следующем разделе."
 
-#: xfunc.xml:892(title)
+#: xfunc.xml:848(title)
 msgid "<acronym>SQL</acronym> Functions Returning Sets"
 msgstr "Функции <acronym>SQL</acronym>, возвращающие множества"
 
-#: xfunc.xml:894(indexterm)
+#: xfunc.xml:850(indexterm)
 msgid "<primary>function</primary> <secondary>with SETOF</secondary>"
 msgstr "<primary>функция</primary> <secondary>с SETOF</secondary>"
 
-#: xfunc.xml:899(para)
+#: xfunc.xml:855(para)
 msgid ""
 "When an SQL function is declared as returning <literal>SETOF "
 "<replaceable>sometype</replaceable></literal>, the function's final query is "
@@ -1401,7 +1334,7 @@ msgstr ""
 "выполняется до завершения и каждая строка выводится как элемент "
 "результирующего множества."
 
-#: xfunc.xml:912(programlisting)
+#: xfunc.xml:868(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION getfoo(int) RETURNS SETOF foo AS $$\n"
@@ -1416,7 +1349,7 @@ msgstr ""
 "\n"
 "SELECT * FROM getfoo(1) AS t1;"
 
-#: xfunc.xml:906(para)
+#: xfunc.xml:862(para)
 msgid ""
 "This feature is normally used when calling the function in the "
 "<literal>FROM</literal> clause. In this case each row returned by the "
@@ -1443,7 +1376,7 @@ msgstr ""
 "(2 rows)\n"
 "</screen>"
 
-#: xfunc.xml:934(programlisting)
+#: xfunc.xml:890(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE tab (y int, z int);\n"
@@ -1482,7 +1415,7 @@ msgstr ""
 "  17 |      70\n"
 "(4 rows)"
 
-#: xfunc.xml:930(para)
+#: xfunc.xml:886(para)
 msgid ""
 "It is also possible to return multiple rows with the columns defined by "
 "output parameters, like this: <placeholder-1/> The key point here is that "
@@ -1497,7 +1430,7 @@ msgstr ""
 "один выходной параметр, укажите тип этого параметра вместо <type>record</"
 "type>."
 
-#: xfunc.xml:960(para)
+#: xfunc.xml:916(para)
 msgid ""
 "It is frequently useful to construct a query's result by invoking a set-"
 "returning function multiple times, with the parameters for each invocation "
@@ -1584,7 +1517,7 @@ msgstr ""
 "сделать, применив простое соединение, но для более сложных вычислений "
 "возможность поместить некоторую логику в функцию может быть весьма удобной."
 
-#: xfunc.xml:1009(para)
+#: xfunc.xml:965(para)
 msgid ""
 "Currently, functions returning sets can also be called in the select list of "
 "a query. For each row that the query generates by itself, the function "
@@ -1647,7 +1580,7 @@ msgstr ""
 "не генерируются. Это же поведение мы получаем при внутреннем соединении с "
 "результатом функции с применением <literal>LATERAL</literal>."
 
-#: xfunc.xml:1047(para)
+#: xfunc.xml:1003(para)
 msgid ""
 "If a function's last command is <command>INSERT</command>, <command>UPDATE</"
 "command>, or <command>DELETE</command> with <literal>RETURNING</literal>, "
@@ -1667,7 +1600,7 @@ msgstr ""
 "соответствующие изменения в таблице всё равно произойдут (и будут завершены "
 "до выхода из функции)."
 
-#: xfunc.xml:1059(para)
+#: xfunc.xml:1015(para)
 msgid ""
 "The key problem with using set-returning functions in the select list, "
 "rather than the <literal>FROM</literal> clause, is that putting more than "
@@ -1687,17 +1620,17 @@ msgstr ""
 "Синтаксис <literal>LATERAL</literal> даёт более ожидаемые результаты при "
 "вызове нескольких таких функций и поэтому рекомендуется использовать его."
 
-#: xfunc.xml:1073(title)
+#: xfunc.xml:1029(title)
 msgid "<acronym>SQL</acronym> Functions Returning <literal>TABLE</literal>"
 msgstr ""
 "Функции <acronym>SQL</acronym>, возвращающие таблицы (<literal>TABLE</"
 "literal>)"
 
-#: xfunc.xml:1075(indexterm)
+#: xfunc.xml:1031(indexterm)
 msgid "<primary>function</primary> <secondary>RETURNS TABLE</secondary>"
 msgstr "<primary>функция</primary> <secondary>RETURNS TABLE</secondary>"
 
-#: xfunc.xml:1080(para)
+#: xfunc.xml:1036(para)
 msgid ""
 "There is another way to declare a function as returning a set, which is to "
 "use the syntax <literal>RETURNS TABLE(<replaceable>columns</replaceable>)</"
@@ -1716,7 +1649,7 @@ msgstr ""
 "последних версиях стандарта SQL, так что этот вариант может быть более "
 "портируемым, чем <literal>SETOF</literal>."
 
-#: xfunc.xml:1095(programlisting)
+#: xfunc.xml:1051(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sum_n_product_with_tab (x int)\n"
@@ -1729,7 +1662,7 @@ msgstr ""
 "    SELECT $1 + tab.y, $1 * tab.y FROM tab;\n"
 "$$ LANGUAGE SQL;"
 
-#: xfunc.xml:1091(para)
+#: xfunc.xml:1047(para)
 msgid ""
 "For example, the preceding sum-and-product example could also be done this "
 "way: <placeholder-1/> It is not allowed to use explicit <literal>OUT</"
@@ -1743,11 +1676,11 @@ msgstr ""
 "параметров &mdash; все выходные столбцы необходимо записать в списке "
 "<literal>TABLE</literal>."
 
-#: xfunc.xml:1109(title)
+#: xfunc.xml:1065(title)
 msgid "Polymorphic <acronym>SQL</acronym> Functions"
 msgstr "Полиморфные функции <acronym>SQL</acronym>"
 
-#: xfunc.xml:1111(para)
+#: xfunc.xml:1067(para)
 msgid ""
 "<acronym>SQL</acronym> functions can be declared to accept and return the "
 "polymorphic types <type>anyelement</type>, <type>anyarray</type>, "
@@ -1787,7 +1720,7 @@ msgstr ""
 "(1 row)\n"
 "</screen>"
 
-#: xfunc.xml:1133(para)
+#: xfunc.xml:1089(para)
 msgid ""
 "Notice the use of the typecast <literal>'a'::text</literal> to specify that "
 "the argument is of type <type>text</type>. This is required if the argument "
@@ -1813,7 +1746,7 @@ msgstr ""
 "</screen> (ОШИБКА:  не удалось определить полиморфный тип, так как входные "
 "аргументы имеют тип \"unknown\")"
 
-#: xfunc.xml:1148(para)
+#: xfunc.xml:1104(para)
 msgid ""
 "It is permitted to have polymorphic arguments with a fixed return type, but "
 "the converse is not. For example: <screen>\n"
@@ -1857,7 +1790,7 @@ msgstr ""
 "Функция, возвращающая полиморфный тип, должна иметь минимум один полиморфный "
 "аргумент.\")"
 
-#: xfunc.xml:1170(para)
+#: xfunc.xml:1126(para)
 msgid ""
 "Polymorphism can be used with functions that have output arguments. For "
 "example: <screen>\n"
@@ -1883,7 +1816,7 @@ msgstr ""
 "(1 row)\n"
 "</screen>"
 
-#: xfunc.xml:1185(para)
+#: xfunc.xml:1141(para)
 msgid ""
 "Polymorphism can also be used with variadic functions. For example: "
 "<screen>\n"
@@ -1943,26 +1876,26 @@ msgstr ""
 "(1 row)\n"
 "</screen>"
 
-#: xfunc.xml:1219(title)
+#: xfunc.xml:1175(title)
 msgid "<acronym>SQL</acronym> Functions with Collations"
 msgstr "Функции <acronym>SQL</acronym> с правилами сортировки"
 
-#: xfunc.xml:1221(indexterm)
+#: xfunc.xml:1177(indexterm)
 msgid "<primary>collation</primary> <secondary>in SQL functions</secondary>"
 msgstr ""
 "<primary>правила сортировки</primary> <secondary>в функциях SQL</secondary>"
 
-#: xfunc.xml:1236(programlisting)
+#: xfunc.xml:1192(programlisting)
 #, no-wrap
 msgid "SELECT anyleast('abc'::text, 'ABC');"
 msgstr "SELECT anyleast('abc'::text, 'ABC');"
 
-#: xfunc.xml:1243(programlisting)
+#: xfunc.xml:1199(programlisting)
 #, no-wrap
 msgid "SELECT anyleast('abc'::text, 'ABC' COLLATE \"C\");"
 msgstr "SELECT anyleast('abc'::text, 'ABC' COLLATE \"C\");"
 
-#: xfunc.xml:1251(programlisting)
+#: xfunc.xml:1207(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION anyleast (VARIADIC anyarray) RETURNS anyelement AS $$\n"
@@ -1973,7 +1906,7 @@ msgstr ""
 "    SELECT min($1[i] COLLATE \"en_US\") FROM generate_subscripts($1, 1) g(i);\n"
 "$$ LANGUAGE SQL;"
 
-#: xfunc.xml:1226(para)
+#: xfunc.xml:1182(para)
 msgid ""
 "When a SQL function has one or more parameters of collatable data types, a "
 "collation is identified for each function call depending on the collations "
@@ -2017,7 +1950,7 @@ msgstr ""
 "локали <literal>en_US</literal>: <placeholder-3/> Но заметьте, что при "
 "попытке применить правило к несортируемому типу данных, возникнет ошибка."
 
-#: xfunc.xml:1260(para)
+#: xfunc.xml:1216(para)
 msgid ""
 "If no common collation can be identified among the actual arguments, then a "
 "SQL function treats its parameters as having their data types' default "
@@ -2030,7 +1963,7 @@ msgstr ""
 "определено по умолчанию для базы данных, но оно может быть и другим для "
 "параметров доменных типов)."
 
-#: xfunc.xml:1267(para)
+#: xfunc.xml:1223(para)
 msgid ""
 "The behavior of collatable parameters can be thought of as a limited form of "
 "polymorphism, applicable only to textual data types."
@@ -2038,15 +1971,15 @@ msgstr ""
 "Поведение сортируемых параметров можно воспринимать как ограниченную форму "
 "полиморфизма, применимую только к текстовым типам данных."
 
-#: xfunc.xml:1275(title)
+#: xfunc.xml:1231(title)
 msgid "Function Overloading"
 msgstr "Перегрузка функций"
 
-#: xfunc.xml:1277(indexterm)
+#: xfunc.xml:1233(indexterm)
 msgid "<primary>overloading</primary> <secondary>functions</secondary>"
 msgstr "<primary>перегрузка</primary> <secondary>функций</secondary>"
 
-#: xfunc.xml:1282(para)
+#: xfunc.xml:1238(para)
 msgid ""
 "More than one function can be defined with the same SQL name, so long as the "
 "arguments they take are different. In other words, function names can be "
@@ -2062,7 +1995,7 @@ msgstr ""
 "представленных аргументов. Перегрузка может быть полезна для имитации "
 "функций с переменным количеством аргументов, до какого-то конечного числа."
 
-#: xfunc.xml:1296(programlisting)
+#: xfunc.xml:1252(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION test(int, real) RETURNS ...\n"
@@ -2071,7 +2004,7 @@ msgstr ""
 "CREATE FUNCTION test(int, real) RETURNS ...\n"
 "CREATE FUNCTION test(smallint, double precision) RETURNS ..."
 
-#: xfunc.xml:1292(para)
+#: xfunc.xml:1248(para)
 msgid ""
 "When creating a family of overloaded functions, one should be careful not to "
 "create ambiguities. For instance, given the functions: <placeholder-1/> it "
@@ -2088,7 +2021,7 @@ msgstr ""
 "разрабатывать систему, которая будет незаметно полагаться на такие "
 "особенности, неразумно."
 
-#: xfunc.xml:1307(para)
+#: xfunc.xml:1263(para)
 msgid ""
 "A function that takes a single argument of a composite type should generally "
 "not have the same name as any attribute (field) of that type. Recall that "
@@ -2115,7 +2048,7 @@ msgstr ""
 "<replaceable>функция</replaceable>(<replaceable>таблица</replaceable>) </"
 "literal>), но лучше избежать этой проблемы, подобрав разные имена."
 
-#: xfunc.xml:1322(para)
+#: xfunc.xml:1278(para)
 msgid ""
 "Another possible conflict is between variadic and non-variadic functions. "
 "For instance, it is possible to create both <literal>foo(numeric)</literal> "
@@ -2134,7 +2067,7 @@ msgstr ""
 "первой по пути поиска, либо, если две функции находятся в одной схеме, "
 "выбирается функция с постоянными аргументами."
 
-#: xfunc.xml:1343(programlisting)
+#: xfunc.xml:1299(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION test(int) RETURNS int\n"
@@ -2151,7 +2084,7 @@ msgstr ""
 "    AS '<replaceable>имя_файла</replaceable>', 'test_2arg'\n"
 "    LANGUAGE C;"
 
-#: xfunc.xml:1332(para)
+#: xfunc.xml:1288(para)
 msgid ""
 "When overloading C-language functions, there is an additional constraint: "
 "The C name of each function in the family of overloaded functions must be "
@@ -2175,27 +2108,27 @@ msgstr ""
 "на C. Например: <placeholder-1/> Имена функций на C здесь следуют одному из "
 "множества возможных соглашений."
 
-#: xfunc.xml:1356(title)
+#: xfunc.xml:1312(title)
 msgid "Function Volatility Categories"
 msgstr "Категории изменчивости функций"
 
-#: xfunc.xml:1358(indexterm)
+#: xfunc.xml:1314(indexterm)
 msgid "<primary>volatility</primary> <secondary>functions</secondary>"
 msgstr "<primary>изменчивость</primary> <secondary>функций</secondary>"
 
-#: xfunc.xml:1362(indexterm)
+#: xfunc.xml:1318(indexterm)
 msgid "<primary>VOLATILE</primary>"
 msgstr "<primary>VOLATILE</primary>"
 
-#: xfunc.xml:1365(indexterm)
+#: xfunc.xml:1321(indexterm)
 msgid "<primary>STABLE</primary>"
 msgstr "<primary>STABLE</primary>"
 
-#: xfunc.xml:1368(indexterm)
+#: xfunc.xml:1324(indexterm)
 msgid "<primary>IMMUTABLE</primary>"
 msgstr "<primary>IMMUTABLE</primary>"
 
-#: xfunc.xml:1382(para)
+#: xfunc.xml:1338(para)
 msgid ""
 "A <literal>VOLATILE</literal> function can do anything, including modifying "
 "the database. It can return different results on successive calls with the "
@@ -2210,7 +2143,7 @@ msgstr ""
 "запросе, использующем изменчивую функцию, она будет вычисляться заново для "
 "каждой строки, когда потребуется её результат."
 
-#: xfunc.xml:1391(para)
+#: xfunc.xml:1347(para)
 msgid ""
 "A <literal>STABLE</literal> function cannot modify the database and is "
 "guaranteed to return the same results given the same arguments for all rows "
@@ -2231,7 +2164,7 @@ msgstr ""
 "характеристикой <literal>VOLATILE</literal> в условии поиска по индексу "
 "нельзя.)"
 
-#: xfunc.xml:1404(para)
+#: xfunc.xml:1360(para)
 msgid ""
 "An <literal>IMMUTABLE</literal> function cannot modify the database and is "
 "guaranteed to return the same results given the same arguments forever. This "
@@ -2250,7 +2183,7 @@ msgstr ""
 "literal>, так как нижележащая функция оператора сложения помечена как "
 "<literal>IMMUTABLE</literal>."
 
-#: xfunc.xml:1372(para)
+#: xfunc.xml:1328(para)
 msgid ""
 "Every function has a <firstterm>volatility</firstterm> classification, with "
 "the possibilities being <literal>VOLATILE</literal>, <literal>STABLE</"
@@ -2267,7 +2200,7 @@ msgstr ""
 "изменчивости представляет собой обещание некоторого поведения функции для "
 "оптимизатора: <placeholder-1/>"
 
-#: xfunc.xml:1417(para)
+#: xfunc.xml:1373(para)
 msgid ""
 "For best optimization results, you should label your functions with the "
 "strictest volatility category that is valid for them."
@@ -2275,7 +2208,7 @@ msgstr ""
 "Для наилучших результатов оптимизации, функции следует назначать самую "
 "строгую характеристику изменчивости, которой она соответствует."
 
-#: xfunc.xml:1422(para)
+#: xfunc.xml:1378(para)
 msgid ""
 "Any function with side-effects <emphasis>must</emphasis> be labeled "
 "<literal>VOLATILE</literal>, so that calls to it cannot be optimized away. "
@@ -2291,7 +2224,7 @@ msgstr ""
 "меняться при выполнении одного запроса; таковы функции <literal>random()</"
 "literal>, <literal>currval()</literal> и <literal>timeofday()</literal>."
 
-#: xfunc.xml:1431(para)
+#: xfunc.xml:1387(para)
 msgid ""
 "Another important example is that the <function>current_timestamp</function> "
 "family of functions qualify as <literal>STABLE</literal>, since their values "
@@ -2302,7 +2235,7 @@ msgstr ""
 "<literal>STABLE</literal>, потому что их значения не меняются в рамках одной "
 "транзакции."
 
-#: xfunc.xml:1437(para)
+#: xfunc.xml:1393(para)
 msgid ""
 "There is relatively little difference between <literal>STABLE</literal> and "
 "<literal>IMMUTABLE</literal> categories when considering simple interactive "
@@ -2328,7 +2261,7 @@ msgstr ""
 "использовании подготовленных операторов или языков функций, кеширующих планы "
 "(например, <application>PL/pgSQL</application>)."
 
-#: xfunc.xml:1451(para)
+#: xfunc.xml:1407(para)
 msgid ""
 "For functions written in SQL or in any of the standard procedural languages, "
 "there is a second important property determined by the volatility category, "
@@ -2353,7 +2286,7 @@ msgstr ""
 "начале вызывающего запроса, тогда как функции <literal>VOLATILE</literal> "
 "получают свежий снимок в начале каждого запроса, который они выполняют."
 
-#: xfunc.xml:1466(para)
+#: xfunc.xml:1422(para)
 msgid ""
 "Functions written in C can manage snapshots however they want, but it's "
 "usually a good idea to make C functions work this way too."
@@ -2361,7 +2294,7 @@ msgstr ""
 "Функции, написанные на C, могут работать со снимками как угодно, но обычно "
 "лучше сделать так, чтобы они действовали аналогично."
 
-#: xfunc.xml:1472(para)
+#: xfunc.xml:1428(para)
 msgid ""
 "Because of this snapshotting behavior, a function containing only "
 "<command>SELECT</command> commands can safely be marked <literal>STABLE</"
@@ -2379,7 +2312,7 @@ msgstr ""
 "снимком, полученным для вызывающего запроса, так что они будут видеть одно "
 "представление базы данных на протяжении всего запроса."
 
-#: xfunc.xml:1483(para)
+#: xfunc.xml:1439(para)
 msgid ""
 "The same snapshotting behavior is used for <command>SELECT</command> "
 "commands within <literal>IMMUTABLE</literal> functions. It is generally "
@@ -2395,7 +2328,7 @@ msgstr ""
 "содержимое таблиц изменится. Однако <productname>PostgreSQL</productname> не "
 "принуждает вас явно отказаться от этого."
 
-#: xfunc.xml:1492(para)
+#: xfunc.xml:1448(para)
 msgid ""
 "A common error is to label a function <literal>IMMUTABLE</literal> when its "
 "results depend on a configuration parameter. For example, a function that "
@@ -2409,7 +2342,7 @@ msgstr ""
 "зависящие от параметра <xref linkend=\"guc-timezone\"/>. Для надёжности "
 "такие функции следует помечать как <literal>STABLE</literal>."
 
-#: xfunc.xml:1501(para)
+#: xfunc.xml:1457(para)
 msgid ""
 "<productname>PostgreSQL</productname> requires that <literal>STABLE</"
 "literal> and <literal>IMMUTABLE</literal> functions contain no SQL commands "
@@ -2430,11 +2363,11 @@ msgstr ""
 "изменений в базе данных, произведённых вызванной функцией, так как они не "
 "проявляются в её снимке данных.)"
 
-#: xfunc.xml:1515(title)
+#: xfunc.xml:1471(title)
 msgid "Procedural Language Functions"
 msgstr "Функции на процедурных языках"
 
-#: xfunc.xml:1517(para)
+#: xfunc.xml:1473(para)
 msgid ""
 "<productname>PostgreSQL</productname> allows user-defined functions to be "
 "written in other languages besides SQL and C. These other languages are "
@@ -2452,15 +2385,15 @@ msgstr ""
 "модулями. За дополнительной информацией обратитесь к <xref remap=\"3\" "
 "linkend=\"xplang\"/> и следующим главам."
 
-#: xfunc.xml:1531(title)
+#: xfunc.xml:1487(title)
 msgid "Internal Functions"
 msgstr "Внутренние функции"
 
-#: xfunc.xml:1533(indexterm)
+#: xfunc.xml:1489(indexterm)
 msgid "<primary>function</primary><secondary>internal</secondary>"
 msgstr "<primary>функция</primary> <secondary>внутренняя</secondary>"
 
-#: xfunc.xml:1535(para)
+#: xfunc.xml:1491(para)
 msgid ""
 "Internal functions are functions written in C that have been statically "
 "linked into the <productname>PostgreSQL</productname> server. The "
@@ -2477,7 +2410,7 @@ msgstr ""
 "быть пустым, что будет означать, что имя функции на уровне C совпадает с "
 "именем в SQL.)"
 
-#: xfunc.xml:1555(programlisting)
+#: xfunc.xml:1511(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION square_root(double precision) RETURNS double precision\n"
@@ -2490,7 +2423,7 @@ msgstr ""
 "    LANGUAGE internal\n"
 "    STRICT;"
 
-#: xfunc.xml:1546(para)
+#: xfunc.xml:1502(para)
 msgid ""
 "Normally, all internal functions present in the server are declared during "
 "the initialization of the database cluster (see <xref linkend=\"creating-"
@@ -2511,7 +2444,7 @@ msgstr ""
 "(Большинство внутренних функций должны объявляться как <quote>strict</"
 "quote>.)"
 
-#: xfunc.xml:1565(para)
+#: xfunc.xml:1521(para)
 msgid ""
 "Not all <quote>predefined</quote> functions are <quote>internal</quote> in "
 "the above sense. Some predefined functions are written in SQL."
@@ -2520,11 +2453,11 @@ msgstr ""
 "quote> в вышеописанном смысле. Некоторые предопределённые функции написаны "
 "на SQL."
 
-#: xfunc.xml:1574(title)
+#: xfunc.xml:1530(title)
 msgid "C-Language Functions"
 msgstr "Функции на языке C"
 
-#: xfunc.xml:1576(indexterm)
+#: xfunc.xml:1532(indexterm)
 msgid ""
 "<primary>function</primary> <secondary>user-defined</secondary> <tertiary>in "
 "C</tertiary>"
@@ -2532,7 +2465,7 @@ msgstr ""
 "<primary>функция</primary> <secondary>пользовательская</secondary> "
 "<tertiary>на C</tertiary>"
 
-#: xfunc.xml:1582(para)
+#: xfunc.xml:1538(para)
 msgid ""
 "User-defined functions can be written in C (or a language that can be made "
 "compatible with C, such as C++). Such functions are compiled into "
@@ -2552,7 +2485,7 @@ msgstr ""
 "поэтому стандартная библиотека внутренних функций может быть богатым "
 "источником примеров для написания собственных функций на языке C.)"
 
-#: xfunc.xml:1594(para)
+#: xfunc.xml:1550(para)
 msgid ""
 "Two different calling conventions are currently used for C functions. The "
 "newer <quote>version 1</quote> calling convention is indicated by writing a "
@@ -2574,15 +2507,15 @@ msgstr ""
 "недостаточной функциональности, но они всё ещё поддерживаются для "
 "совместимости."
 
-#: xfunc.xml:1606(title)
+#: xfunc.xml:1562(title)
 msgid "Dynamic Loading"
 msgstr "Динамическая загрузка"
 
-#: xfunc.xml:1608(indexterm)
+#: xfunc.xml:1564(indexterm)
 msgid "<primary>dynamic loading</primary>"
 msgstr "<primary>динамическая загрузка</primary>"
 
-#: xfunc.xml:1612(para)
+#: xfunc.xml:1568(para)
 msgid ""
 "The first time a user-defined function in a particular loadable object file "
 "is called in a session, the dynamic loader loads that object file into "
@@ -2602,15 +2535,15 @@ msgstr ""
 "компоновки) заданной функции в этом объектном файле. Если имя уровня C не "
 "указано явно, предполагается, что оно совпадает с именем функции в SQL."
 
-#: xfunc.xml:1631(para)
+#: xfunc.xml:1587(para)
 msgid "If the name is an absolute path, the given file is loaded."
 msgstr "Если имя задаётся абсолютным путём, загружается заданный файл."
 
-#: xfunc.xml:1641(indexterm)
+#: xfunc.xml:1597(indexterm)
 msgid "<primary>$libdir</primary>"
 msgstr "<primary>$libdir</primary>"
 
-#: xfunc.xml:1637(para)
+#: xfunc.xml:1593(para)
 msgid ""
 "If the name starts with the string <literal>$libdir</literal>, that part is "
 "replaced by the <productname>PostgreSQL</productname> package library "
@@ -2620,11 +2553,11 @@ msgstr ""
 "заменяется путём к каталогу библиотек <productname>PostgreSQL</productname>, "
 "который определяется во время сборки.<placeholder-1/>"
 
-#: xfunc.xml:1649(indexterm)
+#: xfunc.xml:1605(indexterm)
 msgid "<primary>dynamic_library_path</primary>"
 msgstr "<primary>dynamic_library_path</primary>"
 
-#: xfunc.xml:1646(para)
+#: xfunc.xml:1602(para)
 msgid ""
 "If the name does not contain a directory part, the file is searched for in "
 "the path specified by the configuration variable <xref linkend=\"guc-dynamic-"
@@ -2634,7 +2567,7 @@ msgstr ""
 "заданному конфигурационной переменной <xref linkend=\"guc-dynamic-library-"
 "path\"/>.<placeholder-1/>"
 
-#: xfunc.xml:1654(para)
+#: xfunc.xml:1610(para)
 msgid ""
 "Otherwise (the file was not found in the path, or it contains a non-absolute "
 "directory part), the dynamic loader will try to take the name as given, "
@@ -2646,7 +2579,7 @@ msgstr ""
 "как есть, что, скорее всего, не увенчается успехом. (Полагаться на текущий "
 "рабочий каталог ненадёжно.)"
 
-#: xfunc.xml:1624(para)
+#: xfunc.xml:1580(para)
 msgid ""
 "The following algorithm is used to locate the shared object file based on "
 "the name given in the <command>CREATE FUNCTION</command> command: "
@@ -2663,7 +2596,7 @@ msgstr ""
 "последовательность повторяется снова. Если и это не приводит к успеху, "
 "происходит сбой загрузки."
 
-#: xfunc.xml:1669(para)
+#: xfunc.xml:1625(para)
 msgid ""
 "It is recommended to locate shared libraries either relative to <literal>"
 "$libdir</literal> or through the dynamic library path. This simplifies "
@@ -2677,7 +2610,7 @@ msgstr ""
 "место. Какой именно каталог подразумевается под <literal>$libdir</literal>, "
 "можно узнать с помощью команды <literal>pg_config --pkglibdir</literal>."
 
-#: xfunc.xml:1678(para)
+#: xfunc.xml:1634(para)
 msgid ""
 "The user ID the <productname>PostgreSQL</productname> server runs as must be "
 "able to traverse the path to the file you intend to load. Making the file or "
@@ -2690,7 +2623,7 @@ msgstr ""
 "каталог верхнего уровня оказывается недоступным для чтения и/или исполнения "
 "для пользователя <systemitem>postgres</systemitem>."
 
-#: xfunc.xml:1686(para)
+#: xfunc.xml:1642(para)
 msgid ""
 "In any case, the file name that is given in the <command>CREATE FUNCTION</"
 "command> command is recorded literally in the system catalogs, so if the "
@@ -2700,7 +2633,7 @@ msgstr ""
 "command>, записывается в системные каталоги буквально, так что если этот "
 "файл потребуется загрузить ещё раз, та же процедура будет проделана снова."
 
-#: xfunc.xml:1694(para)
+#: xfunc.xml:1650(para)
 msgid ""
 "<productname>PostgreSQL</productname> will not compile a C function "
 "automatically. The object file must be compiled before it is referenced in a "
@@ -2713,11 +2646,11 @@ msgstr ""
 "дополнительными сведениями обратитесь к <xref remap=\"3\" linkend=\"dfunc\"/"
 ">."
 
-#: xfunc.xml:1703(indexterm)
+#: xfunc.xml:1659(indexterm)
 msgid "<primary>magic block</primary>"
 msgstr "<primary>отличительный блок</primary>"
 
-#: xfunc.xml:1718(programlisting)
+#: xfunc.xml:1674(programlisting)
 #, no-wrap
 msgid ""
 "#ifdef PG_MODULE_MAGIC\n"
@@ -2728,7 +2661,7 @@ msgstr ""
 "PG_MODULE_MAGIC;\n"
 "#endif"
 
-#: xfunc.xml:1707(para)
+#: xfunc.xml:1663(para)
 msgid ""
 "To ensure that a dynamically loaded object file is not loaded into an "
 "incompatible server, <productname>PostgreSQL</productname> checks that the "
@@ -2755,7 +2688,7 @@ msgstr ""
 "этот код не планируется компилировать для версий <productname>PostgreSQL</"
 "productname> до 8.2."
 
-#: xfunc.xml:1729(para)
+#: xfunc.xml:1685(para)
 msgid ""
 "After it is used for the first time, a dynamically loaded object file is "
 "retained in memory. Future calls in the same session to the function(s) in "
@@ -2769,23 +2702,23 @@ msgstr ""
 "поиском в таблице символов. Если вам нужно принудительно перезагрузить "
 "объектный файл, например, после перекомпиляции, начните новый сеанс."
 
-#: xfunc.xml:1737(indexterm)
+#: xfunc.xml:1693(indexterm)
 msgid "<primary>_PG_init</primary>"
 msgstr "<primary>_PG_init</primary>"
 
-#: xfunc.xml:1740(indexterm)
+#: xfunc.xml:1696(indexterm)
 msgid "<primary>_PG_fini</primary>"
 msgstr "<primary>_PG_fini</primary>"
 
-#: xfunc.xml:1743(indexterm)
+#: xfunc.xml:1699(indexterm)
 msgid "<primary>library initialization function</primary>"
 msgstr "<primary>функция инициализации библиотеки</primary>"
 
-#: xfunc.xml:1746(indexterm)
+#: xfunc.xml:1702(indexterm)
 msgid "<primary>library finalization function</primary>"
 msgstr "<primary>функция завершения работы библиотеки</primary>"
 
-#: xfunc.xml:1750(para)
+#: xfunc.xml:1706(para)
 msgid ""
 "Optionally, a dynamically loaded file can contain initialization and "
 "finalization functions. If the file includes a function named "
@@ -2809,17 +2742,17 @@ msgstr ""
 "не при завершении процесса. (В настоящее время выгрузка отключена и не "
 "происходит никогда, но в будущем это может измениться.)"
 
-#: xfunc.xml:1767(title)
+#: xfunc.xml:1723(title)
 msgid "Base Types in C-Language Functions"
 msgstr "Базовые типы в функциях на языке C"
 
-#: xfunc.xml:1769(indexterm)
+#: xfunc.xml:1725(indexterm)
 msgid ""
 "<primary>data type</primary> <secondary>internal organization</secondary>"
 msgstr ""
 "<primary>тип данных</primary> <secondary>внутренняя организация</secondary>"
 
-#: xfunc.xml:1774(para)
+#: xfunc.xml:1730(para)
 msgid ""
 "To know how to write C-language functions, you need to know how "
 "<productname>PostgreSQL</productname> internally represents base data types "
@@ -2841,24 +2774,24 @@ msgstr ""
 "загружает данные с диска, а для ввода, обработки и вывода данных он "
 "использует определяемые вами функции."
 
-#: xfunc.xml:1792(para)
+#: xfunc.xml:1748(para)
 msgid "pass by value, fixed-length"
 msgstr "передаётся по значению, фиксированной длины"
 
-#: xfunc.xml:1797(para)
+#: xfunc.xml:1753(para)
 msgid "pass by reference, fixed-length"
 msgstr "передаётся по ссылке, фиксированной длины"
 
-#: xfunc.xml:1802(para)
+#: xfunc.xml:1758(para)
 msgid "pass by reference, variable-length"
 msgstr "передаётся по ссылке, переменной длины"
 
-#: xfunc.xml:1787(para)
+#: xfunc.xml:1743(para)
 msgid "Base types can have one of three internal formats: <placeholder-1/>"
 msgstr ""
 "Базовые типы могут иметь один из трёх внутренних форматов: <placeholder-1/>"
 
-#: xfunc.xml:1819(programlisting)
+#: xfunc.xml:1775(programlisting)
 #, no-wrap
 msgid ""
 "/* 4-byte integer, passed by value */\n"
@@ -2867,7 +2800,7 @@ msgstr ""
 "/* 4-байтное целое, передаётся по значению */\n"
 "typedef int int4;"
 
-#: xfunc.xml:1809(para)
+#: xfunc.xml:1765(para)
 msgid ""
 "By-value types can only be 1, 2, or 4 bytes in length (also 8 bytes, if "
 "<literal>sizeof(Datum)</literal> is 8 on your machine). You should be "
@@ -2898,7 +2831,7 @@ msgstr ""
 "байт. Тип <type>int8</type>, принятый в SQL, в C называется <type>int64</"
 "type>. См. также <xref remap=\"4\" linkend=\"xfunc-c-type-table\"/>.)"
 
-#: xfunc.xml:1837(programlisting)
+#: xfunc.xml:1793(programlisting)
 #, no-wrap
 msgid ""
 "/* 16-byte structure, passed by reference */\n"
@@ -2913,7 +2846,7 @@ msgstr ""
 "    double  x, y;\n"
 "} Point;"
 
-#: xfunc.xml:1832(para)
+#: xfunc.xml:1788(para)
 msgid ""
 "On the other hand, fixed-length types of any size can be passed by-"
 "reference. For example, here is a sample implementation of a "
@@ -2937,7 +2870,7 @@ msgstr ""
 "данных, вы можете пропустить дополнительный вызов <literal>palloc</literal> "
 "и просто вернуть указатель на это поступившее значение.)"
 
-#: xfunc.xml:1855(para)
+#: xfunc.xml:1811(para)
 msgid ""
 "Finally, all variable-length types must also be passed by reference. All "
 "variable-length types must begin with an opaque length field of exactly 4 "
@@ -2955,7 +2888,7 @@ msgstr ""
 "этим полем длины. Поле длины содержит полную длину структуры, то есть "
 "включает размер самого поля длины."
 
-#: xfunc.xml:1867(para)
+#: xfunc.xml:1823(para)
 msgid ""
 "Another important point is to avoid leaving any uninitialized bits within "
 "data type values; for example, take care to zero out any alignment padding "
@@ -2969,7 +2902,7 @@ msgstr ""
 "равные значения ваших данных могут представляться неравными планировщику, "
 "что приведёт к построению неэффективных (хотя и корректных) планов."
 
-#: xfunc.xml:1877(para)
+#: xfunc.xml:1833(para)
 msgid ""
 "<emphasis>Never</emphasis> modify the contents of a pass-by-reference input "
 "value. If you do so you are likely to corrupt on-disk data, since the "
@@ -2982,7 +2915,7 @@ msgstr ""
 "дисковом буфере. Единственное исключение из этого правила освещается в <xref "
 "remap=\"6\" linkend=\"xaggr\"/>."
 
-#: xfunc.xml:1890(programlisting)
+#: xfunc.xml:1846(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct {\n"
@@ -2995,7 +2928,7 @@ msgstr ""
 "    char data[FLEXIBLE_ARRAY_MEMBER];\n"
 "} text;"
 
-#: xfunc.xml:1886(para)
+#: xfunc.xml:1842(para)
 msgid ""
 "As an example, we can define the type <type>text</type> as follows: "
 "<placeholder-1/> The <literal>[FLEXIBLE_ARRAY_MEMBER]</literal> notation "
@@ -3006,7 +2939,7 @@ msgstr ""
 "<placeholder-1/> Запись <literal>[FLEXIBLE_ARRAY_MEMBER]</literal> означает, "
 "что действительная длина массива данных в этом объявлении не указывается."
 
-#: xfunc.xml:1901(para)
+#: xfunc.xml:1857(para)
 msgid ""
 "When manipulating variable-length types, we must be careful to allocate the "
 "correct amount of memory and set the length field correctly. For example, if "
@@ -3028,7 +2961,7 @@ msgstr ""
 "emphasis> устанавливаться макросом <literal>SET_VARSIZE</literal>, а не "
 "простым присваиванием."
 
-#: xfunc.xml:1927(para)
+#: xfunc.xml:1883(para)
 msgid ""
 "<xref linkend=\"xfunc-c-type-table\"/> specifies which C type corresponds to "
 "which SQL type when writing a C-language function that uses a built-in type "
@@ -3050,305 +2983,305 @@ msgstr ""
 "любом исходном файле всегда необходимо первым включать <filename>postgres.h</"
 "filename>, так как в нём объявляется ряд вещей, которые нужны в любом случае."
 
-#: xfunc.xml:1941(title)
+#: xfunc.xml:1897(title)
 msgid "Equivalent C Types for Built-in SQL Types"
 msgstr "Типы C, эквивалентные встроенным типам SQL"
 
-#: xfunc.xml:1945(entry)
+#: xfunc.xml:1901(entry)
 msgid "SQL Type"
 msgstr "Тип SQL"
 
-#: xfunc.xml:1948(entry)
+#: xfunc.xml:1904(entry)
 msgid "C Type"
 msgstr "Тип C"
 
-#: xfunc.xml:1951(entry)
+#: xfunc.xml:1907(entry)
 msgid "Defined In"
 msgstr "Определён в"
 
-#: xfunc.xml:1958(type)
+#: xfunc.xml:1914(type)
 msgid "abstime"
 msgstr "abstime"
 
-#: xfunc.xml:1959(type)
+#: xfunc.xml:1915(type)
 msgid "AbsoluteTime"
 msgstr "AbsoluteTime"
 
-#: xfunc.xml:1960(filename) xfunc.xml:2070(filename) xfunc.xml:2100(filename)
+#: xfunc.xml:1916(filename) xfunc.xml:2026(filename) xfunc.xml:2056(filename)
 msgid "utils/nabstime.h"
 msgstr "utils/nabstime.h"
 
-#: xfunc.xml:1963(entry)
+#: xfunc.xml:1919(entry)
 msgid "<type>bigint</type> (<type>int8</type>)"
 msgstr "<type>bigint</type> (<type>int8</type>)"
 
-#: xfunc.xml:1964(type)
+#: xfunc.xml:1920(type)
 msgid "int64"
 msgstr "int64"
 
-#: xfunc.xml:1965(filename) xfunc.xml:1980(filename) xfunc.xml:1990(filename)
-#: xfunc.xml:1995(filename) xfunc.xml:2005(filename) xfunc.xml:2010(filename)
-#: xfunc.xml:2015(filename) xfunc.xml:2020(filename) xfunc.xml:2025(filename)
-#: xfunc.xml:2040(filename) xfunc.xml:2045(filename) xfunc.xml:2050(filename)
-#: xfunc.xml:2065(filename) xfunc.xml:2075(filename) xfunc.xml:2105(filename)
-#: xfunc.xml:2110(filename)
+#: xfunc.xml:1921(filename) xfunc.xml:1936(filename) xfunc.xml:1946(filename)
+#: xfunc.xml:1951(filename) xfunc.xml:1961(filename) xfunc.xml:1966(filename)
+#: xfunc.xml:1971(filename) xfunc.xml:1976(filename) xfunc.xml:1981(filename)
+#: xfunc.xml:1996(filename) xfunc.xml:2001(filename) xfunc.xml:2006(filename)
+#: xfunc.xml:2021(filename) xfunc.xml:2031(filename) xfunc.xml:2061(filename)
+#: xfunc.xml:2066(filename)
 msgid "postgres.h"
 msgstr "postgres.h"
 
-#: xfunc.xml:1968(type)
+#: xfunc.xml:1924(type)
 msgid "boolean"
 msgstr "boolean"
 
-#: xfunc.xml:1969(type)
+#: xfunc.xml:1925(type)
 msgid "bool"
 msgstr "bool"
 
-#: xfunc.xml:1970(entry)
+#: xfunc.xml:1926(entry)
 msgid "<filename>postgres.h</filename> (maybe compiler built-in)"
 msgstr "<filename>postgres.h</filename> (может быть встроен в компиляторе)"
 
-#: xfunc.xml:1973(type)
+#: xfunc.xml:1929(type)
 msgid "box"
 msgstr "box"
 
-#: xfunc.xml:1974(type)
+#: xfunc.xml:1930(type)
 msgid "BOX*"
 msgstr "BOX*"
 
-#: xfunc.xml:1975(filename) xfunc.xml:2035(filename) xfunc.xml:2055(filename)
-#: xfunc.xml:2060(filename)
+#: xfunc.xml:1931(filename) xfunc.xml:1991(filename) xfunc.xml:2011(filename)
+#: xfunc.xml:2016(filename)
 msgid "utils/geo_decls.h"
 msgstr "utils/geo_decls.h"
 
-#: xfunc.xml:1978(type)
+#: xfunc.xml:1934(type)
 msgid "bytea"
 msgstr "bytea"
 
-#: xfunc.xml:1979(type)
+#: xfunc.xml:1935(type)
 msgid "bytea*"
 msgstr "bytea*"
 
-#: xfunc.xml:1983(type)
+#: xfunc.xml:1939(type)
 msgid "\"char\""
 msgstr "\"char\""
 
-#: xfunc.xml:1984(type)
+#: xfunc.xml:1940(type)
 msgid "char"
 msgstr "char"
 
-#: xfunc.xml:1985(entry)
+#: xfunc.xml:1941(entry)
 msgid "(compiler built-in)"
 msgstr "(встроен в компиляторе)"
 
-#: xfunc.xml:1988(type)
+#: xfunc.xml:1944(type)
 msgid "character"
 msgstr "character"
 
-#: xfunc.xml:1989(type)
+#: xfunc.xml:1945(type)
 msgid "BpChar*"
 msgstr "BpChar*"
 
-#: xfunc.xml:1993(type)
+#: xfunc.xml:1949(type)
 msgid "cid"
 msgstr "cid"
 
-#: xfunc.xml:1994(type)
+#: xfunc.xml:1950(type)
 msgid "CommandId"
 msgstr "CommandId"
 
-#: xfunc.xml:1998(type)
+#: xfunc.xml:1954(type)
 msgid "date"
 msgstr "date"
 
-#: xfunc.xml:1999(type)
+#: xfunc.xml:1955(type)
 msgid "DateADT"
 msgstr "DateADT"
 
-#: xfunc.xml:2000(filename) xfunc.xml:2085(filename) xfunc.xml:2090(filename)
+#: xfunc.xml:1956(filename) xfunc.xml:2041(filename) xfunc.xml:2046(filename)
 msgid "utils/date.h"
 msgstr "utils/date.h"
 
-#: xfunc.xml:2003(entry)
+#: xfunc.xml:1959(entry)
 msgid "<type>smallint</type> (<type>int2</type>)"
 msgstr "<type>smallint</type> (<type>int2</type>)"
 
-#: xfunc.xml:2004(type)
+#: xfunc.xml:1960(type)
 msgid "int16"
 msgstr "int16"
 
-#: xfunc.xml:2008(type)
+#: xfunc.xml:1964(type)
 msgid "int2vector"
 msgstr "int2vector"
 
-#: xfunc.xml:2009(type)
+#: xfunc.xml:1965(type)
 msgid "int2vector*"
 msgstr "int2vector*"
 
-#: xfunc.xml:2013(entry)
+#: xfunc.xml:1969(entry)
 msgid "<type>integer</type> (<type>int4</type>)"
 msgstr "<type>integer</type> (<type>int4</type>)"
 
-#: xfunc.xml:2014(type)
+#: xfunc.xml:1970(type)
 msgid "int32"
 msgstr "int32"
 
-#: xfunc.xml:2018(entry)
+#: xfunc.xml:1974(entry)
 msgid "<type>real</type> (<type>float4</type>)"
 msgstr "<type>real</type> (<type>float4</type>)"
 
-#: xfunc.xml:2019(type)
+#: xfunc.xml:1975(type)
 msgid "float4*"
 msgstr "float4*"
 
-#: xfunc.xml:2023(entry)
+#: xfunc.xml:1979(entry)
 msgid "<type>double precision</type> (<type>float8</type>)"
 msgstr "<type>double precision</type> (<type>float8</type>)"
 
-#: xfunc.xml:2024(type)
+#: xfunc.xml:1980(type)
 msgid "float8*"
 msgstr "float8*"
 
-#: xfunc.xml:2028(type)
+#: xfunc.xml:1984(type)
 msgid "interval"
 msgstr "interval"
 
-#: xfunc.xml:2029(type)
+#: xfunc.xml:1985(type)
 msgid "Interval*"
 msgstr "Interval*"
 
-#: xfunc.xml:2030(filename) xfunc.xml:2095(filename)
+#: xfunc.xml:1986(filename) xfunc.xml:2051(filename)
 msgid "datatype/timestamp.h"
 msgstr "datatype/timestamp.h"
 
-#: xfunc.xml:2033(type)
+#: xfunc.xml:1989(type)
 msgid "lseg"
 msgstr "lseg"
 
-#: xfunc.xml:2034(type)
+#: xfunc.xml:1990(type)
 msgid "LSEG*"
 msgstr "LSEG*"
 
-#: xfunc.xml:2038(type)
+#: xfunc.xml:1994(type)
 msgid "name"
 msgstr "name"
 
-#: xfunc.xml:2039(type)
+#: xfunc.xml:1995(type)
 msgid "Name"
 msgstr "Name"
 
-#: xfunc.xml:2043(type)
+#: xfunc.xml:1999(type)
 msgid "oid"
 msgstr "oid"
 
-#: xfunc.xml:2044(type)
+#: xfunc.xml:2000(type)
 msgid "Oid"
 msgstr "Oid"
 
-#: xfunc.xml:2048(type)
+#: xfunc.xml:2004(type)
 msgid "oidvector"
 msgstr "oidvector"
 
-#: xfunc.xml:2049(type)
+#: xfunc.xml:2005(type)
 msgid "oidvector*"
 msgstr "oidvector*"
 
-#: xfunc.xml:2053(type)
+#: xfunc.xml:2009(type)
 msgid "path"
 msgstr "path"
 
-#: xfunc.xml:2054(type)
+#: xfunc.xml:2010(type)
 msgid "PATH*"
 msgstr "PATH*"
 
-#: xfunc.xml:2058(type)
+#: xfunc.xml:2014(type)
 msgid "point"
 msgstr "point"
 
-#: xfunc.xml:2059(type)
+#: xfunc.xml:2015(type)
 msgid "POINT*"
 msgstr "POINT*"
 
-#: xfunc.xml:2063(type) xfunc.xml:2064(type)
+#: xfunc.xml:2019(type) xfunc.xml:2020(type)
 msgid "regproc"
 msgstr "regproc"
 
-#: xfunc.xml:2068(type)
+#: xfunc.xml:2024(type)
 msgid "reltime"
 msgstr "reltime"
 
-#: xfunc.xml:2069(type)
+#: xfunc.xml:2025(type)
 msgid "RelativeTime"
 msgstr "RelativeTime"
 
-#: xfunc.xml:2073(type)
+#: xfunc.xml:2029(type)
 msgid "text"
 msgstr "text"
 
-#: xfunc.xml:2074(type)
+#: xfunc.xml:2030(type)
 msgid "text*"
 msgstr "text*"
 
-#: xfunc.xml:2078(type)
+#: xfunc.xml:2034(type)
 msgid "tid"
 msgstr "tid"
 
-#: xfunc.xml:2079(type)
+#: xfunc.xml:2035(type)
 msgid "ItemPointer"
 msgstr "ItemPointer"
 
-#: xfunc.xml:2080(filename)
+#: xfunc.xml:2036(filename)
 msgid "storage/itemptr.h"
 msgstr "storage/itemptr.h"
 
-#: xfunc.xml:2083(type)
+#: xfunc.xml:2039(type)
 msgid "time"
 msgstr "time"
 
-#: xfunc.xml:2084(type)
+#: xfunc.xml:2040(type)
 msgid "TimeADT"
 msgstr "TimeADT"
 
-#: xfunc.xml:2088(type)
+#: xfunc.xml:2044(type)
 msgid "time with time zone"
 msgstr "time with time zone"
 
-#: xfunc.xml:2089(type)
+#: xfunc.xml:2045(type)
 msgid "TimeTzADT"
 msgstr "TimeTzADT"
 
-#: xfunc.xml:2093(type)
+#: xfunc.xml:2049(type)
 msgid "timestamp"
 msgstr "timestamp"
 
-#: xfunc.xml:2094(type)
+#: xfunc.xml:2050(type)
 msgid "Timestamp*"
 msgstr "Timestamp*"
 
-#: xfunc.xml:2098(type)
+#: xfunc.xml:2054(type)
 msgid "tinterval"
 msgstr "tinterval"
 
-#: xfunc.xml:2099(type)
+#: xfunc.xml:2055(type)
 msgid "TimeInterval"
 msgstr "TimeInterval"
 
-#: xfunc.xml:2103(type)
+#: xfunc.xml:2059(type)
 msgid "varchar"
 msgstr "varchar"
 
-#: xfunc.xml:2104(type)
+#: xfunc.xml:2060(type)
 msgid "VarChar*"
 msgstr "VarChar*"
 
-#: xfunc.xml:2108(type)
+#: xfunc.xml:2064(type)
 msgid "xid"
 msgstr "xid"
 
-#: xfunc.xml:2109(type)
+#: xfunc.xml:2065(type)
 msgid "TransactionId"
 msgstr "TransactionId"
 
-#: xfunc.xml:2116(para)
+#: xfunc.xml:2072(para)
 msgid ""
 "Now that we've gone over all of the possible structures for base types, we "
 "can show some examples of real functions."
@@ -3356,11 +3289,11 @@ msgstr ""
 "Теперь, когда мы рассмотрели все возможные структуры для базовых типов, мы "
 "можем перейти к примерам реальных функций."
 
-#: xfunc.xml:2123(title)
+#: xfunc.xml:2079(title)
 msgid "Version 0 Calling Conventions"
 msgstr "Соглашение о вызовах версии 0"
 
-#: xfunc.xml:2125(para)
+#: xfunc.xml:2081(para)
 msgid ""
 "We present the <quote>old style</quote> calling convention first &mdash; "
 "although this approach is now deprecated, it's easier to get a handle on "
@@ -3374,11 +3307,11 @@ msgstr ""
 "C, но при этом должны использоваться типы C, соответствующие типам данных "
 "SQL, как показано выше."
 
-#: xfunc.xml:2134(para)
+#: xfunc.xml:2090(para)
 msgid "Here are some examples: <placeholder-1/>"
 msgstr "Несколько примеров функций: <placeholder-1/>"
 
-#: xfunc.xml:2218(programlisting)
+#: xfunc.xml:2174(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION add_one(integer) RETURNS integer\n"
@@ -3423,7 +3356,7 @@ msgstr ""
 "     AS '<replaceable>КАТАЛОГ</replaceable>/funcs', 'concat_text'\n"
 "     LANGUAGE C STRICT;"
 
-#: xfunc.xml:2212(para)
+#: xfunc.xml:2168(para)
 msgid ""
 "Supposing that the above code has been prepared in file <filename>funcs.c</"
 "filename> and compiled into a shared object, we could define the functions "
@@ -3435,7 +3368,7 @@ msgstr ""
 "объявить эти функции в <productname>PostgreSQL</productname> следующими "
 "командами: <placeholder-1/>"
 
-#: xfunc.xml:2242(para)
+#: xfunc.xml:2198(para)
 msgid ""
 "Here, <replaceable>DIRECTORY</replaceable> stands for the directory of the "
 "shared library file (for instance the <productname>PostgreSQL</productname> "
@@ -3456,7 +3389,7 @@ msgstr ""
 "разделяемых библиотек, обычно <literal>.so</literal> или <literal>.sl</"
 "literal>.)"
 
-#: xfunc.xml:2255(para)
+#: xfunc.xml:2211(para)
 msgid ""
 "Notice that we have specified the functions as <quote>strict</quote>, "
 "meaning that the system should automatically assume a null result if any "
@@ -3473,7 +3406,7 @@ msgstr ""
 "сравнивая указатель аргументов, передаваемых по ссылке, с NULL. (Для "
 "аргументов, передаваемых по значению, мы даже не можем это проверить!)"
 
-#: xfunc.xml:2266(para)
+#: xfunc.xml:2222(para)
 msgid ""
 "Although this calling convention is simple to use, it is not very portable; "
 "on some architectures there are problems with passing data types that are "
@@ -3489,21 +3422,21 @@ msgstr ""
 "NULL, кроме как объявив функцию строгой. В соглашении версии 1, "
 "представленном далее, эти недостатки устранены."
 
-#: xfunc.xml:2277(title)
+#: xfunc.xml:2233(title)
 msgid "Version 1 Calling Conventions"
 msgstr "Соглашение о вызовах версии 1"
 
-#: xfunc.xml:2283(programlisting)
+#: xfunc.xml:2239(programlisting)
 #, no-wrap
 msgid "Datum funcname(PG_FUNCTION_ARGS)"
 msgstr "Datum funcname(PG_FUNCTION_ARGS)"
 
-#: xfunc.xml:2287(programlisting)
+#: xfunc.xml:2243(programlisting)
 #, no-wrap
 msgid "PG_FUNCTION_INFO_V1(funcname);"
 msgstr "PG_FUNCTION_INFO_V1(funcname);"
 
-#: xfunc.xml:2279(para)
+#: xfunc.xml:2235(para)
 msgid ""
 "The version-1 calling convention relies on macros to suppress most of the "
 "complexity of passing arguments and results. The C declaration of a "
@@ -3525,7 +3458,7 @@ msgstr ""
 "productname> предполагает, что все внутренние функции используют соглашении "
 "версии 1. Однако для функций, загружаемых динамически, этот макрос необходим."
 
-#: xfunc.xml:2298(para)
+#: xfunc.xml:2254(para)
 msgid ""
 "In a version-1 function, each actual argument is fetched using a "
 "<function>PG_GETARG_<replaceable>xxx</replaceable>()</function> macro that "
@@ -3546,7 +3479,7 @@ msgstr ""
 "replaceable>()</function> принимает в качестве параметра фактическое "
 "значение, которое нужно возвратить."
 
-#: xfunc.xml:2312(para)
+#: xfunc.xml:2268(para)
 msgid ""
 "Here we show the same functions as above, coded in version-1 style: "
 "<placeholder-1/>"
@@ -3554,7 +3487,7 @@ msgstr ""
 "Так выглядят те же функции, что были показаны выше, но реализованные в стиле "
 "версии 1: <placeholder-1/>"
 
-#: xfunc.xml:2408(para)
+#: xfunc.xml:2364(para)
 msgid ""
 "The <command>CREATE FUNCTION</command> commands are the same as for the "
 "version-0 equivalents."
@@ -3562,7 +3495,7 @@ msgstr ""
 "Команды <command>CREATE FUNCTION</command> не отличаются от тех, что "
 "объявляют функции версии 0."
 
-#: xfunc.xml:2413(para)
+#: xfunc.xml:2369(para)
 msgid ""
 "At first glance, the version-1 coding conventions might appear to be just "
 "pointless obscurantism. They do, however, offer a number of improvements, "
@@ -3581,7 +3514,7 @@ msgstr ""
 "что макрос <literal>GETARG</literal> для типов переменной длины позволяет "
 "эффективно выбирать значения в формате TOAST (сжатых или хранимых отдельно)."
 
-#: xfunc.xml:2424(para)
+#: xfunc.xml:2380(para)
 msgid ""
 "One big improvement in version-1 functions is better handling of null inputs "
 "and results. The macro <function>PG_ARGISNULL(<replaceable>n</replaceable>)</"
@@ -3607,7 +3540,7 @@ msgstr ""
 "качестве результата, воспользуйтесь макросом <function>PG_RETURN_NULL()</"
 "function>; это работает и со строгими, и с нестрогими функциями."
 
-#: xfunc.xml:2439(para)
+#: xfunc.xml:2395(para)
 msgid ""
 "Other options provided in the new-style interface are two variants of the "
 "<function>PG_GETARG_<replaceable>xxx</replaceable>()</function> macros. The "
@@ -3653,7 +3586,7 @@ msgstr ""
 "<literal>external</literal>, <literal>extended</literal> или <literal>main</"
 "literal>.)"
 
-#: xfunc.xml:2467(para)
+#: xfunc.xml:2423(para)
 msgid ""
 "Finally, the version-1 function call conventions make it possible to return "
 "set results (<xref linkend=\"xfunc-c-return-set\"/>) and implement trigger "
@@ -3671,11 +3604,11 @@ msgstr ""
 "вызова функций. Дополнительные подробности можно найти в <filename>src/"
 "backend/utils/fmgr/README</filename> в пакете исходного кода."
 
-#: xfunc.xml:2481(title)
+#: xfunc.xml:2437(title)
 msgid "Writing Code"
 msgstr "Написание кода"
 
-#: xfunc.xml:2483(para)
+#: xfunc.xml:2439(para)
 msgid ""
 "Before we turn to the more advanced topics, we should discuss some coding "
 "rules for <productname>PostgreSQL</productname> C-language functions. While "
@@ -3697,7 +3630,7 @@ msgstr ""
 "функциями разными способами. Поэтому далее предполагается, что ваши функции "
 "на языке C действительно написаны на C."
 
-#: xfunc.xml:2504(indexterm)
+#: xfunc.xml:2460(indexterm)
 msgid ""
 "<primary>pg_config</primary><secondary>with user-defined C functions</"
 "secondary>"
@@ -3705,7 +3638,7 @@ msgstr ""
 "<primary>pg_config</primary> <secondary>для пользовательских функций на C</"
 "secondary>"
 
-#: xfunc.xml:2502(para)
+#: xfunc.xml:2458(para)
 msgid ""
 "Use <literal>pg_config --includedir-server</literal><placeholder-1/> to find "
 "out where the <productname>PostgreSQL</productname> server header files are "
@@ -3716,7 +3649,7 @@ msgstr ""
 "системе, с которой будут работать ваши пользователи), воспользуйтесь "
 "командой <literal>pg_config --includedir-server</literal><placeholder-1/>."
 
-#: xfunc.xml:2512(para)
+#: xfunc.xml:2468(para)
 msgid ""
 "Compiling and linking your code so that it can be dynamically loaded into "
 "<productname>PostgreSQL</productname> always requires special flags. See "
@@ -3728,7 +3661,7 @@ msgstr ""
 "флаги. Чтобы конкретнее узнать, как это сделать в вашей конкретной "
 "операционной системе, обратитесь к <xref remap=\"3\" linkend=\"dfunc\"/>."
 
-#: xfunc.xml:2522(para)
+#: xfunc.xml:2478(para)
 msgid ""
 "Remember to define a <quote>magic block</quote> for your shared library, as "
 "described in <xref linkend=\"xfunc-c-dynload\"/>."
@@ -3737,15 +3670,15 @@ msgstr ""
 "разделяемой библиотеки, как описано в <xref remap=\"6\" linkend=\"xfunc-c-"
 "dynload\"/>."
 
-#: xfunc.xml:2532(indexterm)
+#: xfunc.xml:2488(indexterm)
 msgid "<primary>palloc</primary>"
 msgstr "<primary>palloc</primary>"
 
-#: xfunc.xml:2532(indexterm)
+#: xfunc.xml:2488(indexterm)
 msgid "<primary>pfree</primary>"
 msgstr "<primary>pfree</primary>"
 
-#: xfunc.xml:2529(para)
+#: xfunc.xml:2485(para)
 msgid ""
 "When allocating memory, use the <productname>PostgreSQL</productname> "
 "functions <function>palloc</function><placeholder-1/> and <function>pfree</"
@@ -3761,7 +3694,7 @@ msgstr ""
 "Память, выделяемая функцией <function>palloc</function>, будет автоматически "
 "освобождаться в конце каждой транзакции, во избежание утечек памяти."
 
-#: xfunc.xml:2542(para)
+#: xfunc.xml:2498(para)
 msgid ""
 "Always zero the bytes of your structures using <function>memset</function> "
 "(or allocate them with <function>palloc0</function> in the first place). "
@@ -3784,7 +3717,7 @@ msgstr ""
 "оказаться неожиданными, если логически равные значения окажутся неравными на "
 "битовом уровне."
 
-#: xfunc.xml:2557(para)
+#: xfunc.xml:2513(para)
 msgid ""
 "Most of the internal <productname>PostgreSQL</productname> types are "
 "declared in <filename>postgres.h</filename>, while the function manager "
@@ -3805,7 +3738,7 @@ msgstr ""
 "filename> автоматически также будут подключены <filename>elog.h</filename> и "
 "<filename>palloc.h</filename>."
 
-#: xfunc.xml:2573(para)
+#: xfunc.xml:2529(para)
 msgid ""
 "Symbol names defined within object files must not conflict with each other "
 "or with symbols defined in the <productname>PostgreSQL</productname> server "
@@ -3818,18 +3751,18 @@ msgstr ""
 "ошибками, вызванными таким конфликтом, вам придётся переименовать ваши "
 "функции или переменные."
 
-#: xfunc.xml:2497(para)
+#: xfunc.xml:2453(para)
 msgid ""
 "The basic rules for writing and building C functions are as follows: "
 "<placeholder-1/>"
 msgstr ""
 "Основные правила написания и компиляции функций на C таковы: <placeholder-1/>"
 
-#: xfunc.xml:2588(title)
+#: xfunc.xml:2544(title)
 msgid "Composite-type Arguments"
 msgstr "Аргументы составного типа"
 
-#: xfunc.xml:2590(para)
+#: xfunc.xml:2546(para)
 msgid ""
 "Composite types do not have a fixed layout like C structures. Instances of a "
 "composite type can contain null fields. In addition, composite types that "
@@ -3845,7 +3778,7 @@ msgstr ""
 "productname> предоставляет функциям специальный интерфейс для обращения к "
 "полям составных типов из C."
 
-#: xfunc.xml:2603(programlisting)
+#: xfunc.xml:2559(programlisting)
 #, no-wrap
 msgid ""
 "SELECT name, c_overpaid(emp, 1500) AS overpaid\n"
@@ -3856,7 +3789,7 @@ msgstr ""
 "    FROM emp\n"
 "    WHERE name = 'Bill' OR name = 'Sam';"
 
-#: xfunc.xml:2600(para)
+#: xfunc.xml:2556(para)
 msgid ""
 "Suppose we want to write a function to answer the query: <placeholder-1/> "
 "Using call conventions version 0, we can define <function>c_overpaid</"
@@ -3868,7 +3801,7 @@ msgstr ""
 "функцию <function>c_overpaid</function> так: <placeholder-2/> Для версии 1 "
 "она будет выглядеть следующим образом: <placeholder-3/>"
 
-#: xfunc.xml:2666(para)
+#: xfunc.xml:2622(para)
 msgid ""
 "<function>GetAttributeByName</function> is the <productname>PostgreSQL</"
 "productname> system function that returns attributes out of the specified "
@@ -3892,7 +3825,7 @@ msgstr ""
 "недействительно, если установлен флаг null; всегда проверяйте этот флаг, "
 "прежде чем что-либо делать с результатом."
 
-#: xfunc.xml:2682(para)
+#: xfunc.xml:2638(para)
 msgid ""
 "There is also <function>GetAttributeByNum</function>, which selects the "
 "target attribute by column number instead of name."
@@ -3900,7 +3833,7 @@ msgstr ""
 "Есть также функция <function>GetAttributeByNum</function>, которая выбирает "
 "целевой атрибут не по имени, а по номеру столбца."
 
-#: xfunc.xml:2691(programlisting)
+#: xfunc.xml:2647(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION c_overpaid(emp, integer) RETURNS boolean\n"
@@ -3911,7 +3844,7 @@ msgstr ""
 "    AS '<replaceable>КАТАЛОГ</replaceable>/funcs', 'c_overpaid'\n"
 "    LANGUAGE C STRICT;"
 
-#: xfunc.xml:2687(para)
+#: xfunc.xml:2643(para)
 msgid ""
 "The following command declares the function <function>c_overpaid</function> "
 "in SQL: <placeholder-1/> Notice we have used <literal>STRICT</literal> so "
@@ -3921,16 +3854,16 @@ msgstr ""
 "<placeholder-1/> Заметьте, что мы использовали <literal>STRICT</literal>, "
 "чтобы нам не пришлось проверять входные аргументы на равенство NULL."
 
-#: xfunc.xml:2703(title)
+#: xfunc.xml:2659(title)
 msgid "Returning Rows (Composite Types)"
 msgstr "Возврат строк (составных типов)"
 
-#: xfunc.xml:2710(programlisting)
+#: xfunc.xml:2666(programlisting)
 #, no-wrap
 msgid "#include \"funcapi.h\""
 msgstr "#include \"funcapi.h\""
 
-#: xfunc.xml:2705(para)
+#: xfunc.xml:2661(para)
 msgid ""
 "To return a row or composite-type value from a C-language function, you can "
 "use a special API that provides macros and functions to hide most of the "
@@ -3942,7 +3875,7 @@ msgstr ""
 "скрывающие основную сложность формирования составных типов данных. Для "
 "использования этого API необходимо включить в исходный файл: <placeholder-1/>"
 
-#: xfunc.xml:2715(para)
+#: xfunc.xml:2671(para)
 msgid ""
 "There are two ways you can build a composite data value (henceforth a "
 "<quote>tuple</quote>): you can build it from an array of Datum values, or "
@@ -3972,7 +3905,7 @@ msgstr ""
 "возвращающей множество кортежей, все подготовительные действия можно "
 "выполнить один раз при первом вызове функции."
 
-#: xfunc.xml:2735(programlisting)
+#: xfunc.xml:2691(programlisting)
 #, no-wrap
 msgid ""
 "TypeFuncClass get_call_result_type(FunctionCallInfo fcinfo,\n"
@@ -3983,7 +3916,7 @@ msgstr ""
 "                                   Oid *resultTypeId,\n"
 "                                   TupleDesc *resultTupleDesc)"
 
-#: xfunc.xml:2731(para)
+#: xfunc.xml:2687(para)
 msgid ""
 "Several helper functions are available for setting up the needed "
 "<structname>TupleDesc</structname>. The recommended way to do this in most "
@@ -4016,7 +3949,7 @@ msgstr ""
 "можете выдать ошибку с сообщением <quote>функция, возвращающая запись, "
 "вызвана в контексте, не допускающем этот тип</quote>.)"
 
-#: xfunc.xml:2754(para)
+#: xfunc.xml:2710(para)
 msgid ""
 "<function>get_call_result_type</function> can resolve the actual type of a "
 "polymorphic function result; so it is useful in functions that return scalar "
@@ -4030,7 +3963,7 @@ msgstr ""
 "возвращающих составные типы. Выходной параметр <varname>resultTypeId</"
 "varname> полезен в первую очередь для полиморфных скалярных функций."
 
-#: xfunc.xml:2764(para)
+#: xfunc.xml:2720(para)
 msgid ""
 "<function>get_call_result_type</function> has a sibling "
 "<function>get_expr_result_type</function>, which can be used to resolve the "
@@ -4054,17 +3987,17 @@ msgstr ""
 "неспособна разрешать полиморфные типы, так что вместо них лучше использовать "
 "<function>get_call_result_type</function>."
 
-#: xfunc.xml:2781(programlisting)
+#: xfunc.xml:2737(programlisting)
 #, no-wrap
 msgid "TupleDesc RelationNameGetTupleDesc(const char *relname)"
 msgstr "TupleDesc RelationNameGetTupleDesc(const char *relname)"
 
-#: xfunc.xml:2786(programlisting)
+#: xfunc.xml:2742(programlisting)
 #, no-wrap
 msgid "TupleDesc TypeGetTupleDesc(Oid typeoid, List *colaliases)"
 msgstr "TupleDesc TypeGetTupleDesc(Oid typeoid, List *colaliases)"
 
-#: xfunc.xml:2778(para)
+#: xfunc.xml:2734(para)
 msgid ""
 "Older, now-deprecated functions for obtaining <structname>TupleDesc</"
 "structname>s are: <placeholder-1/> to get a <structname>TupleDesc</"
@@ -4083,17 +4016,17 @@ msgstr ""
 "возвращающей тип <structname>record</structname>, и не сможет разрешить "
 "полиморфные типы."
 
-#: xfunc.xml:2798(programlisting)
+#: xfunc.xml:2754(programlisting)
 #, no-wrap
 msgid "TupleDesc BlessTupleDesc(TupleDesc tupdesc)"
 msgstr "TupleDesc BlessTupleDesc(TupleDesc tupdesc)"
 
-#: xfunc.xml:2802(programlisting)
+#: xfunc.xml:2758(programlisting)
 #, no-wrap
 msgid "AttInMetadata *TupleDescGetAttInMetadata(TupleDesc tupdesc)"
 msgstr "AttInMetadata *TupleDescGetAttInMetadata(TupleDesc tupdesc)"
 
-#: xfunc.xml:2796(para)
+#: xfunc.xml:2752(para)
 msgid ""
 "Once you have a <structname>TupleDesc</structname>, call: <placeholder-1/> "
 "if you plan to work with Datums, or: <placeholder-2/> if you plan to work "
@@ -4110,12 +4043,12 @@ msgstr ""
 "<structfield>tuple_desc</structfield> или <structfield>attinmeta</"
 "structfield>, соответственно."
 
-#: xfunc.xml:2814(programlisting)
+#: xfunc.xml:2770(programlisting)
 #, no-wrap
 msgid "HeapTuple heap_form_tuple(TupleDesc tupdesc, Datum *values, bool *isnull)"
 msgstr "HeapTuple heap_form_tuple(TupleDesc tupdesc, Datum *values, bool *isnull)"
 
-#: xfunc.xml:2812(para)
+#: xfunc.xml:2768(para)
 msgid ""
 "When working with Datums, use: <placeholder-1/> to build a "
 "<structname>HeapTuple</structname> given user data in Datum form."
@@ -4124,12 +4057,12 @@ msgstr ""
 "<placeholder-1/> Она формирует <structname>HeapTuple</structname> из "
 "переданных ей данных в форме Datum."
 
-#: xfunc.xml:2822(programlisting)
+#: xfunc.xml:2778(programlisting)
 #, no-wrap
 msgid "HeapTuple BuildTupleFromCStrings(AttInMetadata *attinmeta, char **values)"
 msgstr "HeapTuple BuildTupleFromCStrings(AttInMetadata *attinmeta, char **values)"
 
-#: xfunc.xml:2820(para)
+#: xfunc.xml:2776(para)
 msgid ""
 "When working with C strings, use: <placeholder-1/> to build a "
 "<structname>HeapTuple</structname> given user data in C string form. "
@@ -4150,12 +4083,12 @@ msgstr ""
 "<symbol>NULL</symbol>. Эту функцию нужно вызывать для каждой строки, которую "
 "вы будете возвращать."
 
-#: xfunc.xml:2838(programlisting)
+#: xfunc.xml:2794(programlisting)
 #, no-wrap
 msgid "HeapTupleGetDatum(HeapTuple tuple)"
 msgstr "HeapTupleGetDatum(HeapTuple tuple)"
 
-#: xfunc.xml:2835(para)
+#: xfunc.xml:2791(para)
 msgid ""
 "Once you have built a tuple to return from your function, it must be "
 "converted into a <type>Datum</type>. Use: <placeholder-1/> to convert a "
@@ -4171,15 +4104,15 @@ msgstr ""
 "использовать как текущее выдаваемое значение в функции, возвращающей набор "
 "строк."
 
-#: xfunc.xml:2847(para)
+#: xfunc.xml:2803(para)
 msgid "An example appears in the next section."
 msgstr "Пример приведён в следующем разделе."
 
-#: xfunc.xml:2854(title)
+#: xfunc.xml:2810(title)
 msgid "Returning Sets"
 msgstr "Возврат множеств"
 
-#: xfunc.xml:2856(para)
+#: xfunc.xml:2812(para)
 msgid ""
 "There is also a special API that provides support for returning sets "
 "(multiple rows) from a C-language function. A set-returning function must "
@@ -4192,10 +4125,10 @@ msgstr ""
 "исходные файлы должны включать <filename>funcapi.h</filename>, как показано "
 "выше."
 
-#: xfunc.xml:2873(programlisting)
+#: xfunc.xml:2829(programlisting)
 #, no-wrap
 msgid ""
-"typedef struct\n"
+"typedef struct FuncCallContext\n"
 "{\n"
 "    /*\n"
 "     * Number of times we've been called before\n"
@@ -4203,7 +4136,7 @@ msgid ""
 "     * call_cntr is initialized to 0 for you by SRF_FIRSTCALL_INIT(), and\n"
 "     * incremented for you every time SRF_RETURN_NEXT() is called.\n"
 "     */\n"
-"    uint32 call_cntr;\n"
+"    uint64 call_cntr;\n"
 "\n"
 "    /*\n"
 "     * OPTIONAL maximum number of calls\n"
@@ -4212,7 +4145,7 @@ msgid ""
 "     * If not set, you must provide alternative means to know when the\n"
 "     * function is done.\n"
 "     */\n"
-"    uint32 max_calls;\n"
+"    uint64 max_calls;\n"
 "\n"
 "    /*\n"
 "     * OPTIONAL pointer to result slot\n"
@@ -4263,15 +4196,15 @@ msgid ""
 "\n"
 "} FuncCallContext;"
 msgstr ""
-"typedef struct\n"
+"typedef struct FuncCallContext\n"
 "{\n"
 "    /*\n"
 "     * Счётчик числа ранее выполненных вызовов\n"
 "     *\n"
-"     * call_cntr сбрасывается в 0 макросом SRF_FIRSTCALL_INIT(), и\n"
+"     * call_cntr сбрасывается в 0 макросом SRF_FIRSTCALL_INIT() и\n"
 "     * увеличивается на 1 каждый раз, когда вызывается SRF_RETURN_NEXT().\n"
 "     */\n"
-"    uint32 call_cntr;\n"
+"    uint64 call_cntr;\n"
 "\n"
 "    /*\n"
 "     * Максимальное число вызовов (может не использоваться)\n"
@@ -4280,7 +4213,7 @@ msgstr ""
 "     * Если это значение не задано, вы должны предоставить другую возможность определить,\n"
 "     * когда функция завершила свою работу.\n"
 "     */\n"
-"    uint32 max_calls;\n"
+"    uint64 max_calls;\n"
 "\n"
 "    /*\n"
 "     * Указатель на слот результата (может не использоваться)\n"
@@ -4291,7 +4224,7 @@ msgstr ""
 "    TupleTableSlot *slot;\n"
 "\n"
 "    /*\n"
-"     * Указатель на разнообразную контекстную информацию, \n"
+"     * Указатель на разнообразную контекстную информацию,\n"
 "     * представленную пользователем; (может не использоваться)\n"
 "     *\n"
 "     * user_fctx используется как указатель на ваши собственные данные,\n"
@@ -4303,7 +4236,7 @@ msgstr ""
 "     * Указатель на структуру, содержащую метаданные ввода типа атрибута\n"
 "     * (может не использоваться)\n"
 "     *\n"
-"     * attinmeta задействуется, когда возвращаются кортежи (т. е., составные типы данных),\n"
+"     * attinmeta задействуется, когда возвращаются кортежи (т. е. составные типы данных),\n"
 "     * и не применяется для возврата базовых типов. Он нужен, только если\n"
 "     * вы планируете использовать BuildTupleFromCStrings() для формирования возвращаемого\n"
 "     * кортежа.\n"
@@ -4313,7 +4246,7 @@ msgstr ""
 "    /*\n"
 "     * Контекст памяти, нужный для структур, которые должны сохраняться при нескольких вызовах\n"
 "     *\n"
-"     * Поле multi_call_memory_ctx заполняется в SRF_FIRSTCALL_INIT(), и используется\n"
+"     * Поле multi_call_memory_ctx заполняется в SRF_FIRSTCALL_INIT() и используется\n"
 "     * в SRF_RETURN_DONE() для очистки. Это наиболее подходящий контекст\n"
 "     * для любых блоков памяти, которые должны многократно использоваться при\n"
 "     * повторных вызовах SRF.\n"
@@ -4333,7 +4266,7 @@ msgstr ""
 "\n"
 "} FuncCallContext;"
 
-#: xfunc.xml:2864(para)
+#: xfunc.xml:2820(para)
 msgid ""
 "A set-returning function (<acronym>SRF</acronym>) is called once for each "
 "item it returns. The <acronym>SRF</acronym> must therefore save enough state "
@@ -4353,22 +4286,22 @@ msgstr ""
 "вызовами в поле <literal>fcinfo-&gt;flinfo-&gt;fn_extra</literal>. "
 "<placeholder-1/>"
 
-#: xfunc.xml:2948(programlisting)
+#: xfunc.xml:2904(programlisting)
 #, no-wrap
 msgid "SRF_IS_FIRSTCALL()"
 msgstr "SRF_IS_FIRSTCALL()"
 
-#: xfunc.xml:2953(programlisting)
+#: xfunc.xml:2909(programlisting)
 #, no-wrap
 msgid "SRF_FIRSTCALL_INIT()"
 msgstr "SRF_FIRSTCALL_INIT()"
 
-#: xfunc.xml:2958(programlisting)
+#: xfunc.xml:2914(programlisting)
 #, no-wrap
 msgid "SRF_PERCALL_SETUP()"
 msgstr "SRF_PERCALL_SETUP()"
 
-#: xfunc.xml:2944(para)
+#: xfunc.xml:2900(para)
 msgid ""
 "An <acronym>SRF</acronym> uses several functions and macros that "
 "automatically manipulate the <structname>FuncCallContext</structname> "
@@ -4391,17 +4324,17 @@ msgstr ""
 "данные, оставшиеся после предыдущего прохода, при каждом вызове функции, в "
 "том числе, первом, выполните: <placeholder-3/>"
 
-#: xfunc.xml:2968(programlisting)
+#: xfunc.xml:2924(programlisting)
 #, no-wrap
 msgid "SRF_RETURN_NEXT(funcctx, result)"
 msgstr "SRF_RETURN_NEXT(funcctx, result)"
 
-#: xfunc.xml:2975(programlisting)
+#: xfunc.xml:2931(programlisting)
 #, no-wrap
 msgid "SRF_RETURN_DONE(funcctx)"
 msgstr "SRF_RETURN_DONE(funcctx)"
 
-#: xfunc.xml:2966(para)
+#: xfunc.xml:2922(para)
 msgid ""
 "If your function has data to return, use: <placeholder-1/> to return it to "
 "the caller. (<literal>result</literal> must be of type <type>Datum</type>, "
@@ -4416,7 +4349,7 @@ msgstr ""
 "ваша функция закончила возвращать данные, выполните: <placeholder-2/> для "
 "того, чтобы провести очистку и завершить <acronym>SRF</acronym>."
 
-#: xfunc.xml:2981(para)
+#: xfunc.xml:2937(para)
 msgid ""
 "The memory context that is current when the <acronym>SRF</acronym> is called "
 "is a transient context that will be cleared between calls. This means that "
@@ -4443,7 +4376,7 @@ msgstr ""
 "<structfield>multi_call_memory_ctx</structfield> в коде подготовки при "
 "первом вызове."
 
-#: xfunc.xml:2995(para)
+#: xfunc.xml:2951(para)
 msgid ""
 "While the actual arguments to the function remain unchanged between calls, "
 "if you detoast the argument values (which is normally done transparently by "
@@ -4464,7 +4397,7 @@ msgstr ""
 "structfield> после распаковки, либо распаковывать значения только в этом "
 "контексте."
 
-#: xfunc.xml:3010(programlisting)
+#: xfunc.xml:2966(programlisting)
 #, no-wrap
 msgid ""
 "Datum\n"
@@ -4553,12 +4486,12 @@ msgstr ""
 "    }\n"
 "}"
 
-#: xfunc.xml:3008(para)
+#: xfunc.xml:2964(para)
 msgid ""
 "A complete pseudo-code example looks like the following: <placeholder-1/>"
 msgstr "Полный пример с псевдокодом будет выглядеть так: <placeholder-1/>"
 
-#: xfunc.xml:3152(programlisting)
+#: xfunc.xml:3108(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TYPE __retcomposite AS (f1 integer, f2 integer, f3 integer);\n"
@@ -4575,7 +4508,7 @@ msgstr ""
 "    AS '<replaceable>имя_файла</replaceable>', 'retcomposite'\n"
 "    LANGUAGE C IMMUTABLE STRICT;"
 
-#: xfunc.xml:3161(programlisting)
+#: xfunc.xml:3117(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION retcomposite(IN integer, IN integer,\n"
@@ -4590,7 +4523,7 @@ msgstr ""
 "    AS '<replaceable>имя_файла</replaceable>', 'retcomposite'\n"
 "    LANGUAGE C IMMUTABLE STRICT;"
 
-#: xfunc.xml:3056(para)
+#: xfunc.xml:3012(para)
 msgid ""
 "A complete example of a simple <acronym>SRF</acronym> returning a composite "
 "type looks like: <placeholder-1/> One way to declare this function in SQL "
@@ -4604,7 +4537,7 @@ msgstr ""
 "<placeholder-3/> Заметьте, что при таком подходе выходным типом функции "
 "формально является анонимный тип <structname>record</structname>."
 
-#: xfunc.xml:3172(para)
+#: xfunc.xml:3128(para)
 msgid ""
 "The directory <link linkend=\"tablefunc\">contrib/tablefunc</link> module in "
 "the source distribution contains more examples of set-returning functions."
@@ -4613,11 +4546,11 @@ msgstr ""
 "исходного кода содержит дополнительные примеры функций, возвращающих "
 "множества."
 
-#: xfunc.xml:3180(title)
+#: xfunc.xml:3136(title)
 msgid "Polymorphic Arguments and Return Types"
 msgstr "Полиморфные типы аргументов и результата"
 
-#: xfunc.xml:3182(para)
+#: xfunc.xml:3138(para)
 msgid ""
 "C-language functions can be declared to accept and return the polymorphic "
 "types <type>anyelement</type>, <type>anyarray</type>, <type>anynonarray</"
@@ -4665,7 +4598,7 @@ msgstr ""
 "literal>, так как такое объединение всегда имеет место для функций с "
 "переменными аргументами, принимающих обычные типы."
 
-#: xfunc.xml:3213(programlisting)
+#: xfunc.xml:3169(programlisting)
 #, no-wrap
 msgid ""
 "PG_FUNCTION_INFO_V1(make_array);\n"
@@ -4752,7 +4685,7 @@ msgstr ""
 "    PG_RETURN_ARRAYTYPE_P(result);\n"
 "}"
 
-#: xfunc.xml:3209(para)
+#: xfunc.xml:3165(para)
 msgid ""
 "For example, suppose we want to write a function to accept a single element "
 "of any type, and return a one-dimensional array of that type: <placeholder-1/"
@@ -4762,7 +4695,7 @@ msgstr ""
 "элемент любого типа и возвращающую одномерный массив этого типа: "
 "<placeholder-1/>"
 
-#: xfunc.xml:3262(programlisting)
+#: xfunc.xml:3218(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION make_array(anyelement) RETURNS anyarray\n"
@@ -4773,7 +4706,7 @@ msgstr ""
 "    AS '<replaceable>КАТАЛОГ</replaceable>/funcs', 'make_array'\n"
 "    LANGUAGE C IMMUTABLE;"
 
-#: xfunc.xml:3258(para)
+#: xfunc.xml:3214(para)
 msgid ""
 "The following command declares the function <function>make_array</function> "
 "in SQL: <placeholder-1/>"
@@ -4781,7 +4714,7 @@ msgstr ""
 "Следующая команда объявляет функцию <function>make_array</function> в SQL: "
 "<placeholder-1/>"
 
-#: xfunc.xml:3269(para)
+#: xfunc.xml:3225(para)
 msgid ""
 "There is a variant of polymorphism that is only available to C-language "
 "functions: they can be declared to take parameters of type <literal>\"any\"</"
@@ -4824,11 +4757,11 @@ msgstr ""
 "определив с помощью <function>get_fn_expr_variadic</function>, был ли "
 "фактический аргумент передан с указанием <literal>VARIADIC</literal>."
 
-#: xfunc.xml:3293(title)
+#: xfunc.xml:3249(title)
 msgid "Transform Functions"
 msgstr "Функции преобразования"
 
-#: xfunc.xml:3295(para)
+#: xfunc.xml:3251(para)
 msgid ""
 "Some function calls can be simplified during planning based on properties "
 "specific to the function. For example, <literal>int4mul(n, 1)</literal> "
@@ -4860,7 +4793,7 @@ msgstr ""
 "случае нужно вернуть указатель <literal>NULL</literal> (<emphasis>не</"
 "emphasis> NULL языка SQL)."
 
-#: xfunc.xml:3312(para)
+#: xfunc.xml:3268(para)
 msgid ""
 "We make no guarantee that <productname>PostgreSQL</productname> will never "
 "call the primary function in cases that the transform function could "
@@ -4872,7 +4805,7 @@ msgstr ""
 "преобразования может её упростить, поэтому важно, чтобы упрощённое выражение "
 "строго соответствовало реальному вызову основной функции."
 
-#: xfunc.xml:3319(para)
+#: xfunc.xml:3275(para)
 msgid ""
 "Currently, this facility is not exposed to users at the SQL level because of "
 "security concerns, so it is only practical to use for optimizing built-in "
@@ -4882,20 +4815,20 @@ msgstr ""
 "уровне SQL из соображений безопасности, так что на практике это можно "
 "использовать только для оптимизации встроенных функций."
 
-#: xfunc.xml:3327(title)
+#: xfunc.xml:3283(title)
 msgid "Shared Memory and LWLocks"
 msgstr "Разделяемая память и лёгкие блокировки"
 
-#: xfunc.xml:3333(indexterm)
+#: xfunc.xml:3289(indexterm)
 msgid "<primary>shared_preload_libraries</primary>"
 msgstr "<primary>shared_preload_libraries</primary>"
 
-#: xfunc.xml:3335(programlisting)
+#: xfunc.xml:3291(programlisting)
 #, no-wrap
 msgid "void RequestAddinShmemSpace(int size)"
 msgstr "void RequestAddinShmemSpace(int size)"
 
-#: xfunc.xml:3329(para)
+#: xfunc.xml:3285(para)
 msgid ""
 "Add-ins can reserve LWLocks and an allocation of shared memory on server "
 "startup. The add-in's shared library must be preloaded by specifying it in "
@@ -4910,12 +4843,12 @@ msgstr ""
 "зарезервировать разделяемую память, вызовите из вашей функции "
 "<function>_PG_init</function> функцию: <placeholder-2/>"
 
-#: xfunc.xml:3342(programlisting)
+#: xfunc.xml:3298(programlisting)
 #, no-wrap
 msgid "void RequestNamedLWLockTranche(const char *tranche_name, int num_lwlocks)"
 msgstr "void RequestNamedLWLockTranche(const char *tranche_name, int num_lwlocks)"
 
-#: xfunc.xml:3340(para)
+#: xfunc.xml:3296(para)
 msgid ""
 "LWLocks are reserved by calling: <placeholder-1/> from <function>_PG_init</"
 "function>. This will ensure that an array of <literal>num_lwlocks</literal> "
@@ -4928,7 +4861,7 @@ msgstr ""
 "<literal>tranche_name</literal>. Чтобы получить указатель на этот массив, "
 "воспользуйтесь функцией <function>GetNamedLWLockTranche</function>."
 
-#: xfunc.xml:3354(programlisting)
+#: xfunc.xml:3310(programlisting)
 #, no-wrap
 msgid ""
 "static mystruct *ptr = NULL;\n"
@@ -4965,7 +4898,7 @@ msgstr ""
 "        LWLockRelease(AddinShmemInitLock);\n"
 "}"
 
-#: xfunc.xml:3350(para)
+#: xfunc.xml:3306(para)
 msgid ""
 "To avoid possible race-conditions, each backend should use the LWLock "
 "<function>AddinShmemInitLock</function> when connecting to and initializing "
@@ -4975,15 +4908,15 @@ msgstr ""
 "вызывать <function>AddinShmemInitLock</function> в момент подключения и при "
 "инициализации разделяемой памяти, как показано здесь: <placeholder-1/>"
 
-#: xfunc.xml:3376(title)
+#: xfunc.xml:3332(title)
 msgid "Using C++ for Extensibility"
 msgstr "Использование C++ для расширяемости"
 
-#: xfunc.xml:3378(indexterm)
+#: xfunc.xml:3334(indexterm)
 msgid "<primary>C++</primary>"
 msgstr "<primary>C++</primary>"
 
-#: xfunc.xml:3389(para)
+#: xfunc.xml:3345(para)
 msgid ""
 "All functions accessed by the backend must present a C interface to the "
 "backend; these C functions can then call C++ functions. For example, "
@@ -4998,7 +4931,7 @@ msgstr ""
 "указатели на которые передаются между кодом сервера и подключаемым кодом на C"
 "++."
 
-#: xfunc.xml:3399(para)
+#: xfunc.xml:3355(para)
 msgid ""
 "Free memory using the appropriate deallocation method. For example, most "
 "backend memory is allocated using <function>palloc()</function>, so use "
@@ -5011,7 +4944,7 @@ msgstr ""
 "использовать в таких случаях принятую в C++ операцию <function>delete</"
 "function> приведёт к ошибке."
 
-#: xfunc.xml:3407(para)
+#: xfunc.xml:3363(para)
 msgid ""
 "Prevent exceptions from propagating into the C code (use a catch-all block "
 "at the top level of all <literal>extern C</literal> functions). This is "
@@ -5033,7 +4966,7 @@ msgstr ""
 "ситуации в коде C++, например, проверять на NULL адрес, возвращённый "
 "<function>new()</function>."
 
-#: xfunc.xml:3420(para)
+#: xfunc.xml:3376(para)
 msgid ""
 "If calling backend functions from C++ code, be sure that the C++ call stack "
 "contains only plain old data structures (<acronym>POD</acronym>). This is "
@@ -5047,7 +4980,7 @@ msgstr ""
 "она не отматывает стек вызовов C++ должным образом для объектов, отличных от "
 "простых структур."
 
-#: xfunc.xml:3382(para)
+#: xfunc.xml:3338(para)
 msgid ""
 "Although the <productname>PostgreSQL</productname> backend is written in C, "
 "it is possible to write extensions in C++ if these guidelines are followed: "
@@ -5057,7 +4990,7 @@ msgstr ""
 "расширения для него можно писать и на C++, если соблюдать эти правила: "
 "<placeholder-1/>"
 
-#: xfunc.xml:3431(para)
+#: xfunc.xml:3387(para)
 msgid ""
 "In summary, it is best to place C++ code behind a wall of <literal>extern C</"
 "literal> functions that interface to the backend, and avoid exception, "
@@ -5071,3 +5004,94 @@ msgstr ""
 #: xfunc.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "Another option is to use functional notation for extracting an attribute. "
+#~ "The simple way to explain this is that we can use the notations "
+#~ "<literal><replaceable>attribute</replaceable>(<replaceable>table</"
+#~ "replaceable>)</literal> and <literal><replaceable>table</replaceable>."
+#~ "<replaceable>attribute</replaceable></literal> interchangeably. <screen>\n"
+#~ "SELECT name(new_emp());\n"
+#~ "\n"
+#~ " name\n"
+#~ "------\n"
+#~ " None\n"
+#~ "</screen> <screen>\n"
+#~ "-- This is the same as:\n"
+#~ "-- SELECT emp.name AS youngster FROM emp WHERE emp.age &lt; 30;\n"
+#~ "\n"
+#~ "SELECT name(emp) AS youngster FROM emp WHERE age(emp) &lt; 30;\n"
+#~ "\n"
+#~ " youngster\n"
+#~ "-----------\n"
+#~ " Sam\n"
+#~ " Andy\n"
+#~ "</screen>"
+#~ msgstr ""
+#~ "В качестве ещё одного варианта можно использовать функциональную запись "
+#~ "для извлечения атрибута. Проще всего это можно объяснить, отметив, что "
+#~ "записи <literal><replaceable>атрибут</replaceable>(<replaceable>таблица</"
+#~ "replaceable>)</literal> и <literal><replaceable>таблица</replaceable>."
+#~ "<replaceable>атрибут</replaceable></literal> взаимозаменяемы. <screen>\n"
+#~ "SELECT name(new_emp());\n"
+#~ "\n"
+#~ " name\n"
+#~ "------\n"
+#~ " None\n"
+#~ "</screen> <screen>\n"
+#~ "-- Это то же самое:\n"
+#~ "-- SELECT emp.name AS youngster FROM emp WHERE emp.age &lt; 30;\n"
+#~ "\n"
+#~ "SELECT name(emp) AS youngster FROM emp WHERE age(emp) &lt; 30;\n"
+#~ "\n"
+#~ " youngster\n"
+#~ "-----------\n"
+#~ " Sam\n"
+#~ " Andy\n"
+#~ "</screen>"
+
+#~ msgid "<primary>computed field</primary>"
+#~ msgstr "<primary>вычисляемое поле</primary>"
+
+#~ msgid "<primary>field</primary> <secondary>computed</secondary>"
+#~ msgstr "<primary>поле</primary> <secondary>вычисляемое</secondary>"
+
+#~ msgid ""
+#~ "The equivalence between functional notation and attribute notation makes "
+#~ "it possible to use functions on composite types to emulate "
+#~ "<quote>computed fields</quote>. <placeholder-1/> <placeholder-2/> For "
+#~ "example, using the previous definition for <literal>double_salary(emp)</"
+#~ "literal>, we can write <screen>\n"
+#~ "SELECT emp.name, emp.double_salary FROM emp;\n"
+#~ "</screen> An application using this wouldn't need to be directly aware "
+#~ "that <literal>double_salary</literal> isn't a real column of the table. "
+#~ "(You can also emulate computed fields with views.)"
+#~ msgstr ""
+#~ "Равнозначность функциональной записи и записи с атрибутом позволяет "
+#~ "использовать функции с составными типами для имитации <quote>вычисляемых "
+#~ "полей</quote>. <placeholder-1/> <placeholder-2/> Например, используя "
+#~ "предыдущее определение <literal>double_salary(emp)</literal>, мы можем "
+#~ "записать <screen>\n"
+#~ "SELECT emp.name, emp.double_salary FROM emp;\n"
+#~ "</screen> Приложению, использующему такой запрос, не обязательно "
+#~ "определённо знать, что <literal>double_salary</literal> — это не "
+#~ "настоящий столбец таблицы. (Вычисляемые поля также можно имитировать в "
+#~ "представлениях.)"
+
+#~ msgid ""
+#~ "Because of this behavior, it's unwise to give a function that takes a "
+#~ "single composite-type argument the same name as any of the fields of that "
+#~ "composite type."
+#~ msgstr ""
+#~ "Вследствие такого поведения, функции, которая принимает один аргумент "
+#~ "составного типа, не стоит давать имя, совпадающее с именем одного из "
+#~ "полей этого составного типа."
+
+#~ msgid ""
+#~ "Still another way to use a function that returns a composite type is to "
+#~ "call it as a table function, as described in <xref linkend=\"xfunc-sql-"
+#~ "table-functions\"/>."
+#~ msgstr ""
+#~ "И ещё один способ использовать функцию, возвращающую составной тип — "
+#~ "вызвать её как табличную функцию, как описано в <xref remap=\"6\" linkend="
+#~ "\"xfunc-sql-table-functions\"/>."

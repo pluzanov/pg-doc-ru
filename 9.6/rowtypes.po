@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
+"POT-Creation-Date: 2017-02-06 11:19+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -165,24 +165,24 @@ msgstr ""
 "(В некоторой степени это можно обойти, используя в составных типах домены.)"
 
 #: rowtypes.xml:94(title)
-msgid "Composite Value Input"
-msgstr "Ввод значения составного типа"
+msgid "Constructing Composite Values"
+msgstr "Конструирование составных значений"
 
 #: rowtypes.xml:96(indexterm)
 msgid "<primary>composite type</primary> <secondary>constant</secondary>"
 msgstr "<primary>составной тип</primary> <secondary>константа</secondary>"
 
-#: rowtypes.xml:111(programlisting)
+#: rowtypes.xml:112(programlisting)
 #, no-wrap
 msgid "'(\"fuzzy dice\",42,1.99)'"
 msgstr "'(\"fuzzy dice\",42,1.99)'"
 
-#: rowtypes.xml:118(programlisting)
+#: rowtypes.xml:119(programlisting)
 #, no-wrap
 msgid "'(\"fuzzy dice\",42,)'"
 msgstr "'(\"fuzzy dice\",42,)'"
 
-#: rowtypes.xml:122(programlisting)
+#: rowtypes.xml:123(programlisting)
 #, no-wrap
 msgid "'(\"\",42,)'"
 msgstr "'(\"\",42,)'"
@@ -192,8 +192,9 @@ msgid ""
 "To write a composite value as a literal constant, enclose the field values "
 "within parentheses and separate them by commas. You can put double quotes "
 "around any field value, and must do so if it contains commas or parentheses. "
-"(More details appear below.) Thus, the general format of a composite "
-"constant is the following: <synopsis>\n"
+"(More details appear <link linkend=\"rowtypes-io-syntax\">below</link>.) "
+"Thus, the general format of a composite constant is the following: "
+"<synopsis>\n"
 "'( <replaceable>val1</replaceable> , <replaceable>val2</"
 "replaceable> , ... )'\n"
 "</synopsis> An example is: <placeholder-1/> which would be a valid value of "
@@ -206,32 +207,34 @@ msgstr ""
 "Чтобы записать значение составного типа в виде текстовой константы, его поля "
 "нужно заключить в круглые скобки и разделить их запятыми. Значение любого "
 "поля можно заключить в кавычки, а если оно содержит запятые или скобки, это "
-"делать обязательно. (Подробности описаны ниже.) Таким образом, в общем виде "
-"константа составного типа записывается так: <synopsis>\n"
+"делать обязательно. (Подробнее об этом говорится <link linkend=\"rowtypes-io-"
+"syntax\">ниже</link>.) Таким образом, в общем виде константа составного типа "
+"записывается так: <synopsis>\n"
 "'( <replaceable>значение1</replaceable> , <replaceable>значение2</"
 "replaceable> , ... )'\n"
 "</synopsis> Например, эта запись: <placeholder-1/> будет допустимой для "
 "описанного выше типа <literal>inventory_item</literal>. Чтобы присвоить NULL "
 "одному из полей, в соответствующем месте в списке нужно оставить пустое "
-"место. Например, эта константа задаёт значение для третьего поля: "
+"место. Например, эта константа задаёт значение NULL для третьего поля: "
 "<placeholder-2/> Если же вместо NULL требуется вставить пустую строку, нужно "
 "записать пару кавычек: <placeholder-3/> Здесь в первом поле окажется пустая "
 "строка, а в третьем &mdash; NULL."
 
-#: rowtypes.xml:128(para)
+#: rowtypes.xml:129(para)
 msgid ""
 "(These constants are actually only a special case of the generic type "
 "constants discussed in <xref linkend=\"sql-syntax-constants-generic\"/>. The "
 "constant is initially treated as a string and passed to the composite-type "
-"input conversion routine. An explicit type specification might be necessary.)"
+"input conversion routine. An explicit type specification might be necessary "
+"to tell which type to convert the constant to.)"
 msgstr ""
 "(Такого рода константы массивов на самом деле представляют собой всего лишь "
 "частный случай констант, описанных в <xref remap=\"6\" linkend=\"sql-syntax-"
 "constants-generic\"/>. Константа изначально воспринимается как строка и "
 "передаётся процедуре преобразования составного типа. При этом может "
-"потребоваться явно указать целевой тип.)"
+"потребоваться явно указать тип, к которому будет приведена константа.)"
 
-#: rowtypes.xml:142(programlisting)
+#: rowtypes.xml:144(programlisting)
 #, no-wrap
 msgid ""
 "ROW('fuzzy dice', 42, 1.99)\n"
@@ -240,7 +243,7 @@ msgstr ""
 "ROW('fuzzy dice', 42, 1.99)\n"
 "ROW('', 42, NULL)"
 
-#: rowtypes.xml:148(programlisting)
+#: rowtypes.xml:150(programlisting)
 #, no-wrap
 msgid ""
 "('fuzzy dice', 42, 1.99)\n"
@@ -249,16 +252,16 @@ msgstr ""
 "('fuzzy dice', 42, 1.99)\n"
 "('', 42, NULL)"
 
-#: rowtypes.xml:136(para)
+#: rowtypes.xml:138(para)
 msgid ""
 "The <literal>ROW</literal> expression syntax can also be used to construct "
 "composite values. In most cases this is considerably simpler to use than the "
 "string-literal syntax since you don't have to worry about multiple layers of "
 "quoting. We already used this method above: <placeholder-1/> The ROW keyword "
 "is actually optional as long as you have more than one field in the "
-"expression, so these can simplify to: <placeholder-2/> The <literal>ROW</"
-"literal> expression syntax is discussed in more detail in <xref linkend="
-"\"sql-syntax-row-constructors\"/>."
+"expression, so these can be simplified to: <placeholder-2/> The "
+"<literal>ROW</literal> expression syntax is discussed in more detail in "
+"<xref linkend=\"sql-syntax-row-constructors\"/>."
 msgstr ""
 "Значения составных типов также можно конструировать, используя синтаксис "
 "выражения <literal>ROW</literal>. В большинстве случае это значительно "
@@ -270,26 +273,26 @@ msgstr ""
 "более подробно рассматривается в <xref remap=\"6\" linkend=\"sql-syntax-row-"
 "constructors\"/>."
 
-#: rowtypes.xml:158(title)
+#: rowtypes.xml:160(title)
 msgid "Accessing Composite Types"
 msgstr "Обращение к составным типам"
 
-#: rowtypes.xml:168(programlisting)
+#: rowtypes.xml:170(programlisting)
 #, no-wrap
 msgid "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
 msgstr "SELECT item.name FROM on_hand WHERE item.price &gt; 9.99;"
 
-#: rowtypes.xml:176(programlisting)
+#: rowtypes.xml:178(programlisting)
 #, no-wrap
 msgid "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
 msgstr "SELECT (item).name FROM on_hand WHERE (item).price &gt; 9.99;"
 
-#: rowtypes.xml:183(programlisting)
+#: rowtypes.xml:185(programlisting)
 #, no-wrap
 msgid "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
 msgstr "SELECT (on_hand.item).name FROM on_hand WHERE (on_hand.item).price &gt; 9.99;"
 
-#: rowtypes.xml:160(para)
+#: rowtypes.xml:162(para)
 msgid ""
 "To access a field of a composite column, one writes a dot and the field "
 "name, much like selecting a field from a table name. In fact, it's so much "
@@ -318,12 +321,12 @@ msgstr ""
 "интерпретирован как ссылка на столбец <literal>item</literal>, из которого "
 "выбирается поле."
 
-#: rowtypes.xml:196(programlisting)
+#: rowtypes.xml:198(programlisting)
 #, no-wrap
 msgid "SELECT (my_func(...)).field FROM ..."
 msgstr "SELECT (my_func(...)).field FROM ..."
 
-#: rowtypes.xml:191(para)
+#: rowtypes.xml:193(para)
 msgid ""
 "Similar syntactic issues apply whenever you select a field from a composite "
 "value. For instance, to select just one field from the result of a function "
@@ -337,11 +340,20 @@ msgstr ""
 "подобное: <placeholder-1/> Без дополнительных скобок в этом запросе "
 "произойдёт синтаксическая ошибка."
 
-#: rowtypes.xml:205(title)
+#: rowtypes.xml:205(para)
+msgid ""
+"The special field name <literal>*</literal> means <quote>all fields</quote>, "
+"as further explained in <xref linkend=\"rowtypes-usage\"/>."
+msgstr ""
+"Специальное имя поля <literal>*</literal> означает <quote>все поля</quote>; "
+"подробнее об этом рассказывается в <xref remap=\"6\" linkend=\"rowtypes-usage"
+"\"/>."
+
+#: rowtypes.xml:212(title)
 msgid "Modifying Composite Types"
 msgstr "Изменение составных типов"
 
-#: rowtypes.xml:212(programlisting)
+#: rowtypes.xml:219(programlisting)
 #, no-wrap
 msgid ""
 "INSERT INTO mytab (complex_col) VALUES((1.1,2.2));\n"
@@ -352,7 +364,7 @@ msgstr ""
 "\n"
 "UPDATE mytab SET complex_col = ROW(1.1,2.2) WHERE ...;"
 
-#: rowtypes.xml:207(para)
+#: rowtypes.xml:214(para)
 msgid ""
 "Here are some examples of the proper syntax for inserting and updating "
 "composite columns. First, inserting or updating a whole column: "
@@ -365,12 +377,12 @@ msgstr ""
 "<literal>ROW</literal>, а во втором оно есть; присутствовать или "
 "отсутствовать оно может в обоих случаях."
 
-#: rowtypes.xml:225(programlisting)
+#: rowtypes.xml:232(programlisting)
 #, no-wrap
 msgid "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
 msgstr "UPDATE mytab SET complex_col.r = (complex_col).r + 1 WHERE ...;"
 
-#: rowtypes.xml:222(para)
+#: rowtypes.xml:229(para)
 msgid ""
 "We can update an individual subfield of a composite column: <placeholder-1/> "
 "Notice here that we don't need to (and indeed cannot) put parentheses around "
@@ -384,12 +396,12 @@ msgstr ""
 "но в ссылке на тот же столбец в выражении, находящемся по правую сторону "
 "знака равенства, скобки обязательны."
 
-#: rowtypes.xml:238(programlisting)
+#: rowtypes.xml:245(programlisting)
 #, no-wrap
 msgid "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
 msgstr "INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);"
 
-#: rowtypes.xml:235(para)
+#: rowtypes.xml:242(para)
 msgid ""
 "And we can specify subfields as targets for <command>INSERT</command>, too: "
 "<placeholder-1/> Had we not supplied values for all the subfields of the "
@@ -399,16 +411,357 @@ msgstr ""
 "command>: <placeholder-1/> Если при этом мы не укажем значения для всех "
 "полей столбца, оставшиеся поля будут заполнены значениями NULL."
 
-#: rowtypes.xml:248(title)
+#: rowtypes.xml:255(title)
+msgid "Using Composite Types in Queries"
+msgstr "Использование составных типов в запросах"
+
+#: rowtypes.xml:257(para)
+msgid ""
+"There are various special syntax rules and behaviors associated with "
+"composite types in queries. These rules provide useful shortcuts, but can be "
+"confusing if you don't know the logic behind them."
+msgstr ""
+"С составными типами в запросах связаны особые правила синтаксиса и "
+"поведение. Эти правила образуют полезные конструкции, но они могут быть "
+"неочевидными, если не понимать стоящую за ними логику."
+
+#: rowtypes.xml:269(programlisting)
+#, no-wrap
+msgid "SELECT c FROM inventory_item c;"
+msgstr "SELECT c FROM inventory_item c;"
+
+#: rowtypes.xml:274(programlisting)
+#, no-wrap
+msgid ""
+"           c\n"
+"------------------------\n"
+" (\"fuzzy dice\",42,1.99)\n"
+"(1 row)"
+msgstr ""
+"           c\n"
+"------------------------\n"
+" (\"fuzzy dice\",42,1.99)\n"
+"(1 row)"
+
+#: rowtypes.xml:263(para)
+msgid ""
+"In <productname>PostgreSQL</productname>, a reference to a table name (or "
+"alias) in a query is effectively a reference to the composite value of the "
+"table's current row. For example, if we had a table "
+"<structname>inventory_item</structname> as shown <link linkend=\"rowtypes-"
+"declaring\">above</link>, we could write: <placeholder-1/> This query "
+"produces a single composite-valued column, so we might get output like: "
+"<placeholder-2/> Note however that simple names are matched to column names "
+"before table names, so this example works only because there is no column "
+"named <structfield>c</structfield> in the query's tables."
+msgstr ""
+"В <productname>PostgreSQL</productname> ссылка на имя таблицы (или её "
+"псевдоним) в запросе по сути является ссылкой на составное значение текущей "
+"строки в этой таблице. Например, имея таблицу <structname>inventory_item</"
+"structname>, показанную <link linkend=\"rowtypes-declaring\">выше</link>, мы "
+"можем написать: <placeholder-1/> Этот запрос выдаёт один столбец с составным "
+"значением, и его результат может быть таким: <placeholder-2/> Заметьте, "
+"однако, что простые имена сопоставляются сначала с именами столбцов, и "
+"только потом с именами таблиц, так что такой результат получается только "
+"потому, что в таблицах запроса не оказалось столбца с именем <structfield>c</"
+"structfield>."
+
+#: rowtypes.xml:285(para)
+msgid ""
+"The ordinary qualified-column-name syntax <replaceable>table_name</"
+"replaceable><literal>.</literal><replaceable>column_name</replaceable> can "
+"be understood as applying <link linkend=\"field-selection\">field selection</"
+"link> to the composite value of the table's current row. (For efficiency "
+"reasons, it's not actually implemented that way.)"
+msgstr ""
+"Обычную запись полного имени столбца вида <replaceable>имя_таблицы</"
+"replaceable><literal>.</literal><replaceable>имя_столбца</replaceable> можно "
+"понимать как применение <link linkend=\"field-selection\">выбора поля</link> "
+"к составному значению текущей строки таблицы. (Из соображений эффективности "
+"на самом деле это реализовано по-другому.)"
+
+#: rowtypes.xml:295(programlisting)
+#, no-wrap
+msgid "SELECT c.* FROM inventory_item c;"
+msgstr "SELECT c.* FROM inventory_item c;"
+
+#: rowtypes.xml:300(programlisting)
+#, no-wrap
+msgid ""
+"    name    | supplier_id | price\n"
+"------------+-------------+-------\n"
+" fuzzy dice |          42 |  1.99\n"
+"(1 row)"
+msgstr ""
+"    name    | supplier_id | price\n"
+"------------+-------------+-------\n"
+" fuzzy dice |          42 |  1.99\n"
+"(1 row)"
+
+#: rowtypes.xml:307(programlisting)
+#, no-wrap
+msgid "SELECT c.name, c.supplier_id, c.price FROM inventory_item c;"
+msgstr "SELECT c.name, c.supplier_id, c.price FROM inventory_item c;"
+
+#: rowtypes.xml:318(programlisting)
+#, no-wrap
+msgid ""
+"SELECT (myfunc(x)).* FROM some_table;\n"
+"SELECT (myfunc(x)).a, (myfunc(x)).b, (myfunc(x)).c FROM some_table;"
+msgstr ""
+"SELECT (myfunc(x)).* FROM some_table;\n"
+"SELECT (myfunc(x)).a, (myfunc(x)).b, (myfunc(x)).c FROM some_table;"
+
+#: rowtypes.xml:293(para)
+msgid ""
+"When we write <placeholder-1/> then, according to the SQL standard, we "
+"should get the contents of the table expanded into separate columns: "
+"<placeholder-2/> as if the query were <placeholder-3/> "
+"<productname>PostgreSQL</productname> will apply this expansion behavior to "
+"any composite-valued expression, although as shown <link linkend=\"rowtypes-"
+"accessing\">above</link>, you need to write parentheses around the value "
+"that <literal>.*</literal> is applied to whenever it's not a simple table "
+"name. For example, if <function>myfunc()</function> is a function returning "
+"a composite type with columns <structfield>a</structfield>, <structfield>b</"
+"structfield>, and <structfield>c</structfield>, then these two queries have "
+"the same result: <placeholder-4/>"
+msgstr ""
+"Когда мы пишем <placeholder-1/> то, согласно стандарту SQL, мы должны "
+"получить содержимое таблицы, развёрнутое в отдельные столбцы: <placeholder-2/"
+"> как с запросом <placeholder-3/> <productname>PostgreSQL</productname> "
+"применяет такое развёртывание для любых выражений с составными значениями, "
+"хотя как показано <link linkend=\"rowtypes-accessing\">выше</link>, "
+"необходимо заключить в скобки значение, к которому применяется <literal>.*</"
+"literal>, если только это не простое имя таблицы. Например, если "
+"<function>myfunc()</function> — функция, возвращающая составной тип со "
+"столбцами <structfield>a</structfield>, <structfield>b</structfield> и "
+"<structfield>c</structfield>, то эти два запроса выдадут одинаковый "
+"результат: <placeholder-4/>"
+
+#: rowtypes.xml:331(programlisting)
+#, no-wrap
+msgid "SELECT (m).* FROM (SELECT myfunc(x) AS m FROM some_table OFFSET 0) ss;"
+msgstr "SELECT (m).* FROM (SELECT myfunc(x) AS m FROM some_table OFFSET 0) ss;"
+
+#: rowtypes.xml:325(para)
+msgid ""
+"<productname>PostgreSQL</productname> handles column expansion by actually "
+"transforming the first form into the second. So, in this example, "
+"<function>myfunc()</function> would get invoked three times per row with "
+"either syntax. If it's an expensive function you may wish to avoid that, "
+"which you can do with a query like: <placeholder-1/> The <literal>OFFSET 0</"
+"literal> clause keeps the optimizer from <quote>flattening</quote> the sub-"
+"select to arrive at the form with multiple calls of <function>myfunc()</"
+"function>."
+msgstr ""
+"<productname>PostgreSQL</productname> осуществляет развёртывание столбцов "
+"фактически переводя первую форму во вторую. Таким образом, в данном примере "
+"<function>myfunc()</function> будет вызываться три раза для каждой строки и "
+"с тем, и с тем синтаксисом. Если это дорогостоящая функция и вы хотите "
+"избежать лишних вызовов, это осуществимо с таким запросом: <placeholder-1/> "
+"Предложение <literal>OFFSET 0</literal> добавлено, чтобы оптимизатор не "
+"упрощал подзапрос, в результате чего он может преобразоваться в форму с "
+"множественными вызовами <function>myfunc()</function>."
+
+#: rowtypes.xml:355(programlisting)
+#, no-wrap
+msgid ""
+"SELECT somefunc(c.*) FROM inventory_item c;\n"
+"SELECT somefunc(c) FROM inventory_item c;"
+msgstr ""
+"SELECT somefunc(c.*) FROM inventory_item c;\n"
+"SELECT somefunc(c) FROM inventory_item c;"
+
+#: rowtypes.xml:340(para)
+msgid ""
+"The <replaceable>composite_value</replaceable><literal>.*</literal> syntax "
+"results in column expansion of this kind when it appears at the top level of "
+"a <link linkend=\"queries-select-lists\"><command>SELECT</command> output "
+"list</link>, a <link linkend=\"dml-returning\"><literal>RETURNING</literal> "
+"list</link> in <command>INSERT</command>/<command>UPDATE</command>/"
+"<command>DELETE</command>, a <link linkend=\"queries-values"
+"\"><literal>VALUES</literal> clause</link>, or a <link linkend=\"sql-syntax-"
+"row-constructors\">row constructor</link>. In all other contexts (including "
+"when nested inside one of those constructs), attaching <literal>.*</literal> "
+"to a composite value does not change the value, since it means <quote>all "
+"columns</quote> and so the same composite value is produced again. For "
+"example, if <function>somefunc()</function> accepts a composite-valued "
+"argument, these queries are the same: <placeholder-1/> In both cases, the "
+"current row of <structname>inventory_item</structname> is passed to the "
+"function as a single composite-valued argument. Even though <literal>.*</"
+"literal> does nothing in such cases, using it is good style, since it makes "
+"clear that a composite value is intended. In particular, the parser will "
+"consider <literal>c</literal> in <literal>c.*</literal> to refer to a table "
+"name or alias, not to a column name, so that there is no ambiguity; whereas "
+"without <literal>.*</literal>, it is not clear whether <literal>c</literal> "
+"means a table name or a column name, and in fact the column-name "
+"interpretation will be preferred if there is a column named <literal>c</"
+"literal>."
+msgstr ""
+"Запись <replaceable>составное_значение</replaceable><literal>.*</literal> "
+"приводит к такому развёртыванию столбцов, когда она фигурирует на верхнем "
+"уровне <link linkend=\"queries-select-lists\">выходного списка "
+"<command>SELECT</command></link>, в <link linkend=\"dml-returning\">списке "
+"<literal>RETURNING</literal></link> команд <command>INSERT</command>/"
+"<command>UPDATE</command>/<command>DELETE</command>, в <link linkend="
+"\"queries-values\"><literal>предложении VALUES</literal></link> или в <link "
+"linkend=\"sql-syntax-row-constructors\">конструкторе строки</link>. Во всех "
+"других контекстах (включая вложенные в одну из этих конструкций), добавление "
+"<literal>.*</literal> к составному значению не меняет это значение, так как "
+"это воспринимается как <quote>все столбцы</quote> и поэтому выдаётся то же "
+"составное значение. Например, если функция <function>somefunc()</function> "
+"принимает в качестве аргумента составное значение, эти запросы равносильны: "
+"<placeholder-1/> В обоих случаях текущая строка таблицы "
+"<structname>inventory_item</structname> передаётся функции как один аргумент "
+"с составным значением. И хотя дополнение <literal>.*</literal> в этих "
+"случаях не играет роли, использовать его считается хорошим стилем, так как "
+"это ясно указывает на использование составного значения. В частности "
+"анализатор запроса воспримет <literal>c</literal> в записи <literal>c.*</"
+"literal> как ссылку на имя или псевдоним таблицы, а не имя столбца, что "
+"избавляет от неоднозначности; тогда как без <literal>.*</literal> неясно, "
+"означает ли <literal>c</literal> имя таблицы или имя столбца, и на самом "
+"деле при наличии столбца с именем <literal>c</literal> будет выбрано второе "
+"прочтение."
+
+#: rowtypes.xml:375(programlisting)
+#, no-wrap
+msgid ""
+"SELECT * FROM inventory_item c ORDER BY c;\n"
+"SELECT * FROM inventory_item c ORDER BY c.*;\n"
+"SELECT * FROM inventory_item c ORDER BY ROW(c.*);"
+msgstr ""
+"SELECT * FROM inventory_item c ORDER BY c;\n"
+"SELECT * FROM inventory_item c ORDER BY c.*;\n"
+"SELECT * FROM inventory_item c ORDER BY ROW(c.*);"
+
+#: rowtypes.xml:387(programlisting)
+#, no-wrap
+msgid ""
+"SELECT * FROM inventory_item c ORDER BY ROW(c.name, c.supplier_id, c.price);\n"
+"SELECT * FROM inventory_item c ORDER BY (c.name, c.supplier_id, c.price);"
+msgstr ""
+"SELECT * FROM inventory_item c ORDER BY ROW(c.name, c.supplier_id, c.price);\n"
+"SELECT * FROM inventory_item c ORDER BY (c.name, c.supplier_id, c.price);"
+
+#: rowtypes.xml:372(para)
+msgid ""
+"Another example demonstrating these concepts is that all these queries mean "
+"the same thing: <placeholder-1/> All of these <literal>ORDER BY</literal> "
+"clauses specify the row's composite value, resulting in sorting the rows "
+"according to the rules described in <xref linkend=\"composite-type-comparison"
+"\"/>. However, if <structname>inventory_item</structname> contained a column "
+"named <structfield>c</structfield>, the first case would be different from "
+"the others, as it would mean to sort by that column only. Given the column "
+"names previously shown, these queries are also equivalent to those above: "
+"<placeholder-2/> (The last case uses a row constructor with the key word "
+"<literal>ROW</literal> omitted.)"
+msgstr ""
+"Эту концепцию демонстрирует и следующий пример, все запросы в котором "
+"действуют одинаково: <placeholder-1/> Все эти предложения <literal>ORDER BY</"
+"literal> обращаются к составному значению строки, вследствие чего строки "
+"сортируются по правилам, описанным в <xref remap=\"6\" linkend=\"composite-"
+"type-comparison\"/>. Однако, если в <structname>inventory_item</structname> "
+"содержится столбец с именем <structfield>c</structfield>, первый запрос "
+"будет отличаться от других, так как в нём выполнится сортировка только по "
+"данному столбцу. С показанными выше именами столбцов предыдущим запросам "
+"также равнозначны следующие: <placeholder-2/> (В последнем случае "
+"используется конструктор строки, в котором опущено ключевое слово "
+"<literal>ROW</literal>.)"
+
+#: rowtypes.xml:403(programlisting)
+#, no-wrap
+msgid ""
+"SELECT c.name FROM inventory_item c WHERE c.price &gt; 1000;\n"
+"SELECT name(c) FROM inventory_item c WHERE price(c) &gt; 1000;"
+msgstr ""
+"SELECT c.name FROM inventory_item c WHERE c.price &gt; 1000;\n"
+"SELECT name(c) FROM inventory_item c WHERE price(c) &gt; 1000;"
+
+#: rowtypes.xml:412(programlisting)
+#, no-wrap
+msgid ""
+"SELECT somefunc(c) FROM inventory_item c;\n"
+"SELECT somefunc(c.*) FROM inventory_item c;\n"
+"SELECT c.somefunc FROM inventory_item c;"
+msgstr ""
+"SELECT somefunc(c) FROM inventory_item c;\n"
+"SELECT somefunc(c.*) FROM inventory_item c;\n"
+"SELECT c.somefunc FROM inventory_item c;"
+
+#: rowtypes.xml:395(para)
+msgid ""
+"Another special syntactical behavior associated with composite values is "
+"that we can use <firstterm>functional notation</firstterm> for extracting a "
+"field of a composite value. The simple way to explain this is that the "
+"notations <literal><replaceable>field</replaceable>(<replaceable>table</"
+"replaceable>)</literal> and <literal><replaceable>table</replaceable>."
+"<replaceable>field</replaceable></literal> are interchangeable. For example, "
+"these queries are equivalent: <placeholder-1/> Moreover, if we have a "
+"function that accepts a single argument of a composite type, we can call it "
+"with either notation. These queries are all equivalent: <placeholder-2/>"
+msgstr ""
+"Другая особенность синтаксиса, связанная с составными значениями, состоит в "
+"том, что мы можем использовать <firstterm>функциональную запись</firstterm> "
+"для извлечения поля составного значения. Это легко можно объяснить тем, что "
+"записи <literal><replaceable>поле</replaceable>(<replaceable>таблица</"
+"replaceable>)</literal> и <literal><replaceable>таблица</replaceable>."
+"<replaceable>поле</replaceable></literal> взаимозаменяемы. Например, "
+"следующие запросы равнозначны: <placeholder-1/> Более того, если у нас есть "
+"функция, принимающая один аргумент составного типа, мы можем вызвать её в "
+"любой записи. Все эти запросы равносильны: <placeholder-2/>"
+
+#: rowtypes.xml:423(indexterm)
+msgid "<primary>computed field</primary>"
+msgstr "<primary>вычисляемое поле</primary>"
+
+#: rowtypes.xml:426(indexterm)
+msgid "<primary>field</primary> <secondary>computed</secondary>"
+msgstr "<primary>поле</primary> <secondary>вычисляемое</secondary>"
+
+#: rowtypes.xml:419(para)
+msgid ""
+"This equivalence between functional notation and field notation makes it "
+"possible to use functions on composite types to implement <quote>computed "
+"fields</quote>. <placeholder-1/> <placeholder-2/> An application using the "
+"last query above wouldn't need to be directly aware that <literal>somefunc</"
+"literal> isn't a real column of the table."
+msgstr ""
+"Эта равнозначность записи с полем и функциональной записи позволяет "
+"использовать с составными типами функции, реализующие <quote>вычисляемые "
+"поля</quote>. <placeholder-1/> <placeholder-2/> При этом приложению, "
+"использующему последний из предыдущих запросов, не нужно знать, что "
+"фактически <literal>somefunc</literal> — не настоящий столбец таблицы."
+
+#: rowtypes.xml:435(para)
+msgid ""
+"Because of this behavior, it's unwise to give a function that takes a single "
+"composite-type argument the same name as any of the fields of that composite "
+"type. If there is ambiguity, the field-name interpretation will be "
+"preferred, so that such a function could not be called without tricks. One "
+"way to force the function interpretation is to schema-qualify the function "
+"name, that is, write <literal><replaceable>schema</replaceable>."
+"<replaceable>func</replaceable>(<replaceable>compositevalue</replaceable>)</"
+"literal>."
+msgstr ""
+"Учитывая такое поведение, будет неразумно давать функции, принимающей один "
+"аргумент составного типа, то же имя, что и одному из полей данного "
+"составного типа. Если возникнет неоднозначность, предпочтительнее окажется "
+"прочтение имени поля, так что такую функцию нельзя будет вызвать без "
+"дополнительных трюков. Например, для принудительного прочтения имени "
+"функции, потребуется дополнить это имя схемой, то есть, написать "
+"<literal><replaceable>схема</replaceable>.<replaceable>функция</"
+"replaceable>(<replaceable>составное_значение</replaceable>)</literal>."
+
+#: rowtypes.xml:448(title)
 msgid "Composite Type Input and Output Syntax"
 msgstr "Синтаксис вводимых и выводимых значений составного типа"
 
-#: rowtypes.xml:260(programlisting)
+#: rowtypes.xml:460(programlisting)
 #, no-wrap
 msgid "'(  42)'"
 msgstr "'(  42)'"
 
-#: rowtypes.xml:250(para)
+#: rowtypes.xml:450(para)
 msgid ""
 "The external text representation of a composite value consists of items that "
 "are interpreted according to the I/O conversion rules for the individual "
@@ -432,7 +785,7 @@ msgstr ""
 "элемента. Например, в записи: <placeholder-1/> пробелы будут игнорироваться, "
 "если соответствующее поле имеет целочисленный тип, но не текстовый."
 
-#: rowtypes.xml:267(para)
+#: rowtypes.xml:467(para)
 msgid ""
 "As shown previously, when writing a composite value you can write double "
 "quotes around any individual field value. You <emphasis>must</emphasis> do "
@@ -458,7 +811,7 @@ msgstr ""
 "защитив все символы в данных, которые могут быть восприняты как часть "
 "синтаксиса составного значения, с помощью спецпоследовательностей."
 
-#: rowtypes.xml:282(para)
+#: rowtypes.xml:482(para)
 msgid ""
 "A completely empty field value (no characters at all between the commas or "
 "parentheses) represents a NULL. To write a value that is an empty string "
@@ -468,7 +821,7 @@ msgstr ""
 "запятыми или скобками нет никаких символов). Чтобы ввести именно пустую "
 "строку, а не NULL, нужно написать <literal>\"\"</literal>."
 
-#: rowtypes.xml:288(para)
+#: rowtypes.xml:488(para)
 msgid ""
 "The composite output routine will put double quotes around field values if "
 "they are empty strings or contain parentheses, commas, double quotes, "
@@ -483,12 +836,12 @@ msgstr ""
 "Кавычки и обратная косая черта, заключённые в значения полей, при выводе "
 "дублируются."
 
-#: rowtypes.xml:304(programlisting)
+#: rowtypes.xml:504(programlisting)
 #, no-wrap
 msgid "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
 msgstr "INSERT ... VALUES (E'(\"\\\\\"\\\\\\\\\")');"
 
-#: rowtypes.xml:297(para)
+#: rowtypes.xml:497(para)
 msgid ""
 "Remember that what you write in an SQL command will first be interpreted as "
 "a string literal, and then as a composite. This doubles the number of "
@@ -522,7 +875,7 @@ msgstr ""
 "спецсимволов строки можно заключать в доллары (см. <xref remap=\"4\" linkend="
 "\"sql-syntax-dollar-quoting\"/>)."
 
-#: rowtypes.xml:321(para)
+#: rowtypes.xml:521(para)
 msgid ""
 "The <literal>ROW</literal> constructor syntax is usually easier to work with "
 "than the composite-literal syntax when writing composite values in SQL "
@@ -538,3 +891,6 @@ msgstr ""
 #: rowtypes.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid "Composite Value Input"
+#~ msgstr "Ввод значения составного типа"
