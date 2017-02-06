@@ -1571,7 +1571,6 @@ msgid "<varname>ssl_ciphers</varname> (<type>string</type>) <placeholder-1/>"
 msgstr "<varname>ssl_ciphers</varname> (<type>string</type>) <placeholder-1/>"
 
 #: config.xml:1045(para)
-#, fuzzy
 msgid ""
 "Specifies a list of <acronym>SSL</acronym> cipher suites that are allowed to "
 "be used on secure connections. See the <citerefentry><refentrytitle>ciphers</"
@@ -1587,7 +1586,8 @@ msgstr ""
 "<citerefentry><refentrytitle>ciphers</refentrytitle></citerefentry> "
 "руководства по <application>OpenSSL</application>. По умолчанию этот "
 "параметр имеет значение <literal>HIGH:MEDIUM:+3DES:!aNULL</literal>. Обычно "
-"оно вполне приемлемо при отсутствии особых требований по безопасности."
+"оно вполне приемлемо при отсутствии особых требований по безопасности. Этот "
+"параметр можно задать только при запуске сервера."
 
 #: config.xml:1060(literal)
 msgid "HIGH"
@@ -1681,14 +1681,14 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:1123(para)
-#, fuzzy
 msgid ""
 "Specifies whether to use the server's SSL cipher preferences, rather than "
 "the client's. The default is true. This parameter can only be set at server "
 "start."
 msgstr ""
 "Определяет, должны ли шифры SSL сервера предпочитаться клиентским. По "
-"умолчанию предпочтение отдаётся шифрам сервера."
+"умолчанию предпочтение отдаётся шифрам сервера. Этот параметр можно задать "
+"только при запуске сервера."
 
 #: config.xml:1129(para)
 msgid ""
@@ -1716,7 +1716,6 @@ msgstr ""
 "<varname>ssl_ecdh_curve</varname> (<type>string</type>) <placeholder-1/>"
 
 #: config.xml:1146(para)
-#, fuzzy
 msgid ""
 "Specifies the name of the curve to use in <acronym>ECDH</acronym> key "
 "exchange. It needs to be supported by all clients that connect. It does not "
@@ -1727,7 +1726,8 @@ msgstr ""
 "Задаёт имя кривой для использования при обмене ключами <acronym>ECDH</"
 "acronym>. Эту кривую должны поддерживать все подключающиеся клиенты. Это не "
 "обязательно должна быть кривая, с которой был получен ключ сервера. По "
-"умолчанию выбирается кривая <literal>prime256v1</literal>."
+"умолчанию выбирается кривая <literal>prime256v1</literal>. Этот параметр "
+"можно задать только при запуске сервера."
 
 #: config.xml:1154(para)
 msgid ""
@@ -2889,7 +2889,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:1897(para)
-#, fuzzy
 msgid ""
 "Whenever more than <varname>bgwriter_flush_after</varname> bytes have been "
 "written by the bgwriter, attempt to force the OS to issue these writes to "
@@ -2908,7 +2907,7 @@ msgid ""
 "in the <filename>postgresql.conf</filename> file or on the server command "
 "line."
 msgstr ""
-"Когда процесс фоновой записи (bgwriter) записывает больше чем "
+"Когда процессом фоновой записи записывается больше чем "
 "<varname>bgwriter_flush_after</varname> байт, сервер даёт указание ОС "
 "произвести запись этих данных в нижележащее хранилище. Это ограничивает "
 "объём &laquo;грязных&raquo; данных в страничном кеше ядра и уменьшает "
@@ -2919,11 +2918,11 @@ msgstr ""
 "но меньше страничного кеша ОС, когда производительность может упасть. Этот "
 "параметр действует не на всех платформах. Он может принимать значение от "
 "<literal>0</literal> (при этом управление отложенной записью отключается) до "
-"2 мегабайт (<literal>2MB</literal>). Значение по умолчанию — <literal>512kB</"
-"literal> в Linux и <literal>0</literal> в других ОС. (Значение по умолчанию "
-"и максимум меняются с изменением <symbol>BLCKSZ</symbol>.) Задать этот "
-"параметр можно только в <filename>postgresql.conf</filename> или в командной "
-"строке при запуске сервера."
+"2 Мбайт (<literal>2MB</literal>). Значение по умолчанию — <literal>512kB</"
+"literal> в Linux и <literal>0</literal> в других ОС. (Если <symbol>BLCKSZ</"
+"symbol> отличен от 8 Кбайт, значение по умолчанию и максимум корректируются "
+"пропорционально.) Задать этот параметр можно только в <filename>postgresql."
+"conf</filename> или в командной строке при запуске сервера."
 
 #: config.xml:1920(para)
 msgid ""
@@ -3136,7 +3135,6 @@ msgstr ""
 ">"
 
 #: config.xml:2049(para)
-#, fuzzy
 msgid ""
 "Whenever more than <varname>backend_flush_after</varname> bytes have been "
 "written by a single backend, attempt to force the OS to issue these writes "
@@ -3153,7 +3151,7 @@ msgid ""
 "(If <symbol>BLCKSZ</symbol> is not 8kB, the maximum value scales "
 "proportionally to it.)"
 msgstr ""
-"Когда один обслуживающий процесс записывает больше чем "
+"Когда одним обслуживающим процессом записывается больше "
 "<varname>backend_flush_after</varname> байт, сервер даёт указание ОС "
 "произвести запись этих данных в нижележащее хранилище. Это ограничивает "
 "объём &laquo;грязных&raquo; данных в страничном кеше ядра и уменьшает "
@@ -3164,9 +3162,9 @@ msgstr ""
 "но меньше страничного кеша ОС, когда производительность может упасть. Этот "
 "параметр действует не на всех платформах. Он может принимать значение от "
 "<literal>0</literal> (при этом управление отложенной записью отключается) до "
-"2 мегабайт (<literal>2MB</literal>). Значение по умолчанию — <literal>0</"
-"literal> (нет управления записью). (Максимальное значение меняется с "
-"изменением <symbol>BLCKSZ</symbol>.)"
+"2 Мбайт (<literal>2MB</literal>). По умолчанию он имеет значение <literal>0</"
+"literal>, то есть это поведение отключено. (Если <symbol>BLCKSZ</symbol> "
+"отличен от 8 Кбайт, максимальное значение корректируется пропорционально.)"
 
 #: config.xml:2071(indexterm)
 msgid ""
@@ -3920,7 +3918,6 @@ msgstr ""
 "<varname>wal_writer_delay</varname> (<type>integer</type>) <placeholder-1/>"
 
 #: config.xml:2521(para)
-#, fuzzy
 msgid ""
 "Specifies how often the WAL writer flushes WAL. After flushing WAL it sleeps "
 "for <varname>wal_writer_delay</varname> milliseconds, unless woken up by an "
@@ -3937,8 +3934,8 @@ msgid ""
 msgstr ""
 "Определяет, как часто процесс записи WAL будет сбрасывать WAL на диск. После "
 "очередного сброса WAL он делает паузу на <varname>wal_writer_delay</varname> "
-"миллисекунд, но может быть пробуждён асинхронно фиксируемой транзакцией. В "
-"случае, если предыдущая операция сброса имела место в последние "
+"миллисекунд, но может быть пробуждён асинхронно фиксируемой транзакцией. "
+"Если предыдущая операция сброса имела место в последние "
 "<varname>wal_writer_delay</varname> миллисекунд и за это время было получено "
 "меньше <varname>wal_writer_flush_after</varname> байт WAL, данные WAL только "
 "передаются ОС, но не сбрасываются на диск. Значение по умолчанию — 200 "
@@ -3966,7 +3963,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:2546(para)
-#, fuzzy
 msgid ""
 "Specifies how often the WAL writer flushes WAL. If the last flush happened "
 "less than <varname>wal_writer_delay</varname> milliseconds ago and less than "
@@ -3977,16 +3973,16 @@ msgid ""
 "literal>. This parameter can only be set in the <filename>postgresql.conf</"
 "filename> file or on the server command line."
 msgstr ""
-"Определяет, как часто процесс записи WAL будет сбрасывать WAL на диск. В "
-"случае, если предыдущая операция сброса имела место в последние "
+"Определяет, как часто процесс записи WAL будет сбрасывать WAL на диск. Если "
+"предыдущая операция сброса имела место в последние "
 "<varname>wal_writer_delay</varname> миллисекунд и за это время было получено "
 "меньше <varname>wal_writer_flush_after</varname> байт WAL, данные WAL только "
-"передаются ОС, но не сбрасываются на диск. Если "
+"передаются операционной системе, но не сбрасываются на диск. Если "
 "<varname>wal_writer_flush_after</varname> равен <literal>0</literal>, WAL "
-"сбрасывается на диск каждый раз, когда процесс, пишущий WAL, производит "
-"запись. Значение по умолчанию — 1 Мбайт (<literal>1MB</literal>). Задать "
-"этот параметр можно только в <filename>postgresql.conf</filename> или в "
-"командной строке при запуске сервера."
+"сбрасывается на диск немедленно. Значение по умолчанию — 1 Мбайт "
+"(<literal>1MB</literal>). Задать этот параметр можно только в "
+"<filename>postgresql.conf</filename> или в командной строке при запуске "
+"сервера."
 
 #: config.xml:2561(indexterm)
 msgid ""
@@ -4150,7 +4146,6 @@ msgstr ""
 "<placeholder-1/>"
 
 #: config.xml:2660(para)
-#, fuzzy
 msgid ""
 "Whenever more than <varname>checkpoint_flush_after</varname> bytes have been "
 "written while performing a checkpoint, attempt to force the OS to issue "
@@ -4180,11 +4175,11 @@ msgstr ""
 "но меньше страничного кеша ОС, когда производительность может упасть. Этот "
 "параметр действует не на всех платформах. Он может принимать значение от "
 "<literal>0</literal> (при этом управление отложенной записью отключается) до "
-"2 мегабайт <literal>2MB</literal>. Значение по умолчанию — <literal>256kB</"
-"literal> в Linux и <literal>0</literal> в других ОС. (Значение по умолчанию "
-"и максимум меняются с изменением <symbol>BLCKSZ</symbol>.) Задать этот "
-"параметр можно только в <filename>postgresql.conf</filename> или в командной "
-"строке при запуске сервера."
+"2 Мбайт (<literal>2MB</literal>). Значение по умолчанию — <literal>256kB</"
+"literal> в Linux и <literal>0</literal> в других ОС. (Если <symbol>BLCKSZ</"
+"symbol> отличен от 8 Кбайт, значение по умолчанию и максимум корректируются "
+"пропорционально). Задать этот параметр можно только в <filename>postgresql."
+"conf</filename> или в командной строке при запуске сервера."
 
 #: config.xml:2684(indexterm)
 msgid ""

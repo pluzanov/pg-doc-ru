@@ -2176,6 +2176,10 @@ msgid ""
 "literal>: <placeholder-1/> This notation behaves differently depending on "
 "context; see <xref linkend=\"rowtypes-usage\"/> for details."
 msgstr ""
+"Вы можете запросить все поля составного значения, написав <literal>.*</"
+"literal>: <placeholder-1/> Эта запись действует по-разному в зависимости от "
+"контекста; подробнее об этом говорится в <xref remap=\"6\" linkend="
+"\"rowtypes-usage\"/>."
 
 #: syntax.xml:1464(title)
 msgid "Operator Invocations"
@@ -2287,7 +2291,6 @@ msgstr ""
 "<xref remap=\"4\" linkend=\"sql-syntax-calling-funcs\"/>."
 
 #: syntax.xml:1528(para)
-#, fuzzy
 msgid ""
 "A function that takes a single argument of composite type can optionally be "
 "called using field-selection syntax, and conversely field selection can be "
@@ -2304,7 +2307,7 @@ msgstr ""
 "оговорено стандартом SQL, но реализовано в <productname>PostgreSQL</"
 "productname>, так как это позволяет использовать функции для эмуляции "
 "<quote>вычисляемых полей</quote>. Подробнее это описано в <xref remap=\"6\" "
-"linkend=\"xfunc-sql-composite-functions\"/>."
+"linkend=\"rowtypes-usage\"/>."
 
 #: syntax.xml:1542(title)
 msgid "Aggregate Expressions"
@@ -2516,7 +2519,6 @@ msgstr ""
 "<productname>PostgreSQL</productname>."
 
 #: syntax.xml:1665(para)
-#, fuzzy
 msgid ""
 "Placing <literal>ORDER BY</literal> within the aggregate's regular argument "
 "list, as described so far, is used when ordering the input rows for a "
@@ -2559,7 +2561,7 @@ msgstr ""
 "<emphasis>обязательным</emphasis>, обычно потому, что вычисление этой "
 "функции имеет смысл только при определённой сортировке входных строк. "
 "Типичными примерами сортирующих агрегатных функций являются вычисления ранга "
-"и перцентиля. Для сортирующей агрегатной функции "
+"и процентиля. Для сортирующей агрегатной функции "
 "<replaceable>предложение_order_by</replaceable> записывается внутри "
 "<literal>WITHIN GROUP (...)</literal>, что иллюстрирует последний пример, "
 "приведённый выше. Выражения в <replaceable>предложении_order_by</"
@@ -2570,46 +2572,39 @@ msgstr ""
 "replaceable> находится не в <literal>WITHIN GROUP</literal>, оно не "
 "передаётся как аргумент(ы) агрегатной функции.) Выражения-аргументы, "
 "предшествующие <literal>WITHIN GROUP</literal>, (если они есть), называются "
-"<firstterm>прямыми аргументами</firstterm>, а выражения, указанные в "
-"<replaceable>предложении_order_by</replaceable> &mdash; "
+"<firstterm>непосредственными аргументами</firstterm>, а выражения, указанные "
+"в <replaceable>предложении_order_by</replaceable> &mdash; "
 "<firstterm>агрегируемыми аргументами</firstterm>. В отличие от аргументов "
-"обычной агрегатной функции, прямые аргументы вычисляются однократно для "
-"каждого вызова функции, а не для каждой строки. Это значит, что они могут "
-"содержать переменные, только если эти переменные сгруппированы в "
-"<literal>GROUP BY</literal>; это суть то же ограничение, что действовало бы, "
-"будь эти прямые аргументы вне агрегатного выражения. Прямые аргументы обычно "
-"используются, например, для указания значения перцентили, которое имеет "
-"смысл, только если это конкретное число для всего расчёта агрегатной "
-"функции. Список прямых аргументов может быть пуст; в этом случае запишите "
-"просто <literal>()</literal>, но не <literal>(*)</literal>. (На самом деле "
-"<productname>PostgreSQL</productname> примет обе записи, но только первая "
-"соответствует стандарту SQL.) Пример вызова сортирующей агрегатной функции: "
-"<placeholder-1/> Здесь получается 50-ая перцентиль (или медиана) значения "
-"столбца <structfield>income</structfield> (доход) из таблицы "
-"<structname>households</structname> (домочадцы). В данном случае, "
-"<literal>0.5</literal> &mdash; прямой аргумент; выражение не имело бы "
-"смысла, если бы этот аргумент зависел от обрабатываемых строк."
+"обычной агрегатной функции, непосредственные аргументы вычисляются "
+"однократно для каждого вызова функции, а не для каждой строки. Это значит, "
+"что они могут содержать переменные, только если эти переменные сгруппированы "
+"в <literal>GROUP BY</literal>; это суть то же ограничение, что действовало "
+"бы, будь эти непосредственные аргументы вне агрегатного выражения. "
+"Непосредственные аргументы обычно используются, например, для указания "
+"значения процентиля, которое имеет смысл, только если это конкретное число "
+"для всего расчёта агрегатной функции. Список непосредственных аргументов "
+"может быть пуст; в этом случае запишите просто <literal>()</literal>, но не "
+"<literal>(*)</literal>. (На самом деле <productname>PostgreSQL</productname> "
+"примет обе записи, но только первая соответствует стандарту SQL.)"
 
 #: syntax.xml:1701(indexterm)
-#, fuzzy
 msgid "<primary>median</primary>"
-msgstr "<primary>numeric</primary>"
+msgstr "<primary>медиана</primary>"
 
 #: syntax.xml:1704(indexterm)
-#, fuzzy
 msgid "<primary>median</primary> <seealso>percentile</seealso>"
-msgstr "<primary>скаляр</primary> <see>выражение</see>"
+msgstr "<primary>медиана</primary> <seealso>процентиль</seealso>"
 
 #: syntax.xml:1710(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY income) FROM households;\n"
 " percentile_cont\n"
 "-----------------\n"
 "           50489"
 msgstr ""
-"SELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY income) FROM households;\n"
-" percentile_disc\n"
+"SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY income) FROM households;\n"
+" percentile_cont\n"
 "-----------------\n"
 "           50489"
 
@@ -2622,6 +2617,12 @@ msgid ""
 "direct argument; it would make no sense for the percentile fraction to be a "
 "value varying across rows."
 msgstr ""
+"<placeholder-1/> <placeholder-2/> Пример вызова сортирующей агрегатной "
+"функции: <placeholder-3/> она получает 50-ый процентиль, или медиану, "
+"значения столбца <structfield>income</structfield> из таблицы "
+"<structname>households</structname>. В данном случае, <literal>0.5</literal> "
+"— это непосредственный аргумент; если бы дробь процентиля менялась от строки "
+"к строке, это не имело бы смысла."
 
 #: syntax.xml:1728(programlisting)
 #, no-wrap
@@ -3602,7 +3603,6 @@ msgstr ""
 "SELECT ROW(t.f1, t.f2, 42) FROM t;"
 
 #: syntax.xml:2301(para)
-#, fuzzy
 msgid ""
 "A row constructor can include the syntax <replaceable>rowvalue</"
 "replaceable><literal>.*</literal>, which will be expanded to a list of the "
@@ -3615,12 +3615,12 @@ msgstr ""
 "Конструктор строки поддерживает запись <replaceable>составное_значение</"
 "replaceable><literal>.*</literal>, при этом данное значение будет развёрнуто "
 "в список элементов, так же, как в записи <literal>.*</literal> на верхнем "
-"уровне списка <command>SELECT</command>. Например, если таблица <literal>t</"
-"literal> содержит столбцы <literal>f1</literal> и <literal>f2</literal>, эти "
-"записи эквивалентны: <placeholder-1/>"
+"уровне списка <command>SELECT</command> (см. <xref remap=\"4\" linkend="
+"\"rowtypes-usage\"/>). Например, если таблица <literal>t</literal> содержит "
+"столбцы <literal>f1</literal> и <literal>f2</literal>, эти записи "
+"равнозначны: <placeholder-1/>"
 
 #: syntax.xml:2316(para)
-#, fuzzy
 msgid ""
 "Before <productname>PostgreSQL</productname> 8.2, the <literal>.*</literal> "
 "syntax was not expanded in row constructors, so that writing <literal>ROW(t."
@@ -3630,12 +3630,12 @@ msgid ""
 "literal>, for instance <literal>ROW(t, 42)</literal>."
 msgstr ""
 "До версии <productname>PostgreSQL</productname> 8.2 запись <literal>.*</"
-"literal> не разворачивалась, так что выражение <literal>ROW(t.*, 42)</"
-"literal> создавало составное значение из двух полей, в котором первое поле "
-"так же было составным. Новое поведение обычно более полезно. Если вам нужно "
-"создать строку из двух полей так, чтобы первое поле содержало строку, "
-"напишите внутреннее значение без <literal>.*</literal>, например "
-"<literal>ROW(t, 42)</literal>."
+"literal> не разворачивалась в конструкторах строк, так что выражение "
+"<literal>ROW(t.*, 42)</literal> создавало составное значение из двух полей, "
+"в котором первое поле так же было составным. Новое поведение обычно более "
+"полезно. Если вам нужно получить прежнее поведение, чтобы одно значение "
+"строки было вложено в другое, напишите внутреннее значение без <literal>.*</"
+"literal>, например: <literal>ROW(t, 42)</literal>."
 
 #: syntax.xml:2333(programlisting)
 #, no-wrap

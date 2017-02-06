@@ -181,14 +181,15 @@ msgid "You can insert multiple rows in a single command: <placeholder-1/>"
 msgstr "Одна команда может вставить сразу несколько строк: <placeholder-1/>"
 
 #: dml.xml:109(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "INSERT INTO products (product_no, name, price)\n"
 "  SELECT product_no, name, price FROM new_products\n"
 "    WHERE release_date = 'today';"
 msgstr ""
-"INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', 9.99);\n"
-"INSERT INTO products (name, price, product_no) VALUES ('Cheese', 9.99, 1);"
+"INSERT INTO products (product_no, name, price)\n"
+"  SELECT product_no, name, price FROM new_products\n"
+"    WHERE release_date = 'today';"
 
 #: dml.xml:106(para)
 msgid ""
@@ -197,6 +198,10 @@ msgid ""
 "SQL query mechanism (<xref linkend=\"queries\"/>) for computing the rows to "
 "be inserted."
 msgstr ""
+"Также возможно вставить результат запроса (который может не содержать строк "
+"либо содержать одну или несколько): <placeholder-1/> Это позволяет "
+"использовать все возможности механизма запросов SQL (см. <xref remap=\"4\" "
+"linkend=\"queries\"/>) для вычисления вставляемых строк."
 
 #: dml.xml:119(para)
 msgid ""
@@ -419,27 +424,23 @@ msgstr ""
 
 #: dml.xml:270(title)
 msgid "Returning Data From Modified Rows"
-msgstr ""
+msgstr "Возврат данных из изменённых строк"
 
 #: dml.xml:272(indexterm)
-#, fuzzy
 msgid "<primary>RETURNING</primary>"
-msgstr "<primary>INSERT</primary>"
+msgstr "<primary>RETURNING</primary>"
 
 #: dml.xml:276(indexterm)
-#, fuzzy
 msgid "<primary>INSERT</primary> <secondary>RETURNING</secondary>"
-msgstr "<primary>INSERT</primary>"
+msgstr "<primary>INSERT</primary> <secondary>RETURNING</secondary>"
 
 #: dml.xml:281(indexterm)
-#, fuzzy
 msgid "<primary>UPDATE</primary> <secondary>RETURNING</secondary>"
-msgstr "<primary>UPDATE</primary>"
+msgstr "<primary>UPDATE</primary> <secondary>RETURNING</secondary>"
 
 #: dml.xml:286(indexterm)
-#, fuzzy
 msgid "<primary>DELETE</primary> <secondary>RETURNING</secondary>"
-msgstr "<primary>DELETE</primary>"
+msgstr "<primary>DELETE</primary> <secondary>RETURNING</secondary>"
 
 #: dml.xml:291(para)
 msgid ""
@@ -451,6 +452,13 @@ msgid ""
 "collect the data, and is especially valuable when it would otherwise be "
 "difficult to identify the modified rows reliably."
 msgstr ""
+"Иногда бывает полезно получать данные из модифицируемых строк в процессе их "
+"обработки. Это возможно с использованием предложения <literal>RETURNING</"
+"literal>, которое можно задать для команд <command>INSERT</command>, "
+"<command>UPDATE</command> и <command>DELETE</command>. Применение "
+"<literal>RETURNING</literal> позволяет обойтись без дополнительного запроса "
+"к базе для сбора данных и это особенно ценно, когда как-то иначе трудно "
+"получить изменённые строки надёжным образом."
 
 #: dml.xml:301(para)
 msgid ""
@@ -461,6 +469,12 @@ msgid ""
 "is <literal>RETURNING *</literal>, which selects all columns of the target "
 "table in order."
 msgstr ""
+"В предложении <literal>RETURNING</literal> допускается то же содержимое, что "
+"и в выходном списке команды <command>SELECT</command> (см. <xref remap=\"4\" "
+"linkend=\"queries-select-lists\"/>). Оно может содержать имена столбцов "
+"целевой таблицы команды или значения выражений с этими столбцами. Также "
+"часто применяется краткая запись <literal>RETURNING *</literal>, выбирающая "
+"все столбцы целевой таблицы по порядку."
 
 #: dml.xml:318(programlisting)
 #, no-wrap
@@ -469,6 +483,9 @@ msgid ""
 "\n"
 "INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;"
 msgstr ""
+"CREATE TABLE users (firstname text, lastname text, id serial primary key);\n"
+"\n"
+"INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;"
 
 #: dml.xml:310(para)
 msgid ""
@@ -481,14 +498,27 @@ msgid ""
 "ID assigned to a new row: <placeholder-1/> The <literal>RETURNING</literal> "
 "clause is also very useful with <literal>INSERT ... SELECT</literal>."
 msgstr ""
+"В команде <command>INSERT</command> данные, выдаваемые в <literal>RETURNING</"
+"literal>, образуются из строки в том виде, в каком она была вставлена. Это "
+"не очень полезно при простом добавлении, так как в результате будут получены "
+"те же данные, что были переданы клиентом. Но это может быть очень удобно при "
+"использовании вычисляемых значений по умолчанию. Например, если в таблице "
+"есть столбец <link linkend=\"datatype-serial\"><type>serial</type></link>, в "
+"котором генерируются уникальные идентификаторы, команда <literal>RETURNING</"
+"literal> может возвратить идентификатор, назначенный новой строке: "
+"<placeholder-1/> Предложение <literal>RETURNING</literal> также очень "
+"полезно с <literal>INSERT ... SELECT</literal>."
 
 #: dml.xml:330(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "UPDATE products SET price = price * 1.10\n"
 "  WHERE price &lt;= 99.99\n"
 "  RETURNING name, price AS new_price;"
-msgstr "UPDATE products SET price = 10 WHERE price = 5;"
+msgstr ""
+"UPDATE products SET price = price * 1.10\n"
+"  WHERE price &lt;= 99.99\n"
+"  RETURNING name, price AS new_price;"
 
 #: dml.xml:327(para)
 msgid ""
@@ -496,20 +526,28 @@ msgid ""
 "literal> is the new content of the modified row. For example: <placeholder-1/"
 ">"
 msgstr ""
+"В команде <command>UPDATE</command> данные, выдаваемые в <literal>RETURNING</"
+"literal>, образуются новым содержимым изменённой строки. Например: "
+"<placeholder-1/>"
 
 #: dml.xml:340(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "DELETE FROM products\n"
 "  WHERE obsoletion_date = 'today'\n"
 "  RETURNING *;"
-msgstr "DELETE FROM products WHERE price = 10;"
+msgstr ""
+"DELETE FROM products\n"
+"  WHERE obsoletion_date = 'today'\n"
+"  RETURNING *;"
 
 #: dml.xml:337(para)
 msgid ""
 "In a <command>DELETE</command>, the data available to <literal>RETURNING</"
 "literal> is the content of the deleted row. For example: <placeholder-1/>"
 msgstr ""
+"В команде <command>DELETE</command> данные, выдаваемые в <literal>RETURNING</"
+"literal>, образуются содержимым удалённой строки. Например: <placeholder-1/>"
 
 #: dml.xml:347(para)
 msgid ""
@@ -518,6 +556,11 @@ msgid ""
 "the triggers. Thus, inspecting columns computed by triggers is another "
 "common use-case for <literal>RETURNING</literal>."
 msgstr ""
+"Если для целевой таблицы заданы триггеры (см. <xref remap=\"4\" linkend="
+"\"triggers\"/>), в <literal>RETURNING</literal> выдаются данные из строки, "
+"изменённой триггерами. Таким образом, <literal>RETURNING</literal> часто "
+"применяется и для того, чтобы проверить содержимое столбцов, изменяемых "
+"триггерами."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: dml.xml:0(None)
