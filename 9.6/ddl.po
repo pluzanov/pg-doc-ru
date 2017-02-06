@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-02-06 11:18+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -4048,16 +4048,20 @@ msgstr ""
 "structfield> и команда будет отвергнута до применения правила."
 
 #: ddl.xml:2561(para)
+#, fuzzy
 msgid ""
 "All check constraints and not-null constraints on a parent table are "
-"automatically inherited by its children. Other types of constraints (unique, "
-"primary key, and foreign key constraints) are not inherited."
+"automatically inherited by its children, unless explicitly specified "
+"otherwise with <literal>NO INHERIT</literal> clauses. Other types of "
+"constraints (unique, primary key, and foreign key constraints) are not "
+"inherited."
 msgstr ""
 "Дочерние таблицы автоматически наследуют от родительской таблицы ограничения-"
 "проверки и ограничения NOT NULL. Все остальные ограничения (уникальности, "
 "первичный ключ и внешние ключи) не наследуются."
 
-#: ddl.xml:2567(para)
+#: ddl.xml:2568(para)
+#, fuzzy
 msgid ""
 "A table can inherit from more than one parent table, in which case it has "
 "the union of the columns defined by the parent tables. Any columns declared "
@@ -4065,9 +4069,11 @@ msgid ""
 "appears in multiple parent tables, or in both a parent table and the child's "
 "definition, then these columns are <quote>merged</quote> so that there is "
 "only one such column in the child table. To be merged, columns must have the "
-"same data types, else an error is raised. The merged column will have copies "
-"of all the check constraints coming from any one of the column definitions "
-"it came from, and will be marked not-null if any of them are."
+"same data types, else an error is raised. Inheritable check constraints and "
+"not-null constraints are merged in a similar fashion. Thus, for example, a "
+"merged column will be marked not-null if any one of the column definitions "
+"it came from is marked not-null. Check constraints are merged if they have "
+"the same name, and the merge will fail if their conditions are different."
 msgstr ""
 "Таблица может наследоваться от нескольких родительских таблиц, в этом случае "
 "она будет объединять в себе все столбцы этих таблиц, а также столбцы, "
@@ -4079,7 +4085,7 @@ msgstr ""
 "объединённого столбца будут собраны все ограничения-проверки объединяемых "
 "столбцов, а также ограничение NOT NULL, если оно было задано для них."
 
-#: ddl.xml:2580(para)
+#: ddl.xml:2583(para)
 msgid ""
 "Table inheritance is typically established when the child table is created, "
 "using the <literal>INHERITS</literal> clause of the <xref linkend=\"sql-"
@@ -4109,7 +4115,7 @@ msgstr ""
 "секционирования таблиц (см. <xref remap=\"4\" linkend=\"ddl-partitioning\"/"
 ">)."
 
-#: ddl.xml:2598(para)
+#: ddl.xml:2601(para)
 msgid ""
 "One convenient way to create a compatible table that will later be made a "
 "new child is to use the <literal>LIKE</literal> clause in <command>CREATE "
@@ -4128,7 +4134,7 @@ msgstr ""
 "предложению <literal>LIKE</literal> параметр <literal>INCLUDING CONSTRAINTS</"
 "literal>."
 
-#: ddl.xml:2609(para)
+#: ddl.xml:2612(para)
 msgid ""
 "A parent table cannot be dropped while any of its children remain. Neither "
 "can columns or check constraints of child tables be dropped or altered if "
@@ -4143,7 +4149,7 @@ msgstr ""
 "команду удаления родительской таблицы параметр <literal>CASCADE</literal> "
 "(см. <xref remap=\"4\" linkend=\"ddl-depend\"/>)."
 
-#: ddl.xml:2618(para)
+#: ddl.xml:2621(para)
 msgid ""
 "<xref linkend=\"sql-altertable\"/> will propagate any changes in column data "
 "definitions and check constraints down the inheritance hierarchy. Again, "
@@ -4160,22 +4166,23 @@ msgstr ""
 "правилам объединения дублирующихся столбцов, что и <command>CREATE TABLE</"
 "command>."
 
-#: ddl.xml:2628(para)
+#: ddl.xml:2631(para)
 msgid ""
-"Note how table access permissions are handled. Querying a parent table can "
-"automatically access data in child tables without further access privilege "
-"checking. This preserves the appearance that the data is (also) in the "
-"parent table. Accessing the child tables directly is, however, not "
-"automatically allowed and would require further privileges to be granted."
+"Inherited queries perform access permission checks on the parent table only. "
+"Thus, for example, granting <literal>UPDATE</literal> permission on the "
+"<structname>cities</structname> table implies permission to update rows in "
+"the <structname>capitals</structname> table as well, when they are accessed "
+"through <structname>cities</structname>. This preserves the appearance that "
+"the data is (also) in the parent table. But the <structname>capitals</"
+"structname> table could not be updated directly without an additional grant. "
+"In a similar way, the parent table's row security policies (see <xref "
+"linkend=\"ddl-rowsecurity\"/>) are applied to rows coming from child tables "
+"during an inherited query. A child table's policies, if any, are applied "
+"only when it is the table explicitly named in the query; and in that case, "
+"any policies attached to its parent(s) are ignored."
 msgstr ""
-"Обратите внимание на ситуацию с правами доступа. При запросе к родительской "
-"таблице данные всех дочерних таблиц будут возвращены без дополнительной "
-"проверки прав. Так создаётся представление, что эти данные (тоже) находятся "
-"в родительской таблице. Однако права не распространяются автоматически на "
-"все дочерние таблицы, и поэтому для обращения к ним права доступа должны "
-"назначаться отдельно."
 
-#: ddl.xml:2637(para)
+#: ddl.xml:2647(para)
 msgid ""
 "Foreign tables (see <xref linkend=\"ddl-foreign-data\"/>) can also be part "
 "of inheritance hierarchies, either as parent or child tables, just as "
@@ -4189,11 +4196,11 @@ msgstr ""
 "сторонняя таблица, все операции, не поддерживаемые ей, не будут "
 "поддерживаться иерархией в целом."
 
-#: ddl.xml:2646(title) ddl.xml:3349(title)
+#: ddl.xml:2656(title) ddl.xml:3359(title)
 msgid "Caveats"
 msgstr "Ограничения"
 
-#: ddl.xml:2648(para)
+#: ddl.xml:2658(para)
 msgid ""
 "Note that not all SQL commands are able to work on inheritance hierarchies. "
 "Commands that are used for data querying, data modification, or schema "
@@ -4221,7 +4228,7 @@ msgstr ""
 "наследования. Соответствующее поведение каждой команды описано в её справке "
 "(<xref linkend=\"sql-commands\"/>)."
 
-#: ddl.xml:2674(para)
+#: ddl.xml:2684(para)
 msgid ""
 "If we declared <structname>cities</structname>.<structfield>name</"
 "structfield> to be <literal>UNIQUE</literal> or a <literal>PRIMARY KEY</"
@@ -4246,7 +4253,7 @@ msgstr ""
 "structname> соответствующее ограничение, но это не предотвратит дублирование "
 "при объединении с <structname>cities</structname>."
 
-#: ddl.xml:2688(para)
+#: ddl.xml:2698(para)
 msgid ""
 "Similarly, if we were to specify that <structname>cities</structname>."
 "<structfield>name</structfield> <literal>REFERENCES</literal> some other "
@@ -4262,7 +4269,7 @@ msgstr ""
 "может стать явное добавление такого же ограничения <literal>REFERENCES</"
 "literal> в таблицу <structname>capitals</structname>."
 
-#: ddl.xml:2699(para)
+#: ddl.xml:2709(para)
 msgid ""
 "Specifying that another table's column <literal>REFERENCES cities(name)</"
 "literal> would allow the other table to contain city names, but not capital "
@@ -4272,7 +4279,7 @@ msgstr ""
 "<literal>cities(name)</literal>, в этом столбце можно будет указывать только "
 "названия городов, но не столиц. В этом случае хорошего решения нет."
 
-#: ddl.xml:2665(para)
+#: ddl.xml:2675(para)
 msgid ""
 "A serious limitation of the inheritance feature is that indexes (including "
 "unique constraints) and foreign key constraints only apply to single tables, "
@@ -4290,19 +4297,19 @@ msgstr ""
 "настоящее время вам следует тщательно взвесить все за и против, прежде чем "
 "использовать наследование в своих приложениях."
 
-#: ddl.xml:2716(title)
+#: ddl.xml:2726(title)
 msgid "Partitioning"
 msgstr "Секционирование"
 
-#: ddl.xml:2718(indexterm)
+#: ddl.xml:2728(indexterm)
 msgid "<primary>partitioning</primary>"
 msgstr "<primary>секционирование</primary>"
 
-#: ddl.xml:2722(indexterm)
+#: ddl.xml:2732(indexterm)
 msgid "<primary>table</primary> <secondary>partitioning</secondary>"
 msgstr "<primary>таблица</primary> <secondary>секционирование</secondary>"
 
-#: ddl.xml:2727(para)
+#: ddl.xml:2737(para)
 msgid ""
 "<productname>PostgreSQL</productname> supports basic table partitioning. "
 "This section describes why and how to implement partitioning as part of your "
@@ -4312,11 +4319,11 @@ msgstr ""
 "таблиц. В этом разделе описывается, как и почему бывает полезно применять "
 "секционирование при проектировании баз данных."
 
-#: ddl.xml:2734(title)
+#: ddl.xml:2744(title)
 msgid "Overview"
 msgstr "Обзор"
 
-#: ddl.xml:2742(para)
+#: ddl.xml:2752(para)
 msgid ""
 "Query performance can be improved dramatically in certain situations, "
 "particularly when most of the heavily accessed rows of the table are in a "
@@ -4331,7 +4338,7 @@ msgstr ""
 "увеличит вероятность нахождения наиболее востребованных частей индексов в "
 "памяти."
 
-#: ddl.xml:2753(para)
+#: ddl.xml:2763(para)
 msgid ""
 "When queries or updates access a large percentage of a single partition, "
 "performance can be improved by taking advantage of sequential scan of that "
@@ -4343,7 +4350,7 @@ msgstr ""
 "быстрее, чем случайный доступ по индексу к данным, разбросанным по всей "
 "таблице."
 
-#: ddl.xml:2762(para)
+#: ddl.xml:2772(para)
 msgid ""
 "Bulk loads and deletes can be accomplished by adding or removing partitions, "
 "if that requirement is planned into the partitioning design. <command>ALTER "
@@ -4359,13 +4366,13 @@ msgstr ""
 "исключают накладные расходы, связанные с выполнением операции "
 "<command>VACUUM</command> после команды <command>DELETE</command>."
 
-#: ddl.xml:2773(para)
+#: ddl.xml:2783(para)
 msgid "Seldom-used data can be migrated to cheaper and slower storage media."
 msgstr ""
 "Редко используемые данные можно перенести на более дешёвые и медленные "
 "носители."
 
-#: ddl.xml:2736(para)
+#: ddl.xml:2746(para)
 msgid ""
 "Partitioning refers to splitting what is logically one large table into "
 "smaller physical pieces. Partitioning can provide several benefits: "
@@ -4382,7 +4389,7 @@ msgstr ""
 "зависит от конкретного приложения, хотя, как правило, это следует применять "
 "для таблиц, размер которых превышает объём ОЗУ сервера."
 
-#: ddl.xml:2786(para)
+#: ddl.xml:2796(para)
 msgid ""
 "Currently, <productname>PostgreSQL</productname> supports partitioning via "
 "table inheritance. Each partition must be created as a child table of a "
@@ -4399,11 +4406,11 @@ msgstr ""
 "секционирования, вам следует познакомиться с наследованием (см. <xref remap="
 "\"4\" linkend=\"ddl-inherit\"/>)."
 
-#: ddl.xml:2801(term)
+#: ddl.xml:2811(term)
 msgid "Range Partitioning"
 msgstr "Секционирование по диапазонам"
 
-#: ddl.xml:2804(para)
+#: ddl.xml:2814(para)
 msgid ""
 "The table is partitioned into <quote>ranges</quote> defined by a key column "
 "or set of columns, with no overlap between the ranges of values assigned to "
@@ -4415,11 +4422,11 @@ msgstr ""
 "Например, можно секционировать данные по диапазонам дат или по диапазонам "
 "идентификаторов определённых бизнес-объектов."
 
-#: ddl.xml:2815(term)
+#: ddl.xml:2825(term)
 msgid "List Partitioning"
 msgstr "Секционирование по списку"
 
-#: ddl.xml:2818(para)
+#: ddl.xml:2828(para)
 msgid ""
 "The table is partitioned by explicitly listing which key values appear in "
 "each partition."
@@ -4427,7 +4434,7 @@ msgstr ""
 "Таблица секционируется с помощью списка, явно указывающего, какие значения "
 "ключа должны относиться к каждой секции."
 
-#: ddl.xml:2795(para)
+#: ddl.xml:2805(para)
 msgid ""
 "The following forms of partitioning can be implemented in "
 "<productname>PostgreSQL</productname>: <placeholder-1/>"
@@ -4435,11 +4442,11 @@ msgstr ""
 "В <productname>PostgreSQL</productname> можно реализовать следующие типы "
 "секционирования: <placeholder-1/>"
 
-#: ddl.xml:2829(title)
+#: ddl.xml:2839(title)
 msgid "Implementing Partitioning"
 msgstr "Реализация секционирования"
 
-#: ddl.xml:2835(para)
+#: ddl.xml:2845(para)
 msgid ""
 "Create the <quote>master</quote> table, from which all of the partitions "
 "will inherit."
@@ -4447,7 +4454,7 @@ msgstr ""
 "Создайте <quote>главную</quote> таблицу, от которой будут унаследованы все "
 "секции."
 
-#: ddl.xml:2839(para)
+#: ddl.xml:2849(para)
 msgid ""
 "This table will contain no data. Do not define any check constraints on this "
 "table, unless you intend them to be applied equally to all partitions. There "
@@ -4458,7 +4465,7 @@ msgstr ""
 "секциях. Также не имеет смысла определять для неё какие-либо индексы или "
 "ограничения уникальности."
 
-#: ddl.xml:2848(para)
+#: ddl.xml:2858(para)
 msgid ""
 "Create several <quote>child</quote> tables that each inherit from the master "
 "table. Normally, these tables will not add any columns to the set inherited "
@@ -4468,7 +4475,7 @@ msgstr ""
 "главной. Обычно в таких таблицах не будет никаких дополнительных столбцов, "
 "кроме унаследованных."
 
-#: ddl.xml:2854(para)
+#: ddl.xml:2864(para)
 msgid ""
 "We will refer to the child tables as partitions, though they are in every "
 "way normal <productname>PostgreSQL</productname> tables (or, possibly, "
@@ -4478,7 +4485,7 @@ msgstr ""
 "ничем не отличаются от обычных таблиц <productname>PostgreSQL</productname> "
 "(и, возможно, сторонних таблиц)."
 
-#: ddl.xml:2862(para)
+#: ddl.xml:2872(para)
 msgid ""
 "Add table constraints to the partition tables to define the allowed key "
 "values in each partition."
@@ -4486,7 +4493,7 @@ msgstr ""
 "Добавьте в таблицы-секции ограничения, определяющие допустимые значения "
 "ключей для каждой секции."
 
-#: ddl.xml:2869(programlisting)
+#: ddl.xml:2879(programlisting)
 #, no-wrap
 msgid ""
 "CHECK ( x = 1 )\n"
@@ -4497,7 +4504,7 @@ msgstr ""
 "CHECK ( county IN ( 'Oxfordshire', 'Buckinghamshire', 'Warwickshire' ))\n"
 "CHECK ( outletID &gt;= 100 AND outletID &lt; 200 )"
 
-#: ddl.xml:2877(programlisting)
+#: ddl.xml:2887(programlisting)
 #, no-wrap
 msgid ""
 "CHECK ( outletID BETWEEN 100 AND 200 )\n"
@@ -4506,7 +4513,7 @@ msgstr ""
 "CHECK ( outletID BETWEEN 100 AND 200 )\n"
 "CHECK ( outletID BETWEEN 200 AND 300 )"
 
-#: ddl.xml:2867(para)
+#: ddl.xml:2877(para)
 msgid ""
 "Typical examples would be: <placeholder-1/> Ensure that the constraints "
 "guarantee that there is no overlap between the key values permitted in "
@@ -4520,7 +4527,7 @@ msgstr ""
 "определении диапазонов: <placeholder-2/> Это не будет работать, так как "
 "неясно, к какой секции должно относиться значение 200."
 
-#: ddl.xml:2885(para)
+#: ddl.xml:2895(para)
 msgid ""
 "Note that there is no difference in syntax between range and list "
 "partitioning; those terms are descriptive only."
@@ -4528,7 +4535,7 @@ msgstr ""
 "Заметьте, что никаких синтаксических отличий между секционированием по "
 "диапазонам и по списку значений нет; эти типы выделены только для понимания."
 
-#: ddl.xml:2893(para)
+#: ddl.xml:2903(para)
 msgid ""
 "For each partition, create an index on the key column(s), as well as any "
 "other indexes you might want. (The key index is not strictly necessary, but "
@@ -4542,7 +4549,7 @@ msgstr ""
 "значения ключа были уникальны, вам следует также создать ограничения "
 "уникальности или первичного ключа для каждой секции.)"
 
-#: ddl.xml:2904(para)
+#: ddl.xml:2914(para)
 msgid ""
 "Optionally, define a trigger or rule to redirect data inserted into the "
 "master table to the appropriate partition."
@@ -4550,7 +4557,7 @@ msgstr ""
 "Дополнительно вы можете определить триггер или правило для перенаправления "
 "данных, добавляемых в главную таблицу, в соответствующую секцию."
 
-#: ddl.xml:2911(para)
+#: ddl.xml:2921(para)
 msgid ""
 "Ensure that the <xref linkend=\"guc-constraint-exclusion\"/> configuration "
 "parameter is not disabled in <filename>postgresql.conf</filename>. If it is, "
@@ -4560,12 +4567,12 @@ msgstr ""
 "exclusion\"/> не выключен в <filename>postgresql.conf</filename>. Иначе "
 "запросы не будут оптимизироваться должным образом."
 
-#: ddl.xml:2831(para)
+#: ddl.xml:2841(para)
 msgid "To set up a partitioned table, do the following: <placeholder-1/>"
 msgstr ""
 "Чтобы создать секционированную таблицу, выполните следующее: <placeholder-1/>"
 
-#: ddl.xml:2928(programlisting)
+#: ddl.xml:2938(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE measurement (\n"
@@ -4582,7 +4589,7 @@ msgstr ""
 "    unitsales       int\n"
 ");"
 
-#: ddl.xml:2922(para)
+#: ddl.xml:2932(para)
 msgid ""
 "For example, suppose we are constructing a database for a large ice cream "
 "company. The company measures peak temperatures every day as well as ice "
@@ -4603,7 +4610,7 @@ msgstr ""
 "за 3 последних года. Ненужные данные мы будем удалять в начале каждого "
 "месяца."
 
-#: ddl.xml:2945(para)
+#: ddl.xml:2955(para)
 msgid ""
 "In this situation we can use partitioning to help us meet all of our "
 "different requirements for the measurements table. Following the steps "
@@ -4613,7 +4620,7 @@ msgstr ""
 "всех наших потребностей. Настроить секционирование согласно приведённой выше "
 "последовательности действий можно следующим образом:"
 
-#: ddl.xml:2954(para)
+#: ddl.xml:2964(para)
 msgid ""
 "The master table is the <structname>measurement</structname> table, declared "
 "exactly as above."
@@ -4621,7 +4628,7 @@ msgstr ""
 "Главная таблица, названная <structname>measurement</structname>, будет "
 "объявлена в точности как показано выше."
 
-#: ddl.xml:2964(programlisting)
+#: ddl.xml:2974(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE measurement_y2006m02 ( ) INHERITS (measurement);\n"
@@ -4638,7 +4645,7 @@ msgstr ""
 "CREATE TABLE measurement_y2007m12 ( ) INHERITS (measurement);\n"
 "CREATE TABLE measurement_y2008m01 ( ) INHERITS (measurement);"
 
-#: ddl.xml:2961(para)
+#: ddl.xml:2971(para)
 msgid ""
 "Next we create one partition for each active month: <placeholder-1/> Each of "
 "the partitions are complete tables in their own right, but they inherit "
@@ -4649,7 +4656,7 @@ msgstr ""
 "таблицами, но они наследуют свои определения от таблицы "
 "<structname>measurement</structname>."
 
-#: ddl.xml:2978(para)
+#: ddl.xml:2988(para)
 msgid ""
 "This solves one of our problems: deleting old data. Each month, all we will "
 "need to do is perform a <command>DROP TABLE</command> on the oldest child "
@@ -4659,7 +4666,7 @@ msgstr ""
 "нужно будет просто выполнять <command>DROP TABLE</command> для самой старой "
 "дочерней таблицы и создавать новую дочернюю таблицу для данных нового месяца."
 
-#: ddl.xml:2992(programlisting)
+#: ddl.xml:3002(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE measurement_y2006m02 (\n"
@@ -4696,7 +4703,7 @@ msgstr ""
 "  CHECK (logdate &gt;= DATE '2008-01-01' AND logdate &lt; DATE '2008-02-01')\n"
 ") INHERITS (measurement);"
 
-#: ddl.xml:2987(para)
+#: ddl.xml:2997(para)
 msgid ""
 "We must provide non-overlapping table constraints. Rather than just creating "
 "the partition tables as above, the table creation script should really be: "
@@ -4706,7 +4713,7 @@ msgstr ""
 "скрипт создания таблиц должен не просто создавать секции, но ещё и задавать "
 "ограничения: <placeholder-1/>"
 
-#: ddl.xml:3017(programlisting)
+#: ddl.xml:3027(programlisting)
 #, no-wrap
 msgid ""
 "CREATE INDEX measurement_y2006m02_logdate ON measurement_y2006m02 (logdate);\n"
@@ -4728,7 +4735,7 @@ msgstr ""
 "CREATE INDEX measurement_y2008m01_logdate\n"
 "  ON measurement_y2008m01 (logdate);"
 
-#: ddl.xml:3014(para)
+#: ddl.xml:3024(para)
 msgid ""
 "We probably need indexes on the key columns too: <placeholder-1/> We choose "
 "not to add further indexes at this time."
@@ -4736,7 +4743,7 @@ msgstr ""
 "Мы, вероятно, также захотим добавить индексы по столбцам ключа: "
 "<placeholder-1/> На этом с индексами мы пока остановимся."
 
-#: ddl.xml:3039(programlisting)
+#: ddl.xml:3049(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION measurement_insert_trigger()\n"
@@ -4757,7 +4764,7 @@ msgstr ""
 "$$\n"
 "LANGUAGE plpgsql;"
 
-#: ddl.xml:3053(programlisting)
+#: ddl.xml:3063(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TRIGGER insert_measurement_trigger\n"
@@ -4768,7 +4775,7 @@ msgstr ""
 "    BEFORE INSERT ON measurement\n"
 "    FOR EACH ROW EXECUTE PROCEDURE measurement_insert_trigger();"
 
-#: ddl.xml:3031(para)
+#: ddl.xml:3041(para)
 msgid ""
 "We want our application to be able to say <literal>INSERT INTO "
 "measurement ...</literal> and have the data be redirected into the "
@@ -4789,7 +4796,7 @@ msgstr ""
 "каждый месяц переопределять триггерную функцию, чтобы она всегда указывала "
 "на текущую секцию. Однако определение триггера обновлять не потребуется."
 
-#: ddl.xml:3069(programlisting)
+#: ddl.xml:3079(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION measurement_insert_trigger()\n"
@@ -4835,7 +4842,7 @@ msgstr ""
 "$$\n"
 "LANGUAGE plpgsql;"
 
-#: ddl.xml:3064(para)
+#: ddl.xml:3074(para)
 msgid ""
 "We might want to insert data and have the server automatically locate the "
 "partition into which the row should be added. We could do this with a more "
@@ -4849,7 +4856,7 @@ msgstr ""
 "прежним. Заметьте, что все условия <literal>IF</literal> должны в точности "
 "отражать ограничения <literal>CHECK</literal> соответствующих секций."
 
-#: ddl.xml:3097(para)
+#: ddl.xml:3107(para)
 msgid ""
 "While this function is more complex than the single-month case, it doesn't "
 "need to be updated as often, since branches can be added in advance of being "
@@ -4859,7 +4866,7 @@ msgstr ""
 "придётся так часто модифицировать, так как ветви условий можно добавить "
 "заранее."
 
-#: ddl.xml:3104(para)
+#: ddl.xml:3114(para)
 msgid ""
 "In practice it might be best to check the newest partition first, if most "
 "inserts go into that partition. For simplicity we have shown the trigger's "
@@ -4870,7 +4877,7 @@ msgstr ""
 "проверки триггера в том же порядке, как и в других фрагментах кода для этого "
 "примера."
 
-#: ddl.xml:3115(para)
+#: ddl.xml:3125(para)
 msgid ""
 "As we can see, a complex partitioning scheme could require a substantial "
 "amount of DDL. In the above example we would be creating a new partition "
@@ -4882,11 +4889,11 @@ msgstr ""
 "создавать секцию каждый месяц, так что было бы разумно написать скрипт, "
 "который бы формировал требуемый код DDL автоматически."
 
-#: ddl.xml:3125(title)
+#: ddl.xml:3135(title)
 msgid "Managing Partitions"
 msgstr "Управление секциями"
 
-#: ddl.xml:3127(para)
+#: ddl.xml:3137(para)
 msgid ""
 "Normally the set of partitions established when initially defining the table "
 "are not intended to remain static. It is common to want to remove old "
@@ -4903,12 +4910,12 @@ msgstr ""
 "практически моментально выполнять трудоёмкие операции, изменяя структуру "
 "секций, а не физически перемещая большие объёмы данных."
 
-#: ddl.xml:3141(programlisting)
+#: ddl.xml:3151(programlisting)
 #, no-wrap
 msgid "DROP TABLE measurement_y2006m02;"
 msgstr "DROP TABLE measurement_y2006m02;"
 
-#: ddl.xml:3138(para)
+#: ddl.xml:3148(para)
 msgid ""
 "The simplest option for removing old data is simply to drop the partition "
 "that is no longer necessary: <placeholder-1/> This can very quickly delete "
@@ -4919,12 +4926,12 @@ msgstr ""
 "ставшую ненужной: <placeholder-1/> Так можно удалить миллионы записей "
 "гораздо быстрее, чем сервер будет удалять их по одной."
 
-#: ddl.xml:3152(programlisting)
+#: ddl.xml:3162(programlisting)
 #, no-wrap
 msgid "ALTER TABLE measurement_y2006m02 NO INHERIT measurement;"
 msgstr "ALTER TABLE measurement_y2006m02 NO INHERIT measurement;"
 
-#: ddl.xml:3148(para)
+#: ddl.xml:3158(para)
 msgid ""
 "Another option that is often preferable is to remove the partition from the "
 "partitioned table but retain access to it as a table in its own right: "
@@ -4943,7 +4950,7 @@ msgstr ""
 "средства. Возможно, эти данные также можно будет агрегировать, перевести в "
 "компактный формат, выполнить другую обработку или построить отчёты."
 
-#: ddl.xml:3168(programlisting)
+#: ddl.xml:3178(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE measurement_y2008m02 (\n"
@@ -4954,7 +4961,7 @@ msgstr ""
 "    CHECK ( logdate &gt;= DATE '2008-02-01' AND logdate &lt; DATE '2008-03-01' )\n"
 ") INHERITS (measurement);"
 
-#: ddl.xml:3179(programlisting)
+#: ddl.xml:3189(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE measurement_y2008m02\n"
@@ -4973,7 +4980,7 @@ msgstr ""
 "-- возможно, дополнительная подготовка данных\n"
 "ALTER TABLE measurement_y2008m02 INHERIT measurement;"
 
-#: ddl.xml:3163(para)
+#: ddl.xml:3173(para)
 msgid ""
 "Similarly we can add a new partition to handle new data. We can create an "
 "empty partition in the partitioned table just as the original partitions "
@@ -4989,15 +4996,15 @@ msgstr ""
 "подходе данные можно будет загрузить, проверить и преобразовать до того, как "
 "они появятся в секционированной таблице: <placeholder-2/>"
 
-#: ddl.xml:3192(title)
+#: ddl.xml:3202(title)
 msgid "Partitioning and Constraint Exclusion"
 msgstr "Секционирование и исключение по ограничению"
 
-#: ddl.xml:3194(indexterm)
+#: ddl.xml:3204(indexterm)
 msgid "<primary>constraint exclusion</primary>"
 msgstr "<primary>исключение по ограничению</primary>"
 
-#: ddl.xml:3203(programlisting)
+#: ddl.xml:3213(programlisting)
 #, no-wrap
 msgid ""
 "SET constraint_exclusion = on;\n"
@@ -5006,7 +5013,7 @@ msgstr ""
 "SET constraint_exclusion = on;\n"
 "SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';"
 
-#: ddl.xml:3198(para)
+#: ddl.xml:3208(para)
 msgid ""
 "<firstterm>Constraint exclusion</firstterm> is a query optimization "
 "technique that improves performance for partitioned tables defined in the "
@@ -5028,7 +5035,7 @@ msgstr ""
 "удовлетворяющие условию запроса <literal>WHERE</literal>. Если планировщик "
 "придёт к такому выводу, он исключит эту секцию из плана запроса."
 
-#: ddl.xml:3222(programlisting)
+#: ddl.xml:3232(programlisting)
 #, no-wrap
 msgid ""
 "SET constraint_exclusion = off;\n"
@@ -5074,7 +5081,7 @@ msgstr ""
 "                      (cost=0.00..30.38 rows=543 width=0)\n"
 "               Filter: (logdate &gt;= '2008-01-01'::date)"
 
-#: ddl.xml:3249(programlisting)
+#: ddl.xml:3259(programlisting)
 #, no-wrap
 msgid ""
 "SET constraint_exclusion = on;\n"
@@ -5102,7 +5109,7 @@ msgstr ""
 "                      (cost=0.00..30.38 rows=543 width=0)\n"
 "               Filter: (logdate &gt;= '2008-01-01'::date)"
 
-#: ddl.xml:3217(para)
+#: ddl.xml:3227(para)
 msgid ""
 "You can use the <command>EXPLAIN</command> command to show the difference "
 "between a plan with <varname>constraint_exclusion</varname> on and a plan "
@@ -5123,7 +5130,7 @@ msgstr ""
 "включаем исключение по ограничению, мы получаем значительно более "
 "эффективный план, дающий тот же результат: <placeholder-2/>"
 
-#: ddl.xml:3263(para)
+#: ddl.xml:3273(para)
 msgid ""
 "Note that constraint exclusion is driven only by <literal>CHECK</literal> "
 "constraints, not by the presence of indexes. Therefore it isn't necessary to "
@@ -5139,7 +5146,7 @@ msgstr ""
 "обрабатываться при выполнении большинства запросов. Если это небольшая "
 "часть, индекс может быть полезен, в противном случае он не нужен."
 
-#: ddl.xml:3273(para)
+#: ddl.xml:3283(para)
 msgid ""
 "The default (and recommended) setting of <xref linkend=\"guc-constraint-"
 "exclusion\"/> is actually neither <literal>on</literal> nor <literal>off</"
@@ -5158,11 +5165,11 @@ msgstr ""
 "всех запросах, даже в самых простых, где исключение по ограничению не будет "
 "иметь смысла."
 
-#: ddl.xml:3287(title)
+#: ddl.xml:3297(title)
 msgid "Alternative Partitioning Methods"
 msgstr "Альтернативные варианты секционирования"
 
-#: ddl.xml:3294(programlisting)
+#: ddl.xml:3304(programlisting)
 #, no-wrap
 msgid ""
 "CREATE RULE measurement_insert_y2006m02 AS\n"
@@ -5189,7 +5196,7 @@ msgstr ""
 "DO INSTEAD\n"
 "    INSERT INTO measurement_y2008m01 VALUES (NEW.*);"
 
-#: ddl.xml:3289(para)
+#: ddl.xml:3299(para)
 msgid ""
 "A different approach to redirecting inserts into the appropriate partition "
 "table is to set up rules, instead of a trigger, on the master table. For "
@@ -5206,7 +5213,7 @@ msgstr ""
 "добавлении данных. Однако в большинстве случаев триггеры будут работать "
 "быстрее."
 
-#: ddl.xml:3314(para)
+#: ddl.xml:3324(para)
 msgid ""
 "Be aware that <command>COPY</command> ignores rules. If you want to use "
 "<command>COPY</command> to insert data, you'll need to copy into the correct "
@@ -5219,7 +5226,7 @@ msgstr ""
 "стороны, <command>COPY</command> не отменяет триггеры, так что с триггерами "
 "вы сможете использовать её обычным образом."
 
-#: ddl.xml:3321(para)
+#: ddl.xml:3331(para)
 msgid ""
 "Another disadvantage of the rule approach is that there is no simple way to "
 "force an error if the set of rules doesn't cover the insertion date; the "
@@ -5229,7 +5236,7 @@ msgstr ""
 "ошибку, если добавляемая строка не подпадает ни под одно из правил; в этом "
 "случае данные просто попадут в главную таблицу."
 
-#: ddl.xml:3331(programlisting)
+#: ddl.xml:3341(programlisting)
 #, no-wrap
 msgid ""
 "CREATE VIEW measurement AS\n"
@@ -5248,7 +5255,7 @@ msgstr ""
 "UNION ALL SELECT * FROM measurement_y2007m12\n"
 "UNION ALL SELECT * FROM measurement_y2008m01;"
 
-#: ddl.xml:3327(para)
+#: ddl.xml:3337(para)
 msgid ""
 "Partitioning can also be arranged using a <literal>UNION ALL</literal> view, "
 "instead of table inheritance. For example, <placeholder-1/> However, the "
@@ -5262,7 +5269,7 @@ msgstr ""
 "добавлять или удалять секции, но и пересоздавать представление. На практике "
 "этот метод не имеет значительных преимуществ по сравнению с наследованием."
 
-#: ddl.xml:3355(para)
+#: ddl.xml:3365(para)
 msgid ""
 "There is no automatic way to verify that all of the <literal>CHECK</literal> "
 "constraints are mutually exclusive. It is safer to create code that "
@@ -5274,7 +5281,7 @@ msgstr ""
 "написать и отладить код для формирования секций и создания и/или изменения "
 "связанных объектов, чем делать это вручную."
 
-#: ddl.xml:3365(para)
+#: ddl.xml:3375(para)
 msgid ""
 "The schemes shown here assume that the partition key column(s) of a row "
 "never change, or at least do not change enough to require it to move to "
@@ -5291,12 +5298,12 @@ msgstr ""
 "случаи, вы можете установить подходящие триггеры на обновление в таблицы-"
 "секции, но это ещё больше усложнит управление всей конструкцией."
 
-#: ddl.xml:3381(programlisting)
+#: ddl.xml:3391(programlisting)
 #, no-wrap
 msgid "ANALYZE measurement;"
 msgstr "ANALYZE measurement;"
 
-#: ddl.xml:3377(para)
+#: ddl.xml:3387(para)
 msgid ""
 "If you are using manual <command>VACUUM</command> or <command>ANALYZE</"
 "command> commands, don't forget that you need to run them on each partition "
@@ -5307,7 +5314,7 @@ msgstr ""
 "command> вручную, не забывайте, что их нужно запускать для каждой секции в "
 "отдельности. Команда <placeholder-1/> обработает только главную таблицу."
 
-#: ddl.xml:3389(para)
+#: ddl.xml:3399(para)
 msgid ""
 "<command>INSERT</command> statements with <literal>ON CONFLICT</literal> "
 "clauses are unlikely to work as expected, as the <literal>ON CONFLICT</"
@@ -5319,12 +5326,12 @@ msgstr ""
 "<literal>ON CONFLICT</literal> предпринимается только в случае нарушений "
 "уникальности в указанном целевом отношении, а не его дочерних отношениях."
 
-#: ddl.xml:3351(para)
+#: ddl.xml:3361(para)
 msgid "The following caveats apply to partitioned tables: <placeholder-1/>"
 msgstr ""
 "С секционированными таблицами связаны следующие ограничения: <placeholder-1/>"
 
-#: ddl.xml:3405(para)
+#: ddl.xml:3415(para)
 msgid ""
 "Constraint exclusion only works when the query's <literal>WHERE</literal> "
 "clause contains constants (or externally supplied parameters). For example, "
@@ -5340,7 +5347,7 @@ msgstr ""
 "планировщик не знает, в какую секцию попадёт значение функции во время "
 "выполнения."
 
-#: ddl.xml:3416(para)
+#: ddl.xml:3426(para)
 msgid ""
 "Keep the partitioning constraints simple, else the planner may not be able "
 "to prove that partitions don't need to be visited. Use simple equality "
@@ -5357,7 +5364,7 @@ msgstr ""
 "сравнения секционирующих столбцов с константами, в которых используются "
 "операторы, поддерживающие B-деревья."
 
-#: ddl.xml:3428(para)
+#: ddl.xml:3438(para)
 msgid ""
 "All constraints on all partitions of the master table are examined during "
 "constraint exclusion, so large numbers of partitions are likely to increase "
@@ -5371,29 +5378,29 @@ msgstr ""
 "работают хорошо, пока количество секций не превышает примерно ста, но не "
 "пытайтесь применять их с тысячами секций."
 
-#: ddl.xml:3400(para)
+#: ddl.xml:3410(para)
 msgid "The following caveats apply to constraint exclusion: <placeholder-1/>"
 msgstr ""
 "Применяя исключения по ограничению, необходимо учитывать следующее: "
 "<placeholder-1/>"
 
-#: ddl.xml:3443(title)
+#: ddl.xml:3453(title)
 msgid "Foreign Data"
 msgstr "Сторонние данные"
 
-#: ddl.xml:3445(indexterm)
+#: ddl.xml:3455(indexterm)
 msgid "<primary>foreign data</primary>"
 msgstr "<primary>сторонние данные</primary>"
 
-#: ddl.xml:3448(indexterm)
+#: ddl.xml:3458(indexterm)
 msgid "<primary>foreign table</primary>"
 msgstr "<primary>сторонняя таблица</primary>"
 
-#: ddl.xml:3451(indexterm)
+#: ddl.xml:3461(indexterm)
 msgid "<primary>user mapping</primary>"
 msgstr "<primary>сопоставление пользователей</primary>"
 
-#: ddl.xml:3455(para)
+#: ddl.xml:3465(para)
 msgid ""
 "<productname>PostgreSQL</productname> implements portions of the SQL/MED "
 "specification, allowing you to access data that resides outside PostgreSQL "
@@ -5406,7 +5413,7 @@ msgstr ""
 "обычные SQL-запросы. Такие данные называются <firstterm>сторонними</"
 "firstterm>."
 
-#: ddl.xml:3463(para)
+#: ddl.xml:3473(para)
 msgid ""
 "Foreign data is accessed with help from a <firstterm>foreign data wrapper</"
 "firstterm>. A foreign data wrapper is a library that can communicate with an "
@@ -5427,7 +5434,7 @@ msgstr ""
 "из существующих обёрток вас не устраивает, вы можете написать свою "
 "собственную (см. <xref remap=\"4\" linkend=\"fdwhandler\"/>)."
 
-#: ddl.xml:3475(para)
+#: ddl.xml:3485(para)
 msgid ""
 "To access foreign data, you need to create a <firstterm>foreign server</"
 "firstterm> object, which defines how to connect to a particular external "
@@ -5451,7 +5458,7 @@ msgstr ""
 "данных, которая, в свою очередь, получает данные из внешнего источника или "
 "передаёт их ему (в случае команд INSERT или UPDATE)."
 
-#: ddl.xml:3488(para)
+#: ddl.xml:3498(para)
 msgid ""
 "Accessing remote data may require authenticating to the external data "
 "source. This information can be provided by a <firstterm>user mapping</"
@@ -5464,7 +5471,7 @@ msgstr ""
 "определить в частности имена и пароли, в зависимости от текущей роли "
 "пользователя <productname>PostgreSQL</productname>."
 
-#: ddl.xml:3496(para)
+#: ddl.xml:3506(para)
 msgid ""
 "For additional information, see <xref linkend=\"sql-createforeigndatawrapper"
 "\"/>, <xref linkend=\"sql-createserver\"/>, <xref linkend=\"sql-"
@@ -5477,11 +5484,11 @@ msgstr ""
 "linkend=\"sql-createforeigntable\"/> и <xref remap=\"6\" linkend=\"sql-"
 "importforeignschema\"/>."
 
-#: ddl.xml:3507(title)
+#: ddl.xml:3517(title)
 msgid "Other Database Objects"
 msgstr "Другие объекты баз данных"
 
-#: ddl.xml:3509(para)
+#: ddl.xml:3519(para)
 msgid ""
 "Tables are the central objects in a relational database structure, because "
 "they hold your data. But they are not the only objects that exist in a "
@@ -5497,23 +5504,23 @@ msgstr ""
 "Они не обсуждаются в этой главе, но мы просто перечислим некоторые из них, "
 "чтобы вы знали об их существовании:"
 
-#: ddl.xml:3520(para)
+#: ddl.xml:3530(para)
 msgid "Views"
 msgstr "Представления"
 
-#: ddl.xml:3526(para)
+#: ddl.xml:3536(para)
 msgid "Functions and operators"
 msgstr "Функции и операторы"
 
-#: ddl.xml:3532(para)
+#: ddl.xml:3542(para)
 msgid "Data types and domains"
 msgstr "Типы данных и домены"
 
-#: ddl.xml:3538(para)
+#: ddl.xml:3548(para)
 msgid "Triggers and rewrite rules"
 msgstr "Триггеры и правила перезаписи"
 
-#: ddl.xml:3544(para)
+#: ddl.xml:3554(para)
 msgid ""
 "Detailed information on these topics appears in <xref linkend=\"server-"
 "programming\"/>."
@@ -5521,23 +5528,23 @@ msgstr ""
 "Подробнее соответствующие темы освещаются в <xref remap=\"6\" linkend="
 "\"server-programming\"/>."
 
-#: ddl.xml:3551(title)
+#: ddl.xml:3561(title)
 msgid "Dependency Tracking"
 msgstr "Отслеживание зависимостей"
 
-#: ddl.xml:3553(indexterm)
+#: ddl.xml:3563(indexterm)
 msgid ""
 "<primary>CASCADE</primary> <secondary sortas=\"DROP\">with DROP</secondary>"
 msgstr ""
 "<primary>CASCADE</primary> <secondary sortas=\"DROP\">с DROP</secondary>"
 
-#: ddl.xml:3558(indexterm)
+#: ddl.xml:3568(indexterm)
 msgid ""
 "<primary>RESTRICT</primary> <secondary sortas=\"DROP\">with DROP</secondary>"
 msgstr ""
 "<primary>RESTRICT</primary> <secondary sortas=\"DROP\">с DROP</secondary>"
 
-#: ddl.xml:3563(para)
+#: ddl.xml:3573(para)
 msgid ""
 "When you create complex database structures involving many tables with "
 "foreign key constraints, views, triggers, functions, etc. you implicitly "
@@ -5549,7 +5556,7 @@ msgstr ""
 "неявно создаёте сеть зависимостей между объектами. Например, таблица с "
 "ограничением внешнего ключа зависит от таблицы, на которую она ссылается."
 
-#: ddl.xml:3571(para)
+#: ddl.xml:3581(para)
 msgid ""
 "To ensure the integrity of the entire database structure, "
 "<productname>PostgreSQL</productname> makes sure that you cannot drop "
@@ -5600,7 +5607,7 @@ msgstr ""
 "command>, запустите <command>DROP</command> без <literal>CASCADE</literal> и "
 "прочитайте <literal>ПОДРОБНОСТИ</literal> (DETAIL).)"
 
-#: ddl.xml:3599(para)
+#: ddl.xml:3609(para)
 msgid ""
 "Almost all <command>DROP</command> commands in <productname>PostgreSQL</"
 "productname> support specifying <literal>CASCADE</literal>. Of course, the "
@@ -5616,7 +5623,7 @@ msgstr ""
 "включить поведение по умолчанию, когда объект можно удалить, только если от "
 "него не зависят никакие другие."
 
-#: ddl.xml:3609(para)
+#: ddl.xml:3619(para)
 msgid ""
 "According to the SQL standard, specifying either <literal>RESTRICT</literal> "
 "or <literal>CASCADE</literal> is required in a <command>DROP</command> "
@@ -5630,7 +5637,7 @@ msgstr ""
 "системы по умолчанию подразумевают <literal>RESTRICT</literal>, а другие — "
 "<literal>CASCADE</literal>."
 
-#: ddl.xml:3619(para)
+#: ddl.xml:3629(para)
 msgid ""
 "If a <command>DROP</command> command lists multiple objects, "
 "<literal>CASCADE</literal> is only required when there are dependencies "
@@ -5646,7 +5653,7 @@ msgstr ""
 "<literal>tab1</literal> из <literal>tab2</literal>, можно не указывать "
 "<literal>CASCADE</literal>, чтобы она выполнилась успешно."
 
-#: ddl.xml:3635(programlisting)
+#: ddl.xml:3645(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow',\n"
@@ -5667,7 +5674,7 @@ msgstr ""
 "  'SELECT note FROM my_colors WHERE color = $1'\n"
 "  LANGUAGE SQL;"
 
-#: ddl.xml:3628(para)
+#: ddl.xml:3638(para)
 msgid ""
 "For user-defined functions, <productname>PostgreSQL</productname> tracks "
 "dependencies associated with a function's externally-visible properties, "
@@ -5707,6 +5714,20 @@ msgstr ""
 #: ddl.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "Note how table access permissions are handled. Querying a parent table "
+#~ "can automatically access data in child tables without further access "
+#~ "privilege checking. This preserves the appearance that the data is (also) "
+#~ "in the parent table. Accessing the child tables directly is, however, not "
+#~ "automatically allowed and would require further privileges to be granted."
+#~ msgstr ""
+#~ "Обратите внимание на ситуацию с правами доступа. При запросе к "
+#~ "родительской таблице данные всех дочерних таблиц будут возвращены без "
+#~ "дополнительной проверки прав. Так создаётся представление, что эти данные "
+#~ "(тоже) находятся в родительской таблице. Однако права не распространяются "
+#~ "автоматически на все дочерние таблицы, и поэтому для обращения к ним "
+#~ "права доступа должны назначаться отдельно."
 
 #~ msgid ""
 #~ "Foreign key constraint dependencies and serial column dependencies from "

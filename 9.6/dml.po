@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-02-06 11:18+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -180,7 +180,25 @@ msgstr ""
 msgid "You can insert multiple rows in a single command: <placeholder-1/>"
 msgstr "Одна команда может вставить сразу несколько строк: <placeholder-1/>"
 
-#: dml.xml:107(para)
+#: dml.xml:109(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"INSERT INTO products (product_no, name, price)\n"
+"  SELECT product_no, name, price FROM new_products\n"
+"    WHERE release_date = 'today';"
+msgstr ""
+"INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', 9.99);\n"
+"INSERT INTO products (name, price, product_no) VALUES ('Cheese', 9.99, 1);"
+
+#: dml.xml:106(para)
+msgid ""
+"It is also possible to insert the result of a query (which might be no rows, "
+"one row, or many rows): <placeholder-1/> This provides the full power of the "
+"SQL query mechanism (<xref linkend=\"queries\"/>) for computing the rows to "
+"be inserted."
+msgstr ""
+
+#: dml.xml:119(para)
 msgid ""
 "When inserting a lot of data at the same time, considering using the <xref "
 "linkend=\"sql-copy\"/> command. It is not as flexible as the <xref linkend="
@@ -193,19 +211,19 @@ msgstr ""
 "ускорении массовой загрузки данных можно узнать в <xref remap=\"6\" linkend="
 "\"populate\"/>."
 
-#: dml.xml:119(title)
+#: dml.xml:131(title)
 msgid "Updating Data"
 msgstr "Изменение данных"
 
-#: dml.xml:121(indexterm)
+#: dml.xml:133(indexterm)
 msgid "<primary>updating</primary>"
 msgstr "<primary>изменение</primary>"
 
-#: dml.xml:125(indexterm)
+#: dml.xml:137(indexterm)
 msgid "<primary>UPDATE</primary>"
 msgstr "<primary>UPDATE</primary>"
 
-#: dml.xml:129(para)
+#: dml.xml:141(para)
 msgid ""
 "The modification of data that is already in the database is referred to as "
 "updating. You can update individual rows, all the rows in a table, or a "
@@ -217,19 +235,19 @@ msgstr ""
 "избранные строки. Каждый столбец при этом можно изменять независимо от "
 "других."
 
-#: dml.xml:142(para)
+#: dml.xml:154(para)
 msgid "The name of the table and column to update"
 msgstr "Имя таблицы и изменяемого столбца"
 
-#: dml.xml:146(para)
+#: dml.xml:158(para)
 msgid "The new value of the column"
 msgstr "Новое значение столбца"
 
-#: dml.xml:150(para)
+#: dml.xml:162(para)
 msgid "Which row(s) to update"
 msgstr "Критерий отбора изменяемых строк"
 
-#: dml.xml:136(para)
+#: dml.xml:148(para)
 msgid ""
 "To update existing rows, use the <xref linkend=\"sql-update\"/> command. "
 "This requires three pieces of information: <placeholder-1/>"
@@ -237,7 +255,7 @@ msgstr ""
 "Для изменения данных в существующих строках используется команда <xref "
 "linkend=\"sql-update\"/>. Ей требуется следующая информация: <placeholder-1/>"
 
-#: dml.xml:155(para)
+#: dml.xml:167(para)
 msgid ""
 "Recall from <xref linkend=\"ddl\"/> that SQL does not, in general, provide a "
 "unique identifier for rows. Therefore it is not always possible to directly "
@@ -258,12 +276,12 @@ msgstr ""
 "инструменты для работы с базой данных, дающие возможность редактировать "
 "данные по строкам."
 
-#: dml.xml:170(programlisting)
+#: dml.xml:182(programlisting)
 #, no-wrap
 msgid "UPDATE products SET price = 10 WHERE price = 5;"
 msgstr "UPDATE products SET price = 10 WHERE price = 5;"
 
-#: dml.xml:167(para)
+#: dml.xml:179(para)
 msgid ""
 "For example, this command updates all products that have a price of 5 to "
 "have a price of 10: <placeholder-1/> This might cause zero, one, or many "
@@ -275,12 +293,12 @@ msgstr ""
 "множество строк. И если этому запросу не будет удовлетворять ни одна строка, "
 "это не будет ошибкой."
 
-#: dml.xml:186(programlisting)
+#: dml.xml:198(programlisting)
 #, no-wrap
 msgid "UPDATE products SET price = price * 1.10;"
 msgstr "UPDATE products SET price = price * 1.10;"
 
-#: dml.xml:177(para)
+#: dml.xml:189(para)
 msgid ""
 "Let's look at that command in detail. First is the key word <literal>UPDATE</"
 "literal> followed by the table name. As usual, the table name can be schema-"
@@ -320,12 +338,12 @@ msgstr ""
 "операторы (см. <xref remap=\"4\" linkend=\"functions\"/>). Необходимо "
 "только, чтобы это выражение возвращало логический результат."
 
-#: dml.xml:207(programlisting)
+#: dml.xml:219(programlisting)
 #, no-wrap
 msgid "UPDATE mytable SET a = 5, b = 3, c = 1 WHERE a &gt; 0;"
 msgstr "UPDATE mytable SET a = 5, b = 3, c = 1 WHERE a &gt; 0;"
 
-#: dml.xml:203(para)
+#: dml.xml:215(para)
 msgid ""
 "You can update more than one column in an <command>UPDATE</command> command "
 "by listing more than one assignment in the <literal>SET</literal> clause. "
@@ -335,19 +353,19 @@ msgstr ""
 "столбцов, перечислив их в предложении <literal>SET</literal>. Например: "
 "<placeholder-1/>"
 
-#: dml.xml:214(title)
+#: dml.xml:226(title)
 msgid "Deleting Data"
 msgstr "Удаление данных"
 
-#: dml.xml:216(indexterm)
+#: dml.xml:228(indexterm)
 msgid "<primary>deleting</primary>"
 msgstr "<primary>удаление</primary>"
 
-#: dml.xml:220(indexterm)
+#: dml.xml:232(indexterm)
 msgid "<primary>DELETE</primary>"
 msgstr "<primary>DELETE</primary>"
 
-#: dml.xml:224(para)
+#: dml.xml:236(para)
 msgid ""
 "So far we have explained how to add data to tables and how to change data. "
 "What remains is to discuss how to remove data that is no longer needed. Just "
@@ -369,12 +387,12 @@ msgstr ""
 "определённую строку. При этом можно так же удалить группы строк, "
 "соответствующие условию, либо сразу все строки таблицы."
 
-#: dml.xml:243(programlisting)
+#: dml.xml:255(programlisting)
 #, no-wrap
 msgid "DELETE FROM products WHERE price = 10;"
 msgstr "DELETE FROM products WHERE price = 10;"
 
-#: dml.xml:238(para)
+#: dml.xml:250(para)
 msgid ""
 "You use the <xref linkend=\"sql-delete\"/> command to remove rows; the "
 "syntax is very similar to the <command>UPDATE</command> command. For "
@@ -386,18 +404,120 @@ msgstr ""
 "Например, удалить все строки из таблицы с товарами, имеющими цену 10, можно "
 "так: <placeholder-1/>"
 
-#: dml.xml:250(programlisting)
+#: dml.xml:262(programlisting)
 #, no-wrap
 msgid "DELETE FROM products;"
 msgstr "DELETE FROM products;"
 
-#: dml.xml:248(para)
+#: dml.xml:260(para)
 msgid ""
 "If you simply write: <placeholder-1/> then all rows in the table will be "
 "deleted! Caveat programmer."
 msgstr ""
 "Если вы напишете просто: <placeholder-1/> будут удалены все строки таблицы! "
 "Будьте осторожны!"
+
+#: dml.xml:270(title)
+msgid "Returning Data From Modified Rows"
+msgstr ""
+
+#: dml.xml:272(indexterm)
+#, fuzzy
+msgid "<primary>RETURNING</primary>"
+msgstr "<primary>INSERT</primary>"
+
+#: dml.xml:276(indexterm)
+#, fuzzy
+msgid "<primary>INSERT</primary> <secondary>RETURNING</secondary>"
+msgstr "<primary>INSERT</primary>"
+
+#: dml.xml:281(indexterm)
+#, fuzzy
+msgid "<primary>UPDATE</primary> <secondary>RETURNING</secondary>"
+msgstr "<primary>UPDATE</primary>"
+
+#: dml.xml:286(indexterm)
+#, fuzzy
+msgid "<primary>DELETE</primary> <secondary>RETURNING</secondary>"
+msgstr "<primary>DELETE</primary>"
+
+#: dml.xml:291(para)
+msgid ""
+"Sometimes it is useful to obtain data from modified rows while they are "
+"being manipulated. The <command>INSERT</command>, <command>UPDATE</command>, "
+"and <command>DELETE</command> commands all have an optional "
+"<literal>RETURNING</literal> clause that supports this. Use of "
+"<literal>RETURNING</literal> avoids performing an extra database query to "
+"collect the data, and is especially valuable when it would otherwise be "
+"difficult to identify the modified rows reliably."
+msgstr ""
+
+#: dml.xml:301(para)
+msgid ""
+"The allowed contents of a <literal>RETURNING</literal> clause are the same "
+"as a <command>SELECT</command> command's output list (see <xref linkend="
+"\"queries-select-lists\"/>). It can contain column names of the command's "
+"target table, or value expressions using those columns. A common shorthand "
+"is <literal>RETURNING *</literal>, which selects all columns of the target "
+"table in order."
+msgstr ""
+
+#: dml.xml:318(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE users (firstname text, lastname text, id serial primary key);\n"
+"\n"
+"INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;"
+msgstr ""
+
+#: dml.xml:310(para)
+msgid ""
+"In an <command>INSERT</command>, the data available to <literal>RETURNING</"
+"literal> is the row as it was inserted. This is not so useful in trivial "
+"inserts, since it would just repeat the data provided by the client. But it "
+"can be very handy when relying on computed default values. For example, when "
+"using a <link linkend=\"datatype-serial\"><type>serial</type></link> column "
+"to provide unique identifiers, <literal>RETURNING</literal> can return the "
+"ID assigned to a new row: <placeholder-1/> The <literal>RETURNING</literal> "
+"clause is also very useful with <literal>INSERT ... SELECT</literal>."
+msgstr ""
+
+#: dml.xml:330(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"UPDATE products SET price = price * 1.10\n"
+"  WHERE price &lt;= 99.99\n"
+"  RETURNING name, price AS new_price;"
+msgstr "UPDATE products SET price = 10 WHERE price = 5;"
+
+#: dml.xml:327(para)
+msgid ""
+"In an <command>UPDATE</command>, the data available to <literal>RETURNING</"
+"literal> is the new content of the modified row. For example: <placeholder-1/"
+">"
+msgstr ""
+
+#: dml.xml:340(programlisting)
+#, fuzzy, no-wrap
+msgid ""
+"DELETE FROM products\n"
+"  WHERE obsoletion_date = 'today'\n"
+"  RETURNING *;"
+msgstr "DELETE FROM products WHERE price = 10;"
+
+#: dml.xml:337(para)
+msgid ""
+"In a <command>DELETE</command>, the data available to <literal>RETURNING</"
+"literal> is the content of the deleted row. For example: <placeholder-1/>"
+msgstr ""
+
+#: dml.xml:347(para)
+msgid ""
+"If there are triggers (<xref linkend=\"triggers\"/>) on the target table, "
+"the data available to <literal>RETURNING</literal> is the row as modified by "
+"the triggers. Thus, inspecting columns computed by triggers is another "
+"common use-case for <literal>RETURNING</literal>."
+msgstr ""
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: dml.xml:0(None)

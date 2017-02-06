@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-02-06 11:18+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -446,19 +446,19 @@ msgstr "Обращение к базе данных из PL/Tcl"
 msgid "spi_exec"
 msgstr "spi_exec"
 
-#: pltcl.xml:279(replaceable) pltcl.xml:369(replaceable)
+#: pltcl.xml:279(replaceable) pltcl.xml:371(replaceable)
 msgid "n"
 msgstr "n"
 
-#: pltcl.xml:279(optional) pltcl.xml:369(optional)
+#: pltcl.xml:279(optional) pltcl.xml:371(optional)
 msgid "-count <placeholder-1/>"
 msgstr "-count <placeholder-1/>"
 
-#: pltcl.xml:279(replaceable) pltcl.xml:369(replaceable)
+#: pltcl.xml:279(replaceable) pltcl.xml:371(replaceable)
 msgid "name"
 msgstr "имя"
 
-#: pltcl.xml:279(optional) pltcl.xml:369(optional)
+#: pltcl.xml:279(optional) pltcl.xml:371(optional)
 msgid "-array <placeholder-1/>"
 msgstr "-array <placeholder-1/>"
 
@@ -466,7 +466,7 @@ msgstr "-array <placeholder-1/>"
 msgid "command"
 msgstr "команда"
 
-#: pltcl.xml:279(replaceable) pltcl.xml:369(replaceable)
+#: pltcl.xml:279(replaceable) pltcl.xml:371(replaceable)
 msgid "loop-body"
 msgstr "тело-цикла"
 
@@ -502,12 +502,16 @@ msgstr ""
 "предварительно подготовленного для команды."
 
 #: pltcl.xml:296(para)
+#, fuzzy
 msgid ""
 "If the command is a <command>SELECT</command> statement, the values of the "
 "result columns are placed into Tcl variables named after the columns. If the "
 "<literal>-array</literal> option is given, the column values are instead "
-"stored into the named associative array, with the column names used as array "
-"indexes."
+"stored into elements of the named associative array, with the column names "
+"used as array indexes. In addition, the current row number within the result "
+"(counting from zero) is stored into the array element named <quote><literal>."
+"tupno</literal></quote>, unless that name is in use as a column name in the "
+"result."
 msgstr ""
 "Если в качестве команды выполняется оператор <command>SELECT</command>, "
 "значения результирующих столбцов помещаются в переменные Tcl, названные по "
@@ -515,20 +519,22 @@ msgstr ""
 "столбцов вместо этого сохраняются в названном ассоциативном массиве, в "
 "котором имена столбцов становятся индексами массива."
 
-#: pltcl.xml:310(programlisting)
+#: pltcl.xml:313(programlisting)
 #, no-wrap
 msgid "spi_exec \"SELECT count(*) AS cnt FROM pg_proc\""
 msgstr "spi_exec \"SELECT count(*) AS cnt FROM pg_proc\""
 
-#: pltcl.xml:303(para)
+#: pltcl.xml:306(para)
+#, fuzzy
 msgid ""
 "If the command is a <command>SELECT</command> statement and no "
 "<replaceable>loop-body</replaceable> script is given, then only the first "
-"row of results are stored into Tcl variables; remaining rows, if any, are "
-"ignored. No storing occurs if the query returns no rows. (This case can be "
-"detected by checking the result of <function>spi_exec</function>.) For "
-"example: <placeholder-1/> will set the Tcl variable <literal>$cnt</literal> "
-"to the number of rows in the <structname>pg_proc</structname> system catalog."
+"row of results are stored into Tcl variables or array elements; remaining "
+"rows, if any, are ignored. No storing occurs if the query returns no rows. "
+"(This case can be detected by checking the result of <function>spi_exec</"
+"function>.) For example: <placeholder-1/> will set the Tcl variable <literal>"
+"$cnt</literal> to the number of rows in the <structname>pg_proc</structname> "
+"system catalog."
 msgstr ""
 "Если в качестве команды выполняется <command>SELECT</command> без указания "
 "скрипта <replaceable>тело-цикла</replaceable>, в переменных Tcl сохраняется "
@@ -539,7 +545,7 @@ msgstr ""
 "literal> в Tcl число строк, содержащихся в системном каталоге "
 "<structname>pg_proc</structname>."
 
-#: pltcl.xml:324(programlisting)
+#: pltcl.xml:327(programlisting)
 #, no-wrap
 msgid ""
 "spi_exec -array C \"SELECT * FROM pg_class\" {\n"
@@ -550,16 +556,17 @@ msgstr ""
 "    elog DEBUG \"have table $C(relname)\"\n"
 "}"
 
-#: pltcl.xml:317(para)
+#: pltcl.xml:319(para)
+#, fuzzy
 msgid ""
 "If the optional <replaceable>loop-body</replaceable> argument is given, it "
 "is a piece of Tcl script that is executed once for each row in the query "
 "result. (<replaceable>loop-body</replaceable> is ignored if the given "
 "command is not a <command>SELECT</command>.) The values of the current row's "
-"columns are stored into Tcl variables before each iteration. For example: "
-"<placeholder-1/> will print a log message for every row of "
-"<literal>pg_class</literal>. This feature works similarly to other Tcl "
-"looping constructs; in particular <literal>continue</literal> and "
+"columns are stored into Tcl variables or array elements before each "
+"iteration. For example: <placeholder-1/> will print a log message for every "
+"row of <literal>pg_class</literal>. This feature works similarly to other "
+"Tcl looping constructs; in particular <literal>continue</literal> and "
 "<literal>break</literal> work in the usual way inside the loop body."
 msgstr ""
 "Если передаётся необязательный аргумент <replaceable>тело-цикла</"
@@ -573,7 +580,7 @@ msgstr ""
 "<literal>continue</literal> и <literal>break</literal> в теле цикла будут "
 "действовать обычным образом."
 
-#: pltcl.xml:335(para)
+#: pltcl.xml:337(para)
 msgid ""
 "If a column of a query result is null, the target variable for it is "
 "<quote>unset</quote> rather than being set."
@@ -581,23 +588,23 @@ msgstr ""
 "Если в столбце результата запроса выдаётся NULL, целевая переменная для неё "
 "не устанавливается, и оказывается <quote>неустановленной</quote>."
 
-#: pltcl.xml:343(function)
+#: pltcl.xml:345(function)
 msgid "spi_prepare"
 msgstr "spi_prepare"
 
-#: pltcl.xml:343(replaceable)
+#: pltcl.xml:345(replaceable)
 msgid "query"
 msgstr "запрос"
 
-#: pltcl.xml:343(replaceable)
+#: pltcl.xml:345(replaceable)
 msgid "typelist"
 msgstr "список-типов"
 
-#: pltcl.xml:348(indexterm)
+#: pltcl.xml:350(indexterm)
 msgid "<primary>preparing a query</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>подготовка запроса</primary> <secondary>в PL/Tcl</secondary>"
 
-#: pltcl.xml:345(para)
+#: pltcl.xml:347(para)
 msgid ""
 "Prepares and saves a query plan for later execution. The saved plan will be "
 "retained for the life of the current session.<placeholder-1/>"
@@ -606,7 +613,7 @@ msgstr ""
 "Сохранённый план будет продолжать существование до завершения текущего "
 "сеанса.<placeholder-1/>"
 
-#: pltcl.xml:351(para)
+#: pltcl.xml:353(para)
 msgid ""
 "The query can use parameters, that is, placeholders for values to be "
 "supplied whenever the plan is actually executed. In the query string, refer "
@@ -623,7 +630,7 @@ msgstr ""
 "списка Tcl. (Если параметры отсутствуют, задайте пустой "
 "<replaceable>список_типов</replaceable>.)"
 
-#: pltcl.xml:360(para)
+#: pltcl.xml:362(para)
 msgid ""
 "The return value from <function>spi_prepare</function> is a query ID to be "
 "used in subsequent calls to <function>spi_execp</function>. See "
@@ -633,27 +640,27 @@ msgstr ""
 "который может использоваться в последующих вызовах <function>spi_execp</"
 "function>. Пример приведён в описании <function>spi_execp</function>."
 
-#: pltcl.xml:369(function)
+#: pltcl.xml:371(function)
 msgid "spi_execp"
 msgstr "spi_execp"
 
-#: pltcl.xml:369(replaceable) pltcl.xml:440(replaceable)
+#: pltcl.xml:371(replaceable) pltcl.xml:442(replaceable)
 msgid "string"
 msgstr "строка"
 
-#: pltcl.xml:369(optional)
+#: pltcl.xml:371(optional)
 msgid "-nulls <placeholder-1/>"
 msgstr "-nulls <placeholder-1/>"
 
-#: pltcl.xml:369(replaceable)
+#: pltcl.xml:371(replaceable)
 msgid "queryid"
 msgstr "ид-запроса"
 
-#: pltcl.xml:369(replaceable)
+#: pltcl.xml:371(replaceable)
 msgid "value-list"
 msgstr "список-значений"
 
-#: pltcl.xml:371(para)
+#: pltcl.xml:373(para)
 msgid ""
 "Executes a query previously prepared with <function>spi_prepare</function>. "
 "<replaceable>queryid</replaceable> is the ID returned by "
@@ -672,7 +679,7 @@ msgstr ""
 "<function>spi_prepare</function>. Опустите <replaceable>список-значений</"
 "replaceable>, если у запроса нет параметров."
 
-#: pltcl.xml:381(para)
+#: pltcl.xml:383(para)
 msgid ""
 "The optional value for <literal>-nulls</literal> is a string of spaces and "
 "<literal>'n'</literal> characters telling <function>spi_execp</function> "
@@ -687,7 +694,7 @@ msgstr ""
 "значений</replaceable>. В случае её отсутствия значения всех параметров "
 "считаются отличными от NULL."
 
-#: pltcl.xml:388(para)
+#: pltcl.xml:390(para)
 msgid ""
 "Except for the way in which the query and its parameters are specified, "
 "<function>spi_execp</function> works just like <function>spi_exec</"
@@ -701,7 +708,7 @@ msgstr ""
 "<replaceable>тело-цикла</replaceable> задаются так же, и так же передаётся "
 "возвращаемое значение."
 
-#: pltcl.xml:398(programlisting)
+#: pltcl.xml:400(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION t1_count(integer, integer) RETURNS integer AS $$\n"
@@ -726,7 +733,7 @@ msgstr ""
 "    return $cnt\n"
 "$$ LANGUAGE pltcl;"
 
-#: pltcl.xml:395(para)
+#: pltcl.xml:397(para)
 msgid ""
 "Here's an example of a PL/Tcl function using a prepared plan: <placeholder-1/"
 "> We need backslashes inside the query string given to "
@@ -742,15 +749,15 @@ msgstr ""
 "<function>spi_prepare</function> как есть, а не заменялись при подстановке "
 "переменных Tcl."
 
-#: pltcl.xml:423(function)
+#: pltcl.xml:425(function)
 msgid "spi_lastoid"
 msgstr "spi_lastoid"
 
-#: pltcl.xml:424(indexterm)
+#: pltcl.xml:426(indexterm)
 msgid "<primary>spi_lastoid</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>spi_lastoid</primary> <secondary>в PL/Tcl</secondary>"
 
-#: pltcl.xml:430(para)
+#: pltcl.xml:432(para)
 msgid ""
 "Returns the OID of the row inserted by the last <function>spi_exec</"
 "function> or <function>spi_execp</function>, if the command was a single-row "
@@ -762,31 +769,31 @@ msgstr ""
 "оператор <command>INSERT</command> с одной строкой и изменяемая таблица "
 "содержит OID. (В противном случае вы получите ноль.)"
 
-#: pltcl.xml:440(function)
+#: pltcl.xml:442(function)
 msgid "quote"
 msgstr "quote"
 
-#: pltcl.xml:450(programlisting)
+#: pltcl.xml:452(programlisting)
 #, no-wrap
 msgid "\"SELECT '$val' AS ret\""
 msgstr "\"SELECT '$val' AS ret\""
 
-#: pltcl.xml:458(programlisting)
+#: pltcl.xml:460(programlisting)
 #, no-wrap
 msgid "SELECT 'doesn't' AS ret"
 msgstr "SELECT 'doesn't' AS ret"
 
-#: pltcl.xml:467(programlisting)
+#: pltcl.xml:469(programlisting)
 #, no-wrap
 msgid "SELECT 'doesn''t' AS ret"
 msgstr "SELECT 'doesn''t' AS ret"
 
-#: pltcl.xml:473(programlisting)
+#: pltcl.xml:475(programlisting)
 #, no-wrap
 msgid "\"SELECT '[ quote $val ]' AS ret\""
 msgstr "\"SELECT '[ quote $val ]' AS ret\""
 
-#: pltcl.xml:442(para)
+#: pltcl.xml:444(para)
 msgid ""
 "Doubles all occurrences of single quote and backslash characters in the "
 "given string. This can be used to safely quote strings that are to be "
@@ -816,23 +823,23 @@ msgstr ""
 "что для неё заключать значения параметров в кавычки подобным образом не "
 "нужно, так как параметры никогда не разбираются в составе строки команды SQL."
 
-#: pltcl.xml:486(function)
+#: pltcl.xml:488(function)
 msgid "elog"
 msgstr "elog"
 
-#: pltcl.xml:486(replaceable)
+#: pltcl.xml:488(replaceable)
 msgid "level"
 msgstr "уровень"
 
-#: pltcl.xml:486(replaceable)
+#: pltcl.xml:488(replaceable)
 msgid "msg"
 msgstr "сообщение"
 
-#: pltcl.xml:487(indexterm)
+#: pltcl.xml:489(indexterm)
 msgid "<primary>elog</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>elog</primary> <secondary>в PL/Tcl</secondary>"
 
-#: pltcl.xml:493(para)
+#: pltcl.xml:495(para)
 msgid ""
 "Emits a log or error message. Possible levels are <literal>DEBUG</literal>, "
 "<literal>LOG</literal>, <literal>INFO</literal>, <literal>NOTICE</literal>, "
@@ -879,15 +886,15 @@ msgstr ""
 "Для обращения к базе данных из тела функции на PL/Tcl предназначены "
 "следующие команды: <placeholder-1/>"
 
-#: pltcl.xml:524(title)
+#: pltcl.xml:526(title)
 msgid "Trigger Procedures in PL/Tcl"
 msgstr "Процедуры триггеров на PL/Tcl"
 
-#: pltcl.xml:526(indexterm)
+#: pltcl.xml:528(indexterm)
 msgid "<primary>trigger</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>триггер</primary> <secondary>на языке PL/Tcl</secondary>"
 
-#: pltcl.xml:531(para)
+#: pltcl.xml:533(para)
 msgid ""
 "Trigger procedures can be written in PL/Tcl. <productname>PostgreSQL</"
 "productname> requires that a procedure that is to be called as a trigger "
@@ -899,48 +906,48 @@ msgstr ""
 "триггерная, была объявлена как функция без аргументов и возвращала тип "
 "<literal>trigger</literal>."
 
-#: pltcl.xml:544(varname)
+#: pltcl.xml:546(varname)
 msgid "$TG_name"
 msgstr "$TG_name"
 
-#: pltcl.xml:546(para)
+#: pltcl.xml:548(para)
 msgid ""
 "The name of the trigger from the <command>CREATE TRIGGER</command> statement."
 msgstr "Имя триггера из оператора <command>CREATE TRIGGER</command>."
 
-#: pltcl.xml:553(varname)
+#: pltcl.xml:555(varname)
 msgid "$TG_relid"
 msgstr "$TG_relid"
 
-#: pltcl.xml:555(para)
+#: pltcl.xml:557(para)
 msgid ""
 "The object ID of the table that caused the trigger procedure to be invoked."
 msgstr ""
 "Идентификатор объекта таблицы, для которой будет вызываться триггерная "
 "процедура."
 
-#: pltcl.xml:563(varname)
+#: pltcl.xml:565(varname)
 msgid "$TG_table_name"
 msgstr "$TG_table_name"
 
-#: pltcl.xml:565(para)
+#: pltcl.xml:567(para)
 msgid "The name of the table that caused the trigger procedure to be invoked."
 msgstr "Имя таблицы, для которой будет вызываться триггерная процедура."
 
-#: pltcl.xml:573(varname)
+#: pltcl.xml:575(varname)
 msgid "$TG_table_schema"
 msgstr "$TG_table_schema"
 
-#: pltcl.xml:575(para)
+#: pltcl.xml:577(para)
 msgid ""
 "The schema of the table that caused the trigger procedure to be invoked."
 msgstr "Схема таблицы, для которой будет вызываться триггерная процедура."
 
-#: pltcl.xml:583(varname)
+#: pltcl.xml:585(varname)
 msgid "$TG_relatts"
 msgstr "$TG_relatts"
 
-#: pltcl.xml:585(para)
+#: pltcl.xml:587(para)
 msgid ""
 "A Tcl list of the table column names, prefixed with an empty list element. "
 "So looking up a column name in the list with <application>Tcl</"
@@ -958,11 +965,11 @@ msgstr ""
 "позициях удалённых столбцов также содержатся пустые элементы, так что "
 "нумерация следующих за ними атрибутов не нарушается.)"
 
-#: pltcl.xml:599(varname)
+#: pltcl.xml:601(varname)
 msgid "$TG_when"
 msgstr "$TG_when"
 
-#: pltcl.xml:601(para)
+#: pltcl.xml:603(para)
 msgid ""
 "The string <literal>BEFORE</literal>, <literal>AFTER</literal>, or "
 "<literal>INSTEAD OF</literal>, depending on the type of trigger event."
@@ -970,11 +977,11 @@ msgstr ""
 "Строка <literal>BEFORE</literal>, <literal>AFTER</literal> или "
 "<literal>INSTEAD OF</literal>, в зависимости от типа события триггера."
 
-#: pltcl.xml:609(varname)
+#: pltcl.xml:611(varname)
 msgid "$TG_level"
 msgstr "$TG_level"
 
-#: pltcl.xml:611(para)
+#: pltcl.xml:613(para)
 msgid ""
 "The string <literal>ROW</literal> or <literal>STATEMENT</literal> depending "
 "on the type of trigger event."
@@ -982,11 +989,11 @@ msgstr ""
 "Строка <literal>ROW</literal> или <literal>STATEMENT</literal>, в "
 "зависимости от уровня события триггера."
 
-#: pltcl.xml:619(varname)
+#: pltcl.xml:621(varname)
 msgid "$TG_op"
 msgstr "$TG_op"
 
-#: pltcl.xml:621(para)
+#: pltcl.xml:623(para)
 msgid ""
 "The string <literal>INSERT</literal>, <literal>UPDATE</literal>, "
 "<literal>DELETE</literal>, or <literal>TRUNCATE</literal> depending on the "
@@ -996,11 +1003,11 @@ msgstr ""
 "<literal>DELETE</literal> или <literal>TRUNCATE</literal>, в зависимости от "
 "действия события триггера."
 
-#: pltcl.xml:630(varname)
+#: pltcl.xml:632(varname)
 msgid "$NEW"
 msgstr "$NEW"
 
-#: pltcl.xml:632(para)
+#: pltcl.xml:634(para)
 msgid ""
 "An associative array containing the values of the new table row for "
 "<command>INSERT</command> or <command>UPDATE</command> actions, or empty for "
@@ -1014,11 +1021,11 @@ msgstr ""
 "Столбцы со значениями NULL в нём отсутствуют. Для триггеров уровня оператора "
 "этот массив не определяется."
 
-#: pltcl.xml:643(varname)
+#: pltcl.xml:645(varname)
 msgid "$OLD"
 msgstr "$OLD"
 
-#: pltcl.xml:645(para)
+#: pltcl.xml:647(para)
 msgid ""
 "An associative array containing the values of the old table row for "
 "<command>UPDATE</command> or <command>DELETE</command> actions, or empty for "
@@ -1032,11 +1039,11 @@ msgstr ""
 "Столбцы со значениями NULL в нём отсутствуют. Для триггеров уровня оператора "
 "этот массив не определяется."
 
-#: pltcl.xml:656(varname)
+#: pltcl.xml:658(varname)
 msgid "$args"
 msgstr "$args"
 
-#: pltcl.xml:658(para)
+#: pltcl.xml:660(para)
 msgid ""
 "A Tcl list of the arguments to the procedure as given in the <command>CREATE "
 "TRIGGER</command> statement. These arguments are also accessible as <literal>"
@@ -1048,7 +1055,7 @@ msgstr ""
 "обозначениями <literal>$1</literal> ... <literal>$<replaceable>n</"
 "replaceable></literal> в теле процедуры."
 
-#: pltcl.xml:537(para) pltcl.xml:735(para)
+#: pltcl.xml:539(para) pltcl.xml:751(para)
 msgid ""
 "The information from the trigger manager is passed to the procedure body in "
 "the following variables: <placeholder-1/>"
@@ -1056,23 +1063,30 @@ msgstr ""
 "Информация от менеджера триггеров передаётся в тело процедуры в следующих "
 "переменных: <placeholder-1/>"
 
-#: pltcl.xml:669(para)
+#: pltcl.xml:671(para)
+#, fuzzy
 msgid ""
 "The return value from a trigger procedure can be one of the strings "
-"<literal>OK</literal> or <literal>SKIP</literal>, or a list as returned by "
-"the <literal>array get</literal> Tcl command. If the return value is "
-"<literal>OK</literal>, the operation (<command>INSERT</command>/"
-"<command>UPDATE</command>/<command>DELETE</command>) that fired the trigger "
-"will proceed normally. <literal>SKIP</literal> tells the trigger manager to "
-"silently suppress the operation for this row. If a list is returned, it "
-"tells PL/Tcl to return a modified row to the trigger manager. This is only "
-"meaningful for row-level <literal>BEFORE</literal> <command>INSERT</command> "
-"or <command>UPDATE</command> triggers for which the modified row will be "
-"inserted instead of the one given in <varname>$NEW</varname>; or for row-"
-"level <literal>INSTEAD OF</literal> <command>INSERT</command> or "
-"<command>UPDATE</command> triggers where the returned row is used to support "
-"<command>INSERT RETURNING</command> and <command>UPDATE RETURNING</command> "
-"commands. The return value is ignored for other types of triggers."
+"<literal>OK</literal> or <literal>SKIP</literal>, or a list of column name/"
+"value pairs. If the return value is <literal>OK</literal>, the operation "
+"(<command>INSERT</command>/<command>UPDATE</command>/<command>DELETE</"
+"command>) that fired the trigger will proceed normally. <literal>SKIP</"
+"literal> tells the trigger manager to silently suppress the operation for "
+"this row. If a list is returned, it tells PL/Tcl to return a modified row to "
+"the trigger manager; the contents of the modified row are specified by the "
+"column names and values in the list. Any columns not mentioned in the list "
+"are set to null. Returning a modified row is only meaningful for row-level "
+"<literal>BEFORE</literal> <command>INSERT</command> or <command>UPDATE</"
+"command> triggers, for which the modified row will be inserted instead of "
+"the one given in <varname>$NEW</varname>; or for row-level <literal>INSTEAD "
+"OF</literal> <command>INSERT</command> or <command>UPDATE</command> triggers "
+"where the returned row is used as the source data for <command>INSERT "
+"RETURNING</command> or <command>UPDATE RETURNING</command> clauses. In row-"
+"level <literal>BEFORE</literal> <command>DELETE</command> or "
+"<literal>INSTEAD OF</literal> <command>DELETE</command> triggers, returning "
+"a modified row has the same effect as returning <literal>OK</literal>, that "
+"is the operation proceeds. The trigger return value is ignored for all other "
+"types of triggers."
 msgstr ""
 "Возвращаемым значением триггерной процедуры может быть строка <literal>OK</"
 "literal> или <literal>SKIP</literal>, либо список, в виде, возвращаемом "
@@ -1091,7 +1105,13 @@ msgstr ""
 "<command>INSERT RETURNING</command> или <command>UPDATE RETURNING</command>. "
 "Для других типов триггеров возвращаемое значение игнорируется."
 
-#: pltcl.xml:692(programlisting)
+#: pltcl.xml:696(para)
+msgid ""
+"The result list can be made from an array representation of the modified "
+"tuple with the <literal>array get</literal> Tcl command."
+msgstr ""
+
+#: pltcl.xml:708(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION trigfunc_modcount() RETURNS trigger AS $$\n"
@@ -1136,7 +1156,7 @@ msgstr ""
 "CREATE TRIGGER trig_mytab_modcount BEFORE INSERT OR UPDATE ON mytab\n"
 "    FOR EACH ROW EXECUTE PROCEDURE trigfunc_modcount('modcnt');"
 
-#: pltcl.xml:686(para)
+#: pltcl.xml:702(para)
 msgid ""
 "Here's a little example trigger procedure that forces an integer value in a "
 "table to keep track of the number of updates that are performed on the row. "
@@ -1153,15 +1173,15 @@ msgstr ""
 "аргументах триггера. Это позволяет применять эту триггерную процедуру для "
 "различных таблиц."
 
-#: pltcl.xml:722(title)
+#: pltcl.xml:738(title)
 msgid "Event Trigger Procedures in PL/Tcl"
 msgstr "Процедуры событийных триггеров в PL/Tcl"
 
-#: pltcl.xml:724(indexterm)
+#: pltcl.xml:740(indexterm)
 msgid "<primary>event trigger</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>событийный триггер</primary> <secondary>в PL/Tcl</secondary>"
 
-#: pltcl.xml:729(para)
+#: pltcl.xml:745(para)
 msgid ""
 "Event trigger procedures can be written in PL/Tcl. <productname>PostgreSQL</"
 "productname> requires that a procedure that is to be called as an event "
@@ -1173,27 +1193,27 @@ msgstr ""
 "будет вызываться как событийный триггер, была объявлена как функция без "
 "аргументов и возвращала тип <literal>event_trigger</literal>."
 
-#: pltcl.xml:742(varname)
+#: pltcl.xml:758(varname)
 msgid "$TG_event"
 msgstr "$TG_event"
 
-#: pltcl.xml:744(para)
+#: pltcl.xml:760(para)
 msgid "The name of the event the trigger is fired for."
 msgstr "Имя события, при котором срабатывает этот триггер."
 
-#: pltcl.xml:751(varname)
+#: pltcl.xml:767(varname)
 msgid "$TG_tag"
 msgstr "$TG_tag"
 
-#: pltcl.xml:753(para)
+#: pltcl.xml:769(para)
 msgid "The command tag for which the trigger is fired."
 msgstr "Тег команды, для которой срабатывает этот триггер."
 
-#: pltcl.xml:761(para)
+#: pltcl.xml:777(para)
 msgid "The return value of the trigger procedure is ignored."
 msgstr "Возвращаемое значение триггерной процедуры игнорируется."
 
-#: pltcl.xml:770(programlisting)
+#: pltcl.xml:786(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION tclsnitch() RETURNS event_trigger AS $$\n"
@@ -1208,7 +1228,7 @@ msgstr ""
 "\n"
 "CREATE EVENT TRIGGER tcl_a_snitch ON ddl_command_start EXECUTE PROCEDURE tclsnitch();"
 
-#: pltcl.xml:765(para)
+#: pltcl.xml:781(para)
 msgid ""
 "Here's a little example event trigger procedure that simply raises a "
 "<literal>NOTICE</literal> message each time a supported command is executed: "
@@ -1218,15 +1238,15 @@ msgstr ""
 "замечание (<literal>NOTICE</literal>) при каждом выполнении поддерживаемой "
 "команды: <placeholder-1/>"
 
-#: pltcl.xml:781(title)
+#: pltcl.xml:797(title)
 msgid "Error Handling in PL/Tcl"
 msgstr "Обработка ошибок в PL/Tcl"
 
-#: pltcl.xml:783(indexterm)
+#: pltcl.xml:799(indexterm)
 msgid "<primary>exceptions</primary> <secondary>in PL/Tcl</secondary>"
 msgstr "<primary>исключения</primary> <secondary>в PL/Tcl</secondary>"
 
-#: pltcl.xml:788(para)
+#: pltcl.xml:804(para)
 msgid ""
 "Tcl code within or called from a PL/Tcl function can raise an error, either "
 "by executing some invalid operation or by generating an error using the Tcl "
@@ -1244,7 +1264,7 @@ msgstr ""
 "а распространяются выше уровня выполнения функций PL/Tcl, они становятся "
 "ошибками СУБД."
 
-#: pltcl.xml:798(para)
+#: pltcl.xml:814(para)
 msgid ""
 "Conversely, database errors that occur within PL/Tcl's <function>spi_exec</"
 "function>, <function>spi_prepare</function>, and <function>spi_execp</"
@@ -1259,7 +1279,7 @@ msgstr ""
 "перехватываются и распространяются на верхний уровень, они становятся "
 "ошибками СУБД."
 
-#: pltcl.xml:807(para)
+#: pltcl.xml:823(para)
 msgid ""
 "Tcl provides an <varname>errorCode</varname> variable that can represent "
 "additional information about an error in a form that is easy for Tcl "
@@ -1299,7 +1319,7 @@ msgstr ""
 "<varname>filename</varname>, <varname>lineno</varname> и <varname>funcname</"
 "varname>."
 
-#: pltcl.xml:834(programlisting)
+#: pltcl.xml:850(programlisting)
 #, no-wrap
 msgid ""
 "if {[catch { spi_exec $sql_command }]} {\n"
@@ -1324,7 +1344,7 @@ msgstr ""
 "    }\n"
 "}"
 
-#: pltcl.xml:830(para)
+#: pltcl.xml:846(para)
 msgid ""
 "A convenient way to work with PL/Tcl's <varname>errorCode</varname> "
 "information is to load it into an array, so that the field names become "
@@ -1337,11 +1357,11 @@ msgstr ""
 "массиве. Пример такого кода: <placeholder-1/> (Двойные двоеточия явно "
 "указывают, что переменная <varname>errorCode</varname> является глобальной.)"
 
-#: pltcl.xml:852(title)
+#: pltcl.xml:868(title)
 msgid "Modules and the <function>unknown</function> Command"
 msgstr "Модули и команда <function>unknown</function>"
 
-#: pltcl.xml:853(para)
+#: pltcl.xml:869(para)
 msgid ""
 "PL/Tcl has support for autoloading Tcl code when used. It recognizes a "
 "special table, <literal>pltcl_modules</literal>, which is presumed to "
@@ -1359,7 +1379,7 @@ msgstr ""
 "данных. (Это происходит независимо для каждого интерпретатора Tcl, если их "
 "несколько в одном сеансе; см. <xref remap=\"4\" linkend=\"pltcl-global\"/>.)"
 
-#: pltcl.xml:863(para)
+#: pltcl.xml:879(para)
 msgid ""
 "While the <literal>unknown</literal> module could actually contain any "
 "initialization script you need, it normally defines a Tcl <function>unknown</"
@@ -1384,7 +1404,7 @@ msgstr ""
 "модулями, в которых они определены, так что поиск выполняется довольно "
 "быстро."
 
-#: pltcl.xml:876(para)
+#: pltcl.xml:892(para)
 msgid ""
 "The <productname>PostgreSQL</productname> distribution includes support "
 "scripts to maintain these tables: <command>pltcl_loadmod</command>, "
@@ -1400,7 +1420,7 @@ msgstr ""
 "<filename>share/unknown.pltcl</filename>. Для поддержки механизма "
 "автозагрузки этот модуль должен изначально загружаться в каждую базу данных."
 
-#: pltcl.xml:885(para)
+#: pltcl.xml:901(para)
 msgid ""
 "The tables <literal>pltcl_modules</literal> and <literal>pltcl_modfuncs</"
 "literal> must be readable by all, but it is wise to make them owned and "
@@ -1419,11 +1439,11 @@ msgstr ""
 "суперпользователю. Но право на изменение данных в ней можно дать и другим "
 "пользователям, если они заслуживают такого доверия."
 
-#: pltcl.xml:897(title)
+#: pltcl.xml:913(title)
 msgid "Tcl Procedure Names"
 msgstr "Имена процедур Tcl"
 
-#: pltcl.xml:899(para)
+#: pltcl.xml:915(para)
 msgid ""
 "In <productname>PostgreSQL</productname>, the same function name can be used "
 "for different function definitions as long as the number of arguments or "
