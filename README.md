@@ -3,5 +3,4 @@
 
 Написать переводчикам (предложения, замечания, пожелания): pgsql-docs@lists.postgrespro.ru
 
-## 9.5
-[Документация в html формате](http://postgrespro.ru/doc/)  
+[Переведённая документация](https://postgrespro.ru/docs/postgresql/)
