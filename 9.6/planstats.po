@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-05-10 10:49+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -781,6 +781,71 @@ msgstr ""
 "backend/optimizer/path/clausesel.c</filename>. Специфичные для отдельных "
 "операторов функции избирательности, в основном, расположены в <filename>src/"
 "backend/utils/adt/selfuncs.c</filename>."
+
+#: planstats.xml:453(title)
+msgid "Planner Statistics and Security"
+msgstr ""
+
+#: planstats.xml:455(para)
+msgid ""
+"Access to the table <structname>pg_statistic</structname> is restricted to "
+"superusers, so that ordinary users cannot learn about the contents of the "
+"tables of other users from it. Some selectivity estimation functions will "
+"use a user-provided operator (either the operator appearing in the query or "
+"a related operator) to analyze the stored statistics. For example, in order "
+"to determine whether a stored most common value is applicable, the "
+"selectivity estimator will have to run the appropriate <literal>=</literal> "
+"operator to compare the constant in the query to the stored value. Thus the "
+"data in <structname>pg_statistic</structname> is potentially passed to user-"
+"defined operators. An appropriately crafted operator can intentionally leak "
+"the passed operands (for example, by logging them or writing them to a "
+"different table), or accidentally leak them by showing their values in error "
+"messages, in either case possibly exposing data from "
+"<structname>pg_statistic</structname> to a user who should not be able to "
+"see it."
+msgstr ""
+
+#: planstats.xml:473(para)
+msgid ""
+"In order to prevent this, the following applies to all built-in selectivity "
+"estimation functions. When planning a query, in order to be able to use "
+"stored statistics, the current user must either have <literal>SELECT</"
+"literal> privilege on the table or the involved columns, or the operator "
+"used must be <literal>LEAKPROOF</literal> (more accurately, the function "
+"that the operator is based on). If not, then the selectivity estimator will "
+"behave as if no statistics are available, and the planner will proceed with "
+"default or fall-back assumptions."
+msgstr ""
+
+#: planstats.xml:484(para)
+msgid ""
+"If a user does not have the required privilege on the table or columns, then "
+"in many cases the query will ultimately receive a permission-denied error, "
+"in which case this mechanism is invisible in practice. But if the user is "
+"reading from a security-barrier view, then the planner might wish to check "
+"the statistics of an underlying table that is otherwise inaccessible to the "
+"user. In that case, the operator should be leak-proof or the statistics will "
+"not be used. There is no direct feedback about that, except that the plan "
+"might be suboptimal. If one suspects that this is the case, one could try "
+"running the query as a more privileged user, to see if a different plan "
+"results."
+msgstr ""
+
+#: planstats.xml:497(para)
+msgid ""
+"This restriction applies only to cases where the planner would need to "
+"execute a user-defined operator on one or more values from "
+"<structname>pg_statistic</structname>. Thus the planner is permitted to use "
+"generic statistical information, such as the fraction of null values or the "
+"number of distinct values in a column, regardless of access privileges."
+msgstr ""
+
+#: planstats.xml:506(para)
+msgid ""
+"Selectivity estimation functions contained in third-party extensions that "
+"potentially operate on statistics with user-defined operators should follow "
+"the same security rules. Consult the PostgreSQL source code for guidance."
+msgstr ""
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: planstats.xml:0(None)

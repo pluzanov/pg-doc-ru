@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-02-06 11:18+0300\n"
+"POT-Creation-Date: 2017-05-10 10:49+0300\n"
 "PO-Revision-Date: 2016-09-29 10:32+0300\n"
 "Last-Translator: Alexander LAW <exclusion@gmail.com>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
@@ -433,17 +433,15 @@ msgid "Parallel Joins"
 msgstr "Параллельные соединения"
 
 #: parallel.xml:277(para)
+#, fuzzy
 msgid ""
 "The driving table may be joined to one or more other tables using nested "
-"loops or hash joins. The outer side of the join may be any kind of non-"
+"loops or hash joins. The inner side of the join may be any kind of non-"
 "parallel plan that is otherwise supported by the planner provided that it is "
 "safe to run within a parallel worker. For example, it may be an index scan "
-"which looks up a value based on a column taken from the inner table. Each "
-"worker will execute the outer side of the plan in full, which is why merge "
-"joins are not supported here. The outer side of a merge join will often "
-"involve sorting the entire inner table; even if it involves an index, it is "
-"unlikely to be productive to have multiple processes each conduct a full "
-"index scan of the inner table."
+"which looks up a value taken from the outer side of the join. Each worker "
+"will execute the inner side of the join in full, which for hash join means "
+"that an identical hash table is built in each worker process."
 msgstr ""
 "Целевая таблица может соединяться с одной или несколькими другими таблицами, "
 "используя вложенные циклы или соединения по хешу. Внешней стороной "
@@ -458,49 +456,22 @@ msgstr ""
 "продуктивным действие несколько процессов, производящих полное сканирование "
 "по индексу этой внутренней таблицы."
 
-#: parallel.xml:292(title)
+#: parallel.xml:290(title)
 msgid "Parallel Aggregation"
 msgstr "Параллельное агрегирование"
 
-#: parallel.xml:293(para)
-msgid ""
-"It is not possible to perform the aggregation portion of a query entirely in "
-"parallel. For example, if a query involves selecting <literal>COUNT(*)</"
-"literal>, each worker could compute a total, but those totals would need to "
-"combined in order to produce a final answer. If the query involved a "
-"<literal>GROUP BY</literal> clause, a separate total would need to be "
-"computed for each group. Even though aggregation can't be done entirely in "
-"parallel, queries involving aggregation are often excellent candidates for "
-"parallel query, because they typically read many rows but return only a few "
-"rows to the client. Queries that return many rows to the client are often "
-"limited by the speed at which the client can read the data, in which case "
-"parallel query cannot help very much."
-msgstr ""
-"Часть запроса, собственно производящую агрегирование, невозможно выполнять "
-"полностью в параллельном режиме. Например, если запрос включает выборку "
-"<literal>COUNT(*)</literal>, каждый рабочий процесс сможет подсчитать своё "
-"количество строк, но эти количества нужно будет сложить, чтобы получить "
-"окончательный ответ. Если запрос включает предложение <literal>GROUP BY</"
-"literal>, отдельное общее количество надо будет вычислять для каждой группы. "
-"И даже несмотря на то, что агрегирование нельзя осуществлять полностью "
-"параллельно, запросы с агрегированием часто становятся отличными кандидатами "
-"на распараллеливание, так как они обычно читают множество строк, но "
-"возвращают клиенту только небольшое их число. Запросы, возвращающие клиенту "
-"множество строк, часто ограничены скоростью, с которой клиент может "
-"принимать данные, так что в таких случаях параллельное выполнение запроса "
-"может быть не очень полезным."
-
-#: parallel.xml:307(para)
+#: parallel.xml:291(para)
+#, fuzzy
 msgid ""
 "<productname>PostgreSQL</productname> supports parallel aggregation by "
-"aggregating twice. First, each process participating in the parallel portion "
-"of the query performs an aggregation step, producing a partial result for "
-"each group of which that process is aware. This is reflected in the plan as "
-"a <literal>PartialAggregate</literal> node. Second, the partial results are "
-"transferred to the leader via the <literal>Gather</literal> node. Finally, "
-"the leader re-aggregates the results across all workers in order to produce "
-"the final result. This is reflected in the plan as a "
-"<literal>FinalizeAggregate</literal> node."
+"aggregating in two stages. First, each process participating in the parallel "
+"portion of the query performs an aggregation step, producing a partial "
+"result for each group of which that process is aware. This is reflected in "
+"the plan as a <literal>Partial Aggregate</literal> node. Second, the partial "
+"results are transferred to the leader via the <literal>Gather</literal> "
+"node. Finally, the leader re-aggregates the results across all workers in "
+"order to produce the final result. This is reflected in the plan as a "
+"<literal>Finalize Aggregate</literal> node."
 msgstr ""
 "<productname>PostgreSQL</productname> поддерживает параллельное "
 "агрегирование, выполняя агрегирование дважды. Сначала каждый процесс, "
@@ -512,16 +483,33 @@ msgstr ""
 "получить окончательный результат. Это отражает в плане узел "
 "<literal>FinalizeAggregate</literal>."
 
-#: parallel.xml:319(para)
+#: parallel.xml:303(para)
+msgid ""
+"Because the <literal>Finalize Aggregate</literal> node runs on the leader "
+"process, queries which produce a relatively large number of groups in "
+"comparison to the number of input rows will appear less favorable to the "
+"query planner. For example, in the worst-case scenario the number of groups "
+"seen by the <literal>Finalize Aggregate</literal> node could be as many as "
+"the number of input rows which were seen by all worker processes in the "
+"<literal>Partial Aggregate</literal> stage. For such cases, there is clearly "
+"going to be no performance benefit to using parallel aggregation. The query "
+"planner takes this into account during the planning process and is unlikely "
+"to choose parallel aggregate in this scenario."
+msgstr ""
+
+#: parallel.xml:316(para)
+#, fuzzy
 msgid ""
 "Parallel aggregation is not supported in all situations. Each aggregate must "
 "be <link linkend=\"parallel-safety\">safe</link> for parallelism and must "
 "have a combine function. If the aggregate has a transition state of type "
 "<literal>internal</literal>, it must have serialization and deserialization "
 "functions. See <xref linkend=\"sql-createaggregate\"/> for more details. "
-"Parallel aggregation is not supported for ordered set aggregates or when the "
-"query involves <literal>GROUPING SETS</literal>. It can only be used when "
-"all joins involved in the query are also part of the parallel portion of the "
+"Parallel aggregation is not supported if any aggregate function call "
+"contains <literal>DISTINCT</literal> or <literal>ORDER BY</literal> clause "
+"and is also not supported for ordered set aggregates or when the query "
+"involves <literal>GROUPING SETS</literal>. It can only be used when all "
+"joins involved in the query are also part of the parallel portion of the "
 "plan."
 msgstr ""
 "Параллельное агрегирование поддерживается не во всех случаях. Чтобы оно "
@@ -536,11 +524,11 @@ msgstr ""
 "соединения, задействованные в запросе, также входят в параллельную часть "
 "плана."
 
-#: parallel.xml:334(title)
+#: parallel.xml:332(title)
 msgid "Parallel Plan Tips"
 msgstr "Советы по параллельным планам"
 
-#: parallel.xml:336(para)
+#: parallel.xml:334(para)
 msgid ""
 "If a query that is expected to do so does not produce a parallel plan, you "
 "can try reducing <xref linkend=\"guc-parallel-setup-cost\"/> or <xref "
@@ -564,7 +552,7 @@ msgstr ""
 "обратитесь к <xref remap=\"3\" linkend=\"when-can-parallel-query-be-used\"/> "
 "и <xref remap=\"3\" linkend=\"parallel-safety\"/>."
 
-#: parallel.xml:350(para)
+#: parallel.xml:348(para)
 msgid ""
 "When executing a parallel plan, you can use <literal>EXPLAIN (ANALYZE, "
 "VERBOSE)</literal> to display per-worker statistics for each plan node. This "
@@ -578,11 +566,11 @@ msgstr ""
 "ли распределяется работа между всеми узлами плана, и на более общем уровне "
 "понимать характеристики производительности плана."
 
-#: parallel.xml:362(title)
+#: parallel.xml:360(title)
 msgid "Parallel Safety"
 msgstr "Безопасность распараллеливания"
 
-#: parallel.xml:364(para)
+#: parallel.xml:362(para)
 msgid ""
 "The planner classifies operations involved in a query as either "
 "<firstterm>parallel safe</firstterm>, <firstterm>parallel restricted</"
@@ -612,19 +600,19 @@ msgstr ""
 "процессе. Когда запрос содержит что-либо небезопасное для распараллеливания, "
 "параллельное выполнение для такого запроса полностью исключается."
 
-#: parallel.xml:379(para)
+#: parallel.xml:377(para)
 msgid "The following operations are always parallel restricted."
 msgstr "Параллельное выполнение всегда запрещается для следующих операций."
 
-#: parallel.xml:385(para)
+#: parallel.xml:383(para)
 msgid "Scans of common table expressions (CTEs)."
 msgstr "Сканирование общих табличных выражений (CTE)."
 
-#: parallel.xml:391(para)
+#: parallel.xml:389(para)
 msgid "Scans of temporary tables."
 msgstr "Сканирование временных таблиц."
 
-#: parallel.xml:397(para)
+#: parallel.xml:395(para)
 msgid ""
 "Scans of foreign tables, unless the foreign data wrapper has an "
 "<literal>IsForeignScanParallelSafe</literal> API which indicates otherwise."
@@ -633,15 +621,15 @@ msgstr ""
 "предоставляет функцию <literal>IsForeignScanParallelSafe</literal>, которая "
 "допускает распараллеливание."
 
-#: parallel.xml:404(para)
+#: parallel.xml:402(para)
 msgid "Access to an <literal>InitPlan</literal> or <literal>SubPlan</literal>."
 msgstr "Доступ к <literal>InitPlan</literal> или <literal>SubPlan</literal>."
 
-#: parallel.xml:411(title)
+#: parallel.xml:409(title)
 msgid "Parallel Labeling for Functions and Aggregates"
 msgstr "Пометки параллельности для функций и агрегатов"
 
-#: parallel.xml:413(para)
+#: parallel.xml:411(para)
 msgid ""
 "The planner cannot automatically determine whether a user-defined function "
 "or aggregate is parallel safe, parallel restricted, or parallel unsafe, "
@@ -675,7 +663,7 @@ msgstr ""
 "<literal>RESTRICTED</literal> или <literal>UNSAFE</literal> в виде "
 "соответствующего значения."
 
-#: parallel.xml:431(para)
+#: parallel.xml:429(para)
 msgid ""
 "Functions and aggregates must be marked <literal>PARALLEL UNSAFE</literal> "
 "if they write to the database, access sequences, change the transaction "
@@ -701,7 +689,7 @@ msgstr ""
 "рабочими процессами. Например, по этой причине ограниченно параллельными "
 "являются функции <literal>setseed</literal> и <literal>random</literal>."
 
-#: parallel.xml:444(para)
+#: parallel.xml:442(para)
 msgid ""
 "In general, if a function is labeled as being safe when it is restricted or "
 "unsafe, or if it is labeled as being restricted when it is in fact unsafe, "
@@ -723,7 +711,7 @@ msgstr ""
 "сомнений, вероятно, лучше всего будет помечать функции как небезопасные "
 "(<literal>UNSAFE</literal>)."
 
-#: parallel.xml:455(para)
+#: parallel.xml:453(para)
 msgid ""
 "If a function executed within a parallel worker acquires locks which are not "
 "held by the leader, for example by querying a table not referenced in the "
@@ -740,7 +728,7 @@ msgstr ""
 "такую функцию как <literal>PARALLEL RESTRICTED</literal>, чтобы она "
 "выполнялась только в ведущем процессе."
 
-#: parallel.xml:465(para)
+#: parallel.xml:463(para)
 msgid ""
 "Note that the query planner does not consider deferring the evaluation of "
 "parallel-restricted functions or aggregates involved in the query in order "
@@ -768,3 +756,30 @@ msgstr ""
 #: parallel.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#~ msgid ""
+#~ "It is not possible to perform the aggregation portion of a query entirely "
+#~ "in parallel. For example, if a query involves selecting "
+#~ "<literal>COUNT(*)</literal>, each worker could compute a total, but those "
+#~ "totals would need to combined in order to produce a final answer. If the "
+#~ "query involved a <literal>GROUP BY</literal> clause, a separate total "
+#~ "would need to be computed for each group. Even though aggregation can't "
+#~ "be done entirely in parallel, queries involving aggregation are often "
+#~ "excellent candidates for parallel query, because they typically read many "
+#~ "rows but return only a few rows to the client. Queries that return many "
+#~ "rows to the client are often limited by the speed at which the client can "
+#~ "read the data, in which case parallel query cannot help very much."
+#~ msgstr ""
+#~ "Часть запроса, собственно производящую агрегирование, невозможно "
+#~ "выполнять полностью в параллельном режиме. Например, если запрос включает "
+#~ "выборку <literal>COUNT(*)</literal>, каждый рабочий процесс сможет "
+#~ "подсчитать своё количество строк, но эти количества нужно будет сложить, "
+#~ "чтобы получить окончательный ответ. Если запрос включает предложение "
+#~ "<literal>GROUP BY</literal>, отдельное общее количество надо будет "
+#~ "вычислять для каждой группы. И даже несмотря на то, что агрегирование "
+#~ "нельзя осуществлять полностью параллельно, запросы с агрегированием часто "
+#~ "становятся отличными кандидатами на распараллеливание, так как они обычно "
+#~ "читают множество строк, но возвращают клиенту только небольшое их число. "
+#~ "Запросы, возвращающие клиенту множество строк, часто ограничены "
+#~ "скоростью, с которой клиент может принимать данные, так что в таких "
+#~ "случаях параллельное выполнение запроса может быть не очень полезным."

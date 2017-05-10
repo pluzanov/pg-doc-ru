@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-05-10 10:49+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -620,7 +620,7 @@ msgid "<primary>_PG_output_plugin_init</primary>"
 msgstr "<primary>_PG_output_plugin_init</primary>"
 
 #: logicaldecoding.xml:372(programlisting)
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "typedef struct OutputPluginCallbacks\n"
 "{\n"
@@ -633,7 +633,7 @@ msgid ""
 "    LogicalDecodeShutdownCB shutdown_cb;\n"
 "} OutputPluginCallbacks;\n"
 "\n"
-"typedef void (*LogicalOutputPluginInit)(struct OutputPluginCallbacks *cb);"
+"typedef void (*LogicalOutputPluginInit) (struct OutputPluginCallbacks *cb);"
 msgstr ""
 "typedef struct OutputPluginCallbacks\n"
 "{\n"
@@ -714,13 +714,14 @@ msgid "Output Modes"
 msgstr "Режимы вывода"
 
 #: logicaldecoding.xml:417(para)
+#, fuzzy
 msgid ""
 "Output plugin callbacks can pass data to the consumer in nearly arbitrary "
 "formats. For some use cases, like viewing the changes via SQL, returning "
 "data in a data type that can contain arbitrary data (e.g., <type>bytea</"
 "type>) is cumbersome. If the output plugin only outputs textual data in the "
 "server's encoding, it can declare that by setting "
-"<literal>OutputPluginOptions.output_mode</literal> to "
+"<literal>OutputPluginOptions.output_type</literal> to "
 "<literal>OUTPUT_PLUGIN_TEXTUAL_OUTPUT</literal> instead of "
 "<literal>OUTPUT_PLUGIN_BINARY_OUTPUT</literal> in the <link linkend="
 "\"logicaldecoding-output-plugin-startup\">startup callback</link>. In that "
@@ -788,13 +789,11 @@ msgid "Startup Callback"
 msgstr "Обработчик запуска"
 
 #: logicaldecoding.xml:468(programlisting)
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
-"typedef void (*LogicalDecodeStartupCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    OutputPluginOptions *options,\n"
-"    bool is_init\n"
-");"
+"typedef void (*LogicalDecodeStartupCB) (struct LogicalDecodingContext *ctx,\n"
+"                                        OutputPluginOptions *options,\n"
+"                                        bool is_init);"
 msgstr ""
 "typedef void (*LogicalDecodeStartupCB) (\n"
 "    struct LogicalDecodingContext *ctx,\n"
@@ -802,7 +801,7 @@ msgstr ""
 "    bool is_init\n"
 ");"
 
-#: logicaldecoding.xml:479(programlisting)
+#: logicaldecoding.xml:477(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct OutputPluginOptions\n"
@@ -840,7 +839,7 @@ msgstr ""
 "<literal>OUTPUT_PLUGIN_BINARY_OUTPUT</literal>. См. также <xref remap=\"4\" "
 "linkend=\"logicaldecoding-output-mode\"/>."
 
-#: logicaldecoding.xml:491(para)
+#: logicaldecoding.xml:489(para)
 msgid ""
 "The startup callback should validate the options present in <literal>ctx-&gt;"
 "output_plugin_options</literal>. If the output plugin needs to have a state, "
@@ -851,22 +850,19 @@ msgstr ""
 "поддерживать состояние, он может сохранить его в <literal>ctx-&gt;"
 "output_plugin_private</literal>."
 
-#: logicaldecoding.xml:500(title)
+#: logicaldecoding.xml:498(title)
 msgid "Shutdown Callback"
 msgstr "Обработчик выключения"
 
-#: logicaldecoding.xml:507(programlisting)
-#, no-wrap
-msgid ""
-"typedef void (*LogicalDecodeShutdownCB) (\n"
-"    struct LogicalDecodingContext *ctx\n"
-");"
+#: logicaldecoding.xml:505(programlisting)
+#, fuzzy, no-wrap
+msgid "typedef void (*LogicalDecodeShutdownCB) (struct LogicalDecodingContext *ctx);"
 msgstr ""
 "typedef void (*LogicalDecodeShutdownCB) (\n"
 "    struct LogicalDecodingContext *ctx\n"
 ");"
 
-#: logicaldecoding.xml:502(para)
+#: logicaldecoding.xml:500(para)
 msgid ""
 "The optional <function>shutdown_cb</function> callback is called whenever a "
 "formerly active replication slot is not used anymore and can be used to "
@@ -879,24 +875,22 @@ msgstr ""
 "удаляется, прекращается только потоковая передача через него. <placeholder-1/"
 ">"
 
-#: logicaldecoding.xml:516(title)
+#: logicaldecoding.xml:512(title)
 msgid "Transaction Begin Callback"
 msgstr "Обработчик начала транзакции"
 
-#: logicaldecoding.xml:522(programlisting)
-#, no-wrap
+#: logicaldecoding.xml:518(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"typedef void (*LogicalDecodeBeginCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn\n"
-");"
+"typedef void (*LogicalDecodeBeginCB) (struct LogicalDecodingContext *ctx,\n"
+"                                      ReorderBufferTXN *txn);"
 msgstr ""
 "typedef void (*LogicalDecodeBeginCB) (\n"
 "    struct LogicalDecodingContext *,\n"
 "    ReorderBufferTXN *txn\n"
 ");"
 
-#: logicaldecoding.xml:518(para)
+#: logicaldecoding.xml:514(para)
 msgid ""
 "The required <function>begin_cb</function> callback is called whenever a "
 "start of a committed transaction has been decoded. Aborted transactions and "
@@ -910,24 +904,23 @@ msgstr ""
 "<parameter>txn</parameter> содержит метаинформацию о транзакции, в частности "
 "её идентификатор и время её фиксирования."
 
-#: logicaldecoding.xml:535(title)
+#: logicaldecoding.xml:529(title)
 msgid "Transaction End Callback"
 msgstr "Обработчик завершения транзакции"
 
-#: logicaldecoding.xml:543(programlisting)
-#, no-wrap
+#: logicaldecoding.xml:537(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"typedef void (*LogicalDecodeCommitCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn\n"
-");"
+"typedef void (*LogicalDecodeCommitCB) (struct LogicalDecodingContext *ctx,\n"
+"                                       ReorderBufferTXN *txn,\n"
+"                                       XLogRecPtr commit_lsn);"
 msgstr ""
 "typedef void (*LogicalDecodeCommitCB) (\n"
 "    struct LogicalDecodingContext *,\n"
 "    ReorderBufferTXN *txn\n"
 ");"
 
-#: logicaldecoding.xml:537(para)
+#: logicaldecoding.xml:531(para)
 msgid ""
 "The required <function>commit_cb</function> callback is called whenever a "
 "transaction commit has been decoded. The <function>change_cb</function> "
@@ -939,19 +932,17 @@ msgstr ""
 "вызываться обработчик <function>change_cb</function> для всех изменённых "
 "строк (если строки были изменены). <placeholder-1/>"
 
-#: logicaldecoding.xml:553(title)
+#: logicaldecoding.xml:546(title)
 msgid "Change Callback"
 msgstr "Обработчик изменения"
 
-#: logicaldecoding.xml:562(programlisting)
-#, no-wrap
+#: logicaldecoding.xml:555(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"typedef void (*LogicalDecodeChangeCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    ReorderBufferTXN *txn,\n"
-"    Relation relation,\n"
-"    ReorderBufferChange *change\n"
-");"
+"typedef void (*LogicalDecodeChangeCB) (struct LogicalDecodingContext *ctx,\n"
+"                                       ReorderBufferTXN *txn,\n"
+"                                       Relation relation,\n"
+"                                       ReorderBufferChange *change);"
 msgstr ""
 "typedef void (*LogicalDecodeChangeCB) (\n"
 "    struct LogicalDecodingContext *ctx,\n"
@@ -960,7 +951,7 @@ msgstr ""
 "    ReorderBufferChange *change\n"
 ");"
 
-#: logicaldecoding.xml:555(para)
+#: logicaldecoding.xml:548(para)
 msgid ""
 "The required <function>change_cb</function> callback is called for every "
 "individual row modification inside a transaction, may it be an "
@@ -986,7 +977,7 @@ msgstr ""
 "принадлежит строка, а структура <parameter>change</parameter> описывает "
 "передаваемое изменение строки."
 
-#: logicaldecoding.xml:580(para)
+#: logicaldecoding.xml:571(para)
 msgid ""
 "Only changes in user defined tables that are not unlogged (see <xref linkend="
 "\"sql-createtable-unlogged\"/>) and not temporary (see <xref linkend=\"sql-"
@@ -997,24 +988,22 @@ msgstr ""
 "createtable-unlogged\"/>) или временными (см. описание <xref remap=\"4\" "
 "linkend=\"sql-createtable-temporary\"/>)."
 
-#: logicaldecoding.xml:590(title)
+#: logicaldecoding.xml:581(title)
 msgid "Origin Filter Callback"
 msgstr "Обработчик фильтрации источника"
 
-#: logicaldecoding.xml:597(programlisting)
-#, no-wrap
+#: logicaldecoding.xml:588(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"typedef bool (*LogicalDecodeFilterByOriginCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    RepNodeId origin_id\n"
-");"
+"typedef bool (*LogicalDecodeFilterByOriginCB) (struct LogicalDecodingContext *ctx,\n"
+"                                               RepOriginId origin_id);"
 msgstr ""
 "typedef bool (*LogicalDecodeFilterByOriginCB) (\n"
 "    struct LogicalDecodingContext *ctx,\n"
 "    RepNodeId origin_id\n"
 ");"
 
-#: logicaldecoding.xml:592(para)
+#: logicaldecoding.xml:583(para)
 msgid ""
 "The optional <function>filter_by_origin_cb</function> callback is called to "
 "determine whether data that has been replayed from <parameter>origin_id</"
@@ -1035,7 +1024,7 @@ msgstr ""
 "случае он должен вернуть false. Другие обработчики для фильтруемых "
 "транзакций и изменений вызываться не будут."
 
-#: logicaldecoding.xml:610(para)
+#: logicaldecoding.xml:599(para)
 msgid ""
 "This is useful when implementing cascading or multidirectional replication "
 "solutions. Filtering by the origin allows to prevent replicating the same "
@@ -1049,22 +1038,20 @@ msgstr ""
 "можно также извлечь из транзакций и изменений, фильтрация с помощью этого "
 "обработчика гораздо более эффективна."
 
-#: logicaldecoding.xml:621(title)
+#: logicaldecoding.xml:610(title)
 msgid "Generic Message Callback"
 msgstr "Обработчик произвольных сообщений"
 
-#: logicaldecoding.xml:626(programlisting)
-#, no-wrap
+#: logicaldecoding.xml:615(programlisting)
+#, fuzzy, no-wrap
 msgid ""
-"typedef void (*LogicalDecodeMessageCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn,\n"
-"    XLogRecPtr message_lsn,\n"
-"    bool transactional,\n"
-"    const char *prefix,\n"
-"    Size message_size,\n"
-"    const char *message\n"
-");"
+"typedef void (*LogicalDecodeMessageCB) (struct LogicalDecodingContext *ctx,\n"
+"                                        ReorderBufferTXN *txn,\n"
+"                                        XLogRecPtr message_lsn,\n"
+"                                        bool transactional,\n"
+"                                        const char *prefix,\n"
+"                                        Size message_size,\n"
+"                                        const char *message);"
 msgstr ""
 "typedef void (*LogicalDecodeMessageCB) (\n"
 "    struct LogicalDecodingContext *,\n"
@@ -1076,7 +1063,7 @@ msgstr ""
 "    const char *message\n"
 ");"
 
-#: logicaldecoding.xml:623(para)
+#: logicaldecoding.xml:612(para)
 msgid ""
 "The optional <function>message_cb</function> callback is called whenever a "
 "logical decoding message has been decoded. <placeholder-1/> The "
@@ -1105,7 +1092,7 @@ msgstr ""
 "parameter> содержит само сообщение размером <parameter>message_size</"
 "parameter> байт."
 
-#: logicaldecoding.xml:649(para)
+#: logicaldecoding.xml:636(para)
 msgid ""
 "Extra care should be taken to ensure that the prefix the output plugin "
 "considers interesting is unique. Using name of the extension or the output "
@@ -1115,11 +1102,11 @@ msgstr ""
 "интересующие модуль вывода сообщения, был уникальным. Удачным выбором обычно "
 "будет имя расширения или самого модуля вывода."
 
-#: logicaldecoding.xml:659(title)
+#: logicaldecoding.xml:646(title)
 msgid "Functions for Producing Output"
 msgstr "Функции для формирования вывода"
 
-#: logicaldecoding.xml:661(para)
+#: logicaldecoding.xml:648(para)
 msgid ""
 "To actually produce output, output plugins can write data to the "
 "<literal>StringInfo</literal> output buffer in <literal>ctx-&gt;out</"
@@ -1141,7 +1128,7 @@ msgstr ""
 "произвести запись. Параметр <parameter>last_write</parameter> указывает, "
 "была ли эта определённая операция записи последней в данном обработчике."
 
-#: logicaldecoding.xml:677(programlisting)
+#: logicaldecoding.xml:664(programlisting)
 #, no-wrap
 msgid ""
 "OutputPluginPrepareWrite(ctx, true);\n"
@@ -1152,7 +1139,7 @@ msgstr ""
 "appendStringInfo(ctx-&gt;out, \"BEGIN %u\", txn-&gt;xid);\n"
 "OutputPluginWrite(ctx, true);"
 
-#: logicaldecoding.xml:674(para)
+#: logicaldecoding.xml:661(para)
 msgid ""
 "The following example shows how to output data to the consumer of an output "
 "plugin: <placeholder-1/>"
@@ -1160,11 +1147,11 @@ msgstr ""
 "Следующий пример показывает, как вывести данные для потребителя модуля "
 "вывода: <placeholder-1/>"
 
-#: logicaldecoding.xml:687(title)
+#: logicaldecoding.xml:674(title)
 msgid "Logical Decoding Output Writers"
 msgstr "Запись вывода логического декодирования"
 
-#: logicaldecoding.xml:689(para)
+#: logicaldecoding.xml:676(para)
 msgid ""
 "It is possible to add more output methods for logical decoding. For details, "
 "see <filename>src/backend/replication/logical/logicalfuncs.c</filename>. "
@@ -1179,11 +1166,11 @@ msgstr ""
 "записи, и третью для записи вывода (см. <xref remap=\"4\" linkend="
 "\"logicaldecoding-output-plugin-output\"/>)."
 
-#: logicaldecoding.xml:700(title)
+#: logicaldecoding.xml:687(title)
 msgid "Synchronous Replication Support for Logical Decoding"
 msgstr "Поддержка синхронной репликации для логического декодирования"
 
-#: logicaldecoding.xml:702(para)
+#: logicaldecoding.xml:689(para)
 msgid ""
 "Logical decoding can be used to build <link linkend=\"synchronous-replication"
 "\">synchronous replication</link> solutions with the same user interface as "
@@ -1204,7 +1191,7 @@ msgstr ""
 "резервного сервера (F)</literal> (см. <xref remap=\"4\" linkend=\"protocol-"
 "replication\"/>), как и клиенты потоковой репликации."
 
-#: logicaldecoding.xml:715(para)
+#: logicaldecoding.xml:702(para)
 msgid ""
 "A synchronous replica receiving changes via logical decoding will work in "
 "the scope of a single database. Since, in contrast to that, "
