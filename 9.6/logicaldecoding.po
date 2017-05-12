@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2017-05-10 10:49+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"PO-Revision-Date: 2017-05-12 10:53+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: logicaldecoding.xml:4(title) logicaldecoding.xml:174(title)
 msgid "Logical Decoding"
@@ -620,7 +621,7 @@ msgid "<primary>_PG_output_plugin_init</primary>"
 msgstr "<primary>_PG_output_plugin_init</primary>"
 
 #: logicaldecoding.xml:372(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef struct OutputPluginCallbacks\n"
 "{\n"
@@ -646,7 +647,7 @@ msgstr ""
 "    LogicalDecodeShutdownCB shutdown_cb;\n"
 "} OutputPluginCallbacks;\n"
 "\n"
-"typedef void (*LogicalOutputPluginInit)(struct OutputPluginCallbacks *cb);"
+"typedef void (*LogicalOutputPluginInit) (struct OutputPluginCallbacks *cb);"
 
 #: logicaldecoding.xml:363(para)
 msgid ""
@@ -714,7 +715,6 @@ msgid "Output Modes"
 msgstr "Режимы вывода"
 
 #: logicaldecoding.xml:417(para)
-#, fuzzy
 msgid ""
 "Output plugin callbacks can pass data to the consumer in nearly arbitrary "
 "formats. For some use cases, like viewing the changes via SQL, returning "
@@ -734,7 +734,7 @@ msgstr ""
 "содержать произвольные данные (например, <type>bytea</type>), может быть "
 "неудобоваримым. Если модуль вывода выводит только текстовые данные в "
 "кодировке сервера, он может объявить это, установив в "
-"<literal>OutputPluginOptions.output_mode</literal> значение "
+"<literal>OutputPluginOptions.output_type</literal> значение "
 "<literal>OUTPUT_PLUGIN_TEXTUAL_OUTPUT</literal> вместо "
 "<literal>OUTPUT_PLUGIN_BINARY_OUTPUT</literal> в <link linkend="
 "\"logicaldecoding-output-plugin-startup\">обработчике запуска</link>. В этом "
@@ -789,17 +789,15 @@ msgid "Startup Callback"
 msgstr "Обработчик запуска"
 
 #: logicaldecoding.xml:468(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeStartupCB) (struct LogicalDecodingContext *ctx,\n"
 "                                        OutputPluginOptions *options,\n"
 "                                        bool is_init);"
 msgstr ""
-"typedef void (*LogicalDecodeStartupCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    OutputPluginOptions *options,\n"
-"    bool is_init\n"
-");"
+"typedef void (*LogicalDecodeStartupCB) (struct LogicalDecodingContext *ctx,\n"
+"                                        OutputPluginOptions *options,\n"
+"                                        bool is_init);"
 
 #: logicaldecoding.xml:477(programlisting)
 #, no-wrap
@@ -855,12 +853,9 @@ msgid "Shutdown Callback"
 msgstr "Обработчик выключения"
 
 #: logicaldecoding.xml:505(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "typedef void (*LogicalDecodeShutdownCB) (struct LogicalDecodingContext *ctx);"
-msgstr ""
-"typedef void (*LogicalDecodeShutdownCB) (\n"
-"    struct LogicalDecodingContext *ctx\n"
-");"
+msgstr "typedef void (*LogicalDecodeShutdownCB) (struct LogicalDecodingContext *ctx);"
 
 #: logicaldecoding.xml:500(para)
 msgid ""
@@ -880,15 +875,13 @@ msgid "Transaction Begin Callback"
 msgstr "Обработчик начала транзакции"
 
 #: logicaldecoding.xml:518(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeBeginCB) (struct LogicalDecodingContext *ctx,\n"
 "                                      ReorderBufferTXN *txn);"
 msgstr ""
-"typedef void (*LogicalDecodeBeginCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn\n"
-");"
+"typedef void (*LogicalDecodeBeginCB) (struct LogicalDecodingContext *ctx,\n"
+"                                      ReorderBufferTXN *txn);"
 
 #: logicaldecoding.xml:514(para)
 msgid ""
@@ -909,16 +902,15 @@ msgid "Transaction End Callback"
 msgstr "Обработчик завершения транзакции"
 
 #: logicaldecoding.xml:537(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeCommitCB) (struct LogicalDecodingContext *ctx,\n"
 "                                       ReorderBufferTXN *txn,\n"
 "                                       XLogRecPtr commit_lsn);"
 msgstr ""
-"typedef void (*LogicalDecodeCommitCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn\n"
-");"
+"typedef void (*LogicalDecodeCommitCB) (struct LogicalDecodingContext *ctx,\n"
+"                                       ReorderBufferTXN *txn,\n"
+"                                       XLogRecPtr commit_lsn);"
 
 #: logicaldecoding.xml:531(para)
 msgid ""
@@ -937,19 +929,17 @@ msgid "Change Callback"
 msgstr "Обработчик изменения"
 
 #: logicaldecoding.xml:555(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeChangeCB) (struct LogicalDecodingContext *ctx,\n"
 "                                       ReorderBufferTXN *txn,\n"
 "                                       Relation relation,\n"
 "                                       ReorderBufferChange *change);"
 msgstr ""
-"typedef void (*LogicalDecodeChangeCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    ReorderBufferTXN *txn,\n"
-"    Relation relation,\n"
-"    ReorderBufferChange *change\n"
-");"
+"typedef void (*LogicalDecodeChangeCB) (struct LogicalDecodingContext *ctx,\n"
+"                                       ReorderBufferTXN *txn,\n"
+"                                       Relation relation,\n"
+"                                       ReorderBufferChange *change);"
 
 #: logicaldecoding.xml:548(para)
 msgid ""
@@ -993,15 +983,13 @@ msgid "Origin Filter Callback"
 msgstr "Обработчик фильтрации источника"
 
 #: logicaldecoding.xml:588(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef bool (*LogicalDecodeFilterByOriginCB) (struct LogicalDecodingContext *ctx,\n"
 "                                               RepOriginId origin_id);"
 msgstr ""
-"typedef bool (*LogicalDecodeFilterByOriginCB) (\n"
-"    struct LogicalDecodingContext *ctx,\n"
-"    RepNodeId origin_id\n"
-");"
+"typedef bool (*LogicalDecodeFilterByOriginCB) (struct LogicalDecodingContext *ctx,\n"
+"                                               RepOriginId origin_id);"
 
 #: logicaldecoding.xml:583(para)
 msgid ""
@@ -1043,7 +1031,7 @@ msgid "Generic Message Callback"
 msgstr "Обработчик произвольных сообщений"
 
 #: logicaldecoding.xml:615(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeMessageCB) (struct LogicalDecodingContext *ctx,\n"
 "                                        ReorderBufferTXN *txn,\n"
@@ -1053,15 +1041,13 @@ msgid ""
 "                                        Size message_size,\n"
 "                                        const char *message);"
 msgstr ""
-"typedef void (*LogicalDecodeMessageCB) (\n"
-"    struct LogicalDecodingContext *,\n"
-"    ReorderBufferTXN *txn,\n"
-"    XLogRecPtr message_lsn,\n"
-"    bool transactional,\n"
-"    const char *prefix,\n"
-"    Size message_size,\n"
-"    const char *message\n"
-");"
+"typedef void (*LogicalDecodeMessageCB) (struct LogicalDecodingContext *ctx,\n"
+"                                        ReorderBufferTXN *txn,\n"
+"                                        XLogRecPtr message_lsn,\n"
+"                                        bool transactional,\n"
+"                                        const char *prefix,\n"
+"                                        Size message_size,\n"
+"                                        const char *message);"
 
 #: logicaldecoding.xml:612(para)
 msgid ""

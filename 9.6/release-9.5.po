@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2017-05-10 10:50+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"PO-Revision-Date: 2017-05-12 11:34+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: release-9.5.xml:6(title)
-#, fuzzy
 msgid "Release 9.5.7"
-msgstr "Выпуск 9.5.6"
+msgstr "Выпуск 9.5.7"
 
 #: release-9.5.xml:9(title) release-9.5.xml:646(title)
 #: release-9.5.xml:1308(title) release-9.5.xml:2132(title)
@@ -27,24 +27,21 @@ msgid "Release Date"
 msgstr "Дата выпуска"
 
 #: release-9.5.xml:10(simpara)
-#, fuzzy
 msgid "2017-05-11"
-msgstr "2016-05-12"
+msgstr "2017-05-11"
 
 #: release-9.5.xml:13(para)
-#, fuzzy
 msgid ""
 "This release contains a variety of fixes from 9.5.6. For information about "
 "new features in the 9.5 major release, see <xref linkend=\"release-9-5\"/>."
 msgstr ""
-"В этот выпуск вошли различные исправления, внесённые после версии 9.5.5. За "
+"В этот выпуск вошли различные исправления, внесённые после версии 9.5.6. За "
 "информацией о нововведениях версии 9.5 обратитесь к <xref remap=\"3\" "
 "linkend=\"release-9-5\"/>."
 
 #: release-9.5.xml:20(title)
-#, fuzzy
 msgid "Migration to Version 9.5.7"
-msgstr "Миграция на версию 9.5.6"
+msgstr "Миграция на версию 9.5.7"
 
 #: release-9.5.xml:22(para) release-9.5.xml:659(para)
 #: release-9.5.xml:1321(para) release-9.5.xml:2145(para)
@@ -59,21 +56,26 @@ msgid ""
 "However, if you use foreign data servers that make use of user passwords for "
 "authentication, see the first changelog entry below."
 msgstr ""
+"Однако, если вы используете сторонние серверы данных, на которых для "
+"проверки подлинности применяются пароли, прочитайте ниже первую запись в "
+"списке изменений."
 
 #: release-9.5.xml:31(para)
 msgid ""
 "Also, if you are using third-party replication tools that depend on "
 "<quote>logical decoding</quote>, see the fourth changelog entry below."
 msgstr ""
+"А если вы используете сторонние средства репликации, основанные на "
+"<quote>логическом декодировании</quote>, обратите внимание на четвёртую "
+"запись в списке изменений."
 
 #: release-9.5.xml:36(para)
-#, fuzzy
 msgid ""
 "Also, if you are upgrading from a version earlier than 9.5.6, see <xref "
 "linkend=\"release-9-5-6\"/>."
 msgstr ""
-"Также, если вы обновляете сервер с версии, более ранней, чем 9.5.5, см. "
-"<xref remap=\"4\" linkend=\"release-9-5-5\"/>."
+"Также, если вы обновляете сервер с версии, более ранней, чем 9.5.6, см. "
+"<xref remap=\"4\" linkend=\"release-9-5-6\"/>."
 
 #: release-9.5.xml:43(title) release-9.5.xml:676(title)
 #: release-9.5.xml:1338(title) release-9.5.xml:2156(title)
@@ -88,6 +90,9 @@ msgid ""
 "<structfield>umoptions</structfield>, to protect passwords stored as user "
 "mapping options (Michael Paquier, Feike Steenbergen)"
 msgstr ""
+"Ограничение видимости <structname>pg_user_mappings</structname>."
+"<structfield>umoptions</structfield> для защиты паролей, сохранённых в "
+"свойствах сопоставлений пользователей (Мишель Пакье, Фейке Стинберген)"
 
 #: release-9.5.xml:55(para)
 msgid ""
@@ -100,6 +105,15 @@ msgid ""
 "or if the mapping is for <literal>PUBLIC</literal> and the current user is "
 "the server owner, or if the current user is a superuser. (CVE-2017-7486)"
 msgstr ""
+"Предыдущая реализация позволяла владельцу объекта стороннего сервера или "
+"любому, кто получил право <literal>USAGE</literal>, видеть свойства всех "
+"сопоставлений, связанных с этим сервером. В том числе это могли быть и "
+"пароли других пользователей. Теперь определение данного представления "
+"изменено для соответствия поведению <structname>information_schema."
+"user_mapping_options</structname>, так что эти свойства может прочитать "
+"только собственно пользователь сопоставления либо, если это сопоставление "
+"роли <literal>PUBLIC</literal>, владелец сервера, либо суперпользователь. "
+"(CVE-2017-7486)"
 
 #: release-9.5.xml:68(para)
 msgid ""
@@ -107,6 +121,9 @@ msgid ""
 "databases. If you wish to apply this change in an existing database, you "
 "will need to do the following:"
 msgstr ""
+"Само по себе это исправление корректирует поведение только в новых базах "
+"данных, создаваемых initdb. Если вы хотите применить это исправление к "
+"существующей базе данных, вам нужно будет проделать следующие действия:"
 
 #: release-9.5.xml:76(para)
 msgid ""
@@ -115,6 +132,11 @@ msgid ""
 "<command>ALTER SYSTEM</command>, you can use that to make the configuration "
 "change, but you'll still need a restart.)"
 msgstr ""
+"Добавьте <literal>allow_system_table_mods = true</literal> в "
+"<filename>postgresql.conf</filename> и перезапустите сервер. (В версиях, "
+"поддерживающих <command>ALTER SYSTEM</command>, вы можете воспользоваться "
+"этой командой для изменения конфигурации, но перезапустить сервер "
+"потребуется всё равно.)"
 
 #: release-9.5.xml:88(programlisting)
 #, no-wrap
@@ -140,22 +162,44 @@ msgid ""
 "         LEFT JOIN pg_authid A ON (A.oid = U.umuser) JOIN\n"
 "        pg_foreign_server S ON (U.umserver = S.oid);"
 msgstr ""
+"SET search_path = pg_catalog;\n"
+"CREATE OR REPLACE VIEW pg_user_mappings AS\n"
+"    SELECT\n"
+"        U.oid       AS umid,\n"
+"        S.oid       AS srvid,\n"
+"        S.srvname   AS srvname,\n"
+"        U.umuser    AS umuser,\n"
+"        CASE WHEN U.umuser = 0 THEN\n"
+"            'public'\n"
+"        ELSE\n"
+"            A.rolname\n"
+"        END AS usename,\n"
+"        CASE WHEN (U.umuser &lt;&gt; 0 AND A.rolname = current_user)\n"
+"                    OR (U.umuser = 0 AND pg_has_role(S.srvowner, 'USAGE'))\n"
+"                    OR (SELECT rolsuper FROM pg_authid WHERE rolname = current_user)\n"
+"                    THEN U.umoptions\n"
+"                 ELSE NULL END AS umoptions\n"
+"    FROM pg_user_mapping U\n"
+"         LEFT JOIN pg_authid A ON (A.oid = U.umuser) JOIN\n"
+"        pg_foreign_server S ON (U.umserver = S.oid);"
 
 #: release-9.5.xml:85(para)
 msgid ""
 "In <emphasis>each</emphasis> database of the cluster, run the following "
 "commands as superuser: <placeholder-1/>"
 msgstr ""
+"В <emphasis>каждой</emphasis> базе данных кластера выполните от имени "
+"суперпользователя следующие команды: <placeholder-1/>"
 
 #: release-9.5.xml:120(programlisting)
 #, no-wrap
 msgid "ALTER DATABASE template0 WITH ALLOW_CONNECTIONS true;"
-msgstr ""
+msgstr "ALTER DATABASE template0 WITH ALLOW_CONNECTIONS true;"
 
 #: release-9.5.xml:124(programlisting)
 #, no-wrap
 msgid "ALTER DATABASE template0 WITH ALLOW_CONNECTIONS false;"
-msgstr ""
+msgstr "ALTER DATABASE template0 WITH ALLOW_CONNECTIONS false;"
 
 #: release-9.5.xml:128(programlisting)
 #, no-wrap
@@ -163,6 +207,8 @@ msgid ""
 "UPDATE pg_database SET datallowconn = true WHERE datname = 'template0';\n"
 "UPDATE pg_database SET datallowconn = false WHERE datname = 'template0';"
 msgstr ""
+"UPDATE pg_database SET datallowconn = true WHERE datname = 'template0';\n"
+"UPDATE pg_database SET datallowconn = false WHERE datname = 'template0';"
 
 #: release-9.5.xml:114(para)
 msgid ""
@@ -174,18 +220,30 @@ msgid ""
 "<placeholder-1/> and then after fixing <literal>template0</literal>, undo "
 "that with <placeholder-2/> In prior versions, instead use <placeholder-3/>"
 msgstr ""
+"Не забудьте внести коррективы в базах данных <literal>template0</literal> и "
+"<literal>template1</literal>, в противном случае уязвимость сохранится в "
+"базах, которые будут создаваться впоследствии. Чтобы поправить "
+"<literal>template0</literal>, вам потребуется временно разрешить подключения "
+"к ней. В <productname>PostgreSQL</productname> 9.5 и новее вы можете "
+"выполнить <placeholder-1/>, а внеся поправку в <literal>template0</literal>, "
+"восстановить прежнее состояние командой <placeholder-2/> В более ранних "
+"версиях вместо этого используйте пару команд <placeholder-3/>"
 
 #: release-9.5.xml:136(para)
 msgid ""
 "Finally, remove the <literal>allow_system_table_mods</literal> configuration "
 "setting, and again restart the postmaster."
 msgstr ""
+"В заключение удалите параметр конфигурации <literal>allow_system_table_mods</"
+"literal> и ещё раз перезапустите postmaster."
 
 #: release-9.5.xml:145(para)
 msgid ""
 "Prevent exposure of statistical information via leaky operators (Peter "
 "Eisentraut)"
 msgstr ""
+"Предотвращение утечки статистической информации через негерметичные "
+"операторы (Питер Эйзентраут)"
 
 #: release-9.5.xml:150(para)
 msgid ""
@@ -199,15 +257,25 @@ msgid ""
 "permission to read the table column whose statistics are needed. At least "
 "one of these criteria is satisfied in most cases in practice. (CVE-2017-7484)"
 msgstr ""
+"Некоторые функции оценки избирательности в планировщике применяют "
+"пользовательские операторы к значениям, получаемым из "
+"<structname>pg_statistic</structname>, например, к наиболее частым значениям "
+"и элементам гистограммы. Это происходит до проверки прав доступа к таблице, "
+"так что злонамеренный пользователь может воспользоваться этим и получить "
+"подобные значения из столбцов таблицы, чтение которых ему запрещено. Для "
+"устранения этой уязвимости следует переходить к общим оценкам, если функция, "
+"реализующая оператор, не считается герметичной и вызывающий её пользователь "
+"не имеет права на чтение столбца, статистика по которому требуется "
+"планировщику. На практике в большинстве случаев одно из этих условий "
+"выполняется. (CVE-2017-7484)"
 
 #: release-9.5.xml:166(para)
-#, fuzzy
 msgid ""
 "Restore <application>libpq</application>'s recognition of the "
 "<envar>PGREQUIRESSL</envar> environment variable (Daniel Gustafsson)"
 msgstr ""
-"Использование в <application>pg_regress</application> тайм-аута запуска из "
-"переменной окружения <envar>PGCTLTIMEOUT</envar>, если она задана (Том Лейн)"
+"Восстановление восприятия библиотекой <application>libpq</application> "
+"переменной окружения <envar>PGREQUIRESSL</envar> (Даниэль Густафсон)"
 
 #: release-9.5.xml:171(para)
 msgid ""
@@ -219,14 +287,22 @@ msgid ""
 "priority than <envar>PGSSLMODE</envar>, to avoid breaking configurations "
 "that work correctly with post-9.3 code. (CVE-2017-7485)"
 msgstr ""
+"Поддержка этой переменной окружения была непреднамеренно ликвидирована в "
+"<productname>PostgreSQL</productname> 9.3, но в документации она осталась. "
+"Это создало угрозу безопасности, так как пользователи могли рассчитывать на "
+"то, что она будет требовать SSL-шифрования подключений, но на самом деле "
+"этого не происходило. Теперь эта переменная воспринимается как и раньше, но "
+"имеет меньший приоритет, чем <envar>PGSSLMODE</envar>, во избежание "
+"нарушения конфигураций, работающих корректно с версиями после 9.3. "
+"(CVE-2017-7485)"
 
 #: release-9.5.xml:184(para)
-#, fuzzy
 msgid ""
 "Fix possibly-invalid initial snapshot during logical decoding (Petr Jelinek, "
 "Andres Freund)"
 msgstr ""
-"Исправление разнообразных ошибок в логическом декодировании (Андрес Фройнд)"
+"Исправление потенциально некорректного начального снимка при логическом "
+"декодировании (Петр Желинек, Андрес Фройнд)"
 
 #: release-9.5.xml:189(para)
 msgid ""
@@ -236,6 +312,12 @@ msgid ""
 "to happen if the source server was busy at the time of slot creation, or if "
 "another logical slot already existed."
 msgstr ""
+"Изначальный снимок, создаваемый для слота репликации с логическим "
+"декодированием, мог быть некорректным. В результате сторонние средства, "
+"использующие логическое декодирование, могли получать неполные/"
+"несогласованные начальные данные. Вероятность такого сбоя увеличивалась, "
+"если при создании слота исходный сервер был загружен либо уже существовал "
+"другой логический слот."
 
 #: release-9.5.xml:197(para)
 msgid ""
@@ -244,15 +326,18 @@ msgid ""
 "advisable to recreate the replica after installing this update, or to verify "
 "its contents against the source server."
 msgstr ""
+"Если вы используете средство репликации, основанное на логическом "
+"декодировании, и копировали непустой набор данных в начале репликации, имеет "
+"смысл пересоздать реплику после установления этого обновления либо сверить "
+"содержимое базы с исходным сервером."
 
 #: release-9.5.xml:207(para)
-#, fuzzy
 msgid ""
 "Fix possible corruption of <quote>init forks</quote> of unlogged indexes "
 "(Robert Haas, Michael Paquier)"
 msgstr ""
-"Безусловное фиксирование в WAL создания <quote>слоя инициализации</quote> "
-"для нежурналируемых таблиц (Мишель Пакье)"
+"Исправление потенциального повреждения <quote>слоёв инициализации</quote> "
+"нежурналируемых индексов (Роберт Хаас, Мишель Пакье)"
 
 #: release-9.5.xml:212(para)
 msgid ""
@@ -260,6 +345,9 @@ msgid ""
 "crash and restart. Such a problem would persist until the index was dropped "
 "and rebuilt."
 msgstr ""
+"Это повреждение могло приводить к переходу нежурналируемого индекса в "
+"ошибочное состояние после сбоя и перезапуска сервера. Устранить возникшую "
+"проблему можно было, только удалив и перестроив индекс."
 
 #: release-9.5.xml:220(para)
 msgid ""
@@ -267,6 +355,9 @@ msgid ""
 "when a standby server replays a prepared but uncommitted two-phase "
 "transaction (Tom Lane)"
 msgstr ""
+"Исправление ошибочного восстановления записей <structname>pg_subtrans</"
+"structname> при воспроизведении резервным сервером подготовленных, но не "
+"зафиксированных двухфазных транзакций (Том Лейн)"
 
 #: release-9.5.xml:226(para)
 msgid ""
@@ -275,30 +366,43 @@ msgid ""
 "structname>, potentially causing infinite loops in queries that examine rows "
 "modified by the two-phase transaction."
 msgstr ""
+"В большинстве случаев это не имело никаких болезненных последствий, но в "
+"особых ситуациях могло приводить к зацикливанию ссылок в "
+"<structname>pg_subtrans</structname>, что, в свою очередь, провоцировало "
+"бесконечные циклы в запросах, обращающимся к строкам, изменённым двухфазной "
+"транзакцией."
 
 #: release-9.5.xml:235(para)
 msgid ""
 "Avoid possible crash in <application>walsender</application> due to failure "
 "to initialize a string buffer (Stas Kelvich, Fujii Masao)"
 msgstr ""
+"Предотвращение возможного сбоя в <application>walsender</application> при "
+"ошибке инициализации буфера строки (Стас Кельвич, Фудзии Масао)"
 
 #: release-9.5.xml:242(para)
 msgid ""
 "Fix possible crash when rescanning a nearest-neighbor index-only scan on a "
 "GiST index (Tom Lane)"
 msgstr ""
+"Предупреждение возможного сбоя при повторном сканировании индекса GiST с "
+"использованием только индекса и поиском ближайших соседей (Том Лейн)"
 
 #: release-9.5.xml:249(para)
 msgid ""
 "Fix postmaster's handling of <function>fork()</function> failure for a "
 "background worker process (Tom Lane)"
 msgstr ""
+"Исправление поведения postmaster при обработке сбоя <function>fork()</"
+"function> для фонового рабочего процесса (Том Лейн)"
 
 #: release-9.5.xml:254(para)
 msgid ""
 "Previously, the postmaster updated portions of its state as though the "
 "process had been launched successfully, resulting in subsequent confusion."
 msgstr ""
+"Ранее postmaster модифицировал элементы своего состояния так, как будто "
+"процесс был запущен успешно, что впоследствии приводило к замешательству."
 
 #. Author: Andrew Gierth <rhodiumtoad@postgresql.org>
 #. Branch: REL9_5_STABLE [7be3678a8] 2017-04-24 07:53:05 +0100
@@ -307,12 +411,17 @@ msgid ""
 "Fix crash or wrong answers when a <literal>GROUPING SETS</literal> column's "
 "data type is hashable but not sortable (Pavan Deolasee)"
 msgstr ""
+"Устранение сбоев или неверных ответов в случаях, когда тип данных столбца в "
+"<literal>GROUPING SETS</literal> является хешируемым, но не сортируемым "
+"(Паван Деоласи)"
 
 #: release-9.5.xml:273(para)
 msgid ""
 "Avoid applying <quote>physical targetlist</quote> optimization to custom "
 "scans (Dmitry Ivanov, Tom Lane)"
 msgstr ""
+"Исключение применения оптимизации <quote>физического целевого списка</quote> "
+"к нестандартным сканированиям (Дмитрий Иванов, Том Лейн)"
 
 #: release-9.5.xml:278(para)
 msgid ""
@@ -320,24 +429,33 @@ msgid ""
 "inexpensive, which is true for ordinary Postgres tuples; but it might not be "
 "the case for a custom scan provider."
 msgstr ""
+"Эта оптимизация предполагала, что получить все столбцы кортежа можно "
+"недорого, что действительно верно для обычных кортежей Postgres, но с "
+"нестандартными провайдерами сканирования это может быть не так."
 
 #: release-9.5.xml:286(para)
 msgid ""
 "Use the correct sub-expression when applying a <literal>FOR ALL</literal> "
 "row-level-security policy (Stephen Frost)"
 msgstr ""
+"Использование правильного подвыражения при применении политики защиты на "
+"уровне строк <literal>FOR ALL</literal> (Стивен Фрост)"
 
 #: release-9.5.xml:291(para)
 msgid ""
 "In some cases the <literal>WITH CHECK</literal> restriction would be applied "
 "when the <literal>USING</literal> restriction is more appropriate."
 msgstr ""
+"В некоторых случаях применялось ограничение <literal>WITH CHECK</literal>, "
+"хотя более уместным было бы ограничение <literal>USING</literal>."
 
 #: release-9.5.xml:298(para)
 msgid ""
 "Ensure parsing of queries in extension scripts sees the results of "
 "immediately-preceding DDL (Julien Rouhaud, Tom Lane)"
 msgstr ""
+"Обеспечение видимости результатов непосредственно предшествующих DDL при "
+"разборе запросов в скриптах расширений (Жульен Рохо, Том Лейн)"
 
 #: release-9.5.xml:303(para)
 msgid ""
@@ -345,12 +463,19 @@ msgid ""
 "file, non-utility queries might not see the effects of an immediately "
 "preceding catalog change, such as <command>ALTER TABLE ... RENAME</command>."
 msgstr ""
+"Из-за того, что кеш между командами в скрипте расширения не сбрасывался, "
+"запрос к данным мог не наблюдать эффектов непосредственно предшествующего "
+"ему изменения каталога, например результатов <command>ALTER TABLE ... "
+"RENAME</command>."
 
 #: release-9.5.xml:312(para)
 msgid ""
 "Skip tablespace privilege checks when <command>ALTER TABLE ... ALTER COLUMN "
 "TYPE</command> rebuilds an existing index (Noah Misch)"
 msgstr ""
+"Ликвидация проверки прав доступа к табличному пространству при перестроении "
+"существующего индекса командой <command>ALTER TABLE ... ALTER COLUMN TYPE</"
+"command> (Ной Миш)"
 
 #: release-9.5.xml:317(para)
 msgid ""
@@ -359,6 +484,10 @@ msgid ""
 "That behavior seems unhelpful, so skip the check, allowing the index to be "
 "rebuilt where it is."
 msgstr ""
+"Это команда выдавала ошибку, если вызывающий пользователь не имел права "
+"<literal>CREATE</literal> для табличного пространства, содержащего индекс. "
+"Такое поведение малополезно, так что стоит исключить эту проверку и "
+"разрешить перестраивать индекс там, где он находился."
 
 #: release-9.5.xml:326(para)
 msgid ""
@@ -366,42 +495,59 @@ msgid ""
 "child tables when the constraint is marked <literal>NO INHERIT</literal> "
 "(Amit Langote)"
 msgstr ""
+"Предотвращение рекурсивного обращения команды <command>ALTER TABLE ... "
+"VALIDATE CONSTRAINT</command> к дочерним таблицам когда ограничение помечено "
+"как <literal>NO INHERIT</literal> (Амит Ланготе)"
 
 #: release-9.5.xml:332(para)
 msgid ""
 "This fix prevents unwanted <quote>constraint does not exist</quote> failures "
 "when no matching constraint is present in the child tables."
 msgstr ""
+"Это предупреждает нежелательные сбои типа <quote>constraint does not exist</"
+"quote> (ограничение не существует) в случаях, когда в дочерних таблицах нет "
+"соответствующего ограничения."
 
 #: release-9.5.xml:339(para)
 msgid ""
 "Avoid dangling pointer in <command>COPY ... TO</command> when row-level "
 "security is active for the source table (Tom Lane)"
 msgstr ""
+"Устранение потери указателя в <command>COPY ... TO</command> когда для "
+"исходной таблицы активна защита на уровне строк (Том Лейн)"
 
 #: release-9.5.xml:344(para)
 msgid ""
 "Usually this had no ill effects, but sometimes it would cause unexpected "
 "errors or crashes."
 msgstr ""
+"Обычно это не имело болезненных последствий, но иногда всё же приводило к "
+"неожиданным ошибкам и сбоям."
 
 #: release-9.5.xml:351(para)
 msgid ""
 "Avoid accessing an already-closed relcache entry in <command>CLUSTER</"
 "command> and <command>VACUUM FULL</command> (Tom Lane)"
 msgstr ""
+"Предупреждение обращения к уже закрытому элементу relcache в "
+"<command>CLUSTER</command> и <command>VACUUM FULL</command> (Том Лейн)"
 
 #: release-9.5.xml:356(para)
 msgid ""
 "With some bad luck, this could lead to indexes on the target relation "
 "getting rebuilt with the wrong persistence setting."
 msgstr ""
+"При особом стечении обстоятельств это могло приводить к тому, что индексы в "
+"целевом отношении перестраивались с неправильным режимом сохранения."
 
 #: release-9.5.xml:363(para)
 msgid ""
 "Fix <command>VACUUM</command> to account properly for pages that could not "
 "be scanned due to conflicting page pins (Andrew Gierth)"
 msgstr ""
+"Исправление ошибки команды <command>VACUUM</command>, когда она неправильно "
+"учитывала страницы, которые не могла прочитать из-за конфликтующих "
+"закреплений страниц (Эндрю Гирт)"
 
 #: release-9.5.xml:368(para)
 msgid ""
@@ -410,18 +556,26 @@ msgid ""
 "command> could incorrectly report that the table contained no tuples, "
 "leading to very bad planning choices."
 msgstr ""
+"Это провоцировало недооценивание количества кортежей в таблице. В худшем "
+"случае с чрезвычайно востребованной таблицей команда <command>VACUUM</"
+"command> могла ошибочно сообщить, что таблица вовсе не содержит кортежей, "
+"что приводило к очень плохим решениям при планировании."
 
 #: release-9.5.xml:377(para)
 msgid ""
 "Ensure that bulk-tuple-transfer loops within a hash join are interruptible "
 "by query cancel requests (Tom Lane, Thomas Munro)"
 msgstr ""
+"Обеспечение возможности прерывания циклов массовой передачи кортежей в "
+"соединении по хешу при попытке отмены запроса (Том Лейн, Томас Мунро)"
 
 #: release-9.5.xml:384(para)
 msgid ""
 "Fix integer-overflow problems in <type>interval</type> comparison (Kyotaro "
 "Horiguchi, Tom Lane)"
 msgstr ""
+"Исправление проблем с переполнением целочисленных значений при сравнении "
+"типов <type>interval</type> (Киотаро Хоригучи, Том Лейн)"
 
 #: release-9.5.xml:389(para)
 msgid ""
@@ -429,6 +583,9 @@ msgid ""
 "answers for intervals larger than about 296000 years. Indexes on columns "
 "containing such large values should be reindexed, since they may be corrupt."
 msgstr ""
+"Операторы сравнения для типа <type>interval</type> могли выдавать неверные "
+"ответы для интервалов, превышающих 296000 лет. Индексы по столбцам с такими "
+"большими значениями следует перестроить, так как они могут быть испорчены."
 
 #: release-9.5.xml:398(para)
 msgid ""
@@ -436,21 +593,24 @@ msgid ""
 "<replaceable>tableforest</replaceable> = false (Thomas Munro, Peter "
 "Eisentraut)"
 msgstr ""
+"Исправление функции <function>cursor_to_xml()</function>, чтобы она выдавала "
+"правильный результат с <replaceable>tableforest</replaceable> = false (Томас "
+"Мунро, Питер Эйзентраут)"
 
 #: release-9.5.xml:404(para)
 msgid ""
 "Previously it failed to produce a wrapping <literal>&lt;table&gt;</literal> "
 "element."
 msgstr ""
+"Ранее она не добавляла внешний элемент <literal>&lt;table&gt;</literal>."
 
 #: release-9.5.xml:411(para)
-#, fuzzy
 msgid ""
 "Fix roundoff problems in <function>float8_timestamptz()</function> and "
 "<function>make_interval()</function> (Tom Lane)"
 msgstr ""
-"Исправление кодов ошибок, получаемых из системных вызовов <function>bind()</"
-"function> и <function>listen()</function> в Windows (Том Лейн)"
+"Устранение проблем с округлением в функциях <function>float8_timestamptz()</"
+"function> и <function>make_interval()</function> (Том Лейн)"
 
 #: release-9.5.xml:416(para)
 msgid ""
@@ -458,66 +618,82 @@ msgid ""
 "point value to integer microseconds; that could cause unexpectedly off-by-"
 "one results."
 msgstr ""
+"Эти функции отбрасывали дробную часть, а не округляли числа при "
+"преобразовании значения с плавающей точкой к целому числу микросекунд; это "
+"могло приводить к неожиданным сдвигам результатов на единицу."
 
 #: release-9.5.xml:424(para)
 msgid ""
 "Fix <function>pg_get_object_address()</function> to handle members of "
 "operator families correctly (&Aacute;lvaro Herrera)"
 msgstr ""
+"Исправление функции <function>pg_get_object_address()</function> для членов "
+"семейств операторов (Альваро Эррера)"
 
 #: release-9.5.xml:431(para)
 msgid ""
 "Improve performance of <structname>pg_timezone_names</structname> view (Tom "
 "Lane, David Rowley)"
 msgstr ""
+"Улучшение производительности представления <structname>pg_timezone_names</"
+"structname> (Том Лейн, Дэвид Роули)"
 
 #: release-9.5.xml:438(para)
 msgid ""
 "Reduce memory management overhead for contexts containing many large blocks "
 "(Tom Lane)"
 msgstr ""
+"Уменьшение издержек при управлении памятью для контекстов, содержащих "
+"множество больших блоков (Том Лейн)"
 
 #: release-9.5.xml:445(para)
-#, fuzzy
 msgid ""
 "Fix sloppy handling of corner-case errors from <function>lseek()</function> "
 "and <function>close()</function> (Tom Lane)"
 msgstr ""
-"Исправление кодов ошибок, получаемых из системных вызовов <function>bind()</"
-"function> и <function>listen()</function> в Windows (Том Лейн)"
+"Исправление неаккуратной обработки редких ошибок в <function>lseek()</"
+"function> и <function>close()</function> (Том Лейн)"
 
 #: release-9.5.xml:450(para)
 msgid ""
 "Neither of these system calls are likely to fail in typical situations, but "
 "if they did, <filename>fd.c</filename> could get quite confused."
 msgstr ""
+"В типичных ситуациях эти системные вызовы отрабатывают без ошибок, но в "
+"случае ошибки код <filename>fd.c</filename> мог повести себя некорректно."
 
 #: release-9.5.xml:457(para)
 msgid ""
 "Fix incorrect check for whether postmaster is running as a Windows service "
 "(Michael Paquier)"
 msgstr ""
+"Исправление некорректной проверки факта работы postmaster в виде службы "
+"Windows (Мишель Пакье)"
 
 #: release-9.5.xml:462(para)
 msgid ""
 "This could result in attempting to write to the event log when that isn't "
 "accessible, so that no logging happens at all."
 msgstr ""
+"Вследствие ошибки для вывода сообщений мог выбираться системный журнал "
+"событий (там где его на самом деле не было), так что запись сообщений "
+"фактически не производилась."
 
 #: release-9.5.xml:469(para)
 msgid ""
 "Fix <application>ecpg</application> to support <command>COMMIT PREPARED</"
 "command> and <command>ROLLBACK PREPARED</command> (Masahiko Sawada)"
 msgstr ""
+"Исправление в <application>ecpg</application> поддержки <command>COMMIT "
+"PREPARED</command> и <command>ROLLBACK PREPARED</command> (Масахико Савада)"
 
 #: release-9.5.xml:476(para)
-#, fuzzy
 msgid ""
 "Fix a double-free error when processing dollar-quoted string literals in "
 "<application>ecpg</application> (Michael Meskes)"
 msgstr ""
-"Исправление ошибочной проверки состояния службы Windows в "
-"<application>pg_ctl</application> (Мануэль Матар)"
+"Исправление ошибки двойного освобождения при обработке строковых констант, "
+"заключённых в доллары, в <application>ecpg</application> (Михаэль Мескес)"
 
 #: release-9.5.xml:483(para)
 msgid ""
@@ -525,6 +701,9 @@ msgid ""
 "marking for comments and security labels of some types of database objects "
 "(Giuseppe Broccolo, Tom Lane)"
 msgstr ""
+"В <application>pg_dump</application> исправлена пометка схемы и владельца "
+"для комментариев и меток безопасности некоторых типов объектов БД (Джузеппе "
+"Брокколо, Том Лейн)"
 
 #: release-9.5.xml:489(para)
 msgid ""
@@ -532,62 +711,76 @@ msgid ""
 "selective restore might omit comments it should include, because they were "
 "not marked as belonging to the schema of their associated object."
 msgstr ""
+"В простых случаях это не проявлялось никак, но например, при восстановлении "
+"с выбором схемы, могли потеряться комментарии, которые в ней должны быть, из-"
+"за того, что они не были помечены как принадлежащие схеме своего объекта."
 
 #: release-9.5.xml:498(para)
 msgid ""
 "Avoid emitting an invalid list file in <literal>pg_restore -l</literal> when "
 "SQL object names contain newlines (Tom Lane)"
 msgstr ""
+"Предотвращение вывода командой <literal>pg_restore -l</literal> "
+"некорректного файла со списком объектов, когда имена объектов SQL содержат "
+"символы перевода строки (Том Лейн)"
 
 #: release-9.5.xml:503(para)
 msgid ""
 "Replace newlines by spaces, which is sufficient to make the output valid for "
 "<literal>pg_restore -L</literal>'s purposes."
 msgstr ""
+"Символы перевода строки заменяются пробелами, что достаточно для того, чтобы "
+"этот список корректно обработала команда <literal>pg_restore -L</literal>."
 
 #: release-9.5.xml:510(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_upgrade</application> to transfer comments and security "
 "labels attached to <quote>large objects</quote> (blobs) (Stephen Frost)"
 msgstr ""
-"Исправление <application>pg_dump</application> для корректной выгрузки "
-"пользовательских приведений и преобразований, использующих встроенные "
-"функции (Стивен Фрост)"
+"Исправление поведения <application>pg_upgrade</application> для корректного "
+"переноса комментариев и меток безопасности, связанных с <quote>большими "
+"объектами</quote> (BLOB) (Стивен Фрост)"
 
 #: release-9.5.xml:515(para)
 msgid ""
 "Previously, blobs were correctly transferred to the new database, but any "
 "comments or security labels attached to them were lost."
 msgstr ""
+"Ранее такие объекты корректно переносились в новую базу данных, но связанные "
+"с ними комментарии и метки безопасности терялись."
 
 #: release-9.5.xml:522(para)
-#, fuzzy
 msgid ""
 "Improve error handling in <filename>contrib/adminpack</filename>'s "
 "<function>pg_file_write()</function> function (Noah Misch)"
 msgstr ""
-"Исправление ряда ошибок в статистике, возвращаемой функцией "
-"<function>pgstatindex()</function> из <filename>contrib/pgstattuple</"
-"filename> (Том Лейн)"
+"Улучшение обработки ошибок в функции <function>pg_file_write()</function> из "
+"<filename>contrib/adminpack</filename> (Ной Миш)"
 
 #: release-9.5.xml:528(para)
 msgid ""
 "Notably, it failed to detect errors reported by <function>fclose()</"
 "function>."
 msgstr ""
+"В частности, она не реагировала на ошибки в вызове <function>fclose()</"
+"function>."
 
 #: release-9.5.xml:535(para)
 msgid ""
 "In <filename>contrib/dblink</filename>, avoid leaking the previous unnamed "
 "connection when establishing a new unnamed connection (Joe Conway)"
 msgstr ""
+"Предупреждение утечки предыдущего безымянного соединения при установлении "
+"нового безымянного соединения в <filename>contrib/dblink</filename> (Джо "
+"Конвей)"
 
 #: release-9.5.xml:542(para)
 msgid ""
 "Fix <filename>contrib/pg_trgm</filename>'s extraction of trigrams from "
 "regular expressions (Tom Lane)"
 msgstr ""
+"Исправление извлечения триграмм из регулярных выражений в <filename>contrib/"
+"pg_trgm</filename> (Том Лейн)"
 
 #: release-9.5.xml:547(para)
 msgid ""
@@ -595,6 +788,10 @@ msgid ""
 "match anything, leading to GIN or GiST indexscans that use a trigram index "
 "not finding any matches to the regular expression."
 msgstr ""
+"В некоторых случаях это могло приводить к формированию испорченной структуры "
+"данных, для которой отсутствуют какие-либо соответствия. Вследствие этого "
+"при сканировании по индексам GIN и GiST с использованием триграмм для "
+"регулярного выражения могли не находиться никакие результаты."
 
 #. Author: Robert Haas <rhaas@postgresql.org>
 #. Branch: REL9_5_STABLE [cdf5a004b] 2017-05-06 22:21:38 -0400
@@ -605,6 +802,8 @@ msgid ""
 "In <filename>contrib/postgres_fdw</filename>, transmit query cancellation "
 "requests to the remote server (Michael Paquier, Etsuro Fujita)"
 msgstr ""
+"В <filename>contrib/postgres_fdw</filename> реализована передача требования "
+"отмены запроса удалённому серверу (Мишель Пакье, Эцуро Фудзита)"
 
 #: release-9.5.xml:567(para)
 msgid ""
@@ -612,26 +811,29 @@ msgid ""
 "remote query to terminate early. This is a back-patch of work originally "
 "done for 9.6."
 msgstr ""
+"Ранее требование на отмену локального запроса не влекло за собой досрочную "
+"отмену удалённого запроса, уже переданного на выполнение. Это доработка "
+"ранее была реализована в 9.6 и теперь перенесена в 9.5."
 
 #: release-9.5.xml:575(para)
 msgid "Support Tcl 8.6 in MSVC builds (&Aacute;lvaro Herrera)"
-msgstr ""
+msgstr "Поддержка Tcl 8.6 в сборках с MSVC (Альваро Эррера)"
 
 #: release-9.5.xml:581(para)
-#, fuzzy
 msgid ""
 "Sync our copy of the timezone library with IANA release tzcode2017b (Tom "
 "Lane)"
 msgstr ""
 "Синхронизация нашей копии библиотеки timezone с выпущенной IANA версией "
-"tzcode2016j (Том Лейн)"
+"tzcode2017b (Том Лейн)"
 
 #: release-9.5.xml:586(para)
 msgid "This fixes a bug affecting some DST transitions in January 2038."
 msgstr ""
+"Это устраняет ошибку с некоторыми вариантами перехода на летнее время в "
+"январе 2038."
 
 #: release-9.5.xml:592(para)
-#, fuzzy
 msgid ""
 "Update time zone data files to <application>tzdata</application> release "
 "2017b for DST law changes in Chile, Haiti, and Mongolia, plus historical "
@@ -640,10 +842,11 @@ msgid ""
 "Indian oceans, and some Asian and Middle Eastern countries."
 msgstr ""
 "Обновление данных часовых поясов до версии <application>tzdata</application> "
-"2016h, включающее изменение правил перехода на летнее время в Палестине и "
-"Турции, а также исторические изменения для Турции и некоторых регионов "
-"России. Переход к числовым аббревиатурам для некоторых часовых поясов в "
-"Антарктике, бывшем Советском Союзе и на Шри-Ланке."
+"2017b, включающее изменение правил перехода на летнее время в Чили, Монголии "
+"и на Гаити, а также исторические изменения для Эквадора, Казахстана, Либерии "
+"и Испании. Переход к числовым аббревиатурам для ряда часовых поясов в Южной "
+"Америке, в Тихом и Индийском океанах, а также в некоторых азиатских и "
+"ближневосточных странах."
 
 #: release-9.5.xml:601(para) release-9.5.xml:2104(para)
 msgid ""
@@ -672,6 +875,8 @@ msgid ""
 "Use correct daylight-savings rules for POSIX-style time zone names in MSVC "
 "builds (David Rowley)"
 msgstr ""
+"Использование корректных правил перехода на летнее время для названий "
+"часовых поясов в стиле POSIX при сборке с MSVC (Дэвид Роули)"
 
 #: release-9.5.xml:620(para)
 msgid ""
@@ -688,6 +893,20 @@ msgid ""
 "\"/>). Note that due to caching, you may need to restart the server to get "
 "such changes to take effect."
 msgstr ""
+"Сборочные скрипты для MSVC не устанавливали корректно файл "
+"<filename>posixrules</filename> в дерево каталогов timezone. Это приводило к "
+"тому, что код timezone переходил к использованию встроенных представлений о "
+"том, какой вариант перехода на летнее время применим для названия пояса в "
+"стиле POSIX. По историческим причинам это соответствует правилам, которые "
+"действовали в США до 2007 г. (то есть переход на летнее время происходил в "
+"первое воскресенье апреля, а на зимнее — в последнее воскресенье октября). С "
+"этим исправлением для часового пояса с названием в стиле POSIX будут "
+"использоваться текущие и исторические даты перехода для пояса <literal>US/"
+"Eastern</literal>. Если для вас это нежелательно, удалите файл "
+"<filename>posixrules</filename> или замените его файлом другого часового "
+"пояса (см. <xref remap=\"4\" linkend=\"datatype-timezones\"/>). Учтите, что "
+"вследствие кеширования вам потребуется перезапустить сервер, чтобы подобные "
+"изменения вступили в силу."
 
 #: release-9.5.xml:643(title)
 msgid "Release 9.5.6"
@@ -738,7 +957,6 @@ msgstr ""
 "(Паван Деоласи, Том Лейн)"
 
 #: release-9.5.xml:687(para)
-#, fuzzy
 msgid ""
 "If <command>CREATE INDEX CONCURRENTLY</command> was used to build an index "
 "that depends on a column not previously indexed, then rows updated by "
@@ -749,10 +967,10 @@ msgid ""
 msgstr ""
 "Если команда <command>CREATE INDEX CONCURRENTLY</command> применялась для "
 "построения индекса, зависящего от столбца, ранее не индексированного, то у "
-"строк, добавляемых или изменяемых транзакциями, выполняемыми одновременно с "
-"командой <command>CREATE INDEX</command>, могли оказываться некорректные "
-"записи в индексе. В случае подозрений, что вас это коснулось, самое надёжное "
-"решение — перестроить такие индексы после установки этого обновления."
+"строк, изменяемых транзакциями, выполняемыми одновременно с командой "
+"<command>CREATE INDEX</command>, могли оказываться некорректные записи в "
+"индексе. В случае подозрений, что вас это коснулось, самое надёжное решение "
+"— перестроить такие индексы после установки этого обновления."
 
 #: release-9.5.xml:699(para)
 msgid ""
