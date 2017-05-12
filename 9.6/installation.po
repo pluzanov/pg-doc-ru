@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-10-25 08:44+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-05-10 10:49+0300\n"
+"PO-Revision-Date: 2017-05-12 10:52+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: installation.xml:12(title)
 msgid ""
@@ -2040,7 +2041,41 @@ msgstr ""
 "Ниже приведён список значимых переменных, которые можно установить таким "
 "образом: <placeholder-1/>"
 
-#: installation.xml:1471(para)
+#: installation.xml:1470(para)
+msgid ""
+"Sometimes it is useful to add compiler flags after-the-fact to the set that "
+"were chosen by <filename>configure</filename>. An important example is that "
+"<application>gcc</application>'s <option>-Werror</option> option cannot be "
+"included in the <envar>CFLAGS</envar> passed to <filename>configure</"
+"filename>, because it will break many of <filename>configure</filename>'s "
+"built-in tests. To add such flags, include them in the <envar>COPT</envar> "
+"environment variable while running <filename>make</filename>. The contents "
+"of <envar>COPT</envar> are added to both the <envar>CFLAGS</envar> and "
+"<envar>LDFLAGS</envar> options set up by <filename>configure</filename>. For "
+"example, you could do <screen>\n"
+"<userinput>make COPT='-Werror'</userinput>\n"
+"</screen> or <screen>\n"
+"<userinput>export COPT='-Werror'</userinput>\n"
+"<userinput>make</userinput>\n"
+"</screen>"
+msgstr ""
+"Иногда может быть полезно добавить флаги компилятора к набору флагов, ранее "
+"заданному на этапе <filename>configure</filename>. В частности, эта "
+"потребность объясняется тем, что параметр <application>gcc</application> "
+"<option>-Werror</option> нельзя указать в переменной <envar>CFLAGS</envar>, "
+"передаваемой <filename>configure</filename>, так как в результате сломаются "
+"многие встроенные тесты <filename>configure</filename>. Чтобы добавить такие "
+"флаги, задайте их в переменной среды <envar>COPT</envar> при запуске "
+"<filename>make</filename>. Содержимое <envar>COPT</envar> будет добавлено в "
+"параметры <envar>CFLAGS</envar> и <envar>LDFLAGS</envar>, заданные скриптом "
+"<filename>configure</filename>. Например, вы можете выполнить: <screen>\n"
+"<userinput>make COPT='-Werror'</userinput>\n"
+"</screen> или <screen>\n"
+"<userinput>export COPT='-Werror'</userinput>\n"
+"<userinput>make</userinput>\n"
+"</screen>"
+
+#: installation.xml:1491(para)
 msgid ""
 "When developing code inside the server, it is recommended to use the "
 "configure options <option>--enable-cassert</option> (which turns on many run-"
@@ -2052,7 +2087,7 @@ msgstr ""
 "проверок во время выполнения) и <option>--enable-debug</option> (которое "
 "упрощает использование средств отладки)."
 
-#: installation.xml:1478(para)
+#: installation.xml:1498(para)
 msgid ""
 "If using GCC, it is best to build with an optimization level of at least "
 "<option>-O1</option>, because using no optimization (<option>-O0</option>) "
@@ -2075,11 +2110,25 @@ msgstr ""
 "соответствующий параметр <application>make</application>: <command>make "
 "PROFILE=-O0 file.o</command>."
 
-#: installation.xml:1494(title)
+#: installation.xml:1511(para)
+msgid ""
+"The <envar>COPT</envar> and <envar>PROFILE</envar> environment variables are "
+"actually handled identically by the <productname>PostgreSQL</productname> "
+"makefiles. Which to use is a matter of preference, but a common habit among "
+"developers is to use <envar>PROFILE</envar> for one-time flag adjustments, "
+"while <envar>COPT</envar> might be kept set all the time."
+msgstr ""
+"На самом деле переменные окружения <envar>COPT</envar> и <envar>PROFILE</"
+"envar> обрабатываются сборочными файлами Makefile <productname>PostgreSQL</"
+"productname> одинаково. Поэтому выбор одной из этих переменных — дело вкуса, "
+"но обычно разработчики используют <envar>PROFILE</envar> для одноразовых "
+"корректив флагов, а содержимое <envar>COPT</envar> сохраняют постоянным."
+
+#: installation.xml:1522(title)
 msgid "Build"
 msgstr "Сборка"
 
-#: installation.xml:1496(para)
+#: installation.xml:1524(para)
 msgid ""
 "To start the build, type: <screen>\n"
 "<userinput>make</userinput>\n"
@@ -2098,7 +2147,7 @@ msgstr ""
 "All of PostgreSQL successfully made. Ready to install.\n"
 "</screen> (Весь PostgreSQL собран успешно и готов к установке.)"
 
-#: installation.xml:1509(para)
+#: installation.xml:1537(para)
 msgid ""
 "If you want to build everything that can be built, including the "
 "documentation (HTML and man pages), and the additional modules "
@@ -2117,15 +2166,15 @@ msgstr ""
 "</screen> (PostgreSQL, contrib и документация собраны успешно и готовы к "
 "установке.)"
 
-#: installation.xml:1524(title)
+#: installation.xml:1552(title)
 msgid "Regression Tests"
 msgstr "Регрессионные тесты"
 
-#: installation.xml:1526(indexterm)
+#: installation.xml:1554(indexterm)
 msgid "<primary>regression test</primary>"
 msgstr "<primary>регрессионный тест</primary>"
 
-#: installation.xml:1530(para)
+#: installation.xml:1558(para)
 msgid ""
 "If you want to test the newly built server before you install it, you can "
 "run the regression tests at this point. The regression tests are a test "
@@ -2152,11 +2201,11 @@ msgstr ""
 "linkend=\"regress\"/></phrase>. Вы можете повторить эту проверку позже в "
 "любой момент, выполнив ту же команду."
 
-#: installation.xml:1550(title)
+#: installation.xml:1578(title)
 msgid "Installing the Files"
 msgstr "Установка файлов"
 
-#: installation.xml:1553(para)
+#: installation.xml:1581(para)
 msgid ""
 "If you are upgrading an existing system be sure to read <phrase condition="
 "\"standalone\">the documentation,</phrase> <phrase condition=\"default"
@@ -2168,7 +2217,7 @@ msgstr ""
 "\">документации</phrase> <phrase condition=\"default\"><xref remap=\"6\" "
 "linkend=\"upgrading\"/></phrase>."
 
-#: installation.xml:1562(para)
+#: installation.xml:1590(para)
 msgid ""
 "To install <productname>PostgreSQL</productname> enter: <screen>\n"
 "<userinput>make install</userinput>\n"
@@ -2186,7 +2235,7 @@ msgstr ""
 "выполнять от имени root. Также возможно заранее создать целевые каталоги и "
 "дать требуемый доступ к ним."
 
-#: installation.xml:1575(para)
+#: installation.xml:1603(para)
 msgid ""
 "To install the documentation (HTML and man pages), enter: <screen>\n"
 "<userinput>make install-docs</userinput>\n"
@@ -2196,7 +2245,7 @@ msgstr ""
 "<userinput>make install-docs</userinput>\n"
 "</screen>"
 
-#: installation.xml:1582(para)
+#: installation.xml:1610(para)
 msgid ""
 "If you built the world above, type instead: <screen>\n"
 "<userinput>make install-world</userinput>\n"
@@ -2206,7 +2255,7 @@ msgstr ""
 "<userinput>make install-world</userinput>\n"
 "</screen> При этом также будет установлена документация."
 
-#: installation.xml:1590(para)
+#: installation.xml:1618(para)
 msgid ""
 "You can use <literal>make install-strip</literal> instead of <literal>make "
 "install</literal> to strip the executable files and libraries as they are "
@@ -2228,7 +2277,7 @@ msgstr ""
 "способна удалить каждый ненужный байт из исполняемого файла. Если вы хотите "
 "освободить как можно больше места, вам придётся проделать это вручную."
 
-#: installation.xml:1603(para)
+#: installation.xml:1631(para)
 msgid ""
 "The standard installation provides all the header files needed for client "
 "application development as well as for server-side program development, such "
@@ -2244,11 +2293,11 @@ msgstr ""
 "<literal>make install-all-headers</literal>, но сейчас это включено в "
 "стандартную установку.)"
 
-#: installation.xml:1613(title)
+#: installation.xml:1641(title)
 msgid "Client-only installation:"
 msgstr "Установка только клиентской части:"
 
-#: installation.xml:1614(para)
+#: installation.xml:1642(para)
 msgid ""
 "If you want to install only the client applications and interface libraries, "
 "then you can use these commands: <screen>\n"
@@ -2268,11 +2317,11 @@ msgstr ""
 "</screen> В <filename>src/bin</filename> есть несколько программ, применимых "
 "только на сервере, но они очень малы."
 
-#: installation.xml:1631(title)
+#: installation.xml:1659(title)
 msgid "Uninstallation:"
 msgstr "Удаление:"
 
-#: installation.xml:1632(para)
+#: installation.xml:1660(para)
 msgid ""
 "To undo the installation use the command <command>make uninstall</command>. "
 "However, this will not remove any created directories."
@@ -2280,11 +2329,11 @@ msgstr ""
 "Чтобы отменить установку, воспользуйтесь командой <command>make uninstall</"
 "command>. Однако созданные каталоги при этом удалены не будут."
 
-#: installation.xml:1639(title)
+#: installation.xml:1667(title)
 msgid "Cleaning:"
 msgstr "Очистка:"
 
-#: installation.xml:1641(para)
+#: installation.xml:1669(para)
 msgid ""
 "After the installation you can free disk space by removing the built files "
 "from the source tree with the command <command>make clean</command>. This "
@@ -2307,7 +2356,7 @@ msgstr ""
 "каждой. (Также можно использовать отдельное дерево сборки для каждой "
 "платформы, чтобы дерево исходного кода оставалось неизменным.)"
 
-#: installation.xml:1655(para)
+#: installation.xml:1683(para)
 msgid ""
 "If you perform a build and then discover that your <command>configure</"
 "command> options were wrong, or if you change anything that "
@@ -2323,19 +2372,19 @@ msgstr ""
 "переконфигурировать и пересобирать всё заново. Если этого не сделать, ваши "
 "изменения в конфигурации могут распространиться не везде, где они важны."
 
-#: installation.xml:1666(title)
+#: installation.xml:1694(title)
 msgid "Post-Installation Setup"
 msgstr "Действия после установки"
 
-#: installation.xml:1669(title)
+#: installation.xml:1697(title)
 msgid "Shared Libraries"
 msgstr "Разделяемые библиотеки"
 
-#: installation.xml:1671(indexterm)
+#: installation.xml:1699(indexterm)
 msgid "<primary>shared library</primary>"
 msgstr "<primary>разделяемая библиотека</primary>"
 
-#: installation.xml:1675(para)
+#: installation.xml:1703(para)
 msgid ""
 "On some systems with shared libraries you need to tell the system how to "
 "find the newly installed shared libraries. The systems on which this is "
@@ -2353,7 +2402,7 @@ msgstr ""
 "\">NetBSD</systemitem>, <systemitem class=\"osname\">OpenBSD</systemitem> и "
 "<systemitem class=\"osname\">Solaris</systemitem>."
 
-#: installation.xml:1693(programlisting)
+#: installation.xml:1721(programlisting)
 #, no-wrap
 msgid ""
 "LD_LIBRARY_PATH=/usr/local/pgsql/lib\n"
@@ -2362,12 +2411,12 @@ msgstr ""
 "LD_LIBRARY_PATH=/usr/local/pgsql/lib\n"
 "export LD_LIBRARY_PATH"
 
-#: installation.xml:1698(programlisting)
+#: installation.xml:1726(programlisting)
 #, no-wrap
 msgid "setenv LD_LIBRARY_PATH /usr/local/pgsql/lib"
 msgstr "setenv LD_LIBRARY_PATH /usr/local/pgsql/lib"
 
-#: installation.xml:1688(para)
+#: installation.xml:1716(para)
 msgid ""
 "The method to set the shared library search path varies between platforms, "
 "but the most widely-used method is to set the environment variable "
@@ -2395,7 +2444,7 @@ msgstr ""
 "использовании этого метода приведены на странице <ulink url=\"http://xahlee."
 "org/UnixResource_dir/_/ldpath.html\"/>."
 
-#: installation.xml:1710(para)
+#: installation.xml:1738(para)
 msgid ""
 "On some systems it might be preferable to set the environment variable "
 "<envar>LD_RUN_PATH</envar> <emphasis>before</emphasis> building."
@@ -2403,7 +2452,7 @@ msgstr ""
 "В некоторых системах предпочтительнее установить переменную окружения "
 "<envar>LD_RUN_PATH</envar> <emphasis>до</emphasis> сборки."
 
-#: installation.xml:1716(para)
+#: installation.xml:1744(para)
 msgid ""
 "On <systemitem class=\"osname\">Cygwin</systemitem>, put the library "
 "directory in the <envar>PATH</envar> or move the <filename>.dll</filename> "
@@ -2413,7 +2462,7 @@ msgstr ""
 "библиотеками в <envar>PATH</envar> или переместите файлы <filename>.dll</"
 "filename> в каталог <filename>bin</filename>."
 
-#: installation.xml:1723(para)
+#: installation.xml:1751(para)
 msgid ""
 "If in doubt, refer to the manual pages of your system (perhaps <command>ld."
 "so</command> or <command>rld</command>). If you later get a message like: "
@@ -2432,21 +2481,21 @@ msgstr ""
 "файла или каталога), значит этот шаг был необходим. Тогда вам просто нужно "
 "вернуться к нему."
 
-#: installation.xml:1735(indexterm)
+#: installation.xml:1763(indexterm)
 msgid "<primary>ldconfig</primary>"
 msgstr "<primary>ldconfig</primary>"
 
-#: installation.xml:1740(programlisting)
+#: installation.xml:1768(programlisting)
 #, no-wrap
 msgid "/sbin/ldconfig /usr/local/pgsql/lib"
 msgstr "/sbin/ldconfig /usr/local/pgsql/lib"
 
-#: installation.xml:1749(programlisting)
+#: installation.xml:1777(programlisting)
 #, no-wrap
 msgid "/sbin/ldconfig -m /usr/local/pgsql/lib"
 msgstr "/sbin/ldconfig -m /usr/local/pgsql/lib"
 
-#: installation.xml:1734(para)
+#: installation.xml:1762(para)
 msgid ""
 "<placeholder-1/> If you are on <systemitem class=\"osname\">Linux</"
 "systemitem> and you have root access, you can run: <placeholder-2/> (or "
@@ -2468,15 +2517,15 @@ msgstr ""
 "class=\"osname\">OpenBSD</systemitem> команда будет такой: <placeholder-3/> "
 "В других системах подобной команды может не быть."
 
-#: installation.xml:1758(title)
+#: installation.xml:1786(title)
 msgid "Environment Variables"
 msgstr "Переменные окружения"
 
-#: installation.xml:1760(indexterm)
+#: installation.xml:1788(indexterm)
 msgid "<primary><envar>PATH</envar></primary>"
 msgstr "<primary><envar>PATH</envar></primary>"
 
-#: installation.xml:1764(para)
+#: installation.xml:1792(para)
 msgid ""
 "If you installed into <filename>/usr/local/pgsql</filename> or some other "
 "location that is not searched for programs by default, you should add "
@@ -2494,7 +2543,7 @@ msgstr ""
 "говоря, это не обязательно, но при этом использовать "
 "<productname>PostgreSQL</productname> будет гораздо удобнее."
 
-#: installation.xml:1778(programlisting)
+#: installation.xml:1806(programlisting)
 #, no-wrap
 msgid ""
 "PATH=/usr/local/pgsql/bin:$PATH\n"
@@ -2503,12 +2552,12 @@ msgstr ""
 "PATH=/usr/local/pgsql/bin:$PATH\n"
 "export PATH"
 
-#: installation.xml:1783(programlisting)
+#: installation.xml:1811(programlisting)
 #, no-wrap
 msgid "set path = ( /usr/local/pgsql/bin $path )"
 msgstr "set path = ( /usr/local/pgsql/bin $path )"
 
-#: installation.xml:1774(para)
+#: installation.xml:1802(para)
 msgid ""
 "To do this, add the following to your shell start-up file, such as "
 "<filename>~/.bash_profile</filename> (or <filename>/etc/profile</filename>, "
@@ -2522,11 +2571,11 @@ msgstr ""
 "command> или <command>tcsh</command> команда должна быть такой: "
 "<placeholder-2/>"
 
-#: installation.xml:1789(indexterm)
+#: installation.xml:1817(indexterm)
 msgid "<primary><envar>MANPATH</envar></primary>"
 msgstr "<primary><envar>MANPATH</envar></primary>"
 
-#: installation.xml:1796(programlisting)
+#: installation.xml:1824(programlisting)
 #, no-wrap
 msgid ""
 "MANPATH=/usr/local/pgsql/share/man:$MANPATH\n"
@@ -2535,7 +2584,7 @@ msgstr ""
 "MANPATH=/usr/local/pgsql/share/man:$MANPATH\n"
 "export MANPATH"
 
-#: installation.xml:1788(para)
+#: installation.xml:1816(para)
 msgid ""
 "<placeholder-1/> To enable your system to find the <application>man</"
 "application> documentation, you need to add lines like the following to a "
@@ -2547,7 +2596,7 @@ msgstr ""
 "примерно следующие строки, если только она не установлена в размещение, "
 "просматриваемое по умолчанию: <placeholder-2/>"
 
-#: installation.xml:1802(para)
+#: installation.xml:1830(para)
 msgid ""
 "The environment variables <envar>PGHOST</envar> and <envar>PGPORT</envar> "
 "specify to client applications the host and port of the database server, "
@@ -2565,11 +2614,11 @@ msgstr ""
 "не обязательно, так как большинство клиентских программ могут принять эти "
 "параметры через аргументы командной строки."
 
-#: installation.xml:1816(title)
+#: installation.xml:1844(title)
 msgid "Getting Started"
 msgstr "Начало"
 
-#: installation.xml:1818(para)
+#: installation.xml:1846(para)
 msgid ""
 "The following is a quick summary of how to get <productname>PostgreSQL</"
 "productname> up and running once installed. The main documentation contains "
@@ -2579,7 +2628,7 @@ msgstr ""
 "productname> начать с ним работу. Более подробно об этом рассказывается в "
 "основной документации."
 
-#: installation.xml:1825(para)
+#: installation.xml:1853(para)
 msgid ""
 "Create a user account for the <productname>PostgreSQL</productname> server. "
 "This is the user the server will run as. For production use you should "
@@ -2601,7 +2650,7 @@ msgstr ""
 "<userinput>adduser postgres</userinput>\n"
 "</screen>"
 
-#: installation.xml:1840(para)
+#: installation.xml:1868(para)
 msgid ""
 "Create a database installation with the <command>initdb</command> command. "
 "To run <command>initdb</command> you must be logged in to your "
@@ -2625,7 +2674,7 @@ msgstr ""
 "userinput>\n"
 "</screen>"
 
-#: installation.xml:1853(para)
+#: installation.xml:1881(para)
 msgid ""
 "The <option>-D</option> option specifies the location where the data will be "
 "stored. You can use any path you want, it does not have to be under the "
@@ -2639,7 +2688,7 @@ msgstr ""
 "имеет право записи в этот каталог, (а если он не существует, создать его) "
 "прежде чем запускать <command>initdb</command>, как показано здесь."
 
-#: installation.xml:1864(para)
+#: installation.xml:1892(para)
 msgid ""
 "At this point, if you did not use the <command>initdb</command> <literal>-A</"
 "literal> option, you might want to modify <filename>pg_hba.conf</filename> "
@@ -2651,12 +2700,12 @@ msgstr ""
 "conf</filename> для разрешения локального доступа к серверу, прежде чем "
 "запускать его. По умолчанию он доверяет всем локальным пользователям."
 
-#: installation.xml:1877(programlisting)
+#: installation.xml:1905(programlisting)
 #, no-wrap
 msgid "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
 msgstr "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data"
 
-#: installation.xml:1882(programlisting)
+#: installation.xml:1910(programlisting)
 #, no-wrap
 msgid ""
 "nohup /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data \\\n"
@@ -2665,7 +2714,7 @@ msgstr ""
 "nohup /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data \\\n"
 "    &lt;/dev/null &gt;&gt;server.log 2&gt;&amp;1 &lt;/dev/null &amp;"
 
-#: installation.xml:1873(para)
+#: installation.xml:1901(para)
 msgid ""
 "The previous <command>initdb</command> step should have told you how to "
 "start up the database server. Do so now. The command should look something "
@@ -2678,19 +2727,19 @@ msgstr ""
 "запущен на переднем плане. Запустить его на заднем плане можно примерно так: "
 "<placeholder-2/>"
 
-#: installation.xml:1890(programlisting)
+#: installation.xml:1918(programlisting)
 #, no-wrap
 msgid "kill `cat /usr/local/pgsql/data/postmaster.pid`"
 msgstr "kill `cat /usr/local/pgsql/data/postmaster.pid`"
 
-#: installation.xml:1888(para)
+#: installation.xml:1916(para)
 msgid ""
 "To stop a server running in the background you can type: <placeholder-1/>"
 msgstr ""
 "Чтобы остановить сервер, работающий в фоновом процессе, можно ввести: "
 "<placeholder-1/>"
 
-#: installation.xml:1897(para)
+#: installation.xml:1925(para)
 msgid ""
 "Create a database: <screen>\n"
 "<userinput>createdb testdb</userinput>\n"
@@ -2706,11 +2755,11 @@ msgstr ""
 "</screen> для того чтобы подключиться к этой базе. В появившемся приглашении "
 "вы сможете вводить команды SQL и приступить к экспериментам."
 
-#: installation.xml:1914(title)
+#: installation.xml:1942(title)
 msgid "What Now?"
 msgstr "Что теперь?"
 
-#: installation.xml:1919(para)
+#: installation.xml:1947(para)
 msgid ""
 "The <productname>PostgreSQL</productname> distribution contains a "
 "comprehensive documentation set, which you should read sometime. After "
@@ -2724,7 +2773,7 @@ msgstr ""
 "<filename>/usr/local/pgsql/doc/html/index.html</filename> (если пути "
 "инсталляции не были изменены)."
 
-#: installation.xml:1928(para)
+#: installation.xml:1956(para)
 msgid ""
 "The first few chapters of the main documentation are the Tutorial, which "
 "should be your first reading if you are completely new to <acronym>SQL</"
@@ -2738,7 +2787,7 @@ msgstr ""
 "посвящённой администрированию сервера, в которой описывается как настроить "
 "сервер, создать пользователей и организовать аутентификацию."
 
-#: installation.xml:1939(para)
+#: installation.xml:1967(para)
 msgid ""
 "Usually, you will want to modify your computer so that it will automatically "
 "start the database server whenever it boots. Some suggestions for this are "
@@ -2748,7 +2797,7 @@ msgstr ""
 "сервер баз данных запускался автоматически. Как это сделать, вы можете "
 "узнать в документации."
 
-#: installation.xml:1947(para)
+#: installation.xml:1975(para)
 msgid ""
 "Run the regression tests against the installed server (using <command>make "
 "installcheck</command>). If you didn't run the tests before installation, "
@@ -2759,7 +2808,7 @@ msgstr ""
 "до установки, это, определённо, стоит сделать сейчас. Об этом также "
 "рассказывается в документации."
 
-#: installation.xml:1956(para)
+#: installation.xml:1984(para)
 msgid ""
 "By default, <productname>PostgreSQL</productname> is configured to run on "
 "minimal hardware. This allows it to start up with almost any hardware "
@@ -2778,11 +2827,11 @@ msgstr ""
 "наиболее важных). На быстродействие сервера также влияют и другие параметры, "
 "описанные в документации."
 
-#: installation.xml:1974(title)
+#: installation.xml:2002(title)
 msgid "Supported Platforms"
 msgstr "Поддерживаемые платформы"
 
-#: installation.xml:1976(para)
+#: installation.xml:2004(para)
 msgid ""
 "A platform (that is, a CPU architecture and operating system combination) is "
 "considered supported by the <productname>PostgreSQL</productname> "
@@ -2808,7 +2857,7 @@ msgstr ""
 "очень хотели бы, чтобы вы включили в ферму сборки свой компьютер с этой "
 "платформой для постоянной гарантии совместимости."
 
-#: installation.xml:1990(para)
+#: installation.xml:2018(para)
 msgid ""
 "In general, <productname>PostgreSQL</productname> can be expected to work on "
 "these CPU architectures: x86, x86_64, IA64, PowerPC, PowerPC 64, S/390, "
@@ -2827,7 +2876,7 @@ msgstr ""
 "<option>--disable-spinlocks</option>, но производительность при этом будет "
 "неудовлетворительной."
 
-#: installation.xml:2000(para)
+#: installation.xml:2028(para)
 msgid ""
 "<productname>PostgreSQL</productname> can be expected to work on these "
 "operating systems: Linux (all recent distributions), Windows (Win2000 SP4 "
@@ -2849,7 +2898,7 @@ msgstr ""
 "относящихся именно к вашей операционной системе, особенно, если вы "
 "используете не самую новую систему."
 
-#: installation.xml:2012(para)
+#: installation.xml:2040(para)
 msgid ""
 "If you have installation problems on a platform that is known to be "
 "supported according to recent build farm results, please report it to "
@@ -2864,11 +2913,11 @@ msgstr ""
 "productname> на новую платформу, обсудить это можно в рассылке <email>pgsql-"
 "hackers@postgresql.org</email>."
 
-#: installation.xml:2023(title)
+#: installation.xml:2051(title)
 msgid "Platform-specific Notes"
 msgstr "Замечания по отдельным платформам"
 
-#: installation.xml:2025(para)
+#: installation.xml:2053(para)
 msgid ""
 "This section documents additional platform-specific issues regarding the "
 "installation and setup of PostgreSQL. Be sure to read the installation "
@@ -2886,7 +2935,7 @@ msgstr ""
 "<phrase condition=\"default\"><xref remap=\"3\" linkend=\"regress\"/></"
 "phrase>, где рассказывается, как прочитать результаты регрессионных тестов."
 
-#: installation.xml:2036(para)
+#: installation.xml:2064(para)
 msgid ""
 "Platforms that are not covered here have no known platform-specific "
 "installation issues."
@@ -2894,15 +2943,15 @@ msgstr ""
 "Если какие-то платформы здесь не упоминаются, значит каких-либо известных "
 "особенностей установки в них нет."
 
-#: installation.xml:2042(title)
+#: installation.xml:2070(title)
 msgid "AIX"
 msgstr "AIX"
 
-#: installation.xml:2044(indexterm)
+#: installation.xml:2072(indexterm)
 msgid "<primary>AIX</primary> <secondary>installation on</secondary>"
 msgstr "<primary>AIX</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2049(para)
+#: installation.xml:2077(para)
 msgid ""
 "PostgreSQL works on AIX, but getting it installed properly can be "
 "challenging. AIX versions from 4.3.3 to 6.1 are considered supported. You "
@@ -2917,52 +2966,52 @@ msgstr ""
 "Получить актуальную информацию о версиях AIX, работа в которых проверена на "
 "данный момент, можно на сайте фермы сборки."
 
-#: installation.xml:2058(para)
+#: installation.xml:2086(para)
 msgid "The minimum recommended fix levels for supported AIX versions are:"
 msgstr ""
 "Минимальные рекомендуемые уровни исправлений для поддерживаемых версий AIX:"
 
-#: installation.xml:2064(term)
+#: installation.xml:2092(term)
 msgid "AIX 4.3.3"
 msgstr "AIX 4.3.3"
 
-#: installation.xml:2065(para)
+#: installation.xml:2093(para)
 msgid "Maintenance Level 11 + post ML11 bundle"
 msgstr "Эксплуатационный уровень (ML) 11 + пакет исправлений после ML11"
 
-#: installation.xml:2069(term)
+#: installation.xml:2097(term)
 msgid "AIX 5.1"
 msgstr "AIX 5.1"
 
-#: installation.xml:2070(para)
+#: installation.xml:2098(para)
 msgid "Maintenance Level 9 + post ML9 bundle"
 msgstr "Эксплуатационный уровень (ML) 9 + пакет исправлений после ML9"
 
-#: installation.xml:2074(term)
+#: installation.xml:2102(term)
 msgid "AIX 5.2"
 msgstr "AIX 5.2"
 
-#: installation.xml:2075(para)
+#: installation.xml:2103(para)
 msgid "Technology Level 10 Service Pack 3"
 msgstr "Технологический уровень (TL) 10, Пакет обновлений (SP) 3"
 
-#: installation.xml:2079(term)
+#: installation.xml:2107(term)
 msgid "AIX 5.3"
 msgstr "AIX 5.3"
 
-#: installation.xml:2080(para)
+#: installation.xml:2108(para)
 msgid "Technology Level 7"
 msgstr "Технологический уровень (TL) 7"
 
-#: installation.xml:2084(term)
+#: installation.xml:2112(term)
 msgid "AIX 6.1"
 msgstr "AIX 6.1"
 
-#: installation.xml:2085(para)
+#: installation.xml:2113(para)
 msgid "Base Level"
 msgstr "Базовый уровень"
 
-#: installation.xml:2089(para)
+#: installation.xml:2117(para)
 msgid ""
 "To check your current fix level, use <command>oslevel -r</command> in AIX "
 "4.3.3 to AIX 5.2 ML 7, or <command>oslevel -s</command> in later versions."
@@ -2971,7 +3020,7 @@ msgstr ""
 "r</command> в AIX версии с 4.3.3 по 5.2 ML 7, либо <command>oslevel -s</"
 "command> в более поздних версиях."
 
-#: installation.xml:2095(para)
+#: installation.xml:2123(para)
 msgid ""
 "Use the following <command>configure</command> flags in addition to your own "
 "if you have installed Readline or libz in <literal>/usr/local</literal>: "
@@ -2983,11 +3032,11 @@ msgstr ""
 "<literal>--with-includes=/usr/local/include --with-libraries=/usr/local/lib</"
 "literal>."
 
-#: installation.xml:2104(title)
+#: installation.xml:2132(title)
 msgid "GCC Issues"
 msgstr "Особенности использования GCC"
 
-#: installation.xml:2106(para)
+#: installation.xml:2134(para)
 msgid ""
 "On AIX 5.3, there have been some problems getting PostgreSQL to compile and "
 "run using GCC."
@@ -2995,7 +3044,7 @@ msgstr ""
 "В AIX 5.3 наблюдались проблемы с компиляцией и запуском PostgreSQL с "
 "использованием GCC."
 
-#: installation.xml:2111(para)
+#: installation.xml:2139(para)
 msgid ""
 "You will want to use a version of GCC subsequent to 3.3.2, particularly if "
 "you use a prepackaged version. We had good success with 4.0.1. Problems with "
@@ -3009,11 +3058,11 @@ msgstr ""
 "как IBM упаковала GCC, а не собственно с GCC, поэтому если вы скомпилируете "
 "GCC самостоятельно, положительный исход возможен и с ранней версией GCC."
 
-#: installation.xml:2122(title)
+#: installation.xml:2150(title)
 msgid "Unix-Domain Sockets Broken"
 msgstr "Неработающие доменные сокеты Unix"
 
-#: installation.xml:2124(para)
+#: installation.xml:2152(para)
 msgid ""
 "AIX 5.3 has a problem where <structname>sockaddr_storage</structname> is not "
 "defined to be large enough. In version 5.3, IBM increased the size of "
@@ -3033,7 +3082,7 @@ msgstr ""
 "устанавливается корректно, а через доменные сокеты Unix — нет, и в "
 "результате регрессионные тесты не проходят."
 
-#: installation.xml:2137(para)
+#: installation.xml:2165(para)
 msgid ""
 "The problem was reported to IBM, and is recorded as bug report PMR29657. If "
 "you upgrade to maintenance level 5300-03 or later, that will include this "
@@ -3048,11 +3097,11 @@ msgstr ""
 "<filename>/usr/include/sys/socket.h</filename>. В любом случае, после "
 "исправления этого заголовочного файла перекомпилируйте PostgreSQL."
 
-#: installation.xml:2148(title)
+#: installation.xml:2176(title)
 msgid "Internet Address Issues"
 msgstr "Проблемы с сетевыми адресами"
 
-#: installation.xml:2150(para)
+#: installation.xml:2178(para)
 msgid ""
 "PostgreSQL relies on the system's <function>getaddrinfo</function> function "
 "to parse IP addresses in <varname>listen_addresses</varname>, "
@@ -3068,11 +3117,11 @@ msgstr ""
 "должно решить их."
 
 #. http://archives.postgresql.org/message-id/6064jt6cfm.fsf_-_@dba2.int.libertyrms.com
-#: installation.xml:2161(para)
+#: installation.xml:2189(para)
 msgid "One user reports:"
 msgstr "Один пользователь сообщает:"
 
-#: installation.xml:2165(para)
+#: installation.xml:2193(para)
 msgid ""
 "When implementing PostgreSQL version 8.1 on AIX 5.3, we periodically ran "
 "into problems where the statistics collector would <quote>mysteriously</"
@@ -3085,7 +3134,7 @@ msgstr ""
 "запускается. Кажется, это результат незапланированного поведения реализации "
 "IPv6. Похоже, что PostgreSQL и IPv6 не дружат в AIX 5.3."
 
-#: installation.xml:2178(para)
+#: installation.xml:2206(para)
 msgid ""
 "Delete the IPv6 address for localhost: <screen>\n"
 "(as root)\n"
@@ -3097,17 +3146,17 @@ msgstr ""
 "# ifconfig lo0 inet6 ::1/0 delete\n"
 "</screen>"
 
-#: installation.xml:2193(programlisting)
+#: installation.xml:2221(programlisting)
 #, no-wrap
 msgid "hosts=local,bind"
 msgstr "hosts=local,bind"
 
-#: installation.xml:2197(programlisting)
+#: installation.xml:2225(programlisting)
 #, no-wrap
 msgid "hosts=local4,bind4"
 msgstr "hosts=local4,bind4"
 
-#: installation.xml:2188(para)
+#: installation.xml:2216(para)
 msgid ""
 "Remove IPv6 from net services. The file <filename>/etc/netsvc.conf</"
 "filename> on AIX is roughly equivalent to <filename>/etc/nsswitch.conf</"
@@ -3121,14 +3170,14 @@ msgstr ""
 "отключить поиск адресов IPv6, замените его содержимое следующим: "
 "<placeholder-2/>"
 
-#: installation.xml:2174(para)
+#: installation.xml:2202(para)
 msgid ""
 "Any of the following actions <quote>fix</quote> the problem. <placeholder-1/>"
 msgstr ""
 "Для <quote>решения</quote> проблемы можно выполнить одно из следующих "
 "действий. <placeholder-1/>"
 
-#: installation.xml:2207(para)
+#: installation.xml:2235(para)
 msgid ""
 "This is really a workaround for problems relating to immaturity of IPv6 "
 "support, which improved visibly during the course of AIX 5.3 releases. It "
@@ -3143,12 +3192,12 @@ msgstr ""
 "идеальных. Кроме того, сообщалось, что они не только не требуются, но и "
 "приводят к другим проблемам в AIX 6.1, где поддержка IPv6 стала более зрелой."
 
-#: installation.xml:2220(title)
+#: installation.xml:2248(title)
 msgid "Memory Management"
 msgstr "Управление памятью"
 
 #. http://archives.postgresql.org/message-id/603bgqmpl9.fsf@dba2.int.libertyrms.com
-#: installation.xml:2223(para)
+#: installation.xml:2251(para)
 msgid ""
 "AIX can be somewhat peculiar with regards to the way it does memory "
 "management. You can have a server with many multiples of gigabytes of RAM "
@@ -3189,7 +3238,7 @@ msgstr ""
 "Также сообщения о нехватке памяти могут появляться в журнале PostgreSQL при "
 "попытке выделить блок памяти размером около 256 МиБ или больше."
 
-#: installation.xml:2245(para)
+#: installation.xml:2273(para)
 msgid ""
 "The overall cause of all these problems is the default bittedness and memory "
 "model used by the server process. By default, all binaries built on AIX are "
@@ -3206,7 +3255,7 @@ msgstr ""
 "По умолчанию в куче можно выделить меньше 256 МиБ, так как она разделяет "
 "один сегмент со стеком."
 
-#: installation.xml:2255(para)
+#: installation.xml:2283(para)
 msgid ""
 "In the case of the <command>createlang</command> example, above, check your "
 "umask and the permissions of the binaries in your PostgreSQL installation. "
@@ -3225,7 +3274,7 @@ msgstr ""
 "объект в область кучи процесса, а не в сегменты разделяемых библиотек, где "
 "он должен находиться."
 
-#: installation.xml:2267(para)
+#: installation.xml:2295(para)
 msgid ""
 "The <quote>ideal</quote> solution for this is to use a 64-bit build of "
 "PostgreSQL, but that is not always practical, because systems with 32-bit "
@@ -3235,7 +3284,7 @@ msgstr ""
 "битную сборку PostgreSQL, но это не всегда практично, так как с 32-битным "
 "процессором нельзя будет запустить 64-битный код (можно только собрать)."
 
-#: installation.xml:2274(para)
+#: installation.xml:2302(para)
 msgid ""
 "If a 32-bit binary is desired, set <symbol>LDR_CNTRL</symbol> to "
 "<literal>MAXDATA=0x<replaceable>n</replaceable>0000000</literal>, where 1 "
@@ -3262,7 +3311,7 @@ msgstr ""
 "получить, пересобрав PostgreSQL с указанием <literal>configure LDFLAGS=\"-"
 "Wl,-bmaxdata:0x<replaceable>n</replaceable>0000000\"</literal>."
 
-#: installation.xml:2291(para)
+#: installation.xml:2319(para)
 msgid ""
 "For a 64-bit build, set <envar>OBJECT_MODE</envar> to 64 and pass "
 "<literal>CC=\"gcc -maix64\"</literal> and <literal>LDFLAGS=\"-Wl,-bbigtoc\"</"
@@ -3283,7 +3332,7 @@ msgstr ""
 "таким как <command>ar</command>, <command>as</command> и <command>ld</"
 "command>, какие типы объектов обрабатывать по умолчанию."
 
-#: installation.xml:2303(para)
+#: installation.xml:2331(para)
 msgid ""
 "By default, overcommit of paging space can happen. While we have not seen "
 "this occur, AIX will kill processes when it runs out of memory and the "
@@ -3302,11 +3351,11 @@ msgstr ""
 "пространства подкачки и уничтожения процессов при нехватке памяти можно "
 "настроить на уровне системы или процесса, если возникают подобные проблемы."
 
-#: installation.xml:2315(title)
+#: installation.xml:2343(title)
 msgid "References and Resources"
 msgstr "Ссылки и ресурсы"
 
-#: installation.xml:2319(title)
+#: installation.xml:2347(title)
 msgid ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
 "aix.doc/aixprggd/genprogc/lrg_prg_support.htm\">Large Program Support</ulink>"
@@ -3314,7 +3363,7 @@ msgstr ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
 "aix.doc/aixprggd/genprogc/lrg_prg_support.htm\">Large Program Support</ulink>"
 
-#: installation.xml:2322(title) installation.xml:2331(title)
+#: installation.xml:2350(title) installation.xml:2359(title)
 msgid ""
 "AIX Documentation: General Programming Concepts: Writing and Debugging "
 "Programs"
@@ -3322,7 +3371,7 @@ msgstr ""
 "Документация AIX: Общие концепции программирования: Написание и отладка "
 "программ"
 
-#: installation.xml:2328(title)
+#: installation.xml:2356(title)
 msgid ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/topic/com.ibm."
 "aix.doc/aixprggd/genprogc/address_space.htm\">Program Address Space "
@@ -3332,7 +3381,7 @@ msgstr ""
 "aix.doc/aixprggd/genprogc/address_space.htm\">Program Address Space "
 "Overview</ulink>"
 
-#: installation.xml:2337(title)
+#: installation.xml:2365(title)
 msgid ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
 "ibm.aix.doc/aixbman/prftungd/resmgmt2.htm\">Performance Overview of the "
@@ -3342,12 +3391,12 @@ msgstr ""
 "ibm.aix.doc/aixbman/prftungd/resmgmt2.htm\">Performance Overview of the "
 "Virtual Memory Manager (VMM)</ulink>"
 
-#: installation.xml:2340(title) installation.xml:2349(title)
-#: installation.xml:2358(title)
+#: installation.xml:2368(title) installation.xml:2377(title)
+#: installation.xml:2386(title)
 msgid "AIX Documentation: Performance Management Guide"
 msgstr "Документация AIX: Руководство по управлению производительностью"
 
-#: installation.xml:2346(title)
+#: installation.xml:2374(title)
 msgid ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
 "ibm.aix.doc/aixbman/prftungd/memperf7.htm\">Page Space Allocation</ulink>"
@@ -3355,7 +3404,7 @@ msgstr ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
 "ibm.aix.doc/aixbman/prftungd/memperf7.htm\">Page Space Allocation</ulink>"
 
-#: installation.xml:2355(title)
+#: installation.xml:2383(title)
 msgid ""
 "<ulink url=\"http://publib.boulder.ibm.com/infocenter/pseries/v5r3/topic/com."
 "ibm.aix.doc/aixbman/prftungd/memperf6.htm\">Paging-space thresholds tuning</"
@@ -3365,7 +3414,7 @@ msgstr ""
 "ibm.aix.doc/aixbman/prftungd/memperf6.htm\">Paging-space thresholds tuning</"
 "ulink>"
 
-#: installation.xml:2363(title)
+#: installation.xml:2391(title)
 msgid ""
 "<ulink url=\"http://www.redbooks.ibm.com/abstracts/sg245674.html?Open"
 "\">Developing and Porting C and C++ Applications on AIX</ulink>"
@@ -3373,19 +3422,19 @@ msgstr ""
 "<ulink url=\"http://www.redbooks.ibm.com/abstracts/sg245674.html?Open"
 "\">Developing and Porting C and C++ Applications on AIX</ulink>"
 
-#: installation.xml:2365(publishername)
+#: installation.xml:2393(publishername)
 msgid "IBM Redbook"
 msgstr "Красная книга IBM"
 
-#: installation.xml:2373(title)
+#: installation.xml:2401(title)
 msgid "Cygwin"
 msgstr "Cygwin"
 
-#: installation.xml:2375(indexterm)
+#: installation.xml:2403(indexterm)
 msgid "<primary>Cygwin</primary> <secondary>installation on</secondary>"
 msgstr "<primary>Cygwin</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2380(para)
+#: installation.xml:2408(para)
 msgid ""
 "PostgreSQL can be built using Cygwin, a Linux-like environment for Windows, "
 "but that method is inferior to the native Windows build <phrase condition="
@@ -3398,7 +3447,7 @@ msgstr ""
 "windows\"/>)</phrase>, и запускать сервер в среде Cygwin более не "
 "рекомендуется."
 
-#: installation.xml:2395(para)
+#: installation.xml:2423(para)
 msgid ""
 "Set your path to use the Cygwin bin directory before the Windows utilities. "
 "This will help prevent problems with compilation."
@@ -3406,7 +3455,7 @@ msgstr ""
 "Настройте путь поиска так, чтобы каталог bin в Cygwin стоял перед каталогами "
 "утилит Windows. Это поможет избавиться от проблем при компиляции."
 
-#: installation.xml:2403(para)
+#: installation.xml:2431(para)
 msgid ""
 "The <command>adduser</command> command is not supported; use the appropriate "
 "user management application on Windows NT, 2000, or XP. Otherwise, skip this "
@@ -3416,7 +3465,7 @@ msgstr ""
 "соответствующим средством управления пользователями для Windows NT, 2000 или "
 "XP. Либо просто пропустите этот шаг."
 
-#: installation.xml:2411(para)
+#: installation.xml:2439(para)
 msgid ""
 "The <command>su</command> command is not supported; use ssh to simulate su "
 "on Windows NT, 2000, or XP. Otherwise, skip this step."
@@ -3424,11 +3473,11 @@ msgstr ""
 "Команда <command>su</command> не поддерживается; для эмуляции su в Windows "
 "NT, 2000 или XP воспользуйтесь ssh. Либо пропустите этот шаг."
 
-#: installation.xml:2419(para)
+#: installation.xml:2447(para)
 msgid "OpenSSL is not supported."
 msgstr "OpenSSL не поддерживается."
 
-#: installation.xml:2425(para)
+#: installation.xml:2453(para)
 msgid ""
 "Start <command>cygserver</command> for shared memory support. To do this, "
 "enter the command <literal>/usr/sbin/cygserver &amp;</literal>. This program "
@@ -3446,7 +3495,7 @@ msgstr ""
 "увеличить <symbol>SEMMNS</symbol>), чтобы PostgreSQL мог получить требуемые "
 "системные ресурсы."
 
-#: installation.xml:2438(para)
+#: installation.xml:2466(para)
 msgid ""
 "Building might fail on some systems where a locale other than C is in use. "
 "To fix this, set the locale to C by doing <command>export LANG=C.utf8</"
@@ -3458,12 +3507,12 @@ msgstr ""
 "<command>export LANG=C.utf8</command> до сборки, а затем восстановите "
 "предыдущее значение после установки PostgreSQL."
 
-#: installation.xml:2455(programlisting)
+#: installation.xml:2483(programlisting)
 #, no-wrap
 msgid "make MAX_CONNECTIONS=5 check"
 msgstr "make MAX_CONNECTIONS=5 check"
 
-#: installation.xml:2448(para)
+#: installation.xml:2476(para)
 msgid ""
 "The parallel regression tests (<literal>make check</literal>) can generate "
 "spurious regression test failures due to overflowing the <function>listen()</"
@@ -3480,7 +3529,7 @@ msgstr ""
 "<placeholder-1/> (В некоторых системах поддерживается до 10 одновременных "
 "подключений)."
 
-#: installation.xml:2387(para)
+#: installation.xml:2415(para)
 msgid ""
 "When building from source, proceed according to the normal installation "
 "procedure (i.e., <literal>./configure; make</literal>; etc.), noting the "
@@ -3490,7 +3539,7 @@ msgstr ""
 "configure; make</literal>; и т. д.), с учётом следующих особенностей Cygwin: "
 "<placeholder-1/>"
 
-#: installation.xml:2465(para)
+#: installation.xml:2493(para)
 msgid ""
 "It is possible to install <command>cygserver</command> and the PostgreSQL "
 "server as Windows NT services. For information on how to do this, please "
@@ -3504,15 +3553,15 @@ msgstr ""
 "Cygwin. Оно устанавливается в каталог <filename>/usr/share/doc/Cygwin</"
 "filename>."
 
-#: installation.xml:2476(title)
+#: installation.xml:2504(title)
 msgid "HP-UX"
 msgstr "HP-UX"
 
-#: installation.xml:2478(indexterm)
+#: installation.xml:2506(indexterm)
 msgid "<primary>HP-UX</primary> <secondary>installation on</secondary>"
 msgstr "<primary>HP-UX</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2483(para)
+#: installation.xml:2511(para)
 msgid ""
 "PostgreSQL 7.3+ should work on Series 700/800 PA-RISC machines running HP-UX "
 "10.X or 11.X, given appropriate system patch levels and build tools. At "
@@ -3525,7 +3574,7 @@ msgstr ""
 "тестирует сборку в HP-UX 10.20, и мы получали сообщения об успешных "
 "установках в HP-UX 11.00 и 11.11."
 
-#: installation.xml:2491(para)
+#: installation.xml:2519(para)
 msgid ""
 "Aside from the PostgreSQL source distribution, you will need GNU make (HP's "
 "make will not do), and either GCC or HP's full ANSI C compiler. If you "
@@ -3554,7 +3603,7 @@ msgstr ""
 "бесплатно можно на сайтах поддержки HP <ulink url=\"http://itrc.hp.com\"/> и "
 "<ulink url=\"ftp://us-ffs.external.hp.com/\"/>."
 
-#: installation.xml:2512(para)
+#: installation.xml:2540(para)
 msgid ""
 "If you are building on a PA-RISC 2.0 machine and want to have 64-bit "
 "binaries using GCC, you must use GCC 64-bit version. GCC binaries for HP-UX "
@@ -3567,7 +3616,7 @@ msgstr ""
 "url=\"http://www.hp.com/go/gcc\"/>. Не забудьте также загрузить и установить "
 "binutils."
 
-#: installation.xml:2520(para)
+#: installation.xml:2548(para)
 msgid ""
 "If you are building on a PA-RISC 2.0 machine and want the compiled binaries "
 "to run on PA-RISC 1.1 machines you will need to specify <option>+DAportable</"
@@ -3577,7 +3626,7 @@ msgstr ""
 "скомпилированный код запускался на машинах PA-RISC 1.1, также потребуется "
 "указать <option>+DAportable</option> в <envar>CFLAGS</envar>."
 
-#: installation.xml:2526(para)
+#: installation.xml:2554(para)
 msgid ""
 "If you are building on a HP-UX Itanium machine, you will need the latest HP "
 "ANSI C compiler with its dependent patch or successor patches: "
@@ -3593,17 +3642,17 @@ msgstr ""
 "PHSS_30849  s700_800 u2comp/be/plugin library Patch\n"
 "</literallayout>"
 
-#: installation.xml:2540(programlisting)
+#: installation.xml:2568(programlisting)
 #, no-wrap
 msgid "./configure CC=cc"
 msgstr "./configure CC=cc"
 
-#: installation.xml:2544(programlisting)
+#: installation.xml:2572(programlisting)
 #, no-wrap
 msgid "./configure CC=gcc"
 msgstr "./configure CC=gcc"
 
-#: installation.xml:2536(para)
+#: installation.xml:2564(para)
 msgid ""
 "If you have both HP's C compiler and GCC's, then you might want to "
 "explicitly select the compiler to use when you run <command>configure</"
@@ -3617,7 +3666,7 @@ msgstr ""
 "> для выбора GCC. При отсутствии явного указания configure выберет "
 "<command>gcc</command>, если есть такая возможность."
 
-#: installation.xml:2551(para)
+#: installation.xml:2579(para)
 msgid ""
 "The default install target location is <filename>/usr/local/pgsql</"
 "filename>, which you might want to change to something under <filename>/opt</"
@@ -3629,7 +3678,7 @@ msgstr ""
 "<filename>/opt</filename>. В этом случае передайте его <command>configure</"
 "command> с ключом <option>--prefix</option>."
 
-#: installation.xml:2559(para)
+#: installation.xml:2587(para)
 msgid ""
 "In the regression tests, there might be some low-order-digit differences in "
 "the geometry tests, which vary depending on which compiler and math library "
@@ -3639,15 +3688,15 @@ msgstr ""
 "наименее значащих цифрах, в зависимости от применяемого компилятора и "
 "математической библиотеки. Любые другие ошибки заслуживают внимания."
 
-#: installation.xml:2568(title)
+#: installation.xml:2596(title)
 msgid "MinGW/Native Windows"
 msgstr "MinGW/Собственная сборка Windows"
 
-#: installation.xml:2570(indexterm)
+#: installation.xml:2598(indexterm)
 msgid "<primary>MinGW</primary> <secondary>installation on</secondary>"
 msgstr "<primary>MinGW</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2575(para)
+#: installation.xml:2603(para)
 msgid ""
 "PostgreSQL for Windows can be built using MinGW, a Unix-like build "
 "environment for Microsoft operating systems, or using Microsoft's "
@@ -3669,7 +3718,7 @@ msgstr ""
 "естественная сборка для Windows, для которой не требуется дополнительное ПО "
 "вроде MinGW. Готовый инсталлятор для Windows можно найти на сайте PostgreSQL."
 
-#: installation.xml:2588(para)
+#: installation.xml:2616(para)
 msgid ""
 "The native Windows port requires a 32 or 64-bit version of Windows 2000 or "
 "later. Earlier operating systems do not have sufficient infrastructure (but "
@@ -3688,7 +3737,7 @@ msgstr ""
 "нужны только для сборки, для запуска полученных исполняемых файлов они не "
 "требуются."
 
-#: installation.xml:2600(para)
+#: installation.xml:2628(para)
 msgid ""
 "To build 64 bit binaries using MinGW, install the 64 bit tool set from "
 "<ulink url=\"http://mingw-w64.sourceforge.net/\"/>, put its bin directory in "
@@ -3701,7 +3750,7 @@ msgstr ""
 "<command>configure</command> с параметром <command>--host=x86_64-w64-"
 "mingw32</command>."
 
-#: installation.xml:2608(para)
+#: installation.xml:2636(para)
 msgid ""
 "After you have everything installed, it is suggested that you run "
 "<application>psql</application> under <command>CMD.EXE</command>, as the "
@@ -3711,11 +3760,11 @@ msgstr ""
 "предлагается из <command>CMD.EXE</command>, так как в консоли MSYS есть "
 "проблемы с буферизацией."
 
-#: installation.xml:2616(title)
+#: installation.xml:2644(title)
 msgid "Collecting Crash Dumps on Windows"
 msgstr "Сбор аварийных дампов в Windows"
 
-#: installation.xml:2618(para)
+#: installation.xml:2646(para)
 msgid ""
 "If PostgreSQL on Windows crashes, it has the ability to generate "
 "<productname>minidumps</productname> that can be used to track down the "
@@ -3736,19 +3785,19 @@ msgstr ""
 "кластера. Дампы будут записываться в этот каталог с уникальным именем, "
 "составленным из идентификатора процесса, давшего сбой, и времени сбоя."
 
-#: installation.xml:2633(title)
+#: installation.xml:2661(title)
 msgid "SCO OpenServer and SCO UnixWare"
 msgstr "SCO OpenServer и SCO UnixWare"
 
-#: installation.xml:2635(indexterm)
+#: installation.xml:2663(indexterm)
 msgid "<primary>SCO</primary> <secondary>installation on</secondary>"
 msgstr "<primary>SCO</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2640(indexterm)
+#: installation.xml:2668(indexterm)
 msgid "<primary>UnixWare</primary> <secondary>installation on</secondary>"
 msgstr "<primary>UnixWare</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2645(para)
+#: installation.xml:2673(para)
 msgid ""
 "PostgreSQL can be built on SCO UnixWare 7 and SCO OpenServer 5. On "
 "OpenServer, you can use either the OpenServer Development Kit or the "
@@ -3761,11 +3810,11 @@ msgstr ""
 "(Universal Development Kit). Возможно, при этом потребуется выполнить "
 "дополнительные действия, как описано ниже."
 
-#: installation.xml:2653(title)
+#: installation.xml:2681(title)
 msgid "Skunkware"
 msgstr "Skunkware"
 
-#: installation.xml:2655(para)
+#: installation.xml:2683(para)
 msgid ""
 "You should locate your copy of the SCO Skunkware CD. The Skunkware CD is "
 "included with UnixWare 7 and current versions of OpenServer 5. Skunkware "
@@ -3783,7 +3832,7 @@ msgstr ""
 "\" (Дополнительное ПО с открытыми лицензиями). Если у вас нет такого CD, это "
 "ПО можно найти на сайте <ulink url=\"http://www.sco.com/skunkware/\"/>."
 
-#: installation.xml:2667(para)
+#: installation.xml:2695(para)
 msgid ""
 "Skunkware has different versions for UnixWare and OpenServer. Make sure you "
 "install the correct version for your operating system, except as noted below."
@@ -3791,7 +3840,7 @@ msgstr ""
 "Версии Skunkware для UnixWare и OpenServer различаются. Убедитесь, что вы "
 "устанавливаете правильную версию для вашей ОС, но учтите следующие замечания."
 
-#: installation.xml:2673(para)
+#: installation.xml:2701(para)
 msgid ""
 "On UnixWare 7.1.3 and beyond, the GCC compiler is included on the UDK CD as "
 "is GNU Make."
@@ -3799,11 +3848,11 @@ msgstr ""
 "В UnixWare 7.1.3 и новее компилятор GCC поставляется на UDK CD, вместе с GNU "
 "Make."
 
-#: installation.xml:2680(title)
+#: installation.xml:2708(title)
 msgid "GNU Make"
 msgstr "GNU Make"
 
-#: installation.xml:2682(para)
+#: installation.xml:2710(para)
 msgid ""
 "You need to use the GNU Make program, which is on the Skunkware CD. By "
 "default, it installs as <filename>/usr/local/bin/make</filename>."
@@ -3811,7 +3860,7 @@ msgstr ""
 "Вам потребуется программа GNU Make, которая находится на Skunkware CD. По "
 "умолчанию она устанавливается в <filename>/usr/local/bin/make</filename>."
 
-#: installation.xml:2688(para)
+#: installation.xml:2716(para)
 msgid ""
 "As of UnixWare 7.1.3 and above, the GNU Make program is the OSTK portion of "
 "the UDK CD, and is in <filename>/usr/gnu/bin/gmake</filename>."
@@ -3819,11 +3868,11 @@ msgstr ""
 "В UnixWare 7.1.3 и новее программа GNU Make включена в раздел OSTK диска UDK "
 "и устанавливается в <filename>/usr/gnu/bin/gmake</filename>."
 
-#: installation.xml:2696(title)
+#: installation.xml:2724(title)
 msgid "Readline"
 msgstr "Readline"
 
-#: installation.xml:2698(para)
+#: installation.xml:2726(para)
 msgid ""
 "The Readline library is on the Skunkware CD. But it is not included on the "
 "UnixWare 7.1 Skunkware CD. If you have the UnixWare 7.0.0 or 7.0.1 Skunkware "
@@ -3835,12 +3884,12 @@ msgstr ""
 "7.0.0 или 7.0.1, вы можете установить её с этого диска. В противном случае, "
 "обратитесь к <ulink url=\"http://www.sco.com/skunkware/\"/>."
 
-#: installation.xml:2712(programlisting)
+#: installation.xml:2740(programlisting)
 #, no-wrap
 msgid "./configure --with-libraries=/usr/local/lib --with-includes=/usr/local/include"
 msgstr "./configure --with-libraries=/usr/local/lib --with-includes=/usr/local/include"
 
-#: installation.xml:2706(para)
+#: installation.xml:2734(para)
 msgid ""
 "By default, Readline installs into <filename>/usr/local/lib</filename> and "
 "<filename>/usr/local/include</filename>. However, the PostgreSQL "
@@ -3854,21 +3903,21 @@ msgstr ""
 "Поэтому, если вы установили Readline, передайте <command>configure</command> "
 "следующие параметры: <placeholder-1/>"
 
-#: installation.xml:2719(title)
+#: installation.xml:2747(title)
 msgid "Using the UDK on OpenServer"
 msgstr "Использование UDK в OpenServer"
 
-#: installation.xml:2725(programlisting)
+#: installation.xml:2753(programlisting)
 #, no-wrap
 msgid "./configure --with-libraries=/udk/usr/lib --with-includes=/udk/usr/include"
 msgstr "./configure --with-libraries=/udk/usr/lib --with-includes=/udk/usr/include"
 
-#: installation.xml:2729(programlisting)
+#: installation.xml:2757(programlisting)
 #, no-wrap
 msgid "./configure --with-libraries=\"/udk/usr/lib /usr/local/lib\" --with-includes=\"/udk/usr/include /usr/local/include\""
 msgstr "./configure --with-libraries=\"/udk/usr/lib /usr/local/lib\" --with-includes=\"/udk/usr/include /usr/local/include\""
 
-#: installation.xml:2721(para)
+#: installation.xml:2749(para)
 msgid ""
 "If you are using the new Universal Development Kit (UDK) compiler on "
 "OpenServer, you need to specify the locations of the UDK libraries: "
@@ -3880,16 +3929,16 @@ msgstr ""
 "размещение библиотек UDK: <placeholder-1/> Совместите эти параметры с "
 "заданными выше для Readline: <placeholder-2/>"
 
-#: installation.xml:2736(title)
+#: installation.xml:2764(title)
 msgid "Reading the PostgreSQL Man Pages"
 msgstr "Получение справки man по PostgreSQL"
 
-#: installation.xml:2745(programlisting)
+#: installation.xml:2773(programlisting)
 #, no-wrap
 msgid "MANPATH=/usr/lib/scohelp/%L/man:/usr/dt/man:/usr/man:/usr/share/man:scohelp:/usr/local/man:/usr/local/pgsql/share/man"
 msgstr "MANPATH=/usr/lib/scohelp/%L/man:/usr/dt/man:/usr/man:/usr/share/man:scohelp:/usr/local/man:/usr/local/pgsql/share/man"
 
-#: installation.xml:2738(para)
+#: installation.xml:2766(para)
 msgid ""
 "By default, the PostgreSQL man pages are installed into <filename>/usr/local/"
 "pgsql/share/man</filename>. By default, UnixWare does not look there for man "
@@ -3903,7 +3952,7 @@ msgstr ""
 "<varname>MANPATH</varname> в <filename>/etc/default/man</filename>, например "
 "так: <placeholder-1/>"
 
-#: installation.xml:2750(para)
+#: installation.xml:2778(para)
 msgid ""
 "On OpenServer, some extra research needs to be invested to make the man "
 "pages usable, because the man system is a bit different from other "
@@ -3914,11 +3963,11 @@ msgstr ""
 "не так, как в других. В настоящее время PostgreSQL просто не устанавливает "
 "справочные страницы в ней."
 
-#: installation.xml:2759(title)
+#: installation.xml:2787(title)
 msgid "C99 Issues with the 7.1.1b Feature Supplement"
 msgstr "Проблемы C99 с функциональным дополнением 7.1.1b"
 
-#: installation.xml:2761(para)
+#: installation.xml:2789(para)
 msgid ""
 "For compilers earlier than the one released with OpenUNIX 8.0.0 (UnixWare "
 "7.1.2), including the 7.1.1b Feature Supplement, you may need to specify "
@@ -3935,11 +3984,11 @@ msgstr ""
 "встроенные функции. Судя по всему, соответствующее исправление включено в "
 "компилятор версии 7.1.2(8.0.0) и новее."
 
-#: installation.xml:2774(title)
+#: installation.xml:2802(title)
 msgid "Threading on UnixWare"
 msgstr "Многопоточность в UnixWare"
 
-#: installation.xml:2776(para)
+#: installation.xml:2804(para)
 msgid ""
 "For threading, you<emphasis>must</emphasis> use <option>-Kpthread</option> "
 "on <emphasis>all</emphasis> libpq-using programs. libpq uses "
@@ -3952,15 +4001,15 @@ msgstr ""
 "<function>pthread_*</function>, которые доступны только при компиляции с "
 "флагом <option>-Kpthread</option>/<option>-Kthread</option>."
 
-#: installation.xml:2787(title)
+#: installation.xml:2815(title)
 msgid "Solaris"
 msgstr "Solaris"
 
-#: installation.xml:2789(indexterm)
+#: installation.xml:2817(indexterm)
 msgid "<primary>Solaris</primary> <secondary>installation on</secondary>"
 msgstr "<primary>Solaris</primary> <secondary>установка в</secondary>"
 
-#: installation.xml:2794(para)
+#: installation.xml:2822(para)
 msgid ""
 "PostgreSQL is well-supported on Solaris. The more up to date your operating "
 "system, the fewer issues you will experience; details below."
@@ -3968,11 +4017,11 @@ msgstr ""
 "PostgreSQL хорошо поддерживается в Solaris. Чем новее операционная система, "
 "тем меньше затруднений будет; подробнее об этом ниже."
 
-#: installation.xml:2801(title)
+#: installation.xml:2829(title)
 msgid "Required Tools"
 msgstr "Требуемые инструменты"
 
-#: installation.xml:2803(para)
+#: installation.xml:2831(para)
 msgid ""
 "You can build with either GCC or Sun's compiler suite. For better code "
 "optimization, Sun's compiler is strongly recommended on the SPARC "
@@ -3988,7 +4037,7 @@ msgstr ""
 "компилятор Sun, не выберите по ошибке <filename>/usr/ucb/cc</filename>; "
 "правильный путь — <filename>/opt/SUNWspro/bin/cc</filename>."
 
-#: installation.xml:2813(para)
+#: installation.xml:2841(para)
 msgid ""
 "You can download Sun Studio from <ulink url=\"http://www.oracle.com/"
 "technetwork/server-storage/solarisstudio/downloads/\"/>. Many of GNU tools "
@@ -4005,27 +4054,27 @@ msgstr ""
 "исходный код, обратитесь к <ulink url=\"http://www.gnu.org/order/ftp.html\"/"
 ">."
 
-#: installation.xml:2827(title)
+#: installation.xml:2855(title)
 msgid "Problems with OpenSSL"
 msgstr "Проблемы с OpenSSL"
 
-#: installation.xml:2833(filename)
+#: installation.xml:2861(filename)
 msgid "src/backend/libpq/crypt.c"
 msgstr "src/backend/libpq/crypt.c"
 
-#: installation.xml:2834(filename)
+#: installation.xml:2862(filename)
 msgid "src/backend/libpq/password.c"
 msgstr "src/backend/libpq/password.c"
 
-#: installation.xml:2835(filename)
+#: installation.xml:2863(filename)
 msgid "src/interfaces/libpq/fe-auth.c"
 msgstr "src/interfaces/libpq/fe-auth.c"
 
-#: installation.xml:2836(filename)
+#: installation.xml:2864(filename)
 msgid "src/interfaces/libpq/fe-connect.c"
 msgstr "src/interfaces/libpq/fe-connect.c"
 
-#: installation.xml:2829(para)
+#: installation.xml:2857(para)
 msgid ""
 "When you build PostgreSQL with OpenSSL support you might get compilation "
 "errors in the following files: <placeholder-1/> This is because of a "
@@ -4037,7 +4086,7 @@ msgstr ""
 "между стандартным <filename>/usr/include/crypt.h</filename> и заголовочными "
 "файлами в составе OpenSSL."
 
-#: installation.xml:2844(para)
+#: installation.xml:2872(para)
 msgid ""
 "Upgrading your OpenSSL installation to version 0.9.6a fixes this problem. "
 "Solaris 9 and above has a newer version of OpenSSL."
@@ -4045,16 +4094,16 @@ msgstr ""
 "Эту проблему можно решить, обновив инсталляцию OpenSSL до версии 0.9.6a. "
 "Solaris 9 и новее уже включает обновлённую версию OpenSSL."
 
-#: installation.xml:2851(title)
+#: installation.xml:2879(title)
 msgid "configure Complains About a Failed Test Program"
 msgstr "Процедура configure сообщает о сбое тестовой программы"
 
-#: installation.xml:2860(programlisting)
+#: installation.xml:2888(programlisting)
 #, no-wrap
 msgid "configure ... LDFLAGS=\"-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib\""
 msgstr "configure ... LDFLAGS=\"-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib\""
 
-#: installation.xml:2853(para)
+#: installation.xml:2881(para)
 msgid ""
 "If <command>configure</command> complains about a failed test program, this "
 "is probably a case of the run-time linker being unable to find some library, "
@@ -4075,21 +4124,21 @@ msgstr ""
 "<citerefentry><refentrytitle>ld</refentrytitle><manvolnum>1</manvolnum></"
 "citerefentry>."
 
-#: installation.xml:2870(title)
+#: installation.xml:2898(title)
 msgid "64-bit Build Sometimes Crashes"
 msgstr "Периодические сбои 64-битной сборки"
 
-#: installation.xml:2881(programlisting)
+#: installation.xml:2909(programlisting)
 #, no-wrap
 msgid "LIBOBJS ="
 msgstr "LIBOBJS ="
 
-#: installation.xml:2885(programlisting)
+#: installation.xml:2913(programlisting)
 #, no-wrap
 msgid "LIBOBJS = snprintf.o"
 msgstr "LIBOBJS = snprintf.o"
 
-#: installation.xml:2872(para)
+#: installation.xml:2900(para)
 msgid ""
 "On Solaris 7 and older, the 64-bit version of libc has a buggy "
 "<function>vsnprintf</function> routine, which leads to erratic core dumps in "
@@ -4111,11 +4160,11 @@ msgstr ""
 "на такую <placeholder-2/> (В этой переменной уже также могут быть "
 "перечислены и другие файлы.) Затем продолжите сборку как обычно."
 
-#: installation.xml:2894(title)
+#: installation.xml:2922(title)
 msgid "Compiling for Optimal Performance"
 msgstr "Компиляция для максимальной производительности"
 
-#: installation.xml:2896(para)
+#: installation.xml:2924(para)
 msgid ""
 "On the SPARC architecture, Sun Studio is strongly recommended for "
 "compilation. Try using the <option>-xO5</option> optimization flag to "
@@ -4132,7 +4181,7 @@ msgstr ""
 "такими флагами PostgreSQL может вести себя нестандартно, например, выполняя "
 "операции с датами/временем."
 
-#: installation.xml:2907(para)
+#: installation.xml:2935(para)
 msgid ""
 "If you do not have a reason to use 64-bit binaries on SPARC, prefer the 32-"
 "bit version. The 64-bit operations are slower and 64-bit binaries are slower "
@@ -4146,11 +4195,11 @@ msgstr ""
 "для процессоров семейства AMD64 не является &laquo;родным&raquo;, поэтому на "
 "таких процессорах значительно медленнее работает 32-битный код."
 
-#: installation.xml:2918(title)
+#: installation.xml:2946(title)
 msgid "Using DTrace for Tracing PostgreSQL"
 msgstr "Применение DTrace для трассировки PostgreSQL"
 
-#: installation.xml:2920(para)
+#: installation.xml:2948(para)
 msgid ""
 "Yes, using DTrace is possible. See <phrase condition=\"standalone\">the "
 "documentation</phrase> <phrase condition=\"default\"><xref linkend=\"dynamic-"
@@ -4164,7 +4213,7 @@ msgstr ""
 "полезную информацию можно найти в этой статье: <ulink url=\"https://blogs."
 "oracle.com/robertlor/entry/user_level_dtrace_probes_in\"/>."
 
-#: installation.xml:2928(para)
+#: installation.xml:2956(para)
 msgid ""
 "If you see the linking of the <command>postgres</command> executable abort "
 "with an error message like: <screen>\n"

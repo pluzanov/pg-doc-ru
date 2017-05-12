@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-02-06 11:19+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-05-10 10:50+0300\n"
+"PO-Revision-Date: 2017-05-12 10:56+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: ref/pg_basebackup.xml:8(indexterm)
 msgid "<primary>pg_basebackup</primary>"
@@ -643,12 +644,12 @@ msgstr "--checkpoint=<placeholder-1/>"
 
 #: ref/pg_basebackup.xml:385(para)
 msgid ""
-"Sets checkpoint mode to fast or spread (default) (see <xref linkend=\"backup-"
-"lowlevel-base-backup\"/>)."
+"Sets checkpoint mode to fast (immediate) or spread (default) (see <xref "
+"linkend=\"backup-lowlevel-base-backup\"/>)."
 msgstr ""
-"Устанавливает режим контрольных точек в быстрый или протяженный (по "
-"умолчанию). Подробнее см. <xref remap=\"4\" linkend=\"backup-lowlevel-base-"
-"backup\"/>."
+"Устанавливает режим контрольных точек: fast (быстрый) или spread "
+"(протяжённый, по умолчанию). Подробнее см. <xref remap=\"4\" linkend="
+"\"backup-lowlevel-base-backup\"/>."
 
 #: ref/pg_basebackup.xml:392(replaceable)
 #: ref/pg_basebackup.xml:393(replaceable)
@@ -974,6 +975,19 @@ msgstr "Замечания"
 
 #: ref/pg_basebackup.xml:593(para)
 msgid ""
+"At the beginning of the backup, a checkpoint needs to be written on the "
+"server the backup is taken from. Especially if the option <literal>--"
+"checkpoint=fast</literal> is not used, this can take some time during which "
+"<application>pg_basebackup</application> will be appear to be idle."
+msgstr ""
+"Прежде чем начнётся копирование, на сервере с копируемой базой необходимо "
+"выполнить контрольную точку. И если копирование запускается без ключа "
+"<literal>--checkpoint=fast</literal>, это может занять некоторое время, в "
+"течение которого <application>pg_basebackup</application> не будет проявлять "
+"никакой активности."
+
+#: ref/pg_basebackup.xml:601(para)
+msgid ""
 "The backup will include all files in the data directory and tablespaces, "
 "including the configuration files and any additional files placed in the "
 "directory by third parties. But only regular files and directories are "
@@ -988,7 +1002,7 @@ msgstr ""
 "пространства) и файлы спецустройств игнорируются. Более подробно см. <xref "
 "remap=\"4\" linkend=\"protocol-replication\"/>."
 
-#: ref/pg_basebackup.xml:602(para)
+#: ref/pg_basebackup.xml:610(para)
 msgid ""
 "Tablespaces will in plain format by default be backed up to the same path "
 "they have on the server, unless the option <literal>--tablespace-mapping</"
@@ -1004,7 +1018,7 @@ msgstr ""
 "направлена в те же каталоги, где располагаются исходные табличные "
 "пространства."
 
-#: ref/pg_basebackup.xml:612(para)
+#: ref/pg_basebackup.xml:620(para)
 msgid ""
 "When tar format mode is used, it is the user's responsibility to unpack each "
 "tar file before starting the PostgreSQL server. If there are additional "
@@ -1022,7 +1036,7 @@ msgstr ""
 "содержимому файла <filename>tablespace_map</filename>, включённого в архив "
 "<filename>base.tar</filename>."
 
-#: ref/pg_basebackup.xml:621(para)
+#: ref/pg_basebackup.xml:629(para)
 msgid ""
 "<application>pg_basebackup</application> works with servers of the same or "
 "an older major version, down to 9.1. However, WAL streaming mode (<literal>-"
@@ -1036,11 +1050,11 @@ msgstr ""
 "формата tar (<literal>--format=tar</literal>) текущей версии совместим "
 "только с версиями сервера не ниже 9.5."
 
-#: ref/pg_basebackup.xml:632(title)
+#: ref/pg_basebackup.xml:640(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: ref/pg_basebackup.xml:634(para)
+#: ref/pg_basebackup.xml:642(para)
 msgid ""
 "To create a base backup of the server at <literal>mydbserver</literal> and "
 "store it in the local directory <filename>/usr/local/pgsql/data</filename>: "
@@ -1056,7 +1070,7 @@ msgstr ""
 "pgsql/data</userinput>\n"
 "</screen>"
 
-#: ref/pg_basebackup.xml:643(para)
+#: ref/pg_basebackup.xml:651(para)
 msgid ""
 "To create a backup of the local server with one compressed tar file for each "
 "tablespace, and store it in the directory <filename>backup</filename>, "
@@ -1070,7 +1084,7 @@ msgstr ""
 "<prompt>$</prompt> <userinput>pg_basebackup -D backup -Ft -z -P</userinput>\n"
 "</screen>"
 
-#: ref/pg_basebackup.xml:652(para)
+#: ref/pg_basebackup.xml:660(para)
 msgid ""
 "To create a backup of a single-tablespace local database and compress this "
 "with <productname>bzip2</productname>: <screen>\n"
@@ -1086,7 +1100,7 @@ msgstr ""
 "</screen> Команда завершится ошибкой, если в базе будет более одного "
 "табличного пространства."
 
-#: ref/pg_basebackup.xml:662(para)
+#: ref/pg_basebackup.xml:670(para)
 msgid ""
 "To create a backup of a local database where the tablespace in <filename>/"
 "opt/ts</filename> is relocated to <filename>./backup/ts</filename>: "
@@ -1102,7 +1116,7 @@ msgstr ""
 "backup/ts</userinput>\n"
 "</screen>"
 
-#: ref/pg_basebackup.xml:673(title)
+#: ref/pg_basebackup.xml:681(title)
 msgid "See Also"
 msgstr "См. также"
 
