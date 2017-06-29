@@ -1,6 +1,6 @@
 diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/all.rules
 --- pology-0.12.ori/lang/ru/rules/all.rules	2016-05-26 07:35:51.316767762 +0300
-+++ pology-0.12/lang/ru/rules/all.rules	2017-05-11 17:22:24.685213588 +0300
++++ pology-0.12/lang/ru/rules/all.rules	2017-06-05 11:39:29.880316585 +0300
 @@ -22,6 +22,9 @@
  [медиа-[а-я]]i
  hint="-> Слова медиа... пишутся слитно"
@@ -463,7 +463,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
  hint="No '(qtundo-format)' in context string, hence magic split is not available"
  
  # https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%BB%D0%B0%D1%8F%D0%BB%D0%B0%D0%BC_(%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%BE)
-@@ -513,3 +645,289 @@
+@@ -513,3 +645,295 @@
  
  # TBD: название программы "Параметры системы" склоняется? Например: "в Параметрах системы"?
  
@@ -732,6 +732,12 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +id="duplicated-word"
 +hint="Повтор слова."
 +
++*hook name="pgdoc/check-nontranslatable~"\
++      on="msgstr"
++environment docbook
++id="modified-nontranslatable"
++hint="Изменена непереводимая строка."
++
 +# [<literal[^>]*>[^<]*?[а-яА-Я][^<]*</literal>]  # -- не готово для повсеместного использования
 +# hint="Содержимое тега literal переводить не надо."
 +
@@ -755,7 +761,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/all.rules pology-0.12/lang/ru/rules/
 +# TODO: поменять <quote>...</quote> на &laquo;...&raquo;, чтобы были кавычки-ёлочки?
 diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/rules/letter-yo.rules
 --- pology-0.12.ori/lang/ru/rules/letter-yo.rules	2016-05-26 07:35:51.304768164 +0300
-+++ pology-0.12/lang/ru/rules/letter-yo.rules	2016-10-12 12:05:41.530077511 +0300
++++ pology-0.12/lang/ru/rules/letter-yo.rules	2017-06-06 15:15:26.474130727 +0300
 @@ -13,6 +13,13 @@
  valid before="и"
  hint="Буква ё"
@@ -816,7 +822,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
  hint="Буква ё"
  
  [щелкните]i
-@@ -52,12 +86,198 @@
+@@ -52,12 +86,199 @@
  [\bнем\b]
  hint="Буква ё"
  
@@ -911,6 +917,7 @@ diff -u -r -N pology-0.12.ori/lang/ru/rules/letter-yo.rules pology-0.12/lang/ru/
 +[еченн]
 +valid after="м"
 +valid after="пересв"
++valid after="отв"
 +hint="Буква ё"
 +
 +[ечен\b]
@@ -1727,6 +1734,46 @@ diff -u -r -N pology-0.12.ori/pology/markup.py pology-0.12/pology/markup.py
          tags = "".join(["<placeholder-%s/>" % x for x in missing_plnums])
          errmsg = _("@info",
                     "Missing placeholder tags in translation: %(taglist)s.",
+diff -u -r -N pology-0.12.ori/pology/pgdoc.py pology-0.12/pology/pgdoc.py
+--- pology-0.12.ori/pology/pgdoc.py	1970-01-01 03:00:00.000000000 +0300
++++ pology-0.12/pology/pgdoc.py	2017-06-05 14:26:29.341299669 +0300
+@@ -0,0 +1,36 @@
++# -*- coding: utf-8 -*-
++
++"""
++PostgreSQL documentation specific checks.
++
++@author: Alexander Lakhin <exclusion@gmail.com>
++@license: GPLv3
++"""
++
++import re
++from pology import PologyError, _, n_
++
++def check_nontranslatable():
++    """
++    Check for modified non-translatable strings
++
++    @return: type V3C hook
++    @rtype: C{(msgstr, msg, cat) -> spans}
++    """
++
++    _nontrans_tags = re.compile(r"\((envar|filename|function|literal|property|structfield|structname|type|varname)\)$");
++
++    def checkf (msgstr, msg, cat):
++
++        errors = []
++        for (src, unk) in msg.source:
++            if (_nontrans_tags.search(src)):
++                if (msgstr.replace('&zwsp;', '').replace(' ', '') != msg.msgid.replace(' ', '')):
++                    #TODO: rid of whitespace differences
++                    errmsg = _("@info", "Modified non-translatable string: %s." % msg.msgid)
++                    errors.append((0, 0, errmsg))
++                    break
++        return errors
++
++    return checkf
++
 diff -u -r -N pology-0.12.ori/pology/remove_ru.py pology-0.12/pology/remove_ru.py
 --- pology-0.12.ori/pology/remove_ru.py	1970-01-01 03:00:00.000000000 +0300
 +++ pology-0.12/pology/remove_ru.py	2017-05-11 17:30:57.974177362 +0300
