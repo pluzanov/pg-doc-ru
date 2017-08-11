@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2017-08-09 16:00+0300\n"
-"PO-Revision-Date: 2017-07-10 15:48+0300\n"
+"PO-Revision-Date: 2017-08-10 22:07+0300\n"
 "Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -16,38 +16,33 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: release-9.5.xml:6(title)
-#, fuzzy
 msgid "Release 9.5.8"
-msgstr "Выпуск 9.5.7"
+msgstr "Выпуск 9.5.8"
 
 #: release-9.5.xml:9(title) release-9.5.xml:716(title)
 #: release-9.5.xml:1285(title) release-9.5.xml:1947(title)
 #: release-9.5.xml:2771(title) release-9.5.xml:3844(title)
 #: release-9.5.xml:4345(title) release-9.5.xml:5056(title)
 #: release-9.5.xml:5504(title)
-#, fuzzy
 msgid "Release date:"
-msgstr "Дата выпуска"
+msgstr "Дата выпуска:"
 
 #: release-9.5.xml:10(para)
-#, fuzzy
 msgid "2017-08-10"
-msgstr "2017-05-11"
+msgstr "2017-08-10"
 
 #: release-9.5.xml:13(para)
-#, fuzzy
 msgid ""
 "This release contains a variety of fixes from 9.5.7. For information about "
 "new features in the 9.5 major release, see <xref linkend=\"release-9-5\"/>."
 msgstr ""
-"В этот выпуск вошли различные исправления, внесённые после версии 9.5.6. За "
+"В этот выпуск вошли различные исправления, внесённые после версии 9.5.7. За "
 "информацией о нововведениях версии 9.5 обратитесь к <xref remap=\"3\" "
 "linkend=\"release-9-5\"/>."
 
 #: release-9.5.xml:20(title)
-#, fuzzy
 msgid "Migration to Version 9.5.8"
-msgstr "Миграция на версию 9.5.7"
+msgstr "Миграция на версию 9.5.8"
 
 #: release-9.5.xml:22(para) release-9.5.xml:729(para)
 #: release-9.5.xml:1298(para) release-9.5.xml:1960(para)
@@ -67,13 +62,12 @@ msgstr ""
 "списке изменений."
 
 #: release-9.5.xml:31(para)
-#, fuzzy
 msgid ""
 "Also, if you are upgrading from a version earlier than 9.5.7, see <xref "
 "linkend=\"release-9-5-7\"/>."
 msgstr ""
-"Также, если вы обновляете сервер с версии, более ранней, чем 9.5.6, см. "
-"<xref remap=\"4\" linkend=\"release-9-5-6\"/>."
+"Также, если вы обновляете сервер с версии, более ранней, чем 9.5.7, см. "
+"<xref remap=\"4\" linkend=\"release-9-5-7\"/>."
 
 #: release-9.5.xml:38(title) release-9.5.xml:750(title)
 #: release-9.5.xml:1315(title) release-9.5.xml:1977(title)
@@ -84,15 +78,14 @@ msgid "Changes"
 msgstr "Изменения"
 
 #: release-9.5.xml:43(para)
-#, fuzzy
 msgid ""
 "Further restrict visibility of <structname>pg_user_mappings</structname>."
 "<structfield>umoptions</structfield>, to protect passwords stored as user "
 "mapping options (Noah Misch)"
 msgstr ""
-"Ограничение видимости <structname>pg_user_mappings</structname>."
+"Дальнейшее ограничение видимости <structname>pg_user_mappings</structname>."
 "<structfield>umoptions</structfield> для защиты паролей, сохранённых в "
-"свойствах сопоставлений пользователей (Мишель Пакье, Фейке Стинберген)"
+"свойствах сопоставлений пользователей (Ной Миш)"
 
 #: release-9.5.xml:50(para)
 msgid ""
@@ -104,6 +97,14 @@ msgid ""
 "structname> does not show the options in such cases, "
 "<structname>pg_user_mappings</structname> should not either. (CVE-2017-7547)"
 msgstr ""
+"Исправление дефекта CVE-2017-7486 оказалось некорректным: в результате "
+"пользователь мог видеть свойства своего собственного сопоставления, даже "
+"когда он не имел права <literal>USAGE</literal> для соответствующего "
+"стороннего сервера. В таких свойствах мог содержаться пароль, который должен "
+"задавать владелец сервера, а не сам пользователь. Так как представление "
+"<structname>information_schema.user_mapping_options</structname> не "
+"показывает свойства в таких случаях, и <structname>pg_user_mappings</"
+"structname> не должно. (CVE-2017-7547)"
 
 #: release-9.5.xml:62(para)
 msgid ""
@@ -129,7 +130,7 @@ msgstr ""
 "потребуется всё равно.)"
 
 #: release-9.5.xml:82(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "SET search_path = pg_catalog;\n"
 "CREATE OR REPLACE VIEW pg_user_mappings AS\n"
@@ -166,7 +167,9 @@ msgstr ""
 "        ELSE\n"
 "            A.rolname\n"
 "        END AS usename,\n"
-"        CASE WHEN (U.umuser &lt;&gt; 0 AND A.rolname = current_user)\n"
+"        CASE WHEN (U.umuser &lt;&gt; 0 AND A.rolname = current_user\n"
+"                     AND (pg_has_role(S.srvowner, 'USAGE')\n"
+"                          OR has_server_privilege(S.oid, 'USAGE')))\n"
 "                    OR (U.umuser = 0 AND pg_has_role(S.srvowner, 'USAGE'))\n"
 "                    OR (SELECT rolsuper FROM pg_authid WHERE rolname = current_user)\n"
 "                    THEN U.umoptions\n"
@@ -234,6 +237,8 @@ msgid ""
 "Disallow empty passwords in all password-based authentication methods "
 "(Heikki Linnakangas)"
 msgstr ""
+"Запрет пустых паролей для всех методов аутентификации по паролю (Хейкки "
+"Линнакангас)"
 
 #: release-9.5.xml:146(para)
 msgid ""
@@ -249,12 +254,25 @@ msgid ""
 "passwords. Change the server to reject empty passwords in all cases. "
 "(CVE-2017-7546)"
 msgstr ""
+"Библиотека <application>libpq</application> игнорирует пустое указание "
+"пароля и не передаёт его на сервер. Поэтому, если пароль пользователя "
+"пустой, <application>psql</application> и другие клиенты на базе "
+"<application>libpq</application> не позволяют подключиться с таким паролем. "
+"Как следствие, администратор может решить, что установка пустого пароля "
+"равнозначна запрету входа по паролю. Однако с изменённым клиентом или "
+"клиентом не на базе <application>libpq</application> подключение оказывается "
+"возможным, в зависимости от настроенного метода аутентификации. В частности, "
+"самый распространённый метод, <literal>md5</literal>, принимает пустые "
+"пароли. В результате этого изменения сервер не будет принимать пустые пароли "
+"во всех случаях. (CVE-2017-7546)"
 
 #: release-9.5.xml:163(para)
 msgid ""
 "Make <function>lo_put()</function> check for <literal>UPDATE</literal> "
 "privilege on the target large object (Tom Lane, Michael Paquier)"
 msgstr ""
+"Добавление в <function>lo_put()</function> проверки права <literal>UPDATE</"
+"literal> для целевых больших объектов (Том Лейн, Мишель Пакье)"
 
 #: release-9.5.xml:168(para)
 msgid ""
@@ -262,12 +280,18 @@ msgid ""
 "<function>lowrite()</function>, but the check was missing, allowing any user "
 "to change the data in a large object. (CVE-2017-7548)"
 msgstr ""
+"Функция <function>lo_put()</function>, несомненно, должна требовать наличия "
+"тех же прав, что и <function>lowrite()</function>, но такая проверка "
+"отсутствовала, что позволяло пользователю менять данные в большом объекте. "
+"(CVE-2017-7548)"
 
 #: release-9.5.xml:177(para)
 msgid ""
 "Correct the documentation about the process for upgrading standby servers "
 "with <application>pg_upgrade</application> (Bruce Momjian)"
 msgstr ""
+"Исправление в документации описания процесса обновления резервных серверов с "
+"использованием <application>pg_upgrade</application> (Брюс Момджян)"
 
 #: release-9.5.xml:182(para)
 msgid ""
@@ -275,11 +299,15 @@ msgid ""
 "after running <application>pg_upgrade</application> but before syncing the "
 "standby servers. This sequence is unsafe."
 msgstr ""
+"Ранее в документации говорилось, что нужно запустить/остановить ведущий "
+"сервер после запуска <application>pg_upgrade</application>, но до "
+"синхронизации резервных серверов. Однако эта последовательность небезопасна."
 
 #: release-9.5.xml:190(para)
-#, fuzzy
 msgid "Fix concurrent locking of tuple update chains (&Aacute;lvaro Herrera)"
-msgstr "Поддержка Tcl 8.6 в сборках с MSVC (Альваро Эррера)"
+msgstr ""
+"Исправление одновременной блокировки цепочки изменённых кортежей (Альваро "
+"Эррера)"
 
 #: release-9.5.xml:194(para)
 msgid ""
@@ -290,82 +318,115 @@ msgid ""
 "foreign-key checks failing to see a tuple that definitely exists but is "
 "being updated concurrently."
 msgstr ""
+"Когда цепочка изменённых кортежей блокируется одновременно несколькими "
+"сеансами в неконфликтующем режиме с использованием старого снимка, и все "
+"операции завершаются успешно, существовала возможность, что некоторые из "
+"них, несмотря на это, нарушатся (и заключат, что актуальной версии кортежа "
+"нет) из-за условий гонки. В частности, вследствие этого проверка внешнего "
+"ключа могла не увидеть кортеж, который определённо существует, но изменяется "
+"параллельной операцией."
 
 #: release-9.5.xml:205(para)
 msgid ""
 "Fix potential data corruption when freezing a tuple whose XMAX is a "
 "multixact with exactly one still-interesting member (Teodor Sigaev)"
 msgstr ""
+"Устранение риска повреждения данных при замораживании кортежа, в котором "
+"XMAX равен идентификатору мультитранзакции с ровно одним ещё востребованным "
+"членом (Фёдор Сигаев)"
 
 #: release-9.5.xml:212(para)
 msgid ""
 "Avoid integer overflow and ensuing crash when sorting more than one billion "
 "tuples in-memory (Sergey Koposov)"
 msgstr ""
+"Предупреждение целочисленного переполнения и краха при сортировке в памяти "
+"более чем одного миллиарда кортежей (Сергей Копосов)"
 
 #: release-9.5.xml:219(para)
 msgid ""
 "On Windows, retry process creation if we fail to reserve the address range "
 "for our shared memory in the new process (Tom Lane, Amit Kapila)"
 msgstr ""
+"В Windows необходимо повторять попытки создания процесса в случае ошибки при "
+"резервировании диапазона адресов разделяемой памяти в новом процессе (Том "
+"Лейн, Амит Капила)"
 
 #: release-9.5.xml:225(para)
 msgid ""
 "This is expected to fix infrequent child-process-launch failures that are "
 "probably due to interference from antivirus products."
 msgstr ""
+"Это должно устранить периодические сбои при запуске дочерних процессов, "
+"возможно, вызванные вмешательством антивирусных программ."
 
 #: release-9.5.xml:232(para)
 msgid ""
 "Fix low-probability corruption of shared predicate-lock hash table in "
 "Windows builds (Thomas Munro, Tom Lane)"
 msgstr ""
+"Устранение маловероятной возможности повреждения разделяемой хеш-таблицы "
+"предикатных блокировок в сборках для Windows (Томас Мунро, Том Лейн)"
 
 #: release-9.5.xml:239(para)
 msgid ""
 "Avoid logging clean closure of an SSL connection as though it were a "
 "connection reset (Michael Paquier)"
 msgstr ""
+"Предотвращение вывода в журнал сообщения о штатном закрытии SSL-соединения "
+"(поведение должно быть таким же, как и при сбросе соединения) (Мишель Пакье)"
 
 #: release-9.5.xml:246(para)
 msgid "Prevent sending SSL session tickets to clients (Tom Lane)"
-msgstr ""
+msgstr "Запрещение передачи сеансовых билетов SSL клиентам (Том Лейн)"
 
 #: release-9.5.xml:250(para)
 msgid ""
 "This fix prevents reconnection failures with ticket-aware client-side SSL "
 "code."
 msgstr ""
+"Это исправление устраняет сбои при переподключении клиентов с реализациями "
+"SSL, в которых эти билеты используются."
 
 #: release-9.5.xml:257(para)
 msgid ""
 "Fix code for setting <xref linkend=\"guc-tcp-keepalives-idle\"/> on Solaris "
 "(Tom Lane)"
 msgstr ""
+"Исправление кода, устанавливающего <xref linkend=\"guc-tcp-keepalives-idle\"/"
+"> в Solaris (Том Лейн)"
 
 #: release-9.5.xml:264(para)
 msgid ""
 "Fix statistics collector to honor inquiry messages issued just after a "
 "postmaster shutdown and immediate restart (Tom Lane)"
 msgstr ""
+"Исправление дефекта в сборщике статистики, приводящего к потере запросных "
+"сообщений, выдаваемых сразу после перезапуска главного процесса (Том Лейн)"
 
 #: release-9.5.xml:269(para)
 msgid ""
 "Statistics inquiries issued within half a second of the previous postmaster "
 "shutdown were effectively ignored."
 msgstr ""
+"Запросы статистики, выдаваемые в течение полсекунды после предыдущего "
+"отключения главного процесса, по сути терялись."
 
 #: release-9.5.xml:276(para)
 msgid ""
 "Ensure that the statistics collector's receive buffer size is at least 100KB "
 "(Tom Lane)"
 msgstr ""
+"Размер приёмного буфера в сборщике статистики должен быть не меньше 100 "
+"Кбайт (Том Лейн)"
 
 #: release-9.5.xml:281(para)
 msgid ""
 "This reduces the risk of dropped statistics data on older platforms whose "
 "default receive buffer size is less than that."
 msgstr ""
+"Это снижает риск потери данных статистики на старых платформах, где размер "
+"приёмного буфера по умолчанию меньше."
 
 #: release-9.5.xml:288(para)
 msgid ""
@@ -373,73 +434,96 @@ msgid ""
 "just after it processes an <literal>XLOG_SWITCH</literal> WAL record (Andres "
 "Freund)"
 msgstr ""
+"Устранение возможности создания некорректного сегмента WAL при повышении "
+"резервного сервера сразу после того, как он обрабатывает запись "
+"<literal>XLOG_SWITCH</literal> (Андрес Фройнд)"
 
 #: release-9.5.xml:296(para)
-#, fuzzy
 msgid ""
 "Fix <application>walsender</application> to exit promptly when client "
 "requests shutdown (Tom Lane)"
 msgstr ""
-"Исправление ошибки в <application>pg_upgrade</application>, приводившей к "
-"сбою, когда правила TOAST в новом кластере отличались от старых (Том Лейн)"
+"Процесс <application>walsender</application> должен завершаться "
+"своевременно, когда клиент инициирует выключение (Том Лейн)"
 
 #: release-9.5.xml:303(para)
 msgid ""
 "Fix <systemitem>SIGHUP</systemitem> and <systemitem>SIGUSR1</systemitem> "
 "handling in walsender processes (Petr Jelinek, Andres Freund)"
 msgstr ""
+"Исправление обработки сигналов <systemitem>SIGHUP</systemitem> и "
+"<systemitem>SIGUSR1</systemitem> в процессах walsender (Петр Желинек, Андрес "
+"Фройнд)"
 
 #: release-9.5.xml:310(para)
 msgid ""
 "Prevent walsender-triggered panics during shutdown checkpoints (Andres "
 "Freund, Michael Paquier)"
 msgstr ""
+"Предотвращение панического состояния, которое могут вызвать процессы "
+"walsender во время контрольной точки при выключении (Андрес Фройнд, Мишель "
+"Пакье)"
 
 #: release-9.5.xml:317(para)
 msgid ""
 "Fix unnecessarily slow restarts of <application>walreceiver</application> "
 "processes due to race condition in postmaster (Tom Lane)"
 msgstr ""
+"Устранение неоправданной паузы при перезапуске процессов "
+"<application>walreceiver</application>, возникающей вследствие условий гонки "
+"в главном процессе (Том Лейн)"
 
 #: release-9.5.xml:324(para)
-#, fuzzy
 msgid ""
 "Fix leakage of small subtransactions spilled to disk during logical decoding "
 "(Andres Freund)"
 msgstr ""
-"Исправление разнообразных ошибок в логическом декодировании (Андрес Фройнд)"
+"Устранение утечки маленьких подтранзакций, оказывающихся на диске при "
+"логическом декодировании (Андрес Фройнд)"
 
 #: release-9.5.xml:329(para)
 msgid "This resulted in temporary files consuming excessive disk space."
 msgstr ""
+"В результате образовывались временные файлы, занимающие лишнее место на "
+"диске."
 
 #: release-9.5.xml:335(para)
 msgid ""
 "Reduce the work needed to build snapshots during creation of logical-"
 "decoding slots (Andres Freund, Petr Jelinek)"
 msgstr ""
+"Оптимизация операций, необходимых для получения снимков при создании слотов "
+"логического декодирования (Андрес Фройнд, Петр Желинек)"
 
 #: release-9.5.xml:340(para)
 msgid ""
 "The previous algorithm was infeasibly expensive on a server with a lot of "
 "open transactions."
 msgstr ""
+"Предыдущий алгоритм оказывался очень неэффективным на сервере со множеством "
+"открытых транзакций."
 
 #: release-9.5.xml:347(para)
 msgid ""
 "Fix race condition that could indefinitely delay creation of logical-"
 "decoding slots (Andres Freund, Petr Jelinek)"
 msgstr ""
+"Устранение условий гонки, при которых создание слотов логического "
+"декодирования могло откладываться на неопределённое время (Андрес Фройнд, "
+"Петр Желинек)"
 
 #: release-9.5.xml:354(para)
 msgid "Reduce overhead in processing syscache invalidation events (Tom Lane)"
 msgstr ""
+"Уменьшение издержек при обработке событий сброса системного кеша (Том Лейн)"
 
 #: release-9.5.xml:358(para)
 msgid ""
 "This is particularly helpful for logical decoding, which triggers frequent "
 "cache invalidation."
 msgstr ""
+"Это особенно полезно для логического декодирования, когда сброс кеша "
+"происходит часто."
 
 #: release-9.5.xml:365(para)
 msgid ""
@@ -447,18 +531,25 @@ msgid ""
 "assigns to more than one element of a column that is of domain-over-array "
 "type (Tom Lane)"
 msgstr ""
+"Исправление поведения в ситуациях, когда <command>INSERT</command> или "
+"<command>UPDATE</command> присваивает более одного элемента столбцу с типом "
+"домена на базе массива (Том Лейн)"
 
 #: release-9.5.xml:373(para)
 msgid ""
 "Allow window functions to be used in sub-<literal>SELECT</literal>s that are "
 "within the arguments of an aggregate function (Tom Lane)"
 msgstr ""
+"Разрешение использования оконных функций во вложенных <literal>SELECT</"
+"literal> в аргументах агрегатной функции (Том Лейн)"
 
 #: release-9.5.xml:380(para)
 msgid ""
 "Move autogenerated array types out of the way during <command>ALTER ... "
 "RENAME</command> (Vik Fearing)"
 msgstr ""
+"Предупреждение конфликта имён с автоматически генерируемыми типами массивов "
+"при выполнении <command>ALTER ... RENAME</command> (Вик Фиринг)"
 
 #: release-9.5.xml:385(para)
 msgid ""
@@ -466,27 +557,34 @@ msgid ""
 "the way during <command>CREATE</command>; this fix extends that behavior to "
 "renaming operations."
 msgstr ""
+"Ранее автоматически сгенерированный тип массива во избежание конфликта "
+"переименовывался при выполнении <command>CREATE</command>; данное "
+"исправление распространяет это поведение и на операции переименования."
 
 #: release-9.5.xml:393(para)
-#, fuzzy
 msgid ""
 "Fix dangling pointer in <command>ALTER TABLE</command> when there is a "
 "comment on a constraint belonging to the table (David Rowley)"
 msgstr ""
-"Устранение потери указателя в <command>COPY ... TO</command> когда для "
-"исходной таблицы активна защита на уровне строк (Том Лейн)"
+"Устранение потери указателя в <command>ALTER TABLE</command> когда для "
+"ограничения, принадлежащего таблице, добавлен комментарий (Дэвид Роули)"
 
 #: release-9.5.xml:398(para)
 msgid ""
 "Re-applying the comment to the reconstructed constraint could fail with a "
 "weird error message, or even crash."
 msgstr ""
+"При повторном применении комментария к воссозданному ограничению мог "
+"произойти сбой со странным сообщением или даже с аварийным завершением."
 
 #: release-9.5.xml:405(para)
 msgid ""
 "Ensure that <command>ALTER USER ... SET</command> accepts all the syntax "
 "variants that <command>ALTER ROLE ... SET</command> does (Peter Eisentraut)"
 msgstr ""
+"Добавление для команды <command>ALTER USER ... SET</command> всех вариантов "
+"синтаксиса, что принимает <command>ALTER ROLE ... SET</command> (Питер "
+"Эйзентраут)"
 
 #: release-9.5.xml:412(para)
 msgid ""
@@ -494,6 +592,9 @@ msgid ""
 "argument or return type from <type>opaque</type> to the correct type (Heikki "
 "Linnakangas)"
 msgstr ""
+"Обновление информации о зависимости при смене типа аргумента или возврата "
+"для функции ввода/вывода с <type>opaque</type> на целевой тип (Хейкки "
+"Линнакангас)"
 
 #: release-9.5.xml:418(para)
 msgid ""
@@ -502,36 +603,51 @@ msgid ""
 "subsequent <command>DROP TYPE</command> to leave broken function definitions "
 "behind."
 msgstr ""
+"<command>CREATE TYPE</command> изменяет функции ввода/вывода, объявленные в "
+"давно устаревшем стиле, но информация о зависимости от этого типа не "
+"записывалась, в результате чего после команд <command>DROP TYPE</command> "
+"могли оставаться дефектные определения функций."
 
 #: release-9.5.xml:427(para)
 msgid ""
 "Reduce memory usage when <command>ANALYZE</command> processes a "
 "<type>tsvector</type> column (Heikki Linnakangas)"
 msgstr ""
+"Сокращение использования памяти при обработке командой <command>ANALYZE</"
+"command> столбцов <type>tsvector</type> (Хейкки Линнакангас)"
 
 #: release-9.5.xml:434(para)
 msgid ""
 "Fix unnecessary precision loss and sloppy rounding when multiplying or "
 "dividing <type>money</type> values by integers or floats (Tom Lane)"
 msgstr ""
+"Устранение ненужной потери точности и небрежного округления при умножении и "
+"делении значений <type>money</type> на целые числа или числа с плавающей "
+"точкой (Том Лейн)"
 
 #: release-9.5.xml:441(para)
 msgid ""
 "Tighten checks for whitespace in functions that parse identifiers, such as "
 "<function>regprocedurein()</function> (Tom Lane)"
 msgstr ""
+"Уточнение проверок пробельных символов в функциях, разбирающих "
+"идентификаторы, например <function>regprocedurein()</function> (Том Лейн)"
 
 #: release-9.5.xml:446(para)
 msgid ""
 "Depending on the prevailing locale, these functions could misinterpret "
 "fragments of multibyte characters as whitespace."
 msgstr ""
+"В зависимости от используемой локали эти функции могли неправильно "
+"воспринимать фрагменты многобайтных символов как пробелы."
 
 #: release-9.5.xml:453(para)
 msgid ""
 "Use relevant <literal>#define</literal> symbols from Perl while compiling "
 "<application>PL/Perl</application> (Ashutosh Sharma, Tom Lane)"
 msgstr ""
+"Использование уместных символов <literal>#define</literal> из Perl при "
+"сборке <application>PL/Perl</application> (Ашутош Шарма, Том Лейн)"
 
 #: release-9.5.xml:458(para)
 msgid ""
@@ -539,12 +655,18 @@ msgid ""
 "<quote>handshake</quote> mismatch during library load, when working with "
 "recent Perl versions."
 msgstr ""
+"Это предупреждает проблемы переносимости, обычно проявляющиеся в виде ошибок "
+"<quote>проверки совместимости</quote> в момент загрузки библиотеки при "
+"использовании последних версий Perl."
 
 #: release-9.5.xml:466(para)
 msgid ""
 "In <application>libpq</application>, reset GSS/SASL and SSPI authentication "
 "state properly after a failed connection attempt (Michael Paquier)"
 msgstr ""
+"Обеспечение в <application>libpq</application> корректного сброса состояния "
+"аутентификации GSS/SASL и SSPI после неудачной попытки подключения (Мишель "
+"Пакье)"
 
 #: release-9.5.xml:471(para)
 msgid ""
@@ -552,6 +674,10 @@ msgid ""
 "connections, a GSS/SASL failure in the SSL attempt would always cause the "
 "non-SSL attempt to fail. SSPI did not fail, but it leaked memory."
 msgstr ""
+"Ранее этот сброс не выполнялся и при переходе с SSL-соединения на не SSL "
+"ошибка GSS/SASL при попытке SSL-подключения мешала затем установить обычное "
+"подключение, без SSL. С SSPI этого не происходило, но имела место утечка "
+"памяти."
 
 #: release-9.5.xml:479(para)
 msgid ""
@@ -559,83 +685,90 @@ msgid ""
 "STDIN</command> is ended with a keyboard EOF signal and then another "
 "<command>COPY FROM STDIN</command> is attempted (Thomas Munro)"
 msgstr ""
+"В <application>psql</application> устранён сбой, возникающий, когда команда "
+"<command>COPY FROM STDIN</command> завершалась вводом сигнала EOF с "
+"клавиатуры, а затем следовала ещё одна попытка выполнить <command>COPY FROM "
+"STDIN</command> (Томас Мунро)"
 
 #: release-9.5.xml:485(para)
-#, fuzzy
 msgid ""
 "This misbehavior was observed on BSD-derived platforms (including macOS), "
 "but not on most others."
 msgstr ""
-"Это устраняет проблему переносимости на платформы на базе FreeBSD (включая "
-"macOS)."
+"Это некорректное поведение наблюдалось в системах, основанных на BSD, "
+"(включая macOS), но не в других."
 
 #: release-9.5.xml:492(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_dump</application> and <application>pg_restore</"
 "application> to emit <command>REFRESH MATERIALIZED VIEW</command> commands "
 "last (Tom Lane)"
 msgstr ""
-"Корректировка выдачи ошибок в параллельном режиме <application>pg_dump</"
-"application> и <application>pg_restore</application> (Том Лейн)"
+"Исправление программ <application>pg_dump</application> и "
+"<application>pg_restore</application>, чтобы команды <command>REFRESH "
+"MATERIALIZED VIEW</command> выдавались в конце (Том Лейн)"
 
 #: release-9.5.xml:497(para)
 msgid ""
 "This prevents errors during dump/restore when a materialized view refers to "
 "tables owned by a different user."
 msgstr ""
+"Это предотвращает ошибки при выгрузке/восстановлении данных, когда "
+"материализованное представление ссылается на таблицы, принадлежащие другому "
+"пользователю."
 
 #: release-9.5.xml:504(para)
-#, fuzzy
 msgid ""
 "Improve <application>pg_dump</application>/<application>pg_restore</"
 "application>'s reporting of error conditions originating in "
 "<application>zlib</application> (Vladimir Kunschikov, &Aacute;lvaro Herrera)"
 msgstr ""
-"Перемещение <application>dummy_seclabel</application>, "
-"<application>test_shm_mq</application>, <application>test_parser</"
-"application> и <application>worker_spi</application> из <filename>contrib</"
-"filename> в <filename>src/test/modules</filename> (Альваро Эррера)"
+"Улучшение вывода в <application>pg_dump</application>/"
+"<application>pg_restore</application> сообщений об ошибках, возникающих в "
+"<application>zlib</application> (Владимир Кунщиков, Альваро Эррера)"
 
 #: release-9.5.xml:512(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_dump</application> with the <option>--clean</option> "
 "option to drop event triggers as expected (Tom Lane)"
 msgstr ""
-"Поддержка нескольких параметров <application>pg_ctl</application> <option>-"
-"o</option>, так что их значения соединяются вместе (Брюс Момджян)"
+"Исправление поведения <application>pg_dump</application> с ключом <option>--"
+"clean</option>, чтобы событийные триггеры удалялись должным образом (Том "
+"Лейн)"
 
 #: release-9.5.xml:517(para)
 msgid ""
 "It also now correctly assigns ownership of event triggers; before, they were "
 "restored as being owned by the superuser running the restore script."
 msgstr ""
+"Теперь также правильно назначаются владельцы событийных триггеров; ранее "
+"после запуска скрипта восстановления такие триггеры оказывались "
+"принадлежащими суперпользователю."
 
 #: release-9.5.xml:525(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_dump</application> to not emit invalid SQL for an empty "
 "operator class (Daniel Gustafsson)"
 msgstr ""
-"Исправление ошибки в <application>pg_upgrade</application>, из-за которой не "
-"восстанавливалось членство семейства операторов, содержащего всего один "
-"класс операторов, в расширении (Том Лейн)"
+"Исправление дефекта в <application>pg_dump</application>, когда для пустого "
+"класса операторов выдавался некорректный SQL (Даниэль Густафсон)"
 
 #: release-9.5.xml:532(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_dump</application> output to stdout on Windows (Kuntal "
 "Ghosh)"
 msgstr ""
-"Программа <application>pg_dump</application> никогда не должна выгружать "
-"функции-конструкторы диапазонов (Том Лейн)"
+"Исправление вывода <application>pg_dump</application> в stdout на платформе "
+"Windows (Кунтал Гхош)"
 
 #: release-9.5.xml:536(para)
 msgid ""
 "A compressed plain-text dump written to stdout would contain corrupt data "
 "due to failure to put the file descriptor into binary mode."
 msgstr ""
+"Сжатые данные выгрузки в текстовом виде при выводе в stdout оказывались "
+"испорченными из-за того, что дескриптор файла не переводился в двоичный "
+"режим."
 
 #: release-9.5.xml:543(para)
 msgid ""
@@ -643,6 +776,9 @@ msgid ""
 "<literal>ON SELECT</literal> rule of a view whose columns have been renamed "
 "(Tom Lane)"
 msgstr ""
+"Исправление вывода <function>pg_get_ruledef()</function> для правила "
+"<literal>ON SELECT</literal>, связанного с представлением, в котором "
+"переименовывались столбцы (Том Лейн)"
 
 #: release-9.5.xml:549(para)
 msgid ""
@@ -650,12 +786,18 @@ msgid ""
 "<function>pg_get_ruledef()</function> to dump views, so that this error "
 "could result in dump/reload failures."
 msgstr ""
+"В некоторых особых случаях <application>pg_dump</application> использует "
+"<function>pg_get_ruledef()</function> для выгрузки представлений, так что "
+"эта ошибка могла приводить к сбоям при выгрузке/загрузке."
 
 #: release-9.5.xml:557(para)
 msgid ""
 "Fix dumping of outer joins with empty constraints, such as the result of a "
 "<literal>NATURAL LEFT JOIN</literal> with no common columns (Tom Lane)"
 msgstr ""
+"Исправление выгрузки внешних соединений с пустыми ограничениями, "
+"получающихся, например, в результате <literal>NATURAL LEFT JOIN</literal> "
+"без общих столбцов (Том Лейн)"
 
 #: release-9.5.xml:564(para)
 msgid ""
@@ -663,33 +805,41 @@ msgid ""
 "cases where the expression does not deparse into something that looks like a "
 "function call (Tom Lane)"
 msgstr ""
+"Исправление выгрузки выражений с функциями в предложении <literal>FROM</"
+"literal> в случаях, когда эти выражения не преобразуются в нечто, "
+"напоминающее вызов функции (Том Лейн)"
 
 #: release-9.5.xml:572(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_basebackup</application> output to stdout on Windows "
 "(Haribabu Kommi)"
 msgstr ""
-"Исправление ограничения нагрузки <application>pg_basebackup</application> "
-"при низкой скорости ввода/вывода (Антонин Хоуска)"
+"Исправление вывода <application>pg_basebackup</application> в stdout на "
+"платформе Windows (Харибабу Комми)"
 
 #: release-9.5.xml:577(para)
 msgid ""
 "A backup written to stdout would contain corrupt data due to failure to put "
 "the file descriptor into binary mode."
 msgstr ""
+"Архивируемые данные при выводе в stdout оказывались испорченными из-за того, "
+"что дескриптор файла не переводился в двоичный режим."
 
 #: release-9.5.xml:584(para)
 msgid ""
 "Fix <application>pg_rewind</application> to correctly handle files exceeding "
 "2GB (Kuntal Ghosh, Michael Paquier)"
 msgstr ""
+"Исправление <application>pg_rewind</application> для корректной работы с "
+"файлами больше 2 ГБ (Кунтал Гхош, Мишель Пакье)"
 
 #: release-9.5.xml:589(para)
 msgid ""
 "Ordinarily such files won't appear in <productname>PostgreSQL</productname> "
 "data directories, but they could be present in some cases."
 msgstr ""
+"Обычно такие файлы в каталогах данных <productname>PostgreSQL</productname> "
+"не образуются, но в некоторых случаях они могут появиться."
 
 #: release-9.5.xml:596(para)
 msgid ""
@@ -697,20 +847,23 @@ msgid ""
 "record does not have <xref linkend=\"guc-wal-level\"/> = <literal>minimum</"
 "literal> (Bruce Momjian)"
 msgstr ""
+"Исправление <application>pg_upgrade</application>, чтобы в конечной записи в "
+"WAL не оказалось <xref linkend=\"guc-wal-level\"/> = <literal>minimum</"
+"literal> (Брюс Момджян)"
 
 #: release-9.5.xml:602(para)
 msgid ""
 "This condition could prevent upgraded standby servers from reconnecting."
 msgstr ""
+"Это могло препятствовать переподключению обновлённых резервных серверов."
 
 #: release-9.5.xml:609(para)
-#, fuzzy
 msgid ""
 "Fix <application>pg_xlogdump</application>'s computation of WAL record "
 "length (Andres Freund)"
 msgstr ""
-"Улучшение в <application>psql</application> дополнения табуляцией для "
-"триггеров и правил (Андреас Карлсон)"
+"Исправление в <application>pg_xlogdump</application> вычисления длины записи "
+"WAL (Андрес Фройнд)"
 
 #: release-9.5.xml:616(para)
 msgid ""
@@ -718,42 +871,57 @@ msgid ""
 "servers after <command>ALTER SERVER</command> or <command>ALTER USER "
 "MAPPING</command> commands (Kyotaro Horiguchi)"
 msgstr ""
+"В <filename>postgres_fdw</filename> соединения к удалённым серверам должны "
+"устанавливаться заново после команд <command>ALTER SERVER</command> и "
+"<command>ALTER USER MAPPING</command> (Киотаро Хоригучи)"
 
 #: release-9.5.xml:622(para)
 msgid ""
 "This ensures that option changes affecting connection parameters will be "
 "applied promptly."
 msgstr ""
+"Благодаря этому изменения параметров, затрагивающие свойства соединения, "
+"вступят в силу своевременно."
 
 #: release-9.5.xml:629(para)
 msgid ""
 "In <filename>postgres_fdw</filename>, allow cancellation of remote "
 "transaction control commands (Robert Haas, Rafia Sabih)"
 msgstr ""
+"В <filename>postgres_fdw</filename> реализована отмена команд управления "
+"удалёнными транзакциями (Роберт Хаас, Рафия Сабих)"
 
 #: release-9.5.xml:634(para)
 msgid ""
 "This change allows us to quickly escape a wait for an unresponsive remote "
 "server in many more cases than previously."
 msgstr ""
+"Это изменение позволяет быстрее прервать ожидание неотвечающего удалённого "
+"сервера в большем количестве случаев, чем раньше."
 
 #: release-9.5.xml:641(para)
 msgid ""
 "Increase <literal>MAX_SYSCACHE_CALLBACKS</literal> to provide more room for "
 "extensions (Tom Lane)"
 msgstr ""
+"Увеличение <literal>MAX_SYSCACHE_CALLBACKS</literal> для выделения "
+"дополнительного места расширениям (Том Лейн)"
 
 #: release-9.5.xml:648(para)
 msgid ""
 "Always use <option>-fPIC</option>, not <option>-fpic</option>, when building "
 "shared libraries with gcc (Tom Lane)"
 msgstr ""
+"При сборке разделяемых библиотек с gcc всегда должен передаваться ключ "
+"<option>-fPIC</option>, а не <option>-fpic</option> (Том Лейн)"
 
 #: release-9.5.xml:653(para)
 msgid ""
 "This supports larger extension libraries on platforms where it makes a "
 "difference."
 msgstr ""
+"Это позволяет поддерживать библиотеки расширений большего размера на тех "
+"платформах, где эти ключи не равнозначны."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: REL9_5_STABLE [af1f18259] 2017-08-02 15:07:20 -0400
@@ -765,39 +933,50 @@ msgid ""
 "Fix unescaped-braces issue in our build scripts for Microsoft MSVC, to avoid "
 "a warning or error from recent Perl versions (Andrew Dunstan)"
 msgstr ""
+"Экранирование фигурных скобок в наших сборочных скриптах для Microsoft MSVC "
+"во избежание предупреждений или ошибок с новыми версиями Perl (Эндрю Дунстан)"
 
 #: release-9.5.xml:675(para)
 msgid ""
 "In MSVC builds, handle the case where the <application>openssl</application> "
 "library is not within a <filename>VC</filename> subdirectory (Andrew Dunstan)"
 msgstr ""
+"Для сборок MSVC реализована обработка ситуации, когда библиотека "
+"<application>openssl</application> находится не в подкаталоге <filename>VC</"
+"filename> (Эндрю Дунстан)"
 
 #: release-9.5.xml:682(para)
-#, fuzzy
 msgid ""
 "In MSVC builds, add proper include path for <application>libxml2</"
 "application> header files (Andrew Dunstan)"
 msgstr ""
-"В сборках MSVC программа <application>pg_recvlogical</application> включена "
-"в клиентский набор (МауМау)"
+"Для сборок MSVC добавлен нужный путь для заголовочных файлов "
+"<application>libxml2</application> (Эндрю Дунстан)"
 
 #: release-9.5.xml:687(para)
 msgid ""
 "This fixes a former need to move things around in standard Windows "
 "installations of <application>libxml2</application>."
 msgstr ""
+"Это устраняет прежнюю необходимость перемещения файлов в стандартной "
+"инсталляции <application>libxml2</application> в Windows."
 
 #: release-9.5.xml:694(para)
 msgid ""
 "In MSVC builds, recognize a Tcl library that is named <filename>tcl86.lib</"
 "filename> (Noah Misch)"
 msgstr ""
+"Сборки MSVC должны распознавать библиотеку Tcl с именем <filename>tcl86.lib</"
+"filename> (Ной Миш)"
 
 #: release-9.5.xml:701(para)
 msgid ""
 "In MSVC builds, honor <literal>PROVE_FLAGS</literal> settings on "
 "<filename>vcregress.pl</filename>'s command line (Andrew Dunstan)"
 msgstr ""
+"В сборках MSVC должны учитываться флаги в параметре <literal>PROVE_FLAGS</"
+"literal>, заданном в командной строке <filename>vcregress.pl</filename> "
+"(Эндрю Дунстан)"
 
 #: release-9.5.xml:713(title)
 msgid "Release 9.5.7"
@@ -869,7 +1048,6 @@ msgstr ""
 "(CVE-2017-7486)"
 
 #: release-9.5.xml:775(para)
-#, fuzzy
 msgid ""
 "By itself, this patch will only fix the behavior in newly initdb'd "
 "databases. If you wish to apply this change in an existing database, follow "
@@ -878,7 +1056,9 @@ msgid ""
 msgstr ""
 "Само по себе это исправление корректирует поведение только в новых базах "
 "данных, создаваемых initdb. Если вы хотите применить это исправление к "
-"существующей базе данных, вам нужно будет проделать следующие действия:"
+"существующей базе данных, следуйте исправленной процедуре в списке "
+"изменений, относящейся к CVE-2017-7547, в <xref remap=\"6\" linkend="
+"\"release-9-5-8\"/>."
 
 #: release-9.5.xml:784(para)
 msgid ""
