@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-08-09 16:00+0300\n"
+"PO-Revision-Date: 2017-08-09 17:07+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: postgres-fdw.xml:5(title)
 msgid "postgres_fdw"
@@ -724,8 +725,9 @@ msgid ""
 "<filename>postgres_fdw</filename> attempts to optimize the query execution "
 "by sending the whole query to the remote server if there are no query "
 "<literal>WHERE</literal> clauses that cannot be sent to the remote server, "
-"no local joins for the query, and no row-level local <literal>BEFORE</"
-"literal> or <literal>AFTER</literal> triggers on the target table. In "
+"no local joins for the query, no row-level local <literal>BEFORE</literal> "
+"or <literal>AFTER</literal> triggers on the target table, and no "
+"<literal>CHECK OPTION</literal> constraints from parent views. In "
 "<command>UPDATE</command>, expressions to assign to target columns must use "
 "only built-in data types, <literal>IMMUTABLE</literal> operators, or "
 "<literal>IMMUTABLE</literal> functions, to reduce the risk of misexecution "
@@ -739,19 +741,21 @@ msgstr ""
 "предложения <literal>WHERE</literal> передаются удалённому серверу, только "
 "если в них используются типы данных, операторы и функции, встроенные в ядро "
 "или относящиеся к расширениям, перечисленным в параметре "
-"<literal>extensions</literal> стороннего сервера. Операторы и функции в "
-"таких предложениях также должны быть постоянными (<literal>IMMUTABLE</"
-"literal>). Для запросов <command>UPDATE</command> или <command>DELETE</"
-"command> обёртка <filename>postgres_fdw</filename> пытается оптимизировать "
-"выполнение, передавая весь запрос на удалённый сервер, если в запросе нет "
-"предложения <literal>WHERE</literal>, которое нельзя было бы передать, не "
-"выполняется локальное соединение, и в целевой таблице отсутствуют локальные "
-"триггеры <literal>BEFORE</literal>/<literal>AFTER</literal> уровня строки. "
+"<literal>extensions</literal>. Операторы и функции в таких предложениях "
+"также должны быть постоянными (<literal>IMMUTABLE</literal>). Для запросов "
+"<command>UPDATE</command> или <command>DELETE</command> обёртка "
+"<filename>postgres_fdw</filename> пытается оптимизировать выполнение, "
+"передавая весь запрос на удалённый сервер, если в запросе нет предложения "
+"<literal>WHERE</literal>, которое нельзя было бы передать, не выполняется "
+"локальное соединение, в целевой таблице отсутствуют локальные триггеры "
+"<literal>BEFORE</literal>/<literal>AFTER</literal> уровня строки и в "
+"родительских представлениях нет ограничения <literal>CHECK OPTION</literal>. "
 "Кроме того, в запросах <command>UPDATE</command> выражения, присваиваемые "
 "целевым столбцам, должны задействовать только встроенные типы данных и "
-"постоянные (<literal>IMMUTABLE</literal>) операторы и функции."
+"постоянные (<literal>IMMUTABLE</literal>) операторы и функции, чтобы "
+"уменьшить риск неверного выполнения запроса."
 
-#: postgres-fdw.xml:499(para)
+#: postgres-fdw.xml:501(para)
 msgid ""
 "When <filename>postgres_fdw</filename> encounters a join between foreign "
 "tables on the same foreign server, it sends the entire join to the foreign "
@@ -770,7 +774,7 @@ msgstr ""
 "предосторожности, что были описаны выше для предложений <literal>WHERE</"
 "literal>."
 
-#: postgres-fdw.xml:509(para)
+#: postgres-fdw.xml:511(para)
 msgid ""
 "The query that is actually sent to the remote server for execution can be "
 "examined using <command>EXPLAIN VERBOSE</command>."
@@ -778,11 +782,11 @@ msgstr ""
 "Запрос, фактически отправляемый удалённому серверу для выполнения, можно "
 "изучить с помощью команды <command>EXPLAIN VERBOSE</command>."
 
-#: postgres-fdw.xml:516(title)
+#: postgres-fdw.xml:518(title)
 msgid "Remote Query Execution Environment"
 msgstr "Окружение удалённого выполнения запросов"
 
-#: postgres-fdw.xml:518(para)
+#: postgres-fdw.xml:520(para)
 msgid ""
 "In the remote sessions opened by <filename>postgres_fdw</filename>, the "
 "<xref linkend=\"guc-search-path\"/> parameter is set to just "
@@ -812,7 +816,7 @@ msgstr ""
 ">) в определения таких функций, чтобы установить ожидаемый ими путь поиска в "
 "окружении."
 
-#: postgres-fdw.xml:534(para)
+#: postgres-fdw.xml:536(para)
 msgid ""
 "<filename>postgres_fdw</filename> likewise establishes remote session "
 "settings for the parameters <xref linkend=\"guc-timezone\"/>, <xref linkend="
@@ -828,7 +832,7 @@ msgstr ""
 "чем с <varname>search_path</varname>, но если они возникнут, их можно "
 "урегулировать, установив нужные параметры с помощью <literal>SET</literal>."
 
-#: postgres-fdw.xml:543(para)
+#: postgres-fdw.xml:545(para)
 msgid ""
 "It is <emphasis>not</emphasis> recommended that you override this behavior "
 "by changing the session-level settings of these parameters; that is likely "
@@ -838,11 +842,11 @@ msgstr ""
 "устанавливая значения этих параметров на уровне сеанса; это скорее всего "
 "приведёт к поломке <filename>postgres_fdw</filename>."
 
-#: postgres-fdw.xml:551(title)
+#: postgres-fdw.xml:553(title)
 msgid "Cross-Version Compatibility"
 msgstr "Совместимость с разными версиями"
 
-#: postgres-fdw.xml:553(para)
+#: postgres-fdw.xml:555(para)
 msgid ""
 "<filename>postgres_fdw</filename> can be used with remote servers dating "
 "back to <productname>PostgreSQL</productname> 8.3. Read-only capability is "
@@ -873,11 +877,11 @@ msgstr ""
 "0</literal> в качестве защиты от оптимизации, и применив проблематичную "
 "функцию или оператор снаружи этого вложенного <literal>SELECT</literal>."
 
-#: postgres-fdw.xml:571(title)
+#: postgres-fdw.xml:573(title)
 msgid "Examples"
 msgstr "Примеры"
 
-#: postgres-fdw.xml:573(para)
+#: postgres-fdw.xml:575(para)
 msgid ""
 "Here is an example of creating a foreign table with <literal>postgres_fdw</"
 "literal>. First install the extension:"
@@ -885,12 +889,12 @@ msgstr ""
 "Ниже приведёт пример создания сторонней таблицы с применением "
 "<literal>postgres_fdw</literal>. Сначала установите расширение:"
 
-#: postgres-fdw.xml:578(programlisting)
+#: postgres-fdw.xml:580(programlisting)
 #, no-wrap
 msgid "CREATE EXTENSION postgres_fdw;"
 msgstr "CREATE EXTENSION postgres_fdw;"
 
-#: postgres-fdw.xml:589(programlisting)
+#: postgres-fdw.xml:591(programlisting)
 #, no-wrap
 msgid ""
 "CREATE SERVER foreign_server\n"
@@ -901,7 +905,7 @@ msgstr ""
 "        FOREIGN DATA WRAPPER postgres_fdw\n"
 "        OPTIONS (host '192.83.123.89', port '5432', dbname 'foreign_db');"
 
-#: postgres-fdw.xml:582(para)
+#: postgres-fdw.xml:584(para)
 msgid ""
 "Then create a foreign server using <xref linkend=\"sql-createserver\"/>. In "
 "this example we wish to connect to a <productname>PostgreSQL</productname> "
@@ -916,7 +920,7 @@ msgstr ""
 "к которой устанавливается подключение, на удалённом сервере называется "
 "<literal>foreign_db</literal>: <placeholder-1/>"
 
-#: postgres-fdw.xml:601(programlisting)
+#: postgres-fdw.xml:603(programlisting)
 #, no-wrap
 msgid ""
 "CREATE USER MAPPING FOR local_user\n"
@@ -927,7 +931,7 @@ msgstr ""
 "        SERVER foreign_server\n"
 "        OPTIONS (user 'foreign_user', password 'password');"
 
-#: postgres-fdw.xml:596(para)
+#: postgres-fdw.xml:598(para)
 msgid ""
 "A user mapping, defined with <xref linkend=\"sql-createusermapping\"/>, is "
 "needed as well to identify the role that will be used on the remote server: "
@@ -937,7 +941,7 @@ msgstr ""
 "помощью <xref linkend=\"sql-createusermapping\"/> задаётся сопоставление "
 "пользователей: <placeholder-1/>"
 
-#: postgres-fdw.xml:615(programlisting)
+#: postgres-fdw.xml:617(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FOREIGN TABLE foreign_table (\n"
@@ -954,7 +958,7 @@ msgstr ""
 "        SERVER foreign_server\n"
 "        OPTIONS (schema_name 'some_schema', table_name 'some_table');"
 
-#: postgres-fdw.xml:608(para)
+#: postgres-fdw.xml:610(para)
 msgid ""
 "Now it is possible to create a foreign table with <xref linkend=\"sql-"
 "createforeigntable\"/>. In this example we wish to access the table named "
@@ -980,11 +984,11 @@ msgstr ""
 "многих случаях использовать <xref linkend=\"sql-importforeignschema\"/> "
 "предпочтительнее, чем конструировать определения сторонних таблиц вручную."
 
-#: postgres-fdw.xml:635(title)
+#: postgres-fdw.xml:637(title)
 msgid "Author"
 msgstr "Автор"
 
-#: postgres-fdw.xml:636(para)
+#: postgres-fdw.xml:638(para)
 msgid "Shigeru Hanada <email>shigeru.hanada@gmail.com</email>"
 msgstr "Шигеру Ханада <email>shigeru.hanada@gmail.com</email>"
 

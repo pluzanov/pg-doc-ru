@@ -1,10 +1,10 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-08-09 16:00+0300\n"
+"PO-Revision-Date: 2017-08-10 22:05+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 
 #: plpgsql.xml:5(title)
 msgid ""
@@ -269,11 +270,46 @@ msgstr ""
 msgid "Structure of <application>PL/pgSQL</application>"
 msgstr "Структура <application>PL/pgSQL</application>"
 
+#: plpgsql.xml:187(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION somefunc(integer, text) RETURNS integer\n"
+"AS '<replaceable>function body text</replaceable>'\n"
+"LANGUAGE plpgsql;"
+msgstr ""
+"CREATE FUNCTION somefunc(integer, text) RETURNS integer\n"
+"AS '<replaceable>тело функции</replaceable>'\n"
+"LANGUAGE plpgsql;"
+
 #: plpgsql.xml:183(para)
 msgid ""
+"Functions written in <application>PL/pgSQL</application> are defined to the "
+"server by executing <xref linkend=\"sql-createfunction\"/> commands. Such a "
+"command would normally look like, say, <placeholder-1/> The function body is "
+"simply a string literal so far as <command>CREATE FUNCTION</command> is "
+"concerned. It is often helpful to use dollar quoting (see <xref linkend="
+"\"sql-syntax-dollar-quoting\"/>) to write the function body, rather than the "
+"normal single quote syntax. Without dollar quoting, any single quotes or "
+"backslashes in the function body must be escaped by doubling them. Almost "
+"all the examples in this chapter use dollar-quoted literals for their "
+"function bodies."
+msgstr ""
+"Функции, написанные на <application>PL/pgSQL</application>, определяются на "
+"сервере командами <xref linkend=\"sql-createfunction\"/>. Такая команда "
+"обычно выглядит, например, так: <placeholder-1/> Если рассматривать "
+"<command>CREATE FUNCTION</command>, тело функции представляет собой просто "
+"текстовую строку. Часто для написания тела функции удобнее заключать эту "
+"строку в доллары (см. <xref remap=\"4\" linkend=\"sql-syntax-dollar-quoting"
+"\"/>), а не в обычные апострофы. Если не применять заключение в доллары, все "
+"апострофы или обратные косые черты в теле функции придётся экранировать, "
+"дублируя их. Почти во всех примерах в этой главе тело функций заключается в "
+"доллары."
+
+#: plpgsql.xml:201(para)
+msgid ""
 "<application>PL/pgSQL</application> is a block-structured language. The "
-"complete text of a function definition must be a <firstterm>block</"
-"firstterm>. A block is defined as: <synopsis>\n"
+"complete text of a function body must be a <firstterm>block</firstterm>. A "
+"block is defined as: <synopsis>\n"
 "<optional> &lt;&lt;<replaceable>label</replaceable>&gt;&gt; </optional>\n"
 "<optional> DECLARE\n"
 "    <replaceable>declarations</replaceable> </optional>\n"
@@ -283,8 +319,8 @@ msgid ""
 "</synopsis>"
 msgstr ""
 "<application>PL/pgSQL</application> это блочно-структурированный язык. Текст "
-"определения функции должен быть <firstterm>блоком</firstterm>. Структура "
-"блока: <synopsis>\n"
+"тела функции должен быть <firstterm>блоком</firstterm>. Структура блока: "
+"<synopsis>\n"
 "<optional> &lt;&lt;<replaceable>метка</replaceable>&gt;&gt; </optional>\n"
 "<optional> DECLARE\n"
 "    <replaceable>объявления</replaceable> </optional>\n"
@@ -293,7 +329,7 @@ msgstr ""
 "END <optional> <replaceable>метка</replaceable> </optional>;\n"
 "</synopsis>"
 
-#: plpgsql.xml:198(para)
+#: plpgsql.xml:216(para)
 msgid ""
 "Each declaration and each statement within a block is terminated by a "
 "semicolon. A block that appears within another block must have a semicolon "
@@ -306,7 +342,7 @@ msgstr ""
 "запятой после <literal>END</literal>, как показано выше. Однако финальный "
 "<literal>END</literal>, завершающий тело функции, не требует точки с запятой."
 
-#: plpgsql.xml:207(para)
+#: plpgsql.xml:225(para)
 msgid ""
 "A common mistake is to write a semicolon immediately after <literal>BEGIN</"
 "literal>. This is incorrect and will result in a syntax error."
@@ -314,7 +350,7 @@ msgstr ""
 "Распространённой ошибкой является добавление точки с запятой сразу после "
 "<literal>BEGIN</literal>. Это неправильно и приведёт к синтаксической ошибке."
 
-#: plpgsql.xml:213(para)
+#: plpgsql.xml:231(para)
 msgid ""
 "A <replaceable>label</replaceable> is only needed if you want to identify "
 "the block for use in an <literal>EXIT</literal> statement, or to qualify the "
@@ -326,7 +362,7 @@ msgstr ""
 "имена переменных, объявленных в этом блоке. Если метка указана после "
 "<literal>END</literal>, то она должна совпадать с меткой в начале блока."
 
-#: plpgsql.xml:221(para)
+#: plpgsql.xml:239(para)
 msgid ""
 "All key words are case-insensitive. Identifiers are implicitly converted to "
 "lower case unless double-quoted, just as they are in ordinary SQL commands."
@@ -335,7 +371,7 @@ msgstr ""
 "командах, идентификаторы неявно преобразуются к нижнему регистру, если они "
 "не взяты в двойные кавычки."
 
-#: plpgsql.xml:227(para)
+#: plpgsql.xml:245(para)
 msgid ""
 "Comments work the same way in <application>PL/pgSQL</application> code as in "
 "ordinary SQL. A double dash (<literal>--</literal>) starts a comment that "
@@ -349,7 +385,7 @@ msgstr ""
 "<literal>/*</literal> и завершается <literal>*/</literal>. Блочные "
 "комментарии могут быть вложенными."
 
-#: plpgsql.xml:243(programlisting)
+#: plpgsql.xml:261(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION somefunc() RETURNS integer AS $$\n"
@@ -398,7 +434,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:235(para)
+#: plpgsql.xml:253(para)
 msgid ""
 "Any statement in the statement section of a block can be a "
 "<firstterm>subblock</firstterm>. Subblocks can be used for logical grouping "
@@ -416,7 +452,7 @@ msgstr ""
 "доступ к внешним переменным, нужно дополнить их имена меткой блока. "
 "Например: <placeholder-1/>"
 
-#: plpgsql.xml:270(para)
+#: plpgsql.xml:288(para)
 msgid ""
 "There is actually a hidden <quote>outer block</quote> surrounding the body "
 "of any <application>PL/pgSQL</application> function. This block provides the "
@@ -434,7 +470,7 @@ msgstr ""
 "совпадающую с именем функции, таким образом, параметры и специальные "
 "переменные могут быть дополнены именем функции."
 
-#: plpgsql.xml:281(para)
+#: plpgsql.xml:299(para)
 msgid ""
 "It is important not to confuse the use of <command>BEGIN</command>/"
 "<command>END</command> for grouping statements in <application>PL/pgSQL</"
@@ -462,11 +498,11 @@ msgstr ""
 "транзакции. Подробнее это описано в <xref remap=\"6\" linkend=\"plpgsql-"
 "error-trapping\"/>."
 
-#: plpgsql.xml:299(title)
+#: plpgsql.xml:317(title)
 msgid "Declarations"
 msgstr "Объявления"
 
-#: plpgsql.xml:301(para)
+#: plpgsql.xml:319(para)
 msgid ""
 "All variables used in a block must be declared in the declarations section "
 "of the block. (The only exceptions are that the loop variable of a "
@@ -481,7 +517,7 @@ msgstr ""
 "автоматически объявляется целочисленная переменная, а для цикла по "
 "результатам курсора - переменная типа <literal>record</literal>.)"
 
-#: plpgsql.xml:311(para)
+#: plpgsql.xml:329(para)
 msgid ""
 "<application>PL/pgSQL</application> variables can have any SQL data type, "
 "such as <type>integer</type>, <type>varchar</type>, and <type>char</type>."
@@ -489,7 +525,7 @@ msgstr ""
 "Переменные <application>PL/pgSQL</application> могут иметь любой тип данных "
 "SQL, такой как <type>integer</type>, <type>varchar</type>, <type>char</type>."
 
-#: plpgsql.xml:319(programlisting)
+#: plpgsql.xml:337(programlisting)
 #, no-wrap
 msgid ""
 "user_id integer;\n"
@@ -506,11 +542,11 @@ msgstr ""
 "myfield tablename.columnname%TYPE;\n"
 "arow RECORD;"
 
-#: plpgsql.xml:317(para)
+#: plpgsql.xml:335(para)
 msgid "Here are some examples of variable declarations: <placeholder-1/>"
 msgstr "Примеры объявления переменных: <placeholder-1/>"
 
-#: plpgsql.xml:329(para)
+#: plpgsql.xml:347(para)
 msgid ""
 "The general syntax of a variable declaration is: <synopsis>\n"
 "<replaceable>name</replaceable> <optional> CONSTANT </optional> "
@@ -552,7 +588,7 @@ msgstr ""
 "иметь непустые значения по умолчанию. Можно использовать знак равенства "
 "(<literal>=</literal>) вместо совместимого с PL/SQL <literal>:=</literal>."
 
-#: plpgsql.xml:351(para)
+#: plpgsql.xml:369(para)
 msgid ""
 "A variable's default value is evaluated and assigned to the variable each "
 "time the block is entered (not just once per function call). So, for "
@@ -567,7 +603,7 @@ msgstr ""
 "переменная всегда будет содержать время текущего вызова функции, а не время, "
 "когда функция была предварительно скомпилирована."
 
-#: plpgsql.xml:362(programlisting)
+#: plpgsql.xml:380(programlisting)
 #, no-wrap
 msgid ""
 "quantity integer DEFAULT 32;\n"
@@ -578,17 +614,17 @@ msgstr ""
 "url varchar := 'http://mysite.com';\n"
 "user_id CONSTANT integer := 10;"
 
-#: plpgsql.xml:360(para) plpgsql.xml:565(para) plpgsql.xml:895(para)
-#: plpgsql.xml:2198(para) plpgsql.xml:2260(para) plpgsql.xml:3167(para)
-#: plpgsql.xml:3214(para)
+#: plpgsql.xml:378(para) plpgsql.xml:583(para) plpgsql.xml:913(para)
+#: plpgsql.xml:2216(para) plpgsql.xml:2278(para) plpgsql.xml:3185(para)
+#: plpgsql.xml:3232(para)
 msgid "Examples: <placeholder-1/>"
 msgstr "Примеры: <placeholder-1/>"
 
-#: plpgsql.xml:370(title)
+#: plpgsql.xml:388(title)
 msgid "Declaring Function Parameters"
 msgstr "Объявление параметров функции"
 
-#: plpgsql.xml:372(para)
+#: plpgsql.xml:390(para)
 msgid ""
 "Parameters passed to functions are named with the identifiers <literal>$1</"
 "literal>, <literal>$2</literal>, etc. Optionally, aliases can be declared "
@@ -602,7 +638,7 @@ msgstr ""
 "$<replaceable>n</replaceable></literal>. Либо псевдоним, либо цифровой "
 "идентификатор используются для обозначения параметра."
 
-#: plpgsql.xml:385(programlisting)
+#: plpgsql.xml:403(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sales_tax(subtotal real) RETURNS real AS $$\n"
@@ -617,7 +653,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:400(programlisting)
+#: plpgsql.xml:418(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sales_tax(real) RETURNS real AS $$\n"
@@ -636,7 +672,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:381(para)
+#: plpgsql.xml:399(para)
 msgid ""
 "There are two ways to create an alias. The preferred way is to give a name "
 "to the parameter in the <command>CREATE FUNCTION</command> command, for "
@@ -652,7 +688,7 @@ msgstr ""
 "<replaceable>имя</replaceable> ALIAS FOR $<replaceable>n</replaceable>;\n"
 "</synopsis> Предыдущий пример для этого стиля выглядит так: <placeholder-2/>"
 
-#: plpgsql.xml:412(para)
+#: plpgsql.xml:430(para)
 msgid ""
 "These two examples are not perfectly equivalent. In the first case, "
 "<literal>subtotal</literal> could be referenced as <literal>sales_tax."
@@ -666,7 +702,7 @@ msgstr ""
 "блоку была добавлена метка, то <literal>subtotal</literal> можно было бы "
 "дополнить этой меткой.)"
 
-#: plpgsql.xml:423(programlisting)
+#: plpgsql.xml:441(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION instr(varchar, integer) RETURNS integer AS $$\n"
@@ -701,11 +737,11 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:421(para)
+#: plpgsql.xml:439(para)
 msgid "Some more examples: <placeholder-1/>"
 msgstr "Ещё несколько примеров: <placeholder-1/>"
 
-#: plpgsql.xml:452(programlisting)
+#: plpgsql.xml:470(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sales_tax(subtotal real, OUT tax real) AS $$\n"
@@ -720,7 +756,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:442(para)
+#: plpgsql.xml:460(para)
 msgid ""
 "When a <application>PL/pgSQL</application> function is declared with output "
 "parameters, the output parameters are given <literal>$<replaceable>n</"
@@ -742,7 +778,7 @@ msgstr ""
 "Обратите внимание, что мы опустили <literal>RETURNS real</literal> &mdash; "
 "хотя можно было и включить, но это было бы излишним."
 
-#: plpgsql.xml:468(programlisting)
+#: plpgsql.xml:486(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sum_n_product(x int, y int, OUT sum int, OUT prod int) AS $$\n"
@@ -759,7 +795,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:464(para)
+#: plpgsql.xml:482(para)
 msgid ""
 "Output parameters are most useful when returning multiple values. A trivial "
 "example is: <placeholder-1/> As discussed in <xref linkend=\"xfunc-output-"
@@ -774,7 +810,7 @@ msgstr ""
 "используется предложение <literal>RETURNS</literal>, то оно должна выглядеть "
 "как <literal>RETURNS record</literal>."
 
-#: plpgsql.xml:487(programlisting)
+#: plpgsql.xml:505(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION extended_sales(p_itemno int)\n"
@@ -793,7 +829,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:483(para)
+#: plpgsql.xml:501(para)
 msgid ""
 "Another way to declare a <application>PL/pgSQL</application> function is "
 "with <literal>RETURNS TABLE</literal>, for example: <placeholder-1/> This is "
@@ -807,7 +843,7 @@ msgstr ""
 "<literal>OUT</literal> и указанию <literal>RETURNS SETOF "
 "<replaceable>некий_тип</replaceable></literal>."
 
-#: plpgsql.xml:518(programlisting)
+#: plpgsql.xml:536(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION add_three_values(v1 anyelement, v2 anyelement, v3 anyelement)\n"
@@ -830,7 +866,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:502(para)
+#: plpgsql.xml:520(para)
 msgid ""
 "When the return type of a <application>PL/pgSQL</application> function is "
 "declared as a polymorphic type (<type>anyelement</type>, <type>anyarray</"
@@ -860,7 +896,7 @@ msgstr ""
 "псевдоним. В следующем примере функция работает с любым типом данных, "
 "поддерживающим оператор <literal>+</literal>: <placeholder-1/>"
 
-#: plpgsql.xml:537(programlisting)
+#: plpgsql.xml:555(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION add_three_values(v1 anyelement, v2 anyelement, v3 anyelement,\n"
@@ -879,7 +915,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:531(para)
+#: plpgsql.xml:549(para)
 msgid ""
 "The same effect can be obtained by declaring one or more output parameters "
 "as polymorphic types. In this case the special <literal>$0</literal> "
@@ -891,24 +927,24 @@ msgstr ""
 "выходные параметры сами используются для этой цели. Например: <placeholder-1/"
 ">"
 
-#: plpgsql.xml:550(literal)
+#: plpgsql.xml:568(literal)
 msgid "ALIAS"
 msgstr "ALIAS"
 
-#: plpgsql.xml:553(replaceable)
+#: plpgsql.xml:571(replaceable)
 msgid "newname"
 msgstr "новое_имя"
 
-#: plpgsql.xml:553(replaceable)
+#: plpgsql.xml:571(replaceable)
 msgid "oldname"
 msgstr "старое_имя"
 
-#: plpgsql.xml:552(synopsis)
+#: plpgsql.xml:570(synopsis)
 #, no-wrap
 msgid "<placeholder-1/> ALIAS FOR <placeholder-2/>;"
 msgstr "<placeholder-1/> ALIAS FOR <placeholder-2/>;"
 
-#: plpgsql.xml:556(para)
+#: plpgsql.xml:574(para)
 msgid ""
 "The <literal>ALIAS</literal> syntax is more general than is suggested in the "
 "previous section: you can declare an alias for any variable, not just "
@@ -922,7 +958,7 @@ msgstr ""
 "назначить другие имена переменным с предопределёнными названиями, таким как "
 "<varname>NEW</varname> или <varname>OLD</varname> в триггерной процедуре."
 
-#: plpgsql.xml:567(programlisting)
+#: plpgsql.xml:585(programlisting)
 #, no-wrap
 msgid ""
 "DECLARE\n"
@@ -933,7 +969,7 @@ msgstr ""
 "  prior ALIAS FOR old;\n"
 "  updated ALIAS FOR new;"
 
-#: plpgsql.xml:574(para)
+#: plpgsql.xml:592(para)
 msgid ""
 "Since <literal>ALIAS</literal> creates two different ways to name the same "
 "object, unrestricted use can be confusing. It's best to use it only for the "
@@ -944,25 +980,25 @@ msgstr ""
 "к путанице. Лучше всего использовать <literal>ALIAS</literal> для "
 "переименования предопределённых имён."
 
-#: plpgsql.xml:582(title)
+#: plpgsql.xml:600(title)
 msgid "Copying Types"
 msgstr "Наследование типов данных"
 
-#: plpgsql.xml:585(replaceable)
+#: plpgsql.xml:603(replaceable)
 msgid "variable"
 msgstr "переменная"
 
-#: plpgsql.xml:584(synopsis)
+#: plpgsql.xml:602(synopsis)
 #, no-wrap
 msgid "<placeholder-1/>%TYPE"
 msgstr "<placeholder-1/>%TYPE"
 
-#: plpgsql.xml:595(programlisting)
+#: plpgsql.xml:613(programlisting)
 #, no-wrap
 msgid "user_id users.user_id%TYPE;"
 msgstr "user_id users.user_id%TYPE;"
 
-#: plpgsql.xml:588(para)
+#: plpgsql.xml:606(para)
 msgid ""
 "<literal>%TYPE</literal> provides the data type of a variable or table "
 "column. You can use this to declare variables that will hold database "
@@ -977,7 +1013,7 @@ msgstr ""
 "типом, как и столбец <literal>user_id</literal> в таблице <literal>users</"
 "literal> нужно написать: <placeholder-1/>"
 
-#: plpgsql.xml:600(para)
+#: plpgsql.xml:618(para)
 msgid ""
 "By using <literal>%TYPE</literal> you don't need to know the data type of "
 "the structure you are referencing, and most importantly, if the data type of "
@@ -991,7 +1027,7 @@ msgstr ""
 "<type>integer</type> на <type>real</type>), то вам может не понадобиться "
 "изменять определение функции."
 
-#: plpgsql.xml:609(para)
+#: plpgsql.xml:627(para)
 msgid ""
 "<literal>%TYPE</literal> is particularly valuable in polymorphic functions, "
 "since the data types needed for internal variables can change from one call "
@@ -1004,28 +1040,28 @@ msgstr ""
 "быть созданы с применением <literal>%TYPE</literal> к аргументам и "
 "возвращаемому значению функции."
 
-#: plpgsql.xml:620(title)
+#: plpgsql.xml:638(title)
 msgid "Row Types"
 msgstr "Типы кортежей"
 
-#: plpgsql.xml:623(replaceable) plpgsql.xml:624(replaceable)
-#: plpgsql.xml:688(replaceable) plpgsql.xml:2316(replaceable)
+#: plpgsql.xml:641(replaceable) plpgsql.xml:642(replaceable)
+#: plpgsql.xml:706(replaceable) plpgsql.xml:2334(replaceable)
 msgid "name"
 msgstr "имя"
 
-#: plpgsql.xml:623(replaceable)
+#: plpgsql.xml:641(replaceable)
 msgid "table_name"
 msgstr "имя_таблицы"
 
-#: plpgsql.xml:623(literal)
+#: plpgsql.xml:641(literal)
 msgid "%ROWTYPE"
 msgstr "%ROWTYPE"
 
-#: plpgsql.xml:624(replaceable)
+#: plpgsql.xml:642(replaceable)
 msgid "composite_type_name"
 msgstr "имя_составного_типа"
 
-#: plpgsql.xml:622(synopsis)
+#: plpgsql.xml:640(synopsis)
 #, no-wrap
 msgid ""
 "<placeholder-1/> <placeholder-2/><placeholder-3/>;\n"
@@ -1034,7 +1070,7 @@ msgstr ""
 "<placeholder-1/> <placeholder-2/><placeholder-3/>;\n"
 "<placeholder-4/> <placeholder-5/>;"
 
-#: plpgsql.xml:627(para)
+#: plpgsql.xml:645(para)
 msgid ""
 "A variable of a composite type is called a <firstterm>row</firstterm> "
 "variable (or <firstterm>row-type</firstterm> variable). Such a variable can "
@@ -1051,7 +1087,7 @@ msgstr ""
 "к отдельным значениям полей строковой переменной осуществляется, как обычно, "
 "через точку, например <literal>rowvar.field</literal>."
 
-#: plpgsql.xml:638(para)
+#: plpgsql.xml:656(para)
 msgid ""
 "A row variable can be declared to have the same type as the rows of an "
 "existing table or view, by using the <replaceable>table_name</"
@@ -1070,7 +1106,7 @@ msgstr ""
 "productname> не имеет значения, пишете ли вы <literal>%ROWTYPE</literal> или "
 "нет. Но использование <literal>%ROWTYPE</literal> более переносимо.)"
 
-#: plpgsql.xml:649(para)
+#: plpgsql.xml:667(para)
 msgid ""
 "Parameters to a function can be composite types (complete table rows). In "
 "that case, the corresponding identifier <literal>$<replaceable>n</"
@@ -1082,7 +1118,7 @@ msgstr ""
 "literal> будет строковой переменной, поля которой можно выбирать, например "
 "<literal>$1.user_id</literal>."
 
-#: plpgsql.xml:656(para)
+#: plpgsql.xml:674(para)
 msgid ""
 "Only the user-defined columns of a table row are accessible in a row-type "
 "variable, not the OID or other system columns (because the row could be from "
@@ -1096,7 +1132,7 @@ msgstr ""
 "точность от типов данных столбцов таблицы, таких как "
 "<type>char(<replaceable>n</replaceable>)</type>."
 
-#: plpgsql.xml:669(programlisting)
+#: plpgsql.xml:687(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION merge_fields(t_row table1) RETURNS text AS $$\n"
@@ -1121,7 +1157,7 @@ msgstr ""
 "\n"
 "SELECT merge_fields(t.*) FROM table1 t WHERE ... ;"
 
-#: plpgsql.xml:664(para)
+#: plpgsql.xml:682(para)
 msgid ""
 "Here is an example of using composite types. <structname>table1</structname> "
 "and <structname>table2</structname> are existing tables having at least the "
@@ -1131,16 +1167,16 @@ msgstr ""
 "structname> и <structname>table2</structname> это существующие таблицы, "
 "имеющие, по меньшей мере, перечисленные столбцы: <placeholder-1/>"
 
-#: plpgsql.xml:685(title)
+#: plpgsql.xml:703(title)
 msgid "Record Types"
 msgstr "Тип <type>record</type>"
 
-#: plpgsql.xml:687(synopsis)
+#: plpgsql.xml:705(synopsis)
 #, no-wrap
 msgid "<placeholder-1/> RECORD;"
 msgstr "<placeholder-1/> RECORD;"
 
-#: plpgsql.xml:691(para)
+#: plpgsql.xml:709(para)
 msgid ""
 "Record variables are similar to row-type variables, but they have no "
 "predefined structure. They take on the actual row structure of the row they "
@@ -1159,7 +1195,7 @@ msgstr ""
 "<type>record</type> не имеет структуры и любая попытка получить доступ к "
 "отдельному полю приведёт к ошибке во время исполнения."
 
-#: plpgsql.xml:701(para)
+#: plpgsql.xml:719(para)
 msgid ""
 "Note that <literal>RECORD</literal> is not a true data type, only a "
 "placeholder. One should also realize that when a <application>PL/pgSQL</"
@@ -1182,15 +1218,15 @@ msgstr ""
 "вызывающего запроса, в то время как переменная типа <type>record</type> "
 "может менять свою структуру на лету."
 
-#: plpgsql.xml:715(title)
+#: plpgsql.xml:733(title)
 msgid "Collation of <application>PL/pgSQL</application> Variables"
 msgstr "Упорядочение переменных <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:717(indexterm)
+#: plpgsql.xml:735(indexterm)
 msgid "<primary>collation</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>collation</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:733(programlisting)
+#: plpgsql.xml:751(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION less_than(a text, b text) RETURNS boolean AS $$\n"
@@ -1211,7 +1247,7 @@ msgstr ""
 "SELECT less_than(text_field_1, text_field_2) FROM table1;\n"
 "SELECT less_than(text_field_1, text_field_2 COLLATE \"C\") FROM table1;"
 
-#: plpgsql.xml:722(para)
+#: plpgsql.xml:740(para)
 msgid ""
 "When a <application>PL/pgSQL</application> function has one or more "
 "parameters of collatable data types, a collation is identified for each "
@@ -1240,7 +1276,7 @@ msgstr ""
 "<structfield>text_field_2</structfield>, в то время как во втором случае "
 "будет использоваться правило <literal>C</literal>."
 
-#: plpgsql.xml:754(programlisting)
+#: plpgsql.xml:772(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION less_than(a text, b text) RETURNS boolean AS $$\n"
@@ -1261,7 +1297,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:749(para)
+#: plpgsql.xml:767(para)
 msgid ""
 "Furthermore, the identified collation is also assumed as the collation of "
 "any local variables that are of collatable types. Thus this function would "
@@ -1272,7 +1308,7 @@ msgstr ""
 "образом, функция не станет работать по-другому, если её переписать так: "
 "<placeholder-1/>"
 
-#: plpgsql.xml:766(para)
+#: plpgsql.xml:784(para)
 msgid ""
 "If there are no parameters of collatable data types, or no common collation "
 "can be identified for them, then parameters and local variables use the "
@@ -1286,7 +1322,7 @@ msgstr ""
 "умолчанию, принятыми для базы данных, но могут отличаться для переменных "
 "доменных типов)."
 
-#: plpgsql.xml:779(programlisting)
+#: plpgsql.xml:797(programlisting)
 #, no-wrap
 msgid ""
 "DECLARE\n"
@@ -1295,7 +1331,7 @@ msgstr ""
 "DECLARE\n"
 "    local_a text COLLATE \"en_US\";"
 
-#: plpgsql.xml:774(para)
+#: plpgsql.xml:792(para)
 msgid ""
 "A local variable of a collatable data type can have a different collation "
 "associated with it by including the <literal>COLLATE</literal> option in its "
@@ -1309,7 +1345,7 @@ msgstr ""
 "переопределяет правило сортировки, которое получила бы переменная в "
 "соответствии с вышеуказанными правилами."
 
-#: plpgsql.xml:793(programlisting)
+#: plpgsql.xml:811(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION less_than_c(a text, b text) RETURNS boolean AS $$\n"
@@ -1324,7 +1360,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:788(para)
+#: plpgsql.xml:806(para)
 msgid ""
 "Also, of course explicit <literal>COLLATE</literal> clauses can be written "
 "inside a function if it is desired to force a particular collation to be "
@@ -1340,21 +1376,21 @@ msgstr ""
 "таблицы, параметрами и локальными переменными, которые используются в данном "
 "выражении."
 
-#: plpgsql.xml:809(title)
+#: plpgsql.xml:827(title)
 msgid "Expressions"
 msgstr "Выражения"
 
-#: plpgsql.xml:834(programlisting)
+#: plpgsql.xml:852(programlisting)
 #, no-wrap
 msgid "IF x &lt; y THEN ..."
 msgstr "IF x &lt; y THEN ..."
 
-#: plpgsql.xml:838(programlisting)
+#: plpgsql.xml:856(programlisting)
 #, no-wrap
 msgid "PREPARE <replaceable>statement_name</replaceable>(integer, integer) AS SELECT $1 &lt; $2;"
 msgstr "PREPARE <replaceable>имя_оператора</replaceable>(integer, integer) AS SELECT $1 &lt; $2;"
 
-#: plpgsql.xml:811(para)
+#: plpgsql.xml:829(para)
 msgid ""
 "All expressions used in <application>PL/pgSQL</application> statements are "
 "processed using the server's main <acronym>SQL</acronym> executor. For "
@@ -1407,11 +1443,11 @@ msgstr ""
 "подробно об этом рассказывается в <xref remap=\"6\" linkend=\"plpgsql-plan-"
 "caching\"/>."
 
-#: plpgsql.xml:852(title)
+#: plpgsql.xml:870(title)
 msgid "Basic Statements"
 msgstr "Основные операторы"
 
-#: plpgsql.xml:854(para)
+#: plpgsql.xml:872(para)
 msgid ""
 "In this section and the following ones, we describe all the statement types "
 "that are explicitly understood by <application>PL/pgSQL</application>. "
@@ -1427,11 +1463,11 @@ msgstr ""
 "linkend=\"plpgsql-statements-sql-noresult\"/> и <xref remap=\"6\" linkend="
 "\"plpgsql-statements-sql-onerow\"/>."
 
-#: plpgsql.xml:865(title)
+#: plpgsql.xml:883(title)
 msgid "Assignment"
 msgstr "Присваивания"
 
-#: plpgsql.xml:867(para)
+#: plpgsql.xml:885(para)
 msgid ""
 "An assignment of a value to a <application>PL/pgSQL</application> variable "
 "is written as: <synopsis>\n"
@@ -1460,7 +1496,7 @@ msgstr ""
 "использовать знак равенства (<literal>=</literal>) вместо совместимого с PL/"
 "SQL <literal>:=</literal>."
 
-#: plpgsql.xml:883(para)
+#: plpgsql.xml:901(para)
 msgid ""
 "If the expression's result data type doesn't match the variable's data type, "
 "the value will be coerced as though by an assignment cast (see <xref linkend="
@@ -1482,7 +1518,7 @@ msgstr ""
 "этом функция ввода может выдавать ошибки времени выполнения, если не "
 "воспримет строковое представление значения результата."
 
-#: plpgsql.xml:897(programlisting)
+#: plpgsql.xml:915(programlisting)
 #, no-wrap
 msgid ""
 "tax := subtotal * 0.06;\n"
@@ -1491,11 +1527,11 @@ msgstr ""
 "tax := subtotal * 0.06;\n"
 "my_record.user_id := 20;"
 
-#: plpgsql.xml:905(title)
+#: plpgsql.xml:923(title)
 msgid "Executing a Command With No Result"
 msgstr "Выполнение команды, не возвращающей результат"
 
-#: plpgsql.xml:907(para)
+#: plpgsql.xml:925(para)
 msgid ""
 "For any SQL command that does not return rows, for example <command>INSERT</"
 "command> without a <literal>RETURNING</literal> clause, you can execute the "
@@ -1506,7 +1542,7 @@ msgstr ""
 "команду SQL, не возвращающую строк, просто написав эту команду (например, "
 "<command>INSERT</command> без предложения <literal>RETURNING</literal>)."
 
-#: plpgsql.xml:914(para)
+#: plpgsql.xml:932(para)
 msgid ""
 "Any <application>PL/pgSQL</application> variable name appearing in the "
 "command text is treated as a parameter, and then the current value of the "
@@ -1520,7 +1556,7 @@ msgstr ""
 "точности совпадает с описанной ранее обработкой для выражений; за "
 "подробностями обратитесь к <xref remap=\"3\" linkend=\"plpgsql-var-subst\"/>."
 
-#: plpgsql.xml:922(para)
+#: plpgsql.xml:940(para)
 msgid ""
 "When executing a SQL command in this way, <application>PL/pgSQL</"
 "application> may cache and re-use the execution plan for the command, as "
@@ -1531,7 +1567,7 @@ msgstr ""
 "команды, как обсуждается в <xref remap=\"6\" linkend=\"plpgsql-plan-caching"
 "\"/>."
 
-#: plpgsql.xml:929(para)
+#: plpgsql.xml:947(para)
 msgid ""
 "Sometimes it is useful to evaluate an expression or <command>SELECT</"
 "command> query but discard the result, for example when calling a function "
@@ -1570,7 +1606,7 @@ msgstr ""
 "одну строку, или ложь, если не возвращает ни одной строки (см. <xref remap="
 "\"4\" linkend=\"plpgsql-statements-diagnostics\"/>)."
 
-#: plpgsql.xml:956(para)
+#: plpgsql.xml:974(para)
 msgid ""
 "One might expect that writing <command>SELECT</command> directly would "
 "accomplish this result, but at present the only accepted way to do it is "
@@ -1585,29 +1621,29 @@ msgstr ""
 "отклонена с ошибкой, если не имеет предложения <literal>INTO</literal>, как "
 "описано в следующем разделе."
 
-#: plpgsql.xml:969(programlisting)
+#: plpgsql.xml:987(programlisting)
 #, no-wrap
 msgid "PERFORM create_mv('cs_session_page_requests_mv', my_query);"
 msgstr "PERFORM create_mv('cs_session_page_requests_mv', my_query);"
 
-#: plpgsql.xml:967(para) plpgsql.xml:2992(para) plpgsql.xml:3243(para)
-#: plpgsql.xml:3264(para)
+#: plpgsql.xml:985(para) plpgsql.xml:3010(para) plpgsql.xml:3261(para)
+#: plpgsql.xml:3282(para)
 msgid "An example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: plpgsql.xml:976(title)
+#: plpgsql.xml:994(title)
 msgid "Executing a Query with a Single-row Result"
 msgstr "Выполнение запроса, возвращающего одну строку"
 
-#: plpgsql.xml:978(indexterm)
+#: plpgsql.xml:996(indexterm)
 msgid "<primary>SELECT INTO</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>SELECT INTO</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:983(indexterm)
+#: plpgsql.xml:1001(indexterm)
 msgid "<primary>RETURNING INTO</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>RETURNING INTO</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:988(para)
+#: plpgsql.xml:1006(para)
 msgid ""
 "The result of a SQL command yielding a single row (possibly of multiple "
 "columns) can be assigned to a record variable, row-type variable, or list of "
@@ -1657,7 +1693,7 @@ msgstr ""
 "<literal>INTO</literal>, это те же SQL-команды, как их можно написать вне "
 "<application>PL/pgSQL</application>."
 
-#: plpgsql.xml:1016(para)
+#: plpgsql.xml:1034(para)
 msgid ""
 "Note that this interpretation of <command>SELECT</command> with "
 "<literal>INTO</literal> is quite different from <productname>PostgreSQL</"
@@ -1675,7 +1711,7 @@ msgstr ""
 "результате команды <command>SELECT</command>, используйте синтаксис "
 "<command>CREATE TABLE ... AS SELECT</command>."
 
-#: plpgsql.xml:1027(para)
+#: plpgsql.xml:1045(para)
 msgid ""
 "If a row or a variable list is used as target, the query's result columns "
 "must exactly match the structure of the target as to number and data types, "
@@ -1688,7 +1724,7 @@ msgstr ""
 "Если используется переменная типа <type>record</type>, то она автоматически "
 "приводится к строковому типу результата запроса."
 
-#: plpgsql.xml:1035(para)
+#: plpgsql.xml:1053(para)
 msgid ""
 "The <literal>INTO</literal> clause can appear almost anywhere in the SQL "
 "command. Customarily it is written either just before or just after the list "
@@ -1704,7 +1740,7 @@ msgstr ""
 "соглашению на случай, если правила разбора <application>PL/pgSQL</"
 "application> ужесточатся в будущих версиях."
 
-#: plpgsql.xml:1056(programlisting)
+#: plpgsql.xml:1074(programlisting)
 #, no-wrap
 msgid ""
 "SELECT * INTO myrec FROM emp WHERE empname = myname;\n"
@@ -1717,7 +1753,7 @@ msgstr ""
 "    RAISE EXCEPTION 'Сотрудник % не найден', myname;\n"
 "END IF;"
 
-#: plpgsql.xml:1069(programlisting)
+#: plpgsql.xml:1087(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN\n"
@@ -1738,7 +1774,7 @@ msgstr ""
 "            RAISE EXCEPTION 'Сотрудник % уже существует', myname;\n"
 "END;"
 
-#: plpgsql.xml:1045(para)
+#: plpgsql.xml:1063(para)
 msgid ""
 "If <literal>STRICT</literal> is not specified in the <literal>INTO</literal> "
 "clause, then <replaceable>target</replaceable> will be set to the first row "
@@ -1771,7 +1807,7 @@ msgstr ""
 "команды с указанием <literal>STRICT</literal>, значение переменной "
 "<literal>FOUND</literal> всегда устанавливается в истину."
 
-#: plpgsql.xml:1083(para)
+#: plpgsql.xml:1101(para)
 msgid ""
 "For <command>INSERT</command>/<command>UPDATE</command>/<command>DELETE</"
 "command> with <literal>RETURNING</literal>, <application>PL/pgSQL</"
@@ -1787,7 +1823,7 @@ msgstr ""
 "этих команд нет возможности, типа <literal>ORDER BY</literal>, указать какая "
 "из задействованных строк должна быть возвращена."
 
-#: plpgsql.xml:1103(programlisting)
+#: plpgsql.xml:1121(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION get_userid(username text) RETURNS int\n"
@@ -1814,7 +1850,7 @@ msgstr ""
 "END\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:1117(programlisting)
+#: plpgsql.xml:1135(programlisting)
 #, no-wrap
 msgid ""
 "ERROR:  query returned no rows\n"
@@ -1825,7 +1861,7 @@ msgstr ""
 "DETAIL:  parameters: $1 = 'nosuchuser'\n"
 "CONTEXT:  PL/pgSQL function get_userid(text) line 6 at SQL statement"
 
-#: plpgsql.xml:1092(para)
+#: plpgsql.xml:1110(para)
 msgid ""
 "If <literal>print_strict_params</literal> is enabled for the function, then "
 "when an error is thrown because the requirements of <literal>STRICT</"
@@ -1848,7 +1884,7 @@ msgstr ""
 "использовать указание компилятора, например: <placeholder-1/> В случае сбоя "
 "будет сформировано примерно такое сообщение об ошибке <placeholder-2/>"
 
-#: plpgsql.xml:1125(para)
+#: plpgsql.xml:1143(para)
 msgid ""
 "The <literal>STRICT</literal> option matches the behavior of Oracle PL/SQL's "
 "<command>SELECT INTO</command> and related statements."
@@ -1856,7 +1892,7 @@ msgstr ""
 "С указанием <literal>STRICT</literal> поведение <command>SELECT INTO</"
 "command> и связанных операторов соответствует принятому в Oracle PL/SQL."
 
-#: plpgsql.xml:1131(para)
+#: plpgsql.xml:1149(para)
 msgid ""
 "To handle cases where you need to process multiple result rows from a SQL "
 "query, see <xref linkend=\"plpgsql-records-iterating\"/>."
@@ -1865,11 +1901,11 @@ msgstr ""
 "результата, описано в <xref remap=\"6\" linkend=\"plpgsql-records-iterating"
 "\"/>."
 
-#: plpgsql.xml:1139(title)
+#: plpgsql.xml:1157(title)
 msgid "Executing Dynamic Commands"
 msgstr "Выполнение динамически формируемых команд"
 
-#: plpgsql.xml:1141(para)
+#: plpgsql.xml:1159(para)
 msgid ""
 "Oftentimes you will want to generate dynamic commands inside your "
 "<application>PL/pgSQL</application> functions, that is, commands that will "
@@ -1909,7 +1945,7 @@ msgstr ""
 "Необязательные выражения в <literal>USING</literal> формируют значения, "
 "которые будут вставлены в команду."
 
-#: plpgsql.xml:1164(para)
+#: plpgsql.xml:1182(para)
 msgid ""
 "No substitution of <application>PL/pgSQL</application> variables is done on "
 "the computed command string. Any required variable values must be inserted "
@@ -1921,7 +1957,7 @@ msgstr ""
 "значения переменных должны быть вставлены в командную строку при её "
 "построении, либо нужно использовать параметры, как описано ниже."
 
-#: plpgsql.xml:1171(para)
+#: plpgsql.xml:1189(para)
 msgid ""
 "Also, there is no plan caching for commands executed via <command>EXECUTE</"
 "command>. Instead, the command is always planned each time the statement is "
@@ -1933,7 +1969,7 @@ msgstr ""
 "выполнении. Таким образом, строка команды может динамически создаваться "
 "внутри функции для выполнения действий с различными таблицами и столбцами."
 
-#: plpgsql.xml:1179(para)
+#: plpgsql.xml:1197(para)
 msgid ""
 "The <literal>INTO</literal> clause specifies where the results of a SQL "
 "command returning rows should be assigned. If a row or variable list is "
@@ -1954,7 +1990,7 @@ msgstr ""
 "возвращается ни одной строки, то присваивается NULL. Без предложения "
 "<literal>INTO</literal> результаты запроса отбрасываются."
 
-#: plpgsql.xml:1192(para)
+#: plpgsql.xml:1210(para)
 msgid ""
 "If the <literal>STRICT</literal> option is given, an error is reported "
 "unless the query produces exactly one row."
@@ -1962,7 +1998,7 @@ msgstr ""
 "С указанием <literal>STRICT</literal> запрос должен вернуть ровно одну "
 "строку, иначе выдаётся сообщение об ошибке."
 
-#: plpgsql.xml:1206(programlisting)
+#: plpgsql.xml:1224(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE 'SELECT count(*) FROM mytable WHERE inserted_by = $1 AND inserted &lt;= $2'\n"
@@ -1973,7 +2009,7 @@ msgstr ""
 "   INTO c\n"
 "   USING checked_user, checked_date;"
 
-#: plpgsql.xml:1197(para)
+#: plpgsql.xml:1215(para)
 msgid ""
 "The command string can use parameter values, which are referenced in the "
 "command as <literal>$1</literal>, <literal>$2</literal>, etc. These symbols "
@@ -1992,7 +2028,7 @@ msgstr ""
 "открывает возможности для SQL-инъекций, не требуя применять экранирование "
 "или кавычки для спецсимволов. Пример: <placeholder-1/>"
 
-#: plpgsql.xml:1219(programlisting)
+#: plpgsql.xml:1237(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE 'SELECT count(*) FROM '\n"
@@ -2007,7 +2043,7 @@ msgstr ""
 "   INTO c\n"
 "   USING checked_user, checked_date;"
 
-#: plpgsql.xml:1229(programlisting)
+#: plpgsql.xml:1247(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE format('SELECT count(*) FROM %I '\n"
@@ -2020,7 +2056,7 @@ msgstr ""
 "   INTO c\n"
 "   USING checked_user, checked_date;"
 
-#: plpgsql.xml:1213(para)
+#: plpgsql.xml:1231(para)
 msgid ""
 "Note that parameter symbols can only be used for data values &mdash; if you "
 "want to use dynamically determined table or column names, you must insert "
@@ -2049,7 +2085,7 @@ msgstr ""
 "типов (обычно называемые служебными) значения нужно вставлять в текстовом "
 "виде, даже если это просто значения данных."
 
-#: plpgsql.xml:1242(para)
+#: plpgsql.xml:1260(para)
 msgid ""
 "An <command>EXECUTE</command> with a simple constant command string and some "
 "<literal>USING</literal> parameters, as in the first example above, is "
@@ -2076,7 +2112,7 @@ msgstr ""
 "использовать <command>EXECUTE</command> для гарантии того, что не будет "
 "выбран общий план."
 
-#: plpgsql.xml:1258(para)
+#: plpgsql.xml:1276(para)
 msgid ""
 "<command>SELECT INTO</command> is not currently supported within "
 "<command>EXECUTE</command>; instead, execute a plain <command>SELECT</"
@@ -2088,7 +2124,7 @@ msgstr ""
 "<command>SELECT</command> и указать <literal>INTO</literal> для самой "
 "команды <command>EXECUTE</command>."
 
-#: plpgsql.xml:1266(para)
+#: plpgsql.xml:1284(para)
 msgid ""
 "The <application>PL/pgSQL</application> <command>EXECUTE</command> statement "
 "is not related to the <xref linkend=\"sql-execute\"/> SQL statement "
@@ -2102,35 +2138,35 @@ msgstr ""
 "не может напрямую использоваться в функциях на <application>PL/pgSQL</"
 "application> (и в этом нет необходимости)."
 
-#: plpgsql.xml:1278(title)
+#: plpgsql.xml:1296(title)
 msgid "Quoting Values In Dynamic Queries"
 msgstr "Использование кавычек в динамических запросах"
 
-#: plpgsql.xml:1280(indexterm)
+#: plpgsql.xml:1298(indexterm)
 msgid "<primary>quote_ident</primary> <secondary>use in PL/pgSQL</secondary>"
 msgstr ""
 "<primary>quote_ident</primary> <secondary>использование в PL/pgSQL</"
 "secondary>"
 
-#: plpgsql.xml:1285(indexterm)
+#: plpgsql.xml:1303(indexterm)
 msgid "<primary>quote_literal</primary> <secondary>use in PL/pgSQL</secondary>"
 msgstr ""
 "<primary>quote_literal</primary> <secondary>использование в PL/pgSQL</"
 "secondary>"
 
-#: plpgsql.xml:1290(indexterm)
+#: plpgsql.xml:1308(indexterm)
 msgid ""
 "<primary>quote_nullable</primary> <secondary>use in PL/pgSQL</secondary>"
 msgstr ""
 "<primary>quote_nullable</primary> <secondary>использование в PL/pgSQL</"
 "secondary>"
 
-#: plpgsql.xml:1295(indexterm)
+#: plpgsql.xml:1313(indexterm)
 msgid "<primary>format</primary> <secondary>use in PL/pgSQL</secondary>"
 msgstr ""
 "<primary>format</primary> <secondary>использование в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:1300(para)
+#: plpgsql.xml:1318(para)
 msgid ""
 "When working with dynamic commands you will often have to handle escaping of "
 "single quotes. The recommended method for quoting fixed text in your "
@@ -2146,7 +2182,7 @@ msgstr ""
 "обзору в <xref remap=\"6\" linkend=\"plpgsql-quote-tips\"/>, это поможет "
 "сэкономить усилия при переводе кода к более приемлемому виду.)"
 
-#: plpgsql.xml:1314(programlisting)
+#: plpgsql.xml:1332(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE format('UPDATE tbl SET %I = $1 '\n"
@@ -2155,7 +2191,7 @@ msgstr ""
 "EXECUTE format('UPDATE tbl SET %I = $1 '\n"
 "   'WHERE key = $2', colname) USING newvalue, keyvalue;"
 
-#: plpgsql.xml:1319(programlisting)
+#: plpgsql.xml:1337(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE 'UPDATE tbl SET '\n"
@@ -2172,7 +2208,7 @@ msgstr ""
 "        || ' WHERE key = '\n"
 "        || quote_literal(keyvalue);"
 
-#: plpgsql.xml:1309(para)
+#: plpgsql.xml:1327(para)
 msgid ""
 "Dynamic values require careful handling since they might contain quote "
 "characters. An example using <function>format()</function> (this assumes "
@@ -2186,7 +2222,7 @@ msgstr ""
 "апострофы дублировать не нужно): <placeholder-1/> Также можно напрямую "
 "вызывать функции заключения в кавычки: <placeholder-2/>"
 
-#: plpgsql.xml:1329(para)
+#: plpgsql.xml:1347(para)
 msgid ""
 "This example demonstrates the use of the <function>quote_ident</function> "
 "and <function>quote_literal</function> functions (see <xref linkend="
@@ -2208,7 +2244,7 @@ msgstr ""
 "соответствующие шаги, чтобы вернуть текст, по ситуации заключённый в двойные "
 "или одинарные кавычки и с правильно экранированными специальными символами."
 
-#: plpgsql.xml:1353(programlisting)
+#: plpgsql.xml:1371(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE 'UPDATE tbl SET '\n"
@@ -2225,7 +2261,7 @@ msgstr ""
 "        || ' WHERE key = '\n"
 "        || quote_nullable(keyvalue);"
 
-#: plpgsql.xml:1343(para)
+#: plpgsql.xml:1361(para)
 msgid ""
 "Because <function>quote_literal</function> is labeled <literal>STRICT</"
 "literal>, it will always return null when called with a null argument. In "
@@ -2252,17 +2288,17 @@ msgstr ""
 "нужно использовать <function>quote_nullable</function> вместо "
 "<function>quote_literal</function>."
 
-#: plpgsql.xml:1368(programlisting)
+#: plpgsql.xml:1386(programlisting)
 #, no-wrap
 msgid "'WHERE key = ' || quote_nullable(keyvalue)"
 msgstr "'WHERE key = ' || quote_nullable(keyvalue)"
 
-#: plpgsql.xml:1375(programlisting)
+#: plpgsql.xml:1393(programlisting)
 #, no-wrap
 msgid "'WHERE key IS NOT DISTINCT FROM ' || quote_nullable(keyvalue)"
 msgstr "'WHERE key IS NOT DISTINCT FROM ' || quote_nullable(keyvalue)"
 
-#: plpgsql.xml:1365(para)
+#: plpgsql.xml:1383(para)
 msgid ""
 "As always, care must be taken to ensure that null values in a query do not "
 "deliver unintended results. For example the <literal>WHERE</literal> clause "
@@ -2287,7 +2323,7 @@ msgstr ""
 "NULL и <literal>IS DISTINCT</literal> описаны в <xref remap=\"6\" linkend="
 "\"functions-comparison\"/>.)"
 
-#: plpgsql.xml:1387(programlisting)
+#: plpgsql.xml:1405(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE 'UPDATE tbl SET '\n"
@@ -2304,7 +2340,7 @@ msgstr ""
 "        || '$$ WHERE key = '\n"
 "        || quote_literal(keyvalue);"
 
-#: plpgsql.xml:1384(para)
+#: plpgsql.xml:1402(para)
 msgid ""
 "Note that dollar quoting is only useful for quoting fixed text. It would be "
 "a very bad idea to try to write this example as: <placeholder-1/> because it "
@@ -2325,7 +2361,7 @@ msgstr ""
 "<function>quote_literal</function>, <function>quote_nullable</function>, или "
 "<function>quote_ident</function>."
 
-#: plpgsql.xml:1407(programlisting)
+#: plpgsql.xml:1425(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE format('UPDATE tbl SET %I = %L '\n"
@@ -2334,7 +2370,7 @@ msgstr ""
 "EXECUTE format('UPDATE tbl SET %I = %L '\n"
 "   'WHERE key = %L', colname, newvalue, keyvalue);"
 
-#: plpgsql.xml:1415(programlisting)
+#: plpgsql.xml:1433(programlisting)
 #, no-wrap
 msgid ""
 "EXECUTE format('UPDATE tbl SET %I = $1 WHERE key = $2', colname)\n"
@@ -2343,7 +2379,7 @@ msgstr ""
 "EXECUTE format('UPDATE tbl SET %I = $1 WHERE key = $2', colname)\n"
 "   USING newvalue, keyvalue;"
 
-#: plpgsql.xml:1403(para)
+#: plpgsql.xml:1421(para)
 msgid ""
 "Dynamic SQL statements can also be safely constructed using the "
 "<function>format</function> function (see <xref linkend=\"functions-string\"/"
@@ -2367,7 +2403,7 @@ msgstr ""
 "преобразуются безусловно в текст, чтобы затем выводиться с использованием "
 "<literal>%L</literal>. Она также и более эффективна."
 
-#: plpgsql.xml:1425(para)
+#: plpgsql.xml:1443(para)
 msgid ""
 "A much larger example of a dynamic command and <command>EXECUTE</command> "
 "can be seen in <xref linkend=\"plpgsql-porting-ex2\"/>, which builds and "
@@ -2379,16 +2415,16 @@ msgstr ""
 ">. В нём создаётся и динамически выполняется команда <command>CREATE "
 "FUNCTION</command> для определения новой функции."
 
-#: plpgsql.xml:1434(title)
+#: plpgsql.xml:1452(title)
 msgid "Obtaining the Result Status"
 msgstr "Статус выполнения команды"
 
-#: plpgsql.xml:1455(programlisting)
+#: plpgsql.xml:1473(programlisting)
 #, no-wrap
 msgid "GET DIAGNOSTICS integer_var = ROW_COUNT;"
 msgstr "GET DIAGNOSTICS integer_var = ROW_COUNT;"
 
-#: plpgsql.xml:1436(para)
+#: plpgsql.xml:1454(para)
 msgid ""
 "There are several ways to determine the effect of a command. The first "
 "method is to use the <command>GET DIAGNOSTICS</command> command, which has "
@@ -2425,45 +2461,45 @@ msgstr ""
 "присваивания (<literal>=</literal>) можно применять присваивание с "
 "двоеточием (<literal>:=</literal>). Например: <placeholder-1/>"
 
-#: plpgsql.xml:1461(title)
+#: plpgsql.xml:1479(title)
 msgid "Available Diagnostics Items"
 msgstr "Доступные элементы диагностики"
 
-#: plpgsql.xml:1465(entry) plpgsql.xml:2740(entry)
+#: plpgsql.xml:1483(entry) plpgsql.xml:2758(entry)
 msgid "Name"
 msgstr "Имя"
 
-#: plpgsql.xml:1466(entry) plpgsql.xml:2741(entry)
+#: plpgsql.xml:1484(entry) plpgsql.xml:2759(entry)
 msgid "Type"
 msgstr "Тип"
 
-#: plpgsql.xml:1467(entry) plpgsql.xml:2742(entry)
+#: plpgsql.xml:1485(entry) plpgsql.xml:2760(entry)
 msgid "Description"
 msgstr "Описание"
 
-#: plpgsql.xml:1472(varname)
+#: plpgsql.xml:1490(varname)
 msgid "ROW_COUNT"
 msgstr "ROW_COUNT"
 
-#: plpgsql.xml:1473(type)
+#: plpgsql.xml:1491(type)
 msgid "bigint"
 msgstr "bigint"
 
-#: plpgsql.xml:1474(entry)
+#: plpgsql.xml:1492(entry)
 msgid ""
 "the number of rows processed by the most recent <acronym>SQL</acronym> "
 "command"
 msgstr "число строк, обработанных последней командой <acronym>SQL</acronym>"
 
-#: plpgsql.xml:1478(varname)
+#: plpgsql.xml:1496(varname)
 msgid "RESULT_OID"
 msgstr "RESULT_OID"
 
-#: plpgsql.xml:1479(type)
+#: plpgsql.xml:1497(type)
 msgid "oid"
 msgstr "oid"
 
-#: plpgsql.xml:1480(entry)
+#: plpgsql.xml:1498(entry)
 msgid ""
 "the OID of the last row inserted by the most recent <acronym>SQL</acronym> "
 "command (only useful after an <command>INSERT</command> command into a table "
@@ -2473,18 +2509,18 @@ msgstr ""
 "(полезен только после команды <command>INSERT</command> для таблицы, "
 "содержащей OID)"
 
-#: plpgsql.xml:1486(literal)
+#: plpgsql.xml:1504(literal)
 msgid "PG_CONTEXT"
 msgstr "PG_CONTEXT"
 
-#: plpgsql.xml:1487(type) plpgsql.xml:2748(type) plpgsql.xml:2753(type)
-#: plpgsql.xml:2758(type) plpgsql.xml:2763(type) plpgsql.xml:2768(type)
-#: plpgsql.xml:2773(type) plpgsql.xml:2778(type) plpgsql.xml:2783(type)
-#: plpgsql.xml:2788(type) plpgsql.xml:2793(type)
+#: plpgsql.xml:1505(type) plpgsql.xml:2766(type) plpgsql.xml:2771(type)
+#: plpgsql.xml:2776(type) plpgsql.xml:2781(type) plpgsql.xml:2786(type)
+#: plpgsql.xml:2791(type) plpgsql.xml:2796(type) plpgsql.xml:2801(type)
+#: plpgsql.xml:2806(type) plpgsql.xml:2811(type)
 msgid "text"
 msgstr "text"
 
-#: plpgsql.xml:1488(entry)
+#: plpgsql.xml:1506(entry)
 msgid ""
 "line(s) of text describing the current call stack (see <xref linkend="
 "\"plpgsql-call-stack\"/>)"
@@ -2492,7 +2528,7 @@ msgstr ""
 "строки текста, описывающие текущий стек вызовов (см. <xref remap=\"4\" "
 "linkend=\"plpgsql-call-stack\"/>)"
 
-#: plpgsql.xml:1504(para)
+#: plpgsql.xml:1522(para)
 msgid ""
 "A <command>SELECT INTO</command> statement sets <literal>FOUND</literal> "
 "true if a row is assigned, false if no row is returned."
@@ -2500,7 +2536,7 @@ msgstr ""
 "<command>SELECT INTO</command> записывает в <literal>FOUND</literal> true, "
 "если строка присвоена, или false, если строки не были получены."
 
-#: plpgsql.xml:1511(para)
+#: plpgsql.xml:1529(para)
 msgid ""
 "A <command>PERFORM</command> statement sets <literal>FOUND</literal> true if "
 "it produces (and discards) one or more rows, false if no row is produced."
@@ -2508,7 +2544,7 @@ msgstr ""
 "<command>PERFORM</command> записывает в <literal>FOUND</literal> true, если "
 "строки выбраны (и отброшены) или false, если строки не выбраны."
 
-#: plpgsql.xml:1518(para)
+#: plpgsql.xml:1536(para)
 msgid ""
 "<command>UPDATE</command>, <command>INSERT</command>, and <command>DELETE</"
 "command> statements set <literal>FOUND</literal> true if at least one row is "
@@ -2519,7 +2555,7 @@ msgstr ""
 "была задействована хотя бы одна строка, или false, если ни одна строка не "
 "была задействована."
 
-#: plpgsql.xml:1525(para)
+#: plpgsql.xml:1543(para)
 msgid ""
 "A <command>FETCH</command> statement sets <literal>FOUND</literal> true if "
 "it returns a row, false if no row is returned."
@@ -2527,7 +2563,7 @@ msgstr ""
 "<command>FETCH</command> записывают в <literal>FOUND</literal> true, если "
 "команда вернула строку, или false, если строка не выбрана."
 
-#: plpgsql.xml:1531(para)
+#: plpgsql.xml:1549(para)
 msgid ""
 "A <command>MOVE</command> statement sets <literal>FOUND</literal> true if it "
 "successfully repositions the cursor, false otherwise."
@@ -2535,7 +2571,7 @@ msgstr ""
 "<command>MOVE</command> записывают в <literal>FOUND</literal> true при "
 "успешном перемещении курсора, в противном случае — false."
 
-#: plpgsql.xml:1537(para)
+#: plpgsql.xml:1555(para)
 msgid ""
 "A <command>FOR</command> or <command>FOREACH</command> statement sets "
 "<literal>FOUND</literal> true if it iterates one or more times, else false. "
@@ -2551,7 +2587,7 @@ msgstr ""
 "выполняется, оператор цикла не изменяет значение переменной. Но другие "
 "операторы внутри цикла могут менять значение <literal>FOUND</literal>."
 
-#: plpgsql.xml:1549(para)
+#: plpgsql.xml:1567(para)
 msgid ""
 "<command>RETURN QUERY</command> and <command>RETURN QUERY EXECUTE</command> "
 "statements set <literal>FOUND</literal> true if the query returns at least "
@@ -2561,7 +2597,7 @@ msgstr ""
 "записывают в <literal>FOUND</literal> true, если запрос вернул хотя бы одну "
 "строку, или false, если строки не выбраны."
 
-#: plpgsql.xml:1495(para)
+#: plpgsql.xml:1513(para)
 msgid ""
 "The second method to determine the effects of a command is to check the "
 "special variable named <literal>FOUND</literal>, which is of type "
@@ -2583,7 +2619,7 @@ msgstr ""
 "command> изменяет вывод <command>GET DIAGNOSTICS</command>, но не меняет "
 "<literal>FOUND</literal>."
 
-#: plpgsql.xml:1565(para)
+#: plpgsql.xml:1583(para)
 msgid ""
 "<literal>FOUND</literal> is a local variable within each <application>PL/"
 "pgSQL</application> function; any changes to it affect only the current "
@@ -2593,11 +2629,11 @@ msgstr ""
 "<application>PL/pgSQL</application> и любые её изменения, влияют только на "
 "текущую функцию."
 
-#: plpgsql.xml:1574(title)
+#: plpgsql.xml:1592(title)
 msgid "Doing Nothing At All"
 msgstr "Не делать ничего"
 
-#: plpgsql.xml:1576(para)
+#: plpgsql.xml:1594(para)
 msgid ""
 "Sometimes a placeholder statement that does nothing is useful. For example, "
 "it can indicate that one arm of an if/then/else chain is deliberately empty. "
@@ -2611,7 +2647,7 @@ msgstr ""
 "NULL;\n"
 "</synopsis>"
 
-#: plpgsql.xml:1589(programlisting)
+#: plpgsql.xml:1607(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN\n"
@@ -2628,7 +2664,7 @@ msgstr ""
 "        NULL;  -- игнорируем ошибку\n"
 "END;"
 
-#: plpgsql.xml:1598(programlisting)
+#: plpgsql.xml:1616(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN\n"
@@ -2643,7 +2679,7 @@ msgstr ""
 "    WHEN division_by_zero THEN  -- игнорируем ошибку\n"
 "END;"
 
-#: plpgsql.xml:1587(para)
+#: plpgsql.xml:1605(para)
 msgid ""
 "For example, the following two fragments of code are equivalent: "
 "<placeholder-1/> <placeholder-2/> Which is preferable is a matter of taste."
@@ -2651,7 +2687,7 @@ msgstr ""
 "В следующем примере два фрагмента кода эквивалентны: <placeholder-1/> "
 "<placeholder-2/> Какой вариант выбрать — дело вкуса."
 
-#: plpgsql.xml:1609(para)
+#: plpgsql.xml:1627(para)
 msgid ""
 "In Oracle's PL/SQL, empty statement lists are not allowed, and so "
 "<command>NULL</command> statements are <emphasis>required</emphasis> for "
@@ -2663,11 +2699,11 @@ msgstr ""
 "ситуациях. В <application>PL/pgSQL</application> разрешается не писать "
 "ничего."
 
-#: plpgsql.xml:1621(title)
+#: plpgsql.xml:1639(title)
 msgid "Control Structures"
 msgstr "Управляющие структуры"
 
-#: plpgsql.xml:1623(para)
+#: plpgsql.xml:1641(para)
 msgid ""
 "Control structures are probably the most useful (and important) part of "
 "<application>PL/pgSQL</application>. With <application>PL/pgSQL</"
@@ -2679,11 +2715,11 @@ msgstr ""
 "<application>PL/pgSQL</application>. С их помощью можно очень гибко и "
 "эффективно манипулировать данными <productname>PostgreSQL</productname>."
 
-#: plpgsql.xml:1632(title)
+#: plpgsql.xml:1650(title)
 msgid "Returning From a Function"
 msgstr "Команды для возврата значения из функции"
 
-#: plpgsql.xml:1634(para)
+#: plpgsql.xml:1652(para)
 msgid ""
 "There are two commands available that allow you to return data from a "
 "function: <command>RETURN</command> and <command>RETURN NEXT</command>."
@@ -2691,23 +2727,23 @@ msgstr ""
 "Две команды позволяют вернуть данные из функции: <command>RETURN</command> и "
 "<command>RETURN NEXT</command>."
 
-#: plpgsql.xml:1641(command)
+#: plpgsql.xml:1659(command)
 msgid "RETURN"
 msgstr "RETURN"
 
-#: plpgsql.xml:1644(replaceable) plpgsql.xml:1713(replaceable)
-#: plpgsql.xml:1715(replaceable) plpgsql.xml:2028(replaceable)
-#: plpgsql.xml:2030(replaceable) plpgsql.xml:2316(replaceable)
-#: plpgsql.xml:3005(replaceable)
+#: plpgsql.xml:1662(replaceable) plpgsql.xml:1731(replaceable)
+#: plpgsql.xml:1733(replaceable) plpgsql.xml:2046(replaceable)
+#: plpgsql.xml:2048(replaceable) plpgsql.xml:2334(replaceable)
+#: plpgsql.xml:3023(replaceable)
 msgid "expression"
 msgstr "выражение"
 
-#: plpgsql.xml:1643(synopsis)
+#: plpgsql.xml:1661(synopsis)
 #, no-wrap
 msgid "RETURN <placeholder-1/>;"
 msgstr "RETURN <placeholder-1/>;"
 
-#: plpgsql.xml:1647(para)
+#: plpgsql.xml:1665(para)
 msgid ""
 "<command>RETURN</command> with an expression terminates the function and "
 "returns the value of <replaceable>expression</replaceable> to the caller. "
@@ -2719,7 +2755,7 @@ msgstr ""
 "используется для функций <application>PL/pgSQL</application>, которые не "
 "возвращают набор строк."
 
-#: plpgsql.xml:1655(para)
+#: plpgsql.xml:1673(para)
 msgid ""
 "In a function that returns a scalar type, the expression's result will "
 "automatically be cast into the function's return type as described for "
@@ -2733,7 +2769,7 @@ msgstr ""
 "содержать требуемый набор столбцов. При этом может потребоваться явное "
 "приведение типов."
 
-#: plpgsql.xml:1663(para)
+#: plpgsql.xml:1681(para)
 msgid ""
 "If you declared the function with output parameters, write just "
 "<command>RETURN</command> with no expression. The current values of the "
@@ -2743,7 +2779,7 @@ msgstr ""
 "command> без выражения. Будут возвращены текущие значения выходных "
 "параметров."
 
-#: plpgsql.xml:1669(para)
+#: plpgsql.xml:1687(para)
 msgid ""
 "If you declared the function to return <type>void</type>, a <command>RETURN</"
 "command> statement can be used to exit the function early; but do not write "
@@ -2752,7 +2788,7 @@ msgstr ""
 "Для функции, возвращающей <type>void</type>, <command>RETURN</command> можно "
 "использовать в любом месте, но без выражения после <command>RETURN</command>."
 
-#: plpgsql.xml:1676(para)
+#: plpgsql.xml:1694(para)
 msgid ""
 "The return value of a function cannot be left undefined. If control reaches "
 "the end of the top-level block of the function without hitting a "
@@ -2768,7 +2804,7 @@ msgstr ""
 "Для них оператор <command>RETURN</command> выполняется автоматически по "
 "окончании блока верхнего уровня."
 
-#: plpgsql.xml:1689(programlisting)
+#: plpgsql.xml:1707(programlisting)
 #, no-wrap
 msgid ""
 "-- functions returning a scalar type\n"
@@ -2787,41 +2823,41 @@ msgstr ""
 "RETURN composite_type_var;\n"
 "RETURN (1, 2, 'three'::text);  -- требуется приведение типов"
 
-#: plpgsql.xml:1686(para)
+#: plpgsql.xml:1704(para)
 msgid "Some examples: <placeholder-1/>"
 msgstr "Несколько примеров: <placeholder-1/>"
 
-#: plpgsql.xml:1702(title)
+#: plpgsql.xml:1720(title)
 msgid "<command>RETURN NEXT</command> and <command>RETURN QUERY</command>"
 msgstr "<command>RETURN NEXT</command> и <command>RETURN QUERY</command>"
 
-#: plpgsql.xml:1703(indexterm)
+#: plpgsql.xml:1721(indexterm)
 msgid "<primary>RETURN NEXT</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>RETURN NEXT</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:1707(indexterm)
+#: plpgsql.xml:1725(indexterm)
 msgid "<primary>RETURN QUERY</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>RETURN QUERY</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:1714(replaceable) plpgsql.xml:2967(replaceable)
-#: plpgsql.xml:2970(replaceable)
+#: plpgsql.xml:1732(replaceable) plpgsql.xml:2985(replaceable)
+#: plpgsql.xml:2988(replaceable)
 msgid "query"
 msgstr "запрос"
 
-#: plpgsql.xml:1715(replaceable)
+#: plpgsql.xml:1733(replaceable)
 msgid "command-string"
 msgstr "строка-команды"
 
-#: plpgsql.xml:1715(optional) plpgsql.xml:3005(optional)
-#: plpgsql.xml:3041(optional)
+#: plpgsql.xml:1733(optional) plpgsql.xml:3023(optional)
+#: plpgsql.xml:3059(optional)
 msgid ", ..."
 msgstr ", ..."
 
-#: plpgsql.xml:1715(optional) plpgsql.xml:3005(optional)
+#: plpgsql.xml:1733(optional) plpgsql.xml:3023(optional)
 msgid "USING <placeholder-1/> <placeholder-2/>"
 msgstr "USING <placeholder-1/> <placeholder-2/>"
 
-#: plpgsql.xml:1712(synopsis)
+#: plpgsql.xml:1730(synopsis)
 #, no-wrap
 msgid ""
 "RETURN NEXT <placeholder-1/>;\n"
@@ -2832,7 +2868,7 @@ msgstr ""
 "RETURN QUERY <placeholder-2/>;\n"
 "RETURN QUERY EXECUTE <placeholder-3/> <placeholder-4/>;"
 
-#: plpgsql.xml:1718(para)
+#: plpgsql.xml:1736(para)
 msgid ""
 "When a <application>PL/pgSQL</application> function is declared to return "
 "<literal>SETOF <replaceable>sometype</replaceable></literal>, the procedure "
@@ -2861,7 +2897,7 @@ msgstr ""
 "command> можно свободно смешивать в теле функции, в этом случае их "
 "результаты будут объединены."
 
-#: plpgsql.xml:1736(para)
+#: plpgsql.xml:1754(para)
 msgid ""
 "<command>RETURN NEXT</command> and <command>RETURN QUERY</command> do not "
 "actually return from the function &mdash; they simply append zero or more "
@@ -2880,7 +2916,7 @@ msgstr ""
 "используется <command>RETURN</command>, обязательно без аргументов (или "
 "можно просто дождаться окончания выполнения функции)."
 
-#: plpgsql.xml:1749(para)
+#: plpgsql.xml:1767(para)
 msgid ""
 "<command>RETURN QUERY</command> has a variant <command>RETURN QUERY EXECUTE</"
 "command>, which specifies the query to be executed dynamically. Parameter "
@@ -2893,7 +2929,7 @@ msgstr ""
 "текст запроса можно добавить параметры, используя <literal>USING</literal>, "
 "также как и с командой <command>EXECUTE</command>."
 
-#: plpgsql.xml:1757(para)
+#: plpgsql.xml:1775(para)
 msgid ""
 "If you declared the function with output parameters, write just "
 "<command>RETURN NEXT</command> with no expression. On each execution, the "
@@ -2916,7 +2952,7 @@ msgstr ""
 "replaceable>, то <literal>RETURNS SETOF <replaceable>некий_тип</"
 "replaceable></literal>."
 
-#: plpgsql.xml:1774(programlisting)
+#: plpgsql.xml:1792(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE foo (fooid INT, foosubid INT, fooname TEXT);\n"
@@ -2963,13 +2999,13 @@ msgstr ""
 "\n"
 "SELECT * FROM get_all_foo();"
 
-#: plpgsql.xml:1770(para)
+#: plpgsql.xml:1788(para)
 msgid ""
 "Here is an example of a function using <command>RETURN NEXT</command>: "
 "<placeholder-1/>"
 msgstr "Пример использования <command>RETURN NEXT</command>: <placeholder-1/>"
 
-#: plpgsql.xml:1803(programlisting)
+#: plpgsql.xml:1821(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION get_available_flightid(date) RETURNS SETOF integer AS\n"
@@ -3017,13 +3053,13 @@ msgstr ""
 "-- Возвращает доступные рейсы, либо вызывает исключение\n"
 "SELECT * FROM get_available_flightid(CURRENT_DATE);"
 
-#: plpgsql.xml:1799(para)
+#: plpgsql.xml:1817(para)
 msgid ""
 "Here is an example of a function using <command>RETURN QUERY</command>: "
 "<placeholder-1/>"
 msgstr "Пример использования <command>RETURN QUERY</command>: <placeholder-1/>"
 
-#: plpgsql.xml:1830(para)
+#: plpgsql.xml:1848(para)
 msgid ""
 "The current implementation of <command>RETURN NEXT</command> and "
 "<command>RETURN QUERY</command> stores the entire result set before "
@@ -3049,31 +3085,31 @@ msgstr ""
 "свободной памяти администраторы должны рассмотреть возможность увеличения "
 "значения данного параметра."
 
-#: plpgsql.xml:1852(title)
+#: plpgsql.xml:1870(title)
 msgid "Conditionals"
 msgstr "Условные операторы"
 
-#: plpgsql.xml:1860(literal)
+#: plpgsql.xml:1878(literal)
 msgid "IF ... THEN ... END IF"
 msgstr "IF ... THEN ... END IF"
 
-#: plpgsql.xml:1863(literal)
+#: plpgsql.xml:1881(literal)
 msgid "IF ... THEN ... ELSE ... END IF"
 msgstr "IF ... THEN ... ELSE ... END IF"
 
-#: plpgsql.xml:1866(literal)
+#: plpgsql.xml:1884(literal)
 msgid "IF ... THEN ... ELSIF ... THEN ... ELSE ... END IF"
 msgstr "IF ... THEN ... ELSIF ... THEN ... ELSE ... END IF"
 
-#: plpgsql.xml:1873(literal)
+#: plpgsql.xml:1891(literal)
 msgid "CASE ... WHEN ... THEN ... ELSE ... END CASE"
 msgstr "CASE ... WHEN ... THEN ... ELSE ... END CASE"
 
-#: plpgsql.xml:1876(literal)
+#: plpgsql.xml:1894(literal)
 msgid "CASE WHEN ... THEN ... ELSE ... END CASE"
 msgstr "CASE WHEN ... THEN ... ELSE ... END CASE"
 
-#: plpgsql.xml:1854(para)
+#: plpgsql.xml:1872(para)
 msgid ""
 "<command>IF</command> and <command>CASE</command> statements let you execute "
 "alternative commands based on certain conditions. <application>PL/pgSQL</"
@@ -3085,30 +3121,30 @@ msgstr ""
 "pgSQL</application> поддерживает три формы <command>IF</command>: "
 "<placeholder-1/> и две формы <command>CASE</command>: <placeholder-2/>"
 
-#: plpgsql.xml:1882(literal)
+#: plpgsql.xml:1900(literal)
 msgid "IF-THEN"
 msgstr "IF-THEN"
 
-#: plpgsql.xml:1885(replaceable) plpgsql.xml:1912(replaceable)
-#: plpgsql.xml:1953(replaceable) plpgsql.xml:1955(replaceable)
-#: plpgsql.xml:1957(replaceable) plpgsql.xml:2071(replaceable)
-#: plpgsql.xml:2073(replaceable) plpgsql.xml:2162(replaceable)
-#: plpgsql.xml:2234(replaceable) plpgsql.xml:2284(replaceable)
+#: plpgsql.xml:1903(replaceable) plpgsql.xml:1930(replaceable)
+#: plpgsql.xml:1971(replaceable) plpgsql.xml:1973(replaceable)
+#: plpgsql.xml:1975(replaceable) plpgsql.xml:2089(replaceable)
+#: plpgsql.xml:2091(replaceable) plpgsql.xml:2180(replaceable)
+#: plpgsql.xml:2252(replaceable) plpgsql.xml:2302(replaceable)
 msgid "boolean-expression"
 msgstr "логическое-выражение"
 
-#: plpgsql.xml:1886(replaceable) plpgsql.xml:1913(replaceable)
-#: plpgsql.xml:1915(replaceable) plpgsql.xml:1954(replaceable)
-#: plpgsql.xml:1956(replaceable) plpgsql.xml:1958(replaceable)
-#: plpgsql.xml:1961(replaceable) plpgsql.xml:2029(replaceable)
-#: plpgsql.xml:2031(replaceable) plpgsql.xml:2034(replaceable)
-#: plpgsql.xml:2072(replaceable) plpgsql.xml:2074(replaceable)
-#: plpgsql.xml:2077(replaceable) plpgsql.xml:2139(replaceable)
-#: plpgsql.xml:2285(replaceable) plpgsql.xml:2317(replaceable)
+#: plpgsql.xml:1904(replaceable) plpgsql.xml:1931(replaceable)
+#: plpgsql.xml:1933(replaceable) plpgsql.xml:1972(replaceable)
+#: plpgsql.xml:1974(replaceable) plpgsql.xml:1976(replaceable)
+#: plpgsql.xml:1979(replaceable) plpgsql.xml:2047(replaceable)
+#: plpgsql.xml:2049(replaceable) plpgsql.xml:2052(replaceable)
+#: plpgsql.xml:2090(replaceable) plpgsql.xml:2092(replaceable)
+#: plpgsql.xml:2095(replaceable) plpgsql.xml:2157(replaceable)
+#: plpgsql.xml:2303(replaceable) plpgsql.xml:2335(replaceable)
 msgid "statements"
 msgstr "операторы"
 
-#: plpgsql.xml:1884(synopsis)
+#: plpgsql.xml:1902(synopsis)
 #, no-wrap
 msgid ""
 "IF <placeholder-1/> THEN\n"
@@ -3119,7 +3155,7 @@ msgstr ""
 "    <placeholder-2/>\n"
 "END IF;"
 
-#: plpgsql.xml:1890(para)
+#: plpgsql.xml:1908(para)
 msgid ""
 "<literal>IF-THEN</literal> statements are the simplest form of <literal>IF</"
 "literal>. The statements between <literal>THEN</literal> and <literal>END "
@@ -3131,7 +3167,7 @@ msgstr ""
 "выполняются, если условие (<replaceable>логическое-выражение</replaceable>) "
 "истинно. В противном случае они опускаются."
 
-#: plpgsql.xml:1900(programlisting)
+#: plpgsql.xml:1918(programlisting)
 #, no-wrap
 msgid ""
 "IF v_user_id &lt;&gt; 0 THEN\n"
@@ -3142,15 +3178,15 @@ msgstr ""
 "    UPDATE users SET email = v_email WHERE user_id = v_user_id;\n"
 "END IF;"
 
-#: plpgsql.xml:1898(para)
+#: plpgsql.xml:1916(para)
 msgid "Example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: plpgsql.xml:1909(literal)
+#: plpgsql.xml:1927(literal)
 msgid "IF-THEN-ELSE"
 msgstr "IF-THEN-ELSE"
 
-#: plpgsql.xml:1911(synopsis)
+#: plpgsql.xml:1929(synopsis)
 #, no-wrap
 msgid ""
 "IF <placeholder-1/> THEN\n"
@@ -3165,7 +3201,7 @@ msgstr ""
 "    <placeholder-3/>\n"
 "END IF;"
 
-#: plpgsql.xml:1919(para)
+#: plpgsql.xml:1937(para)
 msgid ""
 "<literal>IF-THEN-ELSE</literal> statements add to <literal>IF-THEN</literal> "
 "by letting you specify an alternative set of statements that should be "
@@ -3176,7 +3212,7 @@ msgstr ""
 "возможность указать альтернативный набор операторов, которые будут "
 "выполнены, если условие не истинно (в том числе, если условие NULL)."
 
-#: plpgsql.xml:1929(programlisting)
+#: plpgsql.xml:1947(programlisting)
 #, no-wrap
 msgid ""
 "IF parentid IS NULL OR parentid = ''\n"
@@ -3193,7 +3229,7 @@ msgstr ""
 "    RETURN hp_true_filename(parentid) || '/' || fullname;\n"
 "END IF;"
 
-#: plpgsql.xml:1938(programlisting)
+#: plpgsql.xml:1956(programlisting)
 #, no-wrap
 msgid ""
 "IF v_count &gt; 0 THEN\n"
@@ -3210,28 +3246,28 @@ msgstr ""
 "    RETURN 'f';\n"
 "END IF;"
 
-#: plpgsql.xml:1927(para)
+#: plpgsql.xml:1945(para)
 msgid "Examples: <placeholder-1/> <placeholder-2/>"
 msgstr "Примеры: <placeholder-1/> <placeholder-2/>"
 
-#: plpgsql.xml:1950(literal)
+#: plpgsql.xml:1968(literal)
 msgid "IF-THEN-ELSIF"
 msgstr "IF-THEN-ELSIF"
 
-#: plpgsql.xml:1957(optional)
+#: plpgsql.xml:1975(optional)
 msgid "ELSIF <placeholder-1/> THEN <placeholder-2/> ..."
 msgstr "ELSIF <placeholder-1/> THEN <placeholder-2/> ..."
 
-#: plpgsql.xml:1955(optional)
+#: plpgsql.xml:1973(optional)
 msgid "ELSIF <placeholder-1/> THEN <placeholder-2/> <placeholder-3/>"
 msgstr "ELSIF <placeholder-1/> THEN <placeholder-2/> <placeholder-3/>"
 
-#: plpgsql.xml:1960(optional) plpgsql.xml:2033(optional)
-#: plpgsql.xml:2076(optional)
+#: plpgsql.xml:1978(optional) plpgsql.xml:2051(optional)
+#: plpgsql.xml:2094(optional)
 msgid "ELSE <placeholder-1/>"
 msgstr "ELSE <placeholder-1/>"
 
-#: plpgsql.xml:1952(synopsis)
+#: plpgsql.xml:1970(synopsis)
 #, no-wrap
 msgid ""
 "IF <placeholder-1/> THEN\n"
@@ -3246,7 +3282,7 @@ msgstr ""
 "<placeholder-4/>\n"
 "END IF;"
 
-#: plpgsql.xml:1965(para)
+#: plpgsql.xml:1983(para)
 msgid ""
 "Sometimes there are more than just two alternatives. <literal>IF-THEN-ELSIF</"
 "literal> provides a convenient method of checking several alternatives in "
@@ -3267,7 +3303,7 @@ msgstr ""
 "проверяются.) Если ни одно из условий <literal>IF</literal> не является "
 "истинным, то выполняется блок <literal>ELSE</literal> (если присутствует)."
 
-#: plpgsql.xml:1981(programlisting)
+#: plpgsql.xml:1999(programlisting)
 #, no-wrap
 msgid ""
 "IF number = 0 THEN\n"
@@ -3292,11 +3328,11 @@ msgstr ""
 "    result := 'NULL';\n"
 "END IF;"
 
-#: plpgsql.xml:1978(para) plpgsql.xml:2095(para) plpgsql.xml:2806(para)
+#: plpgsql.xml:1996(para) plpgsql.xml:2113(para) plpgsql.xml:2824(para)
 msgid "Here is an example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: plpgsql.xml:1995(para)
+#: plpgsql.xml:2013(para)
 msgid ""
 "The key word <literal>ELSIF</literal> can also be spelled <literal>ELSEIF</"
 "literal>."
@@ -3304,7 +3340,7 @@ msgstr ""
 "Вместо ключевого слова <literal>ELSIF</literal> можно использовать "
 "<literal>ELSEIF</literal>."
 
-#: plpgsql.xml:2005(programlisting)
+#: plpgsql.xml:2023(programlisting)
 #, no-wrap
 msgid ""
 "IF demo_row.sex = 'm' THEN\n"
@@ -3323,7 +3359,7 @@ msgstr ""
 "    END IF;\n"
 "END IF;"
 
-#: plpgsql.xml:2000(para)
+#: plpgsql.xml:2018(para)
 msgid ""
 "An alternative way of accomplishing the same task is to nest <literal>IF-"
 "THEN-ELSE</literal> statements, as in the following example: <placeholder-1/>"
@@ -3331,7 +3367,7 @@ msgstr ""
 "Другой вариант сделать то же самое, это использование вложенных операторов "
 "<literal>IF-THEN-ELSE</literal>, как в следующем примере: <placeholder-1/>"
 
-#: plpgsql.xml:2016(para)
+#: plpgsql.xml:2034(para)
 msgid ""
 "However, this method requires writing a matching <literal>END IF</literal> "
 "for each <literal>IF</literal>, so it is much more cumbersome than using "
@@ -3341,27 +3377,27 @@ msgstr ""
 "каждого <literal>IF</literal>, что при наличии нескольких альтернатив делает "
 "код более громоздким, чем использование <literal>ELSIF</literal>."
 
-#: plpgsql.xml:2024(title)
+#: plpgsql.xml:2042(title)
 msgid "Simple <literal>CASE</literal>"
 msgstr "Простой <literal>CASE</literal>"
 
-#: plpgsql.xml:2027(replaceable)
+#: plpgsql.xml:2045(replaceable)
 msgid "search-expression"
 msgstr "выражение-поиска"
 
-#: plpgsql.xml:2028(optional) plpgsql.xml:2030(optional)
+#: plpgsql.xml:2046(optional) plpgsql.xml:2048(optional)
 msgid "..."
 msgstr "..."
 
-#: plpgsql.xml:2028(optional) plpgsql.xml:2030(optional)
+#: plpgsql.xml:2046(optional) plpgsql.xml:2048(optional)
 msgid ", <placeholder-1/> <placeholder-2/>"
 msgstr ", <placeholder-1/> <placeholder-2/>"
 
-#: plpgsql.xml:2030(optional)
+#: plpgsql.xml:2048(optional)
 msgid "WHEN <placeholder-1/> <placeholder-2/> THEN <placeholder-3/> ..."
 msgstr "WHEN <placeholder-1/> <placeholder-2/> THEN <placeholder-3/> ..."
 
-#: plpgsql.xml:2026(synopsis)
+#: plpgsql.xml:2044(synopsis)
 #, no-wrap
 msgid ""
 "CASE <placeholder-1/>\n"
@@ -3378,7 +3414,7 @@ msgstr ""
 "  <placeholder-6/>\n"
 "END CASE;"
 
-#: plpgsql.xml:2038(para)
+#: plpgsql.xml:2056(para)
 msgid ""
 "The simple form of <command>CASE</command> provides conditional execution "
 "based on equality of operands. The <replaceable>search-expression</"
@@ -3404,7 +3440,7 @@ msgstr ""
 "Но если <literal>ELSE</literal> нет, то вызывается исключение "
 "<literal>CASE_NOT_FOUND</literal>."
 
-#: plpgsql.xml:2055(programlisting)
+#: plpgsql.xml:2073(programlisting)
 #, no-wrap
 msgid ""
 "CASE x\n"
@@ -3421,19 +3457,19 @@ msgstr ""
 "        msg := 'значение, отличное от один или два';\n"
 "END CASE;"
 
-#: plpgsql.xml:2052(para)
+#: plpgsql.xml:2070(para)
 msgid "Here is a simple example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: plpgsql.xml:2067(title)
+#: plpgsql.xml:2085(title)
 msgid "Searched <literal>CASE</literal>"
 msgstr "<literal>CASE</literal> с перебором условий"
 
-#: plpgsql.xml:2073(optional)
+#: plpgsql.xml:2091(optional)
 msgid "WHEN <placeholder-1/> THEN <placeholder-2/> ..."
 msgstr "WHEN <placeholder-1/> THEN <placeholder-2/> ..."
 
-#: plpgsql.xml:2069(synopsis)
+#: plpgsql.xml:2087(synopsis)
 #, no-wrap
 msgid ""
 "CASE\n"
@@ -3450,7 +3486,7 @@ msgstr ""
 "  <placeholder-4/>\n"
 "END CASE;"
 
-#: plpgsql.xml:2081(para)
+#: plpgsql.xml:2099(para)
 msgid ""
 "The searched form of <command>CASE</command> provides conditional execution "
 "based on truth of Boolean expressions. Each <literal>WHEN</literal> clause's "
@@ -3474,7 +3510,7 @@ msgstr ""
 "<literal>ELSE</literal>. Но если <literal>ELSE</literal> нет, то вызывается "
 "исключение <literal>CASE_NOT_FOUND</literal>."
 
-#: plpgsql.xml:2098(programlisting)
+#: plpgsql.xml:2116(programlisting)
 #, no-wrap
 msgid ""
 "CASE\n"
@@ -3491,7 +3527,7 @@ msgstr ""
 "        msg := 'значение в диапазоне между 11 и 20';\n"
 "END CASE;"
 
-#: plpgsql.xml:2108(para)
+#: plpgsql.xml:2126(para)
 msgid ""
 "This form of <command>CASE</command> is entirely equivalent to <literal>IF-"
 "THEN-ELSIF</literal>, except for the rule that reaching an omitted "
@@ -3502,15 +3538,15 @@ msgstr ""
 "отсутствии <literal>ELSE</literal>, <literal>IF-THEN-ELSIF</literal> ничего "
 "не делает, а <command>CASE</command> вызывает ошибку."
 
-#: plpgsql.xml:2119(title)
+#: plpgsql.xml:2137(title)
 msgid "Simple Loops"
 msgstr "Простые циклы"
 
-#: plpgsql.xml:2121(indexterm)
+#: plpgsql.xml:2139(indexterm)
 msgid "<primary>loop</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>цикл</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2126(para)
+#: plpgsql.xml:2144(para)
 msgid ""
 "With the <literal>LOOP</literal>, <literal>EXIT</literal>, "
 "<literal>CONTINUE</literal>, <literal>WHILE</literal>, <literal>FOR</"
@@ -3523,23 +3559,23 @@ msgstr ""
 "literal> и <literal>FOREACH</literal> позволяют повторить серию команд в "
 "функции на <application>PL/pgSQL</application>."
 
-#: plpgsql.xml:2134(literal)
+#: plpgsql.xml:2152(literal)
 msgid "LOOP"
 msgstr "LOOP"
 
-#: plpgsql.xml:2137(replaceable) plpgsql.xml:2140(replaceable)
-#: plpgsql.xml:2162(replaceable) plpgsql.xml:2234(replaceable)
-#: plpgsql.xml:2283(replaceable) plpgsql.xml:2286(replaceable)
-#: plpgsql.xml:2315(replaceable) plpgsql.xml:2318(replaceable)
+#: plpgsql.xml:2155(replaceable) plpgsql.xml:2158(replaceable)
+#: plpgsql.xml:2180(replaceable) plpgsql.xml:2252(replaceable)
+#: plpgsql.xml:2301(replaceable) plpgsql.xml:2304(replaceable)
+#: plpgsql.xml:2333(replaceable) plpgsql.xml:2336(replaceable)
 msgid "label"
 msgstr "метка"
 
-#: plpgsql.xml:2137(optional) plpgsql.xml:2283(optional)
-#: plpgsql.xml:2315(optional)
+#: plpgsql.xml:2155(optional) plpgsql.xml:2301(optional)
+#: plpgsql.xml:2333(optional)
 msgid "&lt;&lt;<placeholder-1/>&gt;&gt;"
 msgstr "&lt;&lt;<placeholder-1/>&gt;&gt;"
 
-#: plpgsql.xml:2136(synopsis)
+#: plpgsql.xml:2154(synopsis)
 #, no-wrap
 msgid ""
 "<placeholder-1/>\n"
@@ -3552,7 +3588,7 @@ msgstr ""
 "    <placeholder-2/>\n"
 "END LOOP <optional> <placeholder-3/> </optional>;"
 
-#: plpgsql.xml:2143(para)
+#: plpgsql.xml:2161(para)
 msgid ""
 "<literal>LOOP</literal> defines an unconditional loop that is repeated "
 "indefinitely until terminated by an <literal>EXIT</literal> or "
@@ -3568,24 +3604,24 @@ msgstr ""
 "<literal>CONTINUE</literal>, чтобы указать, к какому циклу эти операторы "
 "относятся."
 
-#: plpgsql.xml:2154(literal)
+#: plpgsql.xml:2172(literal)
 msgid "EXIT"
 msgstr "EXIT"
 
-#: plpgsql.xml:2156(indexterm)
+#: plpgsql.xml:2174(indexterm)
 msgid "<primary>EXIT</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>EXIT</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2162(optional) plpgsql.xml:2234(optional)
+#: plpgsql.xml:2180(optional) plpgsql.xml:2252(optional)
 msgid "WHEN <placeholder-1/>"
 msgstr "WHEN <placeholder-1/>"
 
-#: plpgsql.xml:2161(synopsis)
+#: plpgsql.xml:2179(synopsis)
 #, no-wrap
 msgid "EXIT <optional> <placeholder-1/> </optional> <placeholder-2/>;"
 msgstr "EXIT <optional> <placeholder-1/> </optional> <placeholder-2/>;"
 
-#: plpgsql.xml:2165(para)
+#: plpgsql.xml:2183(para)
 msgid ""
 "If no <replaceable>label</replaceable> is given, the innermost loop is "
 "terminated and the statement following <literal>END LOOP</literal> is "
@@ -3602,7 +3638,7 @@ msgstr ""
 "переходит к следующему оператору после соответствующего <literal>END</"
 "literal>."
 
-#: plpgsql.xml:2175(para)
+#: plpgsql.xml:2193(para)
 msgid ""
 "If <literal>WHEN</literal> is specified, the loop exit occurs only if "
 "<replaceable>boolean-expression</replaceable> is true. Otherwise, control "
@@ -3612,7 +3648,7 @@ msgstr ""
 "<replaceable>логическое-выражение</replaceable> истинно. В противном случае "
 "управление переходит к оператору, следующему за <literal>EXIT</literal>."
 
-#: plpgsql.xml:2181(para)
+#: plpgsql.xml:2199(para)
 msgid ""
 "<literal>EXIT</literal> can be used with all types of loops; it is not "
 "limited to use with unconditional loops."
@@ -3620,7 +3656,7 @@ msgstr ""
 "<literal>EXIT</literal> можно использовать со всеми типами циклов, не только "
 "с безусловным."
 
-#: plpgsql.xml:2186(para)
+#: plpgsql.xml:2204(para)
 msgid ""
 "When used with a <literal>BEGIN</literal> block, <literal>EXIT</literal> "
 "passes control to the next statement after the end of the block. Note that a "
@@ -3639,7 +3675,7 @@ msgstr ""
 "использовать <literal>EXIT</literal> без <replaceable>метки</replaceable> "
 "для прекращения работы текущего блока.)"
 
-#: plpgsql.xml:2200(programlisting)
+#: plpgsql.xml:2218(programlisting)
 #, no-wrap
 msgid ""
 "LOOP\n"
@@ -3684,20 +3720,20 @@ msgstr ""
 "    -- вычисления не будут выполнены, если stocks &gt; 100000\n"
 "END;"
 
-#: plpgsql.xml:2226(literal)
+#: plpgsql.xml:2244(literal)
 msgid "CONTINUE"
 msgstr "CONTINUE"
 
-#: plpgsql.xml:2228(indexterm)
+#: plpgsql.xml:2246(indexterm)
 msgid "<primary>CONTINUE</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>CONTINUE</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2233(synopsis)
+#: plpgsql.xml:2251(synopsis)
 #, no-wrap
 msgid "CONTINUE <optional> <placeholder-1/> </optional> <placeholder-2/>;"
 msgstr "CONTINUE <optional> <placeholder-1/> </optional> <placeholder-2/>;"
 
-#: plpgsql.xml:2237(para)
+#: plpgsql.xml:2255(para)
 msgid ""
 "If no <replaceable>label</replaceable> is given, the next iteration of the "
 "innermost loop is begun. That is, all statements remaining in the loop body "
@@ -3713,7 +3749,7 @@ msgstr ""
 "<replaceable>метка</replaceable> присутствует, то она указывает на метку "
 "цикла, выполнение которого будет продолжено."
 
-#: plpgsql.xml:2248(para)
+#: plpgsql.xml:2266(para)
 msgid ""
 "If <literal>WHEN</literal> is specified, the next iteration of the loop is "
 "begun only if <replaceable>boolean-expression</replaceable> is true. "
@@ -3724,7 +3760,7 @@ msgstr ""
 "В противном случае управление переходит к оператору, следующему за "
 "<literal>CONTINUE</literal>."
 
-#: plpgsql.xml:2255(para)
+#: plpgsql.xml:2273(para)
 msgid ""
 "<literal>CONTINUE</literal> can be used with all types of loops; it is not "
 "limited to use with unconditional loops."
@@ -3732,7 +3768,7 @@ msgstr ""
 "<literal>CONTINUE</literal> можно использовать со всеми типами циклов, не "
 "только с безусловным."
 
-#: plpgsql.xml:2262(programlisting)
+#: plpgsql.xml:2280(programlisting)
 #, no-wrap
 msgid ""
 "LOOP\n"
@@ -3749,15 +3785,15 @@ msgstr ""
 "    -- Вычисления для count в диапазоне 50 .. 100\n"
 "END LOOP;"
 
-#: plpgsql.xml:2275(literal)
+#: plpgsql.xml:2293(literal)
 msgid "WHILE"
 msgstr "WHILE"
 
-#: plpgsql.xml:2277(indexterm)
+#: plpgsql.xml:2295(indexterm)
 msgid "<primary>WHILE</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>WHILE</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2282(synopsis)
+#: plpgsql.xml:2300(synopsis)
 #, no-wrap
 msgid ""
 "<placeholder-1/>\n"
@@ -3770,7 +3806,7 @@ msgstr ""
 "    <placeholder-3/>\n"
 "END LOOP <optional> <placeholder-4/> </optional>;"
 
-#: plpgsql.xml:2289(para)
+#: plpgsql.xml:2307(para)
 msgid ""
 "The <literal>WHILE</literal> statement repeats a sequence of statements so "
 "long as the <replaceable>boolean-expression</replaceable> evaluates to true. "
@@ -3780,7 +3816,7 @@ msgstr ""
 "<replaceable>логическое-выражение</replaceable>. Выражение проверяется "
 "непосредственно перед каждым входом в тело цикла."
 
-#: plpgsql.xml:2299(programlisting)
+#: plpgsql.xml:2317(programlisting)
 #, no-wrap
 msgid ""
 "WHILE amount_owed &gt; 0 AND gift_certificate_balance &gt; 0 LOOP\n"
@@ -3799,23 +3835,23 @@ msgstr ""
 "    -- здесь вычисления\n"
 "END LOOP;"
 
-#: plpgsql.xml:2297(para)
+#: plpgsql.xml:2315(para)
 msgid "For example: <placeholder-1/>"
 msgstr "Пример: <placeholder-1/>"
 
-#: plpgsql.xml:2312(title)
+#: plpgsql.xml:2330(title)
 msgid "<literal>FOR</literal> (Integer Variant)"
 msgstr "<literal>FOR</literal> (целочисленный вариант)"
 
-#: plpgsql.xml:2316(optional)
+#: plpgsql.xml:2334(optional)
 msgid "REVERSE"
 msgstr "REVERSE"
 
-#: plpgsql.xml:2316(optional)
+#: plpgsql.xml:2334(optional)
 msgid "BY <placeholder-1/>"
 msgstr "BY <placeholder-1/>"
 
-#: plpgsql.xml:2314(synopsis)
+#: plpgsql.xml:2332(synopsis)
 #, no-wrap
 msgid ""
 "<placeholder-1/>\n"
@@ -3828,7 +3864,7 @@ msgstr ""
 "    <placeholder-7/>\n"
 "END LOOP <optional> <placeholder-8/> </optional>;"
 
-#: plpgsql.xml:2321(para)
+#: plpgsql.xml:2339(para)
 msgid ""
 "This form of <literal>FOR</literal> creates a loop that iterates over a "
 "range of integer values. The variable <replaceable>name</replaceable> is "
@@ -3852,7 +3888,7 @@ msgstr ""
 "цикл. Если указано <literal>REVERSE</literal>, то после каждой итерации "
 "величина шага вычитается, а не добавляется."
 
-#: plpgsql.xml:2338(programlisting)
+#: plpgsql.xml:2356(programlisting)
 #, no-wrap
 msgid ""
 "FOR i IN 1..10 LOOP\n"
@@ -3879,11 +3915,11 @@ msgstr ""
 "    -- внутри цикла переменная i будет иметь значения 10,8,6,4,2\n"
 "END LOOP;"
 
-#: plpgsql.xml:2336(para)
+#: plpgsql.xml:2354(para)
 msgid "Some examples of integer <literal>FOR</literal> loops: <placeholder-1/>"
 msgstr "Примеры целочисленного <literal>FOR</literal>: <placeholder-1/>"
 
-#: plpgsql.xml:2353(para)
+#: plpgsql.xml:2371(para)
 msgid ""
 "If the lower bound is greater than the upper bound (or less than, in the "
 "<literal>REVERSE</literal> case), the loop body is not executed at all. No "
@@ -3893,7 +3929,7 @@ msgstr ""
 "<literal>REVERSE</literal>), то тело цикла не выполняется вообще. При этом "
 "ошибка не возникает."
 
-#: plpgsql.xml:2359(para)
+#: plpgsql.xml:2377(para)
 msgid ""
 "If a <replaceable>label</replaceable> is attached to the <literal>FOR</"
 "literal> loop then the integer loop variable can be referenced with a "
@@ -3903,11 +3939,11 @@ msgstr ""
 "replaceable>, к целочисленной переменной цикла можно обращаться по имени, "
 "указывая эту <replaceable>метку</replaceable>."
 
-#: plpgsql.xml:2369(title)
+#: plpgsql.xml:2387(title)
 msgid "Looping Through Query Results"
 msgstr "Цикл по результатам запроса"
 
-#: plpgsql.xml:2386(programlisting)
+#: plpgsql.xml:2404(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION cs_refresh_mviews() RETURNS integer AS $$\n"
@@ -3950,7 +3986,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:2371(para)
+#: plpgsql.xml:2389(para)
 msgid ""
 "Using a different type of <literal>FOR</literal> loop, you can iterate "
 "through the results of a query and manipulate that data accordingly. The "
@@ -3983,7 +4019,7 @@ msgstr ""
 "команде <literal>EXIT</literal>, то последняя присвоенная строка доступна и "
 "после цикла."
 
-#: plpgsql.xml:2412(para)
+#: plpgsql.xml:2430(para)
 msgid ""
 "The <replaceable>query</replaceable> used in this type of <literal>FOR</"
 "literal> statement can be any SQL command that returns rows to the caller: "
@@ -4000,7 +4036,7 @@ msgstr ""
 "того, возможно применение и некоторых служебных команд, например "
 "<command>EXPLAIN</command>."
 
-#: plpgsql.xml:2421(para)
+#: plpgsql.xml:2439(para)
 msgid ""
 "<application>PL/pgSQL</application> variables are substituted into the query "
 "text, and the query plan is cached for possible re-use, as discussed in "
@@ -4013,7 +4049,7 @@ msgstr ""
 "\"plpgsql-var-subst\"/> и <xref remap=\"6\" linkend=\"plpgsql-plan-caching\"/"
 ">."
 
-#: plpgsql.xml:2428(para)
+#: plpgsql.xml:2446(para)
 msgid ""
 "The <literal>FOR-IN-EXECUTE</literal> statement is another way to iterate "
 "over rows: <synopsis>\n"
@@ -4050,7 +4086,7 @@ msgstr ""
 "параметров могут быть добавлены в команду с использованием <literal>USING</"
 "literal>."
 
-#: plpgsql.xml:2446(para)
+#: plpgsql.xml:2464(para)
 msgid ""
 "Another way to specify the query whose results should be iterated through is "
 "to declare it as a cursor. This is described in <xref linkend=\"plpgsql-"
@@ -4059,11 +4095,11 @@ msgstr ""
 "Ещё один способ организовать цикл по результатам запроса это объявить "
 "курсор. Описание в <xref remap=\"6\" linkend=\"plpgsql-cursor-for-loop\"/>."
 
-#: plpgsql.xml:2454(title)
+#: plpgsql.xml:2472(title)
 msgid "Looping Through Arrays"
 msgstr "Цикл по элементам массива"
 
-#: plpgsql.xml:2456(para)
+#: plpgsql.xml:2474(para)
 msgid ""
 "The <literal>FOREACH</literal> loop is much like a <literal>FOR</literal> "
 "loop, but instead of iterating through the rows returned by a SQL query, it "
@@ -4093,7 +4129,7 @@ msgstr ""
 "END LOOP <optional> <replaceable>метка</replaceable> </optional>;\n"
 "</synopsis>"
 
-#: plpgsql.xml:2482(programlisting)
+#: plpgsql.xml:2500(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION sum(int[]) RETURNS int8 AS $$\n"
@@ -4122,7 +4158,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:2473(para)
+#: plpgsql.xml:2491(para)
 msgid ""
 "Without <literal>SLICE</literal>, or if <literal>SLICE 0</literal> is "
 "specified, the loop iterates through individual elements of the array "
@@ -4148,7 +4184,7 @@ msgstr ""
 "этом случае переменным присваиваются значения из последовательных столбцов "
 "составного элемента массива."
 
-#: plpgsql.xml:2515(programlisting)
+#: plpgsql.xml:2533(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION scan_rows(int[]) RETURNS void AS $$\n"
@@ -4187,7 +4223,7 @@ msgstr ""
 "NOTICE:  row = {7,8,9}\n"
 "NOTICE:  row = {10,11,12}"
 
-#: plpgsql.xml:2505(para)
+#: plpgsql.xml:2523(para)
 msgid ""
 "With a positive <literal>SLICE</literal> value, <literal>FOREACH</literal> "
 "iterates through slices of the array rather than single elements. The "
@@ -4206,15 +4242,15 @@ msgstr ""
 "размерность каждого среза задаётся значением <literal>SLICE</literal>. "
 "Пример цикла по одномерным срезам: <placeholder-1/>"
 
-#: plpgsql.xml:2538(title)
+#: plpgsql.xml:2556(title)
 msgid "Trapping Errors"
 msgstr "Обработка ошибок"
 
-#: plpgsql.xml:2540(indexterm)
+#: plpgsql.xml:2558(indexterm)
 msgid "<primary>exceptions</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>исключения</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2545(para)
+#: plpgsql.xml:2563(para)
 msgid ""
 "By default, any error occurring in a <application>PL/pgSQL</application> "
 "function aborts execution of the function, and indeed of the surrounding "
@@ -4259,7 +4295,7 @@ msgstr ""
 "END;\n"
 "</synopsis>"
 
-#: plpgsql.xml:2569(para)
+#: plpgsql.xml:2587(para)
 msgid ""
 "If no error occurs, this form of block simply executes all the "
 "<replaceable>statements</replaceable>, and then control passes to the next "
@@ -4289,7 +4325,7 @@ msgstr ""
 "<literal>EXCEPTION</literal> внешнего блока. Если ошибка так и не была "
 "перехвачена, то обработка функции прекращается."
 
-#: plpgsql.xml:2597(programlisting)
+#: plpgsql.xml:2615(programlisting)
 #, no-wrap
 msgid ""
 "WHEN division_by_zero THEN ...\n"
@@ -4298,7 +4334,7 @@ msgstr ""
 "WHEN division_by_zero THEN ...\n"
 "WHEN SQLSTATE '22012' THEN ..."
 
-#: plpgsql.xml:2587(para)
+#: plpgsql.xml:2605(para)
 msgid ""
 "The <replaceable>condition</replaceable> names can be any of those shown in "
 "<xref linkend=\"errcodes-appendix\"/>. A category name matches any error "
@@ -4319,7 +4355,7 @@ msgstr ""
 "регистра. Условие ошибки также можно задать кодом <literal>SQLSTATE</"
 "literal>; например, эти два варианта равнозначны: <placeholder-1/>"
 
-#: plpgsql.xml:2603(para)
+#: plpgsql.xml:2621(para)
 msgid ""
 "If a new error occurs within the selected <replaceable>handler_statements</"
 "replaceable>, it cannot be caught by this <literal>EXCEPTION</literal> "
@@ -4331,7 +4367,7 @@ msgstr ""
 "<literal>EXCEPTION</literal>. Ошибка передаётся наружу и её можно "
 "перехватить в секции <literal>EXCEPTION</literal> внешнего блока."
 
-#: plpgsql.xml:2617(programlisting)
+#: plpgsql.xml:2635(programlisting)
 #, no-wrap
 msgid ""
 "INSERT INTO mytab(firstname, lastname) VALUES('Tom', 'Jones');\n"
@@ -4356,7 +4392,7 @@ msgstr ""
 "        RETURN x;\n"
 "END;"
 
-#: plpgsql.xml:2610(para)
+#: plpgsql.xml:2628(para)
 msgid ""
 "When an error is caught by an <literal>EXCEPTION</literal> clause, the local "
 "variables of the <application>PL/pgSQL</application> function remain as they "
@@ -4386,7 +4422,7 @@ msgstr ""
 "не будут отменены. В результате, база данных будет содержать <literal>Tom "
 "Jones</literal>, а не <literal>Joe Jones</literal>."
 
-#: plpgsql.xml:2641(para)
+#: plpgsql.xml:2659(para)
 msgid ""
 "A block containing an <literal>EXCEPTION</literal> clause is significantly "
 "more expensive to enter and exit than a block without one. Therefore, don't "
@@ -4396,13 +4432,13 @@ msgstr ""
 "накладные расходы на вход/выход из блока. Поэтому не используйте "
 "<literal>EXCEPTION</literal> без надобности."
 
-#: plpgsql.xml:2649(title)
+#: plpgsql.xml:2667(title)
 msgid "Exceptions with <command>UPDATE</command>/<command>INSERT</command>"
 msgstr ""
 "Обработка исключений для команд <command>UPDATE</command>/<command>INSERT</"
 "command>"
 
-#: plpgsql.xml:2659(programlisting)
+#: plpgsql.xml:2677(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE db (a INT PRIMARY KEY, b TEXT);\n"
@@ -4462,7 +4498,7 @@ msgstr ""
 "SELECT merge_db(1, 'david');\n"
 "SELECT merge_db(1, 'dennis');"
 
-#: plpgsql.xml:2650(para)
+#: plpgsql.xml:2668(para)
 msgid ""
 "This example uses exception handling to perform either <command>UPDATE</"
 "command> or <command>INSERT</command>, as appropriate. It is recommended "
@@ -4492,11 +4528,11 @@ msgstr ""
 "средства, рассмотренные далее, можно сделать код более надёжным, проверяя, "
 "что перехвачена именно ожидаемая ошибка."
 
-#: plpgsql.xml:2701(title)
+#: plpgsql.xml:2719(title)
 msgid "Obtaining Information About an Error"
 msgstr "Получение информации об ошибке"
 
-#: plpgsql.xml:2703(para)
+#: plpgsql.xml:2721(para)
 msgid ""
 "Exception handlers frequently need to identify the specific error that "
 "occurred. There are two ways to get information about the current exception "
@@ -4508,7 +4544,7 @@ msgstr ""
 "application> есть два способа: использование специальных переменных и "
 "команда <command>GET STACKED DIAGNOSTICS</command>."
 
-#: plpgsql.xml:2710(para)
+#: plpgsql.xml:2728(para)
 msgid ""
 "Within an exception handler, the special variable <varname>SQLSTATE</"
 "varname> contains the error code that corresponds to the exception that was "
@@ -4524,7 +4560,7 @@ msgstr ""
 "varname> содержит сообщение об ошибке, связанное с исключением. Эти "
 "переменные являются неопределёнными вне секции <literal>EXCEPTION</literal>."
 
-#: plpgsql.xml:2719(para)
+#: plpgsql.xml:2737(para)
 msgid ""
 "Within an exception handler, one may also retrieve information about the "
 "current exception by using the <command>GET STACKED DIAGNOSTICS</command> "
@@ -4549,87 +4585,87 @@ msgstr ""
 "состояния показаны в <xref remap=\"6\" linkend=\"plpgsql-exception-"
 "diagnostics-values\"/>."
 
-#: plpgsql.xml:2736(title)
+#: plpgsql.xml:2754(title)
 msgid "Error Diagnostics Items"
 msgstr "Элементы диагностики ошибок"
 
-#: plpgsql.xml:2747(literal)
+#: plpgsql.xml:2765(literal)
 msgid "RETURNED_SQLSTATE"
 msgstr "RETURNED_SQLSTATE"
 
-#: plpgsql.xml:2749(entry)
+#: plpgsql.xml:2767(entry)
 msgid "the SQLSTATE error code of the exception"
 msgstr "код исключения, возвращаемый SQLSTATE"
 
-#: plpgsql.xml:2752(literal)
+#: plpgsql.xml:2770(literal)
 msgid "COLUMN_NAME"
 msgstr "COLUMN_NAME"
 
-#: plpgsql.xml:2754(entry)
+#: plpgsql.xml:2772(entry)
 msgid "the name of the column related to exception"
 msgstr "имя столбца, относящегося к исключению"
 
-#: plpgsql.xml:2757(literal)
+#: plpgsql.xml:2775(literal)
 msgid "CONSTRAINT_NAME"
 msgstr "CONSTRAINT_NAME"
 
-#: plpgsql.xml:2759(entry)
+#: plpgsql.xml:2777(entry)
 msgid "the name of the constraint related to exception"
 msgstr "имя ограничения целостности, относящегося к исключению"
 
-#: plpgsql.xml:2762(literal)
+#: plpgsql.xml:2780(literal)
 msgid "PG_DATATYPE_NAME"
 msgstr "PG_DATATYPE_NAME"
 
-#: plpgsql.xml:2764(entry)
+#: plpgsql.xml:2782(entry)
 msgid "the name of the data type related to exception"
 msgstr "имя типа данных, относящегося к исключению"
 
-#: plpgsql.xml:2767(literal)
+#: plpgsql.xml:2785(literal)
 msgid "MESSAGE_TEXT"
 msgstr "MESSAGE_TEXT"
 
-#: plpgsql.xml:2769(entry)
+#: plpgsql.xml:2787(entry)
 msgid "the text of the exception's primary message"
 msgstr "текст основного сообщения исключения"
 
-#: plpgsql.xml:2772(literal)
+#: plpgsql.xml:2790(literal)
 msgid "TABLE_NAME"
 msgstr "TABLE_NAME"
 
-#: plpgsql.xml:2774(entry)
+#: plpgsql.xml:2792(entry)
 msgid "the name of the table related to exception"
 msgstr "имя таблицы, относящейся к исключению"
 
-#: plpgsql.xml:2777(literal)
+#: plpgsql.xml:2795(literal)
 msgid "SCHEMA_NAME"
 msgstr "SCHEMA_NAME"
 
-#: plpgsql.xml:2779(entry)
+#: plpgsql.xml:2797(entry)
 msgid "the name of the schema related to exception"
 msgstr "имя схемы, относящейся к исключению"
 
-#: plpgsql.xml:2782(literal)
+#: plpgsql.xml:2800(literal)
 msgid "PG_EXCEPTION_DETAIL"
 msgstr "PG_EXCEPTION_DETAIL"
 
-#: plpgsql.xml:2784(entry)
+#: plpgsql.xml:2802(entry)
 msgid "the text of the exception's detail message, if any"
 msgstr "текст детального сообщения исключения (если есть)"
 
-#: plpgsql.xml:2787(literal)
+#: plpgsql.xml:2805(literal)
 msgid "PG_EXCEPTION_HINT"
 msgstr "PG_EXCEPTION_HINT"
 
-#: plpgsql.xml:2789(entry)
+#: plpgsql.xml:2807(entry)
 msgid "the text of the exception's hint message, if any"
 msgstr "текст подсказки к исключению (если есть)"
 
-#: plpgsql.xml:2792(literal)
+#: plpgsql.xml:2810(literal)
 msgid "PG_EXCEPTION_CONTEXT"
 msgstr "PG_EXCEPTION_CONTEXT"
 
-#: plpgsql.xml:2794(entry)
+#: plpgsql.xml:2812(entry)
 msgid ""
 "line(s) of text describing the call stack at the time of the exception (see "
 "<xref linkend=\"plpgsql-call-stack\"/>)"
@@ -4637,7 +4673,7 @@ msgstr ""
 "строки текста, описывающие стек вызовов в момент исключения (см. <xref remap="
 "\"4\" linkend=\"plpgsql-call-stack\"/>)"
 
-#: plpgsql.xml:2801(para)
+#: plpgsql.xml:2819(para)
 msgid ""
 "If the exception did not set a value for an item, an empty string will be "
 "returned."
@@ -4645,7 +4681,7 @@ msgstr ""
 "Если исключение не устанавливает значение для идентификатора, то "
 "возвращается пустая строка."
 
-#: plpgsql.xml:2808(programlisting)
+#: plpgsql.xml:2826(programlisting)
 #, no-wrap
 msgid ""
 "DECLARE\n"
@@ -4674,11 +4710,11 @@ msgstr ""
 "                          text_var3 = PG_EXCEPTION_HINT;\n"
 "END;"
 
-#: plpgsql.xml:2827(title)
+#: plpgsql.xml:2845(title)
 msgid "Obtaining Execution Location Information"
 msgstr "Получение информации о месте выполнения"
 
-#: plpgsql.xml:2842(programlisting)
+#: plpgsql.xml:2860(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION outer_func() RETURNS integer AS $$\n"
@@ -4735,7 +4771,7 @@ msgstr ""
 "           1\n"
 "(1 row)"
 
-#: plpgsql.xml:2829(para)
+#: plpgsql.xml:2847(para)
 msgid ""
 "The <command>GET DIAGNOSTICS</command> command, previously described in "
 "<xref linkend=\"plpgsql-statements-diagnostics\"/>, retrieves information "
@@ -4761,7 +4797,7 @@ msgstr ""
 "второй и последующих строках отмечаются функции выше по стеку вызовов. "
 "Например: <placeholder-1/>"
 
-#: plpgsql.xml:2873(para)
+#: plpgsql.xml:2891(para)
 msgid ""
 "<literal>GET STACKED DIAGNOSTICS ... PG_EXCEPTION_CONTEXT</literal> returns "
 "the same sort of stack trace, but describing the location at which an error "
@@ -4771,15 +4807,15 @@ msgstr ""
 "возвращает похожий стек вызовов, но описывает не текущее место, а место, в "
 "котором произошла ошибка."
 
-#: plpgsql.xml:2882(title)
+#: plpgsql.xml:2900(title)
 msgid "Cursors"
 msgstr "Курсоры"
 
-#: plpgsql.xml:2884(indexterm)
+#: plpgsql.xml:2902(indexterm)
 msgid "<primary>cursor</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>курсор</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:2889(para)
+#: plpgsql.xml:2907(para)
 msgid ""
 "Rather than executing a whole query at once, it is possible to set up a "
 "<firstterm>cursor</firstterm> that encapsulates the query, and then read the "
@@ -4803,11 +4839,11 @@ msgstr ""
 "вызывающему получать строки запроса. Это эффективный способ получать большие "
 "наборы строк из функций."
 
-#: plpgsql.xml:2903(title)
+#: plpgsql.xml:2921(title)
 msgid "Declaring Cursor Variables"
 msgstr "Объявление курсорных переменных"
 
-#: plpgsql.xml:2905(para)
+#: plpgsql.xml:2923(para)
 msgid ""
 "All access to cursors in <application>PL/pgSQL</application> goes through "
 "cursor variables, which are always of the special data type <type>refcursor</"
@@ -4850,7 +4886,7 @@ msgstr ""
 "Фактические значения для замены этих имён появятся позже, при открытии "
 "курсора."
 
-#: plpgsql.xml:2930(programlisting)
+#: plpgsql.xml:2948(programlisting)
 #, no-wrap
 msgid ""
 "DECLARE\n"
@@ -4863,7 +4899,7 @@ msgstr ""
 "    curs2 CURSOR FOR SELECT * FROM tenk1;\n"
 "    curs3 CURSOR (key integer) FOR SELECT * FROM tenk1 WHERE unique1 = key;"
 
-#: plpgsql.xml:2928(para)
+#: plpgsql.xml:2946(para)
 msgid ""
 "Some examples: <placeholder-1/> All three of these variables have the data "
 "type <type>refcursor</type>, but the first can be used with any query, while "
@@ -4882,11 +4918,11 @@ msgstr ""
 "несвязанной (<literal>unbound</literal>), так как к ней не привязан никакой "
 "запрос."
 
-#: plpgsql.xml:2948(title)
+#: plpgsql.xml:2966(title)
 msgid "Opening Cursors"
 msgstr "Открытие курсора"
 
-#: plpgsql.xml:2950(para)
+#: plpgsql.xml:2968(para)
 msgid ""
 "Before a cursor can be used to retrieve rows, it must be <firstterm>opened</"
 "firstterm>. (This is the equivalent action to the SQL command "
@@ -4900,7 +4936,7 @@ msgstr ""
 "которых используются для несвязанных курсорных переменных, а третья для "
 "связанных."
 
-#: plpgsql.xml:2959(para)
+#: plpgsql.xml:2977(para)
 msgid ""
 "Bound cursor variables can also be used without explicitly opening the "
 "cursor, via the <command>FOR</command> statement described in <xref linkend="
@@ -4910,28 +4946,28 @@ msgstr ""
 "command> без явного открытия курсора, как описано в <xref remap=\"6\" "
 "linkend=\"plpgsql-cursor-for-loop\"/>."
 
-#: plpgsql.xml:2967(command)
+#: plpgsql.xml:2985(command)
 msgid "OPEN FOR"
 msgstr "OPEN FOR"
 
-#: plpgsql.xml:2970(replaceable) plpgsql.xml:3004(replaceable)
+#: plpgsql.xml:2988(replaceable) plpgsql.xml:3022(replaceable)
 msgid "unbound_cursorvar"
 msgstr "несвязанная_переменная_курсора"
 
-#: plpgsql.xml:2970(optional) plpgsql.xml:3004(optional)
+#: plpgsql.xml:2988(optional) plpgsql.xml:3022(optional)
 msgid "NO"
 msgstr "NO"
 
-#: plpgsql.xml:2970(optional) plpgsql.xml:3004(optional)
+#: plpgsql.xml:2988(optional) plpgsql.xml:3022(optional)
 msgid "<placeholder-1/> SCROLL"
 msgstr "<placeholder-1/> SCROLL"
 
-#: plpgsql.xml:2969(synopsis)
+#: plpgsql.xml:2987(synopsis)
 #, no-wrap
 msgid "OPEN <placeholder-1/> <placeholder-2/> FOR <placeholder-3/>;"
 msgstr "OPEN <placeholder-1/> <placeholder-2/> FOR <placeholder-3/>;"
 
-#: plpgsql.xml:2973(para)
+#: plpgsql.xml:2991(para)
 msgid ""
 "The cursor variable is opened and given the specified query to execute. The "
 "cursor cannot be open already, and it must have been declared as an unbound "
@@ -4961,20 +4997,20 @@ msgstr ""
 "курсора. <literal>SCROLL</literal> и <literal>NO SCROLL</literal> имеют тот "
 "же смысл, что и для связанного курсора."
 
-#: plpgsql.xml:2994(programlisting)
+#: plpgsql.xml:3012(programlisting)
 #, no-wrap
 msgid "OPEN curs1 FOR SELECT * FROM foo WHERE key = mykey;"
 msgstr "OPEN curs1 FOR SELECT * FROM foo WHERE key = mykey;"
 
-#: plpgsql.xml:3001(command)
+#: plpgsql.xml:3019(command)
 msgid "OPEN FOR EXECUTE"
 msgstr "OPEN FOR EXECUTE"
 
-#: plpgsql.xml:3004(replaceable)
+#: plpgsql.xml:3022(replaceable)
 msgid "query_string"
 msgstr "строка_запроса"
 
-#: plpgsql.xml:3003(synopsis)
+#: plpgsql.xml:3021(synopsis)
 #, no-wrap
 msgid ""
 "OPEN <placeholder-1/> <placeholder-2/> FOR EXECUTE <placeholder-3/>\n"
@@ -4983,7 +5019,7 @@ msgstr ""
 "OPEN <placeholder-1/> <placeholder-2/> FOR EXECUTE <placeholder-3/>\n"
 "                                     <placeholder-4/>;"
 
-#: plpgsql.xml:3008(para)
+#: plpgsql.xml:3026(para)
 msgid ""
 "The cursor variable is opened and given the specified query to execute. The "
 "cursor cannot be open already, and it must have been declared as an unbound "
@@ -5010,12 +5046,12 @@ msgstr ""
 "<literal>NO SCROLL</literal> здесь действуют так же, как и со связанным "
 "курсором."
 
-#: plpgsql.xml:3027(programlisting)
+#: plpgsql.xml:3045(programlisting)
 #, no-wrap
 msgid "OPEN curs1 FOR EXECUTE format('SELECT * FROM %I WHERE col1 = $1',tabname) USING keyvalue;"
 msgstr "OPEN curs1 FOR EXECUTE format('SELECT * FROM %I WHERE col1 = $1',tabname) USING keyvalue;"
 
-#: plpgsql.xml:3025(para)
+#: plpgsql.xml:3043(para)
 msgid ""
 "An example: <placeholder-1/> In this example, the table name is inserted "
 "into the query via <function>format()</function>. The comparison value for "
@@ -5027,36 +5063,36 @@ msgstr ""
 "с <literal>col1</literal>, вставляется посредством параметра <literal>USING</"
 "literal>, так что заключать его в апострофы не нужно."
 
-#: plpgsql.xml:3038(title)
+#: plpgsql.xml:3056(title)
 msgid "Opening a Bound Cursor"
 msgstr "Открытие связанного курсора"
 
-#: plpgsql.xml:3041(replaceable)
+#: plpgsql.xml:3059(replaceable)
 msgid "bound_cursorvar"
 msgstr "связанная_переменная_курсора"
 
-#: plpgsql.xml:3041(replaceable)
+#: plpgsql.xml:3059(replaceable)
 msgid "argument_name"
 msgstr "имя_аргумента"
 
-#: plpgsql.xml:3041(optional)
+#: plpgsql.xml:3059(optional)
 msgid "<placeholder-1/> :="
 msgstr "<placeholder-1/> :="
 
-#: plpgsql.xml:3041(replaceable)
+#: plpgsql.xml:3059(replaceable)
 msgid "argument_value"
 msgstr "значение_аргумента"
 
-#: plpgsql.xml:3041(optional)
+#: plpgsql.xml:3059(optional)
 msgid "( <placeholder-1/> <placeholder-2/> <placeholder-3/> )"
 msgstr "( <placeholder-1/> <placeholder-2/> <placeholder-3/> )"
 
-#: plpgsql.xml:3040(synopsis)
+#: plpgsql.xml:3058(synopsis)
 #, no-wrap
 msgid "OPEN <placeholder-1/> <placeholder-2/>;"
 msgstr "OPEN <placeholder-1/> <placeholder-2/>;"
 
-#: plpgsql.xml:3044(para)
+#: plpgsql.xml:3062(para)
 msgid ""
 "This form of <command>OPEN</command> is used to open a cursor variable whose "
 "query was bound to it when it was declared. The cursor cannot be open "
@@ -5070,7 +5106,7 @@ msgstr ""
 "присутствовать только в том случае, если курсор объявлялся с параметрами. "
 "Эти значения будут подставлены в запрос."
 
-#: plpgsql.xml:3052(para)
+#: plpgsql.xml:3070(para)
 msgid ""
 "The query plan for a bound cursor is always considered cacheable; there is "
 "no equivalent of <command>EXECUTE</command> in this case. Notice that "
@@ -5084,7 +5120,7 @@ msgstr ""
 "указаны в этой форме <command>OPEN</command>, возможность прокрутки назад "
 "была определена при объявлении курсора."
 
-#: plpgsql.xml:3060(para)
+#: plpgsql.xml:3078(para)
 msgid ""
 "Argument values can be passed using either <firstterm>positional</firstterm> "
 "or <firstterm>named</firstterm> notation. In positional notation, all "
@@ -5101,7 +5137,7 @@ msgstr ""
 "<xref remap=\"6\" linkend=\"sql-syntax-calling-funcs\"/>. Также разрешается "
 "смешивать позиционную и именную нотации."
 
-#: plpgsql.xml:3072(programlisting)
+#: plpgsql.xml:3090(programlisting)
 #, no-wrap
 msgid ""
 "OPEN curs2;\n"
@@ -5112,13 +5148,13 @@ msgstr ""
 "OPEN curs3(42);\n"
 "OPEN curs3(key := 42);"
 
-#: plpgsql.xml:3070(para)
+#: plpgsql.xml:3088(para)
 msgid ""
 "Examples (these use the cursor declaration examples above): <placeholder-1/>"
 msgstr ""
 "Примеры (здесь используются ранее объявленные курсоры): <placeholder-1/>"
 
-#: plpgsql.xml:3089(programlisting)
+#: plpgsql.xml:3107(programlisting)
 #, no-wrap
 msgid ""
 "DECLARE\n"
@@ -5135,7 +5171,7 @@ msgstr ""
 "    key := 42;\n"
 "    OPEN curs4;"
 
-#: plpgsql.xml:3079(para)
+#: plpgsql.xml:3097(para)
 msgid ""
 "Because variable substitution is done on a bound cursor's query, there are "
 "really two ways to pass values into the cursor: either with an explicit "
@@ -5156,11 +5192,11 @@ msgstr ""
 "command>. Вот ещё один способ получить тот же результат с <literal>curs3</"
 "literal>, как в примере выше: <placeholder-1/>"
 
-#: plpgsql.xml:3102(title)
+#: plpgsql.xml:3120(title)
 msgid "Using Cursors"
 msgstr "Использование курсоров"
 
-#: plpgsql.xml:3104(para)
+#: plpgsql.xml:3122(para)
 msgid ""
 "Once a cursor has been opened, it can be manipulated with the statements "
 "described here."
@@ -5168,7 +5204,7 @@ msgstr ""
 "После того, как курсор был открыт, с ним можно работать при помощи описанных "
 "здесь операторов."
 
-#: plpgsql.xml:3109(para)
+#: plpgsql.xml:3127(para)
 msgid ""
 "These manipulations need not occur in the same function that opened the "
 "cursor to begin with. You can return a <type>refcursor</type> value out of a "
@@ -5186,7 +5222,7 @@ msgstr ""
 "другим переменным с типом <type>refcursor</type> и так далее, при этом "
 "портал не нарушается.)"
 
-#: plpgsql.xml:3119(para)
+#: plpgsql.xml:3137(para)
 msgid ""
 "All portals are implicitly closed at transaction end. Therefore a "
 "<type>refcursor</type> value is usable to reference an open cursor only "
@@ -5196,34 +5232,34 @@ msgstr ""
 "<type>refcursor</type> можно использовать для ссылки на открытый курсор "
 "только до конца транзакции."
 
-#: plpgsql.xml:3126(literal)
+#: plpgsql.xml:3144(literal)
 msgid "FETCH"
 msgstr "FETCH"
 
-#: plpgsql.xml:3129(replaceable) plpgsql.xml:3182(replaceable)
+#: plpgsql.xml:3147(replaceable) plpgsql.xml:3200(replaceable)
 msgid "direction"
 msgstr "направление"
 
-#: plpgsql.xml:3129(optional) plpgsql.xml:3182(optional)
+#: plpgsql.xml:3147(optional) plpgsql.xml:3200(optional)
 msgid "<placeholder-1/> { FROM | IN }"
 msgstr "<placeholder-1/> { FROM | IN }"
 
-#: plpgsql.xml:3129(replaceable) plpgsql.xml:3182(replaceable)
-#: plpgsql.xml:3229(replaceable) plpgsql.xml:3230(replaceable)
-#: plpgsql.xml:3255(replaceable)
+#: plpgsql.xml:3147(replaceable) plpgsql.xml:3200(replaceable)
+#: plpgsql.xml:3247(replaceable) plpgsql.xml:3248(replaceable)
+#: plpgsql.xml:3273(replaceable)
 msgid "cursor"
 msgstr "курсор"
 
-#: plpgsql.xml:3129(replaceable)
+#: plpgsql.xml:3147(replaceable)
 msgid "target"
 msgstr "цель"
 
-#: plpgsql.xml:3128(synopsis)
+#: plpgsql.xml:3146(synopsis)
 #, no-wrap
 msgid "FETCH <placeholder-1/> <placeholder-2/> INTO <placeholder-3/>;"
 msgstr "FETCH <placeholder-1/> <placeholder-2/> INTO <placeholder-3/>;"
 
-#: plpgsql.xml:3132(para)
+#: plpgsql.xml:3150(para)
 msgid ""
 "<command>FETCH</command> retrieves the next row from the cursor into a "
 "target, which might be a row variable, a record variable, or a comma-"
@@ -5241,7 +5277,7 @@ msgstr ""
 "ли получена запись, можно при помощи специальной переменной <literal>FOUND</"
 "literal>."
 
-#: plpgsql.xml:3142(para)
+#: plpgsql.xml:3160(para)
 msgid ""
 "The <replaceable>direction</replaceable> clause can be any of the variants "
 "allowed in the SQL <xref linkend=\"sql-fetch\"/> command except the ones "
@@ -5267,7 +5303,7 @@ msgstr ""
 "перемещения назад, приведут к ошибке, если курсор не был объявлен или открыт "
 "с указанием <literal>SCROLL</literal>."
 
-#: plpgsql.xml:3162(para)
+#: plpgsql.xml:3180(para)
 msgid ""
 "<replaceable>cursor</replaceable> must be the name of a <type>refcursor</"
 "type> variable that references an open cursor portal."
@@ -5275,7 +5311,7 @@ msgstr ""
 "<replaceable>курсор</replaceable> это переменная с типом <type>refcursor</"
 "type>, которая ссылается на открытый портал курсора."
 
-#: plpgsql.xml:3169(programlisting)
+#: plpgsql.xml:3187(programlisting)
 #, no-wrap
 msgid ""
 "FETCH curs1 INTO rowvar;\n"
@@ -5288,16 +5324,16 @@ msgstr ""
 "FETCH LAST FROM curs3 INTO x, y;\n"
 "FETCH RELATIVE -2 FROM curs4 INTO x;"
 
-#: plpgsql.xml:3179(literal)
+#: plpgsql.xml:3197(literal)
 msgid "MOVE"
 msgstr "MOVE"
 
-#: plpgsql.xml:3181(synopsis)
+#: plpgsql.xml:3199(synopsis)
 #, no-wrap
 msgid "MOVE <placeholder-1/> <placeholder-2/>;"
 msgstr "MOVE <placeholder-1/> <placeholder-2/>;"
 
-#: plpgsql.xml:3185(para)
+#: plpgsql.xml:3203(para)
 msgid ""
 "<command>MOVE</command> repositions a cursor without retrieving any data. "
 "<command>MOVE</command> works exactly like the <command>FETCH</command> "
@@ -5312,7 +5348,7 @@ msgstr ""
 "переместился. Как и в <command>SELECT INTO</command>, проверить успешность "
 "перемещения можно с помощью специальной переменной <literal>FOUND</literal>."
 
-#: plpgsql.xml:3194(para)
+#: plpgsql.xml:3212(para)
 msgid ""
 "The <replaceable>direction</replaceable> clause can be any of the variants "
 "allowed in the SQL <xref linkend=\"sql-fetch\"/> command, namely "
@@ -5342,7 +5378,7 @@ msgstr ""
 "перемещения назад, приведут к ошибке, если курсор не был объявлен или открыт "
 "с указанием <literal>SCROLL</literal>."
 
-#: plpgsql.xml:3216(programlisting)
+#: plpgsql.xml:3234(programlisting)
 #, no-wrap
 msgid ""
 "MOVE curs1;\n"
@@ -5355,15 +5391,15 @@ msgstr ""
 "MOVE RELATIVE -2 FROM curs4;\n"
 "MOVE FORWARD 2 FROM curs4;"
 
-#: plpgsql.xml:3226(literal)
+#: plpgsql.xml:3244(literal)
 msgid "UPDATE/DELETE WHERE CURRENT OF"
 msgstr "UPDATE/DELETE WHERE CURRENT OF"
 
-#: plpgsql.xml:3229(replaceable) plpgsql.xml:3230(replaceable)
+#: plpgsql.xml:3247(replaceable) plpgsql.xml:3248(replaceable)
 msgid "table"
 msgstr "таблица"
 
-#: plpgsql.xml:3228(synopsis)
+#: plpgsql.xml:3246(synopsis)
 #, no-wrap
 msgid ""
 "UPDATE <placeholder-1/> SET ... WHERE CURRENT OF <placeholder-2/>;\n"
@@ -5372,7 +5408,7 @@ msgstr ""
 "UPDATE <placeholder-1/> SET ... WHERE CURRENT OF <placeholder-2/>;\n"
 "DELETE FROM <placeholder-3/> WHERE CURRENT OF <placeholder-4/>;"
 
-#: plpgsql.xml:3233(para)
+#: plpgsql.xml:3251(para)
 msgid ""
 "When a cursor is positioned on a table row, that row can be updated or "
 "deleted using the cursor to identify the row. There are restrictions on what "
@@ -5387,21 +5423,21 @@ msgstr ""
 "сведениями обратитесь к странице справки <xref remap=\"1\" linkend=\"sql-"
 "declare\"/>."
 
-#: plpgsql.xml:3245(programlisting)
+#: plpgsql.xml:3263(programlisting)
 #, no-wrap
 msgid "UPDATE foo SET dataval = myval WHERE CURRENT OF curs1;"
 msgstr "UPDATE foo SET dataval = myval WHERE CURRENT OF curs1;"
 
-#: plpgsql.xml:3252(literal)
+#: plpgsql.xml:3270(literal)
 msgid "CLOSE"
 msgstr "CLOSE"
 
-#: plpgsql.xml:3254(synopsis)
+#: plpgsql.xml:3272(synopsis)
 #, no-wrap
 msgid "CLOSE <placeholder-1/>;"
 msgstr "CLOSE <placeholder-1/>;"
 
-#: plpgsql.xml:3258(para)
+#: plpgsql.xml:3276(para)
 msgid ""
 "<command>CLOSE</command> closes the portal underlying an open cursor. This "
 "can be used to release resources earlier than end of transaction, or to free "
@@ -5411,16 +5447,16 @@ msgstr ""
 "для того, чтобы освободить ресурсы раньше, чем закончится транзакция, или "
 "чтобы освободить курсорную переменную для повторного открытия."
 
-#: plpgsql.xml:3266(programlisting)
+#: plpgsql.xml:3284(programlisting)
 #, no-wrap
 msgid "CLOSE curs1;"
 msgstr "CLOSE curs1;"
 
-#: plpgsql.xml:3273(title)
+#: plpgsql.xml:3291(title)
 msgid "Returning Cursors"
 msgstr "Возврат курсора из функции"
 
-#: plpgsql.xml:3275(para)
+#: plpgsql.xml:3293(para)
 msgid ""
 "<application>PL/pgSQL</application> functions can return cursors to the "
 "caller. This is useful to return multiple rows or columns, especially with "
@@ -5438,7 +5474,7 @@ msgstr ""
 "может извлекать строки из курсора. Курсор может быть закрыт вызывающим или "
 "он будет автоматически закрыт при завершении транзакции."
 
-#: plpgsql.xml:3286(para)
+#: plpgsql.xml:3304(para)
 msgid ""
 "The portal name used for a cursor can be specified by the programmer or "
 "automatically generated. To specify a portal name, simply assign a string to "
@@ -5458,7 +5494,7 @@ msgstr ""
 "автоматически генерирует имя, которое не конфликтует с любым существующим "
 "порталом и присваивает его переменной <type>refcursor</type>."
 
-#: plpgsql.xml:3299(para)
+#: plpgsql.xml:3317(para)
 msgid ""
 "A bound cursor variable is initialized to the string value representing its "
 "name, so that the portal name is the same as the cursor variable name, "
@@ -5473,7 +5509,7 @@ msgstr ""
 "Несвязанная курсорная переменная инициализируется в NULL и получит "
 "автоматически сгенерированное уникальное имя, если не будет переопределена."
 
-#: plpgsql.xml:3313(programlisting)
+#: plpgsql.xml:3331(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE test (col text);\n"
@@ -5506,7 +5542,7 @@ msgstr ""
 "FETCH ALL IN funccursor;\n"
 "COMMIT;"
 
-#: plpgsql.xml:3309(para)
+#: plpgsql.xml:3327(para)
 msgid ""
 "The following example shows one way a cursor name can be supplied by the "
 "caller: <placeholder-1/>"
@@ -5514,7 +5550,7 @@ msgstr ""
 "Следующий пример показывает один из способов передачи имени курсора "
 "вызывающему: <placeholder-1/>"
 
-#: plpgsql.xml:3334(programlisting)
+#: plpgsql.xml:3352(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION reffunc2() RETURNS refcursor AS '\n"
@@ -5559,14 +5595,14 @@ msgstr ""
 "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\";\n"
 "COMMIT;"
 
-#: plpgsql.xml:3331(para)
+#: plpgsql.xml:3349(para)
 msgid ""
 "The following example uses automatic cursor name generation: <placeholder-1/>"
 msgstr ""
 "В следующем примере используется автоматическая генерация имени курсора: "
 "<placeholder-1/>"
 
-#: plpgsql.xml:3362(programlisting)
+#: plpgsql.xml:3380(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION myfunc(refcursor, refcursor) RETURNS SETOF refcursor AS $$\n"
@@ -5605,7 +5641,7 @@ msgstr ""
 "FETCH ALL FROM b;\n"
 "COMMIT;"
 
-#: plpgsql.xml:3358(para)
+#: plpgsql.xml:3376(para)
 msgid ""
 "The following example shows one way to return multiple cursors from a single "
 "function: <placeholder-1/>"
@@ -5613,11 +5649,11 @@ msgstr ""
 "В следующем примере показан один из способов вернуть несколько курсоров из "
 "одной функции: <placeholder-1/>"
 
-#: plpgsql.xml:3386(title)
+#: plpgsql.xml:3404(title)
 msgid "Looping Through a Cursor's Result"
 msgstr "Обработка курсора в цикле"
 
-#: plpgsql.xml:3388(para)
+#: plpgsql.xml:3406(para)
 msgid ""
 "There is a variant of the <command>FOR</command> statement that allows "
 "iterating through the rows returned by a cursor. The syntax is: <synopsis>\n"
@@ -5656,7 +5692,7 @@ msgstr ""
 "выполнении <command>OPEN</command> (см. <xref remap=\"4\" linkend=\"plpgsql-"
 "open-bound-cursor\"/>)."
 
-#: plpgsql.xml:3409(para)
+#: plpgsql.xml:3427(para)
 msgid ""
 "The variable <replaceable>recordvar</replaceable> is automatically defined "
 "as type <type>record</type> and exists only inside the loop (any existing "
@@ -5670,23 +5706,23 @@ msgstr ""
 "цикле). Каждая возвращаемая курсором строка последовательно присваивается "
 "этой переменной и выполняется тело цикла."
 
-#: plpgsql.xml:3421(title)
+#: plpgsql.xml:3439(title)
 msgid "Errors and Messages"
 msgstr "Сообщения и ошибки"
 
-#: plpgsql.xml:3424(title)
+#: plpgsql.xml:3442(title)
 msgid "Reporting Errors and Messages"
 msgstr "Вывод сообщений и ошибок"
 
-#: plpgsql.xml:3426(indexterm)
+#: plpgsql.xml:3444(indexterm)
 msgid "<primary>RAISE</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>RAISE</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:3431(indexterm)
+#: plpgsql.xml:3449(indexterm)
 msgid "<primary>reporting errors</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>вывод ошибок</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:3436(para)
+#: plpgsql.xml:3454(para)
 msgid ""
 "Use the <command>RAISE</command> statement to report messages and raise "
 "errors. <synopsis>\n"
@@ -5760,7 +5796,7 @@ msgstr ""
 "дополнительными сведениями обратитесь к <xref remap=\"3\" linkend=\"runtime-"
 "config\"/>."
 
-#: plpgsql.xml:3465(para)
+#: plpgsql.xml:3483(para)
 msgid ""
 "After <replaceable class=\"parameter\">level</replaceable> if any, you can "
 "write a <replaceable class=\"parameter\">format</replaceable> (which must be "
@@ -5785,12 +5821,12 @@ msgstr ""
 "<literal>%</literal> в строке формата, иначе при компиляции функции "
 "возникнет ошибка."
 
-#: plpgsql.xml:3483(programlisting)
+#: plpgsql.xml:3501(programlisting)
 #, no-wrap
 msgid "RAISE NOTICE 'Calling cs_create_job(%)', v_job_id;"
 msgstr "RAISE NOTICE 'Вызов функции cs_create_job(%)', v_job_id;"
 
-#: plpgsql.xml:3480(para)
+#: plpgsql.xml:3498(para)
 msgid ""
 "In this example, the value of <literal>v_job_id</literal> will replace the "
 "<literal>%</literal> in the string: <placeholder-1/>"
@@ -5798,11 +5834,11 @@ msgstr ""
 "В следующем примере символ <literal>%</literal> будет заменён на значение "
 "<literal>v_job_id</literal>: <placeholder-1/>"
 
-#: plpgsql.xml:3499(literal)
+#: plpgsql.xml:3517(literal)
 msgid "MESSAGE"
 msgstr "MESSAGE"
 
-#: plpgsql.xml:3501(para)
+#: plpgsql.xml:3519(para)
 msgid ""
 "Sets the error message text. This option can't be used in the form of "
 "<command>RAISE</command> that includes a format string before "
@@ -5813,27 +5849,27 @@ msgstr ""
 "<replaceable class=\"parameter\">формат</replaceable> перед <literal>USING</"
 "literal>."
 
-#: plpgsql.xml:3508(literal)
+#: plpgsql.xml:3526(literal)
 msgid "DETAIL"
 msgstr "DETAIL"
 
-#: plpgsql.xml:3510(para)
+#: plpgsql.xml:3528(para)
 msgid "Supplies an error detail message."
 msgstr "Предоставляет детальное сообщение об ошибке."
 
-#: plpgsql.xml:3515(literal)
+#: plpgsql.xml:3533(literal)
 msgid "HINT"
 msgstr "HINT"
 
-#: plpgsql.xml:3517(para)
+#: plpgsql.xml:3535(para)
 msgid "Supplies a hint message."
 msgstr "Предоставляет подсказку по вызванной ошибке."
 
-#: plpgsql.xml:3522(literal)
+#: plpgsql.xml:3540(literal)
 msgid "ERRCODE"
 msgstr "ERRCODE"
 
-#: plpgsql.xml:3524(para)
+#: plpgsql.xml:3542(para)
 msgid ""
 "Specifies the error code (SQLSTATE) to report, either by condition name, as "
 "shown in <xref linkend=\"errcodes-appendix\"/>, or directly as a five-"
@@ -5843,31 +5879,31 @@ msgstr ""
 "либо по имени, как показано в <xref remap=\"6\" linkend=\"errcodes-appendix"
 "\"/>, или напрямую, пятисимвольный код <literal>SQLSTATE</literal>."
 
-#: plpgsql.xml:3531(literal)
+#: plpgsql.xml:3549(literal)
 msgid "COLUMN"
 msgstr "COLUMN"
 
-#: plpgsql.xml:3532(literal)
+#: plpgsql.xml:3550(literal)
 msgid "CONSTRAINT"
 msgstr "CONSTRAINT"
 
-#: plpgsql.xml:3533(literal)
+#: plpgsql.xml:3551(literal)
 msgid "DATATYPE"
 msgstr "DATATYPE"
 
-#: plpgsql.xml:3534(literal)
+#: plpgsql.xml:3552(literal)
 msgid "TABLE"
 msgstr "TABLE"
 
-#: plpgsql.xml:3535(literal)
+#: plpgsql.xml:3553(literal)
 msgid "SCHEMA"
 msgstr "SCHEMA"
 
-#: plpgsql.xml:3537(para)
+#: plpgsql.xml:3555(para)
 msgid "Supplies the name of a related object."
 msgstr "Предоставляет имя соответствующего объекта, связанного с ошибкой."
 
-#: plpgsql.xml:3488(para)
+#: plpgsql.xml:3506(para)
 msgid ""
 "You can attach additional information to the error report by writing "
 "<literal>USING</literal> followed by <replaceable class=\"parameter"
@@ -5884,7 +5920,7 @@ msgstr ""
 "<replaceable class=\"parameter\">параметра</replaceable> следующие: "
 "<placeholder-1/>"
 
-#: plpgsql.xml:3546(programlisting)
+#: plpgsql.xml:3564(programlisting)
 #, no-wrap
 msgid ""
 "RAISE EXCEPTION 'Nonexistent ID --&gt; %', user_id\n"
@@ -5893,7 +5929,7 @@ msgstr ""
 "RAISE EXCEPTION 'Несуществующий ID --&gt; %', user_id\n"
 "      USING HINT = 'Проверьте ваш пользовательский ID';"
 
-#: plpgsql.xml:3543(para)
+#: plpgsql.xml:3561(para)
 msgid ""
 "This example will abort the transaction with the given error message and "
 "hint: <placeholder-1/>"
@@ -5901,7 +5937,7 @@ msgstr ""
 "Этот пример прерывает транзакцию и устанавливает сообщение об ошибке с "
 "подсказкой: <placeholder-1/>"
 
-#: plpgsql.xml:3554(programlisting)
+#: plpgsql.xml:3572(programlisting)
 #, no-wrap
 msgid ""
 "RAISE 'Duplicate user ID: %', user_id USING ERRCODE = 'unique_violation';\n"
@@ -5910,7 +5946,7 @@ msgstr ""
 "RAISE 'Duplicate user ID: %', user_id USING ERRCODE = 'unique_violation';\n"
 "RAISE 'Duplicate user ID: %', user_id USING ERRCODE = '23505';"
 
-#: plpgsql.xml:3552(para)
+#: plpgsql.xml:3570(para)
 msgid ""
 "These two examples show equivalent ways of setting the SQLSTATE: "
 "<placeholder-1/>"
@@ -5918,7 +5954,7 @@ msgstr ""
 "Следующие два примера демонстрируют эквивалентные способы задания "
 "<literal>SQLSTATE</literal>: <placeholder-1/>"
 
-#: plpgsql.xml:3563(programlisting)
+#: plpgsql.xml:3581(programlisting)
 #, no-wrap
 msgid ""
 "RAISE division_by_zero;\n"
@@ -5927,12 +5963,12 @@ msgstr ""
 "RAISE division_by_zero;\n"
 "RAISE SQLSTATE '22012';"
 
-#: plpgsql.xml:3570(programlisting)
+#: plpgsql.xml:3588(programlisting)
 #, no-wrap
 msgid "RAISE unique_violation USING MESSAGE = 'Duplicate user ID: ' || user_id;"
 msgstr "RAISE unique_violation USING MESSAGE = 'ID пользователя уже существует: ' || user_id;"
 
-#: plpgsql.xml:3560(para)
+#: plpgsql.xml:3578(para)
 msgid ""
 "There is a second <command>RAISE</command> syntax in which the main argument "
 "is the condition name or SQLSTATE to be reported, for example: "
@@ -5947,7 +5983,7 @@ msgstr ""
 "стандартное сообщение об ошибке, детальное сообщение, подсказку. Ещё один "
 "вариант предыдущего примера: <placeholder-2/>"
 
-#: plpgsql.xml:3575(para)
+#: plpgsql.xml:3593(para)
 msgid ""
 "Still another variant is to write <literal>RAISE USING</literal> or "
 "<literal>RAISE <replaceable class=\"parameter\">level</replaceable> USING</"
@@ -5957,7 +5993,7 @@ msgstr ""
 "<literal>RAISE <replaceable class=\"parameter\">уровень</replaceable> USING</"
 "literal>, а всё остальное записать в списке <literal>USING</literal>."
 
-#: plpgsql.xml:3581(para)
+#: plpgsql.xml:3599(para)
 msgid ""
 "The last variant of <command>RAISE</command> has no parameters at all. This "
 "form can only be used inside a <literal>BEGIN</literal> block's "
@@ -5969,7 +6005,7 @@ msgstr ""
 "<literal>EXCEPTION</literal> блока и предназначена для того, чтобы повторно "
 "вызвать ошибку, которая сейчас перехвачена и обрабатывается."
 
-#: plpgsql.xml:3589(para)
+#: plpgsql.xml:3607(para)
 msgid ""
 "Before <productname>PostgreSQL</productname> 9.1, <command>RAISE</command> "
 "without parameters was interpreted as re-throwing the error from the block "
@@ -5987,7 +6023,7 @@ msgstr ""
 "<literal>EXCEPTION</literal>. Это было сочтено удивительным и не совместимым "
 "с Oracle PL/SQL."
 
-#: plpgsql.xml:3600(para)
+#: plpgsql.xml:3618(para)
 msgid ""
 "If no condition name nor SQLSTATE is specified in a <command>RAISE "
 "EXCEPTION</command> command, the default is to use <literal>RAISE_EXCEPTION</"
@@ -6000,7 +6036,7 @@ msgstr ""
 "текста сообщения об ошибке (если не задан) используется имя или "
 "<literal>SQLSTATE</literal> код."
 
-#: plpgsql.xml:3609(para)
+#: plpgsql.xml:3627(para)
 msgid ""
 "When specifying an error code by SQLSTATE code, you are not limited to the "
 "predefined error codes, but can select any error code consisting of five "
@@ -6017,19 +6053,19 @@ msgstr ""
 "потому что так обозначаются коды категорий. И чтобы их перехватить, нужно "
 "перехватывать целую категорию."
 
-#: plpgsql.xml:3623(title)
+#: plpgsql.xml:3641(title)
 msgid "Checking Assertions"
 msgstr "Проверка утверждений"
 
-#: plpgsql.xml:3625(indexterm)
+#: plpgsql.xml:3643(indexterm)
 msgid "<primary>ASSERT</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>ASSERT</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:3630(indexterm)
+#: plpgsql.xml:3648(indexterm)
 msgid "<primary>assertions</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>утверждения</primary> <secondary>в PL/pgSQL</secondary>"
 
-#: plpgsql.xml:3635(indexterm)
+#: plpgsql.xml:3653(indexterm)
 msgid ""
 "<primary><varname>plpgsql.check_asserts</varname> configuration parameter</"
 "primary>"
@@ -6037,7 +6073,7 @@ msgstr ""
 "<primary>параметр конфигурации <varname>plpgsql.check_asserts</varname></"
 "primary>"
 
-#: plpgsql.xml:3639(para)
+#: plpgsql.xml:3657(para)
 msgid ""
 "The <command>ASSERT</command> statement is a convenient shorthand for "
 "inserting debugging checks into <application>PL/pgSQL</application> "
@@ -6064,7 +6100,7 @@ msgstr ""
 "вычислении <replaceable class=\"parameter\">условия</replaceable>, она "
 "выдаётся как обычная ошибка.)"
 
-#: plpgsql.xml:3657(para)
+#: plpgsql.xml:3675(para)
 msgid ""
 "If the optional <replaceable class=\"parameter\">message</replaceable> is "
 "provided, it is an expression whose result (if not null) replaces the "
@@ -6081,7 +6117,7 @@ msgstr ""
 "утверждения выполняется, выражение <replaceable class=\"parameter"
 "\">сообщения</replaceable> не вычисляется."
 
-#: plpgsql.xml:3666(para)
+#: plpgsql.xml:3684(para)
 msgid ""
 "Testing of assertions can be enabled or disabled via the configuration "
 "parameter <literal>plpgsql.check_asserts</literal>, which takes a Boolean "
@@ -6094,7 +6130,7 @@ msgstr ""
 "literal>). Если этот параметр отключён (<literal>off</literal>), операторы "
 "<command>ASSERT</command> ничего не делают."
 
-#: plpgsql.xml:3673(para)
+#: plpgsql.xml:3691(para)
 msgid ""
 "Note that <command>ASSERT</command> is meant for detecting program bugs, not "
 "for reporting ordinary error conditions. Use the <command>RAISE</command> "
@@ -6104,15 +6140,15 @@ msgstr ""
 "программных дефектов, а не для вывода обычных ошибок (для этого используется "
 "оператор <command>RAISE</command>, описанный выше)."
 
-#: plpgsql.xml:3684(title)
+#: plpgsql.xml:3702(title)
 msgid "Trigger Procedures"
 msgstr "Триггерные процедуры"
 
-#: plpgsql.xml:3686(indexterm)
+#: plpgsql.xml:3704(indexterm)
 msgid "<primary>trigger</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr "<primary>trigger</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:3691(para)
+#: plpgsql.xml:3709(para)
 msgid ""
 "<application>PL/pgSQL</application> can be used to define trigger procedures "
 "on data changes or database events. A trigger procedure is created with the "
@@ -6134,11 +6170,11 @@ msgstr ""
 "<varname>PG_<replaceable>переменная</replaceable></varname>, описывающие "
 "условие, повлекшее вызов триггера."
 
-#: plpgsql.xml:3703(title)
+#: plpgsql.xml:3721(title)
 msgid "Triggers on Data Changes"
 msgstr "Триггеры при изменении данных"
 
-#: plpgsql.xml:3705(para)
+#: plpgsql.xml:3723(para)
 msgid ""
 "A <link linkend=\"triggers\">data change trigger</link> is declared as a "
 "function with no arguments and a return type of <type>trigger</type>. Note "
@@ -6154,11 +6190,11 @@ msgstr ""
 "<command>CREATE TRIGGER</command> &mdash; такие аргументы передаются через "
 "<varname>TG_ARGV</varname>, как описано ниже."
 
-#: plpgsql.xml:3721(varname)
+#: plpgsql.xml:3739(varname)
 msgid "NEW"
 msgstr "NEW"
 
-#: plpgsql.xml:3723(para)
+#: plpgsql.xml:3741(para)
 msgid ""
 "Data type <type>RECORD</type>; variable holding the new database row for "
 "<command>INSERT</command>/<command>UPDATE</command> operations in row-level "
@@ -6170,11 +6206,11 @@ msgstr ""
 "уровня строки. В триггерах уровня оператора и для команды <command>DELETE</"
 "command> этой переменной значение не присваивается."
 
-#: plpgsql.xml:3733(varname)
+#: plpgsql.xml:3751(varname)
 msgid "OLD"
 msgstr "OLD"
 
-#: plpgsql.xml:3735(para)
+#: plpgsql.xml:3753(para)
 msgid ""
 "Data type <type>RECORD</type>; variable holding the old database row for "
 "<command>UPDATE</command>/<command>DELETE</command> operations in row-level "
@@ -6186,22 +6222,22 @@ msgstr ""
 "триггерах уровня строки. В триггерах уровня оператора и для команды "
 "<command>INSERT</command> этой переменной значение не присваивается."
 
-#: plpgsql.xml:3745(varname)
+#: plpgsql.xml:3763(varname)
 msgid "TG_NAME"
 msgstr "TG_NAME"
 
-#: plpgsql.xml:3747(para)
+#: plpgsql.xml:3765(para)
 msgid ""
 "Data type <type>name</type>; variable that contains the name of the trigger "
 "actually fired."
 msgstr ""
 "Тип данных <type>name</type>. Переменная содержит имя сработавшего триггера."
 
-#: plpgsql.xml:3755(varname)
+#: plpgsql.xml:3773(varname)
 msgid "TG_WHEN"
 msgstr "TG_WHEN"
 
-#: plpgsql.xml:3757(para)
+#: plpgsql.xml:3775(para)
 msgid ""
 "Data type <type>text</type>; a string of <literal>BEFORE</literal>, "
 "<literal>AFTER</literal>, or <literal>INSTEAD OF</literal>, depending on the "
@@ -6211,11 +6247,11 @@ msgstr ""
 "<literal>AFTER</literal> или <literal>INSTEAD OF</literal>, в зависимости от "
 "определения триггера."
 
-#: plpgsql.xml:3766(varname)
+#: plpgsql.xml:3784(varname)
 msgid "TG_LEVEL"
 msgstr "TG_LEVEL"
 
-#: plpgsql.xml:3768(para)
+#: plpgsql.xml:3786(para)
 msgid ""
 "Data type <type>text</type>; a string of either <literal>ROW</literal> or "
 "<literal>STATEMENT</literal> depending on the trigger's definition."
@@ -6223,11 +6259,11 @@ msgstr ""
 "Тип данных <type>text</type>. Строка, содержащая <literal>ROW</literal> или "
 "<literal>STATEMENT</literal>, в зависимости от определения триггера."
 
-#: plpgsql.xml:3777(varname)
+#: plpgsql.xml:3795(varname)
 msgid "TG_OP"
 msgstr "TG_OP"
 
-#: plpgsql.xml:3779(para)
+#: plpgsql.xml:3797(para)
 msgid ""
 "Data type <type>text</type>; a string of <literal>INSERT</literal>, "
 "<literal>UPDATE</literal>, <literal>DELETE</literal>, or <literal>TRUNCATE</"
@@ -6237,22 +6273,22 @@ msgstr ""
 "<literal>UPDATE</literal>, <literal>DELETE</literal> или <literal>TRUNCATE</"
 "literal>, в зависимости от того, для какой операции сработал триггер."
 
-#: plpgsql.xml:3789(varname)
+#: plpgsql.xml:3807(varname)
 msgid "TG_RELID"
 msgstr "TG_RELID"
 
-#: plpgsql.xml:3791(para)
+#: plpgsql.xml:3809(para)
 msgid ""
 "Data type <type>oid</type>; the object ID of the table that caused the "
 "trigger invocation."
 msgstr ""
 "Тип данных <type>oid</type>. OID таблицы, для которой сработал триггер."
 
-#: plpgsql.xml:3799(varname)
+#: plpgsql.xml:3817(varname)
 msgid "TG_RELNAME"
 msgstr "TG_RELNAME"
 
-#: plpgsql.xml:3801(para)
+#: plpgsql.xml:3819(para)
 msgid ""
 "Data type <type>name</type>; the name of the table that caused the trigger "
 "invocation. This is now deprecated, and could disappear in a future release. "
@@ -6262,22 +6298,22 @@ msgstr ""
 "переменная устарела и может стать недоступной в будущих релизах. Вместо неё "
 "нужно использовать <literal>TG_TABLE_NAME</literal>."
 
-#: plpgsql.xml:3810(varname)
+#: plpgsql.xml:3828(varname)
 msgid "TG_TABLE_NAME"
 msgstr "TG_TABLE_NAME"
 
-#: plpgsql.xml:3812(para)
+#: plpgsql.xml:3830(para)
 msgid ""
 "Data type <type>name</type>; the name of the table that caused the trigger "
 "invocation."
 msgstr ""
 "Тип данных <type>name</type>. Имя таблицы, для которой сработал триггер."
 
-#: plpgsql.xml:3820(varname)
+#: plpgsql.xml:3838(varname)
 msgid "TG_TABLE_SCHEMA"
 msgstr "TG_TABLE_SCHEMA"
 
-#: plpgsql.xml:3822(para)
+#: plpgsql.xml:3840(para)
 msgid ""
 "Data type <type>name</type>; the name of the schema of the table that caused "
 "the trigger invocation."
@@ -6285,11 +6321,11 @@ msgstr ""
 "Тип данных <type>name</type>. Имя схемы, содержащей таблицу, для которой "
 "сработал триггер."
 
-#: plpgsql.xml:3830(varname)
+#: plpgsql.xml:3848(varname)
 msgid "TG_NARGS"
 msgstr "TG_NARGS"
 
-#: plpgsql.xml:3832(para)
+#: plpgsql.xml:3850(para)
 msgid ""
 "Data type <type>integer</type>; the number of arguments given to the trigger "
 "procedure in the <command>CREATE TRIGGER</command> statement."
@@ -6297,11 +6333,11 @@ msgstr ""
 "Тип данных <type>integer</type>. Число аргументов в команде <command>CREATE "
 "TRIGGER</command>, которые передаются в триггерную процедуру."
 
-#: plpgsql.xml:3840(varname)
+#: plpgsql.xml:3858(varname)
 msgid "TG_ARGV[]"
 msgstr "TG_ARGV[]"
 
-#: plpgsql.xml:3842(para)
+#: plpgsql.xml:3860(para)
 msgid ""
 "Data type array of <type>text</type>; the arguments from the <command>CREATE "
 "TRIGGER</command> statement. The index counts from 0. Invalid indexes (less "
@@ -6312,7 +6348,7 @@ msgstr ""
 "TRIGGER</command>. Индекс массива начинается с 0. Для недопустимых значений "
 "индекса ( &lt; 0 или &gt;= <varname>tg_nargs</varname>) возвращается NULL."
 
-#: plpgsql.xml:3714(para)
+#: plpgsql.xml:3732(para)
 msgid ""
 "When a <application>PL/pgSQL</application> function is called as a trigger, "
 "several special variables are created automatically in the top-level block. "
@@ -6322,7 +6358,7 @@ msgstr ""
 "триггер, в блоке верхнего уровня автоматически создаются несколько "
 "специальных переменных: <placeholder-1/>"
 
-#: plpgsql.xml:3854(para)
+#: plpgsql.xml:3872(para)
 msgid ""
 "A trigger function must return either <symbol>NULL</symbol> or a record/row "
 "value having exactly the structure of the table the trigger was fired for."
@@ -6330,7 +6366,7 @@ msgstr ""
 "Триггерная функция должна вернуть либо <symbol>NULL</symbol>, либо запись/"
 "строку, соответствующую структуре таблице, для которой сработал триггер."
 
-#: plpgsql.xml:3860(para)
+#: plpgsql.xml:3878(para)
 msgid ""
 "Row-level triggers fired <literal>BEFORE</literal> can return null to signal "
 "the trigger manager to skip the rest of the operation for this row (i.e., "
@@ -6372,7 +6408,7 @@ msgstr ""
 "Традиционной идиомой для триггеров <command>DELETE</command> является "
 "возврат переменной <varname>OLD</varname>."
 
-#: plpgsql.xml:3884(para)
+#: plpgsql.xml:3902(para)
 msgid ""
 "<literal>INSTEAD OF</literal> triggers (which are always row-level triggers, "
 "and may only be used on views) can return null to signal that they did not "
@@ -6409,7 +6445,7 @@ msgstr ""
 "операций <command>DELETE</command> возвращаемым значением должно быть "
 "<varname>OLD</varname>."
 
-#: plpgsql.xml:3903(para)
+#: plpgsql.xml:3921(para)
 msgid ""
 "The return value of a row-level trigger fired <literal>AFTER</literal> or a "
 "statement-level trigger fired <literal>BEFORE</literal> or <literal>AFTER</"
@@ -6421,7 +6457,7 @@ msgstr ""
 "Однако, в этих триггерах по-прежнему можно прервать вызвавшую их команду, "
 "для этого нужно явно вызвать ошибку."
 
-#: plpgsql.xml:3911(para)
+#: plpgsql.xml:3929(para)
 msgid ""
 "<xref linkend=\"plpgsql-trigger-example\"/> shows an example of a trigger "
 "procedure in <application>PL/pgSQL</application>."
@@ -6429,11 +6465,11 @@ msgstr ""
 "<xref linkend=\"plpgsql-trigger-example\"/> показывает пример триггерной "
 "процедуры в <application>PL/pgSQL</application>."
 
-#: plpgsql.xml:3917(title)
+#: plpgsql.xml:3935(title)
 msgid "A <application>PL/pgSQL</application> Trigger Procedure"
 msgstr "Триггерная процедура <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:3919(para)
+#: plpgsql.xml:3937(para)
 msgid ""
 "This example trigger ensures that any time a row is inserted or updated in "
 "the table, the current user name and time are stamped into the row. And it "
@@ -6445,7 +6481,7 @@ msgstr ""
 "пользователе и временной метке. Также контролируется, что имя сотрудника "
 "указано и размер зарплаты выше нуля."
 
-#: plpgsql.xml:3926(programlisting)
+#: plpgsql.xml:3944(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE emp (\n"
@@ -6512,7 +6548,7 @@ msgstr ""
 "CREATE TRIGGER emp_stamp BEFORE INSERT OR UPDATE ON emp\n"
 "    FOR EACH ROW EXECUTE PROCEDURE emp_stamp();"
 
-#: plpgsql.xml:3961(para)
+#: plpgsql.xml:3979(para)
 msgid ""
 "Another way to log changes to a table involves creating a new table that "
 "holds a row for each insert, update, or delete that occurs. This approach "
@@ -6527,11 +6563,11 @@ msgstr ""
 "trigger-audit-example\"/> показывает реализацию соответствующей триггерной "
 "процедуры в <application>PL/pgSQL</application>."
 
-#: plpgsql.xml:3970(title)
+#: plpgsql.xml:3988(title)
 msgid "A <application>PL/pgSQL</application> Trigger Procedure For Auditing"
 msgstr "Триггерная процедура для аудита в <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:3972(para)
+#: plpgsql.xml:3990(para)
 msgid ""
 "This example trigger ensures that any insert, update or delete of a row in "
 "the <literal>emp</literal> table is recorded (i.e., audited) in the "
@@ -6543,7 +6579,7 @@ msgstr ""
 "<literal>emp_audit</literal>. Также записывается информация о пользователе, "
 "выполнившем операцию, временной метке и типе операции."
 
-#: plpgsql.xml:3979(programlisting)
+#: plpgsql.xml:3997(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE emp (\n"
@@ -6620,7 +6656,7 @@ msgstr ""
 "AFTER INSERT OR UPDATE OR DELETE ON emp\n"
 "    FOR EACH ROW EXECUTE PROCEDURE process_emp_audit();"
 
-#: plpgsql.xml:4019(para)
+#: plpgsql.xml:4037(para)
 msgid ""
 "A variation of the previous example uses a view joining the main table to "
 "the audit table, to show when each entry was last modified. This approach "
@@ -6639,13 +6675,13 @@ msgstr ""
 "linkend=\"plpgsql-view-trigger-audit-example\"/> показывает пример триггера "
 "на представление для аудита в <application>PL/pgSQL</application>."
 
-#: plpgsql.xml:4030(title)
+#: plpgsql.xml:4048(title)
 msgid ""
 "A <application>PL/pgSQL</application> View Trigger Procedure For Auditing"
 msgstr ""
 "Триггер на представление для аудита в <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4032(para)
+#: plpgsql.xml:4050(para)
 msgid ""
 "This example uses a trigger on the view to make it updatable, and ensure "
 "that any insert, update or delete of a row in the view is recorded (i.e., "
@@ -6660,7 +6696,7 @@ msgstr ""
 "имя пользователя и тип выполняемой операции. Представление показывает дату "
 "последнего изменения для каждой строки."
 
-#: plpgsql.xml:4040(programlisting)
+#: plpgsql.xml:4058(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE emp (\n"
@@ -6773,7 +6809,7 @@ msgstr ""
 "INSTEAD OF INSERT OR UPDATE OR DELETE ON emp_view\n"
 "    FOR EACH ROW EXECUTE PROCEDURE update_emp_view();"
 
-#: plpgsql.xml:4098(para)
+#: plpgsql.xml:4116(para)
 msgid ""
 "One use of triggers is to maintain a summary table of another table. The "
 "resulting summary can be used in place of the original table for certain "
@@ -6794,7 +6830,7 @@ msgstr ""
 "application>, которая поддерживает таблицу итогов для таблицы фактов в "
 "хранилище данных."
 
-#: plpgsql.xml:4112(title)
+#: plpgsql.xml:4130(title)
 msgid ""
 "A <application>PL/pgSQL</application> Trigger Procedure For Maintaining A "
 "Summary Table"
@@ -6802,7 +6838,7 @@ msgstr ""
 "Триггерная процедура в <application>PL/pgSQL</application> для поддержки "
 "таблицы итогов"
 
-#: plpgsql.xml:4114(para)
+#: plpgsql.xml:4132(para)
 msgid ""
 "The schema detailed here is partly based on the <emphasis>Grocery Store </"
 "emphasis> example from <emphasis>The Data Warehouse Toolkit</emphasis> by "
@@ -6812,7 +6848,7 @@ msgstr ""
 "<emphasis>Grocery Store </emphasis> из книги <emphasis>The Data Warehouse "
 "Toolkit</emphasis> (автор Ralph Kimball)."
 
-#: plpgsql.xml:4120(programlisting)
+#: plpgsql.xml:4138(programlisting)
 #, no-wrap
 msgid ""
 "--\n"
@@ -7075,11 +7111,11 @@ msgstr ""
 "UPDATE sales_fact SET units_sold = units_sold * 2;\n"
 "SELECT * FROM sales_summary_bytime;"
 
-#: plpgsql.xml:4255(title)
+#: plpgsql.xml:4273(title)
 msgid "Triggers on Events"
 msgstr "Триггеры событий"
 
-#: plpgsql.xml:4257(para)
+#: plpgsql.xml:4275(para)
 msgid ""
 "<application>PL/pgSQL</application> can be used to define <link linkend="
 "\"event-triggers\">event triggers</link>. <productname>PostgreSQL</"
@@ -7093,11 +7129,11 @@ msgstr ""
 "объявлялась без аргументов и типом возвращаемого значения был "
 "<literal>event_trigger</literal>."
 
-#: plpgsql.xml:4272(varname)
+#: plpgsql.xml:4290(varname)
 msgid "TG_EVENT"
 msgstr "TG_EVENT"
 
-#: plpgsql.xml:4274(para)
+#: plpgsql.xml:4292(para)
 msgid ""
 "Data type <type>text</type>; a string representing the event the trigger is "
 "fired for."
@@ -7105,11 +7141,11 @@ msgstr ""
 "Тип данных <type>text</type>. Строка, содержащая событие, для которого "
 "сработал триггер."
 
-#: plpgsql.xml:4282(varname)
+#: plpgsql.xml:4300(varname)
 msgid "TG_TAG"
 msgstr "TG_TAG"
 
-#: plpgsql.xml:4284(para)
+#: plpgsql.xml:4302(para)
 msgid ""
 "Data type <type>text</type>; variable that contains the command tag for "
 "which the trigger is fired."
@@ -7117,7 +7153,7 @@ msgstr ""
 "Тип данных <type>text</type>. Переменная, содержащая тег команды, для "
 "которой сработал триггер."
 
-#: plpgsql.xml:4265(para)
+#: plpgsql.xml:4283(para)
 msgid ""
 "When a <application>PL/pgSQL</application> function is called as an event "
 "trigger, several special variables are created automatically in the top-"
@@ -7127,7 +7163,7 @@ msgstr ""
 "событийный триггер, в блоке верхнего уровня автоматически создаются "
 "несколько специальных переменных: <placeholder-1/>"
 
-#: plpgsql.xml:4293(para)
+#: plpgsql.xml:4311(para)
 msgid ""
 "<xref linkend=\"plpgsql-event-trigger-example\"/> shows an example of an "
 "event trigger procedure in <application>PL/pgSQL</application>."
@@ -7135,11 +7171,11 @@ msgstr ""
 "<xref linkend=\"plpgsql-event-trigger-example\"/> показывает пример "
 "процедуры событийного триггера в <application>PL/pgSQL</application>."
 
-#: plpgsql.xml:4299(title)
+#: plpgsql.xml:4317(title)
 msgid "A <application>PL/pgSQL</application> Event Trigger Procedure"
 msgstr "Процедура событийного триггера в <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4301(para)
+#: plpgsql.xml:4319(para)
 msgid ""
 "This example trigger simply raises a <literal>NOTICE</literal> message each "
 "time a supported command is executed."
@@ -7147,7 +7183,7 @@ msgstr ""
 "Этот пример триггера просто выдаёт сообщение <literal>NOTICE</literal> "
 "каждый раз, когда выполняется поддерживаемая команда."
 
-#: plpgsql.xml:4306(programlisting)
+#: plpgsql.xml:4324(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION snitch() RETURNS event_trigger AS $$\n"
@@ -7166,11 +7202,11 @@ msgstr ""
 "\n"
 "CREATE EVENT TRIGGER snitch ON ddl_command_start EXECUTE PROCEDURE snitch();"
 
-#: plpgsql.xml:4321(title)
+#: plpgsql.xml:4339(title)
 msgid "<application>PL/pgSQL</application> Under the Hood"
 msgstr "<application>PL/pgSQL</application> изнутри"
 
-#: plpgsql.xml:4323(para)
+#: plpgsql.xml:4341(para)
 msgid ""
 "This section discusses some implementation details that are frequently "
 "important for <application>PL/pgSQL</application> users to know."
@@ -7178,16 +7214,16 @@ msgstr ""
 "В этом разделе обсуждаются некоторые детали реализации, которые "
 "пользователям <application>PL/pgSQL</application> важно знать."
 
-#: plpgsql.xml:4329(title)
+#: plpgsql.xml:4347(title)
 msgid "Variable Substitution"
 msgstr "Подстановка переменных"
 
-#: plpgsql.xml:4338(programlisting)
+#: plpgsql.xml:4356(programlisting)
 #, no-wrap
 msgid "INSERT INTO foo (foo) VALUES (foo);"
 msgstr "INSERT INTO foo (foo) VALUES (foo);"
 
-#: plpgsql.xml:4331(para)
+#: plpgsql.xml:4349(para)
 msgid ""
 "SQL statements and expressions within a <application>PL/pgSQL</application> "
 "function can refer to variables and parameters of the function. Behind the "
@@ -7214,7 +7250,7 @@ msgstr ""
 "будет и здесь. Только третье вхождение <literal>foo</literal> является "
 "кандидатом на то, чтобы быть ссылкой на переменную функции."
 
-#: plpgsql.xml:4350(para)
+#: plpgsql.xml:4368(para)
 msgid ""
 "<productname>PostgreSQL</productname> versions before 9.0 would try to "
 "substitute the variable in all three cases, leading to syntax errors."
@@ -7222,12 +7258,12 @@ msgstr ""
 "Версии <productname>PostgreSQL</productname> до 9.0 пытаются заменить "
 "переменную во всех трёх случаях, что приводит к синтаксической ошибке."
 
-#: plpgsql.xml:4361(programlisting)
+#: plpgsql.xml:4379(programlisting)
 #, no-wrap
 msgid "INSERT INTO dest (col) SELECT foo + bar FROM src;"
 msgstr "INSERT INTO dest (col) SELECT foo + bar FROM src;"
 
-#: plpgsql.xml:4356(para)
+#: plpgsql.xml:4374(para)
 msgid ""
 "Since the names of variables are syntactically no different from the names "
 "of table columns, there can be ambiguity in statements that also refer to "
@@ -7247,7 +7283,7 @@ msgstr ""
 "и <literal>bar</literal> могут быть как переменными функции, так и столбцами "
 "<literal>src</literal>."
 
-#: plpgsql.xml:4370(para)
+#: plpgsql.xml:4388(para)
 msgid ""
 "By default, <application>PL/pgSQL</application> will report an error if a "
 "name in a SQL statement could refer to either a variable or a table column. "
@@ -7261,7 +7297,7 @@ msgstr ""
 "столбца, точной квалификацией неоднозначной ссылки или указанием "
 "<application>PL/pgSQL</application> машине, какую интерпретацию предпочесть."
 
-#: plpgsql.xml:4378(para)
+#: plpgsql.xml:4396(para)
 msgid ""
 "The simplest solution is to rename the variable or column. A common coding "
 "rule is to use a different naming convention for <application>PL/pgSQL</"
@@ -7277,7 +7313,7 @@ msgstr ""
 "<literal>v_<replaceable>имя</replaceable></literal>, а имена столбцов "
 "никогда не начинаются на <literal>v_</literal>, то конфликты исключены."
 
-#: plpgsql.xml:4394(programlisting)
+#: plpgsql.xml:4412(programlisting)
 #, no-wrap
 msgid ""
 "&lt;&lt;block&gt;&gt;\n"
@@ -7294,7 +7330,7 @@ msgstr ""
 "    foo := ...;\n"
 "    INSERT INTO dest (col) SELECT block.foo + bar FROM src;"
 
-#: plpgsql.xml:4388(para)
+#: plpgsql.xml:4406(para)
 msgid ""
 "Alternatively you can qualify ambiguous references to make them clear. In "
 "the above example, <literal>src.foo</literal> would be an unambiguous "
@@ -7319,7 +7355,7 @@ msgstr ""
 "дополнены именем функции, потому что они неявно объявлены во внешнем блоке, "
 "метка которого совпадает с именем функции."
 
-#: plpgsql.xml:4409(para)
+#: plpgsql.xml:4427(para)
 msgid ""
 "Sometimes it is impractical to fix all the ambiguous references in a large "
 "body of <application>PL/pgSQL</application> code. In such cases you can "
@@ -7338,7 +7374,7 @@ msgstr ""
 "(совместимо с некоторыми другими системами, такими как <productname>Oracle</"
 "productname>)."
 
-#: plpgsql.xml:4419(indexterm)
+#: plpgsql.xml:4437(indexterm)
 msgid ""
 "<primary><varname>plpgsql.variable_conflict</varname> configuration "
 "parameter</primary>"
@@ -7346,7 +7382,7 @@ msgstr ""
 "<primary><varname>plpgsql.variable_conflict</varname> configuration "
 "parameter</primary>"
 
-#: plpgsql.xml:4423(para)
+#: plpgsql.xml:4441(para)
 msgid ""
 "To change this behavior on a system-wide basis, set the configuration "
 "parameter <literal>plpgsql.variable_conflict</literal> to one of "
@@ -7370,7 +7406,7 @@ msgstr ""
 "<application>PL/pgSQL</application>, он может быть изменён только "
 "суперпользователем."
 
-#: plpgsql.xml:4440(programlisting)
+#: plpgsql.xml:4458(programlisting)
 #, no-wrap
 msgid ""
 "#variable_conflict error\n"
@@ -7381,7 +7417,7 @@ msgstr ""
 "#variable_conflict use_variable\n"
 "#variable_conflict use_column"
 
-#: plpgsql.xml:4447(programlisting)
+#: plpgsql.xml:4465(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION stamp_user(id int, comment text) RETURNS void AS $$\n"
@@ -7404,7 +7440,7 @@ msgstr ""
 "    END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4468(programlisting)
+#: plpgsql.xml:4486(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION stamp_user(id int, comment text) RETURNS void AS $$\n"
@@ -7427,7 +7463,7 @@ msgstr ""
 "    END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4436(para)
+#: plpgsql.xml:4454(para)
 msgid ""
 "You can also set the behavior on a function-by-function basis, by inserting "
 "one of these special commands at the start of the function text: "
@@ -7462,7 +7498,7 @@ msgstr ""
 "зависимости от значения <literal>variable_conflict</literal>: <placeholder-3/"
 ">"
 
-#: plpgsql.xml:4481(para)
+#: plpgsql.xml:4499(para)
 msgid ""
 "Variable substitution does not happen in the command string given to "
 "<command>EXECUTE</command> or one of its variants. If you need to insert a "
@@ -7476,7 +7512,7 @@ msgstr ""
 "самой командной строки или с использованием <literal>USING</literal>, как "
 "показано в <xref remap=\"6\" linkend=\"plpgsql-statements-executing-dyn\"/>."
 
-#: plpgsql.xml:4489(para)
+#: plpgsql.xml:4507(para)
 msgid ""
 "Variable substitution currently works only in <command>SELECT</command>, "
 "<command>INSERT</command>, <command>UPDATE</command>, and <command>DELETE</"
@@ -7493,11 +7529,11 @@ msgstr ""
 "называются утилиты), необходимо построить текст команды в виде строки и "
 "выполнить её в <command>EXECUTE</command>."
 
-#: plpgsql.xml:4501(title)
+#: plpgsql.xml:4519(title)
 msgid "Plan Caching"
 msgstr "Кеширование плана"
 
-#: plpgsql.xml:4503(para)
+#: plpgsql.xml:4521(para)
 msgid ""
 "The <application>PL/pgSQL</application> interpreter parses the function's "
 "source text and produces an internal binary instruction tree the first time "
@@ -7513,12 +7549,12 @@ msgstr ""
 "команд <acronym>SQL</acronym>, используемых в функции, это происходит не "
 "сразу."
 
-#: plpgsql.xml:4514(indexterm)
+#: plpgsql.xml:4532(indexterm)
 msgid "<primary>preparing a query</primary> <secondary>in PL/pgSQL</secondary>"
 msgstr ""
 "<primary>preparing a query</primary> <secondary>in PL/pgSQL</secondary>"
 
-#: plpgsql.xml:4513(para)
+#: plpgsql.xml:4531(para)
 msgid ""
 "<placeholder-1/> As each expression and <acronym>SQL</acronym> command is "
 "first executed in the function, the <application>PL/pgSQL</application> "
@@ -7548,7 +7584,7 @@ msgstr ""
 "первоначального разбора, но ничего более серьёзного не будет обнаружено до "
 "исполнения.)"
 
-#: plpgsql.xml:4534(para)
+#: plpgsql.xml:4552(para)
 msgid ""
 "<application>PL/pgSQL</application> (or more precisely, the SPI manager) can "
 "furthermore attempt to cache the execution plan associated with any "
@@ -7579,7 +7615,7 @@ msgstr ""
 "формировать новый план. Более подробно поведение подготовленных операторов "
 "рассматривается в <xref remap=\"6\" linkend=\"sql-prepare\"/>."
 
-#: plpgsql.xml:4551(para)
+#: plpgsql.xml:4569(para)
 msgid ""
 "Because <application>PL/pgSQL</application> saves prepared statements and "
 "sometimes execution plans in this way, SQL commands that appear directly in "
@@ -7600,7 +7636,7 @@ msgstr ""
 "application> <command>EXECUTE</command> &mdash; ценой будет разбор и "
 "построение нового плана выполнения при каждом вызове."
 
-#: plpgsql.xml:4564(para)
+#: plpgsql.xml:4582(para)
 msgid ""
 "The mutable nature of record variables presents another problem in this "
 "connection. When fields of a record variable are used in expressions or "
@@ -7618,7 +7654,7 @@ msgstr ""
 "первом вызове. При необходимости можно использовать <command>EXECUTE</"
 "command> для решения этой проблемы."
 
-#: plpgsql.xml:4574(para)
+#: plpgsql.xml:4592(para)
 msgid ""
 "If the same function is used as a trigger for more than one table, "
 "<application>PL/pgSQL</application> prepares and caches statements "
@@ -7638,7 +7674,7 @@ msgstr ""
 "<literal>key</literal>, даже если в разных таблицах этот столбец имеет "
 "разные типы данных."
 
-#: plpgsql.xml:4585(para)
+#: plpgsql.xml:4603(para)
 msgid ""
 "Likewise, functions having polymorphic argument types have a separate "
 "statement cache for each combination of actual argument types they have been "
@@ -7648,7 +7684,7 @@ msgstr ""
 "кеш для каждой комбинации фактических типов аргументов, так что различия "
 "типов данных не вызывают неожиданных сбоев."
 
-#: plpgsql.xml:4597(programlisting)
+#: plpgsql.xml:4615(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION logfunc1(logtxt text) RETURNS void AS $$\n"
@@ -7663,7 +7699,7 @@ msgstr ""
 "    END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4607(programlisting)
+#: plpgsql.xml:4625(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION logfunc2(logtxt text) RETURNS void AS $$\n"
@@ -7684,7 +7720,7 @@ msgstr ""
 "    END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4592(para)
+#: plpgsql.xml:4610(para)
 msgid ""
 "Statement caching can sometimes have surprising effects on the "
 "interpretation of time-sensitive values. For example there is a difference "
@@ -7694,7 +7730,7 @@ msgstr ""
 "интерпретации чувствительных ко времени значений. Например, есть разница "
 "между тем, что делают эти две функции: <placeholder-1/> и <placeholder-2/>"
 
-#: plpgsql.xml:4619(para)
+#: plpgsql.xml:4637(para)
 msgid ""
 "In the case of <function>logfunc1</function>, the <productname>PostgreSQL</"
 "productname> main parser knows when analyzing the <command>INSERT</command> "
@@ -7718,7 +7754,7 @@ msgstr ""
 "Разумеется, это не то, что хотел программист. Лучше было бы использовать "
 "функцию <literal>now()</literal> или <literal>current_timestamp</literal>."
 
-#: plpgsql.xml:4635(para)
+#: plpgsql.xml:4653(para)
 msgid ""
 "In the case of <function>logfunc2</function>, the <productname>PostgreSQL</"
 "productname> main parser does not know what type <literal>'now'</literal> "
@@ -7744,11 +7780,11 @@ msgstr ""
 "работает как ожидалось, это ужасно неэффективно, поэтому использование "
 "функции <literal>now()</literal> по-прежнему значительно лучше."
 
-#: plpgsql.xml:4656(title)
+#: plpgsql.xml:4674(title)
 msgid "Tips for Developing in <application>PL/pgSQL</application>"
 msgstr "Советы по разработке на <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:4667(programlisting)
+#: plpgsql.xml:4685(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION testfunc(integer) RETURNS integer AS $$\n"
@@ -7759,7 +7795,7 @@ msgstr ""
 "          ....\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4658(para)
+#: plpgsql.xml:4676(para)
 msgid ""
 "One good way to develop in <application>PL/pgSQL</application> is to use the "
 "text editor of your choice to create your functions, and in another window, "
@@ -7776,12 +7812,12 @@ msgstr ""
 "образом, можно легко загрузить файл для обновления определения функции. "
 "Например: <placeholder-1/>"
 
-#: plpgsql.xml:4677(programlisting)
+#: plpgsql.xml:4695(programlisting)
 #, no-wrap
 msgid "\\i filename.sql"
 msgstr "\\i filename.sql"
 
-#: plpgsql.xml:4674(para)
+#: plpgsql.xml:4692(para)
 msgid ""
 "While running <application>psql</application>, you can load or reload such a "
 "function definition file with: <placeholder-1/> and then immediately issue "
@@ -7791,7 +7827,7 @@ msgstr ""
 "файл определения функции, выполнив: <placeholder-1/> а затем сразу выполнять "
 "команды SQL для тестирования функции."
 
-#: plpgsql.xml:4683(para)
+#: plpgsql.xml:4701(para)
 msgid ""
 "Another good way to develop in <application>PL/pgSQL</application> is with a "
 "GUI database access tool that facilitates development in a procedural "
@@ -7806,11 +7842,11 @@ msgstr ""
 "удобные возможности, такие как экранирование одинарных кавычек, отладка и "
 "повторное создание функций."
 
-#: plpgsql.xml:4693(title)
+#: plpgsql.xml:4711(title)
 msgid "Handling of Quotation Marks"
 msgstr "Обработка кавычек"
 
-#: plpgsql.xml:4712(programlisting)
+#: plpgsql.xml:4730(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION testfunc(integer) RETURNS integer AS $PROC$\n"
@@ -7821,7 +7857,7 @@ msgstr ""
 "          ....\n"
 "$PROC$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4695(para)
+#: plpgsql.xml:4713(para)
 msgid ""
 "The code of a <application>PL/pgSQL</application> function is specified in "
 "<command>CREATE FUNCTION</command> as a string literal. If you write the "
@@ -7861,7 +7897,7 @@ msgstr ""
 "который включает <literal>$$</literal>, можно использовать <literal>$Q$</"
 "literal>, и так далее."
 
-#: plpgsql.xml:4723(para)
+#: plpgsql.xml:4741(para)
 msgid ""
 "The following chart shows what you have to do when writing quote marks "
 "without dollar quoting. It might be useful when translating pre-dollar "
@@ -7871,11 +7907,11 @@ msgstr ""
 "используется экранирование долларами. Это может быть полезно при переводе "
 "кода, не использующего экранирование знаками доллара, в нечто более понятное."
 
-#: plpgsql.xml:4731(term)
+#: plpgsql.xml:4749(term)
 msgid "1 quotation mark"
 msgstr "1 кавычка"
 
-#: plpgsql.xml:4735(programlisting)
+#: plpgsql.xml:4753(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION foo() RETURNS integer AS '\n"
@@ -7886,7 +7922,7 @@ msgstr ""
 "          ....\n"
 "' LANGUAGE plpgsql;"
 
-#: plpgsql.xml:4733(para)
+#: plpgsql.xml:4751(para)
 msgid ""
 "To begin and end the function body, for example: <placeholder-1/> Anywhere "
 "within a single-quoted function body, quote marks <emphasis>must</emphasis> "
@@ -7895,11 +7931,11 @@ msgstr ""
 "В начале и конце тела функции, например: <placeholder-1/> Внутри такой "
 "функции любая кавычка <emphasis>должна</emphasis> дублироваться."
 
-#: plpgsql.xml:4747(term)
+#: plpgsql.xml:4765(term)
 msgid "2 quotation marks"
 msgstr "2 кавычки"
 
-#: plpgsql.xml:4751(programlisting)
+#: plpgsql.xml:4769(programlisting)
 #, no-wrap
 msgid ""
 "a_output := ''Blah'';\n"
@@ -7908,7 +7944,7 @@ msgstr ""
 "a_output := ''Blah'';\n"
 "SELECT * FROM users WHERE f_name=''foobar'';"
 
-#: plpgsql.xml:4756(programlisting)
+#: plpgsql.xml:4774(programlisting)
 #, no-wrap
 msgid ""
 "a_output := 'Blah';\n"
@@ -7917,7 +7953,7 @@ msgstr ""
 "a_output := 'Blah';\n"
 "SELECT * FROM users WHERE f_name='foobar';"
 
-#: plpgsql.xml:4749(para)
+#: plpgsql.xml:4767(para)
 msgid ""
 "For string literals inside the function body, for example: <placeholder-1/> "
 "In the dollar-quoting approach, you'd just write: <placeholder-2/> which is "
@@ -7929,16 +7965,16 @@ msgstr ""
 "именно это увидит исполнитель <application>PL/pgSQL</application> в обоих "
 "случаях."
 
-#: plpgsql.xml:4767(term)
+#: plpgsql.xml:4785(term)
 msgid "4 quotation marks"
 msgstr "4 кавычки"
 
-#: plpgsql.xml:4772(programlisting)
+#: plpgsql.xml:4790(programlisting)
 #, no-wrap
 msgid "a_output := a_output || '' AND name LIKE ''''foobar'''' AND xyz''"
 msgstr "a_output := a_output || '' AND name LIKE ''''foobar'''' AND xyz''"
 
-#: plpgsql.xml:4769(para)
+#: plpgsql.xml:4787(para)
 msgid ""
 "When you need a single quotation mark in a string constant inside the "
 "function body, for example: <placeholder-1/> The value actually appended to "
@@ -7949,12 +7985,12 @@ msgstr ""
 "например: <placeholder-1/> К <literal>a_output</literal> будет добавлено: "
 "<literal> AND name LIKE 'foobar' AND xyz</literal>"
 
-#: plpgsql.xml:4780(programlisting)
+#: plpgsql.xml:4798(programlisting)
 #, no-wrap
 msgid "a_output := a_output || $$ AND name LIKE 'foobar' AND xyz$$"
 msgstr "a_output := a_output || $$ AND name LIKE 'foobar' AND xyz$$"
 
-#: plpgsql.xml:4778(para)
+#: plpgsql.xml:4796(para)
 msgid ""
 "In the dollar-quoting approach, you'd write: <placeholder-1/> being careful "
 "that any dollar-quote delimiters around this are not just <literal>$$</"
@@ -7964,16 +8000,16 @@ msgstr ""
 "будьте внимательны, при этом не должно быть внешнего долларового разделителя "
 "<literal>$$</literal>."
 
-#: plpgsql.xml:4790(term)
+#: plpgsql.xml:4808(term)
 msgid "6 quotation marks"
 msgstr "6 кавычек"
 
-#: plpgsql.xml:4795(programlisting)
+#: plpgsql.xml:4813(programlisting)
 #, no-wrap
 msgid "a_output := a_output || '' AND name LIKE ''''foobar''''''"
 msgstr "a_output := a_output || '' AND name LIKE ''''foobar''''''"
 
-#: plpgsql.xml:4792(para)
+#: plpgsql.xml:4810(para)
 msgid ""
 "When a single quotation mark in a string inside the function body is "
 "adjacent to the end of that string constant, for example: <placeholder-1/> "
@@ -7985,21 +8021,21 @@ msgstr ""
 "> К <literal>a_output</literal> будет добавлено: <literal> AND name LIKE "
 "'foobar'</literal>."
 
-#: plpgsql.xml:4803(programlisting)
+#: plpgsql.xml:4821(programlisting)
 #, no-wrap
 msgid "a_output := a_output || $$ AND name LIKE 'foobar'$$"
 msgstr "a_output := a_output || $$ AND name LIKE 'foobar'$$"
 
-#: plpgsql.xml:4801(para)
+#: plpgsql.xml:4819(para)
 msgid "In the dollar-quoting approach, this becomes: <placeholder-1/>"
 msgstr ""
 "При использовании знаков доллара это записывается так: <placeholder-1/>"
 
-#: plpgsql.xml:4811(term)
+#: plpgsql.xml:4829(term)
 msgid "10 quotation marks"
 msgstr "10 кавычек"
 
-#: plpgsql.xml:4820(programlisting)
+#: plpgsql.xml:4838(programlisting)
 #, no-wrap
 msgid ""
 "a_output := a_output || '' if v_'' ||\n"
@@ -8014,12 +8050,12 @@ msgstr ""
 "    then return ''''''  || referrer_keys.referrer_type\n"
 "    || ''''''; end if;'';"
 
-#: plpgsql.xml:4828(programlisting)
+#: plpgsql.xml:4846(programlisting)
 #, no-wrap
 msgid "if v_... like ''...'' then return ''...''; end if;"
 msgstr "if v_... like ''...'' then return ''...''; end if;"
 
-#: plpgsql.xml:4813(para)
+#: plpgsql.xml:4831(para)
 msgid ""
 "When you want two single quotation marks in a string constant (which "
 "accounts for 8 quotation marks) and this is adjacent to the end of that "
@@ -8035,7 +8071,7 @@ msgstr ""
 "<placeholder-1/> Значение <literal>a_output</literal> затем будет: "
 "<placeholder-2/>"
 
-#: plpgsql.xml:4834(programlisting)
+#: plpgsql.xml:4852(programlisting)
 #, no-wrap
 msgid ""
 "a_output := a_output || $$ if v_$$ || referrer_keys.kind || $$ like '$$\n"
@@ -8048,7 +8084,7 @@ msgstr ""
 "    then return '$$  || referrer_keys.referrer_type\n"
 "    || $$'; end if;$$;"
 
-#: plpgsql.xml:4832(para)
+#: plpgsql.xml:4850(para)
 msgid ""
 "In the dollar-quoting approach, this becomes: <placeholder-1/> where we "
 "assume we only need to put single quote marks into <literal>a_output</"
@@ -8058,11 +8094,11 @@ msgstr ""
 "нужны только одиночные кавычки в <literal>a_output</literal>, так как "
 "потребуется повторное взятие в кавычки перед использованием."
 
-#: plpgsql.xml:4849(title)
+#: plpgsql.xml:4867(title)
 msgid "Additional Compile-time Checks"
 msgstr "Дополнительные проверки во время компиляции"
 
-#: plpgsql.xml:4851(para)
+#: plpgsql.xml:4869(para)
 msgid ""
 "To aid the user in finding instances of simple but common problems before "
 "they cause harm, <application>PL/PgSQL</application> provides additional "
@@ -8082,17 +8118,17 @@ msgstr ""
 "выполнении не будет выдавать это сообщение и её можно протестировать в "
 "отдельной среде разработки."
 
-#: plpgsql.xml:4870(varname)
+#: plpgsql.xml:4888(varname)
 msgid "shadowed_variables"
 msgstr "shadowed_variables"
 
-#: plpgsql.xml:4872(para)
+#: plpgsql.xml:4890(para)
 msgid "Checks if a declaration shadows a previously defined variable."
 msgstr ""
 "Проверяет, что объявление новой переменной не скрывает ранее объявленную "
 "переменную."
 
-#: plpgsql.xml:4881(programlisting)
+#: plpgsql.xml:4899(programlisting)
 #, no-wrap
 msgid ""
 "SET plpgsql.extra_warnings TO 'shadowed_variables';\n"
@@ -8123,7 +8159,7 @@ msgstr ""
 "        ^\n"
 "CREATE FUNCTION"
 
-#: plpgsql.xml:4861(para)
+#: plpgsql.xml:4879(para)
 msgid ""
 "These additional checks are enabled through the configuration variables "
 "<varname>plpgsql.extra_warnings</varname> for warnings and <varname>plpgsql."
@@ -8144,11 +8180,11 @@ msgstr ""
 "установки <varname>plpgsql.extra_warnings</varname> в значение "
 "<varname>shadowed_variables</varname>: <placeholder-2/>"
 
-#: plpgsql.xml:4903(title)
+#: plpgsql.xml:4921(title)
 msgid "Porting from <productname>Oracle</productname> PL/SQL"
 msgstr "Портирование из <productname>Oracle</productname> PL/SQL"
 
-#: plpgsql.xml:4905(indexterm)
+#: plpgsql.xml:4923(indexterm)
 msgid ""
 "<primary>Oracle</primary> <secondary>porting from PL/SQL to PL/pgSQL</"
 "secondary>"
@@ -8156,14 +8192,14 @@ msgstr ""
 "<primary>Oracle</primary> <secondary>портирование из PL/SQL в PL/pgSQL</"
 "secondary>"
 
-#: plpgsql.xml:4910(indexterm)
+#: plpgsql.xml:4928(indexterm)
 msgid ""
 "<primary>PL/SQL (Oracle)</primary> <secondary>porting to PL/pgSQL</secondary>"
 msgstr ""
 "<primary>PL/SQL (Oracle)</primary> <secondary>портирование в PL/pgSQL</"
 "secondary>"
 
-#: plpgsql.xml:4915(para)
+#: plpgsql.xml:4933(para)
 msgid ""
 "This section explains differences between <productname>PostgreSQL</"
 "productname>'s <application>PL/pgSQL</application> language and Oracle's "
@@ -8177,7 +8213,7 @@ msgstr ""
 "переносящим приложения из <trademark class=\"registered\">Oracle</trademark> "
 "в <productname>PostgreSQL</productname>."
 
-#: plpgsql.xml:4933(para)
+#: plpgsql.xml:4951(para)
 msgid ""
 "If a name used in a SQL command could be either a column name of a table or "
 "a reference to a variable of the function, <application>PL/SQL</application> "
@@ -8200,7 +8236,7 @@ msgstr ""
 "поведения, то установка переменной <literal>variable_conflict</literal> "
 "может быть лучшим решением."
 
-#: plpgsql.xml:4949(para)
+#: plpgsql.xml:4967(para)
 msgid ""
 "In <productname>PostgreSQL</productname> the function body must be written "
 "as a string literal. Therefore you need to use dollar quoting or escape "
@@ -8212,7 +8248,7 @@ msgstr ""
 "экранировать одиночные кавычки в теле функции. (См. <xref remap=\"4\" "
 "linkend=\"plpgsql-quote-tips\"/>.)"
 
-#: plpgsql.xml:4958(para)
+#: plpgsql.xml:4976(para)
 msgid ""
 "Data type names often need translation. For example, in Oracle string values "
 "are commonly declared as being of type <type>varchar2</type>, which is a non-"
@@ -8228,12 +8264,12 @@ msgstr ""
 "образом, тип <type>number</type> нужно заменять на <type>numeric</type> или "
 "другой числовой тип, если найдётся более подходящий."
 
-#: plpgsql.xml:4969(para)
+#: plpgsql.xml:4987(para)
 msgid ""
 "Instead of packages, use schemas to organize your functions into groups."
 msgstr "Для группировки функций вместо пакетов используются схемы."
 
-#: plpgsql.xml:4976(para)
+#: plpgsql.xml:4994(para)
 msgid ""
 "Since there are no packages, there are no package-level variables either. "
 "This is somewhat annoying. You can keep per-session state in temporary "
@@ -8242,7 +8278,7 @@ msgstr ""
 "Так как пакетов нет, нет и пакетных переменных. Это несколько раздражает. "
 "Вместо этого можно хранить состояние каждого сеанса во временных таблицах."
 
-#: plpgsql.xml:4984(para)
+#: plpgsql.xml:5002(para)
 msgid ""
 "Integer <command>FOR</command> loops with <literal>REVERSE</literal> work "
 "differently: <application>PL/SQL</application> counts down from the second "
@@ -8259,7 +8295,7 @@ msgstr ""
 "печально, но вряд ли будет изменено. (См. <xref remap=\"4\" linkend="
 "\"plpgsql-integer-for\"/>.)"
 
-#: plpgsql.xml:4996(para)
+#: plpgsql.xml:5014(para)
 msgid ""
 "<command>FOR</command> loops over queries (other than cursors) also work "
 "differently: the target variable(s) must have been declared, whereas "
@@ -8272,14 +8308,14 @@ msgstr ""
 "<application>PL/SQL</application> она объявляется неявно. Преимущество в "
 "том, что значения переменных доступны и после выхода из цикла."
 
-#: plpgsql.xml:5006(para)
+#: plpgsql.xml:5024(para)
 msgid ""
 "There are various notational differences for the use of cursor variables."
 msgstr ""
 "Существуют некоторые отличия в нотации при использовании курсорных "
 "переменных."
 
-#: plpgsql.xml:4923(para)
+#: plpgsql.xml:4941(para)
 msgid ""
 "<application>PL/pgSQL</application> is similar to PL/SQL in many aspects. It "
 "is a block-structured, imperative language, and all variables have to be "
@@ -8294,11 +8330,11 @@ msgstr ""
 "<application>PL/SQL</application> в <application>PL/pgSQL</application>, "
 "следующие: <placeholder-1/>"
 
-#: plpgsql.xml:5016(title)
+#: plpgsql.xml:5034(title)
 msgid "Porting Examples"
 msgstr "Примеры портирования"
 
-#: plpgsql.xml:5018(para)
+#: plpgsql.xml:5036(para)
 msgid ""
 "<xref linkend=\"pgsql-porting-ex1\"/> shows how to port a simple function "
 "from <application>PL/SQL</application> to <application>PL/pgSQL</"
@@ -8308,7 +8344,7 @@ msgstr ""
 "функцию из <application>PL/SQL</application> в <application>PL/pgSQL</"
 "application>."
 
-#: plpgsql.xml:5024(title)
+#: plpgsql.xml:5042(title)
 msgid ""
 "Porting a Simple Function from <application>PL/SQL</application> to "
 "<application>PL/pgSQL</application>"
@@ -8316,7 +8352,7 @@ msgstr ""
 "Портирование простой функции из <application>PL/SQL</application> в "
 "<application>PL/pgSQL</application>"
 
-#: plpgsql.xml:5028(programlisting)
+#: plpgsql.xml:5046(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar2,\n"
@@ -8343,7 +8379,7 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:5026(para)
+#: plpgsql.xml:5044(para)
 msgid ""
 "Here is an <productname>Oracle</productname> <application>PL/SQL</"
 "application> function: <placeholder-1/>"
@@ -8351,7 +8387,7 @@ msgstr ""
 "Функция <productname>Oracle</productname> <application>PL/SQL</application>: "
 "<placeholder-1/>"
 
-#: plpgsql.xml:5049(para)
+#: plpgsql.xml:5067(para)
 msgid ""
 "The type name <type>varchar2</type> has to be changed to <type>varchar</"
 "type> or <type>text</type>. In the examples in this section, we'll use "
@@ -8363,7 +8399,7 @@ msgstr ""
 "<type>varchar</type>, но обычно лучше выбрать <type>text</type>, если не "
 "требуется ограничивать длину строк."
 
-#: plpgsql.xml:5058(para)
+#: plpgsql.xml:5076(para)
 msgid ""
 "The <literal>RETURN</literal> key word in the function prototype (not the "
 "function body) becomes <literal>RETURNS</literal> in "
@@ -8378,7 +8414,7 @@ msgstr ""
 "literal>, и нужно добавить предложение <literal>LANGUAGE</literal>, потому "
 "что <application>PL/pgSQL</application> — не единственный возможный язык."
 
-#: plpgsql.xml:5070(para)
+#: plpgsql.xml:5088(para)
 msgid ""
 "In <productname>PostgreSQL</productname>, the function body is considered to "
 "be a string literal, so you need to use quote marks or dollar quotes around "
@@ -8389,7 +8425,7 @@ msgstr ""
 "поэтому нужно использовать кавычки или знаки доллара. Это заменяет "
 "завершающий <literal>/</literal> в подходе Oracle."
 
-#: plpgsql.xml:5079(para)
+#: plpgsql.xml:5097(para)
 msgid ""
 "The <literal>show errors</literal> command does not exist in "
 "<productname>PostgreSQL</productname>, and is not needed since errors are "
@@ -8399,7 +8435,7 @@ msgstr ""
 "<productname>PostgreSQL</productname> и не требуется, так как ошибки будут "
 "выводиться автоматически."
 
-#: plpgsql.xml:5043(para)
+#: plpgsql.xml:5061(para)
 msgid ""
 "Let's go through this function and see the differences compared to "
 "<application>PL/pgSQL</application>: <placeholder-1/>"
@@ -8407,7 +8443,7 @@ msgstr ""
 "Пройдемся по этой функции и посмотрим различия по сравнению с "
 "<application>PL/pgSQL</application>: <placeholder-1/>"
 
-#: plpgsql.xml:5092(programlisting)
+#: plpgsql.xml:5110(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar,\n"
@@ -8432,7 +8468,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:5088(para)
+#: plpgsql.xml:5106(para)
 msgid ""
 "This is how this function would look when ported to <productname>PostgreSQL</"
 "productname>: <placeholder-1/>"
@@ -8440,7 +8476,7 @@ msgstr ""
 "Вот как эта функция будет выглядеть после портирования в "
 "<productname>PostgreSQL</productname>: <placeholder-1/>"
 
-#: plpgsql.xml:5107(para)
+#: plpgsql.xml:5125(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex2\"/> shows how to port a function that "
 "creates another function and how to handle the ensuing quoting problems."
@@ -8448,7 +8484,7 @@ msgstr ""
 "<xref linkend=\"plpgsql-porting-ex2\"/> показывает, как портировать функцию, "
 "которая создаёт другую функцию, и как обрабатывать проблемы с кавычками."
 
-#: plpgsql.xml:5114(title)
+#: plpgsql.xml:5132(title)
 msgid ""
 "Porting a Function that Creates Another Function from <application>PL/SQL</"
 "application> to <application>PL/pgSQL</application>"
@@ -8456,7 +8492,7 @@ msgstr ""
 "Портирование функции, создающей другую функцию, из <application>PL/SQL</"
 "application> в <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:5116(para)
+#: plpgsql.xml:5134(para)
 msgid ""
 "The following procedure grabs rows from a <command>SELECT</command> "
 "statement and builds a large function with the results in <literal>IF</"
@@ -8466,7 +8502,7 @@ msgstr ""
 "большую функцию, в целях эффективности возвращающую результат в операторах "
 "<literal>IF</literal>."
 
-#: plpgsql.xml:5125(programlisting)
+#: plpgsql.xml:5143(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_update_referrer_type_proc IS\n"
@@ -8517,11 +8553,11 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:5123(para) plpgsql.xml:5224(para)
+#: plpgsql.xml:5141(para) plpgsql.xml:5242(para)
 msgid "This is the Oracle version: <placeholder-1/>"
 msgstr "Версия Oracle: <placeholder-1/>"
 
-#: plpgsql.xml:5154(programlisting)
+#: plpgsql.xml:5172(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_update_referrer_type_proc() RETURNS void AS $func$\n"
@@ -8588,7 +8624,7 @@ msgstr ""
 "END;\n"
 "$func$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:5152(para)
+#: plpgsql.xml:5170(para)
 msgid ""
 "Here is how this function would end up in <productname>PostgreSQL</"
 "productname>: <placeholder-1/> Notice how the body of the function is built "
@@ -8621,7 +8657,7 @@ msgstr ""
 "structfield> или <structfield>referrer_key.referrer_type</structfield> "
 "содержат кавычки."
 
-#: plpgsql.xml:5202(para)
+#: plpgsql.xml:5220(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex3\"/> shows how to port a function with "
 "<literal>OUT</literal> parameters and string manipulation. "
@@ -8639,7 +8675,7 @@ msgstr ""
 "<function>instr</function> на <application>PL/pgSQL</application>, которая "
 "может быть полезна вам при портировании ваших функций."
 
-#: plpgsql.xml:5215(title)
+#: plpgsql.xml:5233(title)
 msgid ""
 "Porting a Procedure With String Manipulation and <literal>OUT</literal> "
 "Parameters from <application>PL/SQL</application> to <application>PL/pgSQL</"
@@ -8649,7 +8685,7 @@ msgstr ""
 "application> процедуры, которая манипулирует строками и содержит "
 "<literal>OUT</literal> параметры"
 
-#: plpgsql.xml:5219(para)
+#: plpgsql.xml:5237(para)
 msgid ""
 "The following <productname>Oracle</productname> PL/SQL procedure is used to "
 "parse a URL and return several elements (host, path, and query)."
@@ -8657,7 +8693,7 @@ msgstr ""
 "Следующая процедура на языке <productname>Oracle</productname> PL/SQL "
 "разбирает URL и возвращает составляющие его элементы (сервер, путь и запрос)."
 
-#: plpgsql.xml:5226(programlisting)
+#: plpgsql.xml:5244(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_parse_url(\n"
@@ -8736,7 +8772,7 @@ msgstr ""
 "/\n"
 "show errors;"
 
-#: plpgsql.xml:5269(programlisting)
+#: plpgsql.xml:5287(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_parse_url(\n"
@@ -8815,12 +8851,12 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:5310(programlisting)
+#: plpgsql.xml:5328(programlisting)
 #, no-wrap
 msgid "SELECT * FROM cs_parse_url('http://foobar.com/query.cgi?baz');"
 msgstr "SELECT * FROM cs_parse_url('http://foobar.com/query.cgi?baz');"
 
-#: plpgsql.xml:5267(para)
+#: plpgsql.xml:5285(para)
 msgid ""
 "Here is a possible translation into <application>PL/pgSQL</application>: "
 "<placeholder-1/> This function could be used like this: <placeholder-2/>"
@@ -8828,7 +8864,7 @@ msgstr ""
 "Вот возможная трансляция в <application>PL/pgSQL</application>: "
 "<placeholder-1/> Эту функцию можно использовать так: <placeholder-2/>"
 
-#: plpgsql.xml:5316(para)
+#: plpgsql.xml:5334(para)
 msgid ""
 "<xref linkend=\"plpgsql-porting-ex4\"/> shows how to port a procedure that "
 "uses numerous features that are specific to Oracle."
@@ -8837,7 +8873,7 @@ msgstr ""
 "процедуру, использующую большое количество специфических для Oracle "
 "возможностей."
 
-#: plpgsql.xml:5322(title)
+#: plpgsql.xml:5340(title)
 msgid ""
 "Porting a Procedure from <application>PL/SQL</application> to "
 "<application>PL/pgSQL</application>"
@@ -8845,7 +8881,7 @@ msgstr ""
 "Портирование процедуры из <application>PL/SQL</application> в "
 "<application>PL/pgSQL</application>"
 
-#: plpgsql.xml:5327(programlisting)
+#: plpgsql.xml:5345(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE PROCEDURE cs_create_job(v_job_id IN INTEGER) IS\n"
@@ -8902,11 +8938,11 @@ msgstr ""
 "/\n"
 "show errors"
 
-#: plpgsql.xml:5324(para)
+#: plpgsql.xml:5342(para)
 msgid "The Oracle version: <placeholder-1/>"
 msgstr "Версия Oracle: <placeholder-1/>"
 
-#: plpgsql.xml:5364(para)
+#: plpgsql.xml:5382(para)
 msgid ""
 "There is no <literal>PRAGMA</literal> statement in <productname>PostgreSQL</"
 "productname>."
@@ -8914,7 +8950,7 @@ msgstr ""
 "В <productname>PostgreSQL</productname> нет оператора <literal>PRAGMA</"
 "literal>."
 
-#: plpgsql.xml:5370(para)
+#: plpgsql.xml:5388(para)
 msgid ""
 "If you do a <command>LOCK TABLE</command> in <application>PL/pgSQL</"
 "application>, the lock will not be released until the calling transaction is "
@@ -8924,7 +8960,7 @@ msgstr ""
 "application>, блокировка не будет снята, пока не завершится вызывающая "
 "транзакция."
 
-#: plpgsql.xml:5378(para)
+#: plpgsql.xml:5396(para)
 msgid ""
 "You cannot issue <command>COMMIT</command> in a <application>PL/pgSQL</"
 "application> function. The function is running within some outer transaction "
@@ -8940,7 +8976,7 @@ msgstr ""
 "необходимости, потому что блокировка, полученная командой <command>LOCK "
 "TABLE</command>, будет снята при вызове ошибки."
 
-#: plpgsql.xml:5357(para)
+#: plpgsql.xml:5375(para)
 msgid ""
 "Procedures like this can easily be converted into <productname>PostgreSQL</"
 "productname> functions returning <type>void</type>. This procedure in "
@@ -8951,7 +8987,7 @@ msgstr ""
 "productname>, возвращающие <type>void</type>. На примере этой процедуры "
 "можно научиться следующему: <placeholder-1/>"
 
-#: plpgsql.xml:5394(programlisting)
+#: plpgsql.xml:5412(programlisting)
 #, no-wrap
 msgid ""
 "CREATE OR REPLACE FUNCTION cs_create_job(v_job_id integer) RETURNS void AS $$\n"
@@ -9002,7 +9038,7 @@ msgstr ""
 "END;\n"
 "$$ LANGUAGE plpgsql;"
 
-#: plpgsql.xml:5422(para)
+#: plpgsql.xml:5440(para)
 msgid ""
 "The syntax of <literal>RAISE</literal> is considerably different from "
 "Oracle's statement, although the basic case <literal>RAISE</literal> "
@@ -9013,7 +9049,7 @@ msgstr ""
 "основной вариант <literal>RAISE</literal> <replaceable class=\"parameter"
 "\">имя_исключения</replaceable> работает похоже."
 
-#: plpgsql.xml:5430(para)
+#: plpgsql.xml:5448(para)
 msgid ""
 "The exception names supported by <application>PL/pgSQL</application> are "
 "different from Oracle's. The set of built-in exception names is much larger "
@@ -9028,7 +9064,7 @@ msgstr ""
 "вместо этого можно вызывать ошибку с заданным пользователем значением "
 "SQLSTATE."
 
-#: plpgsql.xml:5391(para)
+#: plpgsql.xml:5409(para)
 msgid ""
 "This is how we could port this procedure to <application>PL/pgSQL</"
 "application>: <placeholder-1/> <placeholder-2/> The main functional "
@@ -9045,11 +9081,11 @@ msgstr ""
 "прервётся (например из-за ошибки), произойдёт откат всех действий, "
 "выполненных в этой процедуре."
 
-#: plpgsql.xml:5450(title)
+#: plpgsql.xml:5468(title)
 msgid "Other Things to Watch For"
 msgstr "На что ещё обратить внимание"
 
-#: plpgsql.xml:5452(para)
+#: plpgsql.xml:5470(para)
 msgid ""
 "This section explains a few other things to watch for when porting Oracle "
 "<application>PL/SQL</application> functions to <productname>PostgreSQL</"
@@ -9059,11 +9095,11 @@ msgstr ""
 "обращать внимание при портировании функций из Oracle <application>PL/SQL</"
 "application> в <productname>PostgreSQL</productname>."
 
-#: plpgsql.xml:5459(title)
+#: plpgsql.xml:5477(title)
 msgid "Implicit Rollback after Exceptions"
 msgstr "Неявный откат изменений после возникновения исключения"
 
-#: plpgsql.xml:5467(programlisting)
+#: plpgsql.xml:5485(programlisting)
 #, no-wrap
 msgid ""
 "BEGIN\n"
@@ -9090,7 +9126,7 @@ msgstr ""
 "        ... здесь код ...\n"
 "END;"
 
-#: plpgsql.xml:5461(para)
+#: plpgsql.xml:5479(para)
 msgid ""
 "In <application>PL/pgSQL</application>, when an exception is caught by an "
 "<literal>EXCEPTION</literal> clause, all database changes since the block's "
@@ -9113,11 +9149,11 @@ msgstr ""
 "command> и <command>ROLLBACK TO</command> используются по-другому, то "
 "придётся подумать."
 
-#: plpgsql.xml:5491(command)
+#: plpgsql.xml:5509(command)
 msgid "EXECUTE"
 msgstr "EXECUTE"
 
-#: plpgsql.xml:5493(para)
+#: plpgsql.xml:5511(para)
 msgid ""
 "The <application>PL/pgSQL</application> version of <command>EXECUTE</"
 "command> works similarly to the <application>PL/SQL</application> version, "
@@ -9135,11 +9171,11 @@ msgstr ""
 "конструкции типа <literal>EXECUTE 'SELECT * FROM $1';</literal> будут "
 "работать ненадёжно."
 
-#: plpgsql.xml:5506(title)
+#: plpgsql.xml:5524(title)
 msgid "Optimizing <application>PL/pgSQL</application> Functions"
 msgstr "Оптимизация функций на <application>PL/pgSQL</application>"
 
-#: plpgsql.xml:5508(para)
+#: plpgsql.xml:5526(para)
 msgid ""
 "<productname>PostgreSQL</productname> gives you two function creation "
 "modifiers to optimize execution: <quote>volatility</quote> (whether the "
@@ -9155,7 +9191,7 @@ msgstr ""
 "хотя бы один из аргументов NULL). Для получения подробной информации "
 "обратитесь к справочной странице <xref linkend=\"sql-createfunction\"/>."
 
-#: plpgsql.xml:5523(programlisting)
+#: plpgsql.xml:5541(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION foo(...) RETURNS integer AS $$\n"
@@ -9166,7 +9202,7 @@ msgstr ""
 "...\n"
 "$$ LANGUAGE plpgsql STRICT IMMUTABLE;"
 
-#: plpgsql.xml:5518(para)
+#: plpgsql.xml:5536(para)
 msgid ""
 "When making use of these optimization attributes, your <command>CREATE "
 "FUNCTION</command> statement might look something like this: <placeholder-1/>"
@@ -9174,11 +9210,11 @@ msgstr ""
 "При использовании этих атрибутов оптимизации оператор <command>CREATE "
 "FUNCTION</command> может выглядеть примерно так: <placeholder-1/>"
 
-#: plpgsql.xml:5533(title)
+#: plpgsql.xml:5551(title)
 msgid "Appendix"
 msgstr "Приложение"
 
-#: plpgsql.xml:5535(para)
+#: plpgsql.xml:5553(para)
 msgid ""
 "This section contains the code for a set of Oracle-compatible "
 "<function>instr</function> functions that you can use to simplify your "
@@ -9187,11 +9223,11 @@ msgstr ""
 "Этот раздел содержит код для совместимых с Oracle функций <function>instr</"
 "function>, которые можно использовать для упрощения портирования."
 
-#: plpgsql.xml:5541(indexterm)
+#: plpgsql.xml:5559(indexterm)
 msgid "<primary><function>instr</function> function</primary>"
 msgstr "<primary>функция <function>instr</function></primary>"
 
-#: plpgsql.xml:5545(programlisting)
+#: plpgsql.xml:5563(programlisting)
 #, no-wrap
 msgid ""
 "--\n"
