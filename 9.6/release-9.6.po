@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2017-08-29 10:54+0300\n"
-"PO-Revision-Date: 2017-08-10 22:07+0300\n"
+"PO-Revision-Date: 2017-08-29 14:54+0300\n"
 "Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -16,9 +16,8 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: release-9.6.xml:6(title)
-#, fuzzy
 msgid "Release 9.6.5"
-msgstr "Выпуск 9.6.4"
+msgstr "Выпуск 9.6.5"
 
 #: release-9.6.xml:9(title) release-9.6.xml:258(title)
 #: release-9.6.xml:1539(title) release-9.6.xml:2591(title)
@@ -27,25 +26,22 @@ msgid "Release date:"
 msgstr "Дата выпуска:"
 
 #: release-9.6.xml:10(para)
-#, fuzzy
 msgid "2017-08-31"
-msgstr "2017-08-10"
+msgstr "2017-08-31"
 
 #: release-9.6.xml:13(para)
-#, fuzzy
 msgid ""
 "This release contains a small number of fixes from 9.6.4. For information "
 "about new features in the 9.6 major release, see <xref linkend="
 "\"release-9-6\"/>."
 msgstr ""
-"В этот выпуск вошли различные исправления, внесённые после версии 9.6.3. За "
+"В этот выпуск вошло несколько исправлений, внесённых после версии 9.6.4. За "
 "информацией о нововведениях версии 9.6 обратитесь к <xref remap=\"3\" "
 "linkend=\"release-9-6\"/>."
 
 #: release-9.6.xml:20(title)
-#, fuzzy
 msgid "Migration to Version 9.6.5"
-msgstr "Миграция на версию 9.6.4"
+msgstr "Миграция на версию 9.6.5"
 
 #: release-9.6.xml:22(para) release-9.6.xml:271(para)
 #: release-9.6.xml:1552(para) release-9.6.xml:2604(para)
@@ -55,13 +51,12 @@ msgstr ""
 "Если используется версия 9.6.X, выгрузка/восстановление базы не требуется."
 
 #: release-9.6.xml:26(para)
-#, fuzzy
 msgid ""
 "However, if you are upgrading from a version earlier than 9.6.4, see <xref "
 "linkend=\"release-9-6-4\"/>."
 msgstr ""
-"Также, если вы обновляете сервер с версии, более ранней, чем 9.6.3, см. "
-"<xref remap=\"4\" linkend=\"release-9-6-3\"/>."
+"Также, если вы обновляете сервер с версии, более ранней, чем 9.6.4, см. "
+"<xref remap=\"4\" linkend=\"release-9-6-4\"/>."
 
 #: release-9.6.xml:33(title) release-9.6.xml:287(title)
 #: release-9.6.xml:1573(title) release-9.6.xml:2621(title)
@@ -82,12 +77,16 @@ msgid ""
 "Show foreign tables in <structname>information_schema</structname>."
 "<structname>table_privileges</structname> view (Peter Eisentraut)"
 msgstr ""
+"Отображение сторонних таблиц в представлении <structname>information_schema</"
+"structname>.<structname>table_privileges</structname> (Питер Эйзентраут)"
 
 #: release-9.6.xml:54(para)
 msgid ""
 "All other relevant <structname>information_schema</structname> views include "
 "foreign tables, but this one ignored them."
 msgstr ""
+"Раньше сторонние таблицы отображались в остальных связанных представлениях "
+"<structname>information_schema</structname>, но отсутствовали в этом."
 
 #: release-9.6.xml:64(programlisting)
 #, no-wrap
@@ -97,6 +96,10 @@ msgid ""
 "\\i <replaceable>SHAREDIR</replaceable>/information_schema.sql\n"
 "COMMIT;"
 msgstr ""
+"BEGIN;\n"
+"DROP SCHEMA information_schema CASCADE;\n"
+"\\i <replaceable>SHAREDIR</replaceable>/information_schema.sql\n"
+"COMMIT;"
 
 #: release-9.6.xml:59(para)
 msgid ""
@@ -107,6 +110,14 @@ msgid ""
 "sharedir</literal> if you're uncertain where <replaceable>SHAREDIR</"
 "replaceable> is.) This must be repeated in each database to be fixed."
 msgstr ""
+"Так как определение этого представления устанавливается программой "
+"<application>initdb</application>, для решения проблемы будет недостаточно "
+"обычного обновления. Если вы хотите исправить существующую инсталляцию, вы "
+"можете от имени суперпользователя выполнить в <application>psql</"
+"application>: <placeholder-1/> (Запустите <literal>pg_config --sharedir</"
+"literal>, если вы не знаете, что задать в качестве <replaceable>SHAREDIR</"
+"replaceable>.) Это потребуется повторить для каждой базы данных, требующей "
+"исправления."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [5b6289c1e] 2017-08-14 15:43:20 -0400
@@ -121,6 +132,9 @@ msgid ""
 "<systemitem>SIGTERM</systemitem>) that occurs while trying to execute a "
 "<command>ROLLBACK</command> of a failed transaction (Tom Lane)"
 msgstr ""
+"Исправление обработки аварийного выхода (например, при получении "
+"<systemitem>SIGTERM</systemitem>) при попытке выполнить <command>ROLLBACK</"
+"command> для прерванной транзакции (Том Лейн)"
 
 #: release-9.6.xml:92(para)
 msgid ""
@@ -128,6 +142,10 @@ msgid ""
 "the exit would still occur, but it would log an unexpected message about "
 "<quote>cannot drop active portal</quote>."
 msgstr ""
+"В таких ситуациях мог происходить сбой проверочного утверждения. В "
+"выпускаемых сборках выход всё равно производился, но в журнал выводилось "
+"неуместное сообщение <quote>cannot drop active portal</quote> (удалить "
+"активный портал нельзя)."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [004a9702e] 2017-08-13 16:15:14 -0400
@@ -139,6 +157,8 @@ msgstr ""
 #: release-9.6.xml:109(para)
 msgid "Remove assertion that could trigger during a fatal exit (Tom Lane)"
 msgstr ""
+"Удаление проверочного утверждения, которое могло нарушаться при аварийном "
+"выходе (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [749c7c417] 2017-08-09 17:03:09 -0400
@@ -152,6 +172,8 @@ msgid ""
 "Correctly identify columns that are of a range type or domain type over a "
 "composite type or domain type being searched for (Tom Lane)"
 msgstr ""
+"Правильное обнаружение столбцов, имеющих тип диапазона или домена, который "
+"определён поверх искомого составного или доменного типа (Том Лейн)"
 
 #: release-9.6.xml:129(para)
 msgid ""
@@ -162,18 +184,23 @@ msgid ""
 "relevant values that are wrapped inside range types or sub-domains, possibly "
 "allowing the database to become inconsistent."
 msgstr ""
+"Определённые команды <command>ALTER</command>, меняющие определение "
+"составного или доменного типа, должны проверять, нет ли в базе данных "
+"значений этого типа, и прерываться, если они есть, так как для изменения или "
+"обновления таких значений нет необходимой инфраструктуры. Ранее эти проверки "
+"могли пропустить значения, обёрнутые в типы диапазонов или вложенные домены, "
+"что могло нарушить целостность в базе данных."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [9bf4068cc] 2017-08-08 19:18:22 -0400
 #. Branch: REL9_6_STABLE [fe578cbd4] 2017-08-08 19:18:23 -0400
 #: release-9.6.xml:146(para)
-#, fuzzy
 msgid ""
 "Prevent crash when passing fixed-length pass-by-reference data types to "
 "parallel worker processes (Tom Lane)"
 msgstr ""
-"Предотвращение задержек при запуске процессом postmaster нескольких "
-"параллельных рабочих процессов (Том Лейн)"
+"Предотвращение сбоя при передаче по ссылке типов данных фиксированной длины "
+"параллельным рабочим процессам (Том Лейн)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master [b1c2d76a2] 2017-08-19 13:39:51 -0400
@@ -188,6 +215,9 @@ msgid ""
 "and using a list file to select a subset of items to restore (Fabr&iacute;"
 "zio de Royes Mello)"
 msgstr ""
+"Устранение сбоя в <application>pg_restore</application> при работе в "
+"параллельном режиме и использовании файла-списка объектов, подлежащих "
+"восстановлению (Фабрицио де Ройес Мелло)"
 
 #. Author: Michael Meskes <meskes@postgresql.org>
 #. Branch: master Release: REL_10_STABLE [ea0ca75d5] 2017-08-14 11:29:34 +0200
@@ -197,14 +227,13 @@ msgstr ""
 #. Branch: REL9_3_STABLE [f8bc6b2f6] 2017-08-16 13:30:09 +0200
 #. Branch: REL9_2_STABLE [60b135c82] 2017-08-16 13:30:20 +0200
 #: release-9.6.xml:179(para)
-#, fuzzy
 msgid ""
 "Change <application>ecpg</application>'s parser to allow <literal>RETURNING</"
 "literal> clauses without attached C variables (Michael Meskes)"
 msgstr ""
 "Исправление лексического анализатора <application>ecpg</application>, чтобы "
-"он корректно обрабатывал разрывы строк в комментариях, начинающихся в "
-"строках с директивами препроцессора (Михаэль Мескес)"
+"он принимал предложения <literal>RETURNING</literal> без связанных "
+"переменных C (Михаэль Мескес)"
 
 #: release-9.6.xml:184(para)
 msgid ""
@@ -213,20 +242,22 @@ msgid ""
 "inside a CTE) rather than using it to define values to be returned to the "
 "client."
 msgstr ""
+"Благодаря этому программы <application>ecpg</application> могут содержать "
+"SQL-конструкции, использующие <literal>RETURNING</literal> внутри (например, "
+"внутри CTE), не определяя значения, которые будут возвращены клиенту."
 
 #. Author: Michael Meskes <meskes@postgresql.org>
 #. Branch: master [a4619b26a] 2017-08-15 17:14:52 +0200
 #. Branch: REL_10_STABLE [a6b174f55] 2017-08-16 13:27:21 +0200
 #. Branch: REL9_6_STABLE [954490fec] 2017-08-16 13:28:10 +0200
 #: release-9.6.xml:198(para)
-#, fuzzy
 msgid ""
 "Change <application>ecpg</application>'s parser to recognize backslash "
 "continuation of C preprocessor command lines (Michael Meskes)"
 msgstr ""
-"Исправление лексического анализатора <application>ecpg</application>, чтобы "
-"он корректно обрабатывал разрывы строк в комментариях, начинающихся в "
-"строках с директивами препроцессора (Михаэль Мескес)"
+"Доработка лексического анализатора <application>ecpg</application>, чтобы он "
+"распознавал продолжения строк команд C-препроцессора с обратной косой чертой "
+"(Михаэль Мескес)"
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [5a5c2feca] 2017-08-14 11:48:59 -0400
@@ -244,7 +275,7 @@ msgstr ""
 #. Branch: REL9_2_STABLE [f7e4783dd] 2017-08-17 13:15:46 -0400
 #: release-9.6.xml:221(para)
 msgid "Improve selection of compiler flags for PL/Perl on Windows (Tom Lane)"
-msgstr ""
+msgstr "Улучшение выбора флагов компилятора для PL/Perl в Windows (Том Лейн)"
 
 #: release-9.6.xml:225(para)
 msgid ""
@@ -256,6 +287,13 @@ msgid ""
 "<type>time_t</type> is not used in any <productname>PostgreSQL</productname> "
 "API definitions."
 msgstr ""
+"В результате этого исправления предотвращаются сбои PL/Perl, возможные из-за "
+"некорректных предположений о ширине значений <type>time_t</type>. Побочным "
+"эффектом, который могут заметить разработчики расширений, стала ликвидация "
+"глобального определения <literal>_USE_32BIT_TIME_T</literal> в сборках "
+"<productname>PostgreSQL</productname> для Windows. Это не должно приводить к "
+"проблемам, так как тип <type>time_t</type> не используется ни в каких "
+"определениях API <productname>PostgreSQL</productname>."
 
 #. Author: Tom Lane <tgl@sss.pgh.pa.us>
 #. Branch: master Release: REL_10_STABLE [a76200de8] 2017-08-09 12:05:53 -0400
@@ -266,6 +304,8 @@ msgid ""
 "Fix <literal>make check</literal> to behave correctly when invoked via a non-"
 "GNU make program (Thomas Munro)"
 msgstr ""
+"Исправление поведения <literal>make check</literal> при использовании "
+"альтернативной (не GNU) программы make (Томас Мунро)"
 
 #: release-9.6.xml:255(title)
 msgid "Release 9.6.4"
