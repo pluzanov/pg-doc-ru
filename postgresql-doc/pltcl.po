@@ -1,0 +1,2137 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-08-01 16:29+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:5(title)
+msgid "PL/Tcl - Tcl Procedural Language"
+msgstr "PL/Tcl — процедурный язык Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:7(indexterm)
+msgid "<primary>PL/Tcl</primary>"
+msgstr "<primary>PL/Tcl</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:11(indexterm)
+msgid "<primary>Tcl</primary>"
+msgstr "<primary>Tcl</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:15(para)
+msgid ""
+"PL/Tcl is a loadable procedural language for the <productname>PostgreSQL</"
+"productname> database system that enables the <ulink url=\"http://www.tcl.tk/"
+"\"> Tcl language</ulink> to be used to write functions and trigger "
+"procedures."
+msgstr ""
+"PL/Tcl — это загружаемый процедурный язык для СУБД <productname>PostgreSQL</"
+"productname>, позволяющий использовать <ulink url=\"http://www.tcl.tk/"
+"\">язык Tcl</ulink> для написания функций и триггерных процедур."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:26(title)
+msgid "Overview"
+msgstr "Обзор"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:28(para)
+msgid ""
+"PL/Tcl offers most of the capabilities a function writer has in the C "
+"language, with a few restrictions, and with the addition of the powerful "
+"string processing libraries that are available for Tcl."
+msgstr ""
+"PL/Tcl предоставляет большинство возможностей, которые имеет разработчик "
+"функций на C, с небольшими ограничениями, и позволяет применять мощные "
+"библиотеки обработки строк, существующие для Tcl."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:34(para)
+msgid ""
+"One compelling <emphasis>good</emphasis> restriction is that everything is "
+"executed from within the safety of the context of a Tcl interpreter. In "
+"addition to the limited command set of safe Tcl, only a few commands are "
+"available to access the database via SPI and to raise messages via "
+"<function>elog()</function>. PL/Tcl provides no way to access internals of "
+"the database server or to gain OS-level access under the permissions of the "
+"<productname>PostgreSQL</productname> server process, as a C function can "
+"do. Thus, unprivileged database users can be trusted to use this language; "
+"it does not give them unlimited authority."
+msgstr ""
+"Одним убедительным <emphasis>хорошим</emphasis> ограничением является то, "
+"что весь код выполняется в контексте безопасности интерпретатора Tcl. Помимо "
+"ограниченного набора команд безопасного Tcl, разрешены только несколько "
+"команд для обращения к базе данных через SPI и вызовы <function>elog()</"
+"function> для выдачи сообщений. PL/Tcl не даёт возможности взаимодействовать "
+"с внутренним механизмом сервера баз данных или обращаться к ОС с правами "
+"серверного процесса <productname>PostgreSQL</productname>, что возможно в "
+"функциях на C. Таким образом, использование этого языка можно доверить "
+"непривилегированным пользователям; это не даст им неограниченные полномочия."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:46(para)
+msgid ""
+"The other notable implementation restriction is that Tcl functions cannot be "
+"used to create input/output functions for new data types."
+msgstr ""
+"Ещё одно существенное ограничение заключается в том, что функции на Tcl "
+"нельзя использовать для создания функций ввода/вывода для новых типов данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:51(para)
+msgid ""
+"Sometimes it is desirable to write Tcl functions that are not restricted to "
+"safe Tcl. For example, one might want a Tcl function that sends email. To "
+"handle these cases, there is a variant of <application>PL/Tcl</application> "
+"called <literal>PL/TclU</literal> (for untrusted Tcl). This is exactly the "
+"same language except that a full Tcl interpreter is used. <emphasis>If "
+"<application>PL/TclU</application> is used, it must be installed as an "
+"untrusted procedural language</emphasis> so that only database superusers "
+"can create functions in it. The writer of a <application>PL/TclU</"
+"application> function must take care that the function cannot be used to do "
+"anything unwanted, since it will be able to do anything that could be done "
+"by a user logged in as the database administrator."
+msgstr ""
+"Иногда возникает желание написать функцию на Tcl, которая не будут "
+"ограничена безопасным Tcl. Например, может потребоваться функция, которая "
+"будет посылать сообщения по почте. Для этих случаев есть вариация "
+"<application>PL/Tcl</application>, названная <literal>PL/TclU</literal> "
+"(название подразумевает &laquo;untrusted Tcl&raquo;, недоверенный Tcl). Это "
+"тот же язык, за исключением того, что для него используется полноценный "
+"интерпретатор Tcl. <emphasis>Если применяется <application>PL/TclU</"
+"application>, он должен быть установлен как недоверенный процедурный язык</"
+"emphasis>, чтобы только суперпользователи могли создавать функции на нём. "
+"Автор функции на <application>PL/TclU</application> должен позаботиться о "
+"том, чтобы эту функцию нельзя было использовать не по назначению, так как "
+"она может делать всё, что может пользователь с правами администратора баз "
+"данных."
+
+#. +> REL_10
+#: pltcl.xml:63(para)
+msgid ""
+"The shared object code for the <application>PL/Tcl</application> and "
+"<application>PL/TclU</application> call handlers is automatically built and "
+"installed in the <productname>PostgreSQL</productname> library directory if "
+"Tcl support is specified in the configuration step of the installation "
+"procedure. To install <application>PL/Tcl</application> and/or "
+"<application>PL/TclU</application> in a particular database, use the "
+"<command>CREATE EXTENSION</command> command, for example <literal>CREATE "
+"EXTENSION pltcl</literal> or <literal>CREATE EXTENSION pltclu</literal>."
+msgstr ""
+"Разделяемый объектный код для обработчиков вызова <application>PL/Tcl</"
+"application> и <application>PL/TclU</application> собирается автоматически и "
+"устанавливается в каталог библиотек <productname>PostgreSQL</productname>, "
+"если поддержка Tcl включена на этапе конфигурирования процедуры установки. "
+"Чтобы установить <application>PL/Tcl</application> и/или <application>PL/"
+"TclU</application> в конкретную базу данных, воспользуйтесь командой "
+"<command>CREATE EXTENSION</command>, например, так: <literal>CREATE "
+"EXTENSION pltcl</literal> или <literal>CREATE EXTENSION pltclu</literal>."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:63(para)
+msgid ""
+"The shared object code for the <application>PL/Tcl</application> and "
+"<application>PL/TclU</application> call handlers is automatically built and "
+"installed in the <productname>PostgreSQL</productname> library directory if "
+"Tcl support is specified in the configuration step of the installation "
+"procedure. To install <application>PL/Tcl</application> and/or "
+"<application>PL/TclU</application> in a particular database, use the "
+"<command>CREATE EXTENSION</command> command or the <command>createlang</"
+"command> program, for example <literal>createlang pltcl <replaceable>dbname</"
+"replaceable></literal> or <literal>createlang pltclu <replaceable>dbname</"
+"replaceable></literal>."
+msgstr ""
+"Разделяемый объектный код для обработчиков вызова <application>PL/Tcl</"
+"application> и <application>PL/TclU</application> собирается автоматически и "
+"устанавливается в каталог библиотек <productname>PostgreSQL</productname>, "
+"если поддержка Tcl включена на этапе конфигурирования процедуры установки. "
+"Чтобы установить <application>PL/Tcl</application> и/или <application>PL/"
+"TclU</application> в конкретную базу данных, воспользуйтесь командой "
+"<command>CREATE EXTENSION</command> или программой <command>createlang</"
+"command>, например, так: <literal>createlang pltcl <replaceable>имя_базы</"
+"replaceable></literal> или <literal>createlang pltclu <replaceable>имя_базы</"
+"replaceable></literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:79(title)
+msgid "PL/Tcl Functions and Arguments"
+msgstr "Функции на PL/Tcl и их аргументы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:85(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION <replaceable>funcname</replaceable> (<replaceable>argument-types</replaceable>) RETURNS <replaceable>return-type</replaceable> AS $$\n"
+"    # PL/Tcl function body\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION <replaceable>имя_функции</replaceable> (<replaceable>типы_аргументов</replaceable>) RETURNS <replaceable>тип_результата</replaceable> AS $$\n"
+"    # Тело функции на PL/Tcl\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:81(para)
+msgid ""
+"To create a function in the <application>PL/Tcl</application> language, use "
+"the standard <xref linkend=\"sql-createfunction\"/> syntax: <placeholder-1/> "
+"<application>PL/TclU</application> is the same, except that the language has "
+"to be specified as <literal>pltclu</literal>."
+msgstr ""
+"Чтобы создать функцию на языке <application>PL/Tcl</application>, "
+"используйте стандартный синтаксис <xref linkend=\"sql-createfunction\"/>: "
+"<placeholder-1/> С <application>PL/TclU</application> команда та же, но в "
+"качестве языка должно быть указано <literal>pltclu</literal>."
+
+#. +> REL_10
+#: pltcl.xml:95(para)
+msgid ""
+"The body of the function is simply a piece of Tcl script. When the function "
+"is called, the argument values are passed to the Tcl script as variables "
+"named <literal>1</literal> ... <literal><replaceable>n</replaceable></"
+"literal>. The result is returned from the Tcl code in the usual way, with a "
+"<literal>return</literal> statement."
+msgstr ""
+"Тело функции содержит просто скрипт на Tcl. Когда вызывается функция, "
+"значения аргументов передаются скрипту Tcl в виде переменных с именами "
+"<literal>1</literal> ... <literal><replaceable>n</replaceable></literal>. "
+"Результат из кода Tcl возвращается как обычно, оператором <literal>return</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:108(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION tcl_max(integer, integer) RETURNS integer AS $$\n"
+"    if {$1 &gt; $2} {return $1}\n"
+"    return $2\n"
+"$$ LANGUAGE pltcl STRICT;"
+msgstr ""
+"CREATE FUNCTION tcl_max(integer, integer) RETURNS integer AS $$\n"
+"    if {$1 &gt; $2} {return $1}\n"
+"    return $2\n"
+"$$ LANGUAGE pltcl STRICT;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:104(para)
+msgid ""
+"For example, a function returning the greater of two integer values could be "
+"defined as: <placeholder-1/> Note the clause <literal>STRICT</literal>, "
+"which saves us from having to think about null input values: if a null value "
+"is passed, the function will not be called at all, but will just return a "
+"null result automatically."
+msgstr ""
+"Например, функцию, возвращающую большее из двух целых чисел, можно "
+"определить так: <placeholder-1/> Обратите внимание на предложение "
+"<literal>STRICT</literal>, которое избавляет нас от необходимости думать о "
+"входящих значениях NULL: если при вызове передаётся значение NULL, функция "
+"не будет выполняться вовсе, будет сразу возвращён результат NULL."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:130(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION tcl_max(integer, integer) RETURNS integer AS $$\n"
+"    if {[argisnull 1]} {\n"
+"        if {[argisnull 2]} { return_null }\n"
+"        return $2\n"
+"    }\n"
+"    if {[argisnull 2]} { return $1 }\n"
+"    if {$1 &gt; $2} {return $1}\n"
+"    return $2\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION tcl_max(integer, integer) RETURNS integer AS $$\n"
+"    if {[argisnull 1]} {\n"
+"        if {[argisnull 2]} { return_null }\n"
+"        return $2\n"
+"    }\n"
+"    if {[argisnull 2]} { return $1 }\n"
+"    if {$1 &gt; $2} {return $1}\n"
+"    return $2\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:121(para)
+msgid ""
+"In a nonstrict function, if the actual value of an argument is null, the "
+"corresponding <literal>$<replaceable>n</replaceable></literal> variable will "
+"be set to an empty string. To detect whether a particular argument is null, "
+"use the function <literal>argisnull</literal>. For example, suppose that we "
+"wanted <function>tcl_max</function> with one null and one nonnull argument "
+"to return the nonnull argument, rather than null: <placeholder-1/>"
+msgstr ""
+"В нестрогой функции, если фактическое значение аргумента — NULL, "
+"соответствующей переменной <literal>$<replaceable>n</replaceable></literal> "
+"будет присвоена пустая строка. Чтобы определить, был ли передан NULL в "
+"определённом аргументе, используйте функцию <literal>argisnull</literal>. "
+"Например, предположим, что нам нужна функция <function>tcl_max</function>, "
+"которая с одним аргументом NULL и вторым аргументом не NULL должна "
+"возвращать не NULL, а второй аргумент: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:143(para)
+msgid ""
+"As shown above, to return a null value from a PL/Tcl function, execute "
+"<literal>return_null</literal>. This can be done whether the function is "
+"strict or not."
+msgstr ""
+"Как показано выше, чтобы вернуть значение NULL из функции PL/Tcl, нужно "
+"выполнить <literal>return_null</literal>. Это можно сделать и в строгой, и в "
+"нестрогой функции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:156(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE employee (\n"
+"    name text,\n"
+"    salary integer,\n"
+"    age integer\n"
+");\n"
+"\n"
+"CREATE FUNCTION overpaid(employee) RETURNS boolean AS $$\n"
+"    if {200000.0 &lt; $1(salary)} {\n"
+"        return \"t\"\n"
+"    }\n"
+"    if {$1(age) &lt; 30 &amp;&amp; 100000.0 &lt; $1(salary)} {\n"
+"        return \"t\"\n"
+"    }\n"
+"    return \"f\"\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE TABLE employee (\n"
+"    name text,\n"
+"    salary integer,\n"
+"    age integer\n"
+");\n"
+"\n"
+"CREATE FUNCTION overpaid(employee) RETURNS boolean AS $$\n"
+"    if {200000.0 &lt; $1(salary)} {\n"
+"        return \"t\"\n"
+"    }\n"
+"    if {$1(age) &lt; 30 &amp;&amp; 100000.0 &lt; $1(salary)} {\n"
+"        return \"t\"\n"
+"    }\n"
+"    return \"f\"\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:150(para)
+msgid ""
+"Composite-type arguments are passed to the function as Tcl arrays. The "
+"element names of the array are the attribute names of the composite type. If "
+"an attribute in the passed row has the null value, it will not appear in the "
+"array. Here is an example: <placeholder-1/>"
+msgstr ""
+"Аргументы составного типа передаются функции в виде массивов Tcl. Именами "
+"элементов массива являются имена атрибутов составного типа. Если атрибут в "
+"переданной строке имеет значение NULL, он будет отсутствовать в данном "
+"массиве. Например: <placeholder-1/>"
+
+#. +> REL_10
+#: pltcl.xml:182(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION square_cube(in int, out squared int, out cubed int) AS $$\n"
+"    return [list squared [expr {$1 * $1}] cubed [expr {$1 * $1 * $1}]]\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION square_cube(in int, out squared int, out cubed int) AS $$\n"
+"    return [list squared [expr {$1 * $1}] cubed [expr {$1 * $1 * $1}]]\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:175(para)
+msgid ""
+"PL/Tcl functions can return composite-type results, too. To do this, the Tcl "
+"code must return a list of column name/value pairs matching the expected "
+"result type. Any column names omitted from the list are returned as nulls, "
+"and an error is raised if there are unexpected column names. Here is an "
+"example: <placeholder-1/>"
+msgstr ""
+"Функции PL/Tcl могут возвращать и результаты составного типа. Для этого код "
+"на Tcl должен вернуть список пар имя/значение столбца, соответствующий "
+"ожидаемому типу результата. Столбцы, имена которых в этом списке "
+"отсутствуют, получат значения NULL, а если в списке указано имя "
+"несуществующего столбца, возникнет ошибка. Например: <placeholder-1/>"
+
+#. +> REL_10
+#: pltcl.xml:194(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION raise_pay(employee, delta int) RETURNS employee AS $$\n"
+"    set 1(salary) [expr {$1(salary) + $2}]\n"
+"    return [array get 1]\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION raise_pay(employee, delta int) RETURNS employee AS $$\n"
+"    set 1(salary) [expr {$1(salary) + $2}]\n"
+"    return [array get 1]\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:190(para)
+msgid ""
+"The result list can be made from an array representation of the desired "
+"tuple with the <literal>array get</literal> Tcl command. For example: "
+"<placeholder-1/>"
+msgstr ""
+"Список результатов можно создать из желаемого кортежа, представленного в "
+"виде массива, с помощью команды <literal>array get</literal> языка Tcl. "
+"Например: <placeholder-1/>"
+
+#. +> REL_10
+#: pltcl.xml:210(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION sequence(int, int) RETURNS SETOF int AS $$\n"
+"    for {set i $1} {$i &lt; $2} {incr i} {\n"
+"        return_next $i\n"
+"    }\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION sequence(int, int) RETURNS SETOF int AS $$\n"
+"    for {set i $1} {$i &lt; $2} {incr i} {\n"
+"        return_next $i\n"
+"    }\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:220(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION table_of_squares(int, int) RETURNS TABLE (x int, x2 int) AS $$\n"
+"    for {set i $1} {$i &lt; $2} {incr i} {\n"
+"        return_next [list x $i x2 [expr {$i * $i}]]\n"
+"    }\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION table_of_squares(int, int) RETURNS TABLE (x int, x2 int) AS $$\n"
+"    for {set i $1} {$i &lt; $2} {incr i} {\n"
+"        return_next [list x $i x2 [expr {$i * $i}]]\n"
+"    }\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:203(para)
+msgid ""
+"PL/Tcl functions can return sets. To do this, the Tcl code should call "
+"<function>return_next</function> once per row to be returned, passing either "
+"the appropriate value when returning a scalar type, or a list of column name/"
+"value pairs when returning a composite type. Here is an example returning a "
+"scalar type: <placeholder-1/> and here is one returning a composite type: "
+"<placeholder-2/>"
+msgstr ""
+"Функции PL/Tcl могут возвращать наборы результатов. Для этого код на Tcl "
+"должен вызывать <function>return_next</function> для каждой возвращаемой "
+"строки, передавая ей соответствующее значение, когда возвращается скалярный "
+"тип, или список пар имя/значение столбца, когда возвращается составной тип. "
+"Пример с результатом скалярного типа: <placeholder-1/> и с результатом "
+"составного: <placeholder-2/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:232(title)
+msgid "Data Values in PL/Tcl"
+msgstr "Значения данных в PL/Tcl"
+
+#. +> REL_10
+#: pltcl.xml:234(para)
+msgid ""
+"The argument values supplied to a PL/Tcl function's code are simply the "
+"input arguments converted to text form (just as if they had been displayed "
+"by a <command>SELECT</command> statement). Conversely, the <literal>return</"
+"literal> and <literal>return_next</literal> commands will accept any string "
+"that is acceptable input format for the function's declared result type, or "
+"for the specified column of a composite result type."
+msgstr ""
+"Значения аргументов, передаваемые в код функции PL/Tcl, представляют собой "
+"просто входные аргументы, преобразованные в текстовый вид (так же, как при "
+"выводе оператором <command>SELECT</command>). И наоборот, команды "
+"<literal>return</literal> и <literal>return_next</literal> примут любую "
+"строку, соответствующую формату ввода для объявленного типа результата "
+"функции или заданного столбца в результате составного типа."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:246(title)
+msgid "Global Data in PL/Tcl"
+msgstr "Глобальные данные в PL/Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:248(indexterm)
+msgid "<primary>global data</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>глобальные данные</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:253(para)
+msgid ""
+"Sometimes it is useful to have some global data that is held between two "
+"calls to a function or is shared between different functions. This is easily "
+"done in PL/Tcl, but there are some restrictions that must be understood."
+msgstr ""
+"Иногда полезно иметь некоторые глобальные данные, сохраняемые между двумя "
+"вызовами функции или совместно используемые разными функциями. Это легко "
+"сделать в PL/Tcl, но есть некоторые ограничения, которые необходимо понимать."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:261(para)
+msgid ""
+"For security reasons, PL/Tcl executes functions called by any one SQL role "
+"in a separate Tcl interpreter for that role. This prevents accidental or "
+"malicious interference by one user with the behavior of another user's PL/"
+"Tcl functions. Each such interpreter will have its own values for any "
+"<quote>global</quote> Tcl variables. Thus, two PL/Tcl functions will share "
+"the same global variables if and only if they are executed by the same SQL "
+"role. In an application wherein a single session executes code under "
+"multiple SQL roles (via <literal>SECURITY DEFINER</literal> functions, use "
+"of <command>SET ROLE</command>, etc) you may need to take explicit steps to "
+"ensure that PL/Tcl functions can share data. To do that, make sure that "
+"functions that should communicate are owned by the same user, and mark them "
+"<literal>SECURITY DEFINER</literal>. You must of course take care that such "
+"functions can't be used to do anything unintended."
+msgstr ""
+"По соображениям безопасности, PL/Tcl выполняет функции, вызываемые некоторой "
+"ролью SQL в отдельном интерпретаторе Tcl, выделенном для этой роли. Это "
+"предотвращает случайное или злонамеренное влияние одного пользователя на "
+"поведение функций PL/Tcl другого пользователя. В каждом интерпретаторе будут "
+"свои значения всех <quote>глобальных</quote> переменных Tcl. Таким образом, "
+"в двух функциях PL/Tcl будут общие глобальные переменные, только если они "
+"выполняются одной ролью SQL. В приложении, выполняющем код в одном сеансе с "
+"разными ролями SQL (вызывающем функции <literal>SECURITY DEFINER</literal>, "
+"использующем команду <command>SET ROLE</command> и т. д.) может понадобиться "
+"явно предпринять дополнительные меры, чтобы функции могли разделять свои "
+"данные. Для этого сначала установите для функций, которые должны "
+"взаимодействовать, одного владельца, а затем задайте для них свойство "
+"<literal>SECURITY DEFINER</literal>. Разумеется, при этом нужно позаботиться "
+"о том, чтобы эти функции не могли сделать ничего непредусмотренного."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:278(para)
+msgid ""
+"All PL/TclU functions used in a session execute in the same Tcl interpreter, "
+"which of course is distinct from the interpreter(s) used for PL/Tcl "
+"functions. So global data is automatically shared between PL/TclU functions. "
+"This is not considered a security risk because all PL/TclU functions execute "
+"at the same trust level, namely that of a database superuser."
+msgstr ""
+"Все функции PL/TclU, вызываемые в одном сеансе, выполняются одним "
+"интерпретатором Tcl, который, конечно, отличается от интерпретатора(ов), "
+"используемого для функций PL/Tcl. Поэтому глобальные данные функций PL/TclU "
+"автоматически становятся общими. Это не считается угрозой безопасности, так "
+"как все функции PL/TclU выполняются на одном уровне доверия, а именно уровне "
+"суперпользователя базы данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:287(para)
+msgid ""
+"To help protect PL/Tcl functions from unintentionally interfering with each "
+"other, a global array is made available to each function via the "
+"<function>upvar</function> command. The global name of this variable is the "
+"function's internal name, and the local name is <literal>GD</literal>. It is "
+"recommended that <literal>GD</literal> be used for persistent private data "
+"of a function. Use regular Tcl global variables only for values that you "
+"specifically intend to be shared among multiple functions. (Note that the "
+"<literal>GD</literal> arrays are only global within a particular "
+"interpreter, so they do not bypass the security restrictions mentioned "
+"above.)"
+msgstr ""
+"Чтобы защитить функции PL/Tcl от непреднамеренного влияния друг на друга, "
+"каждой из них предоставляется глобальная переменная-массив через команду "
+"<function>upvar</function>. Глобальным именем этой переменной является "
+"внутреннее имя функции, а в качестве локального выбрано <literal>GD</"
+"literal>. Переменную <literal>GD</literal> рекомендуется использовать для "
+"постоянных внутренних данных функции. Обычные глобальные переменные Tcl "
+"следует использовать только для значений, которые предназначены именно для "
+"совместного использования несколькими функциями. (Заметьте, что массивы "
+"<literal>GD</literal> являются глобальными только для конкретного "
+"интерпретатора, так что они не нарушают ограничения безопасности, описанные "
+"выше.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:301(para)
+msgid ""
+"An example of using <literal>GD</literal> appears in the "
+"<function>spi_execp</function> example below."
+msgstr ""
+"Использование <literal>GD</literal> демонстрируется в примере "
+"<function>spi_execp</function>, приведённом ниже."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:308(title)
+msgid "Database Access from PL/Tcl"
+msgstr "Обращение к базе данных из PL/Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(function)
+msgid "spi_exec"
+msgstr "spi_exec"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(replaceable) pltcl.xml:409(replaceable)
+msgid "n"
+msgstr "n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(optional) pltcl.xml:409(optional)
+msgid "-count <placeholder-1/>"
+msgstr "-count <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(replaceable) pltcl.xml:409(replaceable)
+msgid "name"
+msgstr "имя"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(optional) pltcl.xml:409(optional)
+msgid "-array <placeholder-1/>"
+msgstr "-array <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(replaceable) pltcl.xml:480(replaceable)
+msgid "command"
+msgstr "команда"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:317(replaceable) pltcl.xml:409(replaceable)
+msgid "loop-body"
+msgstr "тело-цикла"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:319(para)
+msgid ""
+"Executes an SQL command given as a string. An error in the command causes an "
+"error to be raised. Otherwise, the return value of <function>spi_exec</"
+"function> is the number of rows processed (selected, inserted, updated, or "
+"deleted) by the command, or zero if the command is a utility statement. In "
+"addition, if the command is a <command>SELECT</command> statement, the "
+"values of the selected columns are placed in Tcl variables as described "
+"below."
+msgstr ""
+"Выполняет команду SQL, заданную в виде строки. В случае ошибки в этой "
+"команде выдаётся ошибка в Tcl. В противном случае <function>spi_exec</"
+"function> возвращает число обработанных командой строк (выбранных, "
+"добавленных, изменённых или удалённых), либо ноль, если эта команда — "
+"служебный оператор. Кроме того, если команда — оператор <command>SELECT</"
+"command>, значения выбранных столбцов помещаются в переменные Tcl, как "
+"описано ниже."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:328(para)
+msgid ""
+"The optional <literal>-count</literal> value tells <function>spi_exec</"
+"function> the maximum number of rows to process in the command. The effect "
+"of this is comparable to setting up a query as a cursor and then saying "
+"<literal>FETCH <replaceable>n</replaceable></literal>."
+msgstr ""
+"Необязательное значение <literal>-count</literal> задаёт для "
+"<function>spi_exec</function> максимальное число строк, которое должно быть "
+"обработано в команде. Его действие можно представить как выполнение "
+"<literal>FETCH <replaceable>n</replaceable></literal> для курсора, "
+"предварительно подготовленного для команды."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:334(para)
+msgid ""
+"If the command is a <command>SELECT</command> statement, the values of the "
+"result columns are placed into Tcl variables named after the columns. If the "
+"<literal>-array</literal> option is given, the column values are instead "
+"stored into elements of the named associative array, with the column names "
+"used as array indexes. In addition, the current row number within the result "
+"(counting from zero) is stored into the array element named <quote><literal>."
+"tupno</literal></quote>, unless that name is in use as a column name in the "
+"result."
+msgstr ""
+"Если в качестве команды выполняется оператор <command>SELECT</command>, "
+"значения результирующих столбцов помещаются в переменные Tcl, названные по "
+"именам столбцов. Если передаётся <literal>-array</literal>, значения "
+"столбцов вместо этого становятся элементами названного ассоциативного "
+"массива, индексами в котором становятся имена столбцов. Кроме того, в "
+"элементе с именем <quote><literal>.tupno</literal></quote> сохраняется номер "
+"текущей строки в результирующем наборе (отсчитывая от нуля), если только это "
+"имя не занято одним из столбцов результата."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:351(programlisting)
+#, no-wrap
+msgid "spi_exec \"SELECT count(*) AS cnt FROM pg_proc\""
+msgstr "spi_exec \"SELECT count(*) AS cnt FROM pg_proc\""
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:344(para)
+msgid ""
+"If the command is a <command>SELECT</command> statement and no "
+"<replaceable>loop-body</replaceable> script is given, then only the first "
+"row of results are stored into Tcl variables or array elements; remaining "
+"rows, if any, are ignored. No storing occurs if the query returns no rows. "
+"(This case can be detected by checking the result of <function>spi_exec</"
+"function>.) For example: <placeholder-1/> will set the Tcl variable <literal>"
+"$cnt</literal> to the number of rows in the <structname>pg_proc</structname> "
+"system catalog."
+msgstr ""
+"Если в качестве команды выполняется <command>SELECT</command> без указания "
+"скрипта <replaceable>тело-цикла</replaceable>, в переменных Tcl или "
+"элементах массива сохраняется только первая строка результатов; оставшиеся "
+"строки (если они есть), игнорируются. Если запрос не возвращает строки, не "
+"сохраняется ничего. (Этот случай можно отследить, проверив результат "
+"<function>spi_exec</function>.) Например, команда: <placeholder-1/> присвоит "
+"переменной <literal>$cnt</literal> в Tcl число строк, содержащихся в "
+"системном каталоге <structname>pg_proc</structname>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:365(programlisting)
+#, no-wrap
+msgid ""
+"spi_exec -array C \"SELECT * FROM pg_class\" {\n"
+"    elog DEBUG \"have table $C(relname)\"\n"
+"}"
+msgstr ""
+"spi_exec -array C \"SELECT * FROM pg_class\" {\n"
+"    elog DEBUG \"have table $C(relname)\"\n"
+"}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:357(para)
+msgid ""
+"If the optional <replaceable>loop-body</replaceable> argument is given, it "
+"is a piece of Tcl script that is executed once for each row in the query "
+"result. (<replaceable>loop-body</replaceable> is ignored if the given "
+"command is not a <command>SELECT</command>.) The values of the current row's "
+"columns are stored into Tcl variables or array elements before each "
+"iteration. For example: <placeholder-1/> will print a log message for every "
+"row of <literal>pg_class</literal>. This feature works similarly to other "
+"Tcl looping constructs; in particular <literal>continue</literal> and "
+"<literal>break</literal> work in the usual way inside the loop body."
+msgstr ""
+"Если передаётся необязательный аргумент <replaceable>тело-цикла</"
+"replaceable>, заданный в нём блок скрипта Tcl будет выполняться для каждой "
+"строки результата запроса. (Аргумент <replaceable>тело-цикла</replaceable> "
+"игнорируется, если целевая команда — не <command>SELECT</command>.) При этом "
+"значения столбцов текущей строки сохраняются в переменных Tcl или элементах "
+"массива перед каждой итерацией этого цикла. Например, код: <placeholder-1/> "
+"будет выводить в журнал сообщение для каждой строки <literal>pg_class</"
+"literal>. Это работает подобно другим конструкциям циклов в Tcl; в "
+"частности, команды <literal>continue</literal> и <literal>break</literal> в "
+"теле цикла будут действовать обычным образом."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:375(para)
+msgid ""
+"If a column of a query result is null, the target variable for it is "
+"<quote>unset</quote> rather than being set."
+msgstr ""
+"Если в столбце результата запроса выдаётся NULL, целевая переменная для неё "
+"не устанавливается, и оказывается <quote>неустановленной</quote>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:383(function)
+msgid "spi_prepare"
+msgstr "spi_prepare"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:383(replaceable)
+msgid "query"
+msgstr "запрос"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:383(replaceable)
+msgid "typelist"
+msgstr "список-типов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:388(indexterm)
+msgid "<primary>preparing a query</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>подготовка запроса</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:385(para)
+msgid ""
+"Prepares and saves a query plan for later execution. The saved plan will be "
+"retained for the life of the current session.<placeholder-1/>"
+msgstr ""
+"Подготавливает и сохраняет план запроса для последующего выполнения. "
+"Сохранённый план будет продолжать существование до завершения текущего "
+"сеанса.<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:391(para)
+msgid ""
+"The query can use parameters, that is, placeholders for values to be "
+"supplied whenever the plan is actually executed. In the query string, refer "
+"to parameters by the symbols <literal>$1</literal> ... <literal>"
+"$<replaceable>n</replaceable></literal>. If the query uses parameters, the "
+"names of the parameter types must be given as a Tcl list. (Write an empty "
+"list for <replaceable>typelist</replaceable> if no parameters are used.)"
+msgstr ""
+"Запрос может принимать параметры, то есть местозаполнители для значений, "
+"которые будут передаваться, когда план будет собственно выполняться. В "
+"строке запроса эти параметры обозначаются как <literal>$1</literal> ... "
+"<literal>$<replaceable>n</replaceable></literal>. Если в запросе "
+"используются параметры, нужно задать имена типов этих параметров в виде "
+"списка Tcl. (Если параметры отсутствуют, задайте пустой "
+"<replaceable>список_типов</replaceable>.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:400(para)
+msgid ""
+"The return value from <function>spi_prepare</function> is a query ID to be "
+"used in subsequent calls to <function>spi_execp</function>. See "
+"<function>spi_execp</function> for an example."
+msgstr ""
+"Функция <function>spi_prepare</function> возвращает идентификатор запроса, "
+"который может использоваться в последующих вызовах <function>spi_execp</"
+"function>. Пример приведён в описании <function>spi_execp</function>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:409(function)
+msgid "spi_execp"
+msgstr "spi_execp"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:409(replaceable) pltcl.xml:494(replaceable)
+msgid "string"
+msgstr "строка"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:409(optional)
+msgid "-nulls <placeholder-1/>"
+msgstr "-nulls <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:409(replaceable)
+msgid "queryid"
+msgstr "ид-запроса"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:409(replaceable)
+msgid "value-list"
+msgstr "список-значений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:411(para)
+msgid ""
+"Executes a query previously prepared with <function>spi_prepare</function>. "
+"<replaceable>queryid</replaceable> is the ID returned by "
+"<function>spi_prepare</function>. If the query references parameters, a "
+"<replaceable>value-list</replaceable> must be supplied. This is a Tcl list "
+"of actual values for the parameters. The list must be the same length as the "
+"parameter type list previously given to <function>spi_prepare</function>. "
+"Omit <replaceable>value-list</replaceable> if the query has no parameters."
+msgstr ""
+"Выполняет запрос, ранее подготовленный функцией <function>spi_prepare</"
+"function>. В качестве <replaceable>ид_запроса</replaceable> передаётся "
+"идентификатор, возвращённый функцией <function>spi_prepare</function>. Если "
+"в запросе задействуются параметры, необходимо указать <replaceable>список-"
+"значений</replaceable>. Это должен быть принятый в Tcl список параметров. Он "
+"должен иметь ту же длину, что и список типов параметров, ранее переданный "
+"<function>spi_prepare</function>. Опустите <replaceable>список-значений</"
+"replaceable>, если у запроса нет параметров."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:421(para)
+msgid ""
+"The optional value for <literal>-nulls</literal> is a string of spaces and "
+"<literal>'n'</literal> characters telling <function>spi_execp</function> "
+"which of the parameters are null values. If given, it must have exactly the "
+"same length as the <replaceable>value-list</replaceable>. If it is not "
+"given, all the parameter values are nonnull."
+msgstr ""
+"Необязательный аргумент <literal>-nulls</literal> принимает строку из "
+"пробелов и символов <literal>'n'</literal>, которые отмечают, в каких "
+"параметрах <function>spi_execp</function> передаются значения NULL. Если "
+"присутствует, эта строка должна иметь ту же длину, что и <replaceable>список-"
+"значений</replaceable>. В случае её отсутствия значения всех параметров "
+"считаются отличными от NULL."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:428(para)
+msgid ""
+"Except for the way in which the query and its parameters are specified, "
+"<function>spi_execp</function> works just like <function>spi_exec</"
+"function>. The <literal>-count</literal>, <literal>-array</literal>, and "
+"<replaceable>loop-body</replaceable> options are the same, and so is the "
+"result value."
+msgstr ""
+"Не считая отличий в способе передачи запроса и параметров, "
+"<function>spi_execp</function> работает так же, как <function>spi_exec</"
+"function>. Параметры <literal>-count</literal>, <literal>-array</literal> и "
+"<replaceable>тело-цикла</replaceable> задаются так же, и так же передаётся "
+"возвращаемое значение."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:438(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION t1_count(integer, integer) RETURNS integer AS $$\n"
+"    if {![ info exists GD(plan) ]} {\n"
+"        # prepare the saved plan on the first call\n"
+"        set GD(plan) [ spi_prepare \\\n"
+"                \"SELECT count(*) AS cnt FROM t1 WHERE num &gt;= \\$1 AND num &lt;= \\$2\" \\\n"
+"                [ list int4 int4 ] ]\n"
+"    }\n"
+"    spi_execp -count 1 $GD(plan) [ list $1 $2 ]\n"
+"    return $cnt\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION t1_count(integer, integer) RETURNS integer AS $$\n"
+"    if {![ info exists GD(plan) ]} {\n"
+"        # подготовить сохранённый план при первом вызове\n"
+"        set GD(plan) [ spi_prepare \\\n"
+"                \"SELECT count(*) AS cnt FROM t1 WHERE num &gt;= \\$1 AND num &lt;= \\$2\" \\\n"
+"                [ list int4 int4 ] ]\n"
+"    }\n"
+"    spi_execp -count 1 $GD(plan) [ list $1 $2 ]\n"
+"    return $cnt\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:435(para)
+msgid ""
+"Here's an example of a PL/Tcl function using a prepared plan: <placeholder-1/"
+"> We need backslashes inside the query string given to "
+"<function>spi_prepare</function> to ensure that the <literal>"
+"$<replaceable>n</replaceable></literal> markers will be passed through to "
+"<function>spi_prepare</function> as-is, and not replaced by Tcl variable "
+"substitution."
+msgstr ""
+"Взгляните на пример функции на PL/Tcl, использующей подготовленный план: "
+"<placeholder-1/> Обратные косые черты внутри строки запроса, передаваемой "
+"функции <function>spi_prepare</function>, нужны для того, чтобы маркеры "
+"<literal>$<replaceable>n</replaceable></literal> передавались функции "
+"<function>spi_prepare</function> как есть, а не заменялись при подстановке "
+"переменных Tcl."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:463(function)
+msgid "spi_lastoid"
+msgstr "spi_lastoid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:464(indexterm)
+msgid "<primary>spi_lastoid</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>spi_lastoid</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:470(para)
+msgid ""
+"Returns the OID of the row inserted by the last <function>spi_exec</"
+"function> or <function>spi_execp</function>, if the command was a single-row "
+"<command>INSERT</command> and the modified table contained OIDs. (If not, "
+"you get zero.)"
+msgstr ""
+"Возвращает OID строки, вставленной последней командой <function>spi_exec</"
+"function> или <function>spi_execp</function>, если этой командой был "
+"оператор <command>INSERT</command> с одной строкой и изменяемая таблица "
+"содержит OID. (В противном случае вы получите ноль.)"
+
+#. +> REL_10
+#: pltcl.xml:480(function)
+msgid "subtransaction"
+msgstr "subtransaction"
+
+#. +> REL_10
+#: pltcl.xml:482(para)
+msgid ""
+"The Tcl script contained in <replaceable>command</replaceable> is executed "
+"within a SQL subtransaction. If the script returns an error, that entire "
+"subtransaction is rolled back before returning the error out to the "
+"surrounding Tcl code. See <xref linkend=\"pltcl-subtransactions\"/> for more "
+"details and an example."
+msgstr ""
+"Скрипт Tcl, который содержит <replaceable>команда</replaceable>, выполняется "
+"в подтранзакции SQL. Если этот скрипт возвращает ошибку, вся подтранзакция "
+"откатывается назад, а затем в окружающий код Tcl возвращается ошибка. За "
+"дополнительными подробностями и примером обратитесь к <xref remap=\"3\" "
+"linkend=\"pltcl-subtransactions\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:494(function)
+msgid "quote"
+msgstr "quote"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:504(programlisting)
+#, no-wrap
+msgid "\"SELECT '$val' AS ret\""
+msgstr "\"SELECT '$val' AS ret\""
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:512(programlisting)
+#, no-wrap
+msgid "SELECT 'doesn't' AS ret"
+msgstr "SELECT 'doesn't' AS ret"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:521(programlisting)
+#, no-wrap
+msgid "SELECT 'doesn''t' AS ret"
+msgstr "SELECT 'doesn''t' AS ret"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:527(programlisting)
+#, no-wrap
+msgid "\"SELECT '[ quote $val ]' AS ret\""
+msgstr "\"SELECT '[ quote $val ]' AS ret\""
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:496(para)
+msgid ""
+"Doubles all occurrences of single quote and backslash characters in the "
+"given string. This can be used to safely quote strings that are to be "
+"inserted into SQL commands given to <function>spi_exec</function> or "
+"<function>spi_prepare</function>. For example, think about an SQL command "
+"string like: <placeholder-1/> where the Tcl variable <literal>val</literal> "
+"actually contains <literal>doesn't</literal>. This would result in the final "
+"command string: <placeholder-2/> which would cause a parse error during "
+"<function>spi_exec</function> or <function>spi_prepare</function>. To work "
+"properly, the submitted command should contain: <placeholder-3/> which can "
+"be formed in PL/Tcl using: <placeholder-4/> One advantage of "
+"<function>spi_execp</function> is that you don't have to quote parameter "
+"values like this, since the parameters are never parsed as part of an SQL "
+"command string."
+msgstr ""
+"Дублирует все вхождения апострофа и обратной косой черты в заданной строке. "
+"Это можно использовать для защиты строк, которые будут вставляться в команды "
+"SQL, передаваемые в <function>spi_exec</function> или <function>spi_prepare</"
+"function>. Например, представьте, что при выполнении такой команды SQL: "
+"<placeholder-1/> переменная языка Tcl <literal>val</literal> содержит "
+"<literal>doesn't</literal>. Это приведёт к формированию такой окончательной "
+"строки команды: <placeholder-2/> при разборе которой в процессе "
+"<function>spi_exec</function> или <function>spi_prepare</function> возникнет "
+"ошибка. Чтобы этот запрос работал правильно, итоговая команда должна "
+"выглядеть так: <placeholder-3/> Получить её в PL/Tcl можно так: "
+"<placeholder-4/> Преимуществом <function>spi_execp</function> является то, "
+"что для неё заключать значения параметров в кавычки подобным образом не "
+"нужно, так как параметры никогда не разбираются в составе строки команды SQL."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:540(function)
+msgid "elog"
+msgstr "elog"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:540(replaceable)
+msgid "level"
+msgstr "уровень"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:540(replaceable)
+msgid "msg"
+msgstr "сообщение"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:541(indexterm)
+msgid "<primary>elog</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>elog</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:547(para)
+msgid ""
+"Emits a log or error message. Possible levels are <literal>DEBUG</literal>, "
+"<literal>LOG</literal>, <literal>INFO</literal>, <literal>NOTICE</literal>, "
+"<literal>WARNING</literal>, <literal>ERROR</literal>, and <literal>FATAL</"
+"literal>. <literal>ERROR</literal> raises an error condition; if this is not "
+"trapped by the surrounding Tcl code, the error propagates out to the calling "
+"query, causing the current transaction or subtransaction to be aborted. This "
+"is effectively the same as the Tcl <literal>error</literal> command. "
+"<literal>FATAL</literal> aborts the transaction and causes the current "
+"session to shut down. (There is probably no good reason to use this error "
+"level in PL/Tcl functions, but it's provided for completeness.) The other "
+"levels only generate messages of different priority levels. Whether messages "
+"of a particular priority are reported to the client, written to the server "
+"log, or both is controlled by the <xref linkend=\"guc-log-min-messages\"/> "
+"and <xref linkend=\"guc-client-min-messages\"/> configuration variables. See "
+"<xref linkend=\"runtime-config\"/> and <xref linkend=\"pltcl-error-handling"
+"\"/> for more information."
+msgstr ""
+"Выдаёт служебное сообщение или сообщение об ошибке. Возможные уровни "
+"сообщений: <literal>DEBUG</literal> (ОТЛАДКА), <literal>LOG</literal> "
+"(СООБЩЕНИЕ), <literal>INFO</literal> (ИНФОРМАЦИЯ), <literal>NOTICE</literal> "
+"(ЗАМЕЧАНИЕ), <literal>WARNING</literal> (ПРЕДУПРЕЖДЕНИЕ), <literal>ERROR</"
+"literal> (ОШИБКА) и <literal>FATAL</literal> (ВАЖНО). С уровнем "
+"<literal>ERROR</literal> выдаётся ошибка; если она не перехватывается "
+"окружающим кодом Tcl, она распространяется в вызывающий запрос, что приводит "
+"к прерыванию текущей транзакции или подтранзакции. По сути то же самое "
+"делает команда <literal>error</literal> языка Tcl. Сообщение уровня "
+"<literal>FATAL</literal> прерывает транзакцию и приводит к завершению "
+"текущего сеанса. (Вероятно, нет обоснованной причины использовать этот "
+"уровень ошибок в функциях PL/Tcl, но он поддерживается для полноты.) При "
+"использовании других уровней происходит просто вывод сообщения с заданным "
+"уровнем важности. Будут ли сообщения определённого уровня передаваться "
+"клиенту и/или записываться в журнал, определяется конфигурационными "
+"переменными <xref linkend=\"guc-log-min-messages\"/> и <xref linkend=\"guc-"
+"client-min-messages\"/>. За дополнительными сведениями обратитесь к <xref "
+"remap=\"3\" linkend=\"runtime-config\"/> и <xref remap=\"3\" linkend=\"pltcl-"
+"error-handling\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:310(para)
+msgid ""
+"The following commands are available to access the database from the body of "
+"a PL/Tcl function: <placeholder-1/>"
+msgstr ""
+"Для обращения к базе данных из тела функции на PL/Tcl предназначены "
+"следующие команды: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:578(title)
+msgid "Trigger Procedures in PL/Tcl"
+msgstr "Процедуры триггеров на PL/Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:580(indexterm)
+msgid "<primary>trigger</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>триггер</primary> <secondary>на языке PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:585(para)
+msgid ""
+"Trigger procedures can be written in PL/Tcl. <productname>PostgreSQL</"
+"productname> requires that a procedure that is to be called as a trigger "
+"must be declared as a function with no arguments and a return type of "
+"<literal>trigger</literal>."
+msgstr ""
+"На PL/Tcl можно написать триггерные процедуры. <productname>PostgreSQL</"
+"productname> требует, чтобы процедура, которая будет вызываться как "
+"триггерная, была объявлена как функция без аргументов и возвращала тип "
+"<literal>trigger</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:598(varname)
+msgid "$TG_name"
+msgstr "$TG_name"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:600(para)
+msgid ""
+"The name of the trigger from the <command>CREATE TRIGGER</command> statement."
+msgstr "Имя триггера из оператора <command>CREATE TRIGGER</command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:607(varname)
+msgid "$TG_relid"
+msgstr "$TG_relid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:609(para)
+msgid ""
+"The object ID of the table that caused the trigger procedure to be invoked."
+msgstr ""
+"Идентификатор объекта таблицы, для которой будет вызываться триггерная "
+"процедура."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:617(varname)
+msgid "$TG_table_name"
+msgstr "$TG_table_name"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:619(para)
+msgid "The name of the table that caused the trigger procedure to be invoked."
+msgstr "Имя таблицы, для которой будет вызываться триггерная процедура."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:627(varname)
+msgid "$TG_table_schema"
+msgstr "$TG_table_schema"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:629(para)
+msgid ""
+"The schema of the table that caused the trigger procedure to be invoked."
+msgstr "Схема таблицы, для которой будет вызываться триггерная процедура."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:637(varname)
+msgid "$TG_relatts"
+msgstr "$TG_relatts"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:639(para)
+msgid ""
+"A Tcl list of the table column names, prefixed with an empty list element. "
+"So looking up a column name in the list with <application>Tcl</"
+"application>'s <function>lsearch</function> command returns the element's "
+"number starting with 1 for the first column, the same way the columns are "
+"customarily numbered in <productname>PostgreSQL</productname>. (Empty list "
+"elements also appear in the positions of columns that have been dropped, so "
+"that the attribute numbering is correct for columns to their right.)"
+msgstr ""
+"Список языка Tcl, содержащий имена столбцов таблицы. В начало списка "
+"добавлен пустой элемент, поэтому при поиске в этом списке имени столбца с "
+"помощью стандартной в <application>Tcl</application> команды "
+"<function>lsearch</function> будет возвращён номер элемента, начиная с 1, "
+"так же, как нумеруются столбцы в <productname>PostgreSQL</productname>. (В "
+"позициях удалённых столбцов также содержатся пустые элементы, так что "
+"нумерация следующих за ними атрибутов не нарушается.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:653(varname)
+msgid "$TG_when"
+msgstr "$TG_when"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:655(para)
+msgid ""
+"The string <literal>BEFORE</literal>, <literal>AFTER</literal>, or "
+"<literal>INSTEAD OF</literal>, depending on the type of trigger event."
+msgstr ""
+"Строка <literal>BEFORE</literal>, <literal>AFTER</literal> или "
+"<literal>INSTEAD OF</literal>, в зависимости от типа события триггера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:663(varname)
+msgid "$TG_level"
+msgstr "$TG_level"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:665(para)
+msgid ""
+"The string <literal>ROW</literal> or <literal>STATEMENT</literal> depending "
+"on the type of trigger event."
+msgstr ""
+"Строка <literal>ROW</literal> или <literal>STATEMENT</literal>, в "
+"зависимости от уровня события триггера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:673(varname)
+msgid "$TG_op"
+msgstr "$TG_op"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:675(para)
+msgid ""
+"The string <literal>INSERT</literal>, <literal>UPDATE</literal>, "
+"<literal>DELETE</literal>, or <literal>TRUNCATE</literal> depending on the "
+"type of trigger event."
+msgstr ""
+"Строка <literal>INSERT</literal>, <literal>UPDATE</literal>, "
+"<literal>DELETE</literal> или <literal>TRUNCATE</literal>, в зависимости от "
+"действия события триггера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:684(varname)
+msgid "$NEW"
+msgstr "$NEW"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:686(para)
+msgid ""
+"An associative array containing the values of the new table row for "
+"<command>INSERT</command> or <command>UPDATE</command> actions, or empty for "
+"<command>DELETE</command>. The array is indexed by column name. Columns that "
+"are null will not appear in the array. This is not set for statement-level "
+"triggers."
+msgstr ""
+"Ассоциативный массив, содержащий значения новой строки таблицы для действий "
+"<command>INSERT</command> или <command>UPDATE</command>, либо пустой массив "
+"для <command>DELETE</command>. Индексами в массиве являются имена столбцов. "
+"Столбцы со значениями NULL в нём отсутствуют. Для триггеров уровня оператора "
+"этот массив не определяется."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:697(varname)
+msgid "$OLD"
+msgstr "$OLD"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:699(para)
+msgid ""
+"An associative array containing the values of the old table row for "
+"<command>UPDATE</command> or <command>DELETE</command> actions, or empty for "
+"<command>INSERT</command>. The array is indexed by column name. Columns that "
+"are null will not appear in the array. This is not set for statement-level "
+"triggers."
+msgstr ""
+"Ассоциативный массив, содержащий значения старой строки таблицы для действий "
+"<command>UPDATE</command> или <command>DELETE</command>, либо пустой массив "
+"для <command>INSERT</command>. Индексами в массиве являются имена столбцов. "
+"Столбцы со значениями NULL в нём отсутствуют. Для триггеров уровня оператора "
+"этот массив не определяется."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:710(varname)
+msgid "$args"
+msgstr "$args"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:712(para)
+msgid ""
+"A Tcl list of the arguments to the procedure as given in the <command>CREATE "
+"TRIGGER</command> statement. These arguments are also accessible as <literal>"
+"$1</literal> ... <literal>$<replaceable>n</replaceable></literal> in the "
+"procedure body."
+msgstr ""
+"Список на языке Tcl аргументов процедуры, заданных в операторе "
+"<command>CREATE TRIGGER</command>. Эти аргументы также доступны под "
+"обозначениями <literal>$1</literal> ... <literal>$<replaceable>n</"
+"replaceable></literal> в теле процедуры."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:591(para) pltcl.xml:803(para)
+msgid ""
+"The information from the trigger manager is passed to the procedure body in "
+"the following variables: <placeholder-1/>"
+msgstr ""
+"Информация от менеджера триггеров передаётся в тело процедуры в следующих "
+"переменных: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:723(para)
+msgid ""
+"The return value from a trigger procedure can be one of the strings "
+"<literal>OK</literal> or <literal>SKIP</literal>, or a list of column name/"
+"value pairs. If the return value is <literal>OK</literal>, the operation "
+"(<command>INSERT</command>/<command>UPDATE</command>/<command>DELETE</"
+"command>) that fired the trigger will proceed normally. <literal>SKIP</"
+"literal> tells the trigger manager to silently suppress the operation for "
+"this row. If a list is returned, it tells PL/Tcl to return a modified row to "
+"the trigger manager; the contents of the modified row are specified by the "
+"column names and values in the list. Any columns not mentioned in the list "
+"are set to null. Returning a modified row is only meaningful for row-level "
+"<literal>BEFORE</literal> <command>INSERT</command> or <command>UPDATE</"
+"command> triggers, for which the modified row will be inserted instead of "
+"the one given in <varname>$NEW</varname>; or for row-level <literal>INSTEAD "
+"OF</literal> <command>INSERT</command> or <command>UPDATE</command> triggers "
+"where the returned row is used as the source data for <command>INSERT "
+"RETURNING</command> or <command>UPDATE RETURNING</command> clauses. In row-"
+"level <literal>BEFORE</literal> <command>DELETE</command> or "
+"<literal>INSTEAD OF</literal> <command>DELETE</command> triggers, returning "
+"a modified row has the same effect as returning <literal>OK</literal>, that "
+"is the operation proceeds. The trigger return value is ignored for all other "
+"types of triggers."
+msgstr ""
+"Возвращаемым значением триггерной процедуры может быть строка <literal>OK</"
+"literal> или <literal>SKIP</literal> либо список пар имя столбца/значение. "
+"Если возвращается значение <literal>OK</literal>, операция (<command>INSERT</"
+"command>/<command>UPDATE</command>/<command>DELETE</command>), которая "
+"привела к срабатыванию триггера, выполняется нормально. Значение "
+"<literal>SKIP</literal> указывает менеджеру триггеров просто пропустить эту "
+"операцию с текущей строкой данных. Если возвращается список, через него PL/"
+"Tcl передаёт менеджеру триггеров изменённую строку; содержимое изменённой "
+"строки задаётся именами и значениями столбцов в списке. Все столбцы, не "
+"перечисленные в этом списке, получают значения NULL. Возвращать изменённую "
+"строку имеет смысл только для триггеров уровня строки с порядком "
+"<literal>BEFORE</literal> команд <command>INSERT</command> и "
+"<command>UPDATE</command>, в которых вместо заданной в <varname>$NEW</"
+"varname> будет записываться изменённая строка; либо с порядком "
+"<literal>INSTEAD OF</literal> команд <command>INSERT</command> и "
+"<command>UPDATE</command>, в которых возвращаемая строка служит исходными "
+"данными для предложений <command>INSERT RETURNING</command> или "
+"<command>UPDATE RETURNING</command>. В триггерах уровня строки с порядком "
+"<literal>BEFORE</literal> или <literal>INSTEAD OF</literal> команды "
+"<command>DELETE</command> возврат изменённой строки воспринимается так же, "
+"как и возврат значения <literal>OK</literal>, то есть операция выполняется. "
+"Для всех остальных типов триггеров возвращаемое значение игнорируется."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:748(para)
+msgid ""
+"The result list can be made from an array representation of the modified "
+"tuple with the <literal>array get</literal> Tcl command."
+msgstr ""
+"Список результатов можно создать из изменённого кортежа, представленного в "
+"виде массива, с помощью команды <literal>array get</literal> языка Tcl."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:760(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION trigfunc_modcount() RETURNS trigger AS $$\n"
+"    switch $TG_op {\n"
+"        INSERT {\n"
+"            set NEW($1) 0\n"
+"        }\n"
+"        UPDATE {\n"
+"            set NEW($1) $OLD($1)\n"
+"            incr NEW($1)\n"
+"        }\n"
+"        default {\n"
+"            return OK\n"
+"        }\n"
+"    }\n"
+"    return [array get NEW]\n"
+"$$ LANGUAGE pltcl;\n"
+"\n"
+"CREATE TABLE mytab (num integer, description text, modcnt integer);\n"
+"\n"
+"CREATE TRIGGER trig_mytab_modcount BEFORE INSERT OR UPDATE ON mytab\n"
+"    FOR EACH ROW EXECUTE PROCEDURE trigfunc_modcount('modcnt');"
+msgstr ""
+"CREATE FUNCTION trigfunc_modcount() RETURNS trigger AS $$\n"
+"    switch $TG_op {\n"
+"        INSERT {\n"
+"            set NEW($1) 0\n"
+"        }\n"
+"        UPDATE {\n"
+"            set NEW($1) $OLD($1)\n"
+"            incr NEW($1)\n"
+"        }\n"
+"        default {\n"
+"            return OK\n"
+"        }\n"
+"    }\n"
+"    return [array get NEW]\n"
+"$$ LANGUAGE pltcl;\n"
+"\n"
+"CREATE TABLE mytab (num integer, description text, modcnt integer);\n"
+"\n"
+"CREATE TRIGGER trig_mytab_modcount BEFORE INSERT OR UPDATE ON mytab\n"
+"    FOR EACH ROW EXECUTE PROCEDURE trigfunc_modcount('modcnt');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:754(para)
+msgid ""
+"Here's a little example trigger procedure that forces an integer value in a "
+"table to keep track of the number of updates that are performed on the row. "
+"For new rows inserted, the value is initialized to 0 and then incremented on "
+"every update operation. <placeholder-1/> Notice that the trigger procedure "
+"itself does not know the column name; that's supplied from the trigger "
+"arguments. This lets the trigger procedure be reused with different tables."
+msgstr ""
+"Следующий небольшой пример показывает триггерную процедуру, которая ведёт в "
+"таблице целочисленный счётчик числа изменений, выполненных в строке. Для "
+"новых строк счётчик инициализируется нулевым значением, а затем "
+"увеличивается на единицу при каждом изменении. <placeholder-1/> Заметьте, "
+"что сама триггерная процедура не знает имени столбца; оно передаётся в "
+"аргументах триггера. Это позволяет применять эту триггерную процедуру для "
+"различных таблиц."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:790(title)
+msgid "Event Trigger Procedures in PL/Tcl"
+msgstr "Процедуры событийных триггеров в PL/Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:792(indexterm)
+msgid "<primary>event trigger</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>событийный триггер</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:797(para)
+msgid ""
+"Event trigger procedures can be written in PL/Tcl. <productname>PostgreSQL</"
+"productname> requires that a procedure that is to be called as an event "
+"trigger must be declared as a function with no arguments and a return type "
+"of <literal>event_trigger</literal>."
+msgstr ""
+"На PL/Tcl можно написать процедуры событийных триггеров. "
+"<productname>PostgreSQL</productname> требует, чтобы процедура, которая "
+"будет вызываться как событийный триггер, была объявлена как функция без "
+"аргументов и возвращала тип <literal>event_trigger</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:810(varname)
+msgid "$TG_event"
+msgstr "$TG_event"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:812(para)
+msgid "The name of the event the trigger is fired for."
+msgstr "Имя события, при котором срабатывает этот триггер."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:819(varname)
+msgid "$TG_tag"
+msgstr "$TG_tag"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:821(para)
+msgid "The command tag for which the trigger is fired."
+msgstr "Тег команды, для которой срабатывает этот триггер."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:829(para)
+msgid "The return value of the trigger procedure is ignored."
+msgstr "Возвращаемое значение триггерной процедуры игнорируется."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:838(programlisting)
+#, no-wrap
+msgid ""
+"CREATE OR REPLACE FUNCTION tclsnitch() RETURNS event_trigger AS $$\n"
+"  elog NOTICE \"tclsnitch: $TG_event $TG_tag\"\n"
+"$$ LANGUAGE pltcl;\n"
+"\n"
+"CREATE EVENT TRIGGER tcl_a_snitch ON ddl_command_start EXECUTE PROCEDURE tclsnitch();"
+msgstr ""
+"CREATE OR REPLACE FUNCTION tclsnitch() RETURNS event_trigger AS $$\n"
+"  elog NOTICE \"tclsnitch: $TG_event $TG_tag\"\n"
+"$$ LANGUAGE pltcl;\n"
+"\n"
+"CREATE EVENT TRIGGER tcl_a_snitch ON ddl_command_start EXECUTE PROCEDURE tclsnitch();"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:833(para)
+msgid ""
+"Here's a little example event trigger procedure that simply raises a "
+"<literal>NOTICE</literal> message each time a supported command is executed: "
+"<placeholder-1/>"
+msgstr ""
+"Следующий небольшой пример процедуры событийного триггера просто выдаёт "
+"замечание (<literal>NOTICE</literal>) при каждом выполнении поддерживаемой "
+"команды: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:849(title)
+msgid "Error Handling in PL/Tcl"
+msgstr "Обработка ошибок в PL/Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:851(indexterm)
+msgid "<primary>exceptions</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>исключения</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10
+#: pltcl.xml:856(para)
+msgid ""
+"Tcl code within or called from a PL/Tcl function can raise an error, either "
+"by executing some invalid operation or by generating an error using the Tcl "
+"<function>error</function> command or PL/Tcl's <function>elog</function> "
+"command. Such errors can be caught within Tcl using the Tcl <function>catch</"
+"function> command. If an error is not caught but is allowed to propagate out "
+"to the top level of execution of the PL/Tcl function, it is reported as a "
+"SQL error in the function's calling query."
+msgstr ""
+"Tcl-код, содержащийся или вызываемый из функции PL/Tcl, может выдавать "
+"ошибку либо выполняя недопустимую операцию, либо генерируя ошибку с помощью "
+"команды <function>error</function> языка Tcl или команды <function>elog</"
+"function> языка PL/Tcl. Такие ошибки могут быть перехвачены в среде Tcl с "
+"помощью команды Tcl <function>catch</function>. Если ошибка не "
+"перехватывается, а распространяется выше уровня выполнения функций PL/Tcl, "
+"она передаётся в запрос, вызвавший функцию, как ошибка SQL."
+
+#. +> REL_10
+#: pltcl.xml:867(para)
+msgid ""
+"Conversely, SQL errors that occur within PL/Tcl's <function>spi_exec</"
+"function>, <function>spi_prepare</function>, and <function>spi_execp</"
+"function> commands are reported as Tcl errors, so they are catchable by "
+"Tcl's <function>catch</function> command. (Each of these PL/Tcl commands "
+"runs its SQL operation in a subtransaction, which is rolled back on error, "
+"so that any partially-completed operation is automatically cleaned up.) "
+"Again, if an error propagates out to the top level without being caught, it "
+"turns back into a SQL error."
+msgstr ""
+"И напротив, ошибки СУБД, возникающие внутри команд <function>spi_exec</"
+"function>, <function>spi_prepare</function> и <function>spi_execp</function> "
+"в среде PL/Tcl, выдаются как ошибки Tcl, так что их можно перехватить "
+"командой Tcl <function>catch</function>. (Каждая из этих команд PL/Tcl "
+"выполняет SQL-операцию в подтранзакции, которая откатывается в случае "
+"ошибки, так что для частично завершённых операций производится "
+"автоматическая очистка.) Опять же, если ошибка не перехватывается и "
+"распространяется выше верхнего уровня, она становится ошибкой SQL."
+
+#. +> REL_10
+#: pltcl.xml:879(para)
+msgid ""
+"Tcl provides an <varname>errorCode</varname> variable that can represent "
+"additional information about an error in a form that is easy for Tcl "
+"programs to interpret. The contents are in Tcl list format, and the first "
+"word identifies the subsystem or library reporting the error; beyond that "
+"the contents are left to the individual subsystem or library. For database "
+"errors reported by PL/Tcl commands, the first word is <literal>POSTGRES</"
+"literal>, the second word is the PostgreSQL version number, and additional "
+"words are field name/value pairs providing detailed information about the "
+"error. Fields <varname>SQLSTATE</varname>, <varname>condition</varname>, and "
+"<varname>message</varname> are always supplied (the first two represent the "
+"error code and condition name as shown in <xref linkend=\"errcodes-appendix"
+"\"/>). Fields that may be present include <varname>detail</varname>, "
+"<varname>hint</varname>, <varname>context</varname>, <varname>schema</"
+"varname>, <varname>table</varname>, <varname>column</varname>, "
+"<varname>datatype</varname>, <varname>constraint</varname>, "
+"<varname>statement</varname>, <varname>cursor_position</varname>, "
+"<varname>filename</varname>, <varname>lineno</varname>, and "
+"<varname>funcname</varname>."
+msgstr ""
+"В Tcl имеется переменная <varname>errorCode</varname>, представляющая "
+"дополнительную информацию об ошибке в виде, удобном для обработки в "
+"программах на Tcl. Эта информация передаётся в формате списка Tcl, первое "
+"слово в котором указывает на подсистему или библиотеку, выдающую ошибку; "
+"последующее содержимое определяется в зависимости от подсистемы или "
+"библиотеки. Для ошибок СУБД, возникающих в командах PL/Tcl, первым словом "
+"будет <literal>POSTGRES</literal>, вторым — номер версии PostgreSQL, а "
+"дополнительные слова представляют пары имя/значения, передающие подробную "
+"информацию об ошибке. В этих парах всегда передаются поля <varname>SQLSTATE</"
+"varname>, <varname>condition</varname> и <varname>message</varname> (первые "
+"два представляют код ошибки и имя условия, как описано в <xref remap=\"6\" "
+"linkend=\"errcodes-appendix\"/>). Также могут передаваться поля "
+"<varname>detail</varname>, <varname>hint</varname>, <varname>context</"
+"varname>, <varname>schema</varname>, <varname>table</varname>, "
+"<varname>column</varname>, <varname>datatype</varname>, <varname>constraint</"
+"varname>, <varname>statement</varname>, <varname>cursor_position</varname>, "
+"<varname>filename</varname>, <varname>lineno</varname> и <varname>funcname</"
+"varname>."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:879(para)
+msgid ""
+"While the <literal>unknown</literal> module could actually contain any "
+"initialization script you need, it normally defines a Tcl <function>unknown</"
+"function> procedure that is invoked whenever Tcl does not recognize an "
+"invoked procedure name. <application>PL/Tcl</application>'s standard version "
+"of this procedure tries to find a module in <literal>pltcl_modules</literal> "
+"that will define the required procedure. If one is found, it is loaded into "
+"the interpreter, and then execution is allowed to proceed with the "
+"originally attempted procedure call. A secondary table "
+"<literal>pltcl_modfuncs</literal> provides an index of which functions are "
+"defined by which modules, so that the lookup is reasonably quick."
+msgstr ""
+"Хотя модуль <literal>unknown</literal> может на самом деле содержать любой "
+"нужный вам скрипт инициализации, обычно в нём определяется процедура "
+"<function>unknown</function> языка Tcl, которая вызывается всякий раз, когда "
+"Tcl не распознаёт имя вызываемой процедуры. Принятая в <application>PL/Tcl</"
+"application> версия этой процедуры пытается найти в <literal>pltcl_modules</"
+"literal> модуль, в котором будет определена требуемая процедура. Если такой "
+"модуль находится, он загружается в интерпретатор и затем выполнение "
+"изначального вызова процедуры может быть продолжено. Дополнительная таблица "
+"<literal>pltcl_modfuncs</literal> содержит индекс, связывающий функции с "
+"модулями, в которых они определены, так что поиск выполняется довольно "
+"быстро."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:906(programlisting)
+#, no-wrap
+msgid ""
+"if {[catch { spi_exec $sql_command }]} {\n"
+"    if {[lindex $::errorCode 0] == \"POSTGRES\"} {\n"
+"        array set errorArray $::errorCode\n"
+"        if {$errorArray(condition) == \"undefined_table\"} {\n"
+"            # deal with missing table\n"
+"        } else {\n"
+"            # deal with some other type of SQL error\n"
+"        }\n"
+"    }\n"
+"}"
+msgstr ""
+"if {[catch { spi_exec $sql_command }]} {\n"
+"    if {[lindex $::errorCode 0] == \"POSTGRES\"} {\n"
+"        array set errorArray $::errorCode\n"
+"        if {$errorArray(condition) == \"undefined_table\"} {\n"
+"            # разобраться с отсутствием таблицы\n"
+"        } else {\n"
+"            # разобраться с другими типами ошибок SQL\n"
+"        }\n"
+"    }\n"
+"}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:902(para)
+msgid ""
+"A convenient way to work with PL/Tcl's <varname>errorCode</varname> "
+"information is to load it into an array, so that the field names become "
+"array subscripts. Code for doing that might look like <placeholder-1/> (The "
+"double colons explicitly specify that <varname>errorCode</varname> is a "
+"global variable.)"
+msgstr ""
+"С информацией в переменной <varname>errorCode</varname> среды PL/Tcl удобно "
+"работать, загрузив переменную в массив, чтобы имена полей стали индексами в "
+"массиве. Пример такого кода: <placeholder-1/> (Двойные двоеточия явно "
+"указывают, что переменная <varname>errorCode</varname> является глобальной.)"
+
+#. +> REL_10
+#: pltcl.xml:924(title)
+msgid "Explicit Subtransactions in PL/Tcl"
+msgstr "Неявные подтранзакции в PL/Tcl"
+
+#. +> REL_10
+#: pltcl.xml:926(indexterm)
+msgid "<primary>subtransactions</primary> <secondary>in PL/Tcl</secondary>"
+msgstr "<primary>подтранзакции</primary> <secondary>в PL/Tcl</secondary>"
+
+#. +> REL_10
+#: pltcl.xml:931(para)
+msgid ""
+"Recovering from errors caused by database access as described in <xref "
+"linkend=\"pltcl-error-handling\"/> can lead to an undesirable situation "
+"where some operations succeed before one of them fails, and after recovering "
+"from that error the data is left in an inconsistent state. PL/Tcl offers a "
+"solution to this problem in the form of explicit subtransactions."
+msgstr ""
+"Перехват ошибок, произошедших при обращении к базе данных, как описано в "
+"<xref remap=\"6\" linkend=\"pltcl-error-handling\"/>, может привести к "
+"нежелательной ситуации, когда часть операций будет успешно выполнена, прежде "
+"чем произойдёт сбой. Данные останутся в несогласованном состоянии после "
+"обработки такой ошибки. PL/Tcl предлагает решение этой проблемы в форме "
+"неявных подтранзакций."
+
+#. +> REL_10
+#: pltcl.xml:942(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION transfer_funds() RETURNS void AS $$\n"
+"    if [catch {\n"
+"        spi_exec \"UPDATE accounts SET balance = balance - 100 WHERE account_name = 'joe'\"\n"
+"        spi_exec \"UPDATE accounts SET balance = balance + 100 WHERE account_name = 'mary'\"\n"
+"    } errormsg] {\n"
+"        set result [format \"error transferring funds: %s\" $errormsg]\n"
+"    } else {\n"
+"        set result \"funds transferred successfully\"\n"
+"    }\n"
+"    spi_exec \"INSERT INTO operations (result) VALUES ('[quote $result]')\"\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION transfer_funds() RETURNS void AS $$\n"
+"    if [catch {\n"
+"        spi_exec \"UPDATE accounts SET balance = balance - 100 WHERE account_name = 'joe'\"\n"
+"        spi_exec \"UPDATE accounts SET balance = balance + 100 WHERE account_name = 'mary'\"\n"
+"    } errormsg] {\n"
+"        set result [format \"error transferring funds: %s\" $errormsg]\n"
+"    } else {\n"
+"        set result \"funds transferred successfully\"\n"
+"    }\n"
+"    spi_exec \"INSERT INTO operations (result) VALUES ('[quote $result]')\"\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:940(para)
+msgid ""
+"Consider a function that implements a transfer between two accounts: "
+"<placeholder-1/> If the second <command>UPDATE</command> statement results "
+"in an exception being raised, this function will log the failure, but the "
+"result of the first <command>UPDATE</command> will nevertheless be "
+"committed. In other words, the funds will be withdrawn from Joe's account, "
+"but will not be transferred to Mary's account. This happens because each "
+"<function>spi_exec</function> is a separate subtransaction, and only one of "
+"those subtransactions got rolled back."
+msgstr ""
+"Рассмотрите функцию, реализующую перевод денег между двумя счетами: "
+"<placeholder-1/> Если второй оператор <command>UPDATE</command> выдаст "
+"исключение, эта функция запишет в журнал сообщение об ошибке, но результат "
+"первого <command>UPDATE</command> будет тем не менее зафиксирован. Другими "
+"словами, денежные средства будут списаны со счёта Джо, но не поступят на "
+"счёт Мери. Это происходит потому, что каждый вызов <function>spi_exec</"
+"function> выполняется в отдельной подтранзакции, а откатывается только одна "
+"из подтранзакций."
+
+#. +> REL_10
+#: pltcl.xml:970(programlisting)
+#, no-wrap
+msgid ""
+"CREATE FUNCTION transfer_funds2() RETURNS void AS $$\n"
+"    if [catch {\n"
+"        subtransaction {\n"
+"            spi_exec \"UPDATE accounts SET balance = balance - 100 WHERE account_name = 'joe'\"\n"
+"            spi_exec \"UPDATE accounts SET balance = balance + 100 WHERE account_name = 'mary'\"\n"
+"        }\n"
+"    } errormsg] {\n"
+"        set result [format \"error transferring funds: %s\" $errormsg]\n"
+"    } else {\n"
+"        set result \"funds transferred successfully\"\n"
+"    }\n"
+"    spi_exec \"INSERT INTO operations (result) VALUES ('[quote $result]')\"\n"
+"$$ LANGUAGE pltcl;"
+msgstr ""
+"CREATE FUNCTION transfer_funds2() RETURNS void AS $$\n"
+"    if [catch {\n"
+"        subtransaction {\n"
+"            spi_exec \"UPDATE accounts SET balance = balance - 100 WHERE account_name = 'joe'\"\n"
+"            spi_exec \"UPDATE accounts SET balance = balance + 100 WHERE account_name = 'mary'\"\n"
+"        }\n"
+"    } errormsg] {\n"
+"        set result [format \"error transferring funds: %s\" $errormsg]\n"
+"    } else {\n"
+"        set result \"funds transferred successfully\"\n"
+"    }\n"
+"    spi_exec \"INSERT INTO operations (result) VALUES ('[quote $result]')\"\n"
+"$$ LANGUAGE pltcl;"
+
+#. +> REL_10
+#: pltcl.xml:965(para)
+msgid ""
+"To handle such cases, you can wrap multiple database operations in an "
+"explicit subtransaction, which will succeed or roll back as a whole. PL/Tcl "
+"provides a <function>subtransaction</function> command to manage this. We "
+"can rewrite our function as: <placeholder-1/> Note that use of "
+"<function>catch</function> is still required for this purpose. Otherwise the "
+"error would propagate to the top level of the function, preventing the "
+"desired insertion into the <structname>operations</structname> table. The "
+"<function>subtransaction</function> command does not trap errors, it only "
+"assures that all database operations executed inside its scope will be "
+"rolled back together when an error is reported."
+msgstr ""
+"В таких случаях вы можете обернуть несколько операций с базой данных в одну "
+"явную подтранзакцию, которая будет выполнена успешно или отменена как единое "
+"целое. Для этого в PL/Tcl есть команда <function>subtransaction</function>. "
+"С ней мы можем переписать нашу функцию так: <placeholder-1/> Заметьте, что и "
+"в этом случае нужно использовать <function>catch</function>. В противном "
+"случае ошибка распространится на верхний уровень функции, что не даст "
+"произвести желаемое добавление записи в таблицу <structname>operations</"
+"structname>. Команда <function>subtransaction</function> не перехватывает "
+"ошибки, она только обеспечивает откат всех операций с базой данных в своей "
+"области действия в случае ошибки."
+
+#. +> REL_10
+#: pltcl.xml:994(para)
+msgid ""
+"A rollback of an explicit subtransaction occurs on any error reported by the "
+"contained Tcl code, not only errors originating from database access. Thus a "
+"regular Tcl exception raised inside a <function>subtransaction</function> "
+"command will also cause the subtransaction to be rolled back. However, non-"
+"error exits out of the contained Tcl code (for instance, due to "
+"<function>return</function>) do not cause a rollback."
+msgstr ""
+"Откат явной подтранзакции происходит в случае любых ошибок, сгенерированных "
+"вложенным кодом Tcl, а не только ошибок, возникающих при обращении к базе "
+"данных. Таким образом, обычное исключение Tcl, возникшее внутри команды "
+"<function>subtransaction</function>, также приведёт к откату подтранзакции. "
+"Однако при выходе из вложенного кода Tcl без ошибки (например, с помощью "
+"команды <function>return</function>) откат не производится."
+
+#. +> REL_10
+#: pltcl.xml:1006(title)
+msgid "PL/Tcl Configuration"
+msgstr "Конфигурация PL/Tcl"
+
+#. +> REL_10
+#: pltcl.xml:1008(para)
+msgid ""
+"This section lists configuration parameters that affect <application>PL/Tcl</"
+"application>."
+msgstr ""
+"В этом разделе описываются параметры конфигурации, влияющие на работу "
+"<application>PL/Tcl</application>."
+
+#. +> REL_10
+#: pltcl.xml:1018(indexterm)
+msgid ""
+"<primary><varname>pltcl.start_proc</varname> configuration parameter</"
+"primary>"
+msgstr ""
+"<primary>параметр конфигурации <varname>pltcl.start_proc</varname></primary>"
+
+#. +> REL_10
+#: pltcl.xml:1016(term)
+msgid ""
+"<varname>pltcl.start_proc</varname> (<type>string</type>) <placeholder-1/>"
+msgstr ""
+"<varname>pltcl.start_proc</varname> (<type>string</type>) <placeholder-1/>"
+
+#. +> REL_10
+#: pltcl.xml:1023(para)
+msgid ""
+"This parameter, if set to a nonempty string, specifies the name (possibly "
+"schema-qualified) of a parameterless PL/Tcl function that is to be executed "
+"whenever a new Tcl interpreter is created for PL/Tcl. Such a function can "
+"perform per-session initialization, such as loading additional Tcl code. A "
+"new Tcl interpreter is created when a PL/Tcl function is first executed in a "
+"database session, or when an additional interpreter has to be created "
+"because a PL/Tcl function is called by a new SQL role."
+msgstr ""
+"В этом параметре, если он не пуст, задаётся имя (возможно, дополненное "
+"схемой) функции на языке PL/Tcl без параметров, которая будет выполняться, "
+"когда для PL/Tcl будет создаваться новый экземпляр Tcl. Такая функция может "
+"выполнять инициализацию в рамках сеанса, например, загружать дополнительный "
+"код Tcl. Новый интерпретатор Tcl создаётся при первом выполнении какой-либо "
+"функции PL/Tcl в сеансе базы данных или когда требуется дополнительный "
+"интерпретатор из-за того, что функция PL/Tcl была вызвана новой ролью SQL."
+
+#. +> REL_10
+#: pltcl.xml:1034(para)
+msgid ""
+"The referenced function must be written in the <literal>pltcl</literal> "
+"language, and must not be marked <literal>SECURITY DEFINER</literal>. (These "
+"restrictions ensure that it runs in the interpreter it's supposed to "
+"initialize.) The current user must have permission to call it, too."
+msgstr ""
+"Указанная функция должна быть написана на языке <literal>pltcl</literal> и "
+"не должна иметь свойство <literal>SECURITY DEFINER</literal>. (Благодаря "
+"этим ограничениям эта функция будет запускаться в интерпретаторе, который "
+"она должна инициализировать.) Текущий пользователь должен иметь право и на "
+"её выполнение тоже."
+
+#. +> REL_10
+#: pltcl.xml:1042(para)
+msgid ""
+"If the function fails with an error it will abort the function call that "
+"caused the new interpreter to be created and propagate out to the calling "
+"query, causing the current transaction or subtransaction to be aborted. Any "
+"actions already done within Tcl won't be undone; however, that interpreter "
+"won't be used again. If the language is used again the initialization will "
+"be attempted again within a fresh Tcl interpreter."
+msgstr ""
+"Если эта функция завершится ошибкой, эта ошибка прервёт вызов функции, "
+"которой потребовался новый интерпретатор, и распространится в вызывающий "
+"запрос, приводя к прерыванию текущей транзакции или подтранзакции. Любые "
+"действия, уже произведённые в среде Tcl, отменены не будут; однако этот "
+"интерпретатор более не будет использоваться. При следующей попытке "
+"использования этого языка последует повторная попытка инициализации со "
+"свежим интерпретатором Tcl."
+
+#. +> REL_10
+#: pltcl.xml:1052(para)
+msgid ""
+"Only superusers can change this setting. Although this setting can be "
+"changed within a session, such changes will not affect Tcl interpreters that "
+"have already been created."
+msgstr ""
+"Изменять этот параметр разрешено только суперпользователям. Хотя изменить "
+"его можно в рамках сеанса, такие изменения не повлияют на работу "
+"интерпретаторов Tcl, созданных ранее."
+
+#. +> REL_10
+#: pltcl.xml:1063(indexterm)
+msgid ""
+"<primary><varname>pltclu.start_proc</varname> configuration parameter</"
+"primary>"
+msgstr ""
+"<primary>параметр конфигурации <varname>pltclu.start_proc</varname></primary>"
+
+#. +> REL_10
+#: pltcl.xml:1061(term)
+msgid ""
+"<varname>pltclu.start_proc</varname> (<type>string</type>) <placeholder-1/>"
+msgstr ""
+"<varname>pltclu.start_proc</varname> (<type>string</type>) <placeholder-1/>"
+
+#. +> REL_10
+#: pltcl.xml:1068(para)
+msgid ""
+"This parameter is exactly like <varname>pltcl.start_proc</varname>, except "
+"that it applies to PL/TclU. The referenced function must be written in the "
+"<literal>pltclu</literal> language."
+msgstr ""
+"Это параметр полностью аналогичен <varname>pltcl.start_proc</varname>, но "
+"применяется к PL/TclU. Указанная функция должна быть написана на языке "
+"<literal>pltclu</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:1080(title)
+msgid "Tcl Procedure Names"
+msgstr "Имена процедур Tcl"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:1082(para)
+msgid ""
+"In <productname>PostgreSQL</productname>, the same function name can be used "
+"for different function definitions as long as the number of arguments or "
+"their types differ. Tcl, however, requires all procedure names to be "
+"distinct. PL/Tcl deals with this by making the internal Tcl procedure names "
+"contain the object ID of the function from the system table "
+"<structname>pg_proc</structname> as part of their name. Thus, "
+"<productname>PostgreSQL</productname> functions with the same name and "
+"different argument types will be different Tcl procedures, too. This is not "
+"normally a concern for a PL/Tcl programmer, but it might be visible when "
+"debugging."
+msgstr ""
+"В <productname>PostgreSQL</productname> одно имя функции может "
+"использоваться разными определениями функций, если они имеют разное число и "
+"типы аргументов. Tcl, однако, требует, чтобы имена всех процедур "
+"различались. PL/Tcl решает эту проблему, устанавливая такие внутренние имена "
+"процедур Tcl, чтобы они включали в свой состав OID функции из системной "
+"таблицы <structname>pg_proc</structname>. Таким образом, функциям "
+"<productname>PostgreSQL</productname> с одним именем и разными типами "
+"аргументов так же будут соответствовать различные процедуры Tcl. Это обычно "
+"остаётся незамеченным для программиста PL/Tcl, но может проявиться при "
+"отладке."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: pltcl.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:96(para)
+msgid ""
+"The body of the function is simply a piece of Tcl script. When the function "
+"is called, the argument values are passed as variables <literal>$1</"
+"literal> ... <literal>$<replaceable>n</replaceable></literal> to the Tcl "
+"script. The result is returned from the Tcl code in the usual way, with a "
+"<literal>return</literal> statement."
+msgstr ""
+"Тело функции содержит просто скрипт на Tcl. Когда вызывается функция, "
+"значения аргументов передаются скрипту Tcl в виде переменных <literal>$1</"
+"literal> ... <literal>$<replaceable>n</replaceable></literal>. Результат из "
+"кода Tcl возвращается как обычно, оператором <literal>return</literal>."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:176(para)
+msgid ""
+"There is currently no support for returning a composite-type result value, "
+"nor for returning sets."
+msgstr ""
+"В настоящее время возврат результатов составного типа не поддерживается, как "
+"и возврат множеств."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:181(para)
+msgid ""
+"<application>PL/Tcl</application> does not currently have full support for "
+"domain types: it treats a domain the same as the underlying scalar type. "
+"This means that constraints associated with the domain will not be enforced. "
+"This is not an issue for function arguments, but it is a hazard if you "
+"declare a <application>PL/Tcl</application> function as returning a domain "
+"type."
+msgstr ""
+"<application>PL/Tcl</application> в настоящее время не поддерживает "
+"полностью доменные типы: он воспринимает домен как нижележащий скалярный "
+"тип. Это означает, что ограничения, связанные с доменом, не будут "
+"действовать. Это не проблема для аргументов функции, но представляет "
+"опасность, когда функция <application>PL/Tcl</application> объявлена как "
+"возвращающая доменный тип."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:195(para)
+msgid ""
+"The argument values supplied to a PL/Tcl function's code are simply the "
+"input arguments converted to text form (just as if they had been displayed "
+"by a <command>SELECT</command> statement). Conversely, the <literal>return</"
+"literal> command will accept any string that is acceptable input format for "
+"the function's declared return type. So, within the PL/Tcl function, all "
+"values are just text strings."
+msgstr ""
+"Значения аргументов, передаваемые в код функции PL/Tcl, представляют собой "
+"просто входные аргументы, преобразованные в текстовый вид (так же, как при "
+"выводе оператором <command>SELECT</command>). И наоборот, команда "
+"<literal>return</literal> может принять любую строку, соответствующую "
+"формату ввода для типа результата функции. Таким образом, внутри функции PL/"
+"Tcl все значения представляют собой просто текстовые строки."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:804(para)
+msgid ""
+"Tcl code within or called from a PL/Tcl function can raise an error, either "
+"by executing some invalid operation or by generating an error using the Tcl "
+"<function>error</function> command or PL/Tcl's <function>elog</function> "
+"command. Such errors can be caught within Tcl using the Tcl <function>catch</"
+"function> command. If they are not caught but are allowed to propagate out "
+"to the top level of execution of the PL/Tcl function, they turn into "
+"database errors."
+msgstr ""
+"Tcl-код, содержащийся или вызываемый из функции PL/Tcl, может выдавать "
+"ошибку, либо выполняя недопустимую операцию, либо генерируя ошибку с помощью "
+"команды <function>error</function> языка Tcl или команды <function>elog</"
+"function> языка PL/Tcl. Такие ошибки могут быть перехвачены в среде Tcl с "
+"помощью команды Tcl <function>catch</function>. Если они не перехватываются, "
+"а распространяются выше уровня выполнения функций PL/Tcl, они становятся "
+"ошибками СУБД."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:814(para)
+msgid ""
+"Conversely, database errors that occur within PL/Tcl's <function>spi_exec</"
+"function>, <function>spi_prepare</function>, and <function>spi_execp</"
+"function> commands are reported as Tcl errors, so they are catchable by "
+"Tcl's <function>catch</function> command. Again, if they propagate out to "
+"the top level without being caught, they turn back into database errors."
+msgstr ""
+"И напротив, ошибки СУБД, возникающие внутри команд <function>spi_exec</"
+"function>, <function>spi_prepare</function> и <function>spi_execp</function> "
+"в среде PL/Tcl, выдаются как ошибки Tcl, так что их можно перехватить "
+"командой Tcl <function>catch</function>. Опять же, если они не "
+"перехватываются и распространяются на верхний уровень, они становятся "
+"ошибками СУБД."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:823(para)
+msgid ""
+"Tcl provides an <varname>errorCode</varname> variable that can represent "
+"additional information about an error in a form that is easy for Tcl "
+"programs to interpret. The contents are in Tcl list format, and the first "
+"word identifies the subsystem or library reporting the error; beyond that "
+"the contents are left to the individual subsystem or library. For database "
+"errors reported by PL/Tcl commands, the first word is <literal>POSTGRES</"
+"literal>, the second word is the Postgres version number, and additional "
+"words are field name/value pairs providing detailed information about the "
+"error. Fields <varname>SQLSTATE</varname>, <varname>condition</varname>, and "
+"<varname>message</varname> are always supplied (the first two represent the "
+"error code and condition name as shown in <xref linkend=\"errcodes-appendix"
+"\"/>). Fields that may be present include <varname>detail</varname>, "
+"<varname>hint</varname>, <varname>context</varname>, <varname>schema</"
+"varname>, <varname>table</varname>, <varname>column</varname>, "
+"<varname>datatype</varname>, <varname>constraint</varname>, "
+"<varname>statement</varname>, <varname>cursor_position</varname>, "
+"<varname>filename</varname>, <varname>lineno</varname>, and "
+"<varname>funcname</varname>."
+msgstr ""
+"В Tcl имеется переменная <varname>errorCode</varname>, представляющая "
+"дополнительную информацию об ошибке в виде, удобном для обработки в "
+"программах на Tcl. Эта информация передаётся в формате списка Tcl, первое "
+"слово в котором указывает на подсистему или библиотеку, выдающую ошибку; "
+"последующее содержимое определяется в зависимости от подсистемы или "
+"библиотеки. Для ошибок СУБД, возникающих в командах PL/Tcl, первым словом "
+"будет <literal>POSTGRES</literal>, вторым — номер версии Postgres, а "
+"дополнительные слова представляют пары имя/значения, передающие подробную "
+"информацию об ошибке. В этих парах всегда передаются поля <varname>SQLSTATE</"
+"varname>, <varname>condition</varname> и <varname>message</varname> (первые "
+"два представляют код ошибки и имя условия, как описано в <xref remap=\"6\" "
+"linkend=\"errcodes-appendix\"/>). Также могут передаваться поля "
+"<varname>detail</varname>, <varname>hint</varname>, <varname>context</"
+"varname>, <varname>schema</varname>, <varname>table</varname>, "
+"<varname>column</varname>, <varname>datatype</varname>, <varname>constraint</"
+"varname>, <varname>statement</varname>, <varname>cursor_position</varname>, "
+"<varname>filename</varname>, <varname>lineno</varname> и <varname>funcname</"
+"varname>."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:868(title)
+msgid "Modules and the <function>unknown</function> Command"
+msgstr "Модули и команда <function>unknown</function>"
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:869(para)
+msgid ""
+"PL/Tcl has support for autoloading Tcl code when used. It recognizes a "
+"special table, <literal>pltcl_modules</literal>, which is presumed to "
+"contain modules of Tcl code. If this table exists, the module "
+"<literal>unknown</literal> is fetched from the table and loaded into the Tcl "
+"interpreter immediately before the first execution of a PL/Tcl function in a "
+"database session. (This happens separately for each Tcl interpreter, if more "
+"than one is used in a session; see <xref linkend=\"pltcl-global\"/>.)"
+msgstr ""
+"PL/Tcl поддерживает автозагрузку кода Tcl. Для этого он задействует "
+"специальную таблицу, <literal>pltcl_modules</literal>, предназначенную для "
+"размещения модулей кода Tcl. Если эта таблица существует, из таблицы "
+"выбирается модуль <literal>unknown</literal> и загружается в интерпретатор "
+"Tcl непосредственно перед первым выполнением функции PL/Tcl в сеансе базы "
+"данных. (Это происходит независимо для каждого интерпретатора Tcl, если их "
+"несколько в одном сеансе; см. <xref remap=\"4\" linkend=\"pltcl-global\"/>.)"
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:892(para)
+msgid ""
+"The <productname>PostgreSQL</productname> distribution includes support "
+"scripts to maintain these tables: <command>pltcl_loadmod</command>, "
+"<command>pltcl_listmod</command>, <command>pltcl_delmod</command>, as well "
+"as source for the standard <literal>unknown</literal> module in "
+"<filename>share/unknown.pltcl</filename>. This module must be loaded into "
+"each database initially to support the autoloading mechanism."
+msgstr ""
+"В составе <productname>PostgreSQL</productname> поставляются вспомогательные "
+"скрипты для обслуживания этих таблиц: <command>pltcl_loadmod</command>, "
+"<command>pltcl_listmod</command>, <command>pltcl_delmod</command>, а также "
+"исходный код стандартного модуля <literal>unknown</literal> в "
+"<filename>share/unknown.pltcl</filename>. Для поддержки механизма "
+"автозагрузки этот модуль должен изначально загружаться в каждую базу данных."
+
+#. +> REL9_6_3 REL9_6
+#: pltcl.xml:901(para)
+msgid ""
+"The tables <literal>pltcl_modules</literal> and <literal>pltcl_modfuncs</"
+"literal> must be readable by all, but it is wise to make them owned and "
+"writable only by the database administrator. As a security precaution, PL/"
+"Tcl will ignore <literal>pltcl_modules</literal> (and thus, not attempt to "
+"load the <literal>unknown</literal> module) unless it is owned by a "
+"superuser. But update privileges on this table can be granted to other "
+"users, if you trust them sufficiently."
+msgstr ""
+"Таблицы <literal>pltcl_modules</literal> и <literal>pltcl_modfuncs</literal> "
+"должны быть доступны на чтение всем, но разрешать запись в них разумно "
+"только администратору базы данных (и только он должен быть их владельцем). В "
+"качестве меры предосторожности PL/Tcl будет игнорировать таблицу "
+"<literal>pltcl_modules</literal> (и таким образом, не будет пытаться "
+"загрузить модуль <literal>unknown</literal>), если она принадлежит не "
+"суперпользователю. Но право на изменение данных в ней можно дать и другим "
+"пользователям, если они заслуживают такого доверия."

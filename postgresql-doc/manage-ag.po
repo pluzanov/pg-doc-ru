@@ -1,0 +1,955 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:5(title)
+msgid "Managing Databases"
+msgstr "Управление базами данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:7(indexterm)
+msgid "<primary>database</primary>"
+msgstr "<primary>база данных</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:9(para)
+msgid ""
+"Every instance of a running <productname>PostgreSQL</productname> server "
+"manages one or more databases. Databases are therefore the topmost "
+"hierarchical level for organizing <acronym>SQL</acronym> objects "
+"(<quote>database objects</quote>). This chapter describes the properties of "
+"databases, and how to create, manage, and destroy them."
+msgstr ""
+"Каждый работающий экземпляр сервера <productname>PostgreSQL</productname> "
+"обслуживает одну или несколько баз данных. Поэтому базы данных представляют "
+"собой вершину иерархии <acronym>SQL</acronym>-объектов (<quote>объектов базы "
+"данных</quote>). Данная глава описывает свойства баз данных, процессы "
+"создания, управления и удаления."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:19(title)
+msgid "Overview"
+msgstr "Обзор"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:21(indexterm)
+msgid "<primary>schema</primary>"
+msgstr "<primary>схема</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:25(para)
+msgid ""
+"A database is a named collection of <acronym>SQL</acronym> objects "
+"(<quote>database objects</quote>). Generally, every database object (tables, "
+"functions, etc.) belongs to one and only one database. (However there are a "
+"few system catalogs, for example <literal>pg_database</literal>, that belong "
+"to a whole cluster and are accessible from each database within the "
+"cluster.) More accurately, a database is a collection of schemas and the "
+"schemas contain the tables, functions, etc. So the full hierarchy is: "
+"server, database, schema, table (or some other kind of object, such as a "
+"function)."
+msgstr ""
+"База данных — именованная коллекция объектов <acronym>SQL</acronym> "
+"(<quote>объектов базы данных</quote>). В целом, каждый объект базы данных "
+"(таблицы, функции и т. д.) принадлежит одной и только одной базе данных. "
+"(Правда есть несколько системных каталогов, например, <literal>pg_database</"
+"literal>, которые принадлежат всему кластеру и доступны для каждой базы "
+"данных этого кластера.) Если точнее, база данных это набор схем, которые "
+"включают в себя таблицы, функции и т. д. Таким образом, полная иерархия "
+"включает в себя: сервер, базу данных, схему, таблицу (или иные типы "
+"объектов, к примеру, функции)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:38(para)
+msgid ""
+"When connecting to the database server, a client must specify in its "
+"connection request the name of the database it wants to connect to. It is "
+"not possible to access more than one database per connection. However, an "
+"application is not restricted in the number of connections it opens to the "
+"same or other databases. Databases are physically separated and access "
+"control is managed at the connection level. If one <productname>PostgreSQL</"
+"productname> server instance is to house projects or users that should be "
+"separate and for the most part unaware of each other, it is therefore "
+"recommended to put them into separate databases. If the projects or users "
+"are interrelated and should be able to use each other's resources, they "
+"should be put in the same database but possibly into separate schemas. "
+"Schemas are a purely logical structure and who can access what is managed by "
+"the privilege system. More information about managing schemas is in <xref "
+"linkend=\"ddl-schemas\"/>."
+msgstr ""
+"При подключении к серверу базы данных, клиент должен указать в параметрах "
+"подключения имя базы данных, с которой нужно соединиться. Одно соединение не "
+"может иметь доступ более чем к одной базе данных. Однако приложение не "
+"ограничено в количестве соединений к одной и той же или разным базам данных. "
+"Базы данных разделены физически и контроль доступа осуществляется на уровне "
+"соединения. В случае, когда один экземпляр сервера <productname>PostgreSQL</"
+"productname> обслуживает проекты или пользователей, которых необходимо "
+"изолировать друг от друга, рекомендуется размещать их в раздельных базах "
+"данных. В случае, когда проекты или пользователи взаимосвязаны и должны "
+"иметь возможность использовать общие ресурсы, они должны размещаться в одной "
+"базе данных, но, возможно, в раздельных схемах. Схемы — в чистом виде "
+"логическая структура, и кто к чему может получить доступ управляется "
+"системой привилегий. Более подробная информация по управлению схемами "
+"приведена в <xref remap=\"6\" linkend=\"ddl-schemas\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:56(para)
+msgid ""
+"Databases are created with the <command>CREATE DATABASE</command> command "
+"(see <xref linkend=\"manage-ag-createdb\"/>) and destroyed with the "
+"<command>DROP DATABASE</command> command (see <xref linkend=\"manage-ag-"
+"dropdb\"/>). To determine the set of existing databases, examine the "
+"<structname>pg_database</structname> system catalog, for example <synopsis>\n"
+"SELECT datname FROM pg_database;\n"
+"</synopsis> The <xref linkend=\"app-psql\"/> program's <literal>\\l</"
+"literal> meta-command and <option>-l</option> command-line option are also "
+"useful for listing the existing databases."
+msgstr ""
+"Базы данных создаются командой <command>CREATE DATABASE</command> (см. <xref "
+"remap=\"4\" linkend=\"manage-ag-createdb\"/>), а удаляются командой "
+"<command>DROP DATABASE</command> (см. <xref remap=\"4\" linkend=\"manage-ag-"
+"dropdb\"/>). Список существующих баз данных можно посмотреть в системном "
+"каталоге <structname>pg_database</structname>, например, <synopsis>\n"
+"SELECT datname FROM pg_database;\n"
+"</synopsis> Метакоманда <literal>\\l</literal> или ключ <option>-l</option> "
+"командной строки приложения <xref linkend=\"app-psql\"/> также позволяют "
+"вывести список существующих баз данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:72(para)
+msgid ""
+"The <acronym>SQL</acronym> standard calls databases <quote>catalogs</quote>, "
+"but there is no difference in practice."
+msgstr ""
+"Стандарт <acronym>SQL</acronym> называет базы данных <quote>каталогами</"
+"quote>, но на практике у них нет отличий."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:80(title)
+msgid "Creating a Database"
+msgstr "Создание базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:82(indexterm)
+msgid "<primary>CREATE DATABASE</primary>"
+msgstr "<primary>CREATE DATABASE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:84(para)
+msgid ""
+"In order to create a database, the <productname>PostgreSQL</productname> "
+"server must be up and running (see <xref linkend=\"server-start\"/>)."
+msgstr ""
+"Для создания базы данных сервер <productname>PostgreSQL</productname> должен "
+"быть развёрнут и запущен (см. <xref remap=\"4\" linkend=\"server-start\"/>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:90(para)
+msgid ""
+"Databases are created with the SQL command <xref linkend=\"sql-createdatabase"
+"\"/>: <synopsis>\n"
+"CREATE DATABASE <replaceable>name</replaceable>;\n"
+"</synopsis> where <replaceable>name</replaceable> follows the usual rules "
+"for <acronym>SQL</acronym> identifiers. The current role automatically "
+"becomes the owner of the new database. It is the privilege of the owner of a "
+"database to remove it later (which also removes all the objects in it, even "
+"if they have a different owner)."
+msgstr ""
+"База данных создаётся SQL-командой <xref linkend=\"sql-createdatabase\"/>: "
+"<synopsis>\n"
+"CREATE DATABASE <replaceable>имя</replaceable>;\n"
+"</synopsis> где <replaceable>имя</replaceable> подчиняется правилам "
+"именования идентификаторов <acronym>SQL</acronym>. Текущий пользователь "
+"автоматически назначается владельцем. Владелец может удалить свою базу, что "
+"также приведёт к удалению всех её объектов, в том числе, имеющих других "
+"владельцев."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:103(para)
+msgid ""
+"The creation of databases is a restricted operation. See <xref linkend="
+"\"role-attributes\"/> for how to grant permission."
+msgstr ""
+"Создание баз данных это привилегированная операция. Как предоставить права "
+"доступа, описано в <xref remap=\"6\" linkend=\"role-attributes\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:116(indexterm)
+msgid "<primary>postgres</primary>"
+msgstr "<primary>postgres</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:108(para)
+msgid ""
+"Since you need to be connected to the database server in order to execute "
+"the <command>CREATE DATABASE</command> command, the question remains how the "
+"<emphasis>first</emphasis> database at any given site can be created. The "
+"first database is always created by the <command>initdb</command> command "
+"when the data storage area is initialized. (See <xref linkend=\"creating-"
+"cluster\"/>.) This database is called <literal>postgres</literal>."
+"<placeholder-1/> So to create the first <quote>ordinary</quote> database you "
+"can connect to <literal>postgres</literal>."
+msgstr ""
+"Поскольку для выполнения команды <command>CREATE DATABASE</command> "
+"необходимо подключение к серверу базы данных, возникает вопрос как создать "
+"самую первую базу данных. Первая база данных всегда создаётся командой "
+"<command>initdb</command> при инициализации пространства хранения данных "
+"(см. <xref remap=\"4\" linkend=\"creating-cluster\"/>.) Эта база данных "
+"называется <literal>postgres</literal>.<placeholder-1/> Далее для создания "
+"первой <quote>обычной</quote> базы данных можно подключиться к "
+"<literal>postgres</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:123(indexterm) manage-ag.xml:182(indexterm)
+msgid "<primary>template1</primary>"
+msgstr "<primary>template1</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:121(para)
+msgid ""
+"A second database, <literal>template1</literal>,<placeholder-1/> is also "
+"created during database cluster initialization. Whenever a new database is "
+"created within the cluster, <literal>template1</literal> is essentially "
+"cloned. This means that any changes you make in <literal>template1</literal> "
+"are propagated to all subsequently created databases. Because of this, avoid "
+"creating objects in <literal>template1</literal> unless you want them "
+"propagated to every newly created database. More details appear in <xref "
+"linkend=\"manage-ag-templatedbs\"/>."
+msgstr ""
+"Вторая база данных <literal>template1</literal>,<placeholder-1/> также "
+"создаётся во время инициализации кластера. При каждом создании новой базы "
+"данных в рамках кластера по факту производится клонирование шаблона "
+"<literal>template1</literal>. При этом любые изменения сделанные в <literal "
+"moreinfo=\" none\">template1</literal> распространяются на все созданные "
+"впоследствии базы данных. Следует избегать создания объектов в "
+"<literal>template1</literal>, за исключением ситуации, когда их необходимо "
+"автоматически добавлять в новые базы. Более подробно в <xref remap=\"6\" "
+"linkend=\"manage-ag-templatedbs\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:137(indexterm)
+msgid "<primary>createdb</primary>"
+msgstr "<primary>createdb</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:134(para)
+msgid ""
+"As a convenience, there is a program you can execute from the shell to "
+"create new databases, <command>createdb</command>.<placeholder-1/> "
+"<synopsis>\n"
+"createdb <replaceable class=\"parameter\">dbname</replaceable>\n"
+"</synopsis> <command>createdb</command> does no magic. It connects to the "
+"<literal>postgres</literal> database and issues the <command>CREATE "
+"DATABASE</command> command, exactly as described above. The <xref linkend="
+"\"app-createdb\"/> reference page contains the invocation details. Note that "
+"<command>createdb</command> without any arguments will create a database "
+"with the current user name."
+msgstr ""
+"Для удобства, есть утилита командной строки для создания баз данных, "
+"<command>createdb</command>.<placeholder-1/> <synopsis>\n"
+"createdb <replaceable class=\"parameter\">dbname</replaceable>\n"
+"</synopsis> Утилита <command>createdb</command> не делает ничего волшебного, "
+"она просто подключается к базе данных <literal>postgres</literal> и "
+"выполняет ранее описанную SQL-команду <command>CREATE DATABASE</command>. "
+"Подробнее о её вызове можно узнать в <xref remap=\"6\" linkend=\"app-createdb"
+"\"/>. Обратите внимание, что команда <command>createdb</command> без "
+"параметров создаст базу данных с именем текущего пользователя."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:152(para)
+msgid ""
+"<xref linkend=\"client-authentication\"/> contains information about how to "
+"restrict who can connect to a given database."
+msgstr ""
+"<xref linkend=\"client-authentication\"/> содержит информацию о том, как "
+"ограничить права на подключение к заданной базе данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:163(programlisting)
+#, no-wrap
+msgid "CREATE DATABASE <replaceable>dbname</replaceable> OWNER <replaceable>rolename</replaceable>;"
+msgstr "CREATE DATABASE <replaceable>имя_базы</replaceable> OWNER <replaceable>имя_роли</replaceable>;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:167(programlisting)
+#, no-wrap
+msgid "createdb -O <replaceable>rolename</replaceable> <replaceable>dbname</replaceable>"
+msgstr "createdb -O <replaceable>имя_роли</replaceable> <replaceable>имя_базы</replaceable>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:158(para)
+msgid ""
+"Sometimes you want to create a database for someone else, and have them "
+"become the owner of the new database, so they can configure and manage it "
+"themselves. To achieve that, use one of the following commands: "
+"<placeholder-1/> from the SQL environment, or: <placeholder-2/> from the "
+"shell. Only the superuser is allowed to create a database for someone else "
+"(that is, for a role you are not a member of)."
+msgstr ""
+"Иногда необходимо создать базу данных для другого пользователя и назначить "
+"его владельцем, чтобы он мог конфигурировать и управлять ею. Для этого "
+"используйте одну из следующих команд: <placeholder-1/> из среды SQL, или: "
+"<placeholder-2/> из командной строки ОС. Лишь суперпользователь может "
+"создавать базы данных для других (для ролей, членом которых он не является)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:177(title)
+msgid "Template Databases"
+msgstr "Шаблоны баз данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:179(para)
+msgid ""
+"<command>CREATE DATABASE</command> actually works by copying an existing "
+"database. By default, it copies the standard system database named "
+"<literal>template1</literal>.<placeholder-1/> Thus that database is the "
+"<quote>template</quote> from which new databases are made. If you add "
+"objects to <literal>template1</literal>, these objects will be copied into "
+"subsequently created user databases. This behavior allows site-local "
+"modifications to the standard set of objects in databases. For example, if "
+"you install the procedural language <application>PL/Perl</application> in "
+"<literal>template1</literal>, it will automatically be available in user "
+"databases without any extra action being taken when those databases are "
+"created."
+msgstr ""
+"По факту команда <command>CREATE DATABASE</command> выполняет копирование "
+"существующей базы данных. По умолчанию копируется стандартная системная база "
+"<literal>template1</literal>. <placeholder-1/> Таким образом, "
+"<literal>template1</literal> это шаблон, на основе которого создаются новые "
+"базы. Если добавить объекты в <literal>template1</literal>, то впоследствии "
+"они будут копироваться в новые базы данных. Это позволяет внести изменения в "
+"стандартный набор объектов. Например, если в <literal>template1</literal> "
+"установить процедурный язык <application>PL/Perl</application>, то он будет "
+"доступен в новых базах без дополнительных действий."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:195(indexterm)
+msgid "<primary>template0</primary>"
+msgstr "<primary>template0</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:193(para)
+msgid ""
+"There is a second standard system database named <literal>template0</"
+"literal>.<placeholder-1/> This database contains the same data as the "
+"initial contents of <literal>template1</literal>, that is, only the standard "
+"objects predefined by your version of <productname>PostgreSQL</productname>. "
+"<literal>template0</literal> should never be changed after the database "
+"cluster has been initialized. By instructing <command>CREATE DATABASE</"
+"command> to copy <literal>template0</literal> instead of <literal>template1</"
+"literal>, you can create a <quote>virgin</quote> user database that contains "
+"none of the site-local additions in <literal>template1</literal>. This is "
+"particularly handy when restoring a <literal>pg_dump</literal> dump: the "
+"dump script should be restored in a virgin database to ensure that one "
+"recreates the correct contents of the dumped database, without conflicting "
+"with objects that might have been added to <literal>template1</literal> "
+"later on."
+msgstr ""
+"Также существует вторая системная база <literal>template0</literal>."
+"<placeholder-1/> При инициализации она содержит те же самые объекты, что и "
+"<literal>template1</literal>, предопределённые в рамках устанавливаемой "
+"версии <productname>PostgreSQL</productname>. Не нужно вносить никаких "
+"изменений в <literal>template0</literal> после инициализации кластера. Если "
+"в команде <command>CREATE DATABASE</command> указать на необходимость "
+"копирования <literal>template0</literal> вместо <literal>template1</"
+"literal>, то на выходе можно получить <quote>чистую</quote> пользовательскую "
+"базу данных без изменений, внесённых в <literal>template1</literal>. Это "
+"удобно, когда производится восстановление из дампа данных с помощью утилиты "
+"<literal>pg_dump</literal>: скрипт дампа лучше выполнять в чистую базу, во "
+"избежание каких-либо конфликтов с объектами, которые могли быть добавлены в "
+"<literal>template1</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:212(para)
+msgid ""
+"Another common reason for copying <literal>template0</literal> instead of "
+"<literal>template1</literal> is that new encoding and locale settings can be "
+"specified when copying <literal>template0</literal>, whereas a copy of "
+"<literal>template1</literal> must use the same settings it does. This is "
+"because <literal>template1</literal> might contain encoding-specific or "
+"locale-specific data, while <literal>template0</literal> is known not to."
+msgstr ""
+"Другая причина, для копирования <literal>template0</literal> вместо "
+"<literal>template1</literal> заключается в том, что можно указать новые "
+"параметры локали и кодировку при копировании <literal>template0</literal>, в "
+"то время как для копий <literal>template1</literal> они не должны меняться. "
+"Это связано с тем, что <literal>template1</literal> может содержать данные в "
+"специфических кодировках и локалях, в отличие от <literal>template0</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:223(programlisting)
+#, no-wrap
+msgid "CREATE DATABASE <replaceable>dbname</replaceable> TEMPLATE template0;"
+msgstr "CREATE DATABASE <replaceable>dbname</replaceable> TEMPLATE template0;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:227(programlisting)
+#, no-wrap
+msgid "createdb -T template0 <replaceable>dbname</replaceable>"
+msgstr "createdb -T template0 <replaceable>dbname</replaceable>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:221(para)
+msgid ""
+"To create a database by copying <literal>template0</literal>, use: "
+"<placeholder-1/> from the SQL environment, or: <placeholder-2/> from the "
+"shell."
+msgstr ""
+"Для создания базы данных на основе <literal>template0</literal>, "
+"используйте: <placeholder-1/> из среды SQL, или: <placeholder-2/> из "
+"командной строки ОС."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:233(para)
+msgid ""
+"It is possible to create additional template databases, and indeed one can "
+"copy any database in a cluster by specifying its name as the template for "
+"<command>CREATE DATABASE</command>. It is important to understand, however, "
+"that this is not (yet) intended as a general-purpose <quote><command>COPY "
+"DATABASE</command></quote> facility. The principal limitation is that no "
+"other sessions can be connected to the source database while it is being "
+"copied. <command>CREATE DATABASE</command> will fail if any other connection "
+"exists when it starts; during the copy operation, new connections to the "
+"source database are prevented."
+msgstr ""
+"Можно создавать дополнительные шаблоны баз данных, и, более того, можно "
+"копировать любую базу данных кластера, если указать её имя в качестве "
+"шаблона в команде <command>CREATE DATABASE</command>. Важно понимать, что "
+"это (пока) не рассматривается в качестве основного инструмента для "
+"реализации возможности <quote><command>COPY DATABASE</command></quote>. "
+"Важным является то, что при копировании все сессии к копируемой базе данных "
+"должны быть закрыты. <command>CREATE DATABASE</command> выдаст ошибку, если "
+"есть другие подключения; во время операции копирования новые подключения к "
+"этой базе данных не разрешены."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:247(indexterm)
+msgid "<primary>pg_database</primary>"
+msgstr "<primary>pg_database</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:246(para)
+msgid ""
+"Two useful flags exist in <literal>pg_database</literal><placeholder-1/> for "
+"each database: the columns <literal>datistemplate</literal> and "
+"<literal>datallowconn</literal>. <literal>datistemplate</literal> can be set "
+"to indicate that a database is intended as a template for <command>CREATE "
+"DATABASE</command>. If this flag is set, the database can be cloned by any "
+"user with <literal>CREATEDB</literal> privileges; if it is not set, only "
+"superusers and the owner of the database can clone it. If "
+"<literal>datallowconn</literal> is false, then no new connections to that "
+"database will be allowed (but existing sessions are not terminated simply by "
+"setting the flag false). The <literal>template0</literal> database is "
+"normally marked <literal>datallowconn = false</literal> to prevent its "
+"modification. Both <literal>template0</literal> and <literal>template1</"
+"literal> should always be marked with <literal>datistemplate = true</"
+"literal>."
+msgstr ""
+"В таблице <literal>pg_database</literal><placeholder-1/> есть два полезных "
+"флага для каждой базы данных: столбцы <literal>datistemplate</literal> и "
+"<literal>datallowconn</literal>. <literal>datistemplate</literal> указывает "
+"на факт того, что база данных может выступать в качестве шаблона в команде "
+"<command>CREATE DATABASE</command>. Если флаг установлен, то для "
+"пользователей с правом <literal>CREATEDB</literal> клонирование доступно; "
+"если флаг не установлен, то лишь суперпользователь и владелец базы данных "
+"могут её клонировать. Если <literal>datallowconn</literal> не установлен, то "
+"новые подключения к этой базе не допустимы (однако текущие сессии не "
+"закрываются при сбросе этого флага). База <literal>template0</literal> "
+"обычно помечена как <literal>datallowconn = false</literal> для избежания "
+"любых её модификаций. И <literal>template0</literal>, и <literal>template1</"
+"literal> всегда должны быть помечены флагом <literal>datistemplate = true</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:263(para)
+msgid ""
+"<literal>template1</literal> and <literal>template0</literal> do not have "
+"any special status beyond the fact that the name <literal>template1</"
+"literal> is the default source database name for <command>CREATE DATABASE</"
+"command>. For example, one could drop <literal>template1</literal> and "
+"recreate it from <literal>template0</literal> without any ill effects. This "
+"course of action might be advisable if one has carelessly added a bunch of "
+"junk in <literal>template1</literal>. (To delete <literal>template1</"
+"literal>, it must have <literal>pg_database.datistemplate = false</literal>.)"
+msgstr ""
+"<literal>template1</literal> и <literal>template0</literal> не выделены как-"
+"то особенно, кроме того факта, что <literal>template1</literal> используется "
+"по умолчанию в команде <command>CREATE DATABASE</command>. Например, можно "
+"удалить <literal>template1</literal> и безболезненно создать заново из "
+"<literal>template0</literal>. Это можно посоветовать в случае, если "
+"<literal>template1</literal> был замусорен. (Чтобы удалить "
+"<literal>template1</literal>, необходимо сбросить флаг <literal>pg_database."
+"datistemplate = false</literal>.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:274(para)
+msgid ""
+"The <literal>postgres</literal> database is also created when a database "
+"cluster is initialized. This database is meant as a default database for "
+"users and applications to connect to. It is simply a copy of "
+"<literal>template1</literal> and can be dropped and recreated if necessary."
+msgstr ""
+"База данных <literal>postgres</literal> также создаётся при инициализации "
+"кластера. Она используется пользователями и приложениями для подключения по "
+"умолчанию. Представляет собой всего лишь копию <literal>template1</literal>, "
+"и может быть удалена и повторно создана при необходимости."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:284(title)
+msgid "Database Configuration"
+msgstr "Конфигурирование баз данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:286(para)
+msgid ""
+"Recall from <xref linkend=\"runtime-config\"/> that the "
+"<productname>PostgreSQL</productname> server provides a large number of run-"
+"time configuration variables. You can set database-specific default values "
+"for many of these settings."
+msgstr ""
+"Обратившись к <xref remap=\"3\" linkend=\"runtime-config\"/> можно выяснить, "
+"что сервер <productname>PostgreSQL</productname> имеет множество параметров "
+"конфигурации времени исполнения. Можно выставить специфичные для базы данных "
+"значения по умолчанию."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:300(programlisting)
+#, no-wrap
+msgid "ALTER DATABASE mydb SET geqo TO off;"
+msgstr "ALTER DATABASE mydb SET geqo TO off;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:293(para)
+msgid ""
+"For example, if for some reason you want to disable the <acronym>GEQO</"
+"acronym> optimizer for a given database, you'd ordinarily have to either "
+"disable it for all databases or make sure that every connecting client is "
+"careful to issue <literal>SET geqo TO off</literal>. To make this setting "
+"the default within a particular database, you can execute the command: "
+"<placeholder-1/> This will save the setting (but not set it immediately). In "
+"subsequent connections to this database it will appear as though "
+"<literal>SET geqo TO off;</literal> had been executed just before the "
+"session started. Note that users can still alter this setting during their "
+"sessions; it will only be the default. To undo any such setting, use "
+"<literal>ALTER DATABASE <replaceable>dbname</replaceable> RESET "
+"<replaceable>varname</replaceable></literal>."
+msgstr ""
+"Например, если по какой-то причине необходимо выключить <acronym>GEQO</"
+"acronym> оптимизатор в какой-то из баз, то можно, либо выключить его для "
+"всех баз данных одновременно, либо убедиться, что все клиенты заботятся об "
+"этом, выполняя команду <literal>SET geqo TO off</literal>. Для того чтобы "
+"это действовало по умолчанию в конкретной базе данных, необходимо выполнить "
+"команду: <placeholder-1/> Установка сохраняется, но не применяется тотчас. В "
+"последующих подключениях к этой базе данных, эффект будет таким, будто перед "
+"началом сессии была выполнена команда <literal>SET geqo TO off;</literal>. "
+"Стоит обратить внимание, что пользователь по-прежнему может изменять этот "
+"параметр во время сессии; ведь это просто значение по умолчанию. Чтобы "
+"сбросить такое установленное значение, используйте <literal>ALTER DATABASE "
+"<replaceable>dbname</replaceable> RESET <replaceable>varname</replaceable></"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:315(title)
+msgid "Destroying a Database"
+msgstr "Удаление базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:319(indexterm)
+msgid "<primary>DROP DATABASE</primary>"
+msgstr "<primary>DROP DATABASE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:317(para)
+msgid ""
+"Databases are destroyed with the command <xref linkend=\"sql-dropdatabase\"/"
+">:<placeholder-1/> <synopsis>\n"
+"DROP DATABASE <replaceable>name</replaceable>;\n"
+"</synopsis> Only the owner of the database, or a superuser, can drop a "
+"database. Dropping a database removes all objects that were contained within "
+"the database. The destruction of a database cannot be undone."
+msgstr ""
+"Базы данных удаляются командой <xref linkend=\"sql-dropdatabase\"/>:"
+"<placeholder-1/> <synopsis>\n"
+"DROP DATABASE <replaceable>имя</replaceable>;\n"
+"</synopsis> Лишь владелец базы данных или суперпользователь могут удалить "
+"базу. При удалении также удаляются все её объекты. Удаление базы данных это "
+"необратимая операция."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:330(para)
+msgid ""
+"You cannot execute the <command>DROP DATABASE</command> command while "
+"connected to the victim database. You can, however, be connected to any "
+"other database, including the <literal>template1</literal> database. "
+"<literal>template1</literal> would be the only option for dropping the last "
+"user database of a given cluster."
+msgstr ""
+"Невозможно выполнить команду <command>DROP DATABASE</command> пока "
+"существует хоть одно подключение к заданной базе. Однако можно подключиться "
+"к любой другой, в том числе и <literal>template1</literal>. "
+"<literal>template1</literal> может быть единственной возможностью при "
+"удалении последней пользовательской базы данных кластера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:341(indexterm)
+msgid "<primary>dropdb</primary>"
+msgstr "<primary>dropdb</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:339(para)
+msgid ""
+"For convenience, there is also a shell program to drop databases, <xref "
+"linkend=\"app-dropdb\"/>:<placeholder-1/> <synopsis>\n"
+"dropdb <replaceable class=\"parameter\">dbname</replaceable>\n"
+"</synopsis> (Unlike <command>createdb</command>, it is not the default "
+"action to drop the database with the current user name.)"
+msgstr ""
+"Также существует утилита командной строки для удаления баз данных <xref "
+"linkend=\"app-dropdb\"/>:<placeholder-1/> <synopsis>\n"
+"dropdb <replaceable class=\"parameter\">dbname</replaceable>\n"
+"</synopsis> (В отличие от команды <command>createdb</command> утилита не "
+"использует имя текущего пользователя по умолчанию)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:351(title)
+msgid "Tablespaces"
+msgstr "Табличные пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:353(indexterm)
+msgid "<primary>tablespace</primary>"
+msgstr "<primary>табличное пространство</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:357(para)
+msgid ""
+"Tablespaces in <productname>PostgreSQL</productname> allow database "
+"administrators to define locations in the file system where the files "
+"representing database objects can be stored. Once created, a tablespace can "
+"be referred to by name when creating database objects."
+msgstr ""
+"Табличные пространства в <productname>PostgreSQL</productname> позволяют "
+"администраторам организовать логику размещения файлов объектов базы данных в "
+"файловой системе. К однажды созданному табличному пространству можно "
+"обращаться по имени на этапе создания объектов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:364(para)
+msgid ""
+"By using tablespaces, an administrator can control the disk layout of a "
+"<productname>PostgreSQL</productname> installation. This is useful in at "
+"least two ways. First, if the partition or volume on which the cluster was "
+"initialized runs out of space and cannot be extended, a tablespace can be "
+"created on a different partition and used until the system can be "
+"reconfigured."
+msgstr ""
+"Табличные пространства позволяют администратору управлять дисковым "
+"пространством для инсталляции <productname>PostgreSQL</productname>. Это "
+"полезно минимум по двум причинам. Во-первых, это нехватка места в разделе, "
+"на котором был инициализирован кластер и невозможность его расширения. "
+"Табличное пространство можно создать в другом разделе и использовать его до "
+"тех пор, пока не появится возможность переконфигурирования системы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:373(para)
+msgid ""
+"Second, tablespaces allow an administrator to use knowledge of the usage "
+"pattern of database objects to optimize performance. For example, an index "
+"which is very heavily used can be placed on a very fast, highly available "
+"disk, such as an expensive solid state device. At the same time a table "
+"storing archived data which is rarely used or not performance critical could "
+"be stored on a less expensive, slower disk system."
+msgstr ""
+"Во-вторых, табличные пространства позволяют администраторам оптимизировать "
+"производительность согласно бизнес-процессам, связанным с объектами базы "
+"данных. Например, часто используемый индекс можно разместить на очень "
+"быстром и надёжном, но дорогом SSD-диске. В то же время таблица с архивными "
+"данными, которые редко используются и скорость к доступа к ним не важна, "
+"может быть размещена в более дешёвом и медленном хранилище."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:384(para)
+msgid ""
+"Even though located outside the main PostgreSQL data directory, tablespaces "
+"are an integral part of the database cluster and <emphasis>cannot</emphasis> "
+"be treated as an autonomous collection of data files. They are dependent on "
+"metadata contained in the main data directory, and therefore cannot be "
+"attached to a different database cluster or backed up individually. "
+"Similarly, if you lose a tablespace (file deletion, disk failure, etc), the "
+"database cluster might become unreadable or unable to start. Placing a "
+"tablespace on a temporary file system like a RAM disk risks the reliability "
+"of the entire cluster."
+msgstr ""
+"Несмотря на внешнее размещение относительно основного каталога хранения "
+"данных PostgreSQL, табличные пространства являются неотъемлемой частью "
+"кластера и <emphasis>не могут</emphasis> трактоваться, как самостоятельная "
+"коллекция файлов данных. Они зависят от метаданных, расположенных в главном "
+"каталоге, и потому не могут быть подключены к другому кластеру, или "
+"копироваться по отдельности. Также, в случае потери табличного пространства "
+"(при удалении файлов, сбое диска и т. п.), кластер может оказаться "
+"недоступным или не сможет запуститься. Таким образом, при размещении "
+"табличного пространства во временной файловой системе, например, в RAM-"
+"диске, возникает угроза надёжности всего кластера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:401(indexterm)
+msgid "<primary>CREATE TABLESPACE</primary>"
+msgstr "<primary>CREATE TABLESPACE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:402(programlisting)
+#, no-wrap
+msgid "CREATE TABLESPACE fastspace LOCATION '/ssd1/postgresql/data';"
+msgstr "CREATE TABLESPACE fastspace LOCATION '/ssd1/postgresql/data';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:398(para)
+msgid ""
+"To define a tablespace, use the <xref linkend=\"sql-createtablespace\"/> "
+"command, for example:<placeholder-1/>: <placeholder-2/> The location must be "
+"an existing, empty directory that is owned by the <productname>PostgreSQL</"
+"productname> operating system user. All objects subsequently created within "
+"the tablespace will be stored in files underneath this directory. The "
+"location must not be on removable or transient storage, as the cluster might "
+"fail to function if the tablespace is missing or lost."
+msgstr ""
+"Для создания табличного пространства используется команда <xref linkend="
+"\"sql-createtablespace\"/>, например:<placeholder-1/>: <placeholder-2/> "
+"Каталог должен существовать, быть пустым и принадлежать пользователю ОС, под "
+"которым запущен <productname>PostgreSQL</productname>. Все созданные "
+"впоследствии объекты, принадлежащие целевому табличному пространству, будут "
+"храниться в файлах расположенных в этом каталоге. Каталог не должен "
+"размещаться на съёмных или устройствах временного хранения, так как кластер "
+"может перестать функционировать из-за потери этого пространства."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:414(para)
+msgid ""
+"There is usually not much point in making more than one tablespace per "
+"logical file system, since you cannot control the location of individual "
+"files within a logical file system. However, <productname>PostgreSQL</"
+"productname> does not enforce any such limitation, and indeed it is not "
+"directly aware of the file system boundaries on your system. It just stores "
+"files in the directories you tell it to use."
+msgstr ""
+"Обычно нет смысла создавать более одного пространства на одну логическую "
+"файловую систему, так как нет возможности контролировать расположение "
+"отдельных файлов в файловой системе. Однако <productname>PostgreSQL</"
+"productname> не накладывает никаких ограничений в этом отношении, и более "
+"того, напрямую не заботится о точках монтирования файловой системы. Просто "
+"осуществляется хранение файлов в указанных каталогах."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:424(para)
+msgid ""
+"Creation of the tablespace itself must be done as a database superuser, but "
+"after that you can allow ordinary database users to use it. To do that, "
+"grant them the <literal>CREATE</literal> privilege on it."
+msgstr ""
+"Создавать табличное пространство должен суперпользователь базы данных, но "
+"после этого можно разрешить обычным пользователям его использовать. Для "
+"этого необходимо предоставить привилегию <literal>CREATE</literal> на "
+"табличное пространство."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:436(programlisting)
+#, no-wrap
+msgid "CREATE TABLE foo(i int) TABLESPACE space1;"
+msgstr "CREATE TABLE foo(i int) TABLESPACE space1;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:430(para)
+msgid ""
+"Tables, indexes, and entire databases can be assigned to particular "
+"tablespaces. To do so, a user with the <literal>CREATE</literal> privilege "
+"on a given tablespace must pass the tablespace name as a parameter to the "
+"relevant command. For example, the following creates a table in the "
+"tablespace <literal>space1</literal>: <placeholder-1/>"
+msgstr ""
+"Таблицы, индексы и целые базы данных могут храниться в отдельных табличных "
+"пространствах. Для этого пользователь с правом <literal>CREATE</literal> на "
+"табличное пространство должен указать его имя в качестве параметра "
+"соответствующей команды. Например, далее создаётся таблица в табличном "
+"пространстве <literal>space1</literal>: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:443(programlisting)
+#, no-wrap
+msgid ""
+"SET default_tablespace = space1;\n"
+"CREATE TABLE foo(i int);"
+msgstr ""
+"SET default_tablespace = space1;\n"
+"CREATE TABLE foo(i int);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:441(para)
+msgid ""
+"Alternatively, use the <xref linkend=\"guc-default-tablespace\"/> parameter: "
+"<placeholder-1/> When <varname>default_tablespace</varname> is set to "
+"anything but an empty string, it supplies an implicit <literal>TABLESPACE</"
+"literal> clause for <command>CREATE TABLE</command> and <command>CREATE "
+"INDEX</command> commands that do not have an explicit one."
+msgstr ""
+"Как вариант, используйте параметр <xref linkend=\"guc-default-tablespace\"/"
+">: <placeholder-1/> Когда <varname>default_tablespace</varname> имеет "
+"значение отличное от пустой строки, он будет использоваться неявно в "
+"качестве значения параметра <literal>TABLESPACE</literal> в командах "
+"<command>CREATE TABLE</command> и <command>CREATE INDEX</command>, если в "
+"самой команде не задано иное."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:453(para)
+msgid ""
+"There is also a <xref linkend=\"guc-temp-tablespaces\"/> parameter, which "
+"determines the placement of temporary tables and indexes, as well as "
+"temporary files that are used for purposes such as sorting large data sets. "
+"This can be a list of tablespace names, rather than only one, so that the "
+"load associated with temporary objects can be spread over multiple "
+"tablespaces. A random member of the list is picked each time a temporary "
+"object is to be created."
+msgstr ""
+"Существует параметр <xref linkend=\"guc-temp-tablespaces\"/>, который "
+"указывает на размещение временных таблиц и индексов, а также файлов, "
+"создаваемых, например, при операциях сортировки больших наборов данных. "
+"Предпочтительнее, в качестве значения этого параметра, указывать не одно "
+"имя, а список из нескольких табличных пространств. Это поможет распределить "
+"нагрузку, связанную с временными объектами, по различным табличным "
+"пространствам. При каждом создании временного объекта будет случайным "
+"образом выбираться имя из указанного списка табличных пространств."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:463(para)
+msgid ""
+"The tablespace associated with a database is used to store the system "
+"catalogs of that database. Furthermore, it is the default tablespace used "
+"for tables, indexes, and temporary files created within the database, if no "
+"<literal>TABLESPACE</literal> clause is given and no other selection is "
+"specified by <varname>default_tablespace</varname> or "
+"<varname>temp_tablespaces</varname> (as appropriate). If a database is "
+"created without specifying a tablespace for it, it uses the same tablespace "
+"as the template database it is copied from."
+msgstr ""
+"Табличное пространство, связанное с базой данных, также используется для "
+"хранения её системных каталогов. Более того, это табличное пространство "
+"используется по умолчанию для таблиц, индексов и временных файлов, "
+"создаваемых в базе данных, если не указано иное в выражении "
+"<literal>TABLESPACE</literal>, или переменной <varname>default_tablespace</"
+"varname>, или <varname>temp_tablespaces</varname> (соответственно). Если "
+"база данных создана без указания конкретного табличного пространства, то "
+"используется пространство, к которому принадлежит копируемый шаблон."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:474(para)
+msgid ""
+"Two tablespaces are automatically created when the database cluster is "
+"initialized. The <literal>pg_global</literal> tablespace is used for shared "
+"system catalogs. The <literal>pg_default</literal> tablespace is the default "
+"tablespace of the <literal>template1</literal> and <literal>template0</"
+"literal> databases (and, therefore, will be the default tablespace for other "
+"databases as well, unless overridden by a <literal>TABLESPACE</literal> "
+"clause in <command>CREATE DATABASE</command>)."
+msgstr ""
+"При инициализации кластера автоматически создаются два табличных "
+"пространства. Табличное пространство <literal>pg_global</literal> "
+"используется для общих системных каталогов. Табличное пространство "
+"<literal>pg_default</literal> используется по умолчанию для баз данных "
+"<literal>template1</literal> и <literal>template0</literal> (в свою очередь, "
+"также является пространством по умолчанию для других баз данных, пока не "
+"будет явно указано иное в выражении <literal>TABLESPACE</literal> команды "
+"<command>CREATE DATABASE</command>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:485(para)
+msgid ""
+"Once created, a tablespace can be used from any database, provided the "
+"requesting user has sufficient privilege. This means that a tablespace "
+"cannot be dropped until all objects in all databases using the tablespace "
+"have been removed."
+msgstr ""
+"После создания, табличное пространство можно использовать в рамках любой "
+"базы данных, при условии, что у пользователя имеются необходимые права. Это "
+"означает, что табличное пространство невозможно удалить до тех пор, пока не "
+"будут удалены все объекты баз данных, использующих это пространство."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:492(para)
+msgid ""
+"To remove an empty tablespace, use the <xref linkend=\"sql-droptablespace\"/"
+"> command."
+msgstr ""
+"Для удаления пустого табличного пространства используйте команду <xref "
+"linkend=\"sql-droptablespace\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:498(para)
+msgid ""
+"To determine the set of existing tablespaces, examine the <link linkend="
+"\"catalog-pg-tablespace\"><structname>pg_tablespace</structname></link> "
+"system catalog, for example <synopsis>\n"
+"SELECT spcname FROM pg_tablespace;\n"
+"</synopsis> The <xref linkend=\"app-psql\"/> program's <literal>\\db</"
+"literal> meta-command is also useful for listing the existing tablespaces."
+msgstr ""
+"Чтобы получить список табличных пространств можно сделать запрос к "
+"системному каталогу <link linkend=\"catalog-pg-tablespace"
+"\"><structname>pg_tablespace</structname></link>, например, <synopsis>\n"
+"SELECT spcname FROM pg_tablespace;\n"
+"</synopsis> Метакоманда <literal>\\db</literal> утилиты <xref linkend=\"app-"
+"psql\"/> также позволяет отобразить список существующих табличных "
+"пространств."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:509(para)
+msgid ""
+"<productname>PostgreSQL</productname> makes use of symbolic links to "
+"simplify the implementation of tablespaces. This means that tablespaces can "
+"be used <emphasis>only</emphasis> on systems that support symbolic links."
+msgstr ""
+"<productname>PostgreSQL</productname> использует символические ссылки для "
+"упрощения реализации табличных пространств. Это означает, что табличные "
+"пространства могут использоваться <emphasis>только</emphasis> в системах, "
+"поддерживающих символические ссылки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:516(para)
+msgid ""
+"The directory <filename>$PGDATA/pg_tblspc</filename> contains symbolic links "
+"that point to each of the non-built-in tablespaces defined in the cluster. "
+"Although not recommended, it is possible to adjust the tablespace layout by "
+"hand by redefining these links. Under no circumstances perform this "
+"operation while the server is running. Note that in PostgreSQL 9.1 and "
+"earlier you will also need to update the <structname>pg_tablespace</"
+"structname> catalog with the new locations. (If you do not, "
+"<literal>pg_dump</literal> will continue to output the old tablespace "
+"locations.)"
+msgstr ""
+"Каталог <filename>$PGDATA/pg_tblspc</filename> содержит символические "
+"ссылки, которые указывают на внешние табличные пространства кластера. Хоть и "
+"не рекомендуется, но возможно регулировать табличные пространства вручную, "
+"переопределяя эти ссылки. Ни при каких обстоятельствах эти операции нельзя "
+"проводить, пока запущен сервер баз данных. Обратите внимание, что в версии "
+"PostgreSQL 9.1 и более ранних также необходимо обновить информацию в "
+"<structname>pg_tablespace</structname> о новых расположениях. (Если это не "
+"сделать, то <literal>pg_dump</literal> будет продолжать выводить старые "
+"расположения табличных пространств.)"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: manage-ag.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

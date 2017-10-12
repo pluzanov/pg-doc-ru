@@ -1,0 +1,574 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:5(title)
+msgid "<acronym>BKI</acronym> Backend Interface"
+msgstr "Внутренний интерфейс <acronym>BKI</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:7(para)
+msgid ""
+"Backend Interface (<acronym>BKI</acronym>) files are scripts in a special "
+"language that is understood by the <productname>PostgreSQL</productname> "
+"backend when running in the <quote>bootstrap</quote> mode. The bootstrap "
+"mode allows system catalogs to be created and filled from scratch, whereas "
+"ordinary SQL commands require the catalogs to exist already. <acronym>BKI</"
+"acronym> files can therefore be used to create the database system in the "
+"first place. (And they are probably not useful for anything else.)"
+msgstr ""
+"Файлы внутреннего интерфейса (<acronym>BKI</acronym>, Backend Interface) "
+"представляют собой скрипты на специальном языке, который понимает сервер "
+"<productname>PostgreSQL</productname> в режиме <quote>первого запуска</"
+"quote>. Этот режим позволяет создать системные каталоги и заполнить их с "
+"нуля, тогда как для обычных SQL-команд необходимо, чтобы каталоги уже "
+"существовали. Таким образом, файлы <acronym>BKI</acronym> могут применяться "
+"для изначального создания системы баз данных. (И вряд ли им можно найти "
+"другое применение.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:19(para)
+msgid ""
+"<application>initdb</application> uses a <acronym>BKI</acronym> file to do "
+"part of its job when creating a new database cluster. The input file used by "
+"<application>initdb</application> is created as part of building and "
+"installing <productname>PostgreSQL</productname> by a program named "
+"<filename>genbki.pl</filename>, which reads some specially formatted C "
+"header files in the <filename>src/include/catalog/</filename> directory of "
+"the source tree. The created <acronym>BKI</acronym> file is called "
+"<filename>postgres.bki</filename> and is normally installed in the "
+"<filename>share</filename> subdirectory of the installation tree."
+msgstr ""
+"Программа <application>initdb</application> использует файл <acronym>BKI</"
+"acronym> для выполнения части своей работы при создании нового кластера баз "
+"данных. Входной файл для <application>initdb</application> создаётся в "
+"процессе сборки и установки <productname>PostgreSQL</productname> программой "
+"<filename>genbki.pl</filename>, которая считывает для этого специально "
+"отформатированные заголовочные файлы C в каталоге <filename>src/include/"
+"catalog/</filename> в дереве исходного кода. Созданный файл <acronym>BKI</"
+"acronym> называется <filename>postgres.bki</filename> и обычно "
+"устанавливается в подкаталог <filename>share</filename> дерева инсталляции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:32(para)
+msgid ""
+"Related information can be found in the documentation for "
+"<application>initdb</application>."
+msgstr ""
+"Дополнительные сведения можно найти в документации по <application>initdb</"
+"application>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:38(title)
+msgid "<acronym>BKI</acronym> File Format"
+msgstr "Формат файла <acronym>BKI</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:40(para)
+msgid ""
+"This section describes how the <productname>PostgreSQL</productname> backend "
+"interprets <acronym>BKI</acronym> files. This description will be easier to "
+"understand if the <filename>postgres.bki</filename> file is at hand as an "
+"example."
+msgstr ""
+"В этом разделе описывается, как сервер <productname>PostgreSQL</productname> "
+"интерпретирует файлы <acronym>BKI</acronym>. Это описание будет легче "
+"понять, если для наглядности вы откроете файл <filename>postgres.bki</"
+"filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:47(para)
+msgid ""
+"<acronym>BKI</acronym> input consists of a sequence of commands. Commands "
+"are made up of a number of tokens, depending on the syntax of the command. "
+"Tokens are usually separated by whitespace, but need not be if there is no "
+"ambiguity. There is no special command separator; the next token that "
+"syntactically cannot belong to the preceding command starts a new one. "
+"(Usually you would put a new command on a new line, for clarity.) Tokens can "
+"be certain key words, special characters (parentheses, commas, etc.), "
+"numbers, or double-quoted strings. Everything is case sensitive."
+msgstr ""
+"Содержимое <acronym>BKI</acronym> состоит из последовательности команд. "
+"Команды образуются из нескольких компонентов, в зависимости от синтаксиса "
+"конкретной команды. Компоненты команд обычно разделяются пробельными "
+"символами, но это не обязательно, если не возникает неоднозначности. "
+"Специальный разделитель команд отсутствует; следующий компонент, который не "
+"может синтаксически относиться к предыдущей команде, начинает следующую. "
+"(Обычно новая команда начинается в отдельной строке, для структурности.) "
+"Компонентами команд могут быть определённые ключевые слова, специальные "
+"символы (скобки, запятые и т. д.), числа или строки в двойных кавычках. Все "
+"буквы в них воспринимаются с учётом регистра."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:59(para)
+msgid "Lines starting with <literal>#</literal> are ignored."
+msgstr "Строки, начинающиеся с <literal>#</literal>, игнорируются."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:66(title)
+msgid "<acronym>BKI</acronym> Commands"
+msgstr "Команды <acronym>BKI</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:70(term)
+msgid ""
+"<literal>create</literal> <replaceable class=\"parameter\">tablename</"
+"replaceable> <replaceable class=\"parameter\">tableoid</replaceable> "
+"<optional><literal>bootstrap</literal></optional> "
+"<optional><literal>shared_relation</literal></optional> "
+"<optional><literal>without_oids</literal></optional> "
+"<optional><literal>rowtype_oid</literal> <replaceable>oid</replaceable></"
+"optional> (<replaceable class=\"parameter\">name1</replaceable> = "
+"<replaceable class=\"parameter\">type1</replaceable> <optional>FORCE NOT "
+"NULL | FORCE NULL </optional> <optional>, <replaceable class=\"parameter"
+"\">name2</replaceable> = <replaceable class=\"parameter\">type2</"
+"replaceable> <optional>FORCE NOT NULL | FORCE NULL </optional>, ...</"
+"optional>)"
+msgstr ""
+"<literal>create</literal> <replaceable class=\"parameter\">имя_таблицы</"
+"replaceable> <replaceable class=\"parameter\">oid_таблицы</replaceable> "
+"<optional><literal>bootstrap</literal></optional> "
+"<optional><literal>shared_relation</literal></optional> "
+"<optional><literal>without_oids</literal></optional> "
+"<optional><literal>rowtype_oid</literal> <replaceable>oid</replaceable></"
+"optional> (<replaceable class=\"parameter\">имя1</replaceable> = "
+"<replaceable class=\"parameter\">тип1</replaceable> <optional>FORCE NOT NULL "
+"| FORCE NULL </optional> <optional>, <replaceable class=\"parameter\">имя2</"
+"replaceable> = <replaceable class=\"parameter\">тип2</replaceable> "
+"<optional>FORCE NOT NULL | FORCE NULL </optional>, ...</optional>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:88(para)
+msgid ""
+"Create a table named <replaceable class=\"parameter\">tablename</"
+"replaceable>, and having the OID <replaceable class=\"parameter\">tableoid</"
+"replaceable>, with the columns given in parentheses."
+msgstr ""
+"Создать таблицу <replaceable class=\"parameter\">имя_таблицы</replaceable> с "
+"заданным <replaceable class=\"parameter\">oid_таблицы</replaceable> и "
+"столбцами, указанными в скобках."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:95(para)
+msgid ""
+"The following column types are supported directly by <filename>bootstrap.c</"
+"filename>: <type>bool</type>, <type>bytea</type>, <type>char</type> (1 "
+"byte), <type>name</type>, <type>int2</type>, <type>int4</type>, "
+"<type>regproc</type>, <type>regclass</type>, <type>regtype</type>, "
+"<type>text</type>, <type>oid</type>, <type>tid</type>, <type>xid</type>, "
+"<type>cid</type>, <type>int2vector</type>, <type>oidvector</type>, "
+"<type>_int4</type> (array), <type>_text</type> (array), <type>_oid</type> "
+"(array), <type>_char</type> (array), <type>_aclitem</type> (array). Although "
+"it is possible to create tables containing columns of other types, this "
+"cannot be done until after <structname>pg_type</structname> has been created "
+"and filled with appropriate entries. (That effectively means that only these "
+"column types can be used in bootstrapped tables, but non-bootstrap catalogs "
+"can contain any built-in type.)"
+msgstr ""
+"Непосредственно <filename>bootstrap.c</filename> поддерживает следующие типы "
+"столбцов: <type>bool</type>, <type>bytea</type>, <type>char</type> (1 байт), "
+"<type>name</type>, <type>int2</type>, <type>int4</type>, <type>regproc</"
+"type>, <type>regclass</type>, <type>regtype</type>, <type>text</type>, "
+"<type>oid</type>, <type>tid</type>, <type>xid</type>, <type>cid</type>, "
+"<type>int2vector</type>, <type>oidvector</type>, <type>_int4</type> "
+"(массив), <type>_text</type> (массив), <type>_oid</type> (массив), "
+"<type>_char</type> (массив), <type>_aclitem</type> (массив). Хотя возможно "
+"создать таблицы, содержащие столбцы и других типов, это нельзя сделать, пока "
+"не будет создан и заполнен соответствующими записями каталог "
+"<structname>pg_type</structname>. (Это по сути означает, что только эти типы "
+"столбцов могут быть в таблицах, создаваемых в таком режиме, хотя каталоги, "
+"создаваемые позже, могут содержать любые встроенные типы.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:114(para)
+msgid ""
+"When <literal>bootstrap</literal> is specified, the table will only be "
+"created on disk; nothing is entered into <structname>pg_class</structname>, "
+"<structname>pg_attribute</structname>, etc, for it. Thus the table will not "
+"be accessible by ordinary SQL operations until such entries are made the "
+"hard way (with <literal>insert</literal> commands). This option is used for "
+"creating <structname>pg_class</structname> etc themselves."
+msgstr ""
+"С указанием <literal>bootstrap</literal> таблица будет создана только на "
+"диске; никакие записи о ней не будут добавлены в <structname>pg_class</"
+"structname>, <structname>pg_attribute</structname> и т. д. Таким образом, "
+"таблица не будет доступна для обычных операций SQL, пока такие записи не "
+"будут добавлены явно (командами <literal>insert</literal>). Это указание "
+"применяется для создания самой структуры <structname>pg_class</structname> и "
+"подобных ей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:125(para)
+msgid ""
+"The table is created as shared if <literal>shared_relation</literal> is "
+"specified. It will have OIDs unless <literal>without_oids</literal> is "
+"specified. The table's row type OID (<structname>pg_type</structname> OID) "
+"can optionally be specified via the <literal>rowtype_oid</literal> clause; "
+"if not specified, an OID is automatically generated for it. (The "
+"<literal>rowtype_oid</literal> clause is useless if <literal>bootstrap</"
+"literal> is specified, but it can be provided anyway for documentation.)"
+msgstr ""
+"Если добавлено указание <literal>shared_relation</literal>, таблица "
+"создаётся как общая. Она будет содержать столбец OID, если отсутствует "
+"указание <literal>without_oids</literal>. Дополнительным предложением "
+"<literal>rowtype_oid</literal> может быть задан OID типа строки (OID записи "
+"в <structname>pg_type</structname>); если он не указан, OID генерируется "
+"автоматически. (Предложение <literal>rowtype_oid</literal> бесполезно, если "
+"присутствует указание <literal>bootstrap</literal>, но его всё равно можно "
+"добавить для документирования.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:140(literal) bki.xml:307(literal)
+msgid "open"
+msgstr "open"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:140(replaceable) bki.xml:154(replaceable) bki.xml:195(replaceable)
+#: bki.xml:227(replaceable)
+msgid "tablename"
+msgstr "имя_таблицы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:144(para)
+msgid ""
+"Open the table named <replaceable class=\"parameter\">tablename</"
+"replaceable> for insertion of data. Any currently open table is closed."
+msgstr ""
+"Открыть таблицу <replaceable class=\"parameter\">имя_таблицы</replaceable> "
+"для добавления данных. Любая другая таблица, открытая в данный момент, "
+"закрывается."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:154(literal) bki.xml:292(literal) bki.xml:317(literal)
+msgid "close"
+msgstr "close"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:158(para)
+msgid ""
+"Close the open table. The name of the table can be given as a cross-check, "
+"but this is not required."
+msgstr ""
+"Закрыть открытую таблицу. Имя таблицы может задаваться для перепроверки, но "
+"это не требуется."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:166(term)
+msgid ""
+"<literal>insert</literal> <optional><literal>OID =</literal> <replaceable "
+"class=\"parameter\">oid_value</replaceable></optional> <literal>(</literal> "
+"<replaceable class=\"parameter\">value1</replaceable> <replaceable class="
+"\"parameter\">value2</replaceable> ... <literal>)</literal>"
+msgstr ""
+"<literal>insert</literal> <optional><literal>OID =</literal> <replaceable "
+"class=\"parameter\">значение_oid</replaceable></optional> <literal>(</"
+"literal> <replaceable class=\"parameter\">значение1</replaceable> "
+"<replaceable class=\"parameter\">значение2</replaceable> ... <literal>)</"
+"literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:171(para)
+msgid ""
+"Insert a new row into the open table using <replaceable class=\"parameter"
+"\">value1</replaceable>, <replaceable class=\"parameter\">value2</"
+"replaceable>, etc., for its column values and <replaceable class=\"parameter"
+"\">oid_value</replaceable> for its OID. If <replaceable class=\"parameter"
+"\">oid_value</replaceable> is zero (0) or the clause is omitted, and the "
+"table has OIDs, then the next available OID is assigned."
+msgstr ""
+"Вставить новую строку в открытую таблицу, установив <replaceable class="
+"\"parameter\">значение1</replaceable>, <replaceable class=\"parameter"
+"\">значение2</replaceable> и т. д. в качестве значений столбцов и "
+"<replaceable class=\"parameter\">значение_oid</replaceable> в качестве OID. "
+"Если <replaceable class=\"parameter\">значение_oid</replaceable> равно нулю "
+"(0) или это указание опущено, а таблица при этом содержит OID, строке "
+"назначается следующий свободный OID."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:182(para)
+msgid ""
+"NULL values can be specified using the special key word <literal>_null_</"
+"literal>. Values containing spaces must be double quoted."
+msgstr ""
+"Значения NULL могут задаваться специальным ключевым словом <literal>_null_</"
+"literal>. Значения, содержащие пробелы, должны заключаться в двойные кавычки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:192(literal)
+msgid "declare"
+msgstr "declare"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:192(literal)
+msgid "unique"
+msgstr "unique"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:193(literal)
+msgid "index"
+msgstr "index"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:193(replaceable)
+msgid "indexname"
+msgstr "имя_индекса"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:194(replaceable)
+msgid "indexoid"
+msgstr "oid_индекса"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:195(literal) bki.xml:227(literal)
+msgid "on"
+msgstr "on"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:196(literal)
+msgid "using"
+msgstr "using"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:196(replaceable)
+msgid "amname"
+msgstr "имя_метода_доступа"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:197(literal)
+msgid "("
+msgstr "("
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:197(replaceable)
+msgid "opclass1"
+msgstr "класс_оп1"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:198(replaceable)
+msgid "name1"
+msgstr "имя1"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:199(optional)
+msgid ", ..."
+msgstr ", ..."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:199(literal)
+msgid ")"
+msgstr ")"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:203(para)
+msgid ""
+"Create an index named <replaceable class=\"parameter\">indexname</"
+"replaceable>, having OID <replaceable class=\"parameter\">indexoid</"
+"replaceable>, on the table named <replaceable class=\"parameter\">tablename</"
+"replaceable>, using the <replaceable class=\"parameter\">amname</"
+"replaceable> access method. The fields to index are called <replaceable "
+"class=\"parameter\">name1</replaceable>, <replaceable class=\"parameter"
+"\">name2</replaceable> etc., and the operator classes to use are "
+"<replaceable class=\"parameter\">opclass1</replaceable>, <replaceable class="
+"\"parameter\">opclass2</replaceable> etc., respectively. The index file is "
+"created and appropriate catalog entries are made for it, but the index "
+"contents are not initialized by this command."
+msgstr ""
+"Создать индекс <replaceable class=\"parameter\">имя_индекса</replaceable> с "
+"OID, равным <replaceable class=\"parameter\">oid_индекса</replaceable>, в "
+"таблице <replaceable class=\"parameter\">имя_таблицы</replaceable>, с "
+"методом доступа <replaceable class=\"parameter\">имя_метода_доступа</"
+"replaceable>. Индекс строится по полям <replaceable class=\"parameter"
+"\">имя1</replaceable>, <replaceable class=\"parameter\">имя2</replaceable> и "
+"т. д., и для них используются соответственно классы операторов <replaceable "
+"class=\"parameter\">класс_оп1</replaceable>, <replaceable class=\"parameter"
+"\">класс_оп2</replaceable> и т. д. Эта команда создаёт файл индекса и "
+"добавляет соответствующие записи в каталог, но не инициализирует содержимое "
+"индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:224(literal)
+msgid "declare toast"
+msgstr "declare toast"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:225(replaceable)
+msgid "toasttableoid"
+msgstr "oid_таблицы_toast"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:226(replaceable)
+msgid "toastindexoid"
+msgstr "oid_индекса_toast"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:231(para)
+msgid ""
+"Create a TOAST table for the table named <replaceable class=\"parameter"
+"\">tablename</replaceable>. The TOAST table is assigned OID <replaceable "
+"class=\"parameter\">toasttableoid</replaceable> and its index is assigned "
+"OID <replaceable class=\"parameter\">toastindexoid</replaceable>. As with "
+"<literal>declare index</literal>, filling of the index is postponed."
+msgstr ""
+"Создаёт таблицу TOAST для таблицы <replaceable class=\"parameter"
+"\">имя_таблицы</replaceable>. Таблице TOAST назначается OID, равный "
+"<replaceable class=\"parameter\">oid_таблицы_toast</replaceable>, а её "
+"индексу назначается OID, равный <replaceable class=\"parameter"
+"\">oid_индекса_toast</replaceable>. Как и с <literal>declare index</"
+"literal>, заполнение индекса откладывается."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:245(literal) bki.xml:332(literal)
+msgid "build indices"
+msgstr "build indices"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:248(para)
+msgid "Fill in the indices that have previously been declared."
+msgstr "Заполнить индексы, объявленные ранее."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:258(title)
+msgid "Structure of the Bootstrap <acronym>BKI</acronym> File"
+msgstr "Структура файла <acronym>BKI</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:260(para)
+msgid ""
+"The <literal>open</literal> command cannot be used until the tables it uses "
+"exist and have entries for the table that is to be opened. (These minimum "
+"tables are <structname>pg_class</structname>, <structname>pg_attribute</"
+"structname>, <structname>pg_proc</structname>, and <structname>pg_type</"
+"structname>.) To allow those tables themselves to be filled, "
+"<literal>create</literal> with the <literal>bootstrap</literal> option "
+"implicitly opens the created table for data insertion."
+msgstr ""
+"Команда <literal>open</literal> может применяться, только когда открываемая "
+"ей таблица существует и для неё имеются записи в каталогах. (Минимальный "
+"набор этих каталогов образуют <structname>pg_class</structname>, "
+"<structname>pg_attribute</structname>, <structname>pg_proc</structname> и "
+"<structname>pg_type</structname>.) Чтобы можно было заполнить сами эти "
+"таблицы, команда <literal>create</literal> с указанием <literal>bootstrap</"
+"literal> неявно открывает создаваемую таблицу для добавления данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:270(para)
+msgid ""
+"Also, the <literal>declare index</literal> and <literal>declare toast</"
+"literal> commands cannot be used until the system catalogs they need have "
+"been created and filled in."
+msgstr ""
+"Кроме того, команды <literal>declare index</literal> и <literal>declare "
+"toast</literal> нельзя применять, пока не будут созданы и заполнены "
+"системные каталоги."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:281(para)
+msgid "<literal>create bootstrap</literal> one of the critical tables"
+msgstr ""
+"<literal>create bootstrap</literal> (создание) одной из критичных таблиц"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:286(para)
+msgid "<literal>insert</literal> data describing at least the critical tables"
+msgstr ""
+"<literal>insert</literal> (добавление) данных, описывающих как минимум "
+"критичные таблицы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:296(para)
+msgid "Repeat for the other critical tables."
+msgstr "Повторение для других критичных таблиц."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:301(para)
+msgid ""
+"<literal>create</literal> (without <literal>bootstrap</literal>) a "
+"noncritical table"
+msgstr ""
+"<literal>create</literal> (создание) (без <literal>bootstrap</literal>) "
+"некритичной таблицы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:311(para)
+msgid "<literal>insert</literal> desired data"
+msgstr "<literal>insert</literal> (добавление) требуемых данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:321(para)
+msgid "Repeat for the other noncritical tables."
+msgstr "Повторение для других некритичных таблиц."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:326(para)
+msgid "Define indexes and toast tables."
+msgstr "Определение индексов и таблиц TOAST."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:276(para)
+msgid ""
+"Thus, the structure of the <filename>postgres.bki</filename> file has to be: "
+"<placeholder-1/>"
+msgstr ""
+"Таким образом, файл <filename>postgres.bki</filename> должен иметь следующую "
+"структуру: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:338(para)
+msgid "There are doubtless other, undocumented ordering dependencies."
+msgstr ""
+"Несомненно есть и другие, недокументированные зависимости, диктующие "
+"определённый порядок."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:344(title)
+msgid "Example"
+msgstr "Пример"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:352(programlisting)
+#, no-wrap
+msgid ""
+"create test_table 420 (cola = int4, colb = text)\n"
+"open test_table\n"
+"insert OID=421 ( 1 \"value1\" )\n"
+"insert OID=422 ( 2 _null_ )\n"
+"close test_table"
+msgstr ""
+"create test_table 420 (cola = int4, colb = text)\n"
+"open test_table\n"
+"insert OID=421 ( 1 \"value1\" )\n"
+"insert OID=422 ( 2 _null_ )\n"
+"close test_table"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:346(para)
+msgid ""
+"The following sequence of commands will create the table "
+"<literal>test_table</literal> with OID 420, having two columns "
+"<literal>cola</literal> and <literal>colb</literal> of type <type>int4</"
+"type> and <type>text</type>, respectively, and insert two rows into the "
+"table: <placeholder-1/>"
+msgstr ""
+"Следующая последовательность команд создаст таблицу <literal>test_table</"
+"literal> с OID 420, имеющую два столбца <literal>cola</literal> и "
+"<literal>colb</literal> типа <type>int4</type> и <type>text</type>, "
+"соответственно, и вставит две строки в эту таблицу: <placeholder-1/>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: bki.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

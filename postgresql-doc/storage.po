@@ -1,0 +1,2002 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-09-28 16:33+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:6(title)
+msgid "Database Physical Storage"
+msgstr "Физическое хранение базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:8(para)
+msgid ""
+"This chapter provides an overview of the physical storage format used by "
+"<productname>PostgreSQL</productname> databases."
+msgstr ""
+"В данной главе рассматривается формат физического хранения, используемый "
+"базами данных <productname>PostgreSQL</productname>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:15(title)
+msgid "Database File Layout"
+msgstr "Размещение файлов базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:17(para)
+msgid ""
+"This section describes the storage format at the level of files and "
+"directories."
+msgstr "Этот раздел описывает формат хранения на уровне файлов и каталогов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:22(para)
+msgid ""
+"Traditionally, the configuration and data files used by a database cluster "
+"are stored together within the cluster's data directory, commonly referred "
+"to as <varname>PGDATA</varname> (after the name of the environment variable "
+"that can be used to define it). A common location for <varname>PGDATA</"
+"varname> is <filename>/var/lib/pgsql/data</filename>. Multiple clusters, "
+"managed by different server instances, can exist on the same machine."
+msgstr ""
+"Файлы конфигурации и файлы данных, используемые кластером базы данных, "
+"традиционно хранятся вместе в каталоге данных кластера, который обычно "
+"называют <varname>PGDATA</varname> (по имени переменной среды, которую можно "
+"использовать для его определения). Обычно <varname>PGDATA</varname> "
+"находится в <filename>/var/lib/pgsql/data</filename>. На одной и той же "
+"машине может находиться множество кластеров, управляемых различными "
+"экземплярами сервера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:31(para)
+msgid ""
+"The <varname>PGDATA</varname> directory contains several subdirectories and "
+"control files, as shown in <xref linkend=\"pgdata-contents-table\"/>. In "
+"addition to these required items, the cluster configuration files "
+"<filename>postgresql.conf</filename>, <filename>pg_hba.conf</filename>, and "
+"<filename>pg_ident.conf</filename> are traditionally stored in "
+"<varname>PGDATA</varname>, although it is possible to place them elsewhere."
+msgstr ""
+"В каталоге <varname>PGDATA</varname> содержится несколько подкаталогов и "
+"управляющих файлов, как показано в <xref remap=\"6\" linkend=\"pgdata-"
+"contents-table\"/>. В дополнение к этим обязательным элементам "
+"конфигурационные файлы кластера <filename>postgresql.conf</filename>, "
+"<filename>pg_hba.conf</filename> и <filename>pg_ident.conf</filename> "
+"традиционно хранятся в <varname>PGDATA</varname>, хотя их можно разместить и "
+"в другом месте."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:41(title)
+msgid "Contents of <varname>PGDATA</varname>"
+msgstr "Содержание <varname>PGDATA</varname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:45(entry) storage.xml:732(entry)
+msgid "Item"
+msgstr "Элемент"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:48(entry) storage.xml:735(entry) storage.xml:812(entry)
+#: storage.xml:951(entry)
+msgid "Description"
+msgstr "Описание"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:55(filename)
+msgid "PG_VERSION"
+msgstr "PG_VERSION"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:56(entry)
+msgid ""
+"A file containing the major version number of <productname>PostgreSQL</"
+"productname>"
+msgstr ""
+"Файл, содержащий номер основной версии <productname>PostgreSQL</productname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:60(filename)
+msgid "base"
+msgstr "base"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:61(entry)
+msgid "Subdirectory containing per-database subdirectories"
+msgstr "Подкаталог, содержащий подкаталоги для каждой базы данных"
+
+#. +> REL_10
+#: storage.xml:65(filename)
+msgid "current_logfiles"
+msgstr "current_logfiles"
+
+#. +> REL_10
+#: storage.xml:66(entry)
+msgid ""
+"File recording the log file(s) currently written to by the logging collector"
+msgstr ""
+"Файл, в котором отмечается, в какие файлы журналов производит запись сборщик "
+"сообщений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:71(filename)
+msgid "global"
+msgstr "global"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:72(entry)
+msgid ""
+"Subdirectory containing cluster-wide tables, such as "
+"<structname>pg_database</structname>"
+msgstr ""
+"Подкаталог, содержащий общие таблицы кластера, такие как "
+"<structname>pg_database</structname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:77(filename)
+msgid "pg_commit_ts"
+msgstr "pg_commit_ts"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:78(entry)
+msgid "Subdirectory containing transaction commit timestamp data"
+msgstr "Подкаталог, содержащий данные о времени фиксации транзакций"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:82(filename)
+msgid "pg_dynshmem"
+msgstr "pg_dynshmem"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:83(entry)
+msgid ""
+"Subdirectory containing files used by the dynamic shared memory subsystem"
+msgstr ""
+"Подкаталог, содержащий файлы, используемые подсистемой динамически "
+"разделяемой памяти"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:88(filename)
+msgid "pg_logical"
+msgstr "pg_logical"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:89(entry)
+msgid "Subdirectory containing status data for logical decoding"
+msgstr ""
+"Подкаталог, содержащий данные о состоянии для логического декодирования"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:93(filename)
+msgid "pg_multixact"
+msgstr "pg_multixact"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:94(entry)
+msgid ""
+"Subdirectory containing multitransaction status data (used for shared row "
+"locks)"
+msgstr ""
+"Подкаталог, содержащий данные о состоянии мультитранзакций (используемые для "
+"разделяемой блокировки строк)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:99(filename)
+msgid "pg_notify"
+msgstr "pg_notify"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:100(entry)
+msgid "Subdirectory containing LISTEN/NOTIFY status data"
+msgstr ""
+"Подкаталог, содержащий данные состояния прослушивания и нотификации (LISTEN/"
+"NOTIFY)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:104(filename)
+msgid "pg_replslot"
+msgstr "pg_replslot"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:105(entry)
+msgid "Subdirectory containing replication slot data"
+msgstr "Подкаталог, содержащий данные слота репликации"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:109(filename)
+msgid "pg_serial"
+msgstr "pg_serial"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:110(entry)
+msgid ""
+"Subdirectory containing information about committed serializable transactions"
+msgstr ""
+"Подкаталог, содержащий информацию о выполненных сериализуемых транзакциях."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:114(filename)
+msgid "pg_snapshots"
+msgstr "pg_snapshots"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:115(entry)
+msgid "Subdirectory containing exported snapshots"
+msgstr "Подкаталог, содержащий экспортированные снимки (snapshots)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:119(filename)
+msgid "pg_stat"
+msgstr "pg_stat"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:120(entry)
+msgid "Subdirectory containing permanent files for the statistics subsystem"
+msgstr "Подкаталог, содержащий постоянные файлы для подсистемы статистики."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:125(filename)
+msgid "pg_stat_tmp"
+msgstr "pg_stat_tmp"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:126(entry)
+msgid "Subdirectory containing temporary files for the statistics subsystem"
+msgstr "Подкаталог, содержащий временные файлы для подсистемы статистики"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:131(filename)
+msgid "pg_subtrans"
+msgstr "pg_subtrans"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:132(entry)
+msgid "Subdirectory containing subtransaction status data"
+msgstr "Подкаталог, содержащий данные о состоянии подтранзакций"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:136(filename)
+msgid "pg_tblspc"
+msgstr "pg_tblspc"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:137(entry)
+msgid "Subdirectory containing symbolic links to tablespaces"
+msgstr "Подкаталог, содержащий символические ссылки на табличные пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:141(filename)
+msgid "pg_twophase"
+msgstr "pg_twophase"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:142(entry)
+msgid "Subdirectory containing state files for prepared transactions"
+msgstr "Подкаталог, содержащий файлы состояний для подготовленных транзакций"
+
+#. +> REL_10
+#: storage.xml:146(filename)
+msgid "pg_wal"
+msgstr "pg_wal"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:147(entry)
+msgid "Subdirectory containing WAL (Write Ahead Log) files"
+msgstr "Подкаталог, содержащий файлы WAL (журнал предзаписи)"
+
+#. +> REL_10
+#: storage.xml:151(filename)
+msgid "pg_xact"
+msgstr "pg_xact"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:152(entry)
+msgid "Subdirectory containing transaction commit status data"
+msgstr "Подкаталог, содержащий данные о состоянии транзакции"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:156(filename)
+msgid "postgresql.auto.conf"
+msgstr "postgresql.auto.conf"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:157(entry)
+msgid ""
+"A file used for storing configuration parameters that are set by "
+"<command>ALTER SYSTEM</command>"
+msgstr ""
+"Файл, используемый для хранения параметров конфигурации, которые "
+"устанавливаются при помощи <command>ALTER SYSTEM</command>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:162(filename)
+msgid "postmaster.opts"
+msgstr "postmaster.opts"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:163(entry)
+msgid ""
+"A file recording the command-line options the server was last started with"
+msgstr ""
+"Файл, записывающий параметры командной строки, с которыми сервер был запущен "
+"в последний раз"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:168(filename)
+msgid "postmaster.pid"
+msgstr "postmaster.pid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:169(entry)
+msgid ""
+"A lock file recording the current postmaster process ID (PID), cluster data "
+"directory path, postmaster start timestamp, port number, Unix-domain socket "
+"directory path (empty on Windows), first valid listen_address (IP address or "
+"<literal>*</literal>, or empty if not listening on TCP), and shared memory "
+"segment ID (this file is not present after server shutdown)"
+msgstr ""
+"Файл блокировки, записывающий идентификатор (ID) текущего управляющего "
+"процесса (PID), путь к каталогу данных кластера, временную метку запуска "
+"управляющего процесса, номер порта, путь к каталогу сокетов Unix (пустой для "
+"Windows), первый корректный адрес прослушивания (listen_address) (IP-адрес "
+"или <literal>*</literal>, либо пустое значение в случае отсутствия "
+"прослушивания по TCP), и ID сегмента разделяемой памяти (этот файл "
+"отсутствует после остановки сервера)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:184(para)
+msgid ""
+"For each database in the cluster there is a subdirectory within "
+"<varname>PGDATA</varname><filename>/base</filename>, named after the "
+"database's OID in <structname>pg_database</structname>. This subdirectory is "
+"the default location for the database's files; in particular, its system "
+"catalogs are stored there."
+msgstr ""
+"Для каждой базы данных в кластере существует подкаталог внутри "
+"<varname>PGDATA</varname><filename>/base</filename>, названный по OID базы "
+"данных в <structname>pg_database</structname>. Этот подкаталог по умолчанию "
+"является местом хранения файлов базы данных; в частности, там хранятся её "
+"системные каталоги."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:192(para)
+msgid ""
+"Each table and index is stored in a separate file. For ordinary relations, "
+"these files are named after the table or index's <firstterm>filenode</"
+"firstterm> number, which can be found in <structname>pg_class</structname>."
+"<structfield>relfilenode</structfield>. But for temporary relations, the "
+"file name is of the form <literal>t<replaceable>BBB</"
+"replaceable>_<replaceable>FFF</replaceable></literal>, where "
+"<replaceable>BBB</replaceable> is the backend ID of the backend which "
+"created the file, and <replaceable>FFF</replaceable> is the filenode number. "
+"In either case, in addition to the main file (a/k/a main fork), each table "
+"and index has a <firstterm>free space map</firstterm> (see <xref linkend="
+"\"storage-fsm\"/>), which stores information about free space available in "
+"the relation. The free space map is stored in a file named with the filenode "
+"number plus the suffix <literal>_fsm</literal>. Tables also have a "
+"<firstterm>visibility map</firstterm>, stored in a fork with the suffix "
+"<literal>_vm</literal>, to track which pages are known to have no dead "
+"tuples. The visibility map is described further in <xref linkend=\"storage-vm"
+"\"/>. Unlogged tables and indexes have a third fork, known as the "
+"initialization fork, which is stored in a fork with the suffix "
+"<literal>_init</literal> (see <xref linkend=\"storage-init\"/>)."
+msgstr ""
+"Каждая таблица и индекс хранятся в отдельном файле. Для обычных отношений, "
+"эти файлы получают имя по номеру <firstterm>файлового узла</firstterm> "
+"таблицы или индекса, который содержится в <structname>pg_class</structname>."
+"<structfield>relfilenode</structfield>. Но для временных отношений, имя "
+"файла имеет форму <literal>t<replaceable>BBB</replaceable>_<replaceable>FFF</"
+"replaceable></literal>, где <replaceable>BBB</replaceable> - идентификатор "
+"серверного процесса сервера, который создал данный файл, а <replaceable>FFF</"
+"replaceable> — номер файлового узла. В обоих случаях, помимо главного файла "
+"(также называемого основным слоем), у каждой таблицы и индекса есть "
+"<firstterm>карта свободного пространства</firstterm> (см. <xref remap=\"4\" "
+"linkend=\"storage-fsm\"/>), в которой хранится информация о свободном "
+"пространстве в данном отношении. Имя файла карты свободного пространства "
+"образуется из номера файлового узла с суффиксом <literal>_fsm</literal>. "
+"Также таблицы имеют <firstterm>карту видимости</firstterm>, хранящуюся в "
+"слое с суффиксом <literal>_vm</literal>, для отслеживания страниц, не "
+"содержащих мёртвых записей. Карта видимости подробнее описана в <xref remap="
+"\"6\" linkend=\"storage-vm\"/>. Нежурналируемые таблицы и индексы имеют "
+"третий слой, так называемый слой инициализации, имя которого содержит "
+"суффикс <literal>_init</literal> (см. <xref remap=\"4\" linkend=\"storage-"
+"init\"/>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:212(para)
+msgid ""
+"Note that while a table's filenode often matches its OID, this is "
+"<emphasis>not</emphasis> necessarily the case; some operations, like "
+"<command>TRUNCATE</command>, <command>REINDEX</command>, <command>CLUSTER</"
+"command> and some forms of <command>ALTER TABLE</command>, can change the "
+"filenode while preserving the OID. Avoid assuming that filenode and table "
+"OID are the same. Also, for certain system catalogs including "
+"<structname>pg_class</structname> itself, <structname>pg_class</structname>."
+"<structfield>relfilenode</structfield> contains zero. The actual filenode "
+"number of these catalogs is stored in a lower-level data structure, and can "
+"be obtained using the <function>pg_relation_filenode()</function> function."
+msgstr ""
+"Заметьте, что хотя номер файла таблицы часто совпадает с её OID, так бывает "
+"<emphasis>не</emphasis> всегда; некоторые операции, например, "
+"<command>TRUNCATE</command>, <command>REINDEX</command>, <command>CLUSTER</"
+"command> и некоторые формы команды <command>ALTER TABLE</command> могут "
+"изменить номер файла, но при этом сохранят OID. Не следует рассчитывать, что "
+"номер файлового узла и OID таблицы совпадают. Кроме того, для некоторых "
+"системных каталогов, включая и <structname>pg_class</structname>, в "
+"<structname>pg_class</structname>.<structfield>relfilenode</structfield> "
+"содержится ноль. Фактический номер файлового узла для них хранится в "
+"низкоуровневой структуре данных, и его можно получить при помощи функции "
+"<function>pg_relation_filenode()</function>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:226(para)
+msgid ""
+"When a table or index exceeds 1 GB, it is divided into gigabyte-sized "
+"<firstterm>segments</firstterm>. The first segment's file name is the same "
+"as the filenode; subsequent segments are named filenode.1, filenode.2, etc. "
+"This arrangement avoids problems on platforms that have file size "
+"limitations. (Actually, 1 GB is just the default segment size. The segment "
+"size can be adjusted using the configuration option <option>--with-segsize</"
+"option> when building <productname>PostgreSQL</productname>.) In principle, "
+"free space map and visibility map forks could require multiple segments as "
+"well, though this is unlikely to happen in practice."
+msgstr ""
+"Когда объём таблицы или индекса превышает 1 GB, они делятся на "
+"<firstterm>сегменты</firstterm> размером в один гигабайт. Файл первого "
+"сегмента называется по номеру файлового узла (filenode); последующие "
+"сегменты получают имена filenode.1, filenode.2 и т. д. При такой организации "
+"хранения не возникает проблем на платформах, имеющих ограничения по размеру "
+"файлов. (На самом деле, 1 GB является лишь стандартным размером сегмента. "
+"Размер сегмента можно изменить, используя параметр конфигурации <option>--"
+"with-segsize</option> при создании <productname>PostgreSQL</productname>.) В "
+"принципе, карты свободного пространства и карты видимости также могут "
+"занимать нескольких сегментов, хотя на практике это маловероятно."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:238(para)
+msgid ""
+"A table that has columns with potentially large entries will have an "
+"associated <firstterm>TOAST</firstterm> table, which is used for out-of-line "
+"storage of field values that are too large to keep in the table rows proper. "
+"<structname>pg_class</structname>.<structfield>reltoastrelid</structfield> "
+"links from a table to its <acronym>TOAST</acronym> table, if any. See <xref "
+"linkend=\"storage-toast\"/> for more information."
+msgstr ""
+"У таблицы, столбцы которой могут содержать данные большого объёма, будет "
+"иметься собственная таблица <firstterm>TOAST</firstterm>, предназначенная "
+"для отдельного хранения значений, которые слишком велики для хранения в "
+"строках самой таблицы. Основная таблица связывается с её таблицей "
+"<acronym>TOAST</acronym> (если таковая имеется) через <structname>pg_class</"
+"structname>.<structfield>reltoastrelid</structfield>. За подробной "
+"информацией обратитесь к <xref remap=\"3\" linkend=\"storage-toast\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:247(para)
+msgid ""
+"The contents of tables and indexes are discussed further in <xref linkend="
+"\"storage-page-layout\"/>."
+msgstr ""
+"Содержание таблиц и индексов рассматривается ниже (см. <xref remap=\"4\" "
+"linkend=\"storage-page-layout\"/>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:252(para)
+msgid ""
+"Tablespaces make the scenario more complicated. Each user-defined tablespace "
+"has a symbolic link inside the <varname>PGDATA</varname><filename>/"
+"pg_tblspc</filename> directory, which points to the physical tablespace "
+"directory (i.e., the location specified in the tablespace's <command>CREATE "
+"TABLESPACE</command> command). This symbolic link is named after the "
+"tablespace's OID. Inside the physical tablespace directory there is a "
+"subdirectory with a name that depends on the <productname>PostgreSQL</"
+"productname> server version, such as <literal>PG_9.0_201008051</literal>. "
+"(The reason for using this subdirectory is so that successive versions of "
+"the database can use the same <command>CREATE TABLESPACE</command> location "
+"value without conflicts.) Within the version-specific subdirectory, there is "
+"a subdirectory for each database that has elements in the tablespace, named "
+"after the database's OID. Tables and indexes are stored within that "
+"directory, using the filenode naming scheme. The <literal>pg_default</"
+"literal> tablespace is not accessed through <filename>pg_tblspc</filename>, "
+"but corresponds to <varname>PGDATA</varname><filename>/base</filename>. "
+"Similarly, the <literal>pg_global</literal> tablespace is not accessed "
+"through <filename>pg_tblspc</filename>, but corresponds to <varname>PGDATA</"
+"varname><filename>/global</filename>."
+msgstr ""
+"Табличное пространство делает сценарий более сложным. Каждое "
+"пользовательское табличное пространство имеет символическую ссылку внутри "
+"каталога <varname>PGDATA</varname><filename>/pg_tblspc</filename>, "
+"указывающую на физический каталог табличного пространства (т. е., положение, "
+"указанное в команде табличного пространства <command>CREATE TABLESPACE</"
+"command>). Эта символическая ссылка получает имя по OID табличного "
+"пространства. Внутри физического каталога табличного пространства имеется "
+"подкаталог, имя которого зависит от версии сервера <productname>PostgreSQL</"
+"productname>, как например <literal>PG_9.0_201008051</literal>. (Этот "
+"подкаталог используется для того, чтобы последующие версии базы данных могли "
+"свободно использовать одно и то местоположение, заданное в <command>CREATE "
+"TABLESPACE</command>.) Внутри каталога конкретной версии находится "
+"подкаталог для каждой базы данных, которая имеет элементы в табличном "
+"пространстве, названный по OID базы данных. Таблицы и индексы хранятся "
+"внутри этого каталога, используя схему именования файловых узлов. Табличное "
+"пространство <literal>pg_default</literal> недоступно через "
+"<filename>pg_tblspc</filename>, но соответствует <varname>PGDATA</"
+"varname><filename>/base</filename>. Подобным же образом, табличное "
+"пространство <literal>pg_global</literal> недоступно через "
+"<filename>pg_tblspc</filename>, но соответствует <varname>PGDATA</"
+"varname><filename>/global</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:274(para)
+msgid ""
+"The <function>pg_relation_filepath()</function> function shows the entire "
+"path (relative to <varname>PGDATA</varname>) of any relation. It is often "
+"useful as a substitute for remembering many of the above rules. But keep in "
+"mind that this function just gives the name of the first segment of the main "
+"fork of the relation &mdash; you may need to append a segment number and/or "
+"<literal>_fsm</literal>, <literal>_vm</literal>, or <literal>_init</literal> "
+"to find all the files associated with the relation."
+msgstr ""
+"Функция <function>pg_relation_filepath()</function> показывает полный путь "
+"(относительно <varname>PGDATA</varname>) для любого отношения. Часто это "
+"избавляет от необходимости запоминать многие из приведённых выше правил. Но "
+"следует помнить, что эта функция выдаёт лишь имя первого сегмента основного "
+"слоя отношения, т. е. возможно, понадобится добавить номер сегмента и/или "
+"<literal>_fsm</literal>, <literal>_vm</literal> или <literal>_init</"
+"literal>, чтобы найти все файлы, связанные с отношением."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:284(para)
+msgid ""
+"Temporary files (for operations such as sorting more data than can fit in "
+"memory) are created within <varname>PGDATA</varname><filename>/base/"
+"pgsql_tmp</filename>, or within a <filename>pgsql_tmp</filename> "
+"subdirectory of a tablespace directory if a tablespace other than "
+"<literal>pg_default</literal> is specified for them. The name of a temporary "
+"file has the form <filename>pgsql_tmp<replaceable>PPP</replaceable>."
+"<replaceable>NNN</replaceable></filename>, where <replaceable>PPP</"
+"replaceable> is the PID of the owning backend and <replaceable>NNN</"
+"replaceable> distinguishes different temporary files of that backend."
+msgstr ""
+"Временные файлы (для таких операций, как сортировка объёма данных большего, "
+"чем может уместиться в памяти) создаются внутри <varname>PGDATA</"
+"varname><filename>/base/pgsql_tmp</filename> или внутри подкаталога "
+"<filename>pgsql_tmp</filename> каталога табличного пространства, если для "
+"них определено табличное пространство, отличное от <literal>pg_default</"
+"literal>. Имя временного файла имеет форму "
+"<filename>pgsql_tmp<replaceable>PPP</replaceable>.<replaceable>NNN</"
+"replaceable></filename>, где <replaceable>PPP</replaceable> — PID серверного "
+"процесса, а <replaceable>NNN</replaceable> служит для разделения различных "
+"временных файлов этого серверного процесса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:299(title)
+msgid "TOAST"
+msgstr "TOAST"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:301(indexterm)
+msgid "<primary>TOAST</primary>"
+msgstr "<primary>TOAST</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:304(indexterm)
+msgid "<primary>sliced bread</primary><see>TOAST</see>"
+msgstr "<primary>нарезанный хлеб</primary> <see>TOAST</see>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:306(para)
+msgid ""
+"This section provides an overview of <acronym>TOAST</acronym> (The Oversized-"
+"Attribute Storage Technique)."
+msgstr ""
+"В данном разделе рассматривается <acronym>TOAST</acronym> (The Oversized-"
+"Attribute Storage Technique, Методика хранения сверхбольших атрибутов)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:311(para)
+msgid ""
+"<productname>PostgreSQL</productname> uses a fixed page size (commonly 8 "
+"kB), and does not allow tuples to span multiple pages. Therefore, it is not "
+"possible to store very large field values directly. To overcome this "
+"limitation, large field values are compressed and/or broken up into multiple "
+"physical rows. This happens transparently to the user, with only small "
+"impact on most of the backend code. The technique is affectionately known as "
+"<acronym>TOAST</acronym> (or <quote>the best thing since sliced bread</"
+"quote>). The <acronym>TOAST</acronym> infrastructure is also used to improve "
+"handling of large data values in-memory."
+msgstr ""
+"<productname>PostgreSQL</productname> использует фиксированный размер "
+"страницы (обычно 8 КБ), и не позволяет кортежам занимать несколько страниц. "
+"Поэтому непосредственно хранить очень большие значения полей невозможно. Для "
+"преодоления этого ограничения большие значения полей сжимаются и/или "
+"разбиваются на несколько физических строк. Это происходит незаметно для "
+"пользователя и на большую часть кода сервера влияет незначительно. Этот "
+"метод известен как <acronym>TOAST</acronym> (тост, или <quote>лучшее после "
+"изобретения нарезанного хлеба</quote>). Инфраструктура <acronym>TOAST</"
+"acronym> также применяется для оптимизации обработки больших значений данных "
+"в памяти."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:323(para)
+msgid ""
+"Only certain data types support <acronym>TOAST</acronym> &mdash; there is no "
+"need to impose the overhead on data types that cannot produce large field "
+"values. To support <acronym>TOAST</acronym>, a data type must have a "
+"variable-length (<firstterm>varlena</firstterm>) representation, in which, "
+"ordinarily, the first four-byte word of any stored value contains the total "
+"length of the value in bytes (including itself). <acronym>TOAST</acronym> "
+"does not constrain the rest of the data type's representation. The special "
+"representations collectively called <firstterm><acronym>TOAST</acronym>ed "
+"values</firstterm> work by modifying or reinterpreting this initial length "
+"word. Therefore, the C-level functions supporting a <acronym>TOAST</acronym>-"
+"able data type must be careful about how they handle potentially "
+"<acronym>TOAST</acronym>ed input values: an input might not actually consist "
+"of a four-byte length word and contents until after it's been "
+"<firstterm>detoasted</firstterm>. (This is normally done by invoking "
+"<function>PG_DETOAST_DATUM</function> before doing anything with an input "
+"value, but in some cases more efficient approaches are possible. See <xref "
+"linkend=\"xtypes-toast\"/> for more detail.)"
+msgstr ""
+"Лишь определённые типы данных поддерживают <acronym>TOAST</acronym> &mdash; "
+"нет смысла производить дополнительные действия с типами данных, размер "
+"которых не может быть большим. Чтобы поддерживать <acronym>TOAST</acronym>, "
+"тип данных должен представлять значение переменной длины "
+"(<firstterm>varlena</firstterm>), в котором первое четырёхбайтовое слово "
+"любого хранящегося значения содержит общую длину значения в байтах (включая "
+"само это слово). Содержание оставшейся части значения <acronym>TOAST</"
+"acronym> не ограничивает. Специальные представления, в целом называемые "
+"<firstterm>значениями в формате <acronym>TOAST</acronym></firstterm>, "
+"работают, манипулируя этим начальным словом длины и интерпретируя его по-"
+"своему. Таким образом, функции уровня C, работающие с типом данных, "
+"поддерживающим <acronym>TOAST</acronym>, должны аккуратно обращаться со "
+"входными значениями, которые могут быть в формате <acronym>TOAST</acronym>: "
+"входные данные могут и не содержать четырёхбайтовое слово длины и содержимое "
+"после него, пока не будут <firstterm>распакованы</firstterm>. (Обычно в "
+"таких ситуациях нужно использовать макрос <function>PG_DETOAST_DATUM</"
+"function> прежде чем что-либо делать с входным значением, но в некоторых "
+"случаях возможны и более эффективные подходы. За подробностями обратитесь к "
+"<xref remap=\"3\" linkend=\"xtypes-toast\"/>.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:342(para)
+msgid ""
+"<acronym>TOAST</acronym> usurps two bits of the varlena length word (the "
+"high-order bits on big-endian machines, the low-order bits on little-endian "
+"machines), thereby limiting the logical size of any value of a "
+"<acronym>TOAST</acronym>-able data type to 1 GB (2<superscript>30</"
+"superscript> - 1 bytes). When both bits are zero, the value is an ordinary "
+"un-<acronym>TOAST</acronym>ed value of the data type, and the remaining bits "
+"of the length word give the total datum size (including length word) in "
+"bytes. When the highest-order or lowest-order bit is set, the value has only "
+"a single-byte header instead of the normal four-byte header, and the "
+"remaining bits of that byte give the total datum size (including length "
+"byte) in bytes. This alternative supports space-efficient storage of values "
+"shorter than 127 bytes, while still allowing the data type to grow to 1 GB "
+"at need. Values with single-byte headers aren't aligned on any particular "
+"boundary, whereas values with four-byte headers are aligned on at least a "
+"four-byte boundary; this omission of alignment padding provides additional "
+"space savings that is significant compared to short values. As a special "
+"case, if the remaining bits of a single-byte header are all zero (which "
+"would be impossible for a self-inclusive length), the value is a pointer to "
+"out-of-line data, with several possible alternatives as described below. The "
+"type and size of such a <firstterm>TOAST pointer</firstterm> are determined "
+"by a code stored in the second byte of the datum. Lastly, when the highest-"
+"order or lowest-order bit is clear but the adjacent bit is set, the content "
+"of the datum has been compressed and must be decompressed before use. In "
+"this case the remaining bits of the four-byte length word give the total "
+"size of the compressed datum, not the original data. Note that compression "
+"is also possible for out-of-line data but the varlena header does not tell "
+"whether it has occurred &mdash; the content of the <acronym>TOAST</acronym> "
+"pointer tells that, instead."
+msgstr ""
+"<acronym>TOAST</acronym> занимает два бита слова длины varlena (старшие биты "
+"на машинах с порядком байт от старшего к младшему, или младшие биты — при "
+"другом порядке байт), таким образом, логический размер любого значения в "
+"формате <acronym>TOAST</acronym> ограничивается 1 Гигабайтом "
+"(2<superscript>30</superscript> - 1 байт). Когда оба бита равны нулю, "
+"значение является обычным, не в формате <acronym>TOAST</acronym>, и "
+"оставшиеся биты слова длины задают общий размер элемента данных (включая "
+"слово длины) в байтах. Когда установлен старший (или младший, в зависимости "
+"от архитектуры) бит, значение имеет однобайтовый заголовок вместо обычного "
+"четырёхбайтового, а оставшиеся биты этого байта задают общий размер элемента "
+"данных (включая байт длины) в байтах. Этот вариант позволяет экономно "
+"хранить значения короче 127 байт и при этом допускает расширение значения "
+"этого типа данных до 1 Гбайта при необходимости. Значения с однобайтовыми "
+"заголовками не выравниваются по какой-либо определённой границе, тогда как "
+"значения с четырёхбайтовыми заголовками выравниваются по границе минимум "
+"четырёх байт; это избавление от выравнивания даёт дополнительный выигрыш в "
+"объёме, очень ощутимый для коротких значений. В качестве особого случая, "
+"если все оставшиеся биты однобайтового заголовка равны нулю (что в принципе "
+"невозможно с учётом включения размера длины), значением является указатель "
+"на отдельно размещённые данные, с несколькими возможными вариантами, "
+"описанными ниже. Тип и размер такого <firstterm>указателя TOAST</firstterm> "
+"определяется кодом, хранящимся во втором байте значения. Наконец, когда "
+"старший (или младший, в зависимости от архитектуры) бит очищен, а соседний "
+"бит установлен, содержимое данных хранится в упакованном виде и должно быть "
+"распаковано перед использованием. В этом случае оставшиеся биты "
+"четырёхбайтового слова длины задают общий размер сжатых, а не исходных "
+"данных. Заметьте, что сжатие также возможно и для отделённых данных, но "
+"заголовок varlena не говорит, имеет ли оно место &mdash; это определяется "
+"содержимым, на которое указывает указатель <acronym>TOAST</acronym>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:372(para)
+msgid ""
+"As mentioned, there are multiple types of <acronym>TOAST</acronym> pointer "
+"datums. The oldest and most common type is a pointer to out-of-line data "
+"stored in a <firstterm><acronym>TOAST</acronym> table</firstterm> that is "
+"separate from, but associated with, the table containing the <acronym>TOAST</"
+"acronym> pointer datum itself. These <firstterm>on-disk</firstterm> pointer "
+"datums are created by the <acronym>TOAST</acronym> management code (in "
+"<filename>access/heap/tuptoaster.c</filename>) when a tuple to be stored on "
+"disk is too large to be stored as-is. Further details appear in <xref "
+"linkend=\"storage-toast-ondisk\"/>. Alternatively, a <acronym>TOAST</"
+"acronym> pointer datum can contain a pointer to out-of-line data that "
+"appears elsewhere in memory. Such datums are necessarily short-lived, and "
+"will never appear on-disk, but they are very useful for avoiding copying and "
+"redundant processing of large data values. Further details appear in <xref "
+"linkend=\"storage-toast-inmemory\"/>."
+msgstr ""
+"Как уже было сказано, существуют разные варианты использования указателя "
+"<acronym>TOAST</acronym>. Самый старый и наиболее популярный вариант — когда "
+"он указывает на отделённые данные, размещённые в <firstterm>таблице "
+"<acronym>TOAST</acronym></firstterm>, которая отделена, но связана с "
+"таблицей, содержащей собственно указатель данных <acronym>TOAST</acronym>. "
+"Такой указатель на данные <firstterm>на диске</firstterm> создаётся кодом "
+"обработки <acronym>TOAST</acronym> (в <filename>access/heap/tuptoaster.c</"
+"filename>), когда кортеж, сохраняемый на диск, оказывается слишком большим. "
+"Дополнительные подробности описаны в <xref remap=\"6\" linkend=\"storage-"
+"toast-ondisk\"/>. Кроме того, указатель <acronym>TOAST</acronym> может "
+"указывать на отделённые данные, размещённые где-то в памяти. Такие данные "
+"обязательно недолговременные и никогда не оказываются на диске, но этот "
+"механизм очень полезен для исключения копирования и избыточной обработки "
+"данные большого размера. Дополнительные подробности описаны в <xref remap="
+"\"6\" linkend=\"storage-toast-inmemory\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:388(para)
+msgid ""
+"The compression technique used for either in-line or out-of-line compressed "
+"data is a fairly simple and very fast member of the LZ family of compression "
+"techniques. See <filename>src/common/pg_lzcompress.c</filename> for the "
+"details."
+msgstr ""
+"В качестве метода сжатия внутренних и отделённых данных применяется довольно "
+"простой и очень быстрый представитель семейства алгоритмов LZ. Подробнее см. "
+"<filename>src/common/pg_lzcompress.c</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:396(title)
+msgid "Out-of-line, on-disk TOAST storage"
+msgstr "Отдельное размещение TOAST на диске"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:398(para)
+msgid ""
+"If any of the columns of a table are <acronym>TOAST</acronym>-able, the "
+"table will have an associated <acronym>TOAST</acronym> table, whose OID is "
+"stored in the table's <structname>pg_class</structname>."
+"<structfield>reltoastrelid</structfield> entry. On-disk <acronym>TOAST</"
+"acronym>ed values are kept in the <acronym>TOAST</acronym> table, as "
+"described in more detail below."
+msgstr ""
+"Если какие-либо столбцы таблицы хранятся в формате <acronym>TOAST</acronym>, "
+"у таблицы будет связанная с ней таблица <acronym>TOAST</acronym>, OID "
+"которой хранится в значении <structname>pg_class</structname>."
+"<structfield>reltoastrelid</structfield> для данной таблицы. Размещаемые на "
+"диске <acronym>TOAST</acronym>-значения содержатся в таблице <acronym>TOAST</"
+"acronym>, что подробнее описано ниже."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:406(para)
+msgid ""
+"Out-of-line values are divided (after compression if used) into chunks of at "
+"most <symbol>TOAST_MAX_CHUNK_SIZE</symbol> bytes (by default this value is "
+"chosen so that four chunk rows will fit on a page, making it about 2000 "
+"bytes). Each chunk is stored as a separate row in the <acronym>TOAST</"
+"acronym> table belonging to the owning table. Every <acronym>TOAST</acronym> "
+"table has the columns <structfield>chunk_id</structfield> (an OID "
+"identifying the particular <acronym>TOAST</acronym>ed value), "
+"<structfield>chunk_seq</structfield> (a sequence number for the chunk within "
+"its value), and <structfield>chunk_data</structfield> (the actual data of "
+"the chunk). A unique index on <structfield>chunk_id</structfield> and "
+"<structfield>chunk_seq</structfield> provides fast retrieval of the values. "
+"A pointer datum representing an out-of-line on-disk <acronym>TOAST</"
+"acronym>ed value therefore needs to store the OID of the <acronym>TOAST</"
+"acronym> table in which to look and the OID of the specific value (its "
+"<structfield>chunk_id</structfield>). For convenience, pointer datums also "
+"store the logical datum size (original uncompressed data length) and "
+"physical stored size (different if compression was applied). Allowing for "
+"the varlena header bytes, the total size of an on-disk <acronym>TOAST</"
+"acronym> pointer datum is therefore 18 bytes regardless of the actual size "
+"of the represented value."
+msgstr ""
+"Отделённые значения делятся на порции (после сжатия, если оно применяется) "
+"размером не более <symbol>TOAST_MAX_CHUNK_SIZE</symbol> байт (по умолчанию "
+"это значение выбирается таким образом, чтобы на странице помещались четыре "
+"строки порций, то есть размер одной составляет порядка 2000 байт). Каждая "
+"порция хранится как отдельная строка в таблице <acronym>TOAST</acronym>, "
+"принадлежащей исходной таблице-владельцу. Каждая таблица <acronym>TOAST</"
+"acronym> имеет столбцы <structfield>chunk_id</structfield> (OID, "
+"идентифицирующий конкретное <acronym>TOAST</acronym>-значение), "
+"<structfield>chunk_seq</structfield> (последовательный номер для порции "
+"внутри значения) и <structfield>chunk_data</structfield> (фактические данные "
+"порции). Уникальный индекс по <structfield>chunk_id</structfield> и "
+"<structfield>chunk_seq</structfield> обеспечивает быструю выдачу значений. "
+"Таким образом, в указателе, представляющем отдельно размещаемое на диске "
+"значение <acronym>TOAST</acronym>, должно храниться OID таблицы "
+"<acronym>TOAST</acronym>, к которой нужно обращаться, и OID определённого "
+"значения (его <structfield>chunk_id</structfield>). Для удобства в данных "
+"указателя также хранится логический размер элемента данных (исходных данных "
+"без сжатия) и фактический размер хранимых данных (отличающийся, если было "
+"применено сжатие). Учитывая байты заголовка varlena, общий размер указателя "
+"на хранимое на диске значение <acronym>TOAST</acronym> составляет 18 байт, "
+"независимо от фактического размера собственно значения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:427(para)
+msgid ""
+"The <acronym>TOAST</acronym> management code is triggered only when a row "
+"value to be stored in a table is wider than <symbol>TOAST_TUPLE_THRESHOLD</"
+"symbol> bytes (normally 2 kB). The <acronym>TOAST</acronym> code will "
+"compress and/or move field values out-of-line until the row value is shorter "
+"than <symbol>TOAST_TUPLE_TARGET</symbol> bytes (also normally 2 kB) or no "
+"more gains can be had. During an UPDATE operation, values of unchanged "
+"fields are normally preserved as-is; so an UPDATE of a row with out-of-line "
+"values incurs no <acronym>TOAST</acronym> costs if none of the out-of-line "
+"values change."
+msgstr ""
+"Код обработки <acronym>TOAST</acronym> срабатывает, только когда значение "
+"строки, которое должно храниться в таблице, по размеру больше, чем "
+"<symbol>TOAST_TUPLE_THRESHOLD</symbol> байт (обычно это 2 Кб). Код "
+"<acronym>TOAST</acronym> будет сжимать и/или выносить значения поля за "
+"пределы таблицы до тех пор, пока значение строки не станет меньше "
+"<symbol>TOAST_TUPLE_TARGET</symbol> байт (также обычно 2 Кб) или уменьшить "
+"объём станет невозможно. Во время операции UPDATE значения неизменённых "
+"полей обычно сохраняются как есть, поэтому модификация строки с отдельно "
+"хранимыми значениями не несёт издержек, связанных с <acronym>TOAST</"
+"acronym>, если все такие значения остаются без изменений."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:446(para)
+msgid ""
+"<literal>PLAIN</literal> prevents either compression or out-of-line storage; "
+"furthermore it disables use of single-byte headers for varlena types. This "
+"is the only possible strategy for columns of non-<acronym>TOAST</acronym>-"
+"able data types."
+msgstr ""
+"<literal>PLAIN</literal> не допускает ни сжатие, ни отдельное хранение; "
+"кроме того, отключается использование однобайтовых заголовков для типов "
+"varlena. Это единственно возможная стратегия для столбцов типов данных, "
+"которые несовместимы с <acronym>TOAST</acronym>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:455(para)
+msgid ""
+"<literal>EXTENDED</literal> allows both compression and out-of-line storage. "
+"This is the default for most <acronym>TOAST</acronym>-able data types. "
+"Compression will be attempted first, then out-of-line storage if the row is "
+"still too big."
+msgstr ""
+"<literal>EXTENDED</literal> допускает как сжатие, так и отдельное хранение. "
+"Это стандартный вариант для большинства типов данных, совместимых с "
+"<acronym>TOAST</acronym>. Сначала происходит попытка выполнить сжатие, затем "
+"— сохранение вне таблицы, если строка всё ещё слишком велика."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:463(para)
+msgid ""
+"<literal>EXTERNAL</literal> allows out-of-line storage but not compression. "
+"Use of <literal>EXTERNAL</literal> will make substring operations on wide "
+"<type>text</type> and <type>bytea</type> columns faster (at the penalty of "
+"increased storage space) because these operations are optimized to fetch "
+"only the required parts of the out-of-line value when it is not compressed."
+msgstr ""
+"<literal>EXTERNAL</literal> допускает отдельное хранение, но не сжатие. "
+"Использование <literal>EXTERNAL</literal> ускорит операции над частями строк "
+"в больших столбцах <type>text</type> и <type>bytea</type> (ценой увеличения "
+"объёма памяти для хранения), так как эти операции оптимизированы для "
+"извлечения только требуемых частей отделённого значения, когда оно не сжато."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:473(para)
+msgid ""
+"<literal>MAIN</literal> allows compression but not out-of-line storage. "
+"(Actually, out-of-line storage will still be performed for such columns, but "
+"only as a last resort when there is no other way to make the row small "
+"enough to fit on a page.)"
+msgstr ""
+"<literal>MAIN</literal> допускает сжатие, но не отдельное хранение. "
+"(Фактически, отдельное хранение, тем не менее, будет выполнено для таких "
+"столбцов, но лишь как крайняя мера, когда нет другого способа уменьшить "
+"строку так, чтобы она помещалась на странице.)"
+
+#. +> REL_10
+#: storage.xml:440(para)
+msgid ""
+"The <acronym>TOAST</acronym> management code recognizes four different "
+"strategies for storing <acronym>TOAST</acronym>-able columns on disk: "
+"<placeholder-1/> Each <acronym>TOAST</acronym>-able data type specifies a "
+"default strategy for columns of that data type, but the strategy for a given "
+"table column can be altered with <link linkend=\"sql-altertable"
+"\"><command>ALTER TABLE ... SET STORAGE</command></link>."
+msgstr ""
+"Код обработки <acronym>TOAST</acronym> распознаёт четыре различные стратегии "
+"хранения столбцов, совместимых с <acronym>TOAST</acronym>, на диске: "
+"<placeholder-1/> Каждый тип данных, совместимый с <acronym>TOAST</acronym>, "
+"определяет стандартную стратегию для столбцов этого типа данных, но "
+"стратегия для заданного столбца таблицы может быть изменена с помощью <link "
+"linkend=\"sql-altertable\"><command>ALTER TABLE ... SET STORAGE</command></"
+"link>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:487(para)
+msgid ""
+"This scheme has a number of advantages compared to a more straightforward "
+"approach such as allowing row values to span pages. Assuming that queries "
+"are usually qualified by comparisons against relatively small key values, "
+"most of the work of the executor will be done using the main row entry. The "
+"big values of <acronym>TOAST</acronym>ed attributes will only be pulled out "
+"(if selected at all) at the time the result set is sent to the client. Thus, "
+"the main table is much smaller and more of its rows fit in the shared buffer "
+"cache than would be the case without any out-of-line storage. Sort sets "
+"shrink also, and sorts will more often be done entirely in memory. A little "
+"test showed that a table containing typical HTML pages and their URLs was "
+"stored in about half of the raw data size including the <acronym>TOAST</"
+"acronym> table, and that the main table contained only about 10% of the "
+"entire data (the URLs and some small HTML pages). There was no run time "
+"difference compared to an un-<acronym>TOAST</acronym>ed comparison table, in "
+"which all the HTML pages were cut down to 7 kB to fit."
+msgstr ""
+"Эта схема имеет ряд преимуществ по сравнению с более простым подходом, когда "
+"значения строк могут занимать несколько страниц. Если предположить, что "
+"обычно запросы характеризуются выполнением сравнения с относительно "
+"маленькими значениями ключа, большая часть работы будет выполняться с "
+"использованием главной записи строки. Большие значения атрибутов в формате "
+"<acronym>TOAST</acronym> будут просто передаваться (если будут выбраны) в "
+"тот момент, когда результирующий набор отправляется клиенту. Таким образом, "
+"главная таблица получается гораздо меньше, и в общий кеш буферов помещается "
+"больше её строк, чем их было бы без использования отдельного хранения. "
+"Наборы данных для сортировок также уменьшаются, а сортировки чаще будут "
+"выполняться исключительно в памяти. Небольшой тест показал, что таблица, "
+"содержащая типичные HTML-страницы и их URL после сжатия занимала примерно "
+"половину объёма исходных данных, включая таблицу <acronym>TOAST</acronym>, и "
+"что главная таблица содержала лишь около 10% всех данных (URL и некоторые "
+"маленькие HTML-страницы). Время обработки не отличалось от времени, "
+"необходимого для обработки таблицы без использования <acronym>TOAST</"
+"acronym>, в которой размер всех HTML-страниц был уменьшен до 7 Кб, чтобы они "
+"уместились в строках."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:507(title)
+msgid "Out-of-line, in-memory TOAST storage"
+msgstr "Отдельное размещение TOAST в памяти"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:509(para)
+msgid ""
+"<acronym>TOAST</acronym> pointers can point to data that is not on disk, but "
+"is elsewhere in the memory of the current server process. Such pointers "
+"obviously cannot be long-lived, but they are nonetheless useful. There are "
+"currently two sub-cases: pointers to <firstterm>indirect</firstterm> data "
+"and pointers to <firstterm>expanded</firstterm> data."
+msgstr ""
+"Указатели <acronym>TOAST</acronym> могут указывать на данные, размещённые не "
+"на диске, а где-либо в памяти текущего серверного процесса. Очевидно, что "
+"такие указатель не могут быть долговременными, но они, тем не менее, "
+"полезны. В настоящее время поддерживаются два подварианта: "
+"<firstterm>косвенные</firstterm> указатели на данные и указатели на "
+"<firstterm>развёрнутые</firstterm> данные."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:518(para)
+msgid ""
+"Indirect <acronym>TOAST</acronym> pointers simply point at a non-indirect "
+"varlena value stored somewhere in memory. This case was originally created "
+"merely as a proof of concept, but it is currently used during logical "
+"decoding to avoid possibly having to create physical tuples exceeding 1 GB "
+"(as pulling all out-of-line field values into the tuple might do). The case "
+"is of limited use since the creator of the pointer datum is entirely "
+"responsible that the referenced data survives for as long as the pointer "
+"could exist, and there is no infrastructure to help with this."
+msgstr ""
+"Косвенный указатель <acronym>TOAST</acronym> просто указывает на значение "
+"varlena, хранящееся где-то в памяти. Этот вариант изначально был реализован "
+"просто как подтверждение концепции, но в настоящее время он применяется при "
+"логическом декодировании, чтобы не приходилось создавать физические кортежи "
+"больше одного 1 ГБ (что может потребоваться при консолидации всех отделённых "
+"значений полей в одном кортеже). Данный вариант имеет ограниченное "
+"применение, так как создатель такого указателя должен полностью понимать, "
+"что целевые данные будут существовать, только пока существует указатель, и "
+"никакой инфраструктуры для сохранения их нет."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:529(para)
+msgid ""
+"Expanded <acronym>TOAST</acronym> pointers are useful for complex data types "
+"whose on-disk representation is not especially suited for computational "
+"purposes. As an example, the standard varlena representation of a "
+"<productname>PostgreSQL</productname> array includes dimensionality "
+"information, a nulls bitmap if there are any null elements, then the values "
+"of all the elements in order. When the element type itself is variable-"
+"length, the only way to find the <replaceable>N</replaceable>'th element is "
+"to scan through all the preceding elements. This representation is "
+"appropriate for on-disk storage because of its compactness, but for "
+"computations with the array it's much nicer to have an <quote>expanded</"
+"quote> or <quote>deconstructed</quote> representation in which all the "
+"element starting locations have been identified. The <acronym>TOAST</"
+"acronym> pointer mechanism supports this need by allowing a pass-by-"
+"reference Datum to point to either a standard varlena value (the on-disk "
+"representation) or a <acronym>TOAST</acronym> pointer that points to an "
+"expanded representation somewhere in memory. The details of this expanded "
+"representation are up to the data type, though it must have a standard "
+"header and meet the other API requirements given in <filename>src/include/"
+"utils/expandeddatum.h</filename>. C-level functions working with the data "
+"type can choose to handle either representation. Functions that do not know "
+"about the expanded representation, but simply apply "
+"<function>PG_DETOAST_DATUM</function> to their inputs, will automatically "
+"receive the traditional varlena representation; so support for an expanded "
+"representation can be introduced incrementally, one function at a time."
+msgstr ""
+"Указатели на развёрнутые данные <acronym>TOAST</acronym> полезны для сложных "
+"типов, представление которых на диске плохо приспособлено для вычислительных "
+"целей. Например, стандартное представление в виде varlena массива "
+"<productname>PostgreSQL</productname> включает информацию о размерности, "
+"битовую карту элементов NULL (если они в нём содержатся), а затем значения "
+"всех элементов по порядку. Когда элемент сам по себе имеет переменную длину, "
+"единственный способ найти <replaceable>N</replaceable>-ный элемент — "
+"просканировать все предыдущие элементы. Это представление компактно, и "
+"поэтому подходит для хранения на диске, но для вычислительной обработки "
+"массива гораздо удобнее иметь <quote>развёрнутое</quote> или "
+"<quote>деконструированное</quote> представление, в котором можно определить "
+"начальные адреса всех элементов. Механизм указателей <acronym>TOAST</"
+"acronym> способствует решению этой задачи, допуская передачу по ссылке "
+"элемента Datum как указателя на стандартное значение varlena (представление "
+"на диске) или указателя <acronym>TOAST</acronym> на развёрнутое "
+"представление где-то в памяти. Детали развёрнутого представление "
+"определяются самим типом данных, хотя оно может иметь стандартный заголовок "
+"и удовлетворять другим требованиям API, описанным в <filename>src/include/"
+"utils/expandeddatum.h</filename>. Функции уровня C, работающие с этим типом, "
+"могут реализовать поддержку любого из этих представлений. Функции, не "
+"знающие о развёрнутом представлении, а просто применяющие "
+"<function>PG_DETOAST_DATUM</function> к своим входным данным, будут "
+"автоматически получать традиционное представление varlena; так что поддержка "
+"развёрнутого представления может вводиться постепенно, по одной функции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:555(para)
+msgid ""
+"<acronym>TOAST</acronym> pointers to expanded values are further broken down "
+"into <firstterm>read-write</firstterm> and <firstterm>read-only</firstterm> "
+"pointers. The pointed-to representation is the same either way, but a "
+"function that receives a read-write pointer is allowed to modify the "
+"referenced value in-place, whereas one that receives a read-only pointer "
+"must not; it must first create a copy if it wants to make a modified version "
+"of the value. This distinction and some associated conventions make it "
+"possible to avoid unnecessary copying of expanded values during query "
+"execution."
+msgstr ""
+"Указатели <acronym>TOAST</acronym> на развёрнутые значения далее "
+"подразделяются на указатели <firstterm>для чтения/записи</firstterm> и "
+"указатели <firstterm>только для чтения</firstterm>. Представление, на "
+"которое они указывают, в любом случае одинаковое, но функции, получающей "
+"указатель для чтения/записи, разрешается модифицировать целевые данные прямо "
+"на месте, тогда как функция, получающая указатель только для чтения, не "
+"должна этого делать; если ей нужно получить изменённую версию значения, она "
+"должна сначала сделать копию. Это отличие и связанные с ним соглашения "
+"позволяют избежать излишнего копирования развёрнутых значений при выполнении "
+"запросов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:566(para)
+msgid ""
+"For all types of in-memory <acronym>TOAST</acronym> pointer, the "
+"<acronym>TOAST</acronym> management code ensures that no such pointer datum "
+"can accidentally get stored on disk. In-memory <acronym>TOAST</acronym> "
+"pointers are automatically expanded to normal in-line varlena values before "
+"storage &mdash; and then possibly converted to on-disk <acronym>TOAST</"
+"acronym> pointers, if the containing tuple would otherwise be too big."
+msgstr ""
+"Для всех типов указателей <acronym>TOAST</acronym> на данные в памяти, код "
+"обработки <acronym>TOAST</acronym> гарантирует, что такие данные не окажутся "
+"случайно сохранены на диске. Указатели <acronym>TOAST</acronym> в памяти "
+"автоматически сворачиваются в обычные значения varlena перед сохранением "
+"&mdash; а затем могут преобразоваться в указатели <acronym>TOAST</acronym> "
+"на диске, если без этого не смогут уместиться в содержащем их кортеже."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:581(title)
+msgid "Free Space Map"
+msgstr "Карта свободного пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:583(indexterm)
+msgid "<primary>Free Space Map</primary>"
+msgstr "<primary>Карта свободного пространства</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:586(indexterm)
+msgid "<primary>FSM</primary><see>Free Space Map</see>"
+msgstr "<primary>FSM</primary> <see>Карта свободного пространства</see>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:588(para)
+msgid ""
+"Each heap and index relation, except for hash indexes, has a Free Space Map "
+"(FSM) to keep track of available space in the relation. It's stored "
+"alongside the main relation data in a separate relation fork, named after "
+"the filenode number of the relation, plus a <literal>_fsm</literal> suffix. "
+"For example, if the filenode of a relation is 12345, the FSM is stored in a "
+"file called <filename>12345_fsm</filename>, in the same directory as the "
+"main relation file."
+msgstr ""
+"Каждое табличное и индексное отношение, за исключением хеш-индексов, имеет "
+"карту свободного пространства (Free Space Map, FSM) для отслеживания "
+"доступного места. Она хранится рядом с данными главного отношения в "
+"отдельном слое, имя которого образуется номером файлового узла отношения с "
+"суффиксом <literal>_fsm</literal>. Например, если файловый узел отношения — "
+"12345, FSM хранится в файле с именем <filename>12345_fsm</filename> в том же "
+"каталоге, что и основной файл отношения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:597(para)
+msgid ""
+"The Free Space Map is organized as a tree of <acronym>FSM</acronym> pages. "
+"The bottom level <acronym>FSM</acronym> pages store the free space available "
+"on each heap (or index) page, using one byte to represent each such page. "
+"The upper levels aggregate information from the lower levels."
+msgstr ""
+"Карта свободного пространства представляет собой дерево страниц "
+"<acronym>FSM</acronym>. Страницы <acronym>FSM</acronym> нижнего уровня "
+"хранят информацию о свободном пространстве, доступном на каждой странице "
+"таблицы (или индекса), используя один байт для представления каждой такой "
+"страницы. Верхние уровни агрегируют информацию нижних уровней."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:604(para)
+msgid ""
+"Within each <acronym>FSM</acronym> page is a binary tree, stored in an array "
+"with one byte per node. Each leaf node represents a heap page, or a lower "
+"level <acronym>FSM</acronym> page. In each non-leaf node, the higher of its "
+"children's values is stored. The maximum value in the leaf nodes is "
+"therefore stored at the root."
+msgstr ""
+"Внутри каждой страницы <acronym>FSM</acronym> имеется двоичное дерево, "
+"хранящееся в массиве, где один байт выделяется на каждый узел дерева. Каждый "
+"листовой узел представляет страницу таблицы или страницу <acronym>FSM</"
+"acronym> нижнего уровня. В каждом узле выше листовых хранится наибольшее из "
+"значений его узлов-потомков. Поэтому максимальное из значений листовых узлов "
+"хранится в корневом узле."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:612(para)
+msgid ""
+"See <filename>src/backend/storage/freespace/README</filename> for more "
+"details on how the <acronym>FSM</acronym> is structured, and how it's "
+"updated and searched. The <xref linkend=\"pgfreespacemap\"/> module can be "
+"used to examine the information stored in free space maps."
+msgstr ""
+"Более подробную информацию о структуре <acronym>FSM</acronym> и о том, как "
+"выполняется обновление и поиск, вы найдёте в <filename>src/backend/storage/"
+"freespace/README</filename>. Модуль <xref linkend=\"pgfreespacemap\"/> может "
+"быть использован для просмотра информации, хранящейся в картах свободного "
+"пространства."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:623(title)
+msgid "Visibility Map"
+msgstr "Карта видимости"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:625(indexterm)
+msgid "<primary>Visibility Map</primary>"
+msgstr "<primary>Карта видимости</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:628(indexterm)
+msgid "<primary>VM</primary><see>Visibility Map</see>"
+msgstr "<primary>VM</primary> <see>Карта видимости</see>"
+
+#. +> REL_10 REL9_6
+#: storage.xml:630(para)
+msgid ""
+"Each heap relation has a Visibility Map (VM) to keep track of which pages "
+"contain only tuples that are known to be visible to all active transactions; "
+"it also keeps track of which pages contain only frozen tuples. It's stored "
+"alongside the main relation data in a separate relation fork, named after "
+"the filenode number of the relation, plus a <literal>_vm</literal> suffix. "
+"For example, if the filenode of a relation is 12345, the VM is stored in a "
+"file called <filename>12345_vm</filename>, in the same directory as the main "
+"relation file. Note that indexes do not have VMs."
+msgstr ""
+"Каждое отношение таблицы имеет карту видимости (Visibility Map, VM) для "
+"отслеживания страниц, содержащих только кортежи, которые видны всем активным "
+"транзакциям; в ней также отслеживается, какие страницы содержат только "
+"замороженные кортежи. Она хранится вместе с данными главного отношения в "
+"отдельном файле, имя которого образуется номером файлового узла отношения с "
+"суффиксом <literal>_vm</literal>. Например, если файловый узел отношения — "
+"12345, VM хранится в файле <filename>12345_vm</filename>, в том же самом "
+"каталоге, что и основной файл отношения. Заметьте, что индексы не имеют VM."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:642(para)
+msgid ""
+"The visibility map stores two bits per heap page. The first bit, if set, "
+"indicates that the page is all-visible, or in other words that the page does "
+"not contain any tuples that need to be vacuumed. This information can also "
+"be used by <link linkend=\"indexes-index-only-scans\"><firstterm>index-only "
+"scans</firstterm></link> to answer queries using only the index tuple. The "
+"second bit, if set, means that all tuples on the page have been frozen. That "
+"means that even an anti-wraparound vacuum need not revisit the page."
+msgstr ""
+"Карта видимости хранит по два бита на страницу таблицы. Первый бит, если он "
+"установлен, показывает, что вся страница видна или, другими словами, не "
+"содержит кортежей, которые необходимо очистить. Эта информация может также "
+"использоваться при <link linkend=\"indexes-index-only-scans"
+"\"><firstterm>сканировании только индекса</firstterm></link> для поиска "
+"ответов только в данных индекса. Установленный второй бит показывает, что "
+"все кортежи на этой странице заморожены. Это означает, что процесс очистки "
+"для предотвращения зацикливания не должен больше посещать эту страницу."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:653(para)
+msgid ""
+"The map is conservative in the sense that we make sure that whenever a bit "
+"is set, we know the condition is true, but if a bit is not set, it might or "
+"might not be true. Visibility map bits are only set by vacuum, but are "
+"cleared by any data-modifying operations on a page."
+msgstr ""
+"Карта может отражать реальные данные с запаздыванием в том смысле, что мы "
+"уверены, что в случаях, когда установлен бит, известно, что условие верно, "
+"но если бит не установлен, оно может быть верным или неверным. Биты карты "
+"видимости устанавливаются только при очистке, а сбрасываются при любых "
+"операциях, изменяющих данные на странице."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:660(para)
+msgid ""
+"The <xref linkend=\"pgvisibility\"/> module can be used to examine the "
+"information stored in the visibility map."
+msgstr ""
+"Для изучения информации, хранящейся в карте видимости, можно воспользоваться "
+"модулем <xref linkend=\"pgvisibility\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:669(title)
+msgid "The Initialization Fork"
+msgstr "Слой инициализации"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:671(indexterm)
+msgid "<primary>Initialization Fork</primary>"
+msgstr "<primary>Слой инициализации</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:675(para)
+msgid ""
+"Each unlogged table, and each index on an unlogged table, has an "
+"initialization fork. The initialization fork is an empty table or index of "
+"the appropriate type. When an unlogged table must be reset to empty due to a "
+"crash, the initialization fork is copied over the main fork, and any other "
+"forks are erased (they will be recreated automatically as needed)."
+msgstr ""
+"Каждая нежурналируемая таблица, и каждый индекс такой таблицы имеет файл "
+"инициализации. Файл инициализации представляет собой пустую таблицу или "
+"индекс соответствующего типа. Когда нежурналируемая таблица должна быть "
+"заново очищена по причине сбоя, файл инициализации копируется поверх "
+"главного файла, а все прочие файлы удаляются (при необходимости они будут "
+"автоматически созданы заново)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:687(title)
+msgid "Database Page Layout"
+msgstr "Компоновка страницы базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:692(para)
+msgid ""
+"Actually, index access methods need not use this page format. All the "
+"existing index methods do use this basic format, but the data kept on index "
+"metapages usually doesn't follow the item layout rules."
+msgstr ""
+"Фактически индексные методы доступа не нуждаются в этом формате страниц. Все "
+"существующие индексные методы в действительности используют этот основной "
+"формат, но данные, хранящиеся в индексных метастраницах обычно не следуют "
+"правилам компоновки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:689(para)
+msgid ""
+"This section provides an overview of the page format used within "
+"<productname>PostgreSQL</productname> tables and indexes.<placeholder-1/> "
+"Sequences and <acronym>TOAST</acronym> tables are formatted just like a "
+"regular table."
+msgstr ""
+"В данном разделе рассматривается формат страницы, используемый в таблицах и "
+"индексах <productname>PostgreSQL</productname>.<placeholder-1/> "
+"Последовательности и таблицы <acronym>TOAST</acronym> форматируются как "
+"обычные таблицы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:702(para)
+msgid ""
+"In the following explanation, a <firstterm>byte</firstterm> is assumed to "
+"contain 8 bits. In addition, the term <firstterm>item</firstterm> refers to "
+"an individual data value that is stored on a page. In a table, an item is a "
+"row; in an index, an item is an index entry."
+msgstr ""
+"В дальнейшем подразумевается, что <firstterm>байт</firstterm> содержит 8 "
+"бит. В дополнение, термин <firstterm>элемент</firstterm> относится к "
+"индивидуальному значению данных, которое хранится на странице. В таблице "
+"элемент — это строка; в индексе — элемент индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:711(para)
+msgid ""
+"Every table and index is stored as an array of <firstterm>pages</firstterm> "
+"of a fixed size (usually 8 kB, although a different page size can be "
+"selected when compiling the server). In a table, all the pages are logically "
+"equivalent, so a particular item (row) can be stored in any page. In "
+"indexes, the first page is generally reserved as a <firstterm>metapage</"
+"firstterm> holding control information, and there can be different types of "
+"pages within the index, depending on the index access method."
+msgstr ""
+"Каждая таблица и индекс хранятся как массив <firstterm>страниц</firstterm> "
+"фиксированного размера (обычно 8 kB, хотя можно выбрать другой размер "
+"страницы при компиляции сервера). В таблице все страницы логически "
+"эквивалентны, поэтому конкретный элемент (строка) может храниться на любой "
+"странице. В индексах первая страница обычно резервируется как "
+"<firstterm>метастраница</firstterm>, хранящая контрольную информацию, а "
+"внутри индекса могут быть разные типы страниц, в зависимости от метода "
+"доступа индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:721(para)
+msgid ""
+"<xref linkend=\"page-table\"/> shows the overall layout of a page. There are "
+"five parts to each page."
+msgstr ""
+"<xref linkend=\"page-table\"/> показывает общую компоновку страницы. Каждая "
+"страница имеет пять частей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:727(title)
+msgid "Overall Page Layout"
+msgstr "Общая компоновка страницы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:728(titleabbrev)
+msgid "Page Layout"
+msgstr "Компоновка страницы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:742(entry)
+msgid "PageHeaderData"
+msgstr "Данные заголовка страницы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:743(entry)
+msgid ""
+"24 bytes long. Contains general information about the page, including free "
+"space pointers."
+msgstr ""
+"Длина — 24 байта. Содержит общую информацию о странице, включая указатели "
+"свободного пространства."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:748(entry)
+msgid "ItemIdData"
+msgstr "Данные идентификаторов элементов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:749(entry)
+msgid ""
+"Array of (offset,length) pairs pointing to the actual items. 4 bytes per "
+"item."
+msgstr ""
+"Массив пар (смещение, длина), указывающих на фактические элементы. Для "
+"каждого элемента выделяется 4 байта."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:754(entry)
+msgid "Free space"
+msgstr "Свободное пространство"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:755(entry)
+msgid ""
+"The unallocated space. New item pointers are allocated from the start of "
+"this area, new items from the end."
+msgstr ""
+"Незанятое пространство. Новые указатели элементов размещаются с начала этой "
+"области, сами новые элементы — с конца."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:760(entry)
+msgid "Items"
+msgstr "Элементы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:761(entry)
+msgid "The actual items themselves."
+msgstr "Сами элементы данных как таковые."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:765(entry)
+msgid "Special space"
+msgstr "Специальное пространство"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:766(entry)
+msgid ""
+"Index access method specific data. Different methods store different data. "
+"Empty in ordinary tables."
+msgstr ""
+"Специфические данные метода доступа. Для различных методов хранятся "
+"различные данные. Для обычных таблиц таких данных нет."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:774(para)
+msgid ""
+"The first 24 bytes of each page consists of a page header "
+"(<structname>PageHeaderData</structname>). Its format is detailed in <xref "
+"linkend=\"pageheaderdata-table\"/>. The first field tracks the most recent "
+"WAL entry related to this page. The second field contains the page checksum "
+"if <xref linkend=\"app-initdb-data-checksums\"/> are enabled. Next is a 2-"
+"byte field containing flag bits. This is followed by three 2-byte integer "
+"fields (<structfield>pd_lower</structfield>, <structfield>pd_upper</"
+"structfield>, and <structfield>pd_special</structfield>). These contain byte "
+"offsets from the page start to the start of unallocated space, to the end of "
+"unallocated space, and to the start of the special space. The next 2 bytes "
+"of the page header, <structfield>pd_pagesize_version</structfield>, store "
+"both the page size and a version indicator. Beginning with "
+"<productname>PostgreSQL</productname> 8.3 the version number is 4; "
+"<productname>PostgreSQL</productname> 8.1 and 8.2 used version number 3; "
+"<productname>PostgreSQL</productname> 8.0 used version number 2; "
+"<productname>PostgreSQL</productname> 7.3 and 7.4 used version number 1; "
+"prior releases used version number 0. (The basic page layout and header "
+"format has not changed in most of these versions, but the layout of heap row "
+"headers has.) The page size is basically only present as a cross-check; "
+"there is no support for having more than one page size in an installation. "
+"The last field is a hint that shows whether pruning the page is likely to be "
+"profitable: it tracks the oldest un-pruned XMAX on the page."
+msgstr ""
+"Первые 24 байта каждой страницы образуют заголовок страницы "
+"(<structname>PageHeaderData</structname>). Его формат подробно описан в "
+"<xref remap=\"6\" linkend=\"pageheaderdata-table\"/>. В первом поле "
+"отслеживается самая последняя запись в WAL, связанная с этой страницей. "
+"Второе поле содержит контрольную сумму страницы, если включён режим <xref "
+"linkend=\"app-initdb-data-checksums\"/>. Затем идёт двухбайтовое поле, "
+"содержащее биты флагов. За ним следуют три двухбайтовых целочисленных поля "
+"(<structfield>pd_lower</structfield>, <structfield>pd_upper</structfield> и "
+"<structfield>pd_special</structfield>). Они содержат смещения в байтах от "
+"начала страницы до начала незанятого пространства, до конца незанятого "
+"пространства и до начала специального пространства. В следующих 2 байтах "
+"заголовка страницы, в поле <structfield>pd_pagesize_version</structfield>, "
+"хранится размер страницы и индикатор версии. Начиная с "
+"<productname>PostgreSQL</productname> 8.3, используется версия 4; в "
+"<productname>PostgreSQL</productname> 8.1 и 8.2 использовалась версия 3; в "
+"<productname>PostgreSQL</productname> 8.0 — версия 2; в "
+"<productname>PostgreSQL</productname> 7.3 и 7.4 — версия 1; а в предыдущих "
+"выпусках — версия 0. (Основная структура страницы и формат заголовка почти "
+"во всех этих версиях одни и те же, но структура заголовка строк в куче "
+"изменялась.) Размер страницы присутствует, в основном, только для "
+"перекрёстной проверки; возможность использовать в одной инсталляции разные "
+"размеры страниц не поддерживается. Последнее поле подсказывает, насколько "
+"вероятна возможность получить выигрыш, произведя очистку страницы: оно "
+"отслеживает самый старый XMAX на странице, не подвергавшийся очистке."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:804(title)
+msgctxt "title"
+msgid "PageHeaderData Layout"
+msgstr "Данные заголовка страницы (PageHeaderData)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:805(titleabbrev)
+msgctxt "titleabbrev"
+msgid "PageHeaderData Layout"
+msgstr "Данные заголовка страницы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:809(entry) storage.xml:948(entry)
+msgid "Field"
+msgstr "Поле"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:810(entry) storage.xml:949(entry)
+msgid "Type"
+msgstr "Тип"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:811(entry) storage.xml:950(entry)
+msgid "Length"
+msgstr "Длина"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:817(entry)
+msgid "pd_lsn"
+msgstr "pd_lsn"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:818(entry)
+msgid "PageXLogRecPtr"
+msgstr "PageXLogRecPtr"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:819(entry)
+msgid "8 bytes"
+msgstr "8 байт"
+
+#. +> REL_10
+#: storage.xml:820(entry)
+msgid ""
+"LSN: next byte after last byte of WAL record for last change to this page"
+msgstr ""
+"LSN: Следующий байт после последнего байта записи WAL для последнего "
+"изменения на этой странице"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:824(entry)
+msgid "pd_checksum"
+msgstr "pd_checksum"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:825(entry) storage.xml:831(entry) storage.xml:855(entry)
+#: storage.xml:987(entry) storage.xml:993(entry)
+msgid "uint16"
+msgstr "uint16"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:826(entry) storage.xml:832(entry) storage.xml:838(entry)
+#: storage.xml:844(entry) storage.xml:850(entry) storage.xml:856(entry)
+#: storage.xml:988(entry) storage.xml:994(entry)
+msgid "2 bytes"
+msgstr "2 байта"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:827(entry)
+msgid "Page checksum"
+msgstr "Контрольная сумма страницы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:830(entry)
+msgid "pd_flags"
+msgstr "pd_flags"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:833(entry)
+msgid "Flag bits"
+msgstr "Биты признаков"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:836(entry)
+msgid "pd_lower"
+msgstr "pd_lower"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:837(entry) storage.xml:843(entry) storage.xml:849(entry)
+msgid "LocationIndex"
+msgstr "LocationIndex"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:839(entry)
+msgid "Offset to start of free space"
+msgstr "Смещение до начала свободного пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:842(entry)
+msgid "pd_upper"
+msgstr "pd_upper"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:845(entry)
+msgid "Offset to end of free space"
+msgstr "Смещение до конца свободного пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:848(entry)
+msgid "pd_special"
+msgstr "pd_special"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:851(entry)
+msgid "Offset to start of special space"
+msgstr "Смещение до начала специального пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:854(entry)
+msgid "pd_pagesize_version"
+msgstr "pd_pagesize_version"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:857(entry)
+msgid "Page size and layout version number information"
+msgstr "Информация о размере страницы и номере версии компоновки"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:860(entry)
+msgid "pd_prune_xid"
+msgstr "pd_prune_xid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:861(entry) storage.xml:957(entry) storage.xml:963(entry)
+#: storage.xml:975(entry)
+msgid "TransactionId"
+msgstr "TransactionId"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:862(entry) storage.xml:958(entry) storage.xml:964(entry)
+#: storage.xml:970(entry) storage.xml:976(entry)
+msgid "4 bytes"
+msgstr "4 байта"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:863(entry)
+msgid "Oldest unpruned XMAX on page, or zero if none"
+msgstr ""
+"Самый старый неочищенный идентификатор XMAX на странице или ноль при "
+"отсутствии такового"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:869(para)
+msgid ""
+"All the details can be found in <filename>src/include/storage/bufpage.h</"
+"filename>."
+msgstr ""
+"Всю подробную информацию можно найти в <filename>src/include/storage/bufpage."
+"h</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:874(para)
+msgid ""
+"Following the page header are item identifiers (<type>ItemIdData</type>), "
+"each requiring four bytes. An item identifier contains a byte-offset to the "
+"start of an item, its length in bytes, and a few attribute bits which affect "
+"its interpretation. New item identifiers are allocated as needed from the "
+"beginning of the unallocated space. The number of item identifiers present "
+"can be determined by looking at <structfield>pd_lower</structfield>, which "
+"is increased to allocate a new identifier. Because an item identifier is "
+"never moved until it is freed, its index can be used on a long-term basis to "
+"reference an item, even when the item itself is moved around on the page to "
+"compact free space. In fact, every pointer to an item (<type>ItemPointer</"
+"type>, also known as <type>CTID</type>) created by <productname>PostgreSQL</"
+"productname> consists of a page number and the index of an item identifier."
+msgstr ""
+"За заголовком страницы следуют идентификаторы элемента (<type>ItemIdData</"
+"type>), каждому из которых требуется 4 байта. Идентификатор элемента "
+"содержит байтовое смещение до начала элемента, его длину в байтах и "
+"несколько битов атрибутов, которые влияют на его интерпретацию. Новые "
+"идентификаторы элементов размещаются по мере необходимости от начала "
+"свободного пространства. Количество имеющихся идентификаторов элементов "
+"можно определить через значение <structfield>pd_lower</structfield>, которое "
+"увеличивается при добавлении нового идентификатора. Поскольку идентификатор "
+"элемента никогда не перемещается до тех пор, пока он не освобождается, его "
+"индекс можно использовать в течение длительного периода времени, чтобы "
+"ссылаться на элемент, даже когда сам элемент перемещается по странице для "
+"уплотнения свободного пространства. Фактически каждый указатель на элемент "
+"(<type>ItemPointer</type>, также известный как <type>CTID</type>), созданный "
+"<productname>PostgreSQL</productname>, состоит из номера страницы и индекса "
+"идентификатора элемента."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:896(para)
+msgid ""
+"The items themselves are stored in space allocated backwards from the end of "
+"unallocated space. The exact structure varies depending on what the table is "
+"to contain. Tables and sequences both use a structure named "
+"<type>HeapTupleHeaderData</type>, described below."
+msgstr ""
+"Сами элементы хранятся в пространстве, выделяемом в направлении от конца к "
+"началу незанятого пространства. Точная структура меняется в зависимости от "
+"того, каким будет содержание таблицы. Как таблицы, так и последовательности "
+"используют структуру под названием <type>HeapTupleHeaderData</type>, которая "
+"описывается ниже."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:905(para)
+msgid ""
+"The final section is the <quote>special section</quote> which can contain "
+"anything the access method wishes to store. For example, b-tree indexes "
+"store links to the page's left and right siblings, as well as some other "
+"data relevant to the index structure. Ordinary tables do not use a special "
+"section at all (indicated by setting <structfield>pd_special</structfield> "
+"to equal the page size)."
+msgstr ""
+"Последний раздел является <quote>особым разделом</quote>, который может "
+"содержать всё, что необходимо методу доступа для хранения. Например, индексы-"
+"B-деревья хранят ссылки на страницы слева и справа, равно как и некоторые "
+"другие данные, соответствующие структуре индекса. Обычные таблицы не "
+"используют особый раздел вовсе (что указывается установкой значения "
+"<structfield>pd_special</structfield> равным размеру страницы)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:916(para)
+msgid ""
+"All table rows are structured in the same way. There is a fixed-size header "
+"(occupying 23 bytes on most machines), followed by an optional null bitmap, "
+"an optional object ID field, and the user data. The header is detailed in "
+"<xref linkend=\"heaptupleheaderdata-table\"/>. The actual user data (columns "
+"of the row) begins at the offset indicated by <structfield>t_hoff</"
+"structfield>, which must always be a multiple of the MAXALIGN distance for "
+"the platform. The null bitmap is only present if the "
+"<firstterm>HEAP_HASNULL</firstterm> bit is set in <structfield>t_infomask</"
+"structfield>. If it is present it begins just after the fixed header and "
+"occupies enough bytes to have one bit per data column (that is, "
+"<structfield>t_natts</structfield> bits altogether). In this list of bits, a "
+"1 bit indicates not-null, a 0 bit is a null. When the bitmap is not present, "
+"all columns are assumed not-null. The object ID is only present if the "
+"<firstterm>HEAP_HASOID</firstterm> bit is set in <structfield>t_infomask</"
+"structfield>. If present, it appears just before the <structfield>t_hoff</"
+"structfield> boundary. Any padding needed to make <structfield>t_hoff</"
+"structfield> a MAXALIGN multiple will appear between the null bitmap and the "
+"object ID. (This in turn ensures that the object ID is suitably aligned.)"
+msgstr ""
+"Все строки таблицы структурированы одним и тем же образом. Они включают "
+"заголовок фиксированного размера (занимающий 23 байта на большинстве машин), "
+"за которым следует необязательная битовая карта пустых значений, "
+"необязательное поле идентификатора объекта и данные пользователя. Подробное "
+"описание заголовка представлено в <xref linkend=\"heaptupleheaderdata-table"
+"\"/>. Актуальные пользовательские данные (столбцы строки) начинаются после "
+"смещения, заданного в <structfield>t_hoff</structfield>, которое должно "
+"всегда быть кратным величине MAXALIGN для платформы. Битовая карта пустых "
+"значений имеется тогда, когда бит <firstterm>HEAP_HASNULL</firstterm> "
+"установлен в значении <structfield>t_infomask</structfield>. В случае "
+"наличия, она начинается сразу после фиксированного заголовка и занимает "
+"достаточно байтов, чтобы иметь один бит на столбец (т. е. "
+"<structfield>t_natts</structfield> битов всего). В этом списке битов "
+"установленный в единицу бит означает непустое значение, а установленный в "
+"ноль соответствует пустому значению. Когда битовая карта отсутствует, все "
+"столбцы считаются непустыми. Идентификатор объекта присутствует, если только "
+"бит <firstterm>HEAP_HASOID</firstterm> установлен в значении "
+"<structfield>t_infomask</structfield>. Если он есть, он расположен сразу "
+"перед началом <structfield>t_hoff</structfield>. Любое заполнение, "
+"необходимое для того, чтобы сделать <structfield>t_hoff</structfield> "
+"кратным MAXALIGN, будет расположено между битовой картой пустых значений и "
+"идентификатором объекта. (Это в свою очередь гарантирует, что идентификатор "
+"объекта будет правильно выровнен.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:943(title)
+msgctxt "title"
+msgid "HeapTupleHeaderData Layout"
+msgstr "Данные заголовка строки таблицы (HeapTupleHeaderData)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:944(titleabbrev)
+msgctxt "titleabbrev"
+msgid "HeapTupleHeaderData Layout"
+msgstr "Данные заголовка строки таблицы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:956(entry)
+msgid "t_xmin"
+msgstr "t_xmin"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:959(entry)
+msgid "insert XID stamp"
+msgstr "значение XID вставки"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:962(entry)
+msgid "t_xmax"
+msgstr "t_xmax"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:965(entry)
+msgid "delete XID stamp"
+msgstr "значение XID удаления"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:968(entry)
+msgid "t_cid"
+msgstr "t_cid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:969(entry)
+msgid "CommandId"
+msgstr "CommandId"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:971(entry)
+msgid "insert and/or delete CID stamp (overlays with t_xvac)"
+msgstr "значение CID для вставки и/или удаления (пересекается с t_xvac)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:974(entry)
+msgid "t_xvac"
+msgstr "t_xvac"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:977(entry)
+msgid "XID for VACUUM operation moving a row version"
+msgstr "XID для операции VACUUM, которая перемещает версию строки"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:980(entry)
+msgid "t_ctid"
+msgstr "t_ctid"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:981(entry)
+msgid "ItemPointerData"
+msgstr "ItemPointerData"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:982(entry)
+msgid "6 bytes"
+msgstr "6 байт"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:983(entry)
+msgid "current TID of this or newer row version"
+msgstr "текущее значение TID этой или более новой версии строки"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:986(entry)
+msgid "t_infomask2"
+msgstr "t_infomask2"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:989(entry)
+msgid "number of attributes, plus various flag bits"
+msgstr "количество атрибутов плюс различные биты флагов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:992(entry)
+msgid "t_infomask"
+msgstr "t_infomask"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:995(entry)
+msgid "various flag bits"
+msgstr "различные биты флагов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:998(entry)
+msgid "t_hoff"
+msgstr "t_hoff"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:999(entry)
+msgid "uint8"
+msgstr "uint8"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:1000(entry)
+msgid "1 byte"
+msgstr "1 байт"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:1001(entry)
+msgid "offset to user data"
+msgstr "отступ до пользовательских данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:1007(para)
+msgid ""
+"All the details can be found in <filename>src/include/access/htup_details.h</"
+"filename>."
+msgstr ""
+"Всю подробную информацию можно найти в <filename>src/include/access/"
+"htup_details.h</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:1012(para)
+msgid ""
+"Interpreting the actual data can only be done with information obtained from "
+"other tables, mostly <structname>pg_attribute</structname>. The key values "
+"needed to identify field locations are <structfield>attlen</structfield> and "
+"<structfield>attalign</structfield>. There is no way to directly get a "
+"particular attribute, except when there are only fixed width fields and no "
+"null values. All this trickery is wrapped up in the functions "
+"<firstterm>heap_getattr</firstterm>, <firstterm>fastgetattr</firstterm> and "
+"<firstterm>heap_getsysattr</firstterm>."
+msgstr ""
+"Интерпретация текущих данных может быть проведена с помощью информации, "
+"полученной из других таблиц, в основном из <structname>pg_attribute</"
+"structname>. Ключевые значения, необходимые для определения расположения "
+"полей <structfield>attlen</structfield> и <structfield>attalign</"
+"structfield>. Не существует способа непосредственного получения заданного "
+"атрибута кроме случая, когда имеются только поля фиксированной длины, и при "
+"этом нет пустых значений. Все эти особенности учитываются в функциях "
+"<firstterm>heap_getattr</firstterm>, <firstterm>fastgetattr</firstterm> и "
+"<firstterm>heap_getsysattr</firstterm>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:1025(para)
+msgid ""
+"To read the data you need to examine each attribute in turn. First check "
+"whether the field is NULL according to the null bitmap. If it is, go to the "
+"next. Then make sure you have the right alignment. If the field is a fixed "
+"width field, then all the bytes are simply placed. If it's a variable length "
+"field (attlen = -1) then it's a bit more complicated. All variable-length "
+"data types share the common header structure <type>struct varlena</type>, "
+"which includes the total length of the stored value and some flag bits. "
+"Depending on the flags, the data can be either inline or in a "
+"<acronym>TOAST</acronym> table; it might be compressed, too (see <xref "
+"linkend=\"storage-toast\"/>)."
+msgstr ""
+"Чтобы прочитать данные, необходимо просмотреть каждый атрибут по очереди. В "
+"первую очередь нужно проверить, является ли значение поля пустым согласно "
+"битовой карте пустых значений. Если это так, можно переходить к следующему "
+"полю. Затем следует убедиться, что выравнивание является верным. Если это "
+"поле фиксированной ширины, берутся просто все его байты. Если это поле "
+"переменной длины (attlen = -1), всё несколько сложнее. Все типы данных с "
+"переменной длиной имеют общую структуру заголовка <type>struct varlena</"
+"type>, которая включает общую длину сохранённого значения и некоторые биты "
+"флагов. В зависимости от установленных флагов, данные могут храниться либо "
+"локально, либо в таблице <acronym>TOAST</acronym>. Также, возможно сжатие "
+"данных (см. <xref remap=\"4\" linkend=\"storage-toast\"/>)."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: storage.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: storage.xml:76(filename)
+msgid "pg_clog"
+msgstr "pg_clog"
+
+#. +> REL9_6_3 REL9_6
+#: storage.xml:145(filename)
+msgid "pg_xlog"
+msgstr "pg_xlog"
+
+#. +> REL9_6_3 REL9_6
+#: storage.xml:434(para)
+msgid ""
+"The <acronym>TOAST</acronym> management code recognizes four different "
+"strategies for storing <acronym>TOAST</acronym>-able columns on disk: "
+"<placeholder-1/> Each <acronym>TOAST</acronym>-able data type specifies a "
+"default strategy for columns of that data type, but the strategy for a given "
+"table column can be altered with <command>ALTER TABLE SET STORAGE</command>."
+msgstr ""
+"Код обработки <acronym>TOAST</acronym> распознаёт четыре различные стратегии "
+"хранения столбцов, совместимых с <acronym>TOAST</acronym>, на диске: "
+"<placeholder-1/> Каждый тип данных, совместимый с <acronym>TOAST</acronym>, "
+"определяет стандартную стратегию для столбцов этого типа данных, но "
+"стратегия для заданного столбца таблицы может быть изменена с помощью "
+"<command>ALTER TABLE SET STORAGE</command>."
+
+#. +> REL9_6_3
+#: storage.xml:624(para)
+msgid ""
+"Each heap relation has a Visibility Map (VM) to keep track of which pages "
+"contain only tuples that are known to be visible to all active transactions; "
+"it also keeps track of which pages contain only unfrozen tuples. It's stored "
+"alongside the main relation data in a separate relation fork, named after "
+"the filenode number of the relation, plus a <literal>_vm</literal> suffix. "
+"For example, if the filenode of a relation is 12345, the VM is stored in a "
+"file called <filename>12345_vm</filename>, in the same directory as the main "
+"relation file. Note that indexes do not have VMs."
+msgstr ""
+"Каждое отношение таблицы имеет карту видимости (Visibility Map, VM) для "
+"отслеживания страниц, содержащих только кортежи, которые видны всем активным "
+"транзакциям; в ней также отслеживается, какие страницы содержат только "
+"незамороженные кортежи. Она хранится вместе с данными главного отношения в "
+"отдельном файле, имя которого образуется номером файлового узла отношения с "
+"суффиксом <literal>_vm</literal>. Например, если файловый узел отношения — "
+"12345, VM хранится в файле <filename>12345_vm</filename>, в том же самом "
+"каталоге, что и основной файл отношения. Заметьте, что индексы не имеют VM."
+
+#. +> REL9_6_3 REL9_6
+#: storage.xml:814(entry)
+msgid ""
+"LSN: next byte after last byte of xlog record for last change to this page"
+msgstr ""
+"LSN: Следующий байт после последнего байта записи xlog для последнего "
+"изменения на этой странице"

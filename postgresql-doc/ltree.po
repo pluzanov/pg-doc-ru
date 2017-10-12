@@ -1,0 +1,1251 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:5(title)
+msgctxt "title"
+msgid "ltree"
+msgstr "ltree"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:7(indexterm)
+msgid "<primary>ltree</primary>"
+msgstr "<primary>ltree</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:11(para)
+msgid ""
+"This module implements a data type <type>ltree</type> for representing "
+"labels of data stored in a hierarchical tree-like structure. Extensive "
+"facilities for searching through label trees are provided."
+msgstr ""
+"Этот модуль реализует тип данных <type>ltree</type> для представления меток "
+"данных в иерархической древовидной структуре. Он также предоставляет "
+"расширенные средства для поиска в таких деревьях."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:18(title)
+msgid "Definitions"
+msgstr "Определения"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:20(para)
+msgid ""
+"A <firstterm>label</firstterm> is a sequence of alphanumeric characters and "
+"underscores (for example, in C locale the characters <literal>A-Za-z0-9_</"
+"literal> are allowed). Labels must be less than 256 bytes long."
+msgstr ""
+"<firstterm>Метка</firstterm> — это последовательность алфавитно-цифровых "
+"символов и знаков подчёркивания (например, в локали C допускаются символы "
+"<literal>A-Za-z0-9_</literal>). Метки должны занимать меньше 256 байт."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:27(para)
+msgid "Examples: <literal>42</literal>, <literal>Personal_Services</literal>"
+msgstr "Примеры: <literal>42</literal>, <literal>Personal_Services</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:31(para)
+msgid ""
+"A <firstterm>label path</firstterm> is a sequence of zero or more labels "
+"separated by dots, for example <literal>L1.L2.L3</literal>, representing a "
+"path from the root of a hierarchical tree to a particular node. The length "
+"of a label path must be less than 65kB, but keeping it under 2kB is "
+"preferable. In practice this is not a major limitation; for example, the "
+"longest label path in the DMOZ catalog (<ulink url=\"http://www.dmoz.org\"/"
+">) is about 240 bytes."
+msgstr ""
+"<firstterm>Путь метки</firstterm> — это последовательность из нуля или более "
+"меток, разделённых точками, (например, <literal>L1.L2.L3</literal>), "
+"представляющая путь от корня иерархического дерева к конкретному узлу. Длина "
+"пути метки должна быть меньше 65 Кбайт, но лучше, если она будет в пределах "
+"2 Кбайт. На практике это ограничение не является критичным; например, самый "
+"длинный путь в каталоге DMOZ (<ulink url=\"http://www.dmoz.org\"/>) имеет "
+"длину около 240 байт."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:41(para)
+msgid "Example: <literal>Top.Countries.Europe.Russia</literal>"
+msgstr "Пример: <literal>Top.Countries.Europe.Russia</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:45(para)
+msgid "The <filename>ltree</filename> module provides several data types:"
+msgstr ""
+"Модуль <filename>ltree</filename> предоставляет несколько типов данных:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:51(para)
+msgid "<type>ltree</type> stores a label path."
+msgstr "<type>ltree</type> хранит путь метки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:57(para)
+msgid ""
+"<type>lquery</type> represents a regular-expression-like pattern for "
+"matching <type>ltree</type> values. A simple word matches that label within "
+"a path. A star symbol (<literal>*</literal>) matches zero or more labels. "
+"For example: <synopsis>\n"
+"foo         <lineannotation>Match the exact label path <literal>foo</"
+"literal></lineannotation>\n"
+"*.foo.*     <lineannotation>Match any label path containing the label "
+"<literal>foo</literal></lineannotation>\n"
+"*.foo       <lineannotation>Match any label path whose last label is "
+"<literal>foo</literal></lineannotation>\n"
+"</synopsis>"
+msgstr ""
+"<type>lquery</type> представляет напоминающий регулярные выражения запрос "
+"для поиска нужных значений <type>ltree</type>. Простое слово выбирает путь с "
+"этой меткой. Звёздочка (<literal>*</literal>) выбирает ноль или более меток. "
+"Например: <synopsis>\n"
+"foo         <lineannotation>Выбирает в точности путь метки <literal>foo</"
+"literal></lineannotation>\n"
+"*.foo.*     <lineannotation>Выбирает путь, содержащий метку <literal>foo</"
+"literal></lineannotation>\n"
+"*.foo       <lineannotation>Выбирает путь, в котором последняя метка "
+"<literal>foo</literal></lineannotation>\n"
+"</synopsis>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:69(para)
+msgid ""
+"Star symbols can also be quantified to restrict how many labels they can "
+"match: <synopsis>\n"
+"*{<replaceable>n</replaceable>}        <lineannotation>Match exactly "
+"<replaceable>n</replaceable> labels</lineannotation>\n"
+"*{<replaceable>n</replaceable>,}       <lineannotation>Match at least "
+"<replaceable>n</replaceable> labels</lineannotation>\n"
+"*{<replaceable>n</replaceable>,<replaceable>m</replaceable>}      "
+"<lineannotation>Match at least <replaceable>n</replaceable> but not more "
+"than <replaceable>m</replaceable> labels</lineannotation>\n"
+"*{,<replaceable>m</replaceable>}       <lineannotation>Match at most "
+"<replaceable>m</replaceable> labels &mdash; same as </lineannotation> *{0,"
+"<replaceable>m</replaceable>}\n"
+"</synopsis>"
+msgstr ""
+"Звёздочке можно также добавить числовую характеристику, ограничивающую число "
+"потенциально совпадающих меток: <synopsis>\n"
+"*{<replaceable>n</replaceable>}        <lineannotation>Выбирает ровно "
+"<replaceable>n</replaceable> меток</lineannotation>\n"
+"*{<replaceable>n</replaceable>,}       <lineannotation>Выбирает не меньше "
+"<replaceable>n</replaceable> меток</lineannotation>\n"
+"*{<replaceable>n</replaceable>,<replaceable>m</replaceable>}      "
+"<lineannotation>Выбирает не меньше <replaceable>n</replaceable> и не больше "
+"<replaceable>m</replaceable> меток</lineannotation>\n"
+"*{,<replaceable>m</replaceable>}       <lineannotation>Выбирает не больше "
+"<replaceable>m</replaceable> меток &mdash; то же самое, что и </"
+"lineannotation> *{0,<replaceable>m</replaceable>}\n"
+"</synopsis>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:80(para)
+msgid ""
+"There are several modifiers that can be put at the end of a non-star label "
+"in <type>lquery</type> to make it match more than just the exact match: "
+"<synopsis>\n"
+"@           <lineannotation>Match case-insensitively, for example "
+"<literal>a@</literal> matches <literal>A</literal></lineannotation>\n"
+"*           <lineannotation>Match any label with this prefix, for example "
+"<literal>foo*</literal> matches <literal>foobar</literal></lineannotation>\n"
+"%           <lineannotation>Match initial underscore-separated words</"
+"lineannotation>\n"
+"</synopsis> The behavior of <literal>%</literal> is a bit complicated. It "
+"tries to match words rather than the entire label. For example "
+"<literal>foo_bar%</literal> matches <literal>foo_bar_baz</literal> but not "
+"<literal>foo_barbaz</literal>. If combined with <literal>*</literal>, prefix "
+"matching applies to each word separately, for example <literal>foo_bar%*</"
+"literal> matches <literal>foo1_bar2_baz</literal> but not "
+"<literal>foo1_br2_baz</literal>."
+msgstr ""
+"В конце метки, отличной от звёздочки, в <type>lquery</type> можно добавить "
+"модификаторы, чтобы найти что-то сложнее, чем точное соответствие: "
+"<synopsis>\n"
+"@           <lineannotation>Выбирать метки без учёта регистра, например, "
+"запросу <literal>a@</literal> соответствует <literal>A</literal></"
+"lineannotation>\n"
+"*           <lineannotation>Выбирать любую метку с данным префиксом, "
+"например запросу <literal>foo*</literal> соответствует <literal>foobar</"
+"literal></lineannotation>\n"
+"%           <lineannotation>Выбирать начальные слова, разделённые "
+"подчёркиваниями</lineannotation>\n"
+"</synopsis> Поведение модификатора <literal>%</literal> несколько "
+"нетривиальное. Он пытается найти соответствие по словам, а не по всей метке. "
+"Например, запросу <literal>foo_bar%</literal> соответствует "
+"<literal>foo_bar_baz</literal> но не <literal>foo_barbaz</literal>. В "
+"сочетании с <literal>*</literal>, сопоставление префикса применяется "
+"отдельно к каждому слову, например запросу <literal>foo_bar%*</literal> "
+"соответствует <literal>foo1_bar2_baz</literal>, но не <literal>foo1_br2_baz</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:97(para)
+msgid ""
+"Also, you can write several possibly-modified labels separated with "
+"<literal>|</literal> (OR) to match any of those labels, and you can put "
+"<literal>!</literal> (NOT) at the start to match any label that doesn't "
+"match any of the alternatives."
+msgstr ""
+"Также вы можете записать несколько различных меток через знак <literal>|</"
+"literal> (обозначающий ИЛИ) для выборки любой из этих меток, либо добавить "
+"знак <literal>!</literal> (НЕ) в начале, чтобы выбрать все метки, не "
+"соответствующие указанным альтернативам."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:106(programlisting)
+#, no-wrap
+msgid ""
+"Top.*{0,2}.sport*@.!football|tennis.Russ*|Spain\n"
+"a.  b.     c.      d.               e."
+msgstr ""
+"Top.*{0,2}.sport*@.!football|tennis.Russ*|Spain\n"
+"a.  b.     c.      d.               e."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:104(para)
+msgid ""
+"Here's an annotated example of <type>lquery</type>: <placeholder-1/> This "
+"query will match any label path that:"
+msgstr ""
+"Расширенный пример <type>lquery</type>: <placeholder-1/> Этот запрос выберет "
+"путь, который:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:114(para)
+msgid "begins with the label <literal>Top</literal>"
+msgstr "начинается с метки <literal>Top</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:119(para)
+msgid "and next has zero to two labels before"
+msgstr "и затем включает от нуля до двух меток до"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:124(para)
+msgid ""
+"a label beginning with the case-insensitive prefix <literal>sport</literal>"
+msgstr ""
+"метки, начинающейся с префикса <literal>sport</literal> (без учёта регистра)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:129(para)
+msgid ""
+"then a label not matching <literal>football</literal> nor <literal>tennis</"
+"literal>"
+msgstr ""
+"затем метку, отличную от <literal>football</literal> и <literal>tennis</"
+"literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:135(para)
+msgid ""
+"and then ends with a label beginning with <literal>Russ</literal> or exactly "
+"matching <literal>Spain</literal>."
+msgstr ""
+"и заканчивается меткой, которая начинается подстрокой <literal>Russ</"
+"literal> или в точности равна <literal>Spain</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:144(para)
+msgid ""
+"<type>ltxtquery</type> represents a full-text-search-like pattern for "
+"matching <type>ltree</type> values. An <type>ltxtquery</type> value contains "
+"words, possibly with the modifiers <literal>@</literal>, <literal>*</"
+"literal>, <literal>%</literal> at the end; the modifiers have the same "
+"meanings as in <type>lquery</type>. Words can be combined with <literal>&amp;"
+"</literal> (AND), <literal>|</literal> (OR), <literal>!</literal> (NOT), and "
+"parentheses. The key difference from <type>lquery</type> is that "
+"<type>ltxtquery</type> matches words without regard to their position in the "
+"label path."
+msgstr ""
+"<type>ltxtquery</type> представляет подобный полнотекстовому запрос поиска "
+"подходящих значений <type>ltree</type>. Значение <type>ltxtquery</type> "
+"содержит слова, возможно с модификаторами <literal>@</literal>, <literal>*</"
+"literal>, <literal>%</literal> в конце; эти модификаторы имеют то же "
+"значение, что и в <type>lquery</type>. Слова можно объединять символами "
+"<literal>&amp;</literal> (И), <literal>|</literal> (ИЛИ), <literal>!</"
+"literal> (НЕ) и скобками. Ключевое отличие от <type>lquery</type> состоит в "
+"том, что <type>ltxtquery</type> выбирает слова независимо от их положения в "
+"пути метки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:158(programlisting)
+#, no-wrap
+msgid "Europe &amp; Russia*@ &amp; !Transportation"
+msgstr "Europe &amp; Russia*@ &amp; !Transportation"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:156(para)
+msgid ""
+"Here's an example <type>ltxtquery</type>: <placeholder-1/> This will match "
+"paths that contain the label <literal>Europe</literal> and any label "
+"beginning with <literal>Russia</literal> (case-insensitive), but not paths "
+"containing the label <literal>Transportation</literal>. The location of "
+"these words within the path is not important. Also, when <literal>%</"
+"literal> is used, the word can be matched to any underscore-separated word "
+"within a label, regardless of position."
+msgstr ""
+"Пример <type>ltxtquery</type>: <placeholder-1/> Этот запрос выберет пути, "
+"содержащие метку <literal>Europe</literal> или любую метку с начальной "
+"подстрокой <literal>Russia</literal> (без учёта регистра), но не пути, "
+"содержащие метку <literal>Transportation</literal>. Положение этих слов в "
+"пути не имеет значения. Кроме того, когда применяется <literal>%</literal>, "
+"слово может быть сопоставлено с любым другим отделённым подчёркиваниями "
+"словом в метке, вне зависимости от его положения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:172(para)
+msgid ""
+"Note: <type>ltxtquery</type> allows whitespace between symbols, but "
+"<type>ltree</type> and <type>lquery</type> do not."
+msgstr ""
+"Замечание: <type>ltxtquery</type> допускает пробелы между символами, а "
+"<type>ltree</type> и <type>lquery</type> — нет."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:179(title)
+msgid "Operators and Functions"
+msgstr "Операторы и функции"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:181(para)
+msgid ""
+"Type <type>ltree</type> has the usual comparison operators <literal>=</"
+"literal>, <literal>&lt;&gt;</literal>, <literal>&lt;</literal>, <literal>&gt;"
+"</literal>, <literal>&lt;=</literal>, <literal>&gt;=</literal>. Comparison "
+"sorts in the order of a tree traversal, with the children of a node sorted "
+"by label text. In addition, the specialized operators shown in <xref linkend="
+"\"ltree-op-table\"/> are available."
+msgstr ""
+"Для типа <type>ltree</type> определены обычные операторы сравнения "
+"<literal>=</literal>, <literal>&lt;&gt;</literal>, <literal>&lt;</literal>, "
+"<literal>&gt;</literal>, <literal>&lt;=</literal>, <literal>&gt;=</literal>. "
+"Сравнение сортирует пути в порядке движения по дереву, а потомки узла "
+"сортируются по тексту метки. В дополнение к ним есть и специализированные "
+"операторы, перечисленные в <xref remap=\"6\" linkend=\"ltree-op-table\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:191(title)
+msgid "<type>ltree</type> Operators"
+msgstr "Операторы <type>ltree</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:196(entry)
+msgid "Operator"
+msgstr "Оператор"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:197(entry)
+msgid "Returns"
+msgstr "Возвращает"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:198(entry) ltree.xml:377(entry)
+msgid "Description"
+msgstr "Описание"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:204(type) ltree.xml:210(type) ltree.xml:216(type)
+#: ltree.xml:222(type) ltree.xml:228(type) ltree.xml:234(type)
+#: ltree.xml:240(type) ltree.xml:246(type) ltree.xml:252(type)
+#: ltree.xml:253(type) ltree.xml:258(type) ltree.xml:259(type)
+#: ltree.xml:264(type) ltree.xml:265(type) ltree.xml:270(type)
+#: ltree.xml:276(type) ltree.xml:282(type) ltree.xml:288(type)
+#: ltree.xml:330(type) ltree.xml:331(type) ltree.xml:336(type)
+#: ltree.xml:337(type) ltree.xml:343(type) ltree.xml:349(type)
+#: ltree.xml:386(type) ltree.xml:395(type) ltree.xml:407(type)
+#: ltree.xml:446(type) ltree.xml:462(type) ltree.xml:471(type)
+msgctxt "type"
+msgid "ltree"
+msgstr "ltree"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:204(literal) ltree.xml:270(literal) ltree.xml:288(literal)
+msgid "@&gt;"
+msgstr "@&gt;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:205(type) ltree.xml:211(type) ltree.xml:217(type)
+#: ltree.xml:223(type) ltree.xml:229(type) ltree.xml:235(type)
+#: ltree.xml:241(type) ltree.xml:247(type) ltree.xml:271(type)
+#: ltree.xml:277(type) ltree.xml:283(type) ltree.xml:289(type)
+#: ltree.xml:295(type) ltree.xml:301(type) ltree.xml:307(type)
+#: ltree.xml:313(type) ltree.xml:319(type) ltree.xml:325(type)
+msgid "boolean"
+msgstr "boolean"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:206(entry)
+msgid "is left argument an ancestor of right (or equal)?"
+msgstr "левый аргумент является предком правого (или равен ему)?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:210(literal) ltree.xml:276(literal) ltree.xml:282(literal)
+msgid "&lt;@"
+msgstr "&lt;@"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:212(entry)
+msgid "is left argument a descendant of right (or equal)?"
+msgstr "левый аргумент является потомком правого (или равен ему)?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:216(literal) ltree.xml:222(literal) ltree.xml:294(literal)
+#: ltree.xml:300(literal)
+msgid "~"
+msgstr "~"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:216(type) ltree.xml:222(type) ltree.xml:294(type)
+#: ltree.xml:300(type) ltree.xml:342(type)
+msgid "lquery"
+msgstr "lquery"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:218(entry) ltree.xml:224(entry)
+msgid "does <type>ltree</type> match <type>lquery</type>?"
+msgstr "значение <type>ltree</type> соответствует <type>lquery</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:228(literal) ltree.xml:234(literal) ltree.xml:306(literal)
+#: ltree.xml:312(literal)
+msgid "?"
+msgstr "?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:228(type) ltree.xml:234(type) ltree.xml:306(type)
+#: ltree.xml:312(type)
+msgid "lquery[]"
+msgstr "lquery[]"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:230(entry) ltree.xml:236(entry)
+msgid "does <type>ltree</type> match any <type>lquery</type> in array?"
+msgstr ""
+"значение <type>ltree</type> соответствует одному из <type>lquery</type> в "
+"массиве?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:240(literal) ltree.xml:246(literal) ltree.xml:318(literal)
+#: ltree.xml:324(literal)
+msgid "@"
+msgstr "@"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:240(type) ltree.xml:246(type) ltree.xml:318(type)
+#: ltree.xml:324(type) ltree.xml:348(type)
+msgid "ltxtquery"
+msgstr "ltxtquery"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:242(entry) ltree.xml:248(entry)
+msgid "does <type>ltree</type> match <type>ltxtquery</type>?"
+msgstr "значение <type>ltree</type> соответствует <type>ltxtquery</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:252(literal) ltree.xml:258(literal) ltree.xml:264(literal)
+msgid "||"
+msgstr "||"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:254(entry)
+msgid "concatenate <type>ltree</type> paths"
+msgstr "объединяет два пути <type>ltree</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:258(type) ltree.xml:264(type) ltree.xml:454(type)
+msgid "text"
+msgstr "text"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:260(entry) ltree.xml:266(entry)
+msgid "convert text to <type>ltree</type> and concatenate"
+msgstr "преобразует текст в <type>ltree</type> и объединяет с путём"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:270(type) ltree.xml:276(type) ltree.xml:282(type)
+#: ltree.xml:288(type) ltree.xml:294(type) ltree.xml:300(type)
+#: ltree.xml:306(type) ltree.xml:312(type) ltree.xml:318(type)
+#: ltree.xml:324(type) ltree.xml:330(type) ltree.xml:336(type)
+#: ltree.xml:342(type) ltree.xml:348(type)
+msgid "ltree[]"
+msgstr "ltree[]"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:272(entry) ltree.xml:278(entry)
+msgid "does array contain an ancestor of <type>ltree</type>?"
+msgstr "массив содержит предка <type>ltree</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:284(entry) ltree.xml:290(entry)
+msgid "does array contain a descendant of <type>ltree</type>?"
+msgstr "массив содержит потомка <type>ltree</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:296(entry) ltree.xml:302(entry)
+msgid "does array contain any path matching <type>lquery</type>?"
+msgstr "массив содержит путь, соответствующий <type>lquery</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:308(entry) ltree.xml:314(entry)
+msgid ""
+"does <type>ltree</type> array contain any path matching any <type>lquery</"
+"type>?"
+msgstr ""
+"массив <type>ltree</type> содержит путь, соответствующий любому из "
+"<type>lquery</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:320(entry) ltree.xml:326(entry)
+msgid "does array contain any path matching <type>ltxtquery</type>?"
+msgstr "массив содержит путь, соответствующий <type>ltxtquery</type>?"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:330(literal)
+msgid "?@&gt;"
+msgstr "?@&gt;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:332(entry)
+msgid ""
+"first array entry that is an ancestor of <type>ltree</type>; NULL if none"
+msgstr ""
+"первый элемент массива, являющийся предком <type>ltree</type>; NULL, если "
+"такого нет"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:336(literal)
+msgid "?&lt;@"
+msgstr "?&lt;@"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:338(entry)
+msgid ""
+"first array entry that is a descendant of <type>ltree</type>; NULL if none"
+msgstr ""
+"первый элемент массива, являющийся потомком <type>ltree</type>; NULL, если "
+"такого нет"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:342(literal)
+msgid "?~"
+msgstr "?~"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:344(entry)
+msgid "first array entry that matches <type>lquery</type>; NULL if none"
+msgstr ""
+"первый элемент массива, соответствующий <type>lquery</type>; NULL, если "
+"такого нет"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:348(literal)
+msgid "?@"
+msgstr "?@"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:350(entry)
+msgid "first array entry that matches <type>ltxtquery</type>; NULL if none"
+msgstr ""
+"первый элемент массива, соответствующий <type>ltxtquery</type>; NULL, если "
+"такого нет"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:357(para)
+msgid ""
+"The operators <literal>&lt;@</literal>, <literal>@&gt;</literal>, "
+"<literal>@</literal> and <literal>~</literal> have analogues <literal>^&lt;"
+"@</literal>, <literal>^@&gt;</literal>, <literal>^@</literal>, <literal>^~</"
+"literal>, which are the same except they do not use indexes. These are "
+"useful only for testing purposes."
+msgstr ""
+"Операторы <literal>&lt;@</literal>, <literal>@&gt;</literal>, <literal>@</"
+"literal> и <literal>~</literal> имеют аналоги в виде <literal>^&lt;@</"
+"literal>, <literal>^@&gt;</literal>, <literal>^@</literal>, <literal>^~</"
+"literal>, которые отличатся только тем, что не используют индексы. Они "
+"полезны только для тестирования."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:365(para)
+msgid ""
+"The available functions are shown in <xref linkend=\"ltree-func-table\"/>."
+msgstr ""
+"Доступные функции перечислены в <xref remap=\"6\" linkend=\"ltree-func-table"
+"\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:370(title)
+msgid "<type>ltree</type> Functions"
+msgstr "Функции <type>ltree</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:375(entry)
+msgid "Function"
+msgstr "Функция"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:376(entry)
+msgid "Return Type"
+msgstr "Тип результата"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:378(entry)
+msgctxt "entry"
+msgid "Example"
+msgstr "Пример"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:379(entry)
+msgid "Result"
+msgstr "Результат"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:385(function)
+msgid "subltree(ltree, int start, int end)"
+msgstr "subltree(ltree, int start, int end)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:385(indexterm)
+msgid "<primary>subltree</primary>"
+msgstr "<primary>subltree</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:387(entry)
+msgid ""
+"subpath of <type>ltree</type> from position <parameter>start</parameter> to "
+"position <parameter>end</parameter>-1 (counting from 0)"
+msgstr ""
+"подпуть <type>ltree</type> от позиции <parameter>start</parameter> до "
+"позиции <parameter>end</parameter>-1 (начиная с 0)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:389(literal)
+msgid "subltree('Top.Child1.Child2',1,2)"
+msgstr "subltree('Top.Child1.&zwsp;Child2',1,2)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:390(literal)
+msgid "Child1"
+msgstr "Child1"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:394(function)
+msgid "subpath(ltree, int offset, int len)"
+msgstr "subpath(ltree, int offset, int len)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:394(indexterm)
+msgid "<primary>subpath</primary>"
+msgstr "<primary>subpath</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:396(entry)
+msgid ""
+"subpath of <type>ltree</type> starting at position <parameter>offset</"
+"parameter>, length <parameter>len</parameter>. If <parameter>offset</"
+"parameter> is negative, subpath starts that far from the end of the path. If "
+"<parameter>len</parameter> is negative, leaves that many labels off the end "
+"of the path."
+msgstr ""
+"подпуть <type>ltree</type>, начиная с позиции <parameter>offset</parameter>, "
+"длиной <parameter>len</parameter>. Если <parameter>offset</parameter> меньше "
+"нуля, подпуть начинается с этого смещения от конца пути. Если "
+"<parameter>len</parameter> меньше нуля, будет отброшено заданное число меток "
+"с конца строки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:401(literal)
+msgid "subpath('Top.Child1.Child2',0,2)"
+msgstr "subpath('Top.Child1.&zwsp;Child2',0,2)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:402(literal)
+msgid "Top.Child1"
+msgstr "Top.Child1"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:406(function)
+msgid "subpath(ltree, int offset)"
+msgstr "subpath(ltree, int offset)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:408(entry)
+msgid ""
+"subpath of <type>ltree</type> starting at position <parameter>offset</"
+"parameter>, extending to end of path. If <parameter>offset</parameter> is "
+"negative, subpath starts that far from the end of the path."
+msgstr ""
+"подпуть <type>ltree</type>, начиная с позиции <parameter>offset</parameter> "
+"и до конца пути. Если <parameter>offset</parameter> меньше нуля, подпуть "
+"начинается с этого смещения от конца пути."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:412(literal)
+msgid "subpath('Top.Child1.Child2',1)"
+msgstr "subpath('Top.Child1.&zwsp;Child2',1)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:413(literal)
+msgid "Child1.Child2"
+msgstr "Child1.Child2"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:417(function)
+msgid "nlevel(ltree)"
+msgstr "nlevel(ltree)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:417(indexterm)
+msgid "<primary>nlevel</primary>"
+msgstr "<primary>nlevel</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:418(type) ltree.xml:426(type) ltree.xml:435(type)
+msgid "integer"
+msgstr "integer"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:419(entry)
+msgid "number of labels in path"
+msgstr "число меток в пути"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:420(literal)
+msgid "nlevel('Top.Child1.Child2')"
+msgstr "nlevel('Top.Child1.&zwsp;Child2')"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:421(literal)
+msgid "3"
+msgstr "3"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:425(function)
+msgid "index(ltree a, ltree b)"
+msgstr "index(ltree a, ltree b)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:425(indexterm)
+msgid "<primary>index</primary>"
+msgstr "<primary>индекс</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:427(entry)
+msgid ""
+"position of first occurrence of <parameter>b</parameter> in <parameter>a</"
+"parameter>; -1 if not found"
+msgstr ""
+"позиция первого вхождения <parameter>b</parameter> в <parameter>a</"
+"parameter>; -1, если вхождения нет"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:429(literal)
+msgid "index('0.1.2.3.5.4.5.6.8.5.6.8','5.6')"
+msgstr "index('0.1.2.3.5.4.5.6.&zwsp;8.5.6.8','5.6')"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:430(literal)
+msgid "6"
+msgstr "6"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:434(function)
+msgid "index(ltree a, ltree b, int offset)"
+msgstr "index(ltree a, ltree b, int offset)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:436(entry)
+msgid ""
+"position of first occurrence of <parameter>b</parameter> in <parameter>a</"
+"parameter>, searching starting at <parameter>offset</parameter>; negative "
+"<parameter>offset</parameter> means start <parameter>-offset</parameter> "
+"labels from the end of the path"
+msgstr ""
+"позиция первого вхождения <parameter>b</parameter> в <parameter>a</"
+"parameter>, найденного от позиции <parameter>offset</parameter>; если "
+"<parameter>offset</parameter> меньше 0, поиск начинается с <parameter>-"
+"offset</parameter> меток от конца пути"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:440(literal)
+msgid "index('0.1.2.3.5.4.5.6.8.5.6.8','5.6',-4)"
+msgstr "index('0.1.2.3.5.4.5.6.&zwsp;8.5.6.8','5.6',-4)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:441(literal)
+msgid "9"
+msgstr "9"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:445(function)
+msgid "text2ltree(text)"
+msgstr "text2ltree(text)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:445(indexterm)
+msgid "<primary>text2ltree</primary>"
+msgstr "<primary>text2ltree</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:447(entry)
+msgid "cast <type>text</type> to <type>ltree</type>"
+msgstr "приводит <type>text</type> к типу <type>ltree</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:453(function)
+msgid "ltree2text(ltree)"
+msgstr "ltree2text(ltree)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:453(indexterm)
+msgid "<primary>ltree2text</primary>"
+msgstr "<primary>ltree2text</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:455(entry)
+msgid "cast <type>ltree</type> to <type>text</type>"
+msgstr "приводит <type>ltree</type> к типу <type>text</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:461(function)
+msgid "lca(ltree, ltree, ...)"
+msgstr "lca(ltree, ltree, ...)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:461(indexterm)
+msgid "<primary>lca</primary>"
+msgstr "<primary>lca</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:463(entry)
+msgid ""
+"lowest common ancestor, i.e., longest common prefix of paths (up to 8 "
+"arguments supported)"
+msgstr ""
+"самый нижний общий предок, то есть наибольший общий префикс путей "
+"(принимается до 8 аргументов)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:465(literal)
+msgid "lca('1.2.2.3','1.2.3.4.5.6')"
+msgstr "lca('1.2.2.3','1.2.3.4.5.6')"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:466(literal) ltree.xml:474(literal)
+msgid "1.2"
+msgstr "1.2"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:470(function)
+msgid "lca(ltree[])"
+msgstr "lca(ltree[])"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:472(entry)
+msgid "lowest common ancestor, i.e., longest common prefix of paths"
+msgstr "самый нижний предок, то есть наибольший общий префикс путей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:473(literal)
+msgid "lca(array['1.2.2.3'::ltree,'1.2.3'])"
+msgstr "lca(array['1.2.2.3'::ltree,'1.2.3'])"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:483(title)
+msgid "Indexes"
+msgstr "Индексы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:484(para)
+msgid ""
+"<filename>ltree</filename> supports several types of indexes that can speed "
+"up the indicated operators:"
+msgstr ""
+"<filename>ltree</filename> поддерживает несколько типов индексов, которые "
+"могут ускорить означенные операции:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:491(para)
+msgid ""
+"B-tree index over <type>ltree</type>: <literal>&lt;</literal>, <literal>&lt;"
+"=</literal>, <literal>=</literal>, <literal>&gt;=</literal>, <literal>&gt;</"
+"literal>"
+msgstr ""
+"B-дерево по значениям <type>ltree</type>: <literal>&lt;</literal>, "
+"<literal>&lt;=</literal>, <literal>=</literal>, <literal>&gt;=</literal>, "
+"<literal>&gt;</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:498(para)
+msgid ""
+"GiST index over <type>ltree</type>: <literal>&lt;</literal>, <literal>&lt;=</"
+"literal>, <literal>=</literal>, <literal>&gt;=</literal>, <literal>&gt;</"
+"literal>, <literal>@&gt;</literal>, <literal>&lt;@</literal>, <literal>@</"
+"literal>, <literal>~</literal>, <literal>?</literal>"
+msgstr ""
+"GiST по значениям <type>ltree</type>: <literal>&lt;</literal>, <literal>&lt;"
+"=</literal>, <literal>=</literal>, <literal>&gt;=</literal>, <literal>&gt;</"
+"literal>, <literal>@&gt;</literal>, <literal>&lt;@</literal>, <literal>@</"
+"literal>, <literal>~</literal>, <literal>?</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:505(para) ltree.xml:518(para)
+msgid "Example of creating such an index:"
+msgstr "Пример создания такого индекса:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:508(programlisting)
+#, no-wrap
+msgid "CREATE INDEX path_gist_idx ON test USING GIST (path);"
+msgstr "CREATE INDEX path_gist_idx ON test USING GIST (path);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:513(para)
+msgid ""
+"GiST index over <type>ltree[]</type>: <literal>ltree[] &lt;@ ltree</"
+"literal>, <literal>ltree @&gt; ltree[]</literal>, <literal>@</literal>, "
+"<literal>~</literal>, <literal>?</literal>"
+msgstr ""
+"GiST по столбцу <type>ltree[]</type>: <literal>ltree[] &lt;@ ltree</"
+"literal>, <literal>ltree @&gt; ltree[]</literal>, <literal>@</literal>, "
+"<literal>~</literal>, <literal>?</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:521(programlisting)
+#, no-wrap
+msgid "CREATE INDEX path_gist_idx ON test USING GIST (array_path);"
+msgstr "CREATE INDEX path_gist_idx ON test USING GIST (array_path);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:524(para)
+msgid "Note: This index type is lossy."
+msgstr "Примечание: Индекс этого типа является неточным."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:532(title)
+msgctxt "title"
+msgid "Example"
+msgstr "Пример"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:534(para)
+msgid ""
+"This example uses the following data (also available in file "
+"<filename>contrib/ltree/ltreetest.sql</filename> in the source distribution):"
+msgstr ""
+"Для этого примера используются следующие данные (это же описание данных "
+"находится в файле <filename>contrib/ltree/ltreetest.sql</filename> в "
+"дистрибутиве исходного кода):"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:539(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE test (path ltree);\n"
+"INSERT INTO test VALUES ('Top');\n"
+"INSERT INTO test VALUES ('Top.Science');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy.Astrophysics');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy.Cosmology');\n"
+"INSERT INTO test VALUES ('Top.Hobbies');\n"
+"INSERT INTO test VALUES ('Top.Hobbies.Amateurs_Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Collections');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Stars');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Galaxies');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Astronauts');\n"
+"CREATE INDEX path_gist_idx ON test USING GIST (path);\n"
+"CREATE INDEX path_idx ON test USING BTREE (path);"
+msgstr ""
+"CREATE TABLE test (path ltree);\n"
+"INSERT INTO test VALUES ('Top');\n"
+"INSERT INTO test VALUES ('Top.Science');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy.Astrophysics');\n"
+"INSERT INTO test VALUES ('Top.Science.Astronomy.Cosmology');\n"
+"INSERT INTO test VALUES ('Top.Hobbies');\n"
+"INSERT INTO test VALUES ('Top.Hobbies.Amateurs_Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Collections');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Stars');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Galaxies');\n"
+"INSERT INTO test VALUES ('Top.Collections.Pictures.Astronomy.Astronauts');\n"
+"CREATE INDEX path_gist_idx ON test USING GIST (path);\n"
+"CREATE INDEX path_idx ON test USING BTREE (path);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:558(para)
+msgid ""
+"Now, we have a table <structname>test</structname> populated with data "
+"describing the hierarchy shown below:"
+msgstr ""
+"В итоге мы получаем таблицу <structname>test</structname>, наполненную "
+"данными, представляющими следующую иерархию:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:563(literallayout)
+#, no-wrap
+msgid ""
+"                        Top\n"
+"                     /   |  \\\n"
+"             Science Hobbies Collections\n"
+"                 /       |              \\\n"
+"        Astronomy   Amateurs_Astronomy Pictures\n"
+"           /  \\                            |\n"
+"Astrophysics  Cosmology                Astronomy\n"
+"                                        /  |    \\\n"
+"                                 Galaxies Stars Astronauts"
+msgstr ""
+"                        Top\n"
+"                     /   |  \\\n"
+"             Science Hobbies Collections\n"
+"                 /       |              \\\n"
+"        Astronomy   Amateurs_Astronomy Pictures\n"
+"           /  \\                            |\n"
+"Astrophysics  Cosmology                Astronomy\n"
+"                                        /  |    \\\n"
+"                                 Galaxies Stars Astronauts"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:575(para)
+msgid ""
+"We can do inheritance: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path &lt;@ 'Top.Science';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(4 rows)\n"
+"</screen>"
+msgstr ""
+"Мы можем выбрать потомки в иерархии наследования: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path &lt;@ 'Top.Science';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(4 rows)\n"
+"</screen>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:589(para)
+msgid ""
+"Here are some examples of path matching: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path ~ '*.Astronomy.*';\n"
+"                     path\n"
+"-----------------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+" Top.Collections.Pictures.Astronomy\n"
+" Top.Collections.Pictures.Astronomy.Stars\n"
+" Top.Collections.Pictures.Astronomy.Galaxies\n"
+" Top.Collections.Pictures.Astronomy.Astronauts\n"
+"(7 rows)\n"
+"\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path ~ '*.!pictures@.*.Astronomy."
+"*';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+msgstr ""
+"Несколько примеров выборки по путям: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path ~ '*.Astronomy.*';\n"
+"                     path\n"
+"-----------------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+" Top.Collections.Pictures.Astronomy\n"
+" Top.Collections.Pictures.Astronomy.Stars\n"
+" Top.Collections.Pictures.Astronomy.Galaxies\n"
+" Top.Collections.Pictures.Astronomy.Astronauts\n"
+"(7 rows)\n"
+"\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path ~ '*.!pictures@.*.Astronomy."
+"*';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:614(para)
+msgid ""
+"Here are some examples of full text search: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path @ 'Astro*% &amp; !"
+"pictures@';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+" Top.Hobbies.Amateurs_Astronomy\n"
+"(4 rows)\n"
+"\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path @ 'Astro* &amp; !"
+"pictures@';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+msgstr ""
+"Ещё несколько примеров полнотекстового поиска: <screen>\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path @ 'Astro*% &amp; !"
+"pictures@';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+" Top.Hobbies.Amateurs_Astronomy\n"
+"(4 rows)\n"
+"\n"
+"ltreetest=&gt; SELECT path FROM test WHERE path @ 'Astro* &amp; !"
+"pictures@';\n"
+"                path\n"
+"------------------------------------\n"
+" Top.Science.Astronomy\n"
+" Top.Science.Astronomy.Astrophysics\n"
+" Top.Science.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:636(para)
+msgid ""
+"Path construction using functions: <screen>\n"
+"ltreetest=&gt; SELECT subpath(path,0,2)||'Space'||subpath(path,2) FROM test "
+"WHERE path &lt;@ 'Top.Science.Astronomy';\n"
+"                 ?column?\n"
+"------------------------------------------\n"
+" Top.Science.Space.Astronomy\n"
+" Top.Science.Space.Astronomy.Astrophysics\n"
+" Top.Science.Space.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+msgstr ""
+"Образование пути с помощью функций: <screen>\n"
+"ltreetest=&gt; SELECT subpath(path,0,2)||'Space'||subpath(path,2) FROM test "
+"WHERE path &lt;@ 'Top.Science.Astronomy';\n"
+"                 ?column?\n"
+"------------------------------------------\n"
+" Top.Science.Space.Astronomy\n"
+" Top.Science.Space.Astronomy.Astrophysics\n"
+" Top.Science.Space.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:649(para)
+msgid ""
+"We could simplify this by creating a SQL function that inserts a label at a "
+"specified position in a path: <screen>\n"
+"CREATE FUNCTION ins_label(ltree, int, text) RETURNS ltree\n"
+"    AS 'select subpath($1,0,$2) || $3 || subpath($1,$2);'\n"
+"    LANGUAGE SQL IMMUTABLE;\n"
+"\n"
+"ltreetest=&gt; SELECT ins_label(path,2,'Space') FROM test WHERE path &lt;@ "
+"'Top.Science.Astronomy';\n"
+"                ins_label\n"
+"------------------------------------------\n"
+" Top.Science.Space.Astronomy\n"
+" Top.Science.Space.Astronomy.Astrophysics\n"
+" Top.Science.Space.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+msgstr ""
+"Эту процедуру можно упростить, создав функцию SQL, вставляющую метку в "
+"определённую позицию в пути: <screen>\n"
+"CREATE FUNCTION ins_label(ltree, int, text) RETURNS ltree\n"
+"    AS 'select subpath($1,0,$2) || $3 || subpath($1,$2);'\n"
+"    LANGUAGE SQL IMMUTABLE;\n"
+"\n"
+"ltreetest=&gt; SELECT ins_label(path,2,'Space') FROM test WHERE path &lt;@ "
+"'Top.Science.Astronomy';\n"
+"                ins_label\n"
+"------------------------------------------\n"
+" Top.Science.Space.Astronomy\n"
+" Top.Science.Space.Astronomy.Astrophysics\n"
+" Top.Science.Space.Astronomy.Cosmology\n"
+"(3 rows)\n"
+"</screen>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:669(title)
+msgid "Transforms"
+msgstr "Трансформации"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:671(para)
+msgid ""
+"Additional extensions are available that implement transforms for the "
+"<type>ltree</type> type for PL/Python. The extensions are called "
+"<literal>ltree_plpythonu</literal>, <literal>ltree_plpython2u</literal>, and "
+"<literal>ltree_plpython3u</literal> (see <xref linkend=\"plpython-python23\"/"
+"> for the PL/Python naming convention). If you install these transforms and "
+"specify them when creating a function, <type>ltree</type> values are mapped "
+"to Python lists. (The reverse is currently not supported, however.)"
+msgstr ""
+"Также имеются дополнительные расширения, реализующие трансформации типа "
+"<type>ltree</type> для языка PL/Python. Эти расширения называются "
+"<literal>ltree_plpythonu</literal>, <literal>ltree_plpython2u</literal> и "
+"<literal>ltree_plpython3u</literal> (соглашения об именовании, принятые для "
+"интерфейса PL/Python, описаны в <xref remap=\"6\" linkend=\"plpython-"
+"python23\"/>). Если вы установите эти трансформации и укажете их при "
+"создании функции, значения <type>ltree</type> будут отображаться в списки "
+"Python. (Однако обратное преобразование не поддерживается.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:684(title)
+msgid "Authors"
+msgstr "Авторы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:686(para)
+msgid ""
+"All work was done by Teodor Sigaev (<email>teodor@stack.net</email>) and "
+"Oleg Bartunov (<email>oleg@sai.msu.su</email>). See <ulink url=\"http://www."
+"sai.msu.su/~megera/postgres/gist/\"/> for additional information. Authors "
+"would like to thank Eugeny Rodichev for helpful discussions. Comments and "
+"bug reports are welcome."
+msgstr ""
+"Разработку осуществили Фёдор Сигаев (<email>teodor@stack.net</email>) и Олег "
+"Бартунов (<email>oleg@sai.msu.su</email>). Дополнительные сведения можно "
+"найти на странице <ulink url=\"http://www.sai.msu.su/~megera/postgres/gist/"
+"\"/>. Авторы выражают благодарность Евгению Родичеву за полезную дискуссии. "
+"Замечания и сообщения об ошибках приветствуются."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: ltree.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

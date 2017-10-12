@@ -1,0 +1,412 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:5(title)
+msgid "spi"
+msgstr "spi"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:7(indexterm)
+msgid "<primary>SPI</primary> <secondary>examples</secondary>"
+msgstr "<primary>SPI</primary> <secondary>примеры</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:12(para)
+msgid ""
+"The <application>spi</application> module provides several workable examples "
+"of using SPI and triggers. While these functions are of some value in their "
+"own right, they are even more useful as examples to modify for your own "
+"purposes. The functions are general enough to be used with any table, but "
+"you have to specify table and field names (as described below) while "
+"creating a trigger."
+msgstr ""
+"Модуль <application>spi</application> предоставляет несколько рабочих "
+"примеров использования SPI и триггеров. Хотя эти функцию имеют некоторую "
+"ценность сами по себе, они ещё более полезны как заготовки, которые можно "
+"приспособить под собственные нужды. Эти функции достаточно общие, чтобы "
+"работать с любой таблицей, но вы должны явно указать имена таблицы и полей "
+"(как описано ниже) при создании триггера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:21(para)
+msgid ""
+"Each of the groups of functions described below is provided as a separately-"
+"installable extension."
+msgstr ""
+"Каждая группа функций, описанная ниже, представлена в виде отдельно "
+"устанавливаемого расширения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:27(title)
+msgid "refint &mdash; Functions for Implementing Referential Integrity"
+msgstr "refint &mdash; функции для реализации ссылочной целостности"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:29(para)
+msgid ""
+"<function>check_primary_key()</function> and <function>check_foreign_key()</"
+"function> are used to check foreign key constraints. (This functionality is "
+"long since superseded by the built-in foreign key mechanism, of course, but "
+"the module is still useful as an example.)"
+msgstr ""
+"Функции <function>check_primary_key()</function> и "
+"<function>check_foreign_key()</function> применяются для проверки "
+"ограничений внешних ключей. (Эта функциональность уже давно вытеснена "
+"встроенным механизмом внешних ключей, но этот модуль всё ещё полезен в "
+"качестве примера.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:36(para)
+msgid ""
+"<function>check_primary_key()</function> checks the referencing table. To "
+"use, create a <literal>BEFORE INSERT OR UPDATE</literal> trigger using this "
+"function on a table referencing another table. Specify as the trigger "
+"arguments: the referencing table's column name(s) which form the foreign "
+"key, the referenced table name, and the column names in the referenced table "
+"which form the primary/unique key. To handle multiple foreign keys, create a "
+"trigger for each reference."
+msgstr ""
+"Функция <function>check_primary_key()</function> проверяет ссылающуюся "
+"таблицу. Чтобы воспользоваться ей, создайте триггер <literal>BEFORE INSERT "
+"OR UPDATE</literal> с этой функцией для таблицы, ссылающейся на другую. "
+"Укажите в аргументах триггера: имена столбцов ссылающейся таблицы, "
+"образующих внешний ключ, имя целевой таблицы и имена столбцов в ней, "
+"образующих первичный/уникальный ключ. Чтобы контролировать несколько внешних "
+"ключей, создайте триггер для каждой такой ссылки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:46(para)
+msgid ""
+"<function>check_foreign_key()</function> checks the referenced table. To "
+"use, create a <literal>BEFORE DELETE OR UPDATE</literal> trigger using this "
+"function on a table referenced by other table(s). Specify as the trigger "
+"arguments: the number of referencing tables for which the function has to "
+"perform checking, the action if a referencing key is found "
+"(<literal>cascade</literal> &mdash; to delete the referencing row, "
+"<literal>restrict</literal> &mdash; to abort transaction if referencing keys "
+"exist, <literal>setnull</literal> &mdash; to set referencing key fields to "
+"null), the triggered table's column names which form the primary/unique key, "
+"then the referencing table name and column names (repeated for as many "
+"referencing tables as were specified by first argument). Note that the "
+"primary/unique key columns should be marked NOT NULL and should have a "
+"unique index."
+msgstr ""
+"Функция <function>check_foreign_key()</function> проверяет целевую таблицу. "
+"Чтобы использовать её, создайте триггер <literal>BEFORE DELETE OR UPDATE</"
+"literal> с этой функцией для таблицы, на которую ссылаются другие. Укажите в "
+"аргументах триггера: число ссылающихся таблиц, для которых функция должна "
+"выполнить проверки, действие в случае обнаружения ссылающегося ключа "
+"(<literal>cascade</literal> &mdash; удалить ссылающуюся строку, "
+"<literal>restrict</literal> &mdash; прервать транзакцию, <literal>setnull</"
+"literal> &mdash; установить в ссылающихся полях значения NULL), имена "
+"столбцов целевой таблицы, образующих первичный/уникальный ключ, а затем "
+"имена таблиц и столбцов (в количестве, задаваемом первым аргументом). "
+"Заметьте, что поля первичных/уникальных столбцов должны иметь пометку NOT "
+"NULL и по ним должен быть создан уникальный индекс."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:62(para)
+msgid "There are examples in <filename>refint.example</filename>."
+msgstr "Примеры приведены в <filename>refint.example</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:68(title)
+msgid "timetravel &mdash; Functions for Implementing Time Travel"
+msgstr "timetravel &mdash; функции для реализации перемещений во времени"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:78(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE mytab (\n"
+"        ...             ...\n"
+"        start_date      abstime,\n"
+"        stop_date       abstime\n"
+"        ...             ...\n"
+");"
+msgstr ""
+"CREATE TABLE mytab (\n"
+"        ...             ...\n"
+"        start_date      abstime,\n"
+"        stop_date       abstime\n"
+"        ...             ...\n"
+");"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:70(para)
+msgid ""
+"Long ago, <productname>PostgreSQL</productname> had a built-in time travel "
+"feature that kept the insert and delete times for each tuple. This can be "
+"emulated using these functions. To use these functions, you must add to a "
+"table two columns of <type>abstime</type> type to store the date when a "
+"tuple was inserted (start_date) and changed/deleted (stop_date): "
+"<placeholder-1/> The columns can be named whatever you like, but in this "
+"discussion we'll call them start_date and stop_date."
+msgstr ""
+"В далёком прошлом в <productname>PostgreSQL</productname> была встроенная "
+"возможность перемещений во времени, для которой фиксировалось время "
+"добавления и удаления каждого кортежа. Эти функции позволяют её имитировать. "
+"Чтобы использовать их, вы должны добавить в таблицу два столбца типа "
+"<type>abstime</type>, в которых будет храниться дата/время, когда кортеж был "
+"вставлен (start_date) и когда изменён/удалён (stop_date): <placeholder-1/> "
+"Эти столбцы могут называться как угодно, но в данном описании они называются "
+"start_date и stop_date."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:91(para)
+msgid ""
+"When a new row is inserted, start_date should normally be set to current "
+"time, and stop_date to <literal>infinity</literal>. The trigger will "
+"automatically substitute these values if the inserted data contains nulls in "
+"these columns. Generally, inserting explicit non-null data in these columns "
+"should only be done when re-loading dumped data."
+msgstr ""
+"Когда вставляется новая строка, в start_date обычно устанавливается текущее "
+"время, а в stop_date — <literal>infinity</literal> (бесконечность). Триггер "
+"автоматически подставит эти значения, если добавляемая строка содержит NULL "
+"в этих столбцах. Обычно не-NULL в этих столбцах может оказаться только при "
+"загрузке в базу выгруженных данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:100(para)
+msgid ""
+"Tuples with stop_date equal to <literal>infinity</literal> are <quote>valid "
+"now</quote>, and can be modified. Tuples with a finite stop_date cannot be "
+"modified anymore &mdash; the trigger will prevent it. (If you need to do "
+"that, you can turn off time travel as shown below.)"
+msgstr ""
+"Кортежи, в которых поле stop_date равно <literal>infinity</literal>, "
+"считаются <quote>актуальными сейчас</quote> и могут быть изменены. Кортежи с "
+"определённой датой stop_date больше не могут быть изменены &mdash; триггер "
+"будет препятствовать этому. (Если вам нужно сделать это, вы можете отключить "
+"машину времени как показано ниже.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:107(para)
+msgid ""
+"For a modifiable row, on update only the stop_date in the tuple being "
+"updated will be changed (to current time) and a new tuple with the modified "
+"data will be inserted. Start_date in this new tuple will be set to current "
+"time and stop_date to <literal>infinity</literal>."
+msgstr ""
+"Если кортеж является изменяемым, при модификации в нём меняется только "
+"stop_date (на текущее время), но в таблицу вставляется новый кортеж с "
+"модифицированными данными. В поле start_date в этом новом кортеже "
+"записывается текущее время, а в stop_date записывается <literal>infinity</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:114(para)
+msgid ""
+"A delete does not actually remove the tuple but only sets its stop_date to "
+"current time."
+msgstr ""
+"При удалении кортеж на самом деле не удаляется; в нём только записывается "
+"текущее время в stop_date."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:119(para)
+msgid ""
+"To query for tuples <quote>valid now</quote>, include <literal>stop_date = "
+"'infinity'</literal> in the query's WHERE condition. (You might wish to "
+"incorporate that in a view.) Similarly, you can query for tuples valid at "
+"any past time with suitable conditions on start_date and stop_date."
+msgstr ""
+"Чтобы запросить кортежи <quote>актуальные сейчас</quote>, добавьте "
+"<literal>stop_date = 'infinity'</literal> в условие WHERE вашего запроса. "
+"(Возможно, вы захотите завернуть это условие в представление.) Аналогичным "
+"образом вы можете запрашивать кортежи, которые были актуальны в любой момент "
+"в прошлом, задав подходящие условия для start_date и stop_date."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:127(para)
+msgid ""
+"<function>timetravel()</function> is the general trigger function that "
+"supports this behavior. Create a <literal>BEFORE INSERT OR UPDATE OR DELETE</"
+"literal> trigger using this function on each time-traveled table. Specify "
+"two trigger arguments: the actual names of the start_date and stop_date "
+"columns. Optionally, you can specify one to three more arguments, which must "
+"refer to columns of type <type>text</type>. The trigger will store the name "
+"of the current user into the first of these columns during INSERT, the "
+"second column during UPDATE, and the third during DELETE."
+msgstr ""
+"Функция <function>timetravel()</function> реализует код универсального "
+"триггера, поддерживающего это поведение. Чтобы использовать её, создайте "
+"триггер <literal>BEFORE INSERT OR UPDATE OR DELETE</literal> с этой функцией "
+"для каждой таблицы, перемещающейся во времени. Передайте триггеру два "
+"аргумента: фактические имена столбцов start_date и stop_date. Вы также "
+"можете дополнительно передать от одного до трёх аргументов, задающих имена "
+"столбцов типа <type>text</type>. Данный триггер сохранит имя текущего "
+"пользователя в первый из этих столбцов при INSERT, во второй — при UPDATE, и "
+"в третий — при DELETE."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:139(para)
+msgid ""
+"<function>set_timetravel()</function> allows you to turn time-travel on or "
+"off for a table. <literal>set_timetravel('mytab', 1)</literal> will turn TT "
+"ON for table <literal>mytab</literal>. <literal>set_timetravel('mytab', 0)</"
+"literal> will turn TT OFF for table <literal>mytab</literal>. In both cases "
+"the old status is reported. While TT is off, you can modify the start_date "
+"and stop_date columns freely. Note that the on/off status is local to the "
+"current database session &mdash; fresh sessions will always start out with "
+"TT ON for all tables."
+msgstr ""
+"Функция <function>set_timetravel()</function> позволяет включить или "
+"отключить машину времени для таблицы. Вызов <literal>set_timetravel('mytab', "
+"1)</literal> включает машину времени для таблицы <literal>mytab</literal>, а "
+"<literal>set_timetravel('mytab', 0)</literal> — отключает её для таблицы "
+"<literal>mytab</literal>. В обоих случаях возвращается прежнее состояние. "
+"Когда машина времени выключена, вы можете свободно модифицировать столбцы "
+"start_date и stop_date. Заметьте, что состояние активности машины является "
+"локальным для текущего сеанса базы данных &mdash; в новых сеансах машина "
+"времени всегда включена для всех таблиц."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:150(para)
+msgid ""
+"<function>get_timetravel()</function> returns the TT state for a table "
+"without changing it."
+msgstr ""
+"Функция <function>get_timetravel()</function> возвращает состояние "
+"перемещения во времени для таблицы, не меняя его."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:155(para)
+msgid "There is an example in <filename>timetravel.example</filename>."
+msgstr "Пример приведён в <filename>timetravel.example</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:161(title)
+msgid "autoinc &mdash; Functions for Autoincrementing Fields"
+msgstr "autoinc &mdash; функции для автоувеличения полей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:163(para)
+msgid ""
+"<function>autoinc()</function> is a trigger that stores the next value of a "
+"sequence into an integer field. This has some overlap with the built-in "
+"<quote>serial column</quote> feature, but it is not the same: "
+"<function>autoinc()</function> will override attempts to substitute a "
+"different field value during inserts, and optionally it can be used to "
+"increment the field during updates, too."
+msgstr ""
+"Функция <function>autoinc()</function> реализует код триггера, сохраняющего "
+"следующее значение последовательности в целочисленном поле. Это в некоторой "
+"степени пересекается со встроенной функциональностью столбца <quote>serial</"
+"quote>, но есть и отличия: <function>autoinc()</function> препятствует "
+"попыткам вставить другое значение поля при добавлении строк и может "
+"увеличивать значение поля при изменениях."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:172(para)
+msgid ""
+"To use, create a <literal>BEFORE INSERT</literal> (or optionally "
+"<literal>BEFORE INSERT OR UPDATE</literal>) trigger using this function. "
+"Specify two trigger arguments: the name of the integer column to be "
+"modified, and the name of the sequence object that will supply values. "
+"(Actually, you can specify any number of pairs of such names, if you'd like "
+"to update more than one autoincrementing column.)"
+msgstr ""
+"Чтобы использовать её, создайте триггер <literal>BEFORE INSERT</literal> "
+"(или <literal>BEFORE INSERT OR UPDATE</literal>) с этой функцией. Передайте "
+"триггеру два аргумента: имя целочисленного столбца, который будет меняться, "
+"и имя объекта последовательности, который будет поставлять значения. (Вообще "
+"вы можете задать любое число пар таких имён, если хотите поддерживать "
+"несколько автоувеличивающихся столбцов.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:181(para)
+msgid "There is an example in <filename>autoinc.example</filename>."
+msgstr "Пример приведён в <filename>autoinc.example</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:188(title)
+msgid "insert_username &mdash; Functions for Tracking Who Changed a Table"
+msgstr ""
+"insert_username &mdash; функции для отслеживания пользователя, вносящего "
+"изменения"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:190(para)
+msgid ""
+"<function>insert_username()</function> is a trigger that stores the current "
+"user's name into a text field. This can be useful for tracking who last "
+"modified a particular row within a table."
+msgstr ""
+"Функция <function>insert_username()</function> реализует код триггера, "
+"сохраняющего имя текущего пользователя в текстовом поле. Это может быть "
+"полезно для отслеживания пользователя, изменившего конкретную строку таблицы "
+"последним."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:196(para)
+msgid ""
+"To use, create a <literal>BEFORE INSERT</literal> and/or <literal>UPDATE</"
+"literal> trigger using this function. Specify a single trigger argument: the "
+"name of the text column to be modified."
+msgstr ""
+"Чтобы использовать её, создайте триггер <literal>BEFORE INSERT</literal> и/"
+"или <literal>UPDATE</literal> с этой функцией. Передайте триггеру один "
+"аргумент: имя целевого текстового столбца."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:202(para)
+msgid "There is an example in <filename>insert_username.example</filename>."
+msgstr "Пример приведён в <filename>insert_username.example</filename>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:209(title)
+msgid "moddatetime &mdash; Functions for Tracking Last Modification Time"
+msgstr ""
+"moddatetime &mdash; функции для отслеживания времени последнего изменения"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:211(para)
+msgid ""
+"<function>moddatetime()</function> is a trigger that stores the current time "
+"into a <type>timestamp</type> field. This can be useful for tracking the "
+"last modification time of a particular row within a table."
+msgstr ""
+"Функция <function>moddatetime()</function> реализует код триггера, "
+"сохраняющего текущее время в поле типа <type>timestamp</type>. Это может "
+"быть полезно для отслеживания времени последней модификации конкретной "
+"строки таблицы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:217(para)
+msgid ""
+"To use, create a <literal>BEFORE UPDATE</literal> trigger using this "
+"function. Specify a single trigger argument: the name of the column to be "
+"modified. The column must be of type <type>timestamp</type> or "
+"<type>timestamp with time zone</type>."
+msgstr ""
+"Чтобы использовать её, создайте триггер <literal>BEFORE UPDATE</literal> с "
+"этой функцией. Передайте триггеру один аргумент: имя целевого столбца. "
+"Столбец должен иметь тип <type>timestamp</type> или <type>timestamp with "
+"time zone</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:225(para)
+msgid "There is an example in <filename>moddatetime.example</filename>."
+msgstr "Пример приведён в <filename>moddatetime.example</filename>."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: contrib-spi.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

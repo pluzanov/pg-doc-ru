@@ -1,0 +1,290 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:5(title)
+msgid "Monitoring Disk Usage"
+msgstr "Мониторинг использования диска"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:7(para)
+msgid ""
+"This chapter discusses how to monitor the disk usage of a "
+"<productname>PostgreSQL</productname> database system."
+msgstr ""
+"В данной главе обсуждается как отслеживать использование дискового "
+"пространства в СУБД <productname>PostgreSQL</productname>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:13(title)
+msgid "Determining Disk Usage"
+msgstr "Определение использования диска"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:15(indexterm)
+msgid "<primary>disk usage</primary>"
+msgstr "<primary>использование диска</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:19(para)
+msgid ""
+"Each table has a primary heap disk file where most of the data is stored. If "
+"the table has any columns with potentially-wide values, there also might be "
+"a <acronym>TOAST</acronym> file associated with the table, which is used to "
+"store values too wide to fit comfortably in the main table (see <xref "
+"linkend=\"storage-toast\"/>). There will be one valid index on the "
+"<acronym>TOAST</acronym> table, if present. There also might be indexes "
+"associated with the base table. Each table and index is stored in a separate "
+"disk file &mdash; possibly more than one file, if the file would exceed one "
+"gigabyte. Naming conventions for these files are described in <xref linkend="
+"\"storage-file-layout\"/>."
+msgstr ""
+"Для каждой таблицы создаётся первичный дисковый файл кучи (heap), в котором "
+"хранится большая часть данных. Если в таблице есть столбцы с потенциально "
+"большими значениями, то также может быть и ассоциированный с этой таблицей "
+"файл <acronym>TOAST</acronym>, который используется для хранения слишком "
+"больших значений, не умещающихся в главной таблице (см. <xref remap=\"4\" "
+"linkend=\"storage-toast\"/>). На каждую таблицу <acronym>TOAST</acronym>, "
+"если она существует, будет существовать один индекс. Также там могут быть и "
+"индексы, ассоциированные с базовой таблицей. Каждая таблица и индекс "
+"хранятся в отдельном дисковом файле &mdash; возможно более чем в одном "
+"файле, если размер этого файла превышает один гигабайт. Преобразования имён "
+"для этих файлов описываются в <xref remap=\"6\" linkend=\"storage-file-layout"
+"\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:32(para)
+msgid ""
+"You can monitor disk space in three ways: using the SQL functions listed in "
+"<xref linkend=\"functions-admin-dbsize\"/>, using the <xref linkend="
+"\"oid2name\"/> module, or using manual inspection of the system catalogs. "
+"The SQL functions are the easiest to use and are generally recommended. The "
+"remainder of this section shows how to do it by inspection of the system "
+"catalogs."
+msgstr ""
+"Вы можете осуществлять мониторинг дискового пространства тремя способами: "
+"используя SQL-функции, перечисленные в <xref remap=\"6\" linkend=\"functions-"
+"admin-dbsize\"/>, используя модуль <xref linkend=\"oid2name\"/> или "
+"просматривая системные каталоги вручную. Вышеупомянутые SQL функции являются "
+"наиболее простыми и рекомендуются для использования. В продолжении этого "
+"раздела рассказывается, как просматривать системные каталоги."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:45(programlisting)
+#, no-wrap
+msgid ""
+"SELECT pg_relation_filepath(oid), relpages FROM pg_class WHERE relname = 'customer';\n"
+"\n"
+" pg_relation_filepath | relpages\n"
+"----------------------+----------\n"
+" base/16384/16806     |       60\n"
+"(1 row)"
+msgstr ""
+"SELECT pg_relation_filepath(oid), relpages FROM pg_class WHERE relname = 'customer';\n"
+"\n"
+" pg_relation_filepath | relpages\n"
+"----------------------+----------\n"
+" base/16384/16806     |       60\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:42(para)
+msgid ""
+"Using <application>psql</application> on a recently vacuumed or analyzed "
+"database, you can issue queries to see the disk usage of any table: "
+"<placeholder-1/> Each page is typically 8 kilobytes. (Remember, "
+"<structfield>relpages</structfield> is only updated by <command>VACUUM</"
+"command>, <command>ANALYZE</command>, and a few DDL commands such as "
+"<command>CREATE INDEX</command>.) The file path name is of interest if you "
+"want to examine the table's disk file directly."
+msgstr ""
+"Используя <application>psql</application> после недавнего применения команд "
+"VACUUM или ANALYZE, вы можете выполнить такой запрос, чтобы увидеть сколько "
+"дискового пространства использует какая-либо таблица: <placeholder-1/> "
+"Каждая страница обычно равна 8kb. (Помните, что <structfield>relpages</"
+"structfield> обновляется только командами <command>VACUUM</command>, "
+"<command>ANALYZE</command>, и несколькими командами DDL, такими как "
+"<command>CREATE INDEX</command>). Путь к файлу представляет интерес, если вы "
+"хотите проанализировать непосредственно файл на диске."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:62(programlisting)
+#, no-wrap
+msgid ""
+"SELECT relname, relpages\n"
+"FROM pg_class,\n"
+"     (SELECT reltoastrelid\n"
+"      FROM pg_class\n"
+"      WHERE relname = 'customer') AS ss\n"
+"WHERE oid = ss.reltoastrelid OR\n"
+"      oid = (SELECT indexrelid\n"
+"             FROM pg_index\n"
+"             WHERE indrelid = ss.reltoastrelid)\n"
+"ORDER BY relname;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" pg_toast_16806       |        0\n"
+" pg_toast_16806_index |        1"
+msgstr ""
+"SELECT relname, relpages\n"
+"FROM pg_class,\n"
+"     (SELECT reltoastrelid\n"
+"      FROM pg_class\n"
+"      WHERE relname = 'customer') AS ss\n"
+"WHERE oid = ss.reltoastrelid OR\n"
+"      oid = (SELECT indexrelid\n"
+"             FROM pg_index\n"
+"             WHERE indrelid = ss.reltoastrelid)\n"
+"ORDER BY relname;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" pg_toast_16806       |        0\n"
+" pg_toast_16806_index |        1"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:59(para)
+msgid ""
+"To show the space used by <acronym>TOAST</acronym> tables, use a query like "
+"the following: <placeholder-1/>"
+msgstr ""
+"Чтобы посмотреть пространство, используемое таблицами <acronym>TOAST</"
+"acronym>, используйте следующий запрос: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:83(programlisting)
+#, no-wrap
+msgid ""
+"SELECT c2.relname, c2.relpages\n"
+"FROM pg_class c, pg_class c2, pg_index i\n"
+"WHERE c.relname = 'customer' AND\n"
+"      c.oid = i.indrelid AND\n"
+"      c2.oid = i.indexrelid\n"
+"ORDER BY c2.relname;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" customer_id_indexdex |       26"
+msgstr ""
+"SELECT c2.relname, c2.relpages\n"
+"FROM pg_class c, pg_class c2, pg_index i\n"
+"WHERE c.relname = 'customer' AND\n"
+"      c.oid = i.indrelid AND\n"
+"      c2.oid = i.indexrelid\n"
+"ORDER BY c2.relname;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" customer_id_indexdex |       26"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:81(para)
+msgid "You can easily display index sizes, too: <placeholder-1/>"
+msgstr "Вы можете легко посмотреть размеры индексов: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:100(programlisting)
+#, no-wrap
+msgid ""
+"SELECT relname, relpages\n"
+"FROM pg_class\n"
+"ORDER BY relpages DESC;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" bigtable             |     3290\n"
+" customer             |     3144"
+msgstr ""
+"SELECT relname, relpages\n"
+"FROM pg_class\n"
+"ORDER BY relpages DESC;\n"
+"\n"
+"       relname        | relpages\n"
+"----------------------+----------\n"
+" bigtable             |     3290\n"
+" customer             |     3144"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:97(para)
+msgid ""
+"It is easy to find your largest tables and indexes using this information: "
+"<placeholder-1/>"
+msgstr ""
+"Также легко найти самые большие таблицы и индексы, используя эту информацию: "
+"<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:114(title)
+msgid "Disk Full Failure"
+msgstr "Ошибка переполнения диска"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:116(para)
+msgid ""
+"The most important disk monitoring task of a database administrator is to "
+"make sure the disk doesn't become full. A filled data disk will not result "
+"in data corruption, but it might prevent useful activity from occurring. If "
+"the disk holding the WAL files grows full, database server panic and "
+"consequent shutdown might occur."
+msgstr ""
+"Наиболее важной задачей мониторинга диска для администратора баз данных "
+"состоит в том, чтобы иметь уверенность в наличии свободного места на диске. "
+"Если диск полон, это не приведёт к повреждению данных, но может не давать "
+"выполняться некоторым полезным действиям. Если переполнится диск, который "
+"содержит файлы WAL, то сервер СУБД может аварийно завершить свою работу."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:124(para)
+msgid ""
+"If you cannot free up additional space on the disk by deleting other things, "
+"you can move some of the database files to other file systems by making use "
+"of tablespaces. See <xref linkend=\"manage-ag-tablespaces\"/> for more "
+"information about that."
+msgstr ""
+"Если вы не можете освободить дополнительное пространство на диске, удалив "
+"какие-либо другие файлы, то можно перенести часть файлов базы данных на "
+"другие файловые системы, с помощью создания табличных пространств. "
+"Подробности об этом смотрите в <xref linkend=\"manage-ag-tablespaces\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:132(para)
+msgid ""
+"Some file systems perform badly when they are almost full, so do not wait "
+"until the disk is completely full to take action."
+msgstr ""
+"Некоторые файловые системы плохо работают, когда они почти или совсем "
+"заполнены, так что не ждите пока диск заполнится полностью, чтобы выполнить "
+"необходимые действия."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:138(para)
+msgid ""
+"If your system supports per-user disk quotas, then the database will "
+"naturally be subject to whatever quota is placed on the user the server runs "
+"as. Exceeding the quota will have the same bad effects as running out of "
+"disk space entirely."
+msgstr ""
+"Если ваша система поддерживает дисковые квоты для пользователей, вы должны "
+"позаботиться о квоте, выделенной для пользователя, от имени которого "
+"запускается сервер СУБД. Если эта квота будет исчерпана, последствия будут "
+"столь же негативными, как если просто закончится свободное место на диске."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: diskusage.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

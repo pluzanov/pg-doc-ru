@@ -1,0 +1,1062 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-08-01 12:40+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:5(title) user-manag.xml:32(title)
+msgid "Database Roles"
+msgstr "Роли базы данных"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:7(para)
+msgid ""
+"<productname>PostgreSQL</productname> manages database access permissions "
+"using the concept of <firstterm>roles</firstterm>. A role can be thought of "
+"as either a database user, or a group of database users, depending on how "
+"the role is set up. Roles can own database objects (for example, tables and "
+"functions) and can assign privileges on those objects to other roles to "
+"control who has access to which objects. Furthermore, it is possible to "
+"grant <firstterm>membership</firstterm> in a role to another role, thus "
+"allowing the member role to use privileges assigned to another role."
+msgstr ""
+"<productname>PostgreSQL</productname> использует концепцию ролей "
+"(<firstterm>roles</firstterm>) для управления разрешениями на доступ к базе "
+"данных. Роль можно рассматривать как пользователя базы данных или как группу "
+"пользователей, в зависимости от того, как роль настроена. Роли могут владеть "
+"объектами базы данных (например, таблицами и функциями) и выдавать другим "
+"ролям разрешения на доступ к этим объектам, управляя тем, кто имеет доступ и "
+"к каким объектам. Кроме того, можно предоставить одной роли "
+"<firstterm>членство</firstterm> в другой роли, таким образом одна роль может "
+"использовать привилегии других ролей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:18(para)
+msgid ""
+"The concept of roles subsumes the concepts of <quote>users</quote> and "
+"<quote>groups</quote>. In <productname>PostgreSQL</productname> versions "
+"before 8.1, users and groups were distinct kinds of entities, but now there "
+"are only roles. Any role can act as a user, a group, or both."
+msgstr ""
+"Концепция ролей включает в себя концепцию пользователей (<quote>users</"
+"quote>) и групп (<quote>groups</quote>). До версии 8.1 в "
+"<productname>PostgreSQL</productname> пользователи и группы были отдельными "
+"сущностями, но теперь есть только роли. Любая роль может использоваться в "
+"качестве пользователя, группы, и того и другого."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:25(para)
+msgid ""
+"This chapter describes how to create and manage roles. More information "
+"about the effects of role privileges on various database objects can be "
+"found in <xref linkend=\"ddl-priv\"/>."
+msgstr ""
+"В этой главе описывается как создавать и управлять ролями. Дополнительную "
+"информацию о привилегиях для ролей на различные объекты базы данных можно "
+"найти в <xref remap=\"6\" linkend=\"ddl-priv\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:34(indexterm) user-manag.xml:490(indexterm)
+msgid "<primary>role</primary>"
+msgstr "<primary>роль</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:38(indexterm)
+msgid "<primary>user</primary>"
+msgstr "<primary>пользователь</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:42(indexterm)
+msgid "<primary>CREATE ROLE</primary>"
+msgstr "<primary>CREATE ROLE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:46(indexterm)
+msgid "<primary>DROP ROLE</primary>"
+msgstr "<primary>DROP ROLE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:50(para)
+msgid ""
+"Database roles are conceptually completely separate from operating system "
+"users. In practice it might be convenient to maintain a correspondence, but "
+"this is not required. Database roles are global across a database cluster "
+"installation (and not per individual database). To create a role use the "
+"<xref linkend=\"sql-createrole\"/> SQL command: <synopsis>\n"
+"CREATE ROLE <replaceable>name</replaceable>;\n"
+"</synopsis> <replaceable>name</replaceable> follows the rules for SQL "
+"identifiers: either unadorned without special characters, or double-quoted. "
+"(In practice, you will usually want to add additional options, such as "
+"<literal>LOGIN</literal>, to the command. More details appear below.) To "
+"remove an existing role, use the analogous <xref linkend=\"sql-droprole\"/> "
+"command: <synopsis>\n"
+"DROP ROLE <replaceable>name</replaceable>;\n"
+"</synopsis>"
+msgstr ""
+"Роли базы данных концептуально полностью отличаются от пользователей "
+"операционной системы. На практике поддержание соответствия между ними может "
+"быть удобным, но не является обязательным. Роли базы данных являются "
+"глобальными для всей установки кластера базы данных (не для отдельной базы "
+"данных). Для создания роли используется команда SQL <xref linkend=\"sql-"
+"createrole\"/>: <synopsis>\n"
+"CREATE ROLE <replaceable>имя</replaceable>;\n"
+"</synopsis> Здесь <replaceable>имя</replaceable> соответствует правилам "
+"именования идентификаторов SQL: либо обычное, без специальных символов, либо "
+"в двойных кавычках. (На практике, к команде обычно добавляются другие "
+"указания, такие как <literal>LOGIN</literal>. Подробнее об этом ниже.) Для "
+"удаления роли используется команда <xref linkend=\"sql-droprole\"/>: "
+"<synopsis>\n"
+"DROP ROLE <replaceable>имя</replaceable>;\n"
+"</synopsis>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:71(indexterm)
+msgid "<primary>createuser</primary>"
+msgstr "<primary>createuser</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:75(indexterm)
+msgid "<primary>dropuser</primary>"
+msgstr "<primary>dropuser</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:79(para)
+msgid ""
+"For convenience, the programs <xref linkend=\"app-createuser\"/> and <xref "
+"linkend=\"app-dropuser\"/> are provided as wrappers around these SQL "
+"commands that can be called from the shell command line: <synopsis>\n"
+"createuser <replaceable>name</replaceable>\n"
+"dropuser <replaceable>name</replaceable>\n"
+"</synopsis>"
+msgstr ""
+"Для удобства поставляются программы <xref linkend=\"app-createuser\"/> и "
+"<xref linkend=\"app-dropuser\"/>, которые являются обёртками для этих команд "
+"SQL и вызываются из командной строки оболочки ОС: <synopsis>\n"
+"createuser <replaceable>имя</replaceable>\n"
+"dropuser <replaceable>имя</replaceable>\n"
+"</synopsis>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:90(para)
+msgid ""
+"To determine the set of existing roles, examine the <structname>pg_roles</"
+"structname> system catalog, for example <synopsis>\n"
+"SELECT rolname FROM pg_roles;\n"
+"</synopsis> The <xref linkend=\"app-psql\"/> program's <literal>\\du</"
+"literal> meta-command is also useful for listing the existing roles."
+msgstr ""
+"Для получения списка существующих ролей, рассмотрите <structname>pg_roles</"
+"structname> системного каталога, например: <synopsis>\n"
+"SELECT rolname FROM pg_roles;\n"
+"</synopsis> Метакоманда <literal>\\du</literal> программы <xref linkend="
+"\"app-psql\"/> также полезна для получения списка существующих ролей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:100(para)
+msgid ""
+"In order to bootstrap the database system, a freshly initialized system "
+"always contains one predefined role. This role is always a <quote>superuser</"
+"quote>, and by default (unless altered when running <command>initdb</"
+"command>) it will have the same name as the operating system user that "
+"initialized the database cluster. Customarily, this role will be named "
+"<literal>postgres</literal>. In order to create more roles you first have to "
+"connect as this initial role."
+msgstr ""
+"Для начальной настройки кластера базы данных, система сразу после "
+"инициализации всегда содержит одну предопределённую роль. Эта роль является "
+"суперпользователем (<quote>superuser</quote>) и по умолчанию (если не "
+"изменено при запуске <command>initdb</command>) имеет такое же имя, как и "
+"пользователь операционной системы, инициализирующий кластер баз данных. "
+"Обычно эта роль называется <literal>postgres</literal>. Для создания других "
+"ролей, вначале нужно подключиться с этой ролью."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:111(para)
+msgid ""
+"Every connection to the database server is made using the name of some "
+"particular role, and this role determines the initial access privileges for "
+"commands issued in that connection. The role name to use for a particular "
+"database connection is indicated by the client that is initiating the "
+"connection request in an application-specific fashion. For example, the "
+"<command>psql</command> program uses the <option>-U</option> command line "
+"option to indicate the role to connect as. Many applications assume the name "
+"of the current operating system user by default (including "
+"<command>createuser</command> and <command>psql</command>). Therefore it is "
+"often convenient to maintain a naming correspondence between roles and "
+"operating system users."
+msgstr ""
+"Каждое подключение к серверу базы данных выполняется под именем конкретной "
+"роли и эта роль определяет начальные привилегии доступа для команд "
+"выполняемых в этом соединении. Имя роли для конкретного подключения к базе "
+"данных указывается клиентской программой характерным для неё способом, таким "
+"образом инициируя запрос на подключение. Например, программа <command>psql</"
+"command> для указания роли использует аргумент командной строки <option>-U</"
+"option>. Многие приложения предполагают, что по умолчанию нужно использовать "
+"имя пользователя операционной системы (включая <command>createuser</command> "
+"и <command>psql</command>). Поэтому часто бывает удобным поддерживать "
+"соответствие между именами ролей и именами пользователей операционной "
+"системы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:127(para)
+msgid ""
+"The set of database roles a given client connection can connect as is "
+"determined by the client authentication setup, as explained in <xref linkend="
+"\"client-authentication\"/>. (Thus, a client is not limited to connect as "
+"the role matching its operating system user, just as a person's login name "
+"need not match his or her real name.) Since the role identity determines the "
+"set of privileges available to a connected client, it is important to "
+"carefully configure privileges when setting up a multiuser environment."
+msgstr ""
+"Список доступных для подключения ролей, который могут использовать клиенты, "
+"определяется конфигурацией аутентификации, как описывалось в <xref remap="
+"\"6\" linkend=\"client-authentication\"/>. (Поэтому, клиент не ограничен "
+"только ролью, соответствующей имени пользователя операционной системы, также "
+"как и имя для входа может не соответствовать реальному имени.) Так как роль "
+"определяет набор доступных привилегий, очень важно тщательно настраивать "
+"привилегии в многопользовательской среде."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:141(title)
+msgid "Role Attributes"
+msgstr "Атрибуты ролей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:149(indexterm)
+msgid "<primary>login privilege</primary>"
+msgstr "<primary>право подключения</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:149(term)
+msgid "login privilege<placeholder-1/>"
+msgstr "Право подключения<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:157(programlisting)
+#, no-wrap
+msgid ""
+"CREATE ROLE <replaceable>name</replaceable> LOGIN;\n"
+"CREATE USER <replaceable>name</replaceable>;"
+msgstr ""
+"CREATE ROLE <replaceable>имя</replaceable> LOGIN;\n"
+"CREATE USER <replaceable>имя</replaceable>;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:151(para)
+msgid ""
+"Only roles that have the <literal>LOGIN</literal> attribute can be used as "
+"the initial role name for a database connection. A role with the "
+"<literal>LOGIN</literal> attribute can be considered the same as a "
+"<quote>database user</quote>. To create a role with login privilege, use "
+"either: <placeholder-1/> (<command>CREATE USER</command> is equivalent to "
+"<command>CREATE ROLE</command> except that <command>CREATE USER</command> "
+"assumes <literal>LOGIN</literal> by default, while <command>CREATE ROLE</"
+"command> does not.)"
+msgstr ""
+"Только роли с атрибутом <literal>LOGIN</literal> могут использоваться для "
+"начального подключения к базе данных. Роль с атрибутом <literal>LOGIN</"
+"literal> можно рассматривать как пользователя базы данных. Для создания роли "
+"такой роли можно использовать любой из вариантов: <placeholder-1/> (Команда "
+"<command>CREATE USER</command> эквивалентна <command>CREATE ROLE</command> "
+"за исключением того, что <command>CREATE USER</command> по умолчанию "
+"предполагает атрибут <literal>LOGIN</literal>, в то время как "
+"<command>CREATE ROLE</command> нет.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:169(indexterm)
+msgid "<primary>superuser</primary>"
+msgstr "<primary>суперпользователь</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:169(term)
+msgid "superuser status<placeholder-1/>"
+msgstr "Статус суперпользователя<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:171(para)
+msgid ""
+"A database superuser bypasses all permission checks, except the right to log "
+"in. This is a dangerous privilege and should not be used carelessly; it is "
+"best to do most of your work as a role that is not a superuser. To create a "
+"new database superuser, use <literal>CREATE ROLE <replaceable>name</"
+"replaceable> SUPERUSER</literal>. You must do this as a role that is already "
+"a superuser."
+msgstr ""
+"Суперпользователь базы данных обходит все проверки прав доступа, за "
+"исключением права на вход в систему. Это опасная привилегия и она не должна "
+"использоваться небрежно. Лучше всего выполнять большую часть работы не как "
+"суперпользователь. Для создания нового суперпользователя используется "
+"<literal>CREATE ROLE <replaceable>имя</replaceable> SUPERUSER</literal>. Это "
+"нужно выполнить из под роли, которая также является суперпользователем."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:183(indexterm)
+msgid "<primary>database</primary><secondary>privilege to create</secondary>"
+msgstr ""
+"<primary>баз данных</primary> <secondary>право для создания</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:183(term)
+msgid "database creation<placeholder-1/>"
+msgstr "Создание базы данных<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:185(para)
+msgid ""
+"A role must be explicitly given permission to create databases (except for "
+"superusers, since those bypass all permission checks). To create such a "
+"role, use <literal>CREATE ROLE <replaceable>name</replaceable> CREATEDB</"
+"literal>."
+msgstr ""
+"Роль должна явно иметь разрешение на создание базы данных (за исключением "
+"суперпользователей, которые пропускают все проверки). Для создания такой "
+"роли используется <literal>CREATE ROLE <replaceable>имя</replaceable> "
+"CREATEDB</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:195(indexterm)
+msgid "<primary>role</primary><secondary>privilege to create</secondary>"
+msgstr "<primary>ролей</primary> <secondary>право для создания</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:195(term)
+msgid "role creation<placeholder-1/>"
+msgstr "Создание роли<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:197(para)
+msgid ""
+"A role must be explicitly given permission to create more roles (except for "
+"superusers, since those bypass all permission checks). To create such a "
+"role, use <literal>CREATE ROLE <replaceable>name</replaceable> CREATEROLE</"
+"literal>. A role with <literal>CREATEROLE</literal> privilege can alter and "
+"drop other roles, too, as well as grant or revoke membership in them. "
+"However, to create, alter, drop, or change membership of a superuser role, "
+"superuser status is required; <literal>CREATEROLE</literal> is insufficient "
+"for that."
+msgstr ""
+"Роль должна явно иметь разрешение на создание других ролей (за исключением "
+"суперпользователей, которые пропускают все проверки). Для создания такой "
+"роли используется <literal>CREATE ROLE <replaceable>имя</replaceable> "
+"CREATEROLE</literal>. Роль с привилегией <literal>CREATEROLE</literal> может "
+"также изменять и удалять другие роли, а также выдавать и отзывать членство в "
+"ролях. Однако, для создания, изменения, удаления суперпользовательских "
+"ролей, а также изменения в них членства, требуется иметь статус "
+"суперпользователя; привилегии <literal>CREATEROLE</literal> в таких случаях "
+"недостаточно."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:212(indexterm)
+msgid ""
+"<primary>role</primary><secondary>privilege to initiate replication</"
+"secondary>"
+msgstr ""
+"<primary>роль</primary> <secondary>право для запуска репликации</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:212(term)
+msgid "initiating replication<placeholder-1/>"
+msgstr "Запуск репликации<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:214(para)
+msgid ""
+"A role must explicitly be given permission to initiate streaming replication "
+"(except for superusers, since those bypass all permission checks). A role "
+"used for streaming replication must have <literal>LOGIN</literal> permission "
+"as well. To create such a role, use <literal>CREATE ROLE <replaceable>name</"
+"replaceable> REPLICATION LOGIN</literal>."
+msgstr ""
+"Роль должна иметь явное разрешение на запуск потоковой репликации (за "
+"исключением суперпользователей, которые пропускают все проверки). Роль, "
+"используемая для потоковой репликации, также должна иметь атрибут "
+"<literal>LOGIN</literal>. Для создания такой роли используется "
+"<literal>CREATE ROLE <replaceable>имя</replaceable> REPLICATION LOGIN</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:226(indexterm)
+msgid "<primary>password</primary>"
+msgstr "<primary>пароль</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:226(term)
+msgid "password<placeholder-1/>"
+msgstr "Пароль<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:228(para)
+msgid ""
+"A password is only significant if the client authentication method requires "
+"the user to supply a password when connecting to the database. The "
+"<option>password</option> and <option>md5</option> authentication methods "
+"make use of passwords. Database passwords are separate from operating system "
+"passwords. Specify a password upon role creation with <literal>CREATE ROLE "
+"<replaceable>name</replaceable> PASSWORD '<replaceable>string</"
+"replaceable>'</literal>."
+msgstr ""
+"Пароль имеет значение, если метод аутентификации клиентов требует, чтобы "
+"пользователи предоставляли пароль при подключении к базе данных. Методы "
+"аутентификации <option>password</option> и <option>md5</option> используют "
+"пароли. База данных и операционная система используют раздельные пароли. "
+"Пароль указывается при создании роли: <literal>CREATE ROLE <replaceable>имя</"
+"replaceable> PASSWORD '<replaceable>строка</replaceable>'</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:243(indexterm)
+msgid "<primary>ALTER ROLE</primary>"
+msgstr "<primary>ALTER ROLE</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:143(para)
+msgid ""
+"A database role can have a number of attributes that define its privileges "
+"and interact with the client authentication system. <placeholder-1/> A "
+"role's attributes can be modified after creation with <command>ALTER ROLE</"
+"command>.<placeholder-2/> See the reference pages for the <xref linkend="
+"\"sql-createrole\"/> and <xref linkend=\"sql-alterrole\"/> commands for "
+"details."
+msgstr ""
+"Роль базы данных может иметь атрибуты, определяющие её полномочия и "
+"взаимодействие с системой аутентификации клиентов. <placeholder-1/> Атрибуты "
+"ролей могут быть изменены после создания командой <command>ALTER ROLE</"
+"command>.<placeholder-2/> Более детальная информация в справке по командам "
+"<xref linkend=\"sql-createrole\"/> и <xref linkend=\"sql-alterrole\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:249(para)
+msgid ""
+"It is good practice to create a role that has the <literal>CREATEDB</"
+"literal> and <literal>CREATEROLE</literal> privileges, but is not a "
+"superuser, and then use this role for all routine management of databases "
+"and roles. This approach avoids the dangers of operating as a superuser for "
+"tasks that do not really require it."
+msgstr ""
+"Рекомендуется создать роль с привилегиями <literal>CREATEDB</literal> и "
+"<literal>CREATEROLE</literal>, но не суперпользователя и в последующем "
+"использовать её для управления базами данных и ролями. Такой подход позволит "
+"избежать опасностей, связанных с использованием полномочий суперпользователя "
+"для задач, которые их не требуют."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:264(programlisting)
+#, no-wrap
+msgid "ALTER ROLE myname SET enable_indexscan TO off;"
+msgstr "ALTER ROLE myname SET enable_indexscan TO off;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:258(para)
+msgid ""
+"A role can also have role-specific defaults for many of the run-time "
+"configuration settings described in <xref linkend=\"runtime-config\"/>. For "
+"example, if for some reason you want to disable index scans (hint: not a "
+"good idea) anytime you connect, you can use: <placeholder-1/> This will save "
+"the setting (but not set it immediately). In subsequent connections by this "
+"role it will appear as though <literal>SET enable_indexscan TO off</literal> "
+"had been executed just before the session started. You can still alter this "
+"setting during the session; it will only be the default. To remove a role-"
+"specific default setting, use <literal>ALTER ROLE <replaceable>rolename</"
+"replaceable> RESET <replaceable>varname</replaceable></literal>. Note that "
+"role-specific defaults attached to roles without <literal>LOGIN</literal> "
+"privilege are fairly useless, since they will never be invoked."
+msgstr ""
+"На уровне ролей можно устанавливать многие конфигурационные параметры "
+"времени выполнения, описанные в <xref remap=\"6\" linkend=\"runtime-config\"/"
+">. Например, если по некоторым причинам всякий раз при подключении к базе "
+"данных требуется отключить использование индексов (подсказка: плохая идея) "
+"можно выполнить: <placeholder-1/> Установленное значение параметра будет "
+"сохранено (но не будет применено сразу). Для последующих подключений с этой "
+"ролью это будет выглядеть как выполнение команды <literal>SET "
+"enable_indexscan TO off</literal> перед началом сессии. Но это только "
+"значение по умолчанию, в течение сессии эту установку можно изменить. Для "
+"удаления установок на уровне ролей для параметров конфигурации используется "
+"<literal>ALTER ROLE <replaceable>rolename</replaceable> RESET "
+"<replaceable>varname</replaceable></literal>. Обратите внимание, что "
+"установка параметров конфигурации на уровне роли без привилегии "
+"<literal>LOGIN</literal> лишено смысла, т. к. они никогда не будут применены,"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:281(title)
+msgid "Role Membership"
+msgstr "Членство в роли"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:283(indexterm)
+msgid "<primary>role</primary><secondary>membership in</secondary>"
+msgstr "<primary>роль</primary> <secondary>членство</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:287(para)
+msgid ""
+"It is frequently convenient to group users together to ease management of "
+"privileges: that way, privileges can be granted to, or revoked from, a group "
+"as a whole. In <productname>PostgreSQL</productname> this is done by "
+"creating a role that represents the group, and then granting "
+"<firstterm>membership</firstterm> in the group role to individual user roles."
+msgstr ""
+"Часто бывает удобным сгруппировать пользователей для упрощения "
+"администрирования привилегий: привилегии выдаются или отзываются на всю "
+"группу. В <productname>PostgreSQL</productname> для этого создаётся роль, "
+"которая представляет группу, а затем членство (<firstterm>membership</"
+"firstterm>) в этой группе выдаётся ролям индивидуальных пользователей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:296(para)
+msgid ""
+"To set up a group role, first create the role: <synopsis>\n"
+"CREATE ROLE <replaceable>name</replaceable>;\n"
+"</synopsis> Typically a role being used as a group would not have the "
+"<literal>LOGIN</literal> attribute, though you can set it if you wish."
+msgstr ""
+"Для настройки групповой роли, сначала нужно создать саму роль:<synopsis>\n"
+"CREATE ROLE <replaceable>имя</replaceable>;\n"
+"</synopsis> Обычно групповая роль не имеет атрибута <literal>LOGIN</"
+"literal>, хотя при желании его можно установить."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:305(para)
+msgid ""
+"Once the group role exists, you can add and remove members using the <xref "
+"linkend=\"sql-grant\"/> and <xref linkend=\"sql-revoke\"/> commands: "
+"<synopsis>\n"
+"GRANT <replaceable>group_role</replaceable> TO <replaceable>role1</"
+"replaceable>, ... ;\n"
+"REVOKE <replaceable>group_role</replaceable> FROM <replaceable>role1</"
+"replaceable>, ... ;\n"
+"</synopsis> You can grant membership to other group roles, too (since there "
+"isn't really any distinction between group roles and non-group roles). The "
+"database will not let you set up circular membership loops. Also, it is not "
+"permitted to grant membership in a role to <literal>PUBLIC</literal>."
+msgstr ""
+"После того как групповая роль создана, в неё можно добавлять или удалять "
+"членов, используя команды <xref linkend=\"sql-grant\"/> и <xref linkend="
+"\"sql-revoke\"/>:<synopsis>\n"
+"GRANT <replaceable>group_role</replaceable> TO <replaceable>role1</"
+"replaceable>, ... ;\n"
+"REVOKE <replaceable>group_role</replaceable> FROM <replaceable>role1</"
+"replaceable>, ... ;\n"
+"</synopsis> Можно выдавать членство в групповой роли другим групповым ролям "
+"(потому что в действительности нет никаких различий между групповыми и не "
+"групповыми ролями). База данных не позволит замкнуть предоставление членства "
+"по кругу. Также, не допускается выдача членства в роли для <literal>PUBLIC</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:332(programlisting)
+#, no-wrap
+msgid ""
+"CREATE ROLE joe LOGIN INHERIT;\n"
+"CREATE ROLE admin NOINHERIT;\n"
+"CREATE ROLE wheel NOINHERIT;\n"
+"GRANT admin TO joe;\n"
+"GRANT wheel TO admin;"
+msgstr ""
+"CREATE ROLE joe LOGIN INHERIT;\n"
+"CREATE ROLE admin NOINHERIT;\n"
+"CREATE ROLE wheel NOINHERIT;\n"
+"GRANT admin TO joe;\n"
+"GRANT wheel TO admin;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:347(programlisting)
+#, no-wrap
+msgid "SET ROLE admin;"
+msgstr "SET ROLE admin;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:352(programlisting)
+#, no-wrap
+msgid "SET ROLE wheel;"
+msgstr "SET ROLE wheel;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:359(programlisting)
+#, no-wrap
+msgid ""
+"SET ROLE joe;\n"
+"SET ROLE NONE;\n"
+"RESET ROLE;"
+msgstr ""
+"SET ROLE joe;\n"
+"SET ROLE NONE;\n"
+"RESET ROLE;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:320(para)
+msgid ""
+"The members of a group role can use the privileges of the role in two ways. "
+"First, every member of a group can explicitly do <xref linkend=\"sql-set-role"
+"\"/> to temporarily <quote>become</quote> the group role. In this state, the "
+"database session has access to the privileges of the group role rather than "
+"the original login role, and any database objects created are considered "
+"owned by the group role not the login role. Second, member roles that have "
+"the <literal>INHERIT</literal> attribute automatically have use of the "
+"privileges of roles of which they are members, including any privileges "
+"inherited by those roles. As an example, suppose we have done: "
+"<placeholder-1/> Immediately after connecting as role <literal>joe</"
+"literal>, a database session will have use of privileges granted directly to "
+"<literal>joe</literal> plus any privileges granted to <literal>admin</"
+"literal>, because <literal>joe</literal> <quote>inherits</quote> "
+"<literal>admin</literal>'s privileges. However, privileges granted to "
+"<literal>wheel</literal> are not available, because even though "
+"<literal>joe</literal> is indirectly a member of <literal>wheel</literal>, "
+"the membership is via <literal>admin</literal> which has the "
+"<literal>NOINHERIT</literal> attribute. After: <placeholder-2/> the session "
+"would have use of only those privileges granted to <literal>admin</literal>, "
+"and not those granted to <literal>joe</literal>. After: <placeholder-3/> the "
+"session would have use of only those privileges granted to <literal>wheel</"
+"literal>, and not those granted to either <literal>joe</literal> or "
+"<literal>admin</literal>. The original privilege state can be restored with "
+"any of: <placeholder-4/>"
+msgstr ""
+"Члены групповой роли могут использовать её привилегии двумя способами. Во-"
+"первых, каждый член группы может явно выполнить <xref linkend=\"sql-set-role"
+"\"/>, чтобы временно <quote>стать</quote> групповой ролью. В этом состоянии, "
+"сессия базы данных использует полномочия групповой роли, вместо оригинальной "
+"роли, под которой был выполнен вход в систему. При этом для всех создаваемых "
+"объектов базы данных владельцем считается групповая, а не оригинальная роль. "
+"Во-вторых, роли, имеющие атрибут <literal>INHERIT</literal>, автоматически "
+"используют привилегии всех ролей, членами которых они являются, в том числе "
+"и унаследованными этими ролями привилегиями. Например: <placeholder-1/> "
+"После подключения с ролью <literal>joe</literal>, сессия базы данных будет "
+"использовать полномочия выданные напрямую <literal>joe</literal> и "
+"привилегии выданные <literal>admin</literal>, так как <literal>joe</literal> "
+"\"наследует\" привилегии <literal>admin</literal>. Однако привилегии "
+"выданные <literal>wheel</literal> не будут доступны, потому что, хотя "
+"<literal>joe</literal> неявно и является членом <literal>wheel</literal>, "
+"это членство получено через роль <literal>admin</literal>, которая имеет "
+"атрибут <literal>NOINHERIT</literal>. После выполнения команды: "
+"<placeholder-2/> сессия будет использовать только привилегии выданные "
+"<literal>admin</literal>, привилегии выданные <literal>joe</literal> не "
+"будут доступны. После выполнения команды: <placeholder-3/> сессия будет "
+"использовать только привилегии выданные <literal>wheel</literal>, привилегии "
+"<literal>joe</literal> и <literal>admin</literal> не будут доступны. "
+"Начальный набор привилегий можно вернуть любой из команд: <placeholder-4/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:367(para)
+msgid ""
+"The <command>SET ROLE</command> command always allows selecting any role "
+"that the original login role is directly or indirectly a member of. Thus, in "
+"the above example, it is not necessary to become <literal>admin</literal> "
+"before becoming <literal>wheel</literal>."
+msgstr ""
+"Команда <command>SET ROLE</command> в любой момент разрешает выбрать любую "
+"роль, прямым или косвенным членом которой является оригинальная роль, под "
+"которой был выполнен вход в систему. Поэтому, в примере выше, не обязательно "
+"сначала становиться <literal>admin</literal>, перед тем как стать "
+"<literal>wheel</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:376(para)
+msgid ""
+"In the SQL standard, there is a clear distinction between users and roles, "
+"and users do not automatically inherit privileges while roles do. This "
+"behavior can be obtained in <productname>PostgreSQL</productname> by giving "
+"roles being used as SQL roles the <literal>INHERIT</literal> attribute, "
+"while giving roles being used as SQL users the <literal>NOINHERIT</literal> "
+"attribute. However, <productname>PostgreSQL</productname> defaults to giving "
+"all roles the <literal>INHERIT</literal> attribute, for backward "
+"compatibility with pre-8.1 releases in which users always had use of "
+"permissions granted to groups they were members of."
+msgstr ""
+"В стандарте SQL есть чёткое различие между пользователями и ролями. При этом "
+"пользователи не наследуют автоматически привилегии, а роли наследуют "
+"автоматически. Такое поведение может быть получено в "
+"<productname>PostgreSQL</productname>, если для ролей, используемых как роли "
+"в стандарте SQL, устанавливать атрибут <literal>INHERIT</literal>, а для "
+"ролей, используемых как пользователи в стандарте SQL, устанавливать атрибут "
+"<literal>NOINHERIT</literal>. Однако, в <productname>PostgreSQL</"
+"productname> все роли по умолчанию имеют атрибут <literal>INHERIT</literal>. "
+"Это сделано для обратной совместимости с версиями предшествующими 8.1, в "
+"которых пользователи всегда могли использовать привилегии групп, членами "
+"которых они являются."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:389(para)
+msgid ""
+"The role attributes <literal>LOGIN</literal>, <literal>SUPERUSER</literal>, "
+"<literal>CREATEDB</literal>, and <literal>CREATEROLE</literal> can be "
+"thought of as special privileges, but they are never inherited as ordinary "
+"privileges on database objects are. You must actually <command>SET ROLE</"
+"command> to a specific role having one of these attributes in order to make "
+"use of the attribute. Continuing the above example, we might choose to grant "
+"<literal>CREATEDB</literal> and <literal>CREATEROLE</literal> to the "
+"<literal>admin</literal> role. Then a session connecting as role "
+"<literal>joe</literal> would not have these privileges immediately, only "
+"after doing <command>SET ROLE admin</command>."
+msgstr ""
+"Атрибуты роли <literal>LOGIN</literal>, <literal>SUPERUSER</literal>, "
+"<literal>CREATEDB</literal> и <literal>CREATEROLE</literal> можно "
+"рассматривать как особые привилегии, но они никогда не наследуются, как "
+"обычные привилегии на объекты базы данных. Необходимо через <command>SET "
+"ROLE</command> установить роль, имеющую один из этих атрибутов, чтобы им "
+"воспользоваться. Продолжая предыдущий пример, можно установить атрибуты "
+"<literal>CREATEDB</literal> и <literal>CREATEROLE</literal> для роли "
+"<literal>admin</literal>. Затем при входе с ролью <literal>joe</literal>, "
+"получить доступ к этим привилегиям будет возможно только после выполнения "
+"<command>SET ROLE admin</command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:405(para)
+msgid ""
+"To destroy a group role, use <xref linkend=\"sql-droprole\"/>: <synopsis>\n"
+"DROP ROLE <replaceable>name</replaceable>;\n"
+"</synopsis> Any memberships in the group role are automatically revoked (but "
+"the member roles are not otherwise affected)."
+msgstr ""
+"Для удаления групповой роли используется <xref linkend=\"sql-droprole\"/>: "
+"<synopsis>\n"
+"DROP ROLE <replaceable>имя</replaceable>;\n"
+"</synopsis> Любое членство в групповой роли будет автоматически отозвано (в "
+"остальном на членов этой роли это никак не повлияет)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:417(title)
+msgid "Dropping Roles"
+msgstr "Удаление ролей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:419(para)
+msgid ""
+"Because roles can own database objects and can hold privileges to access "
+"other objects, dropping a role is often not just a matter of a quick <xref "
+"linkend=\"sql-droprole\"/>. Any objects owned by the role must first be "
+"dropped or reassigned to other owners; and any permissions granted to the "
+"role must be revoked."
+msgstr ""
+"Так как роли могут владеть объектами баз данных и иметь права доступа к "
+"объектам других, удаление роли не сводится к немедленному действию <xref "
+"linkend=\"sql-droprole\"/>. Сначала должны быть удалены и переданы другим "
+"владельцами все объекты, принадлежащие роли; также должны быть отозваны все "
+"права, данные роли."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:430(programlisting)
+#, no-wrap
+msgid "ALTER TABLE bobs_table OWNER TO alice;"
+msgstr "ALTER TABLE bobs_table OWNER TO alice;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:427(para)
+msgid ""
+"Ownership of objects can be transferred one at a time using <command>ALTER</"
+"command> commands, for example: <placeholder-1/> Alternatively, the <xref "
+"linkend=\"sql-reassign-owned\"/> command can be used to reassign ownership "
+"of all objects owned by the role-to-be-dropped to a single other role. "
+"Because <command>REASSIGN OWNED</command> cannot access objects in other "
+"databases, it is necessary to run it in each database that contains objects "
+"owned by the role. (Note that the first such <command>REASSIGN OWNED</"
+"command> will change the ownership of any shared-across-databases objects, "
+"that is databases or tablespaces, that are owned by the role-to-be-dropped.)"
+msgstr ""
+"Владение объектами можно передавать в индивидуальном порядке, применяя "
+"команду <command>ALTER</command>, например: <placeholder-1/> Кроме того, для "
+"переназначения какой-либо другой роли владения сразу всеми объектами, "
+"принадлежащих удаляемой роли, можно применить команду <xref linkend=\"sql-"
+"reassign-owned\"/>. Так как <command>REASSIGN OWNED</command> не может "
+"обращаться к объектам в других базах данных, её необходимо выполнить в "
+"каждой базе, которая содержит объекты, принадлежащие этой роли. (Заметьте, "
+"что первая такая команда <command>REASSIGN OWNED</command> изменит владельца "
+"для всех разделяемых между базами объектов, то есть для баз данных или "
+"табличных пространств, принадлежащих удаляемой роли.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:443(para)
+msgid ""
+"Once any valuable objects have been transferred to new owners, any remaining "
+"objects owned by the role-to-be-dropped can be dropped with the <xref "
+"linkend=\"sql-drop-owned\"/> command. Again, this command cannot access "
+"objects in other databases, so it is necessary to run it in each database "
+"that contains objects owned by the role. Also, <command>DROP OWNED</command> "
+"will not drop entire databases or tablespaces, so it is necessary to do that "
+"manually if the role owns any databases or tablespaces that have not been "
+"transferred to new owners."
+msgstr ""
+"После того, как все ценные объекты будут переданы новым владельцам, все "
+"оставшиеся объекты, принадлежащие удаляемой роли, могут быть удалены с "
+"помощью команды <xref linkend=\"sql-drop-owned\"/>. И эта команда не может "
+"обращаться к объектам в других базах данных, так что её нужно запускать в "
+"каждой базе, которая содержит объекты, принадлежащие роли. Также заметьте, "
+"что <command>DROP OWNED</command> не удаляет табличные пространства или базы "
+"данных целиком, так что это необходимо сделать вручную, если роли "
+"принадлежат базы или табличные пространства, не переданные новым владельцам."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:454(para)
+msgid ""
+"<command>DROP OWNED</command> also takes care of removing any privileges "
+"granted to the target role for objects that do not belong to it. Because "
+"<command>REASSIGN OWNED</command> does not touch such objects, it's "
+"typically necessary to run both <command>REASSIGN OWNED</command> and "
+"<command>DROP OWNED</command> (in that order!) to fully remove the "
+"dependencies of a role to be dropped."
+msgstr ""
+"<command>DROP OWNED</command> также удаляет все права, которые даны целевой "
+"роли для объектов, не принадлежащих ей. Так как <command>REASSIGN OWNED</"
+"command> такие объекты не затрагивает, обычно необходимо запустить и "
+"<command>REASSIGN OWNED</command>, и <command>DROP OWNED</command> (в этом "
+"порядке!), чтобы полностью ликвидировать зависимости удаляемой роли."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:463(para)
+msgid ""
+"In short then, the most general recipe for removing a role that has been "
+"used to own objects is:"
+msgstr ""
+"С учётом этого, общий рецепт удаления роли, которая владела объектами, "
+"вкратце таков:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:467(programlisting)
+#, no-wrap
+msgid ""
+"REASSIGN OWNED BY doomed_role TO successor_role;\n"
+"DROP OWNED BY doomed_role;\n"
+"-- repeat the above commands in each database of the cluster\n"
+"DROP ROLE doomed_role;"
+msgstr ""
+"REASSIGN OWNED BY doomed_role TO successor_role;\n"
+"DROP OWNED BY doomed_role;\n"
+"-- повторить предыдущие команды для каждой базы в кластере\n"
+"DROP ROLE doomed_role;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:474(para)
+msgid ""
+"When not all owned objects are to be transferred to the same successor "
+"owner, it's best to handle the exceptions manually and then perform the "
+"above steps to mop up."
+msgstr ""
+"Когда не все объекты нужно передать одному новому владельцу, лучше сначала "
+"вручную отработать исключения, а в завершение выполнить показанные выше "
+"действия."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:480(para)
+msgid ""
+"If <command>DROP ROLE</command> is attempted while dependent objects still "
+"remain, it will issue messages identifying which objects need to be "
+"reassigned or dropped."
+msgstr ""
+"При попытке выполнить <command>DROP ROLE</command> для роли, у которой "
+"сохраняются зависимые объекты, будут выданы сообщения, говорящие, какие "
+"объекты нужно передать другому владельцу или удалить."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:488(title) user-manag.xml:510(title)
+msgid "Default Roles"
+msgstr "Предопределённые роли"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:494(para)
+msgid ""
+"<productname>PostgreSQL</productname> provides a set of default roles which "
+"provide access to certain, commonly needed, privileged capabilities and "
+"information. Administrators can GRANT these roles to users and/or other "
+"roles in their environment, providing those users with access to the "
+"specified capabilities and information."
+msgstr ""
+"В <productname>PostgreSQL</productname> имеется набор предопределённых "
+"ролей, которые дают доступ к некоторым часто востребованным, но не "
+"общедоступным функциям и данным. Администраторы могут назначать (GRANT) эти "
+"роли пользователям и/или ролям в своей среде, таким образом открывая этим "
+"пользователям доступ к указанной функциональности и информации."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:502(para)
+msgid ""
+"The default roles are described in <xref linkend=\"default-roles-table\"/>. "
+"Note that the specific permissions for each of the default roles may change "
+"in the future as additional capabilities are added. Administrators should "
+"monitor the release notes for changes."
+msgstr ""
+"Имеющиеся предопределённые роли описаны в <xref remap=\"6\" linkend="
+"\"default-roles-table\"/>. Заметьте, что конкретные разрешения для каждой из "
+"предопределённых ролей в будущем могут изменяться по мере добавления "
+"дополнительной функциональности. Администраторы должны следить за этими "
+"изменениями, просматривая замечания к выпускам."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:514(entry)
+msgid "Role"
+msgstr "Роль"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:515(entry)
+msgid "Allowed Access"
+msgstr "Разрешаемый доступ"
+
+#. +> REL_10
+#: user-manag.xml:520(entry)
+msgid "pg_read_all_settings"
+msgstr "pg_read_all_settings"
+
+#. +> REL_10
+#: user-manag.xml:521(entry)
+msgid ""
+"Read all configuration variables, even those normally visible only to "
+"superusers."
+msgstr ""
+"Читать все конфигурационные переменные, даже те, что обычно видны только "
+"суперпользователям."
+
+#. +> REL_10
+#: user-manag.xml:525(entry)
+msgid "pg_read_all_stats"
+msgstr "pg_read_all_stats"
+
+#. +> REL_10
+#: user-manag.xml:526(entry)
+msgid ""
+"Read all pg_stat_* views and use various statistics related extensions, even "
+"those normally visible only to superusers."
+msgstr ""
+"Читать все представления pg_stat_* и использовать различные расширения, "
+"связанные со статистикой, даже те, что обычно видны только "
+"суперпользователям."
+
+#. +> REL_10
+#: user-manag.xml:530(entry)
+msgid "pg_stat_scan_tables"
+msgstr "pg_stat_scan_tables"
+
+#. +> REL_10
+#: user-manag.xml:531(entry)
+msgid ""
+"Execute monitoring functions that may take <literal>ACCESS SHARE</literal> "
+"locks on tables, potentially for a long time."
+msgstr ""
+"Выполнять функции мониторинга, которые могут устанавливать блокировки "
+"<literal>ACCESS SHARE</literal> в таблицах, возможно, на длительное время."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:535(entry)
+msgid "pg_signal_backend"
+msgstr "pg_signal_backend"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:536(entry)
+msgid "Send signals to other backends (eg: cancel query, terminate)."
+msgstr ""
+"Передавать сигналы другим обслуживающим процессам (например, отменять "
+"запрос, завершать процесс)."
+
+#. +> REL_10
+#: user-manag.xml:539(entry)
+msgid "pg_monitor"
+msgstr "pg_monitor"
+
+#. +> REL_10
+#: user-manag.xml:540(entry)
+msgid ""
+"Read/execute various monitoring views and functions. This role is a member "
+"of <literal>pg_read_all_settings</literal>, <literal>pg_read_all_stats</"
+"literal> and <literal>pg_stat_scan_tables</literal>."
+msgstr ""
+"Читать/выполнять различные представления и функции для мониторинга. Эта роль "
+"включена в роли <literal>pg_read_all_settings</literal>, "
+"<literal>pg_read_all_stats</literal> и <literal>pg_stat_scan_tables</"
+"literal>."
+
+#. +> REL_10
+#: user-manag.xml:549(para)
+msgid ""
+"The <literal>pg_monitor</literal>, <literal>pg_read_all_settings</literal>, "
+"<literal>pg_read_all_stats</literal> and <literal>pg_stat_scan_tables</"
+"literal> roles are intended to allow administrators to easily configure a "
+"role for the purpose of monitoring the database server. They grant a set of "
+"common privileges allowing the role to read various useful configuration "
+"settings, statistics and other system information normally restricted to "
+"superusers."
+msgstr ""
+"Роли <literal>pg_monitor</literal>, <literal>pg_read_all_settings</literal>, "
+"<literal>pg_read_all_stats</literal> и <literal>pg_stat_scan_tables</"
+"literal> созданы для того, чтобы администраторы могли легко настроить роль "
+"для мониторинга сервера БД. Эти роли наделяют своих членов набором общих "
+"прав, позволяющих читать различные полезные параметры конфигурации, "
+"статистику и другую системную информацию, что обычно доступно только "
+"суперпользователям."
+
+#. +> REL_10
+#: user-manag.xml:558(para)
+msgid ""
+"Care should be taken when granting these roles to ensure they are only used "
+"where needed to perform the desired monitoring."
+msgstr ""
+"Распределяя эти роли, следует проявлять осторожность, чтобы они "
+"использовались только для целей мониторинга."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:567(programlisting)
+#, no-wrap
+msgid "GRANT pg_signal_backend TO admin_user;"
+msgstr "GRANT pg_signal_backend TO admin_user;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:563(para)
+msgid ""
+"Administrators can grant access to these roles to users using the GRANT "
+"command: <placeholder-1/>"
+msgstr ""
+"Администраторы могут давать пользователям доступ к этим ролям, используя "
+"команду GRANT: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:575(title)
+msgid "Function and Trigger Security"
+msgstr "Безопасность функций и триггеров"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:577(para)
+msgid ""
+"Functions and triggers allow users to insert code into the backend server "
+"that other users might execute unintentionally. Hence, both mechanisms "
+"permit users to <quote>Trojan horse</quote> others with relative ease. The "
+"only real protection is tight control over who can define functions."
+msgstr ""
+"Функции и триггеры дают возможность пользователям добавить на сервер "
+"программный код, который другие пользователи могут непреднамеренно "
+"выполнить. Таким образом, оба механизма позволяют относительно легко "
+"атаковать других пользователей, внедряя <quote>троянских коней</quote>. "
+"Единственной реальной защитой может быть жёсткое ограничение круга лиц, "
+"имеющих право создавать функции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:585(para)
+msgid ""
+"Functions run inside the backend server process with the operating system "
+"permissions of the database server daemon. If the programming language used "
+"for the function allows unchecked memory accesses, it is possible to change "
+"the server's internal data structures. Hence, among many other things, such "
+"functions can circumvent any system access controls. Function languages that "
+"allow such access are considered <quote>untrusted</quote>, and "
+"<productname>PostgreSQL</productname> allows only superusers to create "
+"functions written in those languages."
+msgstr ""
+"Функции выполняются внутри серверного процесса с полномочиями пользователя "
+"операционной системы, запускающего сервер базы данных. Если используемый для "
+"функций язык программирования разрешает неконтролируемый доступ к памяти, то "
+"это даёт возможность изменить внутренние структуры данных сервера. Таким "
+"образом, помимо всего прочего, такие функции могут обойти ограничения "
+"доступа к системе. Языки программирования, допускающие такой доступ, "
+"считаются <quote>недоверенными</quote> и создавать функции на этих языках "
+"<productname>PostgreSQL</productname> разрешает только суперпользователям."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: user-manag.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

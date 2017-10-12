@@ -1,0 +1,2215 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2017-08-04 12:05+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:5(title)
+msgid "Extending <acronym>SQL</acronym>"
+msgstr "Расширение <acronym>SQL</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:7(indexterm)
+msgid "<primary>extending SQL</primary>"
+msgstr "<primary>расширение SQL</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:18(para)
+msgid "functions (starting in <xref linkend=\"xfunc\"/>)"
+msgstr "функции (начиная с <xref remap=\"2\" linkend=\"xfunc\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:23(para)
+msgid "aggregates (starting in <xref linkend=\"xaggr\"/>)"
+msgstr "агрегатные функции (начиная с <xref remap=\"2\" linkend=\"xaggr\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:28(para)
+msgid "data types (starting in <xref linkend=\"xtypes\"/>)"
+msgstr "типы данных (начиная с <xref remap=\"2\" linkend=\"xtypes\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:33(para)
+msgid "operators (starting in <xref linkend=\"xoper\"/>)"
+msgstr "операторы (начиная с <xref remap=\"2\" linkend=\"xoper\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:38(para)
+msgid "operator classes for indexes (starting in <xref linkend=\"xindex\"/>)"
+msgstr ""
+"классы операторов для индексов (начиная с <xref remap=\"2\" linkend=\"xindex"
+"\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:43(para)
+msgid ""
+"packages of related objects (starting in <xref linkend=\"extend-extensions\"/"
+">)"
+msgstr ""
+"пакеты связанных объектов (начиная с <xref remap=\"2\" linkend=\"extend-"
+"extensions\"/>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:11(para)
+msgid ""
+"In the sections that follow, we will discuss how you can extend the "
+"<productname>PostgreSQL</productname> <acronym>SQL</acronym> query language "
+"by adding: <placeholder-1/>"
+msgstr ""
+"В следующих разделах мы обсудим, как в <productname>PostgreSQL</productname> "
+"можно расширять язык запросов SQL, добавляя собственные: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:51(title)
+msgid "How Extensibility Works"
+msgstr "Как реализована расширяемость"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:53(para)
+msgid ""
+"<productname>PostgreSQL</productname> is extensible because its operation is "
+"catalog-driven. If you are familiar with standard relational database "
+"systems, you know that they store information about databases, tables, "
+"columns, etc., in what are commonly known as system catalogs. (Some systems "
+"call this the data dictionary.) The catalogs appear to the user as tables "
+"like any other, but the <acronym>DBMS</acronym> stores its internal "
+"bookkeeping in them. One key difference between <productname>PostgreSQL</"
+"productname> and standard relational database systems is that "
+"<productname>PostgreSQL</productname> stores much more information in its "
+"catalogs: not only information about tables and columns, but also "
+"information about data types, functions, access methods, and so on. These "
+"tables can be modified by the user, and since <productname>PostgreSQL</"
+"productname> bases its operation on these tables, this means that "
+"<productname>PostgreSQL</productname> can be extended by users. By "
+"comparison, conventional database systems can only be extended by changing "
+"hardcoded procedures in the source code or by loading modules specially "
+"written by the <acronym>DBMS</acronym> vendor."
+msgstr ""
+"<productname>PostgreSQL</productname> является расширяемым благодаря тому, "
+"что его работа управляется каталогами. Если вы знакомы с традиционными "
+"реляционными системами баз данных, вы знаете, что они хранят информацию о "
+"базах, таблицах, столбцах и т. д., в структурах, которые обычно называются "
+"системными каталогами. (В некоторых системах они называются словарями "
+"данных.) Эти каталоги представляются пользователю в виде таблиц, подобных "
+"любым другим, но <acronym>СУБД</acronym> ведёт в них свои внутренние записи. "
+"Ключевое отличие <productname>PostgreSQL</productname> от обычных "
+"реляционных СУБД состоит в том, что <productname>PostgreSQL</productname> "
+"хранит в этих каталогах намного больше информации: информацию не только о "
+"таблицах и столбцах, но также о типах данных, функциях, методах доступа и т. "
+"д. Эти таблицы могут быть изменены пользователями, а так как "
+"<productname>PostgreSQL</productname> в своих действиях руководствуется "
+"этими таблицами, это означает, что пользователи могут расширять "
+"<productname>PostgreSQL</productname>. Обычные же СУБД можно расширять, "
+"только модифицируя жёстко запрограммированные процедуры в исходном коде или "
+"загружая модули, специально разработанные производителем <acronym>СУБД</"
+"acronym>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:75(para)
+msgid ""
+"The <productname>PostgreSQL</productname> server can moreover incorporate "
+"user-written code into itself through dynamic loading. That is, the user can "
+"specify an object code file (e.g., a shared library) that implements a new "
+"type or function, and <productname>PostgreSQL</productname> will load it as "
+"required. Code written in <acronym>SQL</acronym> is even more trivial to add "
+"to the server. This ability to modify its operation <quote>on the fly</"
+"quote> makes <productname>PostgreSQL</productname> uniquely suited for rapid "
+"prototyping of new applications and storage structures."
+msgstr ""
+"Кроме того, сервер <productname>PostgreSQL</productname> может динамически "
+"загружать в свой процесс код, написанный пользователем. То есть, "
+"пользователь может подключить файл с объектным кодом (например, разделяемую "
+"библиотеку), который реализует новый тип или функцию, а "
+"<productname>PostgreSQL</productname> загрузит его по мере надобности. Код, "
+"написанный на <acronym>SQL</acronym>, добавляется на сервер ещё проще. Эта "
+"способность менять своё поведение <quote>на лету</quote> делает "
+"<productname>PostgreSQL</productname> исключительно подходящим для быстрого "
+"прототипирования новых приложений и структур хранения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:90(title)
+msgid "The <productname>PostgreSQL</productname> Type System"
+msgstr "Система типов <productname>PostgreSQL</productname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:92(indexterm)
+msgid "<primary>base type</primary>"
+msgstr "<primary>базовый тип</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:96(indexterm)
+msgid "<primary>data type</primary> <secondary>base</secondary>"
+msgstr "<primary>тип данных</primary> <secondary>базовый</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:101(indexterm)
+msgid "<primary>composite type</primary>"
+msgstr "<primary>составной тип</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:105(indexterm)
+msgid "<primary>data type</primary> <secondary>composite</secondary>"
+msgstr "<primary>тип данных</primary> <secondary>составной</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:110(para)
+msgid ""
+"<productname>PostgreSQL</productname> data types are divided into base "
+"types, composite types, domains, and pseudo-types."
+msgstr ""
+"Типы данных <productname>PostgreSQL</productname> делятся на базовые, "
+"составные, доменные и псевдотипы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:116(title)
+msgid "Base Types"
+msgstr "Базовые типы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:118(para)
+msgid ""
+"Base types are those, like <type>int4</type>, that are implemented below the "
+"level of the <acronym>SQL</acronym> language (typically in a low-level "
+"language such as C). They generally correspond to what are often known as "
+"abstract data types. <productname>PostgreSQL</productname> can only operate "
+"on such types through functions provided by the user and only understands "
+"the behavior of such types to the extent that the user describes them. Base "
+"types are further subdivided into scalar and array types. For each scalar "
+"type, a corresponding array type is automatically created that can hold "
+"variable-size arrays of that scalar type."
+msgstr ""
+"Базовые типы — это типы вроде <type>int4</type>, которые реализуются ниже "
+"уровня языка <acronym>SQL</acronym> (обычно на низкоуровневом языке, "
+"например, C). В общих чертах они соответствуют так называемым абстрактным "
+"типам данных. <productname>PostgreSQL</productname> может работать с такими "
+"типами только через функции, предоставленные пользователем, и понимать их "
+"поведение только в той степени, в какой его опишет пользователь. Базовые "
+"типы подразделяются на скалярные типы и массивы. Для каждого скалярного типа "
+"автоматически создаётся тип массива, который может содержать множество "
+"значений этого скалярного типа переменного размера."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:134(title)
+msgid "Composite Types"
+msgstr "Составные типы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:136(para)
+msgid ""
+"Composite types, or row types, are created whenever the user creates a "
+"table. It is also possible to use <xref linkend=\"sql-createtype\"/> to "
+"define a <quote>stand-alone</quote> composite type with no associated table. "
+"A composite type is simply a list of types with associated field names. A "
+"value of a composite type is a row or record of field values. The user can "
+"access the component fields from <acronym>SQL</acronym> queries. Refer to "
+"<xref linkend=\"rowtypes\"/> for more information on composite types."
+msgstr ""
+"Составные типы, или типы строк, образуются при создании любой таблицы. С "
+"помощью команды <xref linkend=\"sql-createtype\"/> также можно определить "
+"<quote>независимый</quote> составной тип, не связанный с таблицей. Составной "
+"тип представляет собой просто список типов с определёнными именами полей. "
+"Значением составного типа является строка таблицы или запись из значений "
+"полей. Пользователь может обращаться к этим полям из запросов <acronym>SQL</"
+"acronym>. За дополнительными сведениями о составных типах обратитесь к <xref "
+"remap=\"3\" linkend=\"rowtypes\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:150(title)
+msgid "Domains"
+msgstr "Домены"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:152(para)
+msgid ""
+"A domain is based on a particular base type and for many purposes is "
+"interchangeable with its base type. However, a domain can have constraints "
+"that restrict its valid values to a subset of what the underlying base type "
+"would allow."
+msgstr ""
+"Домен основывается на определённом базовом типе и во многих аспектах "
+"взаимозаменяем с ним. Однако домен может иметь дополнительные ограничения, "
+"уменьшающие множество допустимых значений относительно нижележащего базового "
+"типа."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:159(para)
+msgid ""
+"Domains can be created using the <acronym>SQL</acronym> command <xref "
+"linkend=\"sql-createdomain\"/>. Their creation and use is not discussed in "
+"this chapter."
+msgstr ""
+"Доменные типы можно создавать, используя <acronym>SQL</acronym>-команду "
+"<xref linkend=\"sql-createdomain\"/>. Их создание и применение в этой главе "
+"не рассматривается."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:167(title)
+msgid "Pseudo-Types"
+msgstr "Псевдотипы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:169(para)
+msgid ""
+"There are a few <quote>pseudo-types</quote> for special purposes. Pseudo-"
+"types cannot appear as columns of tables or attributes of composite types, "
+"but they can be used to declare the argument and result types of functions. "
+"This provides a mechanism within the type system to identify special classes "
+"of functions. <xref linkend=\"datatype-pseudotypes-table\"/> lists the "
+"existing pseudo-types."
+msgstr ""
+"Для специальных целей существует также несколько <quote>псевдотипов</quote>. "
+"Псевдотипы не могут применяться в столбцах таблицы или атрибутах составных "
+"типов, но их можно использовать в объявлениях аргументов и результатов "
+"функций. Это даёт возможность выделить в системе типов специальные классы "
+"функций. Все существующие псевдотипы перечислены в <xref remap=\"6\" linkend="
+"\"datatype-pseudotypes-table\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:181(title)
+msgid "Polymorphic Types"
+msgstr "Полиморфные типы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:183(indexterm)
+msgid "<primary>polymorphic type</primary>"
+msgstr "<primary>полиморфный тип</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:187(indexterm)
+msgid "<primary>polymorphic function</primary>"
+msgstr "<primary>полиморфная функция</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:191(indexterm)
+msgid "<primary>type</primary> <secondary>polymorphic</secondary>"
+msgstr "<primary>тип</primary> <secondary>полиморфный</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:196(indexterm)
+msgid "<primary>function</primary> <secondary>polymorphic</secondary>"
+msgstr "<primary>функция</primary> <secondary>полиморфная</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:201(para)
+msgid ""
+"Five pseudo-types of special interest are <type>anyelement</type>, "
+"<type>anyarray</type>, <type>anynonarray</type>, <type>anyenum</type>, and "
+"<type>anyrange</type>, which are collectively called <firstterm>polymorphic "
+"types</firstterm>. Any function declared using these types is said to be a "
+"<firstterm>polymorphic function</firstterm>. A polymorphic function can "
+"operate on many different data types, with the specific data type(s) being "
+"determined by the data types actually passed to it in a particular call."
+msgstr ""
+"Особый интерес представляют пять псевдотипов: <type>anyelement</type>, "
+"<type>anyarray</type>, <type>anynonarray</type>, <type>anyenum</type> и "
+"<type>anyrange</type>, которые называются <firstterm>полиморфными типами</"
+"firstterm>. Функция, в объявлении которой используются эти типы, называется "
+"<firstterm>полиморфной</firstterm>. Полиморфная функция может работать со "
+"множеством различных типов данных; конкретный тип определяется в зависимости "
+"от значения, переданного при вызове."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:213(para)
+msgid ""
+"Polymorphic arguments and results are tied to each other and are resolved to "
+"a specific data type when a query calling a polymorphic function is parsed. "
+"Each position (either argument or return value) declared as "
+"<type>anyelement</type> is allowed to have any specific actual data type, "
+"but in any given call they must all be the <emphasis>same</emphasis> actual "
+"type. Each position declared as <type>anyarray</type> can have any array "
+"data type, but similarly they must all be the same type. And similarly, "
+"positions declared as <type>anyrange</type> must all be the same range type. "
+"Furthermore, if there are positions declared <type>anyarray</type> and "
+"others declared <type>anyelement</type>, the actual array type in the "
+"<type>anyarray</type> positions must be an array whose elements are the same "
+"type appearing in the <type>anyelement</type> positions. Similarly, if there "
+"are positions declared <type>anyrange</type> and others declared "
+"<type>anyelement</type>, the actual range type in the <type>anyrange</type> "
+"positions must be a range whose subtype is the same type appearing in the "
+"<type>anyelement</type> positions. <type>anynonarray</type> is treated "
+"exactly the same as <type>anyelement</type>, but adds the additional "
+"constraint that the actual type must not be an array type. <type>anyenum</"
+"type> is treated exactly the same as <type>anyelement</type>, but adds the "
+"additional constraint that the actual type must be an enum type."
+msgstr ""
+"Полиморфные аргументы и результаты связываются друг с другом и сводятся к "
+"определённому типу данных при разборе запроса, вызывающего полиморфную "
+"функцию. В каждой позиции (в аргументах или возвращаемом значении), "
+"объявленной как <type>anyelement</type>, может передаваться любой "
+"фактический тип данных, но в каждом конкретном вызове все эти фактические "
+"типы должны быть <emphasis>одинаковыми</emphasis>. Аналогичным образом, в "
+"каждой позиции, объявленной как <type>anyarray</type>, может передаваться "
+"любой тип данных массива, но все фактические типы массивов должны совпадать. "
+"Так же и во всех позициях, объявленных как <type>anyrange</type>, должен "
+"передаваться одинаковый тип-диапазон. Более того, если некоторые позиции "
+"объявлены как <type>anyarray</type>, а другие как <type>anyelement</type>, "
+"то фактическим типом в позициях <type>anyarray</type> должен быть массив, "
+"элементы которого имеют тот же тип, что и значения в позициях "
+"<type>anyelement</type>. Подобным образом, если одни позиции объявлены как "
+"<type>anyrange</type>, а другие как <type>anyelement</type>, фактическим "
+"типом в позициях <type>anyrange</type> должен быть диапазон, подтип которого "
+"совпадает с типом, передаваемым в позициях <type>anyelement</type>. "
+"Псевдотип <type>anynonarray</type> обрабатывается так же, как "
+"<type>anyelement</type>, но с дополнительным ограничением — фактический тип "
+"не должен быть типом массива. Псевдотип <type>anyenum</type> тоже "
+"обрабатывается как <type>anyelement</type>, но его фактические типы "
+"ограничиваются перечислениями."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:240(para)
+msgid ""
+"Thus, when more than one argument position is declared with a polymorphic "
+"type, the net effect is that only certain combinations of actual argument "
+"types are allowed. For example, a function declared as "
+"<literal>equal(anyelement, anyelement)</literal> will take any two input "
+"values, so long as they are of the same data type."
+msgstr ""
+"Таким образом, когда с полиморфным типом объявлено несколько аргументов, в "
+"итоге допускаются только определённые комбинации фактических типов. "
+"Например, функция, объявленная как <literal>equal(anyelement, anyelement)</"
+"literal>, примет в аргументах любые два значения, но только если их типы "
+"данных совпадают."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:248(para)
+msgid ""
+"When the return value of a function is declared as a polymorphic type, there "
+"must be at least one argument position that is also polymorphic, and the "
+"actual data type supplied as the argument determines the actual result type "
+"for that call. For example, if there were not already an array subscripting "
+"mechanism, one could define a function that implements subscripting as "
+"<literal>subscript(anyarray, integer) returns anyelement</literal>. This "
+"declaration constrains the actual first argument to be an array type, and "
+"allows the parser to infer the correct result type from the actual first "
+"argument's type. Another example is that a function declared as "
+"<literal>f(anyarray) returns anyenum</literal> will only accept arrays of "
+"enum types."
+msgstr ""
+"Когда с полиморфным типом объявлено возвращаемое значение функции, так же "
+"полиморфным должен быть минимум один аргумент, и фактический тип результата "
+"при конкретном вызове определится по типу фактически переданного аргумента. "
+"Например, если бы отсутствовал механизм обращения к элементам массива, его "
+"можно было бы реализовать, создав функцию <literal>subscript(anyarray, "
+"integer) returns anyelement</literal>. С таким объявлением первым "
+"фактическим аргументом должен быть массив, и из него будет выведен "
+"правильный тип результата при разборе запроса. В качестве другого примера "
+"можно привести функцию <literal>f(anyarray) returns anyenum</literal>, "
+"которая будет принимать только массивы перечислений."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:262(para)
+msgid ""
+"Note that <type>anynonarray</type> and <type>anyenum</type> do not represent "
+"separate type variables; they are the same type as <type>anyelement</type>, "
+"just with an additional constraint. For example, declaring a function as "
+"<literal>f(anyelement, anyenum)</literal> is equivalent to declaring it as "
+"<literal>f(anyenum, anyenum)</literal>: both actual arguments have to be the "
+"same enum type."
+msgstr ""
+"Заметьте, что <type>anynonarray</type> и <type>anyenum</type> представляют "
+"не отдельные типы переменных; это те же типы, что и <type>anyelement</type>, "
+"но с дополнительными ограничениями. Например, объявление функции "
+"<literal>f(anyelement, anyenum)</literal> равнозначно объявлению "
+"<literal>f(anyenum, anyenum)</literal>: оба фактических аргумента должны "
+"быть одинаковыми типами-перечислениями."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:271(para)
+msgid ""
+"A variadic function (one taking a variable number of arguments, as in <xref "
+"linkend=\"xfunc-sql-variadic-functions\"/>) can be polymorphic: this is "
+"accomplished by declaring its last parameter as <literal>VARIADIC</literal> "
+"<type>anyarray</type>. For purposes of argument matching and determining the "
+"actual result type, such a function behaves the same as if you had written "
+"the appropriate number of <type>anynonarray</type> parameters."
+msgstr ""
+"Функции с переменным числом аргументом (описанные в <xref remap=\"6\" "
+"linkend=\"xfunc-sql-variadic-functions\"/>) тоже могут быть полиморфными: "
+"для этого их последний параметр описывается как <literal>VARIADIC</literal> "
+"<type>anyarray</type>. Для целей сопоставления аргументов и определения "
+"фактического типа результата такая функция представляется так же, как если "
+"бы в ней явно объявлялось нужное число параметров <type>anynonarray</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:291(title)
+msgid "Packaging Related Objects into an Extension"
+msgstr "Упаковывание связанных объектов в расширение"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:293(indexterm)
+msgid "<primary>extension</primary>"
+msgstr "<primary>расширение</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:297(para)
+msgid ""
+"A useful extension to <productname>PostgreSQL</productname> typically "
+"includes multiple SQL objects; for example, a new data type will require new "
+"functions, new operators, and probably new index operator classes. It is "
+"helpful to collect all these objects into a single package to simplify "
+"database management. <productname>PostgreSQL</productname> calls such a "
+"package an <firstterm>extension</firstterm>. To define an extension, you "
+"need at least a <firstterm>script file</firstterm> that contains the "
+"<acronym>SQL</acronym> commands to create the extension's objects, and a "
+"<firstterm>control file</firstterm> that specifies a few basic properties of "
+"the extension itself. If the extension includes C code, there will typically "
+"also be a shared library file into which the C code has been built. Once you "
+"have these files, a simple <xref linkend=\"sql-createextension\"/> command "
+"loads the objects into your database."
+msgstr ""
+"Полезное расширение <productname>PostgreSQL</productname> обычно включает "
+"несколько объектов SQL; например, с появлением нового типа данных могут "
+"потребоваться новые функции, новые операторы и новые классы операторов. Все "
+"эти объекты удобно собрать в один пакет, с тем чтобы упростить управление "
+"базой данных. В <productname>PostgreSQL</productname> такие пакеты "
+"называются <firstterm>расширениями</firstterm>. Чтобы определить расширение, "
+"вам понадобится как минимум <firstterm>файл скрипта</firstterm> с командами "
+"<acronym>SQL</acronym>, создающими объекты расширения, и "
+"<firstterm>управляющий файл</firstterm>, в котором определяются несколько "
+"базовых свойств самого расширения. Если расширение написано на C, в него "
+"обычно также включается файл разделяемой библиотеки, содержащий "
+"скомпилированный код. Обеспечив наличие этих файлов, загрузить их в базу "
+"данных можно простой командой <xref linkend=\"sql-createextension\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:314(para)
+msgid ""
+"The main advantage of using an extension, rather than just running the "
+"<acronym>SQL</acronym> script to load a bunch of <quote>loose</quote> "
+"objects into your database, is that <productname>PostgreSQL</productname> "
+"will then understand that the objects of the extension go together. You can "
+"drop all the objects with a single <xref linkend=\"sql-dropextension\"/> "
+"command (no need to maintain a separate <quote>uninstall</quote> script). "
+"Even more useful, <application>pg_dump</application> knows that it should "
+"not dump the individual member objects of the extension &mdash; it will just "
+"include a <command>CREATE EXTENSION</command> command in dumps, instead. "
+"This vastly simplifies migration to a new version of the extension that "
+"might contain more or different objects than the old version. Note however "
+"that you must have the extension's control, script, and other files "
+"available when loading such a dump into a new database."
+msgstr ""
+"Основное преимущество расширений по сравнению с обычным <acronym>SQL</"
+"acronym>-скриптом, загружающим множество <quote>разрозненных</quote> "
+"объектов в базу данных, состоит в том, что <productname>PostgreSQL</"
+"productname> будет понимать, что объекты расширения связаны вместе. Вы "
+"можете удалить все объекты одной командой <xref linkend=\"sql-dropextension"
+"\"/> (разрабатывать отдельный скрипт <quote>uninstall</quote> не требуется). "
+"Ещё полезнее то, что утилита <application>pg_dump</application> знает, что "
+"не нужно выгружать отдельные объекты, составляющие расширение &mdash; вместо "
+"этого она просто включит в архивный файл команду <command>CREATE EXTENSION</"
+"command>. Это кардинально упрощает миграцию на новую версию расширения, "
+"которая может содержать новые или другие объекты по сравнению с предыдущей "
+"версией. Заметьте, однако, что при загрузке такого архива в базу данных "
+"обязательно наличие скрипта, управляющего файла и других файлов расширения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:330(para)
+msgid ""
+"<productname>PostgreSQL</productname> will not let you drop an individual "
+"object contained in an extension, except by dropping the whole extension. "
+"Also, while you can change the definition of an extension member object (for "
+"example, via <command>CREATE OR REPLACE FUNCTION</command> for a function), "
+"bear in mind that the modified definition will not be dumped by "
+"<application>pg_dump</application>. Such a change is usually only sensible "
+"if you concurrently make the same change in the extension's script file. "
+"(But there are special provisions for tables containing configuration data; "
+"see <xref linkend=\"extend-extensions-config-tables\"/>.) In production "
+"situations, it's generally better to create an extension update script to "
+"perform changes to extension member objects."
+msgstr ""
+"<productname>PostgreSQL</productname> не позволит удалить отдельный объект, "
+"содержащийся в расширении, кроме как при удалении всего расширения. Также "
+"имейте в виду, что вы можете изменить определение объекта, относящегося к "
+"расширению (например, командой <command>CREATE OR REPLACE FUNCTION</command> "
+"для функции), но изменённое определение не будет выгружено утилитой "
+"<application>pg_dump</application>. Такие изменения обычно разумны, только "
+"если они параллельно отражаются в файле скрипта расширения. (Для таблиц, "
+"содержащих конфигурационные данные, предусмотрены специальные средства; см. "
+"<xref remap=\"4\" linkend=\"extend-extensions-config-tables\"/>.) В "
+"производственной среде обычно лучше создавать скрипт обновления расширения, "
+"который будет изменять относящиеся к расширению объекты."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:344(para)
+msgid ""
+"The extension script may set privileges on objects that are part of the "
+"extension via <command>GRANT</command> and <command>REVOKE</command> "
+"statements. The final set of privileges for each object (if any are set) "
+"will be stored in the <link linkend=\"catalog-pg-init-privs"
+"\"><structname>pg_init_privs</structname></link> system catalog. When "
+"<application>pg_dump</application> is used, the <command>CREATE EXTENSION</"
+"command> command will be included in the dump, followed by the set of "
+"<command>GRANT</command> and <command>REVOKE</command> statements necessary "
+"to set the privileges on the objects to what they were at the time the dump "
+"was taken."
+msgstr ""
+"Скрипт расширения может устанавливать права доступа для объектов, являющихся "
+"частью расширения, выполняя команды <command>GRANT</command> и "
+"<command>REVOKE</command>. Окончательный набор прав для каждого объекта "
+"(если они заданы) будет сохранён в системном каталоге <link linkend="
+"\"catalog-pg-init-privs\"><structname>pg_init_privs</structname></link>. При "
+"использовании <application>pg_dump</application> в выгружаемый скрипт будет "
+"выведена команда <command>CREATE EXTENSION</command> с последующими "
+"операторами <command>GRANT</command> и <command>REVOKE</command>, которые "
+"установят права, имевшие место в момент выгрузки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:357(para)
+msgid ""
+"<productname>PostgreSQL</productname> does not currently support extension "
+"scripts issuing <command>CREATE POLICY</command> or <command>SECURITY LABEL</"
+"command> statements. These are expected to be set after the extension has "
+"been created. All RLS policies and security labels on extension objects will "
+"be included in dumps created by <application>pg_dump</application>."
+msgstr ""
+"<productname>PostgreSQL</productname> в настоящее время не поддерживает "
+"скрипты расширений, выполняющие операторы <command>CREATE POLICY</command> "
+"или <command>SECURITY LABEL</command>. Ожидается, что такие команды будут "
+"выполняться после того, как расширение будет создано. Выгружая данные, "
+"<application>pg_dump</application> будет также включать в вывод все политики "
+"RLS и метки безопасности."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:365(para)
+msgid ""
+"The extension mechanism also has provisions for packaging modification "
+"scripts that adjust the definitions of the SQL objects contained in an "
+"extension. For example, if version 1.1 of an extension adds one function and "
+"changes the body of another function compared to 1.0, the extension author "
+"can provide an <firstterm>update script</firstterm> that makes just those "
+"two changes. The <command>ALTER EXTENSION UPDATE</command> command can then "
+"be used to apply these changes and track which version of the extension is "
+"actually installed in a given database."
+msgstr ""
+"Механизм расширений также предоставляет средства для поддержки "
+"дополнительных скриптов, призванных изменять определение объектов SQL, "
+"содержащихся в расширении. Например, если версия расширения 1.1, по "
+"сравнению с версией 1.0, добавляет одну функцию и изменяет тело другой "
+"функции, автор расширения может предоставить <firstterm>скрипт обновления</"
+"firstterm>, который произведёт именно эти два изменения. Затем, "
+"воспользовавшись командой <command>ALTER EXTENSION UPDATE</command>, можно "
+"будет применить эти изменения и отследить, какая версия расширения "
+"фактически установлена в заданной базе данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:376(para)
+msgid ""
+"The kinds of SQL objects that can be members of an extension are shown in "
+"the description of <xref linkend=\"sql-alterextension\"/>. Notably, objects "
+"that are database-cluster-wide, such as databases, roles, and tablespaces, "
+"cannot be extension members since an extension is only known within one "
+"database. (Although an extension script is not prohibited from creating such "
+"objects, if it does so they will not be tracked as part of the extension.) "
+"Also notice that while a table can be a member of an extension, its "
+"subsidiary objects such as indexes are not directly considered members of "
+"the extension. Another important point is that schemas can belong to "
+"extensions, but not vice versa: an extension as such has an unqualified name "
+"and does not exist <quote>within</quote> any schema. The extension's member "
+"objects, however, will belong to schemas whenever appropriate for their "
+"object types. It may or may not be appropriate for an extension to own the "
+"schema(s) its member objects are within."
+msgstr ""
+"Типы SQL-объектов, которые могут быть членами расширения, перечислены в "
+"описании <xref linkend=\"sql-alterextension\"/>. Не могут быть его членами, "
+"в частности, объекты уровня кластера, такие как базы данных, роли и "
+"табличные пространства, так как расширение существует только в рамках одной "
+"базы данных. (Скрипту расширения не запрещается создавать такие объекты, но "
+"если он сделает это, они не будут считаться частью расширения.) Также "
+"заметьте, что несмотря на то, что таблица может быть членом расширения, её "
+"подчинённые объекты, такие как индексы, непосредственными членами расширения "
+"считаться не будут. Ещё один важный момент — схемы могут принадлежать "
+"расширениям, но не наоборот; поэтому расширение имеет неполное имя и не "
+"существует <quote>внутри</quote> какой-либо схемы. Однако объекты-члены "
+"расширения, будут относиться к схемам, если это уместно для их типов. Сами "
+"расширения могут иметь, а могут не иметь основания владеть схемами, к "
+"которым относятся объекты-члены расширения."
+
+#. +> REL_10
+#: extend.xml:394(para)
+msgid ""
+"If an extension's script creates any temporary objects (such as temp "
+"tables), those objects are treated as extension members for the remainder of "
+"the current session, but are automatically dropped at session end, as any "
+"temporary object would be. This is an exception to the rule that extension "
+"member objects cannot be dropped without dropping the whole extension."
+msgstr ""
+"Если скрипт расширения создаёт какие-либо временные объекты (например, "
+"временные таблицы), эти объекты будут считаться членами расширения до конца "
+"текущего сеанса, но удалятся автоматически в конце сеанса, как и должны "
+"временные объекты. Это является исключением из правила, запрещающего "
+"удаление объектов-членов расширения без удаления всего расширения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:404(title)
+msgid "Extension Files"
+msgstr "Файлы расширений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:406(indexterm)
+msgid "<primary>control file</primary>"
+msgstr "<primary>управляющий файл</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:410(para)
+msgid ""
+"The <xref linkend=\"sql-createextension\"/> command relies on a control file "
+"for each extension, which must be named the same as the extension with a "
+"suffix of <literal>.control</literal>, and must be placed in the "
+"installation's <literal>SHAREDIR/extension</literal> directory. There must "
+"also be at least one <acronym>SQL</acronym> script file, which follows the "
+"naming pattern <literal><replaceable>extension</replaceable>--"
+"<replaceable>version</replaceable>.sql</literal> (for example, "
+"<literal>foo--1.0.sql</literal> for version <literal>1.0</literal> of "
+"extension <literal>foo</literal>). By default, the script file(s) are also "
+"placed in the <literal>SHAREDIR/extension</literal> directory; but the "
+"control file can specify a different directory for the script file(s)."
+msgstr ""
+"Команда <xref linkend=\"sql-createextension\"/> задействует управляющий файл "
+"расширения, который должен называться по имени расширения, с суффиксом "
+"<literal>.control</literal>, и должен быть помещён в каталог сервера "
+"<literal>SHAREDIR/extension</literal>. Должен быть также ещё минимум один "
+"<acronym>SQL</acronym>-скрипт, с именем, соответствующим шаблону "
+"<literal><replaceable>расширение</replaceable>--<replaceable>версия</"
+"replaceable>.sql</literal> (например, <literal>foo--1.0.sql</literal> для "
+"версии <literal>1.0</literal> расширения <literal>foo</literal>). По "
+"умолчанию скрипт(ы) также помещается в каталог <literal>SHAREDIR/extension</"
+"literal>; но в управляющем файле можно задать и другой каталог."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:424(para)
+msgid ""
+"The file format for an extension control file is the same as for the "
+"<filename>postgresql.conf</filename> file, namely a list of "
+"<replaceable>parameter_name</replaceable> <literal>=</literal> "
+"<replaceable>value</replaceable> assignments, one per line. Blank lines and "
+"comments introduced by <literal>#</literal> are allowed. Be sure to quote "
+"any value that is not a single word or number."
+msgstr ""
+"Формат управляющего файла расширения не отличается от формата "
+"<filename>postgresql.conf</filename>, а именно представляет собой список "
+"присвоений <replaceable>имя_параметра</replaceable> <literal>=</literal> "
+"<replaceable>значение</replaceable>, по одному в строке. В нём также "
+"допускаются пустые строки и комментарии, начинающиеся с <literal>#</"
+"literal>. Все значения, отличные от единственного слова или числа, в нём "
+"должны заключаться в кавычки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:433(para)
+msgid "A control file can set the following parameters:"
+msgstr "В управляющем файле могут устанавливаться следующие параметры:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:439(term)
+msgid "<varname>directory</varname> (<type>string</type>)"
+msgstr "<varname>directory</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:441(para)
+msgid ""
+"The directory containing the extension's <acronym>SQL</acronym> script "
+"file(s). Unless an absolute path is given, the name is relative to the "
+"installation's <literal>SHAREDIR</literal> directory. The default behavior "
+"is equivalent to specifying <literal>directory = 'extension'</literal>."
+msgstr ""
+"Каталог, содержащий <acronym>SQL</acronym>-скрипт(ы) расширения. Если только "
+"не задан абсолютный путь, это имя рассматривается относительно каталога "
+"сервера <literal>SHAREDIR</literal>. По умолчанию подразумевается указание "
+"<literal>directory = 'extension'</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:452(term)
+msgid "<varname>default_version</varname> (<type>string</type>)"
+msgstr "<varname>default_version</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:454(para)
+msgid ""
+"The default version of the extension (the one that will be installed if no "
+"version is specified in <command>CREATE EXTENSION</command>). Although this "
+"can be omitted, that will result in <command>CREATE EXTENSION</command> "
+"failing if no <literal>VERSION</literal> option appears, so you generally "
+"don't want to do that."
+msgstr ""
+"Версия расширения по умолчанию (та, которая будет установлена, если в "
+"<command>CREATE EXTENSION</command> не будет указана никакая версия). Хотя "
+"этот параметр можно опустить, это приведёт к ошибке в <command>CREATE "
+"EXTENSION</command> без явного указания <literal>VERSION</literal>, что вряд "
+"ли будет желаемым поведением."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:465(term)
+msgid "<varname>comment</varname> (<type>string</type>)"
+msgstr "<varname>comment</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:467(para)
+msgid ""
+"A comment (any string) about the extension. The comment is applied when "
+"initially creating an extension, but not during extension updates (since "
+"that might override user-added comments). Alternatively, the extension's "
+"comment can be set by writing a <xref linkend=\"sql-comment\"/> command in "
+"the script file."
+msgstr ""
+"Комментарий (произвольная строка) к расширению. Комментарий применяется при "
+"изначальном создании расширения, но не при обновлениях расширения (так как "
+"при этом мог бы заменяться комментарий, заданный пользователем). Комментарий "
+"расширения также можно задать посредством команды <xref linkend=\"sql-comment"
+"\"/> в файле скрипта."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:478(term)
+msgid "<varname>encoding</varname> (<type>string</type>)"
+msgstr "<varname>encoding</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:480(para)
+msgid ""
+"The character set encoding used by the script file(s). This should be "
+"specified if the script files contain any non-ASCII characters. Otherwise "
+"the files will be assumed to be in the database encoding."
+msgstr ""
+"Кодировка символов, используемая в файлах скриптов. Её следует указать, если "
+"эти файлы содержат символы не из набора ASCII. По умолчанию предполагается, "
+"что эти файлы содержат текст в кодировке базы данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:489(term)
+msgid "<varname>module_pathname</varname> (<type>string</type>)"
+msgstr "<varname>module_pathname</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:491(para)
+msgid ""
+"The value of this parameter will be substituted for each occurrence of "
+"<literal>MODULE_PATHNAME</literal> in the script file(s). If it is not set, "
+"no substitution is made. Typically, this is set to <literal>$libdir/"
+"<replaceable>shared_library_name</replaceable></literal> and then "
+"<literal>MODULE_PATHNAME</literal> is used in <command>CREATE FUNCTION</"
+"command> commands for C-language functions, so that the script files do not "
+"need to hard-wire the name of the shared library."
+msgstr ""
+"Значение этого параметра будет подставляться вместо каждого вхождения "
+"<literal>MODULE_PATHNAME</literal> в скриптах. Если этот параметр не задан, "
+"подстановка не производится. Обычно для этого параметра устанавливается "
+"значение <literal>$libdir/<replaceable>имя_разделяемой_библиотеки</"
+"replaceable></literal>, а затем в командах <command>CREATE FUNCTION</"
+"command> для функций на языке C указывается <literal>MODULE_PATHNAME</"
+"literal>, чтобы в скриптах не приходилось жёстко задавать имя разделяемой "
+"библиотеки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:504(term)
+msgid "<varname>requires</varname> (<type>string</type>)"
+msgstr "<varname>requires</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:506(para)
+msgid ""
+"A list of names of extensions that this extension depends on, for example "
+"<literal>requires = 'foo, bar'</literal>. Those extensions must be installed "
+"before this one can be installed."
+msgstr ""
+"Список имён расширений, от которых зависит данное, например, "
+"<literal>requires = 'foo, bar'</literal>. Эти расширения должны быть уже "
+"установлены, прежде чем можно будет установить данное."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:515(term)
+msgid "<varname>superuser</varname> (<type>boolean</type>)"
+msgstr "<varname>superuser</varname> (<type>boolean</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:517(para)
+msgid ""
+"If this parameter is <literal>true</literal> (which is the default), only "
+"superusers can create the extension or update it to a new version. If it is "
+"set to <literal>false</literal>, just the privileges required to execute the "
+"commands in the installation or update script are required."
+msgstr ""
+"Если этот параметр имеет значение <literal>true</literal> (по умолчанию), "
+"только суперпользователи смогут создать это расширение или обновить его до "
+"новой версии. Если он равен <literal>false</literal>, для этого будет "
+"достаточно прав, необходимых для выполнения команд в установочном скрипте "
+"или скрипте обновления."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:528(term)
+msgid "<varname>relocatable</varname> (<type>boolean</type>)"
+msgstr "<varname>relocatable</varname> (<type>boolean</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:530(para)
+msgid ""
+"An extension is <firstterm>relocatable</firstterm> if it is possible to move "
+"its contained objects into a different schema after initial creation of the "
+"extension. The default is <literal>false</literal>, i.e. the extension is "
+"not relocatable. See <xref linkend=\"extend-extensions-relocation\"/> for "
+"more information."
+msgstr ""
+"Расширение является <firstterm>перемещаемым</firstterm>, если относящиеся к "
+"нему объекты после создания расширения можно переместить в другую схему. По "
+"умолчанию подразумевается <literal>false</literal>, то есть расширение не "
+"считается перемещаемым. Подробнее об этом рассказывается в <xref remap=\"6\" "
+"linkend=\"extend-extensions-relocation\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:541(term)
+msgid "<varname>schema</varname> (<type>string</type>)"
+msgstr "<varname>schema</varname> (<type>string</type>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:543(para)
+msgid ""
+"This parameter can only be set for non-relocatable extensions. It forces the "
+"extension to be loaded into exactly the named schema and not any other. The "
+"<varname>schema</varname> parameter is consulted only when initially "
+"creating an extension, not during extension updates. See <xref linkend="
+"\"extend-extensions-relocation\"/> for more information."
+msgstr ""
+"Этот параметр может задаваться только для неперемещаемых расширений. Если он "
+"задан, расширение можно будет загрузить только в указанную схему и не в "
+"какую другую. Подробнее об этом рассказывается ниже. Параметр "
+"<varname>schema</varname> учитывается только при изначальном создании "
+"расширения, но не при его обновлении. Подробнее об этом рассказывается в "
+"<xref remap=\"6\" linkend=\"extend-extensions-relocation\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:555(para)
+msgid ""
+"In addition to the primary control file <literal><replaceable>extension</"
+"replaceable>.control</literal>, an extension can have secondary control "
+"files named in the style <literal><replaceable>extension</replaceable>--"
+"<replaceable>version</replaceable>.control</literal>. If supplied, these "
+"must be located in the script file directory. Secondary control files follow "
+"the same format as the primary control file. Any parameters set in a "
+"secondary control file override the primary control file when installing or "
+"updating to that version of the extension. However, the parameters "
+"<varname>directory</varname> and <varname>default_version</varname> cannot "
+"be set in a secondary control file."
+msgstr ""
+"Помимо главного управляющего файла <literal><replaceable>расширение</"
+"replaceable>.control</literal>, расширение может включать дополнительные "
+"управляющие файлы с именами вида <literal><replaceable>расширение</"
+"replaceable>--<replaceable>версия</replaceable>.control</literal>. Если они "
+"присутствуют, они должны находиться в том же каталоге, что и основной "
+"скрипт. Дополнительные управляющие файлы имеют тот же формат, что и "
+"основной. Любые параметры, заданные в дополнительном управляющем файле, "
+"переопределяют параметры основного файла, когда выполняется установка этой "
+"версии расширения или обновление до неё. Однако параметры "
+"<varname>directory</varname> и <varname>default_version</varname> в "
+"дополнительных управляющих файлах задать нельзя."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:568(para)
+msgid ""
+"An extension's <acronym>SQL</acronym> script files can contain any SQL "
+"commands, except for transaction control commands (<command>BEGIN</command>, "
+"<command>COMMIT</command>, etc) and commands that cannot be executed inside "
+"a transaction block (such as <command>VACUUM</command>). This is because the "
+"script files are implicitly executed within a transaction block."
+msgstr ""
+"<acronym>SQL</acronym>-скрипты расширений могут содержать любые команды SQL, "
+"за исключением команд управления транзакциями (<command>BEGIN</command>, "
+"<command>COMMIT</command> и т. д.) и команд, которые не могут выполняться "
+"внутри блока транзакции (например, <command>VACUUM</command>). Это "
+"объясняется тем, что эти скрипты неявно выполняются в блоке транзакции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:576(para)
+msgid ""
+"An extension's <acronym>SQL</acronym> script files can also contain lines "
+"beginning with <literal>\\echo</literal>, which will be ignored (treated as "
+"comments) by the extension mechanism. This provision is commonly used to "
+"throw an error if the script file is fed to <application>psql</application> "
+"rather than being loaded via <command>CREATE EXTENSION</command> (see "
+"example script in <xref linkend=\"extend-extensions-example\"/>). Without "
+"that, users might accidentally load the extension's contents as "
+"<quote>loose</quote> objects rather than as an extension, a state of affairs "
+"that's a bit tedious to recover from."
+msgstr ""
+"<acronym>SQL</acronym>-скрипты расширений также могут содержать строки, "
+"начинающиеся с <literal>\\echo</literal>, и они будут игнорироваться "
+"(восприниматься как комментарии) механизмом расширений. Это часто "
+"используется для вывода ошибки в случае, если этот скрипт выполняется в "
+"<application>psql</application>, а не загружается командой <command>CREATE "
+"EXTENSION</command> (см. пример скрипта в <xref remap=\"6\" linkend=\"extend-"
+"extensions-example\"/>). Если такое выполнение не предотвратить, "
+"пользователи могут случайно загрузить содержимое расширения как "
+"<quote>разрозненные</quote> объекты, а не как собственно расширение, и "
+"получить состояние, которое довольно сложно исправить."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:588(para)
+msgid ""
+"While the script files can contain any characters allowed by the specified "
+"encoding, control files should contain only plain ASCII, because there is no "
+"way for <productname>PostgreSQL</productname> to know what encoding a "
+"control file is in. In practice this is only an issue if you want to use non-"
+"ASCII characters in the extension's comment. Recommended practice in that "
+"case is to not use the control file <varname>comment</varname> parameter, "
+"but instead use <command>COMMENT ON EXTENSION</command> within a script file "
+"to set the comment."
+msgstr ""
+"Тогда как файлы скриптов могут содержать любые символы, допустимые в "
+"указанной кодировке, управляющие файлы могут содержать только ASCII-символы, "
+"так как указать кодировку этих файлов в <productname>PostgreSQL</"
+"productname> нет никакой возможности. На практике это представляет проблему, "
+"только если вы хотите использовать символы не из набора ASCII в комментарии "
+"расширения. В таких случаях рекомендуется не использовать параметр "
+"<varname>comment</varname> в управляющем файле, а вместо этого задать "
+"комментарий командой <command>COMMENT ON EXTENSION</command> в файле скрипта."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:602(title)
+msgid "Extension Relocatability"
+msgstr "Перемещаемость расширений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:604(para)
+msgid ""
+"Users often wish to load the objects contained in an extension into a "
+"different schema than the extension's author had in mind. There are three "
+"supported levels of relocatability:"
+msgstr ""
+"У пользователей часто возникает желание загрузить объекты, содержащиеся в "
+"расширении, в схему, отличную от той, что выбрал автор расширения. Насколько "
+"это поддерживает расширение, описывается одним из трёх уровней:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:612(para)
+msgid ""
+"A fully relocatable extension can be moved into another schema at any time, "
+"even after it's been loaded into a database. This is done with the "
+"<command>ALTER EXTENSION SET SCHEMA</command> command, which automatically "
+"renames all the member objects into the new schema. Normally, this is only "
+"possible if the extension contains no internal assumptions about what schema "
+"any of its objects are in. Also, the extension's objects must all be in one "
+"schema to begin with (ignoring objects that do not belong to any schema, "
+"such as procedural languages). Mark a fully relocatable extension by setting "
+"<literal>relocatable = true</literal> in its control file."
+msgstr ""
+"Полностью перемещаемое расширение может быть перемещено в другую схему в "
+"любое время, даже после того, как оно загружено в базу данных. Это "
+"осуществляется командой <command>ALTER EXTENSION SET SCHEMA</command>, "
+"которая автоматически переименовывает все объекты-члены расширения, перенося "
+"их в новую схему. Обычно это возможно, только если в расширении нет никаких "
+"внутренних предположений о том, в какой схеме находятся все его объекты. "
+"Кроме того, все объекты расширения должны находиться в одной исходной схеме "
+"(за исключением объектов, не принадлежащих схемам, как например, процедурные "
+"языки). Чтобы пометить расширение как полностью перемещаемое, установите "
+"<literal>relocatable = true</literal> в его управляющем файле."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:628(para)
+msgid ""
+"An extension might be relocatable during installation but not afterwards. "
+"This is typically the case if the extension's script file needs to reference "
+"the target schema explicitly, for example in setting <literal>search_path</"
+"literal> properties for SQL functions. For such an extension, set "
+"<literal>relocatable = false</literal> in its control file, and use "
+"<literal>@extschema@</literal> to refer to the target schema in the script "
+"file. All occurrences of this string will be replaced by the actual target "
+"schema's name before the script is executed. The user can set the target "
+"schema using the <literal>SCHEMA</literal> option of <command>CREATE "
+"EXTENSION</command>."
+msgstr ""
+"Расширение может быть перемещаемым в момент установки, но не после. Обычно "
+"это имеет место, когда скрипту расширения необходимо явно ссылаться на "
+"целевую схему, например, устанавливая свойства <literal>search_path</"
+"literal> для функций SQL. Для такого расширения нужно задать "
+"<literal>relocatable = false</literal> в его управляющем файле и обращаться "
+"к целевой схеме в скрипте по псевдоимени <literal>@extschema@</literal>. Все "
+"вхождения этого псевдоимени будут заменены именем выбранной целевой схемы "
+"перед выполнением скрипта. Пользователь может выбрать целевую схему в "
+"указании <literal>SCHEMA</literal> команды <command>CREATE EXTENSION</"
+"command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:643(para)
+msgid ""
+"If the extension does not support relocation at all, set "
+"<literal>relocatable = false</literal> in its control file, and also set "
+"<literal>schema</literal> to the name of the intended target schema. This "
+"will prevent use of the <literal>SCHEMA</literal> option of <command>CREATE "
+"EXTENSION</command>, unless it specifies the same schema named in the "
+"control file. This choice is typically necessary if the extension contains "
+"internal assumptions about schema names that can't be replaced by uses of "
+"<literal>@extschema@</literal>. The <literal>@extschema@</literal> "
+"substitution mechanism is available in this case too, although it is of "
+"limited use since the schema name is determined by the control file."
+msgstr ""
+"Если расширение вовсе не поддерживает перемещение, установите в его "
+"управляющем файле <literal>relocatable = false</literal>, и также задайте в "
+"параметре <literal>schema</literal> имя предполагаемой целевой схемы. Это "
+"предотвратит использование указания <literal>SCHEMA</literal> команды "
+"<command>CREATE EXTENSION</command>, если только оно задаёт не то же имя, "
+"что определёно в управляющем файле. Этот выбор обычно необходим, если в "
+"расширении делаются внутренние предположения об именах схемы, которые нельзя "
+"свести к использованию псевдоимени <literal>@extschema@</literal>. Механизм "
+"подстановки <literal>@extschema@</literal> будет работать и в этом случае, "
+"хотя польза от него будет ограниченной, так как имя схемы определяется "
+"управляющим файлом."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:663(programlisting)
+#, no-wrap
+msgid "SET LOCAL search_path TO @extschema@;"
+msgstr "SET LOCAL search_path TO @extschema@;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:658(para)
+msgid ""
+"In all cases, the script file will be executed with <xref linkend=\"guc-"
+"search-path\"/> initially set to point to the target schema; that is, "
+"<command>CREATE EXTENSION</command> does the equivalent of this: "
+"<placeholder-1/> This allows the objects created by the script file to go "
+"into the target schema. The script file can change <varname>search_path</"
+"varname> if it wishes, but that is generally undesirable. "
+"<varname>search_path</varname> is restored to its previous setting upon "
+"completion of <command>CREATE EXTENSION</command>."
+msgstr ""
+"В любом случае, при выполнении файла скрипта параметр <xref linkend=\"guc-"
+"search-path\"/> изначально будет указывать на целевую схему; то есть, "
+"<command>CREATE EXTENSION</command> делает то же, что и: <placeholder-1/> "
+"Это позволяет направить объекты, создаваемые скриптом, в целевую схему. "
+"Скрипт может изменить <varname>search_path</varname>, если пожелает, но "
+"обычно это нежелательно. Параметр <varname>search_path</varname> "
+"восстанавливает предыдущее значение по завершении <command>CREATE EXTENSION</"
+"command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:672(para)
+msgid ""
+"The target schema is determined by the <varname>schema</varname> parameter "
+"in the control file if that is given, otherwise by the <literal>SCHEMA</"
+"literal> option of <command>CREATE EXTENSION</command> if that is given, "
+"otherwise the current default object creation schema (the first one in the "
+"caller's <varname>search_path</varname>). When the control file "
+"<varname>schema</varname> parameter is used, the target schema will be "
+"created if it doesn't already exist, but in the other two cases it must "
+"already exist."
+msgstr ""
+"Целевая схема определяется параметром <varname>schema</varname> (если он "
+"задан) в управляющем файле, либо указанием <literal>SCHEMA</literal> команды "
+"<command>CREATE EXTENSION</command> (если оно присутствует), а в противном "
+"случае выбирается текущая схема для создания объектов по умолчанию (первая "
+"указанная в параметре <varname>search_path</varname> вызывающего). Когда "
+"используется параметр управляющего файла <varname>schema</varname>, целевая "
+"схема будет создана, если она ещё не существует, но в двух других случаях "
+"она должна уже существовать."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:682(para)
+msgid ""
+"If any prerequisite extensions are listed in <varname>requires</varname> in "
+"the control file, their target schemas are appended to the initial setting "
+"of <varname>search_path</varname>. This allows their objects to be visible "
+"to the new extension's script file."
+msgstr ""
+"Если в параметре <varname>requires</varname> в файле управления указаны "
+"какие-либо расширения, необходимые для данного, их целевые схемы добавляются "
+"к начальному значению <varname>search_path</varname>. Благодаря этому, их "
+"объекты видны для скрипта нового расширения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:689(para)
+msgid ""
+"Although a non-relocatable extension can contain objects spread across "
+"multiple schemas, it is usually desirable to place all the objects meant for "
+"external use into a single schema, which is considered the extension's "
+"target schema. Such an arrangement works conveniently with the default "
+"setting of <varname>search_path</varname> during creation of dependent "
+"extensions."
+msgstr ""
+"Хотя неперемещаемое расширение может содержать объекты, распределяемые по "
+"нескольким схемам, обычно желательно поместить все объекты, предназначенные "
+"для внешнего использования, в одну схему, назначенную целевой схемой "
+"расширения. Такой порядок будет хорошо согласовываться со значением "
+"<varname>search_path</varname> по умолчанию в процессе создания зависимых "
+"расширений."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:700(title)
+msgid "Extension Configuration Tables"
+msgstr "Конфигурационные таблицы расширений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:702(para)
+msgid ""
+"Some extensions include configuration tables, which contain data that might "
+"be added or changed by the user after installation of the extension. "
+"Ordinarily, if a table is part of an extension, neither the table's "
+"definition nor its content will be dumped by <application>pg_dump</"
+"application>. But that behavior is undesirable for a configuration table; "
+"any data changes made by the user need to be included in dumps, or the "
+"extension will behave differently after a dump and reload."
+msgstr ""
+"Некоторые расширения включают конфигурационные таблицы, содержащие данные, "
+"которые могут быть добавлены или изменены пользователем после установки "
+"расширения. Обычно, если таблица является частью расширения, ни определение "
+"таблицы, ни её содержимое не будет выгружаться утилитой "
+"<application>pg_dump</application>. Но это поведение нежелательно для "
+"конфигурационных таблиц — изменения, внесённые в них пользователем, должны "
+"выгружаться; в противном случае расширение будет вести себя по-другому, "
+"когда будет загружено вновь."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:713(indexterm)
+msgid "<primary>pg_extension_config_dump</primary>"
+msgstr "<primary>pg_extension_config_dump</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:724(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE my_config (key text, value text);\n"
+"CREATE SEQUENCE my_config_seq;\n"
+"\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config', '');\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config_seq', '');"
+msgstr ""
+"CREATE TABLE my_config (key text, value text);\n"
+"CREATE SEQUENCE my_config_seq;\n"
+"\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config', '');\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config_seq', '');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:717(para)
+msgid ""
+"To solve this problem, an extension's script file can mark a table or a "
+"sequence it has created as a configuration relation, which will cause "
+"<application>pg_dump</application> to include the table's or the sequence's "
+"contents (not its definition) in dumps. To do that, call the function "
+"<function>pg_extension_config_dump(regclass, text)</function> after creating "
+"the table or the sequence, for example <placeholder-1/> Any number of tables "
+"or sequences can be marked this way. Sequences associated with <type>serial</"
+"type> or <type>bigserial</type> columns can be marked as well."
+msgstr ""
+"Чтобы решить эту проблему, скрипт расширения может пометить созданную им "
+"таблицу или последовательность как конфигурационное отношение, в результате "
+"чего <application>pg_dump</application> включит в выгружаемые данные "
+"содержимое (но не определение) этой таблицы или последовательности. Для "
+"этого нужно вызвать функцию <function>pg_extension_config_dump(regclass, "
+"text)</function> после создания таблицы или последовательности, например "
+"так: <placeholder-1/> Так можно пометить любое число таблиц или "
+"последовательностей, в том числе последовательности, связанные со столбцами "
+"<type>serial</type> или <type>bigserial</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:745(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE my_config (key text, value text, standard_entry boolean);\n"
+"\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config', 'WHERE NOT standard_entry');"
+msgstr ""
+"CREATE TABLE my_config (key text, value text, standard_entry boolean);\n"
+"\n"
+"SELECT pg_catalog.pg_extension_config_dump('my_config', 'WHERE NOT standard_entry');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:736(para)
+msgid ""
+"When the second argument of <function>pg_extension_config_dump</function> is "
+"an empty string, the entire contents of the table are dumped by "
+"<application>pg_dump</application>. This is usually only correct if the "
+"table is initially empty as created by the extension script. If there is a "
+"mixture of initial data and user-provided data in the table, the second "
+"argument of <function>pg_extension_config_dump</function> provides a "
+"<literal>WHERE</literal> condition that selects the data to be dumped. For "
+"example, you might do <placeholder-1/> and then make sure that "
+"<structfield>standard_entry</structfield> is true only in the rows created "
+"by the extension's script."
+msgstr ""
+"Когда второй аргумент <function>pg_extension_config_dump</function> — пустая "
+"строка, <application>pg_dump</application> выгружает всё содержимое таблицы. "
+"Обычно это правильно, только если после создания скриптом расширения эта "
+"таблица изначально пуста. Если же в таблице оказывается смесь начальных "
+"данных и данных, добавленных пользователем, во втором аргументе "
+"<function>pg_extension_config_dump</function> передаётся условие "
+"<literal>WHERE</literal>, которое отфильтровывает данные, подлежащие "
+"выгрузке. Например, имея таблицу, созданную таким образом: <placeholder-1/> "
+"можно сделать так, чтобы поле <structfield>standard_entry</structfield> "
+"содержало true только для строк, создаваемых скриптом расширения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:754(para)
+msgid ""
+"For sequences, the second argument of <function>pg_extension_config_dump</"
+"function> has no effect."
+msgstr ""
+"Для последовательностей второй аргумент функции "
+"<function>pg_extension_config_dump</function> не имеет значения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:759(para)
+msgid ""
+"More complicated situations, such as initially-provided rows that might be "
+"modified by users, can be handled by creating triggers on the configuration "
+"table to ensure that modified rows are marked correctly."
+msgstr ""
+"В более сложных ситуациях, когда пользователи могут модифицировать и "
+"изначально существовавшие строки, можно создать триггеры для "
+"конфигурационной таблицы, которые корректно пометят изменённые строки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:765(para)
+msgid ""
+"You can alter the filter condition associated with a configuration table by "
+"calling <function>pg_extension_config_dump</function> again. (This would "
+"typically be useful in an extension update script.) The only way to mark a "
+"table as no longer a configuration table is to dissociate it from the "
+"extension with <command>ALTER EXTENSION ... DROP TABLE</command>."
+msgstr ""
+"Условие фильтра, связанное с конфигурационной таблицей, можно изменить, "
+"повторно вызвав <function>pg_extension_config_dump</function>. (Обычно это "
+"находит применение в скрипте обновления расширения.) Единственный способ "
+"обозначить, что некоторая таблица более не является конфигурационной — "
+"разорвать её связь с расширением командой <command>ALTER EXTENSION ... DROP "
+"TABLE</command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:773(para)
+msgid ""
+"Note that foreign key relationships between these tables will dictate the "
+"order in which the tables are dumped out by pg_dump. Specifically, pg_dump "
+"will attempt to dump the referenced-by table before the referencing table. "
+"As the foreign key relationships are set up at CREATE EXTENSION time (prior "
+"to data being loaded into the tables) circular dependencies are not "
+"supported. When circular dependencies exist, the data will still be dumped "
+"out but the dump will not be able to be restored directly and user "
+"intervention will be required."
+msgstr ""
+"Заметьте, что отношения внешних ключей между таблицами определяют порядок, в "
+"котором эти таблицы будет выгружать pg_dump. В частности, pg_dump попытается "
+"выгрузить сначала основную таблицу, а затем подчинённую. Так как отношения "
+"внешних ключей устанавливаются во время выполнения CREATE EXTENSION (до "
+"загрузки данных в таблицы), циклические зависимости не поддерживаются. Когда "
+"образуются циклические зависимости, данные, тем не менее, будут выгружены, "
+"но полученный архив нельзя будет восстановить обычным образом, потребуется "
+"вмешательство пользователя."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:784(para)
+msgid ""
+"Sequences associated with <type>serial</type> or <type>bigserial</type> "
+"columns need to be directly marked to dump their state. Marking their parent "
+"relation is not enough for this purpose."
+msgstr ""
+"Последовательности, связанные со столбцами <type>serial</type> или "
+"<type>bigserial</type>, не обязательно помечать непосредственно, чтобы их "
+"состояние было сохранено. Для этой цели достаточно пометить только их "
+"родительское отношение."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:792(title)
+msgid "Extension Updates"
+msgstr "Обновление расширений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:794(para)
+msgid ""
+"One advantage of the extension mechanism is that it provides convenient ways "
+"to manage updates to the SQL commands that define an extension's objects. "
+"This is done by associating a version name or number with each released "
+"version of the extension's installation script. In addition, if you want "
+"users to be able to update their databases dynamically from one version to "
+"the next, you should provide <firstterm>update scripts</firstterm> that make "
+"the necessary changes to go from one version to the next. Update scripts "
+"have names following the pattern <literal><replaceable>extension</"
+"replaceable>--<replaceable>oldversion</replaceable>--"
+"<replaceable>newversion</replaceable>.sql</literal> (for example, "
+"<literal>foo--1.0--1.1.sql</literal> contains the commands to modify version "
+"<literal>1.0</literal> of extension <literal>foo</literal> into version "
+"<literal>1.1</literal>)."
+msgstr ""
+"Один из плюсов механизма расширений заключается в том, что он предоставляет "
+"удобные способы управления обновлениями SQL-команд, определяющих объекты "
+"расширения. В частности, каждой выпускаемой версии установочного скрипта "
+"расширения назначается имя или номер версии. Кроме того, если вы хотите, "
+"чтобы пользователи могли динамически обновлять одну версию расширения до "
+"другой, вы должны предоставить <firstterm>скрипты обновления</firstterm>, "
+"которые внесут необходимые изменения для перехода от старой версии к новой. "
+"Скриптам обновлений назначаются имена, соответствующие шаблону "
+"<literal><replaceable>расширение</replaceable>--<replaceable>старая_версия</"
+"replaceable>--<replaceable>новая_версия</replaceable>.sql</literal> "
+"(например, <literal>foo--1.0--1.1.sql</literal> будет содержать команды, "
+"меняющие версию <literal>1.0</literal> расширения <literal>foo</literal> на "
+"версию <literal>1.1</literal>)."
+
+#. +> REL_10
+#: extend.xml:809(para)
+msgid ""
+"Given that a suitable update script is available, the command <command>ALTER "
+"EXTENSION UPDATE</command> will update an installed extension to the "
+"specified new version. The update script is run in the same environment that "
+"<command>CREATE EXTENSION</command> provides for installation scripts: in "
+"particular, <varname>search_path</varname> is set up in the same way, and "
+"any new objects created by the script are automatically added to the "
+"extension. Also, if the script chooses to drop extension member objects, "
+"they are automatically dissociated from the extension."
+msgstr ""
+"С условием, что имеется подходящий скрипт расширения, команда <command>ALTER "
+"EXTENSION UPDATE</command> обновит установленное расширение до указанной "
+"новой версии. Скрипт обновления запускается в том же окружении, которое "
+"организует команда <command>CREATE EXTENSION</command> для установочных "
+"скриптов: в частности, <varname>search_path</varname> устанавливается таким "
+"же образом, а любые новые объекты, созданные скриптом, автоматически "
+"добавляются в расширение. И если скрипт решит удалить объекты-члены "
+"расширения, они будут автоматически исключены из его состава."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:820(para)
+msgid ""
+"If an extension has secondary control files, the control parameters that are "
+"used for an update script are those associated with the script's target "
+"(new) version."
+msgstr ""
+"Если у расширения есть дополнительные управляющие файлы, для скрипта "
+"обновления применяются те параметры, которые связаны с целевой (новой) "
+"версией скрипта."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:826(para)
+msgid ""
+"The update mechanism can be used to solve an important special case: "
+"converting a <quote>loose</quote> collection of objects into an extension. "
+"Before the extension mechanism was added to <productname>PostgreSQL</"
+"productname> (in 9.1), many people wrote extension modules that simply "
+"created assorted unpackaged objects. Given an existing database containing "
+"such objects, how can we convert the objects into a properly packaged "
+"extension? Dropping them and then doing a plain <command>CREATE EXTENSION</"
+"command> is one way, but it's not desirable if the objects have dependencies "
+"(for example, if there are table columns of a data type created by the "
+"extension). The way to fix this situation is to create an empty extension, "
+"then use <command>ALTER EXTENSION ADD</command> to attach each pre-existing "
+"object to the extension, then finally create any new objects that are in the "
+"current extension version but were not in the unpackaged release. "
+"<command>CREATE EXTENSION</command> supports this case with its "
+"<literal>FROM</literal> <replaceable class=\"parameter\">old_version</"
+"replaceable> option, which causes it to not run the normal installation "
+"script for the target version, but instead the update script named "
+"<literal><replaceable>extension</replaceable>--<replaceable>old_version</"
+"replaceable>--<replaceable>target_version</replaceable>.sql</literal>. The "
+"choice of the dummy version name to use as <replaceable class=\"parameter"
+"\">old_version</replaceable> is up to the extension author, though "
+"<literal>unpackaged</literal> is a common convention. If you have multiple "
+"prior versions you need to be able to update into extension style, use "
+"multiple dummy version names to identify them."
+msgstr ""
+"Механизм обновления может использоваться для решения важной особой задачи: "
+"преобразование <quote>разрозненной</quote> коллекции объектов в расширение. "
+"До того как механизм расширений появился в <productname>PostgreSQL</"
+"productname> (в версии 9.1), многие писали модули разрешений, которые просто "
+"создавали множество неупакованных объектов. Но если у нас уже есть база "
+"данных с такими объектами, как их можно преобразовать в правильно "
+"упакованное расширение? Один из вариантов — удалить их и затем выполнить "
+"простую команду <command>CREATE EXTENSION</command>, но это нежелательно, "
+"если у объектов есть зависимости (например, если в таблицах есть столбцы "
+"типа данных, созданного расширением). Чтобы исправить эту ситуацию, можно "
+"создать пустое расширение, затем с помощью команды <command>ALTER EXTENSION "
+"ADD</command> добавить в него каждый существующий объект, и наконец, создать "
+"все новые объекты, которые есть в текущей версии расширения, но отсутствуют "
+"в неупакованном варианте. <command>CREATE EXTENSION</command> поддерживает "
+"этот сценарий предложением <literal>FROM</literal> <replaceable class="
+"\"parameter\">старая_версия</replaceable>, с которым она не будет запускать "
+"обычный установочный скрипт для целевой версии, а запустит вместо этого "
+"скрипт обновления с именем <literal><replaceable>расширение</replaceable>--"
+"<replaceable>старая_версия</replaceable>--<replaceable>новая_версия</"
+"replaceable>.sql</literal>. В качестве имени <replaceable class=\"parameter"
+"\">старая_версия</replaceable> автор расширения может выбрать любое "
+"фиктивное имя, но обычно задаётся <literal>unpackaged</literal>. Если у вас "
+"несколько предыдущих версий, которые нужно привести к стилю расширения, "
+"выберите разные фиктивные имена версий, чтобы различить их."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:853(para)
+msgid ""
+"<command>ALTER EXTENSION</command> is able to execute sequences of update "
+"script files to achieve a requested update. For example, if only "
+"<literal>foo--1.0--1.1.sql</literal> and <literal>foo--1.1--2.0.sql</"
+"literal> are available, <command>ALTER EXTENSION</command> will apply them "
+"in sequence if an update to version <literal>2.0</literal> is requested when "
+"<literal>1.0</literal> is currently installed."
+msgstr ""
+"<command>ALTER EXTENSION</command> также может выполнять последовательности "
+"скриптов обновления для получения запрошенной версии. Например, если имеются "
+"только скрипты <literal>foo--1.0--1.1.sql</literal> и <literal>foo--1.1--2.0."
+"sql</literal>, <command>ALTER EXTENSION</command> будет применять их по "
+"порядку, если при установленной версии <literal>1.0</literal> запрошено "
+"обновлении до версии <literal>2.0</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:862(para)
+msgid ""
+"<productname>PostgreSQL</productname> doesn't assume anything about the "
+"properties of version names: for example, it does not know whether "
+"<literal>1.1</literal> follows <literal>1.0</literal>. It just matches up "
+"the available version names and follows the path that requires applying the "
+"fewest update scripts. (A version name can actually be any string that "
+"doesn't contain <literal>--</literal> or leading or trailing <literal>-</"
+"literal>.)"
+msgstr ""
+"<productname>PostgreSQL</productname> не делает никаких предположений о "
+"свойствах имён версий: например, он не знает, следует ли версия "
+"<literal>1.1</literal> за <literal>1.0</literal>. Он просто сопоставляет "
+"имена имеющихся версий и следует пути, который требует применить как можно "
+"меньше скриптов обновлений. (Именем версии на самом деле может быть любая "
+"строка, которая не содержит <literal>--</literal> и при этом не начинается и "
+"не заканчивается символом <literal>-</literal>.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:871(para)
+msgid ""
+"Sometimes it is useful to provide <quote>downgrade</quote> scripts, for "
+"example <literal>foo--1.1--1.0.sql</literal> to allow reverting the changes "
+"associated with version <literal>1.1</literal>. If you do that, be careful "
+"of the possibility that a downgrade script might unexpectedly get applied "
+"because it yields a shorter path. The risky case is where there is a "
+"<quote>fast path</quote> update script that jumps ahead several versions as "
+"well as a downgrade script to the fast path's start point. It might take "
+"fewer steps to apply the downgrade and then the fast path than to move ahead "
+"one version at a time. If the downgrade script drops any irreplaceable "
+"objects, this will yield undesirable results."
+msgstr ""
+"Иногда бывают полезны скрипты <quote>понижения версии</quote>, например, "
+"<literal>foo--1.1--1.0.sql</literal>, которые позволяют откатить изменения, "
+"связанные с версией <literal>1.1</literal>. Если вы применяете их, учтите, "
+"что есть вероятность неожиданного выполнения такого скрипта, если он "
+"окажется в кратчайшем пути. Рискованная ситуация возникает при наличии "
+"скрипта обновления по <quote>короткому пути</quote>, который перепрыгивает "
+"через несколько версий, и скрипта понижения версии до начальной точки "
+"первого скрипта. В результате может получиться так, что понижение версии с "
+"последующим обновлением по короткому пути окажется на несколько шагов "
+"короче, чем последовательное повышение версии. Если скрипт понижения версии "
+"удаляет какие-либо незаменимые объекты, это может привести к нежелательным "
+"результатам."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:886(programlisting)
+#, no-wrap
+msgid "SELECT * FROM pg_extension_update_paths('<replaceable>extension_name</replaceable>');"
+msgstr "SELECT * FROM pg_extension_update_paths('<replaceable>имя_расширения</replaceable>');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:884(para)
+msgid ""
+"To check for unexpected update paths, use this command: <placeholder-1/> "
+"This shows each pair of distinct known version names for the specified "
+"extension, together with the update path sequence that would be taken to get "
+"from the source version to the target version, or <literal>NULL</literal> if "
+"there is no available update path. The path is shown in textual form with "
+"<literal>--</literal> separators. You can use "
+"<literal>regexp_split_to_array(path,'--')</literal> if you prefer an array "
+"format."
+msgstr ""
+"Чтобы убедиться, что при обновлении не будет выбран нежелательный путь, "
+"воспользуйтесь этой командой: <placeholder-1/> Она показывает каждую пару "
+"различных известных имён версий для указанного расширения, вместе с "
+"последовательностью обновления, которая будет выбрана для перехода от одной "
+"версии к другой, либо <literal>NULL</literal>, если путь обновления не "
+"находится. Путь выводится в текстовом виде с разделителями <literal>--</"
+"literal>. Если вы предпочитаете формат массива, вы можете применить "
+"<literal>regexp_split_to_array(path,'--')</literal>."
+
+#. +> REL_10
+#: extend.xml:900(title)
+msgid "Installing Extensions using Update Scripts"
+msgstr "Установка расширений скриптами обновления"
+
+#. +> REL_10
+#: extend.xml:902(para)
+msgid ""
+"An extension that has been around for awhile will probably exist in several "
+"versions, for which the author will need to write update scripts. For "
+"example, if you have released a <literal>foo</literal> extension in versions "
+"<literal>1.0</literal>, <literal>1.1</literal>, and <literal>1.2</literal>, "
+"there should be update scripts <filename>foo--1.0--1.1.sql</filename> and "
+"<filename>foo--1.1--1.2.sql</filename>. Before <productname>PostgreSQL</"
+"productname> 10, it was necessary to also create new script files "
+"<filename>foo--1.1.sql</filename> and <filename>foo--1.2.sql</filename> that "
+"directly build the newer extension versions, or else the newer versions "
+"could not be installed directly, only by installing <literal>1.0</literal> "
+"and then updating. That was tedious and duplicative, but now it's "
+"unnecessary, because <command>CREATE EXTENSION</command> can follow update "
+"chains automatically. For example, if only the script files "
+"<filename>foo--1.0.sql</filename>, <filename>foo--1.0--1.1.sql</filename>, "
+"and <filename>foo--1.1--1.2.sql</filename> are available then a request to "
+"install version <literal>1.2</literal> is honored by running those three "
+"scripts in sequence. The processing is the same as if you'd first installed "
+"<literal>1.0</literal> and then updated to <literal>1.2</literal>. (As with "
+"<command>ALTER EXTENSION UPDATE</command>, if multiple pathways are "
+"available then the shortest is preferred.) Arranging an extension's script "
+"files in this style can reduce the amount of maintenance effort needed to "
+"produce small updates."
+msgstr ""
+"Расширение, существующее некоторое время, вероятно, будет иметь несколько "
+"версий, для которых автору надо будет писать скрипты обновления. Например, "
+"если вы выпустили расширение <literal>foo</literal> версий <literal>1.0</"
+"literal>, <literal>1.1</literal> и <literal>1.2</literal>, у вас должны быть "
+"скрипты обновления <filename>foo--1.0--1.1.sql</filename> и "
+"<filename>foo--1.1--1.2.sql</filename>. До <productname>PostgreSQL</"
+"productname> версии 10 необходимо было также создавать файлы скриптов "
+"<filename>foo--1.1.sql</filename> и <filename>foo--1.2.sql</filename>, "
+"которые устанавливают непосредственно новые версии скриптов; в противном "
+"случае их можно было установить, только установив <literal>1.0</literal> и "
+"произведя обновление. Это было утомительно и неэффективно, но теперь такой "
+"необходимости нет, так как команда <command>CREATE EXTENSION</command> может "
+"сама построить цепочку обновлений. Например, если имеются только файлы "
+"скриптов <filename>foo--1.0.sql</filename>, <filename>foo--1.0--1.1.sql</"
+"filename> и <filename>foo--1.1--1.2.sql</filename>, то запрос на установку "
+"версии <literal>1.2</literal> удовлетворяется запуском этих трёх скриптов по "
+"очереди. Это не будет отличаться от установки версии <literal>1.0</literal> "
+"с последующим обновлением до <literal>1.2</literal>. (Как и с командой "
+"<command>ALTER EXTENSION UPDATE</command>, при наличии нескольких путей "
+"выбирается самый короткий.) Организация скриптов расширения по такой схеме "
+"может упростить сопровождение небольших обновлений."
+
+#. +> REL_10
+#: extend.xml:928(para)
+msgid ""
+"If you use secondary (version-specific) control files with an extension "
+"maintained in this style, keep in mind that each version needs a control "
+"file even if it has no stand-alone installation script, as that control file "
+"will determine how the implicit update to that version is performed. For "
+"example, if <filename>foo--1.0.control</filename> specifies "
+"<literal>requires = 'bar'</literal> but <literal>foo</literal>'s other "
+"control files do not, the extension's dependency on <literal>bar</literal> "
+"will be dropped when updating from <literal>1.0</literal> to another version."
+msgstr ""
+"Если вы используете дополнительные (ориентированные на версию) управляющие "
+"файлы для расширения, поддерживаемого по такой схеме, имейте в виду, что "
+"управляющий файл нужен для каждой версии, даже если для неё нет отдельного "
+"скрипта установки, так как этот файл будет определять, как произвести "
+"неявное обновление до этой версии. Например, если в файле <filename>foo--1.0."
+"control</filename> задаётся <literal>requires = 'bar'</literal>, а в других "
+"управляющих файлах <literal>foo</literal> — нет, зависимость расширения от "
+"<literal>bar</literal> будет удалена при обновлении с версии <literal>1.0</"
+"literal> до другой."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:941(title)
+msgid "Extension Example"
+msgstr "Пример расширения"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:943(para)
+msgid ""
+"Here is a complete example of an <acronym>SQL</acronym>-only extension, a "
+"two-element composite type that can store any type of value in its slots, "
+"which are named <quote>k</quote> and <quote>v</quote>. Non-text values are "
+"automatically coerced to text for storage."
+msgstr ""
+"Здесь представлен полный пример расширения, в котором средствами "
+"исключительно <acronym>SQL</acronym> реализуется составной тип с двумя "
+"элементами, который может сохранить в своих слотах значения любого типа, "
+"названные <quote>k</quote> и <quote>v</quote>. Для хранения все значения "
+"переводятся в текстовый формат (если они имеют другой формат)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:950(para)
+msgid ""
+"The script file <filename>pair--1.0.sql</filename> looks like this: "
+"<placeholder-1/>"
+msgstr ""
+"Файл скрипта <filename>pair--1.0.sql</filename> выглядит так: <placeholder-1/"
+">"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:982(programlisting)
+#, no-wrap
+msgid ""
+"# pair extension\n"
+"comment = 'A key/value pair data type'\n"
+"default_version = '1.0'\n"
+"relocatable = true"
+msgstr ""
+"# pair extension\n"
+"comment = 'A key/value pair data type'\n"
+"default_version = '1.0'\n"
+"relocatable = true"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:979(para)
+msgid ""
+"The control file <filename>pair.control</filename> looks like this: "
+"<placeholder-1/>"
+msgstr ""
+"Управляющий файл <filename>pair.control</filename> выглядит так: "
+"<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:994(programlisting)
+#, no-wrap
+msgid ""
+"EXTENSION = pair\n"
+"DATA = pair--1.0.sql\n"
+"\n"
+"PG_CONFIG = pg_config\n"
+"PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
+"include $(PGXS)"
+msgstr ""
+"EXTENSION = pair\n"
+"DATA = pair--1.0.sql\n"
+"\n"
+"PG_CONFIG = pg_config\n"
+"PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
+"include $(PGXS)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:990(para)
+msgid ""
+"While you hardly need a makefile to install these two files into the correct "
+"directory, you could use a <filename>Makefile</filename> containing this: "
+"<placeholder-1/> This makefile relies on <acronym>PGXS</acronym>, which is "
+"described in <xref linkend=\"extend-pgxs\"/>. The command <literal>make "
+"install</literal> will install the control and script files into the correct "
+"directory as reported by <application>pg_config</application>."
+msgstr ""
+"Хотя вам вряд ли понадобится сборочный файл, только для того, чтобы "
+"установить эти два файла в нужный каталог, вы можете использовать "
+"<filename>Makefile</filename> следующего содержания: <placeholder-1/> Этот "
+"Makefile опирается на инфраструктуру <acronym>PGXS</acronym>, которая "
+"описывается в <xref remap=\"6\" linkend=\"extend-pgxs\"/>. С ним команда "
+"<literal>make install</literal> установит управляющий файл и скрипт в "
+"правильный каталог, который определит <application>pg_config</application>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1009(para)
+msgid ""
+"Once the files are installed, use the <xref linkend=\"sql-createextension\"/"
+"> command to load the objects into any particular database."
+msgstr ""
+"Когда эти файлы будут установлены, выполните команду <xref linkend=\"sql-"
+"createextension\"/>, чтобы загрузить объекты в определённую базу данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1018(title)
+msgid "Extension Building Infrastructure"
+msgstr "Инфраструктура сборки расширений"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1020(indexterm)
+msgid "<primary>pgxs</primary>"
+msgstr "<primary>pgxs</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1024(para)
+msgid ""
+"If you are thinking about distributing your <productname>PostgreSQL</"
+"productname> extension modules, setting up a portable build system for them "
+"can be fairly difficult. Therefore the <productname>PostgreSQL</productname> "
+"installation provides a build infrastructure for extensions, called "
+"<acronym>PGXS</acronym>, so that simple extension modules can be built "
+"simply against an already installed server. <acronym>PGXS</acronym> is "
+"mainly intended for extensions that include C code, although it can be used "
+"for pure-SQL extensions too. Note that <acronym>PGXS</acronym> is not "
+"intended to be a universal build system framework that can be used to build "
+"any software interfacing to <productname>PostgreSQL</productname>; it simply "
+"automates common build rules for simple server extension modules. For more "
+"complicated packages, you might need to write your own build system."
+msgstr ""
+"Если вы задумываетесь о распространении ваших модулей расширения "
+"<productname>PostgreSQL</productname>, знайте, что организовать для них "
+"портируемую систему сборки может быть довольно сложно. Поэтому инсталляция "
+"<productname>PostgreSQL</productname> включает инфраструктуру сборки "
+"расширений, названную <acronym>PGXS</acronym>, так что несложные модули "
+"расширений можно собрать просто в среде установленного сервера. "
+"<acronym>PGXS</acronym> предназначена в первую очередь для расширений, "
+"написанных на C, хотя её можно применять и для расширения на чистом SQL. "
+"Заметьте, что <acronym>PGXS</acronym> не претендует на роль универсальной "
+"инфраструктуры сборки, способной собрать любой программный объект, "
+"взаимодействующий с <productname>PostgreSQL</productname>; она просто "
+"автоматизирует общие правила для сборки простых модулей расширения сервера. "
+"Для более сложных пакетов вам придётся разработать собственную систему "
+"сборки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1050(programlisting)
+#, no-wrap
+msgid ""
+"MODULES = isbn_issn\n"
+"EXTENSION = isbn_issn\n"
+"DATA = isbn_issn--1.0.sql\n"
+"DOCS = README.isbn_issn\n"
+"\n"
+"PG_CONFIG = pg_config\n"
+"PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
+"include $(PGXS)"
+msgstr ""
+"MODULES = isbn_issn\n"
+"EXTENSION = isbn_issn\n"
+"DATA = isbn_issn--1.0.sql\n"
+"DOCS = README.isbn_issn\n"
+"\n"
+"PG_CONFIG = pg_config\n"
+"PGXS := $(shell $(PG_CONFIG) --pgxs)\n"
+"include $(PGXS)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1041(para)
+msgid ""
+"To use the <acronym>PGXS</acronym> infrastructure for your extension, you "
+"must write a simple makefile. In the makefile, you need to set some "
+"variables and include the global <acronym>PGXS</acronym> makefile. Here is "
+"an example that builds an extension module named <literal>isbn_issn</"
+"literal>, consisting of a shared library containing some C code, an "
+"extension control file, a SQL script, and a documentation text file: "
+"<placeholder-1/> The last three lines should always be the same. Earlier in "
+"the file, you assign variables or add custom <application>make</application> "
+"rules."
+msgstr ""
+"Чтобы использовать инфраструктуру <acronym>PGXS</acronym> для вашего "
+"расширения, вы должны написать простой сборочный файл. В нём вы должны "
+"установить нужные переменные и подключить глобальный сборочный файл "
+"<acronym>PGXS</acronym>. Следующий пример собирает модуль расширения с "
+"именем <literal>isbn_issn</literal>, который включает разделяемую "
+"библиотеку, написанную на C, управляющий файл расширения, SQL-скрипт и "
+"текстовый файл документации: <placeholder-1/> Последние три строки всегда "
+"должны быть такими. Выше в файле вы определяете переменные или добавляете "
+"собственные правила для <application>make</application>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1070(varname)
+msgid "MODULES"
+msgstr "MODULES"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1072(para)
+msgid ""
+"list of shared-library objects to be built from source files with same stem "
+"(do not include library suffixes in this list)"
+msgstr ""
+"список объектов разделяемых библиотек, которые должны быть собраны из "
+"исходных файлов с одной основой (суффиксы библиотек в этом списке не "
+"указываются)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1080(varname)
+msgid "MODULE_big"
+msgstr "MODULE_big"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1082(para)
+msgid ""
+"a shared library to build from multiple source files (list object files in "
+"<varname>OBJS</varname>)"
+msgstr ""
+"разделяемая библиотека, которая должна быть собрана из нескольких исходных "
+"файлов (объектные файлы перечисляются в <varname>OBJS</varname>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1090(varname)
+msgid "PROGRAM"
+msgstr "PROGRAM"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1092(para)
+msgid ""
+"an executable program to build (list object files in <varname>OBJS</varname>)"
+msgstr ""
+"исполняемая программа, которая должна быть собрана (объектные файлы "
+"перечисляются в <varname>OBJS</varname>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1104(varname)
+msgid "EXTENSION"
+msgstr "EXTENSION"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1106(para)
+msgid ""
+"extension name(s); for each name you must provide an "
+"<literal><replaceable>extension</replaceable>.control</literal> file, which "
+"will be installed into <literal><replaceable>prefix</replaceable>/share/"
+"extension</literal>"
+msgstr ""
+"имена расширений(я); для каждого имени вы должны предоставить файл "
+"<literal><replaceable>расширение</replaceable>.control</literal>, который "
+"будет установлен в <literal><replaceable>префикс</replaceable>/share/"
+"extension</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1116(varname)
+msgid "MODULEDIR"
+msgstr "MODULEDIR"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1118(para)
+msgid ""
+"subdirectory of <literal><replaceable>prefix</replaceable>/share</literal> "
+"into which DATA and DOCS files should be installed (if not set, default is "
+"<literal>extension</literal> if <varname>EXTENSION</varname> is set, or "
+"<literal>contrib</literal> if not)"
+msgstr ""
+"подкаталог в каталоге <literal><replaceable>префикс</replaceable>/share</"
+"literal>, в который должны устанавливаться файлы DATA и DOCS (если не задан, "
+"подразумевается <literal>extension</literal>, если установлена переменная "
+"<varname>EXTENSION</varname>, или <literal>contrib</literal> в противном "
+"случае)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1129(varname)
+msgid "DATA"
+msgstr "DATA"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1131(para)
+msgid ""
+"random files to install into <literal><replaceable>prefix</replaceable>/"
+"share/$MODULEDIR</literal>"
+msgstr ""
+"произвольные файлы, которые должны быть установлены в "
+"<literal><replaceable>префикс</replaceable>/share/$MODULEDIR</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1138(varname)
+msgid "DATA_built"
+msgstr "DATA_built"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1140(para)
+msgid ""
+"random files to install into <literal><replaceable>prefix</replaceable>/"
+"share/$MODULEDIR</literal>, which need to be built first"
+msgstr ""
+"произвольные файлы, которые должны быть сначала собраны, а затем установлены "
+"в <literal><replaceable>префикс</replaceable>/share/$MODULEDIR</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1149(varname)
+msgid "DATA_TSEARCH"
+msgstr "DATA_TSEARCH"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1151(para)
+msgid ""
+"random files to install under <literal><replaceable>prefix</replaceable>/"
+"share/tsearch_data</literal>"
+msgstr ""
+"произвольные файлы, которые должны быть установлены в "
+"<literal><replaceable>префикс</replaceable>/share/tsearch_data</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1159(varname)
+msgid "DOCS"
+msgstr "DOCS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1161(para)
+msgid ""
+"random files to install under <literal><replaceable>prefix</replaceable>/doc/"
+"$MODULEDIR</literal>"
+msgstr ""
+"произвольные файлы, которые должны быть установлены в "
+"<literal><replaceable>префикс</replaceable>/doc/$MODULEDIR</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1169(varname)
+msgid "SCRIPTS"
+msgstr "SCRIPTS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1171(para)
+msgid ""
+"script files (not binaries) to install into <literal><replaceable>prefix</"
+"replaceable>/bin</literal>"
+msgstr ""
+"скрипты (не двоичные файлы), которые должны быть установлены в "
+"<literal><replaceable>префикс</replaceable>/bin</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1179(varname)
+msgid "SCRIPTS_built"
+msgstr "SCRIPTS_built"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1181(para)
+msgid ""
+"script files (not binaries) to install into <literal><replaceable>prefix</"
+"replaceable>/bin</literal>, which need to be built first"
+msgstr ""
+"скрипты (не двоичные файлы), которые должны быть сначала собраны, а затем "
+"установлены в <literal><replaceable>префикс</replaceable>/bin</literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1190(varname)
+msgid "REGRESS"
+msgstr "REGRESS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1192(para)
+msgid "list of regression test cases (without suffix), see below"
+msgstr "список тестов регрессий (без суффикса), см. ниже"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1199(varname)
+msgid "REGRESS_OPTS"
+msgstr "REGRESS_OPTS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1201(para)
+msgid "additional switches to pass to <application>pg_regress</application>"
+msgstr ""
+"дополнительные параметры, передаваемые <application>pg_regress</application>"
+
+#. +> REL_10
+#: extend.xml:1208(varname)
+msgid "NO_INSTALLCHECK"
+msgstr "NO_INSTALLCHECK"
+
+#. +> REL_10
+#: extend.xml:1210(para)
+msgid ""
+"don't define an <literal>installcheck</literal> target, useful e.g. if tests "
+"require special configuration, or don't use <application>pg_regress</"
+"application>"
+msgstr ""
+"не определять цель <literal>installcheck</literal>; это полезно, если тестам "
+"требуется особая конфигурация или <application>pg_regress</application> не "
+"используется"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1217(varname)
+msgid "EXTRA_CLEAN"
+msgstr "EXTRA_CLEAN"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1219(para)
+msgid "extra files to remove in <literal>make clean</literal>"
+msgstr ""
+"дополнительные файлы, которые должны быть удалены при <literal>make clean</"
+"literal>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1226(varname)
+msgid "PG_CPPFLAGS"
+msgstr "PG_CPPFLAGS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1228(para)
+msgid "will be added to <varname>CPPFLAGS</varname>"
+msgstr "флаги, добавляемые в <varname>CPPFLAGS</varname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1235(varname)
+msgid "PG_LIBS"
+msgstr "PG_LIBS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1237(para)
+msgid "will be added to <varname>PROGRAM</varname> link line"
+msgstr "будет добавлено в строку компоновки <varname>PROGRAM</varname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1244(varname)
+msgid "SHLIB_LINK"
+msgstr "SHLIB_LINK"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1246(para)
+msgid "will be added to <varname>MODULE_big</varname> link line"
+msgstr "будет добавлено в строку компоновки <varname>MODULE_big</varname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1253(varname)
+msgid "PG_CONFIG"
+msgstr "PG_CONFIG"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1255(para)
+msgid ""
+"path to <application>pg_config</application> program for the "
+"<productname>PostgreSQL</productname> installation to build against "
+"(typically just <literal>pg_config</literal> to use the first one in your "
+"<varname>PATH</varname>)"
+msgstr ""
+"путь к программе <application>pg_config</application> в инсталляции "
+"<productname>PostgreSQL</productname>, с которой будет выполняться сборка "
+"(обычно указывается просто <literal>pg_config</literal>, и используется "
+"первый экземпляр, найденный по пути в <varname>PATH</varname>)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1065(para)
+msgid ""
+"Set one of these three variables to specify what is built: <placeholder-1/> "
+"The following variables can also be set: <placeholder-2/>"
+msgstr ""
+"Установите одну из этих трёх переменных, чтобы указать, что будет собрано: "
+"<placeholder-1/> Также можно установить следующие переменные: <placeholder-2/"
+">"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1266(para)
+msgid ""
+"Put this makefile as <literal>Makefile</literal> in the directory which "
+"holds your extension. Then you can do <literal>make</literal> to compile, "
+"and then <literal>make install</literal> to install your module. By default, "
+"the extension is compiled and installed for the <productname>PostgreSQL</"
+"productname> installation that corresponds to the first <command>pg_config</"
+"command> program found in your <varname>PATH</varname>. You can use a "
+"different installation by setting <varname>PG_CONFIG</varname> to point to "
+"its <command>pg_config</command> program, either within the makefile or on "
+"the <literal>make</literal> command line."
+msgstr ""
+"Поместите этот сборочный файл под именем <literal>Makefile</literal> в "
+"каталог, где находится ваше расширение. После этого выполните <literal>make</"
+"literal>, чтобы скомпилировать, а затем <literal>make install</literal>, "
+"чтобы установить ваш модуль. По умолчанию расширение компилируется и "
+"устанавливается для той инсталляции <productname>PostgreSQL</productname>, "
+"которая соответствует экземпляру <command>pg_config</command>, найденному "
+"первым при поиске по пути в <varname>PATH</varname>. Чтобы использовать "
+"другую инсталляцию, вы можете задать в <varname>PG_CONFIG</varname> путь к "
+"её экземпляру <command>pg_config</command> либо внутри сборочного файла, "
+"либо в командном файле <literal>make</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1284(indexterm)
+msgid "<primary>VPATH</primary>"
+msgstr "<primary>VPATH</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1286(programlisting)
+#, no-wrap
+msgid ""
+"mkdir build_dir\n"
+"cd build_dir\n"
+"make -f /path/to/extension/source/tree/Makefile\n"
+"make -f /path/to/extension/source/tree/Makefile install"
+msgstr ""
+"mkdir build_dir\n"
+"cd build_dir\n"
+"make -f /path/to/extension/source/tree/Makefile\n"
+"make -f /path/to/extension/source/tree/Makefile install"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1280(para)
+msgid ""
+"You can also run <literal>make</literal> in a directory outside the source "
+"tree of your extension, if you want to keep the build directory separate. "
+"This procedure is also called a <placeholder-1/><firstterm>VPATH</firstterm> "
+"build. Here's how: <placeholder-2/>"
+msgstr ""
+"Вы также можете запустить <literal>make</literal> в каталоге вне каталога "
+"исходного дерева вашего расширения, если хотите отделить каталог сборки. Эта "
+"процедура называется сборкой с <placeholder-1/><firstterm>VPATH</firstterm> "
+"и выполняется так: <placeholder-2/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1300(programlisting)
+#, no-wrap
+msgid ""
+"make VPATH=/path/to/extension/source/tree\n"
+"make VPATH=/path/to/extension/source/tree install"
+msgstr ""
+"make VPATH=/path/to/extension/source/tree\n"
+"make VPATH=/path/to/extension/source/tree install"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1294(para)
+msgid ""
+"Alternatively, you can set up a directory for a VPATH build in a similar way "
+"to how it is done for the core code. One way to do this is using the core "
+"script <filename>config/prep_buildtree</filename>. Once this has been done "
+"you can build by setting the <literal>make</literal> variable "
+"<varname>VPATH</varname> like this: <placeholder-1/> This procedure can work "
+"with a greater variety of directory layouts."
+msgstr ""
+"Также вы можете подготовить каталог для сборки с VPATH таким же образом, как "
+"это делается в коде ядра сервера. Как один из вариантов, для этого можно "
+"воспользоваться скриптом ядра <filename>config/prep_buildtree</filename>. "
+"Затем вы сможете выполнить сборку, установив переменную <varname>VPATH</"
+"varname> для <literal>make</literal> таким образом: <placeholder-1/> Эта "
+"процедура поддерживает самые разные расположения каталогов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1307(para)
+msgid ""
+"The scripts listed in the <varname>REGRESS</varname> variable are used for "
+"regression testing of your module, which can be invoked by <literal>make "
+"installcheck</literal> after doing <literal>make install</literal>. For this "
+"to work you must have a running <productname>PostgreSQL</productname> "
+"server. The script files listed in <varname>REGRESS</varname> must appear in "
+"a subdirectory named <literal>sql/</literal> in your extension's directory. "
+"These files must have extension <literal>.sql</literal>, which must not be "
+"included in the <varname>REGRESS</varname> list in the makefile. For each "
+"test there should also be a file containing the expected output in a "
+"subdirectory named <literal>expected/</literal>, with the same stem and "
+"extension <literal>.out</literal>. <literal>make installcheck</literal> "
+"executes each test script with <application>psql</application>, and compares "
+"the resulting output to the matching expected file. Any differences will be "
+"written to the file <literal>regression.diffs</literal> in <command>diff -c</"
+"command> format. Note that trying to run a test that is missing its expected "
+"file will be reported as <quote>trouble</quote>, so make sure you have all "
+"expected files."
+msgstr ""
+"Скрипты, перечисленные в переменной <varname>REGRESS</varname>, используются "
+"для тестирования регрессии в вашем модуле, и вызвать их можно командой "
+"<literal>make installcheck</literal> после <literal>make install</literal>. "
+"Для проведения тестов необходим работающий сервер <productname>PostgreSQL</"
+"productname>. Файлы скриптов, перечисленные в <varname>REGRESS</varname>, "
+"должны размещаться в подкаталоге <literal>sql/</literal> каталога "
+"расширения. Эти файлы должны иметь расширение <literal>.sql</literal>, но "
+"указывать его в списке <varname>REGRESS</varname> в сборочном файле не "
+"нужно. Для каждого теста также должен создаваться файл с ожидаемым выводом в "
+"подкаталоге <literal>expected/</literal>, с тем же базовым именем и "
+"расширением <literal>.out</literal>. Команда <literal>make installcheck</"
+"literal> выполнит каждый тест в <application>psql</application> и сравнит "
+"полученный вывод с ожидаемым. Все выявленные различия будут записаны в файл "
+"<literal>regression.diffs</literal> в формате команды <command>diff -c</"
+"command>. Заметьте, что при попытке запустить тест без файла ожидаемого "
+"вывода этот тест будет отмечен как <quote>проблемный</quote>, поэтому "
+"убедитесь, что все такие файлы присутствуют."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:1328(para)
+msgid ""
+"The easiest way to create the expected files is to create empty files, then "
+"do a test run (which will of course report differences). Inspect the actual "
+"result files found in the <literal>results/</literal> directory, then copy "
+"them to <literal>expected/</literal> if they match what you expect from the "
+"test."
+msgstr ""
+"Проще всего для этого создать пустые файлы ожидаемого вывода, а затем "
+"выполнить тест (при этом конечно будут выявлены несоответствия). Изучите "
+"полученные файлы результатов, сохранённые в каталоге <literal>results/</"
+"literal>, и, если они соответствуют вашим ожиданиям от теста, скопируйте их "
+"в <literal>expected/</literal>."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: extend.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: extend.xml:800(para)
+msgid ""
+"Given that a suitable update script is available, the command <command>ALTER "
+"EXTENSION UPDATE</command> will update an installed extension to the "
+"specified new version. The update script is run in the same environment that "
+"<command>CREATE EXTENSION</command> provides for installation scripts: in "
+"particular, <varname>search_path</varname> is set up in the same way, and "
+"any new objects created by the script are automatically added to the "
+"extension."
+msgstr ""
+"С условием, что имеется подходящий скрипт расширения, команда <command>ALTER "
+"EXTENSION UPDATE</command> обновит установленное расширение до указанной "
+"новой версии. Скрипт обновления запускается в том же окружении, которое "
+"организует команда <command>CREATE EXTENSION</command> для установочных "
+"скриптов: в частности, <varname>search_path</varname> устанавливается таким "
+"же образом, а любые новые объекты, созданные скриптом, автоматически "
+"добавляются в расширение."

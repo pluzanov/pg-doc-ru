@@ -1,0 +1,208 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: REL 10_BETA1\n"
+"POT-Creation-Date: 2017-10-02 10:32+0300\n"
+"PO-Revision-Date: 2017-10-03 12:17+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:8(indexterm)
+msgid "<primary>DROP SUBSCRIPTION</primary>"
+msgstr "<primary>DROP SUBSCRIPTION</primary>"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:13(refentrytitle)
+msgctxt "refentrytitle"
+msgid "DROP SUBSCRIPTION"
+msgstr "DROP SUBSCRIPTION"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:14(manvolnum)
+msgid "7"
+msgstr "7"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:15(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:19(refname)
+msgctxt "refname"
+msgid "DROP SUBSCRIPTION"
+msgstr "DROP SUBSCRIPTION"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:20(refpurpose)
+msgid "remove a subscription"
+msgstr "удалить подписку"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:25(replaceable)
+#: ref/drop_subscription.xml:54(replaceable)
+msgid "name"
+msgstr "имя"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:24(synopsis)
+#, no-wrap
+msgid "DROP SUBSCRIPTION [ IF EXISTS ] <placeholder-1/> [ CASCADE | RESTRICT ]"
+msgstr "DROP VIEW [ IF EXISTS ] <placeholder-1/> [, ] [ CASCADE | RESTRICT ]"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:30(title)
+msgid "Description"
+msgstr "Описание"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:32(para)
+msgid ""
+"<command>DROP SUBSCRIPTION</command> removes a subscription from the "
+"database cluster."
+msgstr ""
+"<command>DROP SUBSCRIPTION</command> удаляет подписку из кластера баз данных."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:37(para)
+msgid "A subscription can only be dropped by a superuser."
+msgstr "Удалить подписку может только суперпользователь."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:41(para)
+msgid ""
+"<command>DROP SUBSCRIPTION</command> cannot be executed inside a transaction "
+"block if the subscription is associated with a replication slot. (You can "
+"use <command>ALTER SUBSCRIPTION</command> to unset the slot.)"
+msgstr ""
+"Команду <command>DROP SUBSCRIPTION</command> нельзя выполнять в блоке "
+"транзакции, если подписка связана со слотом репликации. (Для освобождения "
+"слота можно использовать <command>ALTER SUBSCRIPTION</command>.)"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:50(title)
+msgid "Parameters"
+msgstr "Параметры"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:56(para)
+msgid "The name of a subscription to be dropped."
+msgstr "Имя подписки, подлежащей удалению."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:63(literal)
+msgid "CASCADE"
+msgstr "CASCADE"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:64(literal)
+msgid "RESTRICT"
+msgstr "RESTRICT"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:67(para)
+msgid ""
+"These key words do not have any effect, since there are no dependencies on "
+"subscriptions."
+msgstr ""
+"Эти ключевые слова игнорируются, так как от подписок не зависят никакие "
+"объекты."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:78(title)
+msgid "Notes"
+msgstr "Замечания"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:80(para)
+msgid ""
+"When dropping a subscription that is associated with a replication slot on "
+"the remote host (the normal state), <command>DROP SUBSCRIPTION</command> "
+"will connect to the remote host and try to drop the replication slot as part "
+"of its operation. This is necessary so that the resources allocated for the "
+"subscription on the remote host are released. If this fails, either because "
+"the remote host is not reachable or because the remote replication slot "
+"cannot be dropped or does not exist or never existed, the <command>DROP "
+"SUBSCRIPTION</command> command will fail. To proceed in this situation, "
+"disassociate the subscription from the replication slot by executing "
+"<literal>ALTER SUBSCRIPTION ... SET (slot_name = NONE)</literal>. After "
+"that, <command>DROP SUBSCRIPTION</command> will no longer attempt any "
+"actions on a remote host. Note that if the remote replication slot still "
+"exists, it should then be dropped manually; otherwise it will continue to "
+"reserve WAL and might eventually cause the disk to fill up. See also <xref "
+"linkend=\"logical-replication-subscription-slot\"/>."
+msgstr ""
+"При удалении подписки, связанной со слотом репликации на удалённом узле (это "
+"типичная ситуация), команда <command>DROP SUBSCRIPTION</command> подключится "
+"к удалённому узлу и попытается удалить слот репликации в ходе этой операции. "
+"Это необходимо для освобождения ресурсов, выделенных для подписки на "
+"удалённом узле. Если при этом происходит сбой, либо из-за недоступности "
+"удалённого узла, либо из-за ошибки при удалении слота репликации, либо "
+"вообще из-за его отсутствия, команда <command>DROP SUBSCRIPTION</command> "
+"прерывается. Для разрешения этой ситуации разорвите связь подписки с этим "
+"слотом репликации, выполнив команду <literal>ALTER SUBSCRIPTION ... SET "
+"(slot_name = NONE)</literal>. После этого команда <command>DROP "
+"SUBSCRIPTION</command> не будет пытаться выполнять какие-либо действия на "
+"удалённом узле. Заметьте, что если удалённый слот репликации фактически "
+"продолжает существовать, его нужно будет удалить вручную; в противном случае "
+"для него будет по-прежнему сохраняться WAL, что в конце концов может "
+"привести к переполнению диска. См. также <xref remap=\"4\" linkend=\"logical-"
+"replication-subscription-slot\"/>."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:98(para)
+msgid ""
+"If a subscription is associated with a replication slot, then <command>DROP "
+"SUBSCRIPTION</command> cannot be executed inside a transaction block."
+msgstr ""
+"Если подписка связана со слотом репликации, команду <command>DROP "
+"SUBSCRIPTION</command> нельзя выполнять внутри блока транзакции."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:105(title)
+msgid "Examples"
+msgstr "Примеры"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:109(programlisting)
+#, no-wrap
+msgid "DROP SUBSCRIPTION mysub;"
+msgstr "DROP SUBSCRIPTION mysub;"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:107(para)
+msgid "Drop a subscription: <placeholder-1/>"
+msgstr "Удаление подписки: <placeholder-1/>"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:115(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#. +> REL_10
+#: ref/drop_subscription.xml:117(para)
+msgid ""
+"<command>DROP SUBSCRIPTION</command> is a <productname>PostgreSQL</"
+"productname> extension."
+msgstr ""
+"<command>DROP SUBSCRIPTION</command> является расширением "
+"<productname>PostgreSQL</productname>."
+
+#. +> REL_10
+#: ref/drop_subscription.xml:124(title)
+msgid "See Also"
+msgstr "См. также"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10
+#: ref/drop_subscription.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

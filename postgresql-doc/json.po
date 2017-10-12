@@ -1,0 +1,1138 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-21 15:23+0300\n"
+"PO-Revision-Date: 2017-09-18 11:14+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:5(title)
+msgid "<acronym>JSON</acronym> Types"
+msgstr "Типы <acronym>JSON</acronym>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:7(indexterm)
+msgid "<primary>JSON</primary>"
+msgstr "<primary>JSON</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:11(indexterm)
+msgid "<primary>JSONB</primary>"
+msgstr "<primary>JSONB</primary>"
+
+#. +> REL_10
+#: json.xml:15(para)
+msgid ""
+"JSON data types are for storing JSON (JavaScript Object Notation) data, as "
+"specified in <ulink url=\"https://tools.ietf.org/html/rfc7159\">RFC 7159</"
+"ulink>. Such data can also be stored as <type>text</type>, but the JSON data "
+"types have the advantage of enforcing that each stored value is valid "
+"according to the JSON rules. There are also assorted JSON-specific functions "
+"and operators available for data stored in these data types; see <xref "
+"linkend=\"functions-json\"/>."
+msgstr ""
+"Типы JSON предназначены для хранения данных JSON (JavaScript Object "
+"Notation, Запись объекта JavaScript) согласно стандарту <ulink url=\"https://"
+"tools.ietf.org/html/rfc7159\">RFC 7159</ulink>. Такие данные можно хранить и "
+"в типе <type>text</type>, но типы JSON лучше тем, что проверяют, "
+"соответствует ли вводимое значение формату JSON. Для работы с ними есть "
+"также несколько специальных функций и операторов; см. <xref remap=\"4\" "
+"linkend=\"functions-json\"/>."
+
+#. +> REL9_6_3 REL9_6
+#: json.xml:15(para)
+msgid ""
+"JSON data types are for storing JSON (JavaScript Object Notation) data, as "
+"specified in <ulink url=\"http://rfc7159.net/rfc7159\">RFC 7159</ulink>. "
+"Such data can also be stored as <type>text</type>, but the JSON data types "
+"have the advantage of enforcing that each stored value is valid according to "
+"the JSON rules. There are also assorted JSON-specific functions and "
+"operators available for data stored in these data types; see <xref linkend="
+"\"functions-json\"/>."
+msgstr ""
+"Типы JSON предназначены для хранения данных JSON (JavaScript Object "
+"Notation, Запись объекта JavaScript) согласно стандарту <ulink url=\"http://"
+"www.ietf.org/rfc/rfc4627.txt\">RFC 4627</ulink>. Такие данные можно хранить "
+"и в типе <type>text</type>, но типы JSON лучше тем, что проверяют, "
+"соответствует ли вводимое значение формату JSON. Для работы с ними есть "
+"также несколько специальных функций и операторов; см. <xref remap=\"4\" "
+"linkend=\"functions-json\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:25(para)
+msgid ""
+"There are two JSON data types: <type>json</type> and <type>jsonb</type>. "
+"They accept <emphasis>almost</emphasis> identical sets of values as input. "
+"The major practical difference is one of efficiency. The <type>json</type> "
+"data type stores an exact copy of the input text, which processing functions "
+"must reparse on each execution; while <type>jsonb</type> data is stored in a "
+"decomposed binary format that makes it slightly slower to input due to added "
+"conversion overhead, but significantly faster to process, since no reparsing "
+"is needed. <type>jsonb</type> also supports indexing, which can be a "
+"significant advantage."
+msgstr ""
+"Существуют два типа данных JSON: <type>json</type> и <type>jsonb</type>. Они "
+"принимают на вход <emphasis>почти</emphasis> одинаковые наборы значений, но "
+"основное их отличие в эффективности. Тип <type>json</type> сохраняет точную "
+"копию введённого текста, которую функции обработки должны разбирать заново "
+"при каждом выполнении, тогда как данные <type>jsonb</type> сохраняются в "
+"разобранном двоичном формате, что несколько замедляет ввод из-за "
+"преобразования, но значительно ускоряет обработку, не требуя многократного "
+"разбора текста. Кроме того, <type>jsonb</type> поддерживает индексацию, что "
+"тоже может быть очень полезно."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:38(para)
+msgid ""
+"Because the <type>json</type> type stores an exact copy of the input text, "
+"it will preserve semantically-insignificant white space between tokens, as "
+"well as the order of keys within JSON objects. Also, if a JSON object within "
+"the value contains the same key more than once, all the key/value pairs are "
+"kept. (The processing functions consider the last value as the operative "
+"one.) By contrast, <type>jsonb</type> does not preserve white space, does "
+"not preserve the order of object keys, and does not keep duplicate object "
+"keys. If duplicate keys are specified in the input, only the last value is "
+"kept."
+msgstr ""
+"Так как тип <type>json</type> сохраняет точную копию введённого текста, он "
+"сохраняет семантически незначащие пробелы между элементами, а также порядок "
+"ключей в JSON-объектах. И если JSON-объект внутри содержит повторяющиеся "
+"ключи, этот тип сохранит все пары ключ/значение. (Функции обработки будут "
+"считать действительной последнюю пару.) Тип <type>jsonb</type>, напротив, не "
+"сохраняет пробелы, порядок ключей и значения с дублирующимися ключами. Если "
+"во входных данных оказываются дублирующиеся ключи, сохраняется только "
+"последнее значение."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:50(para)
+msgid ""
+"In general, most applications should prefer to store JSON data as "
+"<type>jsonb</type>, unless there are quite specialized needs, such as legacy "
+"assumptions about ordering of object keys."
+msgstr ""
+"Для большинства приложений предпочтительнее хранить данные JSON в типе "
+"<type>jsonb</type> (если нет особых противопоказаний, например важны прежние "
+"предположения о порядке ключей объектов)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:56(para)
+msgid ""
+"<productname>PostgreSQL</productname> allows only one character set encoding "
+"per database. It is therefore not possible for the JSON types to conform "
+"rigidly to the JSON specification unless the database encoding is UTF8. "
+"Attempts to directly include characters that cannot be represented in the "
+"database encoding will fail; conversely, characters that can be represented "
+"in the database encoding but not in UTF8 will be allowed."
+msgstr ""
+"<productname>PostgreSQL</productname> позволяет использовать только одну "
+"кодировку символов в базе данных, поэтому данные JSON не будут полностью "
+"соответствовать спецификации, если кодировка базы данных не UTF-8. При этом "
+"нельзя будет вставить символы, непредставимые в кодировке сервера, и "
+"наоборот, допустимыми будут символы, представимые в кодировке сервера, но не "
+"в UTF-8."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:66(para)
+msgid ""
+"RFC 7159 permits JSON strings to contain Unicode escape sequences denoted by "
+"<literal>\\u<replaceable>XXXX</replaceable></literal>. In the input function "
+"for the <type>json</type> type, Unicode escapes are allowed regardless of "
+"the database encoding, and are checked only for syntactic correctness (that "
+"is, that four hex digits follow <literal>\\u</literal>). However, the input "
+"function for <type>jsonb</type> is stricter: it disallows Unicode escapes "
+"for non-ASCII characters (those above <literal>U+007F</literal>) unless the "
+"database encoding is UTF8. The <type>jsonb</type> type also rejects <literal>"
+"\\u0000</literal> (because that cannot be represented in "
+"<productname>PostgreSQL</productname>'s <type>text</type> type), and it "
+"insists that any use of Unicode surrogate pairs to designate characters "
+"outside the Unicode Basic Multilingual Plane be correct. Valid Unicode "
+"escapes are converted to the equivalent ASCII or UTF8 character for storage; "
+"this includes folding surrogate pairs into a single character."
+msgstr ""
+"RFC 7159 разрешает включать в строки JSON спецпоследовательности Unicode в "
+"виде <literal>\\u<replaceable>XXXX</replaceable></literal>. В функцию ввода "
+"для типа <type>json</type> эти спецпоследовательности допускаются вне "
+"зависимости от кодировки базы данных, и проверяется только правильность их "
+"синтаксиса (за <literal>\\u</literal> должны следовать четыре "
+"шестнадцатеричных цифры). Однако, функция ввода для типа <type>jsonb</type> "
+"более строгая: она не допускает спецпоследовательности Unicode для не-ASCII "
+"символов (символов после <literal>U+007F</literal>), если кодировка базы "
+"данных не UTF8. Тип <type>jsonb</type> также не принимает <literal>\\u0000</"
+"literal> (так как это значение не может быть представлено в типе <type>text</"
+"type> <productname>PostgreSQL</productname>), и требует, чтобы суррогатные "
+"пары Unicode использовались для представления символов вне основной "
+"многоязыковой плоскости (BMP) правильно. Корректные спецпоследовательности "
+"Unicode преобразуются для хранения в соответствующий символ ASCII или UTF8 "
+"(это подразумевает сворачивание суррогатных пар в один символ)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:84(para)
+msgid ""
+"Many of the JSON processing functions described in <xref linkend=\"functions-"
+"json\"/> will convert Unicode escapes to regular characters, and will "
+"therefore throw the same types of errors just described even if their input "
+"is of type <type>json</type> not <type>jsonb</type>. The fact that the "
+"<type>json</type> input function does not make these checks may be "
+"considered a historical artifact, although it does allow for simple storage "
+"(without processing) of JSON Unicode escapes in a non-UTF8 database "
+"encoding. In general, it is best to avoid mixing Unicode escapes in JSON "
+"with a non-UTF8 database encoding, if possible."
+msgstr ""
+"Многие из функций обработки JSON, описанные в <xref remap=\"6\" linkend="
+"\"functions-json\"/>, преобразуют спецпоследовательности Unicode в обычные "
+"символы, поэтому могут выдавать подобные ошибки, даже если им на вход "
+"поступает тип <type>json</type>, а не <type>jsonb</type>. То, что функция "
+"ввода в тип <type>json</type> не производит этих проверок, можно считать "
+"историческим артефактом, хотя это и позволяет просто сохранять (но не "
+"обрабатывать) в JSON спецкоды Unicode в базе данных с кодировкой не UTF8. "
+"Вообще же, по возможности следует избегать смешения спецкодов Unicode в JSON "
+"с кодировкой базой данных не UTF8."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:98(para)
+msgid ""
+"When converting textual JSON input into <type>jsonb</type>, the primitive "
+"types described by <acronym>RFC</acronym> 7159 are effectively mapped onto "
+"native <productname>PostgreSQL</productname> types, as shown in <xref "
+"linkend=\"json-type-mapping-table\"/>. Therefore, there are some minor "
+"additional constraints on what constitutes valid <type>jsonb</type> data "
+"that do not apply to the <type>json</type> type, nor to JSON in the "
+"abstract, corresponding to limits on what can be represented by the "
+"underlying data type. Notably, <type>jsonb</type> will reject numbers that "
+"are outside the range of the <productname>PostgreSQL</productname> "
+"<type>numeric</type> data type, while <type>json</type> will not. Such "
+"implementation-defined restrictions are permitted by <acronym>RFC</acronym> "
+"7159. However, in practice such problems are far more likely to occur in "
+"other implementations, as it is common to represent JSON's <type>number</"
+"type> primitive type as IEEE 754 double precision floating point (which "
+"<acronym>RFC</acronym> 7159 explicitly anticipates and allows for). When "
+"using JSON as an interchange format with such systems, the danger of losing "
+"numeric precision compared to data originally stored by "
+"<productname>PostgreSQL</productname> should be considered."
+msgstr ""
+"При преобразовании вводимого текста JSON в тип <type>jsonb</type>, "
+"примитивные типы, описанные в <acronym>RFC</acronym> 7159, по сути "
+"отображаются в собственные типы <productname>PostgreSQL</productname> как "
+"показано в <xref remap=\"6\" linkend=\"json-type-mapping-table\"/>. Таким "
+"образом, к содержимому типа <type>jsonb</type> предъявляются некоторые "
+"дополнительные требования, продиктованные ограничениями представления "
+"нижележащего типа данных, которые не распространяются ни на тип <type>json</"
+"type>, ни на формат JSON вообще. В частности, тип <type>jsonb</type> не "
+"принимает числа, выходящие за диапазон типа данных <productname>PostgreSQL</"
+"productname> <type>numeric</type>, тогда как с <type>json</type> такого "
+"ограничения нет. Такие ограничения, накладываемые реализацией, допускаются "
+"согласно <acronym>RFC</acronym> 7159. Однако, на практике такие проблемы "
+"более вероятны в других реализациях, так как обычно примитивный тип JSON "
+"<type>number</type> представляется в виде числа с плавающей точкой двойной "
+"точности IEEE 754 (что <acronym>RFC</acronym> 7159 явно признаёт и "
+"допускает). При использовании JSON в качестве формата обмена данными с "
+"такими системами следует учитывать риски потери точности чисел, хранившихся "
+"в <productname>PostgreSQL</productname>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:120(para)
+msgid ""
+"Conversely, as noted in the table there are some minor restrictions on the "
+"input format of JSON primitive types that do not apply to the corresponding "
+"<productname>PostgreSQL</productname> types."
+msgstr ""
+"И напротив, как показано в таблице, есть некоторые ограничения в формате "
+"ввода примитивных типов JSON, не актуальные для соответствующих типов "
+"<productname>PostgreSQL</productname>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:127(title)
+msgid ""
+"JSON primitive types and corresponding <productname>PostgreSQL</productname> "
+"types"
+msgstr ""
+"Примитивные типы JSON и соответствующие им типы <productname>PostgreSQL</"
+"productname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:131(entry)
+msgid "JSON primitive type"
+msgstr "Примитивный тип JSON"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:132(entry)
+msgid "<productname>PostgreSQL</productname> type"
+msgstr "Тип <productname>PostgreSQL</productname>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:133(entry)
+msgid "Notes"
+msgstr "Замечания"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:138(type)
+msgid "string"
+msgstr "string"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:139(type)
+msgid "text"
+msgstr "text"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:140(entry)
+msgid ""
+"<literal>\\u0000</literal> is disallowed, as are non-ASCII Unicode escapes "
+"if database encoding is not UTF8"
+msgstr ""
+"<literal>\\u0000</literal> не допускается, как не ASCII символ, если "
+"кодировка базы данных не UTF8"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:144(type)
+msgid "number"
+msgstr "number"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:145(type)
+msgid "numeric"
+msgstr "numeric"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:146(entry)
+msgid ""
+"<literal>NaN</literal> and <literal>infinity</literal> values are disallowed"
+msgstr ""
+"Значения <literal>NaN</literal> и <literal>infinity</literal> не допускаются"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:149(type) json.xml:150(type)
+msgid "boolean"
+msgstr "boolean"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:151(entry)
+msgid ""
+"Only lowercase <literal>true</literal> and <literal>false</literal> "
+"spellings are accepted"
+msgstr ""
+"Допускаются только варианты <literal>true</literal> и <literal>false</"
+"literal> (в нижнем регистре)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:154(type)
+msgid "null"
+msgstr "null"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:155(entry)
+msgid "(none)"
+msgstr "(нет)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:156(entry)
+msgid "SQL <literal>NULL</literal> is a different concept"
+msgstr "<literal>NULL</literal> в SQL имеет другой смысл"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:163(title)
+msgid "JSON Input and Output Syntax"
+msgstr "Синтаксис вводимых и выводимых значений JSON"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:164(para)
+msgid ""
+"The input/output syntax for the JSON data types is as specified in "
+"<acronym>RFC</acronym> 7159."
+msgstr ""
+"Синтаксис ввода/вывода типов данных JSON соответствует стандарту "
+"<acronym>RFC</acronym> 7159."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:170(programlisting)
+#, no-wrap
+msgid ""
+"-- Simple scalar/primitive value\n"
+"-- Primitive values can be numbers, quoted strings, true, false, or null\n"
+"SELECT '5'::json;\n"
+"\n"
+"-- Array of zero or more elements (elements need not be of same type)\n"
+"SELECT '[1, 2, \"foo\", null]'::json;\n"
+"\n"
+"-- Object containing pairs of keys and values\n"
+"-- Note that object keys must always be quoted strings\n"
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\": false}'::json;\n"
+"\n"
+"-- Arrays and objects can be nested arbitrarily\n"
+"SELECT '{\"foo\": [true, \"bar\"], \"tags\": {\"a\": 1, \"b\": null}}'::json;"
+msgstr ""
+"-- Простое скалярное/примитивное значение\n"
+"-- Простыми значениями могут быть числа, строки в кавычках, true, false или null\n"
+"SELECT '5'::json;\n"
+"\n"
+"-- Массив из нуля и более элементов (элементы могут быть разных типов)\n"
+"SELECT '[1, 2, \"foo\", null]'::json;\n"
+"\n"
+"-- Объект, содержащий пары ключей и значений\n"
+"-- Заметьте, что ключи объектов &mdash; это всегда строки в кавычках\n"
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\": false}'::json;\n"
+"\n"
+"-- Массивы и объекты могут вкладываться произвольным образом\n"
+"SELECT '{\"foo\": [true, \"bar\"], \"tags\": {\"a\": 1, \"b\": null}}'::json;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:168(para)
+msgid ""
+"The following are all valid <type>json</type> (or <type>jsonb</type>) "
+"expressions: <placeholder-1/>"
+msgstr ""
+"Примеры допустимых выражений с типом <type>json</type> (или <type>jsonb</"
+"type>): <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:192(programlisting)
+#, no-wrap
+msgid ""
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}'::json;\n"
+"                      json                       \n"
+"-------------------------------------------------\n"
+" {\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}\n"
+"(1 row)\n"
+"\n"
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}'::jsonb;\n"
+"                      jsonb                       \n"
+"--------------------------------------------------\n"
+" {\"bar\": \"baz\", \"active\": false, \"balance\": 7.77}\n"
+"(1 row)"
+msgstr ""
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}'::json;\n"
+"                      json                       \n"
+"-------------------------------------------------\n"
+" {\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}\n"
+"(1 row)\n"
+"\n"
+"SELECT '{\"bar\": \"baz\", \"balance\": 7.77, \"active\":false}'::jsonb;\n"
+"                      jsonb                       \n"
+"--------------------------------------------------\n"
+" {\"bar\": \"baz\", \"active\": false, \"balance\": 7.77}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:210(programlisting)
+#, no-wrap
+msgid ""
+"SELECT '{\"reading\": 1.230e-5}'::json, '{\"reading\": 1.230e-5}'::jsonb;\n"
+"         json          |          jsonb          \n"
+"-----------------------+-------------------------\n"
+" {\"reading\": 1.230e-5} | {\"reading\": 0.00001230}\n"
+"(1 row)"
+msgstr ""
+"SELECT '{\"reading\": 1.230e-5}'::json, '{\"reading\": 1.230e-5}'::jsonb;\n"
+"         json          |          jsonb          \n"
+"-----------------------+-------------------------\n"
+" {\"reading\": 1.230e-5} | {\"reading\": 0.00001230}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:187(para)
+msgid ""
+"As previously stated, when a JSON value is input and then printed without "
+"any additional processing, <type>json</type> outputs the same text that was "
+"input, while <type>jsonb</type> does not preserve semantically-insignificant "
+"details such as whitespace. For example, note the differences here: "
+"<placeholder-1/> One semantically-insignificant detail worth noting is that "
+"in <type>jsonb</type>, numbers will be printed according to the behavior of "
+"the underlying <type>numeric</type> type. In practice this means that "
+"numbers entered with <literal>E</literal> notation will be printed without "
+"it, for example: <placeholder-2/> However, <type>jsonb</type> will preserve "
+"trailing fractional zeroes, as seen in this example, even though those are "
+"semantically insignificant for purposes such as equality checks."
+msgstr ""
+"Как было сказано ранее, когда значение JSON вводится и затем выводится без "
+"дополнительной обработки, тип <type>json</type> выводит тот же текст, что "
+"поступил на вход, а <type>jsonb</type> не сохраняет семантически незначащие "
+"детали, такие как пробелы. Например, посмотрите на эти различия: "
+"<placeholder-1/> Первая семантически незначимая деталь, заслуживающая "
+"внимания: с <type>jsonb</type> числа выводятся по правилам нижележащего типа "
+"<type>numeric</type>. На практике это означает, что числа, заданные в записи "
+"с <literal>E</literal>, будут выведены без неё, например: <placeholder-2/> "
+"Однако, как видно из этого примера, <type>jsonb</type> сохраняет конечные "
+"нули дробного числа, хотя они и не имеют семантической значимости, в "
+"частности для проверки на равенство."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:224(title)
+msgid "Designing JSON documents effectively"
+msgstr "Эффективная организация документов JSON"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:225(para)
+msgid ""
+"Representing data as JSON can be considerably more flexible than the "
+"traditional relational data model, which is compelling in environments where "
+"requirements are fluid. It is quite possible for both approaches to co-exist "
+"and complement each other within the same application. However, even for "
+"applications where maximal flexibility is desired, it is still recommended "
+"that JSON documents have a somewhat fixed structure. The structure is "
+"typically unenforced (though enforcing some business rules declaratively is "
+"possible), but having a predictable structure makes it easier to write "
+"queries that usefully summarize a set of <quote>documents</quote> (datums) "
+"in a table."
+msgstr ""
+"Представлять данные в JSON можно гораздо более гибко, чем в традиционной "
+"реляционной модели данных, что очень привлекательно там, где нет жёстких "
+"условий. И оба этих подхода вполне могут сосуществовать и дополнять друг "
+"друга в одном приложении. Однако, даже для приложений, которым нужна "
+"максимальная гибкость, рекомендуется, чтобы документы JSON имели некоторую "
+"фиксированную структуру. Эта структура обычно не навязывается жёстко (хотя "
+"можно декларативно диктовать некоторые бизнес-правила), но когда она "
+"предсказуема, становится гораздо проще писать запросы, которые извлекают "
+"полезные данные из набора <quote>документов</quote> (информации) в таблице."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:238(para)
+msgid ""
+"JSON data is subject to the same concurrency-control considerations as any "
+"other data type when stored in a table. Although storing large documents is "
+"practicable, keep in mind that any update acquires a row-level lock on the "
+"whole row. Consider limiting JSON documents to a manageable size in order to "
+"decrease lock contention among updating transactions. Ideally, JSON "
+"documents should each represent an atomic datum that business rules dictate "
+"cannot reasonably be further subdivided into smaller datums that could be "
+"modified independently."
+msgstr ""
+"Данные JSON, как и данные любых других типов, хранящиеся в таблицах, "
+"находятся под контролем механизма параллельного доступа. Хотя хранить "
+"большие документы вполне возможно, не забывайте, что при любом изменении "
+"устанавливается блокировка всей строки (на уровне строки). Поэтому для "
+"оптимизации блокировок транзакций, изменяющих данные, стоит ограничить "
+"размер документов JSON разумными пределами. В идеале каждый документ JSON "
+"должен собой представлять атомарный информационный блок, который, согласно "
+"бизнес-логике, нельзя разделить на меньшие, индивидуально изменяемые блоки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:253(title)
+msgid "<type>jsonb</type> Containment and Existence"
+msgstr "Проверки на вхождение и существование <type>jsonb</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:254(indexterm)
+msgid "<primary>jsonb</primary> <secondary>containment</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>вхождение</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:258(indexterm)
+msgid "<primary>jsonb</primary> <secondary>existence</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>существование</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:262(para)
+msgid ""
+"Testing <firstterm>containment</firstterm> is an important capability of "
+"<type>jsonb</type>. There is no parallel set of facilities for the "
+"<type>json</type> type. Containment tests whether one <type>jsonb</type> "
+"document has contained within it another one. These examples return true "
+"except as noted:"
+msgstr ""
+"Проверка <firstterm>вхождения</firstterm> &mdash; важная особенность типа "
+"<type>jsonb</type>, не имеющая аналога для типа <type>json</type>. Эта "
+"проверка определяет, входит ли один документ <type>jsonb</type> в другой. В "
+"следующих примерах возвращается истинное значение (кроме упомянутых "
+"исключений):"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:269(programlisting)
+#, no-wrap
+msgid ""
+"-- Simple scalar/primitive values contain only the identical value:\n"
+"SELECT '\"foo\"'::jsonb @&gt; '\"foo\"'::jsonb;\n"
+"\n"
+"-- The array on the right side is contained within the one on the left:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[1, 3]'::jsonb;\n"
+"\n"
+"-- Order of array elements is not significant, so this is also true:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[3, 1]'::jsonb;\n"
+"\n"
+"-- Duplicate array elements don't matter either:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[1, 2, 2]'::jsonb;\n"
+"\n"
+"-- The object with a single pair on the right side is contained\n"
+"-- within the object on the left side:\n"
+"SELECT '{\"product\": \"PostgreSQL\", \"version\": 9.4, \"jsonb\": true}'::jsonb @&gt; '{\"version\": 9.4}'::jsonb;\n"
+"\n"
+"-- The array on the right side is <emphasis>not</emphasis> considered contained within the\n"
+"-- array on the left, even though a similar array is nested within it:\n"
+"SELECT '[1, 2, [1, 3]]'::jsonb @&gt; '[1, 3]'::jsonb;  -- yields false\n"
+"\n"
+"-- But with a layer of nesting, it is contained:\n"
+"SELECT '[1, 2, [1, 3]]'::jsonb @&gt; '[[1, 3]]'::jsonb;\n"
+"\n"
+"-- Similarly, containment is not reported here:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb @&gt; '{\"bar\": \"baz\"}'::jsonb;  -- yields false\n"
+"\n"
+"-- A top-level key and an empty object is contained:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb @&gt; '{\"foo\": {}}'::jsonb;"
+msgstr ""
+"-- Простые скалярные/примитивные значения включают только одно идентичное значение:\n"
+"SELECT '\"foo\"'::jsonb @&gt; '\"foo\"'::jsonb;\n"
+"\n"
+"-- Массив с правой стороны входит в массив слева:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[1, 3]'::jsonb;\n"
+"\n"
+"-- Порядок элементов в массиве не важен, поэтому это условие тоже выполняется:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[3, 1]'::jsonb;\n"
+"\n"
+"-- А повторяющиеся элементы массива не имеют значения:\n"
+"SELECT '[1, 2, 3]'::jsonb @&gt; '[1, 2, 2]'::jsonb;\n"
+"\n"
+"-- Объект с одной парой справа входит в объект слева:\n"
+"SELECT '{\"product\": \"PostgreSQL\", \"version\": 9.4, \"jsonb\": true}'::jsonb @&gt; '{\"version\": 9.4}'::jsonb;\n"
+"\n"
+"-- Массив справа <emphasis>не</emphasis> считается входящим в\n"
+"-- массив слева, хотя в последний и вложен подобный массив:\n"
+"SELECT '[1, 2, [1, 3]]'::jsonb @&gt; '[1, 3]'::jsonb;  -- выдаёт false\n"
+"\n"
+"-- Но если добавить уровень вложенности, проверка на вхождение выполняется:\n"
+"SELECT '[1, 2, [1, 3]]'::jsonb @&gt; '[[1, 3]]'::jsonb;\n"
+"\n"
+"-- Аналогично, это вхождением не считается:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb @&gt; '{\"bar\": \"baz\"}'::jsonb;  -- выдаёт false\n"
+"\n"
+"-- Ключ с пустым объектом на верхнем уровне входит в объект с таким ключом:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb @&gt; '{\"foo\": {}}'::jsonb;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:300(para)
+msgid ""
+"The general principle is that the contained object must match the containing "
+"object as to structure and data contents, possibly after discarding some non-"
+"matching array elements or object key/value pairs from the containing "
+"object. But remember that the order of array elements is not significant "
+"when doing a containment match, and duplicate array elements are effectively "
+"considered only once."
+msgstr ""
+"Общий принцип этой проверки в том, что входящий объект должен "
+"соответствовать объекту, содержащему его, по структуре и данным, возможно, "
+"после исключения из содержащего объекта лишних элементов массива или пар "
+"ключ/значение. Но помните, что порядок элементов массива для проверки на "
+"вхождение не имеет значения, а повторяющиеся элементы массива считаются "
+"только один раз."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:310(para)
+msgid ""
+"As a special exception to the general principle that the structures must "
+"match, an array may contain a primitive value:"
+msgstr ""
+"В качестве особого исключения для требования идентичности структур, массив "
+"может содержать примитивное значение:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:314(programlisting)
+#, no-wrap
+msgid ""
+"-- This array contains the primitive string value:\n"
+"SELECT '[\"foo\", \"bar\"]'::jsonb @&gt; '\"bar\"'::jsonb;\n"
+"\n"
+"-- This exception is not reciprocal -- non-containment is reported here:\n"
+"SELECT '\"bar\"'::jsonb @&gt; '[\"bar\"]'::jsonb;  -- yields false"
+msgstr ""
+"-- В этот массив входит примитивное строковое значение:\n"
+"SELECT '[\"foo\", \"bar\"]'::jsonb @&gt; '\"bar\"'::jsonb;\n"
+"\n"
+"-- Это исключение действует только в одну сторону -- здесь вхождения нет:\n"
+"SELECT '\"bar\"'::jsonb @&gt; '[\"bar\"]'::jsonb;  -- выдаёт false"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:322(para)
+msgid ""
+"<type>jsonb</type> also has an <firstterm>existence</firstterm> operator, "
+"which is a variation on the theme of containment: it tests whether a string "
+"(given as a <type>text</type> value) appears as an object key or array "
+"element at the top level of the <type>jsonb</type> value. These examples "
+"return true except as noted:"
+msgstr ""
+"Для типа <type>jsonb</type> введён также оператор <firstterm>существования</"
+"firstterm>, который является вариацией на тему вхождения: он проверяет, "
+"является ли строка (заданная в виде значения <type>text</type>) ключом "
+"объекта или элементом массива на верхнем уровне значения <type>jsonb</type>. "
+"В следующих примерах возвращается истинное значение (кроме упомянутых "
+"исключений):"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:329(programlisting)
+#, no-wrap
+msgid ""
+"-- String exists as array element:\n"
+"SELECT '[\"foo\", \"bar\", \"baz\"]'::jsonb ? 'bar';\n"
+"\n"
+"-- String exists as object key:\n"
+"SELECT '{\"foo\": \"bar\"}'::jsonb ? 'foo';\n"
+"\n"
+"-- Object values are not considered:\n"
+"SELECT '{\"foo\": \"bar\"}'::jsonb ? 'bar';  -- yields false\n"
+"\n"
+"-- As with containment, existence must match at the top level:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb ? 'bar'; -- yields false\n"
+"\n"
+"-- A string is considered to exist if it matches a primitive JSON string:\n"
+"SELECT '\"foo\"'::jsonb ? 'foo';"
+msgstr ""
+"-- Строка существует в качестве элемента массива:\n"
+"SELECT '[\"foo\", \"bar\", \"baz\"]'::jsonb ? 'bar';\n"
+"\n"
+"-- Строка существует в качестве ключа объекта:\n"
+"SELECT '{\"foo\": \"bar\"}'::jsonb ? 'foo';\n"
+"\n"
+"-- Значения объектов не рассматриваются:\n"
+"SELECT '{\"foo\": \"bar\"}'::jsonb ? 'bar';  -- выдаёт false\n"
+"\n"
+"-- Как и вхождение, существование определяется на верхнем уровне:\n"
+"SELECT '{\"foo\": {\"bar\": \"baz\"}}'::jsonb ? 'bar'; -- выдаёт false\n"
+"\n"
+"-- Строка считается существующей, если она соответствует примитивной строке JSON:\n"
+"SELECT '\"foo\"'::jsonb ? 'foo';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:346(para)
+msgid ""
+"JSON objects are better suited than arrays for testing containment or "
+"existence when there are many keys or elements involved, because unlike "
+"arrays they are internally optimized for searching, and do not need to be "
+"searched linearly."
+msgstr ""
+"Объекты JSON для проверок на существование и вхождение со множеством ключей "
+"или элементов подходят больше, чем массивы, так как, в отличие от массивов, "
+"они внутри оптимизируются для поиска, и поиск элемента не будет линейным."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:362(programlisting)
+#, no-wrap
+msgid ""
+"SELECT doc-&gt;'site_name' FROM websites\n"
+"  WHERE doc @&gt; '{\"tags\":[{\"term\":\"paris\"}, {\"term\":\"food\"}]}';"
+msgstr ""
+"SELECT doc-&gt;'site_name' FROM websites\n"
+"  WHERE doc @&gt; '{\"tags\":[{\"term\":\"paris\"}, {\"term\":\"food\"}]}';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:367(programlisting)
+#, no-wrap
+msgid ""
+"SELECT doc-&gt;'site_name' FROM websites\n"
+"  WHERE doc-&gt;'tags' @&gt; '[{\"term\":\"paris\"}, {\"term\":\"food\"}]';"
+msgstr ""
+"SELECT doc-&gt;'site_name' FROM websites\n"
+"  WHERE doc-&gt;'tags' @&gt; '[{\"term\":\"paris\"}, {\"term\":\"food\"}]';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:354(para)
+msgid ""
+"Because JSON containment is nested, an appropriate query can skip explicit "
+"selection of sub-objects. As an example, suppose that we have a "
+"<structfield>doc</structfield> column containing objects at the top level, "
+"with most objects containing <literal>tags</literal> fields that contain "
+"arrays of sub-objects. This query finds entries in which sub-objects "
+"containing both <literal>\"term\":\"paris\"</literal> and <literal>\"term\":"
+"\"food\"</literal> appear, while ignoring any such keys outside the "
+"<literal>tags</literal> array: <placeholder-1/> One could accomplish the "
+"same thing with, say, <placeholder-2/> but that approach is less flexible, "
+"and often less efficient as well."
+msgstr ""
+"Так как вхождение в JSON проверяется с учётом вложенности, правильно "
+"написанный запрос может заменить явную выборку внутренних объектов. "
+"Например, предположим, что у нас есть столбец <structfield>doc</"
+"structfield>, содержащий объекты на верхнем уровне, и большинство этих "
+"объектов содержит поля <literal>tags</literal> с массивами вложенных "
+"объектов. Данный запрос найдёт записи, в которых вложенные объекты содержат "
+"ключи <literal>\"term\":\"paris\"</literal> и <literal>\"term\":\"food\"</"
+"literal>, и при этом пропустит такие ключи, находящиеся вне массива "
+"<literal>tags</literal>: <placeholder-1/> Этого же результата можно "
+"добиться, например, так: <placeholder-2/> Но данный подход менее гибкий и "
+"часто также менее эффективный."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:374(para)
+msgid ""
+"On the other hand, the JSON existence operator is not nested: it will only "
+"look for the specified key or array element at top level of the JSON value."
+msgstr ""
+"С другой стороны, оператор существования JSON не учитывает вложенность: он "
+"будет искать заданный ключ или элемент массива только на верхнем уровне "
+"значения JSON."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:381(para)
+msgid ""
+"The various containment and existence operators, along with all other JSON "
+"operators and functions are documented in <xref linkend=\"functions-json\"/>."
+msgstr ""
+"Различные операторы вхождения и существования, а также все другие операторы "
+"и функции для работы с JSON документированы в <xref remap=\"6\" linkend="
+"\"functions-json\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:389(title)
+msgid "<type>jsonb</type> Indexing"
+msgstr "Индексация <type>jsonb</type>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:390(indexterm)
+msgid "<primary>jsonb</primary> <secondary>indexes on</secondary>"
+msgstr "<primary>jsonb</primary> <secondary>индексы по</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:395(para)
+msgid ""
+"GIN indexes can be used to efficiently search for keys or key/value pairs "
+"occurring within a large number of <type>jsonb</type> documents (datums). "
+"Two GIN <quote>operator classes</quote> are provided, offering different "
+"performance and flexibility trade-offs."
+msgstr ""
+"Для эффективного поиска ключей или пар ключ/значение в большом количестве "
+"документов <type>jsonb</type> можно успешно применять индексы GIN. Для этого "
+"предоставляются два <quote>класса операторов</quote> GIN, предлагающие выбор "
+"между производительностью и гибкостью."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:410(programlisting)
+#, no-wrap
+msgid "CREATE INDEX idxgin ON api USING GIN (jdoc);"
+msgstr "CREATE INDEX idxgin ON api USING GIN (jdoc);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:416(programlisting)
+#, no-wrap
+msgid "CREATE INDEX idxginp ON api USING GIN (jdoc jsonb_path_ops);"
+msgstr "CREATE INDEX idxginp ON api USING GIN (jdoc jsonb_path_ops);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:402(para)
+msgid ""
+"The default GIN operator class for <type>jsonb</type> supports queries with "
+"top-level key-exists operators <literal>?</literal>, <literal>?&amp;</"
+"literal> and <literal>?|</literal> operators and path/value-exists operator "
+"<literal>@&gt;</literal>. (For details of the semantics that these operators "
+"implement, see <xref linkend=\"functions-jsonb-op-table\"/>.) An example of "
+"creating an index with this operator class is: <placeholder-1/> The non-"
+"default GIN operator class <literal>jsonb_path_ops</literal> supports "
+"indexing the <literal>@&gt;</literal> operator only. An example of creating "
+"an index with this operator class is: <placeholder-2/>"
+msgstr ""
+"Класс операторов GIN по умолчанию для <type>jsonb</type> поддерживает "
+"запросы с операторами существования ключа на верхнем уровне (<literal>?</"
+"literal>, <literal>?&amp;</literal> и <literal>?|</literal>) и оператором "
+"существования пути/значения (<literal>@&gt;</literal>). (Подробнее "
+"семантика, реализуемая этими операторами, описана в <xref remap=\"6\" "
+"linkend=\"functions-jsonb-op-table\"/>.) Пример создания индекса с этим "
+"классом операторов: <placeholder-1/> Дополнительный класс операторов GIN "
+"<literal>jsonb_path_ops</literal> поддерживает индексацию только для "
+"оператора <literal>@&gt;</literal>. Пример создания индекса с этим классом "
+"операторов: <placeholder-2/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:425(programlisting)
+#, no-wrap
+msgid ""
+"{\n"
+"    \"guid\": \"9c36adc1-7fb5-4d5b-83b4-90356a46061a\",\n"
+"    \"name\": \"Angela Barton\",\n"
+"    \"is_active\": true,\n"
+"    \"company\": \"Magnafone\",\n"
+"    \"address\": \"178 Howard Place, Gulf, Washington, 702\",\n"
+"    \"registered\": \"2009-11-07T08:53:22 +08:00\",\n"
+"    \"latitude\": 19.793713,\n"
+"    \"longitude\": 86.513373,\n"
+"    \"tags\": [\n"
+"        \"enim\",\n"
+"        \"aliquip\",\n"
+"        \"qui\"\n"
+"    ]\n"
+"}"
+msgstr ""
+"{\n"
+"    \"guid\": \"9c36adc1-7fb5-4d5b-83b4-90356a46061a\",\n"
+"    \"name\": \"Angela Barton\",\n"
+"    \"is_active\": true,\n"
+"    \"company\": \"Magnafone\",\n"
+"    \"address\": \"178 Howard Place, Gulf, Washington, 702\",\n"
+"    \"registered\": \"2009-11-07T08:53:22 +08:00\",\n"
+"    \"latitude\": 19.793713,\n"
+"    \"longitude\": 86.513373,\n"
+"    \"tags\": [\n"
+"        \"enim\",\n"
+"        \"aliquip\",\n"
+"        \"qui\"\n"
+"    ]\n"
+"}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:446(programlisting)
+#, no-wrap
+msgid ""
+"-- Find documents in which the key \"company\" has value \"Magnafone\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"company\": \"Magnafone\"}';"
+msgstr ""
+"-- Найти документы, в которых ключ \"company\" имеет значение \"Magnafone\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"company\": \"Magnafone\"}';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:453(programlisting)
+#, no-wrap
+msgid ""
+"-- Find documents in which the key \"tags\" contains key or array element \"qui\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc -&gt; 'tags' ? 'qui';"
+msgstr ""
+"-- Найти документы, в которых ключ \"tags\" содержит ключ или элемент массива \"qui\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc -&gt; 'tags' ? 'qui';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:461(programlisting)
+#, no-wrap
+msgid "CREATE INDEX idxgintags ON api USING GIN ((jdoc -&gt; 'tags'));"
+msgstr "CREATE INDEX idxgintags ON api USING GIN ((jdoc -&gt; 'tags'));"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:421(para)
+msgid ""
+"Consider the example of a table that stores JSON documents retrieved from a "
+"third-party web service, with a documented schema definition. A typical "
+"document is: <placeholder-1/> We store these documents in a table named "
+"<structname>api</structname>, in a <type>jsonb</type> column named "
+"<structfield>jdoc</structfield>. If a GIN index is created on this column, "
+"queries like the following can make use of the index: <placeholder-2/> "
+"However, the index could not be used for queries like the following, because "
+"though the operator <literal>?</literal> is indexable, it is not applied "
+"directly to the indexed column <structfield>jdoc</structfield>: "
+"<placeholder-3/> Still, with appropriate use of expression indexes, the "
+"above query can use an index. If querying for particular items within the "
+"<literal>\"tags\"</literal> key is common, defining an index like this may "
+"be worthwhile: <placeholder-4/> Now, the <literal>WHERE</literal> clause "
+"<literal>jdoc -&gt; 'tags' ? 'qui'</literal> will be recognized as an "
+"application of the indexable operator <literal>?</literal> to the indexed "
+"expression <literal>jdoc -&gt; 'tags'</literal>. (More information on "
+"expression indexes can be found in <xref linkend=\"indexes-expressional\"/>.)"
+msgstr ""
+"Рассмотрим пример таблицы, в которой хранятся документы JSON, получаемые от "
+"сторонней веб-службы, с документированным определением схемы. Типичный "
+"документ:<placeholder-1/> Мы сохраняем эти документы в таблице "
+"<structname>api</structname>, в столбце <structfield>jdoc</structfield> типа "
+"<type>jsonb</type>. Если по этому столбцу создаётся GIN-индекс, он может "
+"применяться в подобных запросах: <placeholder-2/> Однако, в следующих "
+"запросах он не будет использоваться, потому что, несмотря на то, что "
+"оператор <literal>?</literal> &mdash; индексируемый, он применяется не к "
+"индексированному столбцу <structfield>jdoc</structfield> непосредственно: "
+"<placeholder-3/> И всё же, правильно применяя индексы выражений, в этом "
+"запросе можно задействовать индекс. Если запрос определённых элементов в "
+"ключе <literal>\"tags\"</literal> выполняется часто, вероятно стоит "
+"определить такой индекс: <placeholder-4/> Теперь предложение <literal>WHERE</"
+"literal> <literal>jdoc -&gt; 'tags' ? 'qui'</literal> будет выполняться как "
+"применение индексируемого оператора <literal>?</literal> к индексируемому "
+"выражению <literal>jdoc -&gt; 'tags'</literal>. (Подробнее об индексах "
+"выражений можно узнать в <xref remap=\"6\" linkend=\"indexes-expressional\"/"
+">.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:473(programlisting)
+#, no-wrap
+msgid ""
+"-- Find documents in which the key \"tags\" contains array element \"qui\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"tags\": [\"qui\"]}';"
+msgstr ""
+"-- Найти документы, в которых ключ \"tags\" содержит элемент массива \"qui\"\n"
+"SELECT jdoc-&gt;'guid', jdoc-&gt;'name' FROM api WHERE jdoc @&gt; '{\"tags\": [\"qui\"]}';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:471(para)
+msgid ""
+"Another approach to querying is to exploit containment, for example: "
+"<placeholder-1/> A simple GIN index on the <structfield>jdoc</structfield> "
+"column can support this query. But note that such an index will store copies "
+"of every key and value in the <structfield>jdoc</structfield> column, "
+"whereas the expression index of the previous example stores only data found "
+"under the <literal>tags</literal> key. While the simple-index approach is "
+"far more flexible (since it supports queries about any key), targeted "
+"expression indexes are likely to be smaller and faster to search than a "
+"simple index."
+msgstr ""
+"Ещё один подход к использованию проверок на существование: <placeholder-1/> "
+"Этот запрос может задействовать простой GIN-индекс по столбцу "
+"<structfield>jdoc</structfield>. Но заметьте, что такой индекс будет хранить "
+"копии всех ключей и значений в поле <structfield>jdoc</structfield>, тогда "
+"как индекс выражения из предыдущего примера хранит только данные внутри "
+"объекта с ключом <literal>tags</literal>. Хотя подход с простым индексом "
+"гораздо более гибкий (так как он поддерживает запросы по любому ключу), "
+"индексы конкретных выражений скорее всего будут меньше и быстрее, чем "
+"простые индексы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:487(para)
+msgid ""
+"Although the <literal>jsonb_path_ops</literal> operator class supports only "
+"queries with the <literal>@&gt;</literal> operator, it has notable "
+"performance advantages over the default operator class <literal>jsonb_ops</"
+"literal>. A <literal>jsonb_path_ops</literal> index is usually much smaller "
+"than a <literal>jsonb_ops</literal> index over the same data, and the "
+"specificity of searches is better, particularly when queries contain keys "
+"that appear frequently in the data. Therefore search operations typically "
+"perform better than with the default operator class."
+msgstr ""
+"Класс операторов <literal>jsonb_path_ops</literal> поддерживает только "
+"запросы с оператором <literal>@&gt;</literal>, но зато он значительно "
+"производительнее класса по умолчанию <literal>jsonb_ops</literal>. Индекс "
+"<literal>jsonb_path_ops</literal> обычно гораздо меньше индекса "
+"<literal>jsonb_ops</literal> для тех же данных и более точен при поиске, "
+"особенно, если запросы обращаются к ключам, часто встречающимся в данных. "
+"Таким образом, с ним операции поиска выполняются гораздо лучше, чем с "
+"классом операторов по умолчанию."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:506(para)
+msgid ""
+"For this purpose, the term <quote>value</quote> includes array elements, "
+"though JSON terminology sometimes considers array elements distinct from "
+"values within objects."
+msgstr ""
+"Поэтому понятие <quote>значение</quote> включает и элементы массивов, хотя в "
+"терминологии JSON иногда элементы массивов считаются отличными от значений "
+"внутри объектов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:499(para)
+msgid ""
+"The technical difference between a <literal>jsonb_ops</literal> and a "
+"<literal>jsonb_path_ops</literal> GIN index is that the former creates "
+"independent index items for each key and value in the data, while the latter "
+"creates index items only for each value in the data. <placeholder-1/> "
+"Basically, each <literal>jsonb_path_ops</literal> index item is a hash of "
+"the value and the key(s) leading to it; for example to index <literal>{\"foo"
+"\": {\"bar\": \"baz\"}}</literal>, a single index item would be created "
+"incorporating all three of <literal>foo</literal>, <literal>bar</literal>, "
+"and <literal>baz</literal> into the hash value. Thus a containment query "
+"looking for this structure would result in an extremely specific index "
+"search; but there is no way at all to find out whether <literal>foo</"
+"literal> appears as a key. On the other hand, a <literal>jsonb_ops</literal> "
+"index would create three index items representing <literal>foo</literal>, "
+"<literal>bar</literal>, and <literal>baz</literal> separately; then to do "
+"the containment query, it would look for rows containing all three of these "
+"items. While GIN indexes can perform such an AND search fairly efficiently, "
+"it will still be less specific and slower than the equivalent "
+"<literal>jsonb_path_ops</literal> search, especially if there are a very "
+"large number of rows containing any single one of the three index items."
+msgstr ""
+"Техническое различие между GIN-индексами <literal>jsonb_ops</literal> и "
+"<literal>jsonb_path_ops</literal> состоит в том, что для первых создаются "
+"независимые элементы индекса для каждого ключа/значения в данных, тогда как "
+"для вторых создаются элементы только для значений. <placeholder-1/> По сути, "
+"каждый элемент индекса <literal>jsonb_path_ops</literal> представляет собой "
+"хеш значения и ключа(ей), приводящего к нему; например, при индексации "
+"<literal>{\"foo\": {\"bar\": \"baz\"}}</literal> будет создан один элемент "
+"индекса с хешем, рассчитанным по всем трём значениям: <literal>foo</"
+"literal>, <literal>bar</literal> и <literal>baz</literal>. Таким образом, "
+"проверка на вхождение этой структуры будет использовать крайне точный поиск "
+"по индексу, но определить, является ли <literal>foo</literal> ключом, с "
+"помощью такого индекса нельзя. С другой стороны, индекс <literal>jsonb_ops</"
+"literal> создаст три отдельных элемента индекса, представляющих "
+"<literal>foo</literal>, <literal>bar</literal> и <literal>baz</literal> по "
+"отдельности; для выполнения проверки на вхождение будут проверены строки "
+"таблицы, содержащие все эти три значения. Хотя GIN-индексы позволяют "
+"вычислить AND довольно эффективно, такой поиск всё же будет менее точным и "
+"более медленным, чем равнозначный поиск с <literal>jsonb_path_ops</literal>, "
+"особенно если любое одно из этих трёх значений содержится в большом "
+"количестве строк."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:530(para)
+msgid ""
+"A disadvantage of the <literal>jsonb_path_ops</literal> approach is that it "
+"produces no index entries for JSON structures not containing any values, "
+"such as <literal>{\"a\": {}}</literal>. If a search for documents containing "
+"such a structure is requested, it will require a full-index scan, which is "
+"quite slow. <literal>jsonb_path_ops</literal> is therefore ill-suited for "
+"applications that often perform such searches."
+msgstr ""
+"Недостаток класса <literal>jsonb_path_ops</literal> заключается в том, что "
+"он не учитывает в индексе структуры JSON, не содержащие никаких значений "
+"<literal>{\"a\": {}}</literal>. Для поиска по документам, содержащих такие "
+"структуры, потребуется выполнить полное сканирование индекса, что довольно "
+"долго, поэтому <literal>jsonb_path_ops</literal> не очень подходит для "
+"приложений, часто выполняющих такие запросы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:559(programlisting)
+#, no-wrap
+msgid "{ \"aa\": 1, \"c\": 1} &gt; {\"b\": 1, \"d\": 1}"
+msgstr "{ \"aa\": 1, \"c\": 1} &gt; {\"b\": 1, \"d\": 1}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:539(para)
+msgid ""
+"<type>jsonb</type> also supports <literal>btree</literal> and <literal>hash</"
+"literal> indexes. These are usually useful only if it's important to check "
+"equality of complete JSON documents. The <literal>btree</literal> ordering "
+"for <type>jsonb</type> datums is seldom of great interest, but for "
+"completeness it is: <synopsis>\n"
+"<replaceable>Object</replaceable> &gt; <replaceable>Array</replaceable> &gt; "
+"<replaceable>Boolean</replaceable> &gt; <replaceable>Number</replaceable> "
+"&gt; <replaceable>String</replaceable> &gt; <replaceable>Null</replaceable>\n"
+"\n"
+"<replaceable>Object with n pairs</replaceable> &gt; <replaceable>object with "
+"n - 1 pairs</replaceable>\n"
+"\n"
+"<replaceable>Array with n elements</replaceable> &gt; <replaceable>array "
+"with n - 1 elements</replaceable>\n"
+"</synopsis> Objects with equal numbers of pairs are compared in the order: "
+"<synopsis>\n"
+"<replaceable>key-1</replaceable>, <replaceable>value-1</replaceable>, "
+"<replaceable>key-2</replaceable> ...\n"
+"</synopsis> Note that object keys are compared in their storage order; in "
+"particular, since shorter keys are stored before longer keys, this can lead "
+"to results that might be unintuitive, such as: <placeholder-1/> Similarly, "
+"arrays with equal numbers of elements are compared in the order: <synopsis>\n"
+"<replaceable>element-1</replaceable>, <replaceable>element-2</"
+"replaceable> ...\n"
+"</synopsis> Primitive JSON values are compared using the same comparison "
+"rules as for the underlying <productname>PostgreSQL</productname> data type. "
+"Strings are compared using the default database collation."
+msgstr ""
+"Тип <type>jsonb</type> также поддерживает индексы <literal>btree</literal> и "
+"<literal>hash</literal>. Они полезны, только если требуется проверять "
+"равенство JSON-документов в целом. Порядок сортировки <literal>btree</"
+"literal> для типа <type>jsonb</type> редко имеет большое значение, но для "
+"полноты он приводится ниже: <synopsis>\n"
+"<replaceable>Объект</replaceable> &gt; <replaceable>Массив</replaceable> "
+"&gt; <replaceable>Логическое значение</replaceable> &gt; <replaceable>Число</"
+"replaceable> &gt; <replaceable>Строка</replaceable> &gt; <replaceable>Null</"
+"replaceable>\n"
+"\n"
+"<replaceable>Объект с n парами</replaceable> &gt; <replaceable>Объект с n - "
+"1 парами</replaceable>\n"
+"\n"
+"<replaceable>Массив с n элементами</replaceable> &gt; <replaceable>Массив с "
+"n - 1 элементами</replaceable>\n"
+"</synopsis> Объекты с равным количеством пар сравниваются в таком порядке: "
+"<synopsis>\n"
+"<replaceable>ключ-1</replaceable>, <replaceable>значение-1</replaceable>, "
+"<replaceable>ключ-2</replaceable> ...\n"
+"</synopsis> Заметьте, что ключи объектов сравниваются согласно порядку при "
+"хранении; в частности, из-за того, что короткие ключи хранятся перед "
+"длинными, результаты могут оказаться несколько не интуитивными: "
+"<placeholder-1/> Массивы с равным числом элементом упорядочиваются "
+"аналогично: <synopsis>\n"
+"<replaceable>элемент-1</replaceable>, <replaceable>элемент-2</"
+"replaceable> ...\n"
+"</synopsis> Примитивные значения JSON сравниваются по тем же правилам "
+"сравнения, что и нижележащие типы данных <productname>PostgreSQL</"
+"productname>. Строки сравниваются с учётом порядка сортировки по умолчанию в "
+"текущей базе данных."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: json.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

@@ -1,0 +1,1500 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:5(title)
+msgid "Arrays"
+msgstr "Массивы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:7(indexterm)
+msgid "<primary>array</primary>"
+msgstr "<primary>массив</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:11(para)
+msgid ""
+"<productname>PostgreSQL</productname> allows columns of a table to be "
+"defined as variable-length multidimensional arrays. Arrays of any built-in "
+"or user-defined base type, enum type, or composite type can be created. "
+"Arrays of domains are not yet supported."
+msgstr ""
+"<productname>PostgreSQL</productname> позволяет определять столбцы таблицы "
+"как многомерные массивы переменной длины. Элементами массивов могут быть "
+"любые встроенные или определённые пользователями типы, перечисления или "
+"составные типы. Массивы доменов в данный момент не поддерживаются."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:20(title)
+msgid "Declaration of Array Types"
+msgstr "Объявления типов массивов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:22(indexterm)
+msgid "<primary>array</primary> <secondary>declaration</secondary>"
+msgstr "<primary>массив</primary> <secondary>объявление</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:29(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE sal_emp (\n"
+"    name            text,\n"
+"    pay_by_quarter  integer[],\n"
+"    schedule        text[][]\n"
+");"
+msgstr ""
+"CREATE TABLE sal_emp (\n"
+"    name            text,\n"
+"    pay_by_quarter  integer[],\n"
+"    schedule        text[][]\n"
+");"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:27(para)
+msgid ""
+"To illustrate the use of array types, we create this table: <placeholder-1/> "
+"As shown, an array data type is named by appending square brackets "
+"(<literal>[]</literal>) to the data type name of the array elements. The "
+"above command will create a table named <structname>sal_emp</structname> "
+"with a column of type <type>text</type> (<structfield>name</structfield>), a "
+"one-dimensional array of type <type>integer</type> "
+"(<structfield>pay_by_quarter</structfield>), which represents the employee's "
+"salary by quarter, and a two-dimensional array of <type>text</type> "
+"(<structfield>schedule</structfield>), which represents the employee's "
+"weekly schedule."
+msgstr ""
+"Чтобы проиллюстрировать использовать массивов, мы создадим такую таблицу: "
+"<placeholder-1/> Как показано, для объявления типа массива к названию типа "
+"элементов добавляются квадратные скобки (<literal>[]</literal>). Показанная "
+"выше команда создаст таблицу <structname>sal_emp</structname> со столбцами "
+"типов <type>text</type> (<structfield>name</structfield>), одномерный массив "
+"с элементами <type>integer</type> (<structfield>pay_by_quarter</"
+"structfield>), представляющий квартальную зарплату работников, и двухмерный "
+"массив с элементами <type>text</type> (<structfield>schedule</structfield>), "
+"представляющий недельный график работника."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:52(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE tictactoe (\n"
+"    squares   integer[3][3]\n"
+");"
+msgstr ""
+"CREATE TABLE tictactoe (\n"
+"    squares   integer[3][3]\n"
+");"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:48(para)
+msgid ""
+"The syntax for <command>CREATE TABLE</command> allows the exact size of "
+"arrays to be specified, for example: <placeholder-1/> However, the current "
+"implementation ignores any supplied array size limits, i.e., the behavior is "
+"the same as for arrays of unspecified length."
+msgstr ""
+"Команда <command>CREATE TABLE</command> позволяет также указать точный "
+"размер массивов, например так: <placeholder-1/> Однако текущая реализация "
+"игнорирует все указанные размеры, т. е. фактически размер массива остаётся "
+"неопределённым."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:63(para)
+msgid ""
+"The current implementation does not enforce the declared number of "
+"dimensions either. Arrays of a particular element type are all considered to "
+"be of the same type, regardless of size or number of dimensions. So, "
+"declaring the array size or number of dimensions in <command>CREATE TABLE</"
+"command> is simply documentation; it does not affect run-time behavior."
+msgstr ""
+"Текущая реализация также не ограничивает число размерностей. Все элементы "
+"массивов считаются одного типа, вне зависимости от его размера и числа "
+"размерностей. Поэтому явно указывать число элементов или размерностей в "
+"команде <command>CREATE TABLE</command> имеет смысл только для "
+"документирования, на механизм работы с массивом это не влияет."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:77(programlisting)
+#, no-wrap
+msgid "    pay_by_quarter  integer ARRAY[4],"
+msgstr "    pay_by_quarter  integer ARRAY[4],"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:81(programlisting)
+#, no-wrap
+msgid "    pay_by_quarter  integer ARRAY,"
+msgstr "    pay_by_quarter  integer ARRAY,"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:72(para)
+msgid ""
+"An alternative syntax, which conforms to the SQL standard by using the "
+"keyword <literal>ARRAY</literal>, can be used for one-dimensional arrays. "
+"<structfield>pay_by_quarter</structfield> could have been defined as: "
+"<placeholder-1/> Or, if no array size is to be specified: <placeholder-2/> "
+"As before, however, <productname>PostgreSQL</productname> does not enforce "
+"the size restriction in any case."
+msgstr ""
+"Для объявления одномерных массивов можно применять альтернативную запись с "
+"ключевым словом <literal>ARRAY</literal>, соответствующую стандарту SQL. "
+"Столбец <structfield>pay_by_quarter</structfield> можно было бы определить "
+"так: <placeholder-1/> Или без указания размера массива: <placeholder-2/> "
+"Заметьте, что и в этом случае <productname>PostgreSQL</productname> не "
+"накладывает ограничения на фактический размер массива."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:90(title)
+msgid "Array Value Input"
+msgstr "Ввод значения массива"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:92(indexterm)
+msgid "<primary>array</primary> <secondary>constant</secondary>"
+msgstr "<primary>массив</primary> <secondary>константа</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:116(programlisting)
+#, no-wrap
+msgid "'{{1,2,3},{4,5,6},{7,8,9}}'"
+msgstr "'{{1,2,3},{4,5,6},{7,8,9}}'"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:97(para)
+msgid ""
+"To write an array value as a literal constant, enclose the element values "
+"within curly braces and separate them by commas. (If you know C, this is not "
+"unlike the C syntax for initializing structures.) You can put double quotes "
+"around any element value, and must do so if it contains commas or curly "
+"braces. (More details appear below.) Thus, the general format of an array "
+"constant is the following: <synopsis>\n"
+"'{ <replaceable>val1</replaceable> <replaceable>delim</replaceable> "
+"<replaceable>val2</replaceable> <replaceable>delim</replaceable> ... }'\n"
+"</synopsis> where <replaceable>delim</replaceable> is the delimiter "
+"character for the type, as recorded in its <literal>pg_type</literal> entry. "
+"Among the standard data types provided in the <productname>PostgreSQL</"
+"productname> distribution, all use a comma (<literal>,</literal>), except "
+"for type <type>box</type> which uses a semicolon (<literal>;</literal>). "
+"Each <replaceable>val</replaceable> is either a constant of the array "
+"element type, or a subarray. An example of an array constant is: "
+"<placeholder-1/> This constant is a two-dimensional, 3-by-3 array consisting "
+"of three subarrays of integers."
+msgstr ""
+"Чтобы записать значение массива в виде буквальной константы, заключите "
+"значения элементов в фигурные скобки и разделите их запятыми. (Если вам "
+"знаком C, вы найдёте, что это похоже на синтаксис инициализации структур в "
+"C.) Вы можете заключить значение любого элемента в двойные кавычки, а если "
+"он содержит запятые или фигурные скобки, это обязательно нужно сделать. "
+"(Подробнее это описано ниже.) Таким образом, общий формат константы массива "
+"выглядит так: <synopsis>\n"
+"'{ <replaceable>значение1</replaceable> <replaceable>разделитель</"
+"replaceable> <replaceable>значение2</replaceable> <replaceable>разделитель</"
+"replaceable> ... }'\n"
+"</synopsis> где <replaceable>разделитель</replaceable> &mdash; символ, "
+"указанный в качестве разделителя в соответствующей записи в таблице "
+"<literal>pg_type</literal>. Для стандартных типов данных, существующих в "
+"дистрибутиве <productname>PostgreSQL</productname>, разделителем является "
+"запятая (<literal>,</literal>), за исключением лишь типа <type>box</type>, в "
+"котором разделитель &mdash;точка с запятой (<literal>;</literal>). Каждое "
+"<replaceable>значение</replaceable> здесь &mdash; это либо константа типа "
+"элемента массива, либо вложенный массив. Например, константа массива может "
+"быть такой: <placeholder-1/> Эта константа определяет двухмерный массив 3x3, "
+"состоящий из трёх вложенных массивов целых чисел."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:123(para)
+msgid ""
+"To set an element of an array constant to NULL, write <literal>NULL</"
+"literal> for the element value. (Any upper- or lower-case variant of "
+"<literal>NULL</literal> will do.) If you want an actual string value "
+"<quote>NULL</quote>, you must put double quotes around it."
+msgstr ""
+"Чтобы присвоить элементу массива значение NULL, достаточно просто написать "
+"<literal>NULL</literal> (регистр символов при этом не имеет значения). Если "
+"же требуется добавить в массив строку, содержащую <quote>NULL</quote>, это "
+"слово нужно заключить в двойные кавычки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:130(para)
+msgid ""
+"(These kinds of array constants are actually only a special case of the "
+"generic type constants discussed in <xref linkend=\"sql-syntax-constants-"
+"generic\"/>. The constant is initially treated as a string and passed to the "
+"array input conversion routine. An explicit type specification might be "
+"necessary.)"
+msgstr ""
+"(Такого рода константы массивов на самом деле представляют собой всего лишь "
+"частный случай констант, описанных в <xref remap=\"6\" linkend=\"sql-syntax-"
+"constants-generic\"/>. Константа изначально воспринимается как строка и "
+"передаётся процедуре преобразования вводимого массива. При этом может "
+"потребоваться явно указать целевой тип.)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:141(programlisting)
+#, no-wrap
+msgid ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    '{10000, 10000, 10000, 10000}',\n"
+"    '{{\"meeting\", \"lunch\"}, {\"training\", \"presentation\"}}');\n"
+"\n"
+"INSERT INTO sal_emp\n"
+"    VALUES ('Carol',\n"
+"    '{20000, 25000, 25000, 25000}',\n"
+"    '{{\"breakfast\", \"consulting\"}, {\"meeting\", \"lunch\"}}');"
+msgstr ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    '{10000, 10000, 10000, 10000}',\n"
+"    '{{\"meeting\", \"lunch\"}, {\"training\", \"presentation\"}}');\n"
+"\n"
+"INSERT INTO sal_emp\n"
+"    VALUES ('Carol',\n"
+"    '{20000, 25000, 25000, 25000}',\n"
+"    '{{\"breakfast\", \"consulting\"}, {\"meeting\", \"lunch\"}}');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:138(para)
+msgid ""
+"Now we can show some <command>INSERT</command> statements: <placeholder-1/>"
+msgstr ""
+"Теперь мы можем показать несколько операторов <command>INSERT</command>: "
+"<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:157(programlisting)
+#, no-wrap
+msgid ""
+"SELECT * FROM sal_emp;\n"
+" name  |      pay_by_quarter       |                 schedule\n"
+"-------+---------------------------+-------------------------------------------\n"
+" Bill  | {10000,10000,10000,10000} | {{meeting,lunch},{training,presentation}}\n"
+" Carol | {20000,25000,25000,25000} | {{breakfast,consulting},{meeting,lunch}}\n"
+"(2 rows)"
+msgstr ""
+"SELECT * FROM sal_emp;\n"
+"name |     pay_by_quarter      |                schedule\n"
+"-----+-------------------------+--------------------------------------\n"
+"Bill |{10000,10000,10000,10000}|{{meeting,lunch},{training,presentation}}\n"
+"Carol|{20000,25000,25000,25000}|{{breakfast,consulting},{meeting,lunch}}\n"
+"(2 rows)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:154(para)
+msgid ""
+"The result of the previous two inserts looks like this: <placeholder-1/>"
+msgstr "Результат двух предыдущих команд: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:171(programlisting)
+#, no-wrap
+msgid ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    '{10000, 10000, 10000, 10000}',\n"
+"    '{{\"meeting\", \"lunch\"}, {\"meeting\"}}');\n"
+"ERROR:  multidimensional arrays must have array expressions with matching dimensions"
+msgstr ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    '{10000, 10000, 10000, 10000}',\n"
+"    '{{\"meeting\", \"lunch\"}, {\"meeting\"}}');\n"
+"ОШИБКА:  для многомерных массивов должны задаваться выражения\n"
+"  с соответствующими размерностями"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:167(para)
+msgid ""
+"Multidimensional arrays must have matching extents for each dimension. A "
+"mismatch causes an error, for example: <placeholder-1/>"
+msgstr ""
+"В многомерных массивов число элементов в каждой размерности должно быть "
+"одинаковым; в противном случае возникает ошибка. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:182(programlisting)
+#, no-wrap
+msgid ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    ARRAY[10000, 10000, 10000, 10000],\n"
+"    ARRAY[['meeting', 'lunch'], ['training', 'presentation']]);\n"
+"\n"
+"INSERT INTO sal_emp\n"
+"    VALUES ('Carol',\n"
+"    ARRAY[20000, 25000, 25000, 25000],\n"
+"    ARRAY[['breakfast', 'consulting'], ['meeting', 'lunch']]);"
+msgstr ""
+"INSERT INTO sal_emp\n"
+"    VALUES ('Bill',\n"
+"    ARRAY[10000, 10000, 10000, 10000],\n"
+"    ARRAY[['meeting', 'lunch'], ['training', 'presentation']]);\n"
+"\n"
+"INSERT INTO sal_emp\n"
+"    VALUES ('Carol',\n"
+"    ARRAY[20000, 25000, 25000, 25000],\n"
+"    ARRAY[['breakfast', 'consulting'], ['meeting', 'lunch']]);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:180(para)
+msgid ""
+"The <literal>ARRAY</literal> constructor syntax can also be used: "
+"<placeholder-1/> Notice that the array elements are ordinary SQL constants "
+"or expressions; for instance, string literals are single quoted, instead of "
+"double quoted as they would be in an array literal. The <literal>ARRAY</"
+"literal> constructor syntax is discussed in more detail in <xref linkend="
+"\"sql-syntax-array-constructors\"/>."
+msgstr ""
+"Также можно использовать синтаксис конструктора <literal>ARRAY</literal>: "
+"<placeholder-1/> Заметьте, что элементы массива здесь &mdash; это простые "
+"SQL-константы или выражения; и поэтому, например строки будут заключаться в "
+"одинарные апострофы, а не в двойные, как в буквальной константе массива. "
+"Более подробно конструктор <literal>ARRAY</literal> обсуждается в <xref "
+"remap=\"6\" linkend=\"sql-syntax-array-constructors\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:202(title)
+msgid "Accessing Arrays"
+msgstr "Обращение к массивам"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:204(indexterm)
+msgid "<primary>array</primary> <secondary>accessing</secondary>"
+msgstr "<primary>массив</primary> <secondary>обращение</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:215(programlisting)
+#, no-wrap
+msgid ""
+"SELECT name FROM sal_emp WHERE pay_by_quarter[1] &lt;&gt; pay_by_quarter[2];\n"
+"\n"
+" name\n"
+"-------\n"
+" Carol\n"
+"(1 row)"
+msgstr ""
+"SELECT name FROM sal_emp WHERE pay_by_quarter[1] &lt;&gt; pay_by_quarter[2];\n"
+"\n"
+" name\n"
+"-------\n"
+" Carol\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:209(para)
+msgid ""
+"Now, we can run some queries on the table. First, we show how to access a "
+"single element of an array. This query retrieves the names of the employees "
+"whose pay changed in the second quarter: <placeholder-1/> The array "
+"subscript numbers are written within square brackets. By default "
+"<productname>PostgreSQL</productname> uses a one-based numbering convention "
+"for arrays, that is, an array of <replaceable>n</replaceable> elements "
+"starts with <literal>array[1]</literal> and ends with "
+"<literal>array[<replaceable>n</replaceable>]</literal>."
+msgstr ""
+"Добавив данные в таблицу, мы можем перейти к выборкам. Сначала мы покажем, "
+"как получить один элемент массива. Этот запрос получает имена сотрудников, "
+"зарплата которых изменилась во втором квартале: <placeholder-1/> Индексы "
+"элементов массива записываются в квадратных скобках. По умолчанию в "
+"<productname>PostgreSQL</productname> действует соглашение о нумерации "
+"элементов массива с 1, то есть в массиве из <replaceable>n</replaceable> "
+"элементов первым считается <literal>array[1]</literal>, а последним &mdash; "
+"<literal>array[<replaceable>n</replaceable>]</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:234(programlisting)
+#, no-wrap
+msgid ""
+"SELECT pay_by_quarter[3] FROM sal_emp;\n"
+"\n"
+" pay_by_quarter\n"
+"----------------\n"
+"          10000\n"
+"          25000\n"
+"(2 rows)"
+msgstr ""
+"SELECT pay_by_quarter[3] FROM sal_emp;\n"
+"\n"
+" pay_by_quarter\n"
+"----------------\n"
+"          10000\n"
+"          25000\n"
+"(2 rows)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:231(para)
+msgid ""
+"This query retrieves the third quarter pay of all employees: <placeholder-1/>"
+msgstr ""
+"Этот запрос выдаёт зарплату всех сотрудников в третьем квартале: "
+"<placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:252(programlisting)
+#, no-wrap
+msgid ""
+"SELECT schedule[1:2][1:1] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{meeting},{training}}\n"
+"(1 row)"
+msgstr ""
+"SELECT schedule[1:2][1:1] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{meeting},{training}}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:267(programlisting)
+#, no-wrap
+msgid ""
+"SELECT schedule[1:2][2] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"                 schedule\n"
+"-------------------------------------------\n"
+" {{meeting,lunch},{training,presentation}}\n"
+"(1 row)"
+msgstr ""
+"SELECT schedule[1:2][2] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"                 schedule\n"
+"-------------------------------------------\n"
+" {{meeting,lunch},{training,presentation}}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:245(para)
+msgid ""
+"We can also access arbitrary rectangular slices of an array, or subarrays. "
+"An array slice is denoted by writing <literal><replaceable>lower-bound</"
+"replaceable>:<replaceable>upper-bound</replaceable></literal> for one or "
+"more array dimensions. For example, this query retrieves the first item on "
+"Bill's schedule for the first two days of the week: <placeholder-1/> If any "
+"dimension is written as a slice, i.e., contains a colon, then all dimensions "
+"are treated as slices. Any dimension that has only a single number (no "
+"colon) is treated as being from 1 to the number specified. For example, "
+"<literal>[2]</literal> is treated as <literal>[1:2]</literal>, as in this "
+"example: <placeholder-2/> To avoid confusion with the non-slice case, it's "
+"best to use slice syntax for all dimensions, e.g., <literal>[1:2][1:1]</"
+"literal>, not <literal>[2][1:1]</literal>."
+msgstr ""
+"Мы также можем получать обычные прямоугольные срезы массива, то есть "
+"подмассивы. Срез массива обозначается как <literal><replaceable>нижняя-"
+"граница</replaceable>:<replaceable>верхняя-граница</replaceable></literal> "
+"для одной или нескольких размерностей. Например, этот запрос получает первые "
+"пункты в графике Билла в первые два дня недели: <placeholder-1/> Если одна "
+"из размерностей записана в виде среза, то есть содержит двоеточие, тогда "
+"срез распространяется на все размерности. Если при этом для размерности "
+"указывается только одно число (без двоеточия), в срез войдут элемент от 1 до "
+"заданного номера. Например, в этом примере <literal>[2]</literal> будет "
+"равнозначно <literal>[1:2]</literal>: <placeholder-2/> Во избежание путаницы "
+"с обращением к одному элементу, срезы лучше всегда записывать явно для всех "
+"измерений, например <literal>[1:2][1:1]</literal> вместо <literal>[2][1:1]</"
+"literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:286(programlisting)
+#, no-wrap
+msgid ""
+"SELECT schedule[:2][2:] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{lunch},{presentation}}\n"
+"(1 row)\n"
+"\n"
+"SELECT schedule[:][1:1] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{meeting},{training}}\n"
+"(1 row)"
+msgstr ""
+"SELECT schedule[:2][2:] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{lunch},{presentation}}\n"
+"(1 row)\n"
+"\n"
+"SELECT schedule[:][1:1] FROM sal_emp WHERE name = 'Bill';\n"
+"\n"
+"        schedule\n"
+"------------------------\n"
+" {{meeting},{training}}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:280(para)
+msgid ""
+"It is possible to omit the <replaceable>lower-bound</replaceable> and/or "
+"<replaceable>upper-bound</replaceable> of a slice specifier; the missing "
+"bound is replaced by the lower or upper limit of the array's subscripts. For "
+"example: <placeholder-1/>"
+msgstr ""
+"Значения <replaceable>нижняя-граница</replaceable> и/или "
+"<replaceable>верхняя-граница</replaceable> в указании среза можно опустить; "
+"опущенная граница заменяется нижним или верхним пределом индексов массива. "
+"Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:303(para)
+msgid ""
+"An array subscript expression will return null if either the array itself or "
+"any of the subscript expressions are null. Also, null is returned if a "
+"subscript is outside the array bounds (this case does not raise an error). "
+"For example, if <literal>schedule</literal> currently has the dimensions "
+"<literal>[1:3][1:2]</literal> then referencing <literal>schedule[3][3]</"
+"literal> yields NULL. Similarly, an array reference with the wrong number of "
+"subscripts yields a null rather than an error."
+msgstr ""
+"Выражение обращения к элементу массива возвратит NULL, если сам массив или "
+"одно из выражений индексов элемента равны NULL. Значение NULL также "
+"возвращается, если индекс выходит за границы массива (это не считается "
+"ошибкой). Например, если <literal>schedule</literal> в настоящее время имеет "
+"размерности <literal>[1:3][1:2]</literal>, результатом обращения к "
+"<literal>schedule[3][3]</literal> будет NULL. Подобным образом, при "
+"обращении к элементу массива с неправильным числом индексов возвращается "
+"NULL, а не ошибка."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:313(para)
+msgid ""
+"An array slice expression likewise yields null if the array itself or any of "
+"the subscript expressions are null. However, in other cases such as "
+"selecting an array slice that is completely outside the current array "
+"bounds, a slice expression yields an empty (zero-dimensional) array instead "
+"of null. (This does not match non-slice behavior and is done for historical "
+"reasons.) If the requested slice partially overlaps the array bounds, then "
+"it is silently reduced to just the overlapping region instead of returning "
+"null."
+msgstr ""
+"Аналогично, NULL возвращается при обращении к срезу массива, если сам массив "
+"или одно из выражений, определяющих индексы элементов, равны NULL. Однако, в "
+"других случаях, например, когда границы среза выходят за рамки массива, "
+"возвращается не NULL, а пустой массив (с размерностью 0). (Так сложилось "
+"исторически, что в этом срезы отличаются от обращений к обычным элементам.) "
+"Если запрошенный срез пересекает границы массива, тогда возвращается не "
+"NULL, а срез, сокращённый до области пересечения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:329(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_dims(schedule) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_dims\n"
+"------------\n"
+" [1:2][1:2]\n"
+"(1 row)"
+msgstr ""
+"SELECT array_dims(schedule) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_dims\n"
+"------------\n"
+" [1:2][1:2]\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:345(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_upper(schedule, 1) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_upper\n"
+"-------------\n"
+"           2\n"
+"(1 row)"
+msgstr ""
+"SELECT array_upper(schedule, 1) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_upper\n"
+"-------------\n"
+"           2\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:357(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_length(schedule, 1) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_length\n"
+"--------------\n"
+"            2\n"
+"(1 row)"
+msgstr ""
+"SELECT array_length(schedule, 1) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" array_length\n"
+"--------------\n"
+"            2\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:370(programlisting)
+#, no-wrap
+msgid ""
+"SELECT cardinality(schedule) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" cardinality\n"
+"-------------\n"
+"           4\n"
+"(1 row)"
+msgstr ""
+"SELECT cardinality(schedule) FROM sal_emp WHERE name = 'Carol';\n"
+"\n"
+" cardinality\n"
+"-------------\n"
+"           4\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:325(para)
+msgid ""
+"The current dimensions of any array value can be retrieved with the "
+"<function>array_dims</function> function: <placeholder-1/> "
+"<function>array_dims</function> produces a <type>text</type> result, which "
+"is convenient for people to read but perhaps inconvenient for programs. "
+"Dimensions can also be retrieved with <function>array_upper</function> and "
+"<function>array_lower</function>, which return the upper and lower bound of "
+"a specified array dimension, respectively: <placeholder-2/> "
+"<function>array_length</function> will return the length of a specified "
+"array dimension: <placeholder-3/> <function>cardinality</function> returns "
+"the total number of elements in an array across all dimensions. It is "
+"effectively the number of rows a call to <function>unnest</function> would "
+"yield: <placeholder-4/>"
+msgstr ""
+"Текущие размеры значения массива можно получить с помощью функции "
+"<function>array_dims</function>: <placeholder-1/> <function>array_dims</"
+"function> выдаёт результат типа <type>text</type>, что удобно скорее для "
+"людей, чем для программ. Размеры массива также можно получить с помощью "
+"функций <function>array_upper</function> и <function>array_lower</function>, "
+"которые возвращают соответственно верхнюю и нижнюю границу для указанной "
+"размерности: <placeholder-2/> <function>array_length</function> возвращает "
+"число элементов в указанной размерности массива: <placeholder-3/> "
+"<function>cardinality</function> возвращает общее число элементов массива по "
+"всем измерениям. Фактически это число строк, которое вернёт функция "
+"<function>unnest</function>: <placeholder-4/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:382(title)
+msgid "Modifying Arrays"
+msgstr "Изменение массивов"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:384(indexterm)
+msgid "<primary>array</primary> <secondary>modifying</secondary>"
+msgstr "<primary>массив</primary> <secondary>изменение</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:392(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE sal_emp SET pay_by_quarter = '{25000,25000,27000,27000}'\n"
+"    WHERE name = 'Carol';"
+msgstr ""
+"UPDATE sal_emp SET pay_by_quarter = '{25000,25000,27000,27000}'\n"
+"    WHERE name = 'Carol';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:399(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE sal_emp SET pay_by_quarter = ARRAY[25000,25000,27000,27000]\n"
+"    WHERE name = 'Carol';"
+msgstr ""
+"UPDATE sal_emp SET pay_by_quarter = ARRAY[25000,25000,27000,27000]\n"
+"    WHERE name = 'Carol';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:406(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE sal_emp SET pay_by_quarter[4] = 15000\n"
+"    WHERE name = 'Bill';"
+msgstr ""
+"UPDATE sal_emp SET pay_by_quarter[4] = 15000\n"
+"    WHERE name = 'Bill';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:413(programlisting)
+#, no-wrap
+msgid ""
+"UPDATE sal_emp SET pay_by_quarter[1:2] = '{27000,27000}'\n"
+"    WHERE name = 'Carol';"
+msgstr ""
+"UPDATE sal_emp SET pay_by_quarter[1:2] = '{27000,27000}'\n"
+"    WHERE name = 'Carol';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:389(para)
+msgid ""
+"An array value can be replaced completely: <placeholder-1/> or using the "
+"<literal>ARRAY</literal> expression syntax: <placeholder-2/> An array can "
+"also be updated at a single element: <placeholder-3/> or updated in a slice: "
+"<placeholder-4/> The slice syntaxes with omitted <replaceable>lower-bound</"
+"replaceable> and/or <replaceable>upper-bound</replaceable> can be used too, "
+"but only when updating an array value that is not NULL or zero-dimensional "
+"(otherwise, there is no existing subscript limit to substitute)."
+msgstr ""
+"Значение массива можно заменить полностью так: <placeholder-1/> или "
+"используя синтаксис <literal>ARRAY</literal>: <placeholder-2/> Также можно "
+"изменить один элемент массива: <placeholder-3/> или срез: <placeholder-4/> "
+"При этом в указании среза может быть опущена <replaceable>нижняя-граница</"
+"replaceable> и/или <replaceable>верхняя-граница</replaceable>, но только для "
+"массива, отличного от NULL, и имеющего ненулевую размерность (иначе "
+"неизвестно, какие граничные значения должны подставляться вместо опущенных)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:424(para)
+msgid ""
+"A stored array value can be enlarged by assigning to elements not already "
+"present. Any positions between those previously present and the newly "
+"assigned elements will be filled with nulls. For example, if array "
+"<literal>myarray</literal> currently has 4 elements, it will have six "
+"elements after an update that assigns to <literal>myarray[6]</literal>; "
+"<literal>myarray[5]</literal> will contain null. Currently, enlargement in "
+"this fashion is only allowed for one-dimensional arrays, not "
+"multidimensional arrays."
+msgstr ""
+"Сохранённый массив можно расширить, определив значения ранее отсутствовавших "
+"в нём элементов. При этом все элементы, располагающиеся между "
+"существовавшими ранее и новыми, принимают значения NULL. Например, если "
+"массив <literal>myarray</literal> содержит 4 элемента, после присвоения "
+"значения элементу <literal>myarray[6]</literal> его длина будет равна 6, а "
+"<literal>myarray[5]</literal> будет содержать NULL. В настоящее время "
+"подобное расширение поддерживается только для одномерных, но не многомерных "
+"массивов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:435(para)
+msgid ""
+"Subscripted assignment allows creation of arrays that do not use one-based "
+"subscripts. For example one might assign to <literal>myarray[-2:7]</literal> "
+"to create an array with subscript values from -2 to 7."
+msgstr ""
+"Определяя элементы по индексам, можно создавать массивы, в которых нумерация "
+"элементов может начинаться не с 1. Например, можно присвоить значение "
+"выражению <literal>myarray[-2:7]</literal> и таким образом создать массив, в "
+"котором будут элементы с индексами от -2 до 7."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:444(programlisting)
+#, no-wrap
+msgid ""
+"SELECT ARRAY[1,2] || ARRAY[3,4];\n"
+" ?column?\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"(1 row)\n"
+"\n"
+"SELECT ARRAY[5,6] || ARRAY[[1,2],[3,4]];\n"
+"      ?column?\n"
+"---------------------\n"
+" {{5,6},{1,2},{3,4}}\n"
+"(1 row)"
+msgstr ""
+"SELECT ARRAY[1,2] || ARRAY[3,4];\n"
+" ?column?\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"(1 row)\n"
+"\n"
+"SELECT ARRAY[5,6] || ARRAY[[1,2],[3,4]];\n"
+"      ?column?\n"
+"---------------------\n"
+" {{5,6},{1,2},{3,4}}\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:441(para)
+msgid ""
+"New array values can also be constructed using the concatenation operator, "
+"<literal>||</literal>: <placeholder-1/>"
+msgstr ""
+"Значения массива также можно сконструировать с помощью оператора "
+"конкатенации, <literal>||</literal>: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:459(para)
+msgid ""
+"The concatenation operator allows a single element to be pushed onto the "
+"beginning or end of a one-dimensional array. It also accepts two "
+"<replaceable>N</replaceable>-dimensional arrays, or an <replaceable>N</"
+"replaceable>-dimensional and an <replaceable>N+1</replaceable>-dimensional "
+"array."
+msgstr ""
+"Оператор конкатенации позволяет вставить один элемент в начало или в конец "
+"одномерного массива. Он также может принять два <replaceable>N</replaceable>-"
+"мерных массива или массивы размерностей <replaceable>N</replaceable> и "
+"<replaceable>N+1</replaceable>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:470(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_dims(1 || '[0:1]={2,3}'::int[]);\n"
+" array_dims\n"
+"------------\n"
+" [0:2]\n"
+"(1 row)\n"
+"\n"
+"SELECT array_dims(ARRAY[1,2] || 3);\n"
+" array_dims\n"
+"------------\n"
+" [1:3]\n"
+"(1 row)"
+msgstr ""
+"SELECT array_dims(1 || '[0:1]={2,3}'::int[]);\n"
+" array_dims\n"
+"------------\n"
+" [0:2]\n"
+"(1 row)\n"
+"\n"
+"SELECT array_dims(ARRAY[1,2] || 3);\n"
+" array_dims\n"
+"------------\n"
+" [1:3]\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:466(para)
+msgid ""
+"When a single element is pushed onto either the beginning or end of a one-"
+"dimensional array, the result is an array with the same lower bound "
+"subscript as the array operand. For example: <placeholder-1/>"
+msgstr ""
+"Когда в начало или конец одномерного массива вставляется один элемент, в "
+"образованном в результате массиве будет та же нижняя граница, что и в "
+"массиве-операнде. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:490(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_dims(ARRAY[1,2] || ARRAY[3,4,5]);\n"
+" array_dims\n"
+"------------\n"
+" [1:5]\n"
+"(1 row)\n"
+"\n"
+"SELECT array_dims(ARRAY[[1,2],[3,4]] || ARRAY[[5,6],[7,8],[9,0]]);\n"
+" array_dims\n"
+"------------\n"
+" [1:5][1:2]\n"
+"(1 row)"
+msgstr ""
+"SELECT array_dims(ARRAY[1,2] || ARRAY[3,4,5]);\n"
+" array_dims\n"
+"------------\n"
+" [1:5]\n"
+"(1 row)\n"
+"\n"
+"SELECT array_dims(ARRAY[[1,2],[3,4]] || ARRAY[[5,6],[7,8],[9,0]]);\n"
+" array_dims\n"
+"------------\n"
+" [1:5][1:2]\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:485(para)
+msgid ""
+"When two arrays with an equal number of dimensions are concatenated, the "
+"result retains the lower bound subscript of the left-hand operand's outer "
+"dimension. The result is an array comprising every element of the left-hand "
+"operand followed by every element of the right-hand operand. For example: "
+"<placeholder-1/>"
+msgstr ""
+"Когда складываются два массива одинаковых размерностей, в результате "
+"сохраняется нижняя граница внешней размерности левого операнда. Выходной "
+"массив включает все элементы левого операнда, после которых добавляются все "
+"элементы правого. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:511(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_dims(ARRAY[1,2] || ARRAY[[3,4],[5,6]]);\n"
+" array_dims\n"
+"------------\n"
+" [1:3][1:2]\n"
+"(1 row)"
+msgstr ""
+"SELECT array_dims(ARRAY[1,2] || ARRAY[[3,4],[5,6]]);\n"
+" array_dims\n"
+"------------\n"
+" [1:3][1:2]\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:505(para)
+msgid ""
+"When an <replaceable>N</replaceable>-dimensional array is pushed onto the "
+"beginning or end of an <replaceable>N+1</replaceable>-dimensional array, the "
+"result is analogous to the element-array case above. Each <replaceable>N</"
+"replaceable>-dimensional sub-array is essentially an element of the "
+"<replaceable>N+1</replaceable>-dimensional array's outer dimension. For "
+"example: <placeholder-1/>"
+msgstr ""
+"Когда к массиву размерности <replaceable>N+1</replaceable> спереди или сзади "
+"добавляется <replaceable>N</replaceable>-мерный массив, он вставляется "
+"аналогично тому, как в массив вставляется элемент (это было описано выше). "
+"Любой <replaceable>N</replaceable>-мерный массив по сути является элементом "
+"во внешней размерности массива, имеющего размерность <replaceable>N+1</"
+"replaceable>. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:527(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_prepend(1, ARRAY[2,3]);\n"
+" array_prepend\n"
+"---------------\n"
+" {1,2,3}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_append(ARRAY[1,2], 3);\n"
+" array_append\n"
+"--------------\n"
+" {1,2,3}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[1,2], ARRAY[3,4]);\n"
+" array_cat\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[[1,2],[3,4]], ARRAY[5,6]);\n"
+"      array_cat\n"
+"---------------------\n"
+" {{1,2},{3,4},{5,6}}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[5,6], ARRAY[[1,2],[3,4]]);\n"
+"      array_cat\n"
+"---------------------\n"
+" {{5,6},{1,2},{3,4}}"
+msgstr ""
+"SELECT array_prepend(1, ARRAY[2,3]);\n"
+" array_prepend\n"
+"---------------\n"
+" {1,2,3}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_append(ARRAY[1,2], 3);\n"
+" array_append\n"
+"--------------\n"
+" {1,2,3}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[1,2], ARRAY[3,4]);\n"
+" array_cat\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[[1,2],[3,4]], ARRAY[5,6]);\n"
+"      array_cat\n"
+"---------------------\n"
+" {{1,2},{3,4},{5,6}}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_cat(ARRAY[5,6], ARRAY[[1,2],[3,4]]);\n"
+"      array_cat\n"
+"---------------------\n"
+" {{5,6},{1,2},{3,4}}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:520(para)
+msgid ""
+"An array can also be constructed by using the functions "
+"<function>array_prepend</function>, <function>array_append</function>, or "
+"<function>array_cat</function>. The first two only support one-dimensional "
+"arrays, but <function>array_cat</function> supports multidimensional arrays. "
+"Some examples: <placeholder-1/>"
+msgstr ""
+"Массив также можно сконструировать с помощью функций "
+"<function>array_prepend</function>, <function>array_append</function> и "
+"<function>array_cat</function>. Первые две функции поддерживают только "
+"одномерные массивы, а <function>array_cat</function> поддерживает и "
+"многомерные. Несколько примеров: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:566(programlisting)
+#, no-wrap
+msgid ""
+"SELECT ARRAY[1, 2] || '{3, 4}';  -- the untyped literal is taken as an array\n"
+" ?column?\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"\n"
+"SELECT ARRAY[1, 2] || '7';                 -- so is this one\n"
+"ERROR:  malformed array literal: \"7\"\n"
+"\n"
+"SELECT ARRAY[1, 2] || NULL;                -- so is an undecorated NULL\n"
+" ?column?\n"
+"----------\n"
+" {1,2}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_append(ARRAY[1, 2], NULL);    -- this might have been meant\n"
+" array_append\n"
+"--------------\n"
+" {1,2,NULL}"
+msgstr ""
+"SELECT ARRAY[1, 2] || '{3, 4}';  -- нетипизированная строка воспринимается как массив\n"
+" ?column?\n"
+"-----------\n"
+" {1,2,3,4}\n"
+"\n"
+"SELECT ARRAY[1, 2] || '7';                 -- как и эта\n"
+"ERROR:  malformed array literal: \"7\"\n"
+"\n"
+"SELECT ARRAY[1, 2] || NULL;                -- как и буквальный NULL\n"
+" ?column?\n"
+"----------\n"
+" {1,2}\n"
+"(1 row)\n"
+"\n"
+"SELECT array_append(ARRAY[1, 2], NULL);    -- это могло иметься в виду на самом деле\n"
+" array_append\n"
+"--------------\n"
+" {1,2,NULL}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:559(para)
+msgid ""
+"In simple cases, the concatenation operator discussed above is preferred "
+"over direct use of these functions. However, because the concatenation "
+"operator is overloaded to serve all three cases, there are situations where "
+"use of one of the functions is helpful to avoid ambiguity. For example "
+"consider: <placeholder-1/> In the examples above, the parser sees an integer "
+"array on one side of the concatenation operator, and a constant of "
+"undetermined type on the other. The heuristic it uses to resolve the "
+"constant's type is to assume it's of the same type as the operator's other "
+"input &mdash; in this case, integer array. So the concatenation operator is "
+"presumed to represent <function>array_cat</function>, not "
+"<function>array_append</function>. When that's the wrong choice, it could be "
+"fixed by casting the constant to the array's element type; but explicit use "
+"of <function>array_append</function> might be a preferable solution."
+msgstr ""
+"В простых случаях описанный выше оператор конкатенации предпочтительнее "
+"непосредственного вызова этих функций. Однако, так как оператор конкатенации "
+"перегружен для решения всех трёх задач, возможны ситуации, когда лучше "
+"применить одну из этих функций во избежание неоднозначности. Например, "
+"рассмотрите: <placeholder-1/> В показанных примерах анализатор запроса видит "
+"целочисленный массив с одной стороны оператора конкатенации и константу "
+"неопределённого типа с другой. Согласно своим правилам разрешения типа "
+"констант, он полагает, что она имеет тот же тип, что и другой операнд "
+"&mdash; в данном случае, целочисленный массив. Поэтому предполагается, что "
+"оператор конкатенации здесь представляет функцию <function>array_cat</"
+"function>, а не <function>array_append</function>. Если это решение "
+"оказывается неверным, его можно скорректировать, приведя константу к типу "
+"элемента массива; однако может быть лучше явно использовать функцию "
+"<function>array_append</function>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:600(title)
+msgid "Searching in Arrays"
+msgstr "Поиск значений в массивах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:602(indexterm)
+msgid "<primary>array</primary> <secondary>searching</secondary>"
+msgstr "<primary>массив</primary> <secondary>поиск</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:612(programlisting)
+#, no-wrap
+msgid ""
+"SELECT * FROM sal_emp WHERE pay_by_quarter[1] = 10000 OR\n"
+"                            pay_by_quarter[2] = 10000 OR\n"
+"                            pay_by_quarter[3] = 10000 OR\n"
+"                            pay_by_quarter[4] = 10000;"
+msgstr ""
+"SELECT * FROM sal_emp WHERE pay_by_quarter[1] = 10000 OR\n"
+"                            pay_by_quarter[2] = 10000 OR\n"
+"                            pay_by_quarter[3] = 10000 OR\n"
+"                            pay_by_quarter[4] = 10000;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:624(programlisting)
+#, no-wrap
+msgid "SELECT * FROM sal_emp WHERE 10000 = ANY (pay_by_quarter);"
+msgstr "SELECT * FROM sal_emp WHERE 10000 = ANY (pay_by_quarter);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:631(programlisting)
+#, no-wrap
+msgid "SELECT * FROM sal_emp WHERE 10000 = ALL (pay_by_quarter);"
+msgstr "SELECT * FROM sal_emp WHERE 10000 = ALL (pay_by_quarter);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:607(para)
+msgid ""
+"To search for a value in an array, each value must be checked. This can be "
+"done manually, if you know the size of the array. For example: "
+"<placeholder-1/> However, this quickly becomes tedious for large arrays, and "
+"is not helpful if the size of the array is unknown. An alternative method is "
+"described in <xref linkend=\"functions-comparisons\"/>. The above query "
+"could be replaced by: <placeholder-2/> In addition, you can find rows where "
+"the array has all values equal to 10000 with: <placeholder-3/>"
+msgstr ""
+"Чтобы найти значение в массиве, необходимо проверить все его элементы. Это "
+"можно сделать вручную, если вы знаете размер массива. Например: "
+"<placeholder-1/> Однако с большим массивами этот метод становится "
+"утомительным, и к тому же он не работает, когда размер массива неизвестен. "
+"Альтернативный подход описан в <xref remap=\"6\" linkend=\"functions-"
+"comparisons\"/>. Показанный выше запрос можно было переписать так: "
+"<placeholder-2/> А так можно найти в таблице строки, в которых массивы "
+"содержат только значения, равные 10000: <placeholder-3/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:641(programlisting)
+#, no-wrap
+msgid ""
+"SELECT * FROM\n"
+"   (SELECT pay_by_quarter,\n"
+"           generate_subscripts(pay_by_quarter, 1) AS s\n"
+"      FROM sal_emp) AS foo\n"
+" WHERE pay_by_quarter[s] = 10000;"
+msgstr ""
+"SELECT * FROM\n"
+"   (SELECT pay_by_quarter,\n"
+"           generate_subscripts(pay_by_quarter, 1) AS s\n"
+"      FROM sal_emp) AS foo\n"
+" WHERE pay_by_quarter[s] = 10000;"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:637(para)
+msgid ""
+"Alternatively, the <function>generate_subscripts</function> function can be "
+"used. For example: <placeholder-1/> This function is described in <xref "
+"linkend=\"functions-srf-subscripts\"/>."
+msgstr ""
+"Кроме того, для обращения к элементам массива можно использовать функцию "
+"<function>generate_subscripts</function>. Например так: <placeholder-1/> Эта "
+"функция описана в <xref remap=\"6\" linkend=\"functions-srf-subscripts\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:657(programlisting)
+#, no-wrap
+msgid "SELECT * FROM sal_emp WHERE pay_by_quarter &amp;&amp; ARRAY[10000];"
+msgstr "SELECT * FROM sal_emp WHERE pay_by_quarter &amp;&amp; ARRAY[10000];"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:652(para)
+msgid ""
+"You can also search an array using the <literal>&amp;&amp;</literal> "
+"operator, which checks whether the left operand overlaps with the right "
+"operand. For instance: <placeholder-1/> This and other array operators are "
+"further described in <xref linkend=\"functions-array\"/>. It can be "
+"accelerated by an appropriate index, as described in <xref linkend=\"indexes-"
+"types\"/>."
+msgstr ""
+"Также искать в массиве значения можно, используя оператор <literal>&amp;&amp;"
+"</literal>, который проверяет, перекрывается ли левый операнд с правым. "
+"Например: <placeholder-1/> Этот и другие операторы для работы с массивами "
+"описаны в <xref remap=\"6\" linkend=\"functions-array\"/>. Он может быть "
+"ускорен с помощью подходящего индекса, как описано в <xref remap=\"6\" "
+"linkend=\"indexes-types\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:672(programlisting)
+#, no-wrap
+msgid ""
+"SELECT array_position(ARRAY['sun','mon','tue','wed','thu','fri','sat'], 'mon');\n"
+" array_positions\n"
+"-----------------\n"
+" 2\n"
+"\n"
+"SELECT array_positions(ARRAY[1, 4, 3, 1, 3, 4, 2, 1], 1);\n"
+" array_positions\n"
+"-----------------\n"
+" {1,4,8}"
+msgstr ""
+"SELECT array_position(ARRAY['sun','mon','tue','wed','thu','fri','sat'], 'mon');\n"
+" array_positions\n"
+"-----------------\n"
+" 2\n"
+"\n"
+"SELECT array_positions(ARRAY[1, 4, 3, 1, 3, 4, 2, 1], 1);\n"
+" array_positions\n"
+"-----------------\n"
+" {1,4,8}"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:666(para)
+msgid ""
+"You can also search for specific values in an array using the "
+"<function>array_position</function> and <function>array_positions</function> "
+"functions. The former returns the subscript of the first occurrence of a "
+"value in an array; the latter returns an array with the subscripts of all "
+"occurrences of the value in the array. For example: <placeholder-1/>"
+msgstr ""
+"Вы также можете искать определённые значения в массиве, используя функции "
+"<function>array_position</function> и <function>array_positions</function>. "
+"Первая функция возвращает позицию первого вхождения значения в массив, а "
+"вторая — массив позиций всех его вхождений. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:686(para)
+msgid ""
+"Arrays are not sets; searching for specific array elements can be a sign of "
+"database misdesign. Consider using a separate table with a row for each item "
+"that would be an array element. This will be easier to search, and is likely "
+"to scale better for a large number of elements."
+msgstr ""
+"Массивы &mdash; это не множества; необходимость поиска определённых "
+"элементов в массиве может быть признаком неудачно сконструированной базы "
+"данных. Возможно, вместо массива лучше использовать отдельную таблицу, "
+"строки которой будут содержать данные элементов массива. Это может быть "
+"лучше и для поиска, и для работы с большим количеством элементов."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:697(title)
+msgid "Array Input and Output Syntax"
+msgstr "Синтаксис вводимых и выводимых значений массива"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:699(indexterm)
+msgid "<primary>array</primary> <secondary>I/O</secondary>"
+msgstr "<primary>массив</primary> <secondary>ввод/вывод</secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:704(para)
+msgid ""
+"The external text representation of an array value consists of items that "
+"are interpreted according to the I/O conversion rules for the array's "
+"element type, plus decoration that indicates the array structure. The "
+"decoration consists of curly braces (<literal>{</literal> and <literal>}</"
+"literal>) around the array value plus delimiter characters between adjacent "
+"items. The delimiter character is usually a comma (<literal>,</literal>) but "
+"can be something else: it is determined by the <literal>typdelim</literal> "
+"setting for the array's element type. Among the standard data types provided "
+"in the <productname>PostgreSQL</productname> distribution, all use a comma, "
+"except for type <type>box</type>, which uses a semicolon (<literal>;</"
+"literal>). In a multidimensional array, each dimension (row, plane, cube, "
+"etc.) gets its own level of curly braces, and delimiters must be written "
+"between adjacent curly-braced entities of the same level."
+msgstr ""
+"Внешнее текстовое представление значения массива состоит из записи "
+"элементов, интерпретируемых по правилам ввода/вывода для типа элемента "
+"массива, и оформления структуры массива. Оформление состоит из фигурных "
+"скобок (<literal>{</literal> и <literal>}</literal>), окружающих значение "
+"массива, и знаков-разделителей между его элементами. В качестве знака-"
+"разделителя обычно используется запятая (<literal>,</literal>), но это может "
+"быть и другой символ; он определяется параметром <literal>typdelim</literal> "
+"для типа элемента массива. Для стандартных типов данных, существующих в "
+"дистрибутиве <productname>PostgreSQL</productname>, разделителем является "
+"запятая (<literal>,</literal>), за исключением лишь типа <type>box</type>, в "
+"котором разделитель &mdash; точка с запятой (<literal>;</literal>). В "
+"многомерном массиве у каждой размерности (ряд, плоскость, куб и т. д.) есть "
+"свой уровень фигурных скобок, а соседние значения в фигурных скобках на "
+"одном уровне должны отделяться разделителями."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:720(para)
+msgid ""
+"The array output routine will put double quotes around element values if "
+"they are empty strings, contain curly braces, delimiter characters, double "
+"quotes, backslashes, or white space, or match the word <literal>NULL</"
+"literal>. Double quotes and backslashes embedded in element values will be "
+"backslash-escaped. For numeric data types it is safe to assume that double "
+"quotes will never appear, but for textual data types one should be prepared "
+"to cope with either the presence or absence of quotes."
+msgstr ""
+"Функция вывода массива заключает значение элемента в кавычки, если это "
+"пустая строка или оно содержит фигурные скобки, знаки-разделители, кавычки, "
+"обратную косую черту, пробельный символ или это текст <literal>NULL</"
+"literal>. Кавычки и обратная косая черта, включённые в такие значения, "
+"преобразуются в спецпоследовательность с обратной косой чертой. Для числовых "
+"типов данных можно рассчитывать на то, что значения никогда не будут "
+"выводиться в кавычках, но для текстовых типов следует быть готовым к тому, "
+"что выводимое значение массива может содержать кавычки."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:741(programlisting)
+#, no-wrap
+msgid ""
+"SELECT f1[1][-2][3] AS e1, f1[1][-1][5] AS e2\n"
+" FROM (SELECT '[1:1][-2:-1][3:5]={{{1,2,3},{4,5,6}}}'::int[] AS f1) AS ss;\n"
+"\n"
+" e1 | e2\n"
+"----+----\n"
+"  1 |  6\n"
+"(1 row)"
+msgstr ""
+"SELECT f1[1][-2][3] AS e1, f1[1][-1][5] AS e2\n"
+" FROM (SELECT '[1:1][-2:-1][3:5]={{{1,2,3},{4,5,6}}}'::int[] AS f1) AS ss;\n"
+"\n"
+" e1 | e2\n"
+"----+----\n"
+"  1 |  6\n"
+"(1 row)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:731(para)
+msgid ""
+"By default, the lower bound index value of an array's dimensions is set to "
+"one. To represent arrays with other lower bounds, the array subscript ranges "
+"can be specified explicitly before writing the array contents. This "
+"decoration consists of square brackets (<literal>[]</literal>) around each "
+"array dimension's lower and upper bounds, with a colon (<literal>:</"
+"literal>) delimiter character in between. The array dimension decoration is "
+"followed by an equal sign (<literal>=</literal>). For example: "
+"<placeholder-1/> The array output routine will include explicit dimensions "
+"in its result only when there are one or more lower bounds different from "
+"one."
+msgstr ""
+"По умолчанию нижняя граница всех размерностей массива равна одному. Чтобы "
+"представить массивы с другими нижними границами, перед содержимым массива "
+"можно указать диапазоны индексов. Такое оформление массива будет содержать "
+"квадратные скобки (<literal>[]</literal>) вокруг нижней и верхней границ "
+"каждой размерности с двоеточием (<literal>:</literal>) между ними. За таким "
+"указанием размерности следует знак равно (<literal>=</literal>). Например: "
+"<placeholder-1/> Процедура вывода массива включает в результат явное "
+"указание размерностей, только если нижняя граница в одной или нескольких "
+"размерностях отличается от 1."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:754(para)
+msgid ""
+"If the value written for an element is <literal>NULL</literal> (in any case "
+"variant), the element is taken to be NULL. The presence of any quotes or "
+"backslashes disables this and allows the literal string value <quote>NULL</"
+"quote> to be entered. Also, for backward compatibility with pre-8.2 versions "
+"of <productname>PostgreSQL</productname>, the <xref linkend=\"guc-array-nulls"
+"\"/> configuration parameter can be turned <literal>off</literal> to "
+"suppress recognition of <literal>NULL</literal> as a NULL."
+msgstr ""
+"Если в качестве значения элемента задаётся <literal>NULL</literal> (в любом "
+"регистре), этот элемент считается равным непосредственно NULL. Если же оно "
+"включает кавычки или обратную косую черту, элементу присваивается текстовая "
+"строка <quote>NULL</quote>. Кроме того, для обратной совместимости с "
+"версиями <productname>PostgreSQL</productname> до 8.2, параметр конфигурации "
+"<xref linkend=\"guc-array-nulls\"/> можно выключить (присвоив ему "
+"<literal>off</literal>), чтобы строки <literal>NULL</literal> не "
+"воспринимались как значения NULL."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:764(para)
+msgid ""
+"As shown previously, when writing an array value you can use double quotes "
+"around any individual array element. You <emphasis>must</emphasis> do so if "
+"the element value would otherwise confuse the array-value parser. For "
+"example, elements containing curly braces, commas (or the data type's "
+"delimiter character), double quotes, backslashes, or leading or trailing "
+"whitespace must be double-quoted. Empty strings and strings matching the "
+"word <literal>NULL</literal> must be quoted, too. To put a double quote or "
+"backslash in a quoted array element value, use escape string syntax and "
+"precede it with a backslash. Alternatively, you can avoid quotes and use "
+"backslash-escaping to protect all data characters that would otherwise be "
+"taken as array syntax."
+msgstr ""
+"Как было показано ранее, записывая значение массива, любой его элемент можно "
+"заключить в кавычки. Это <emphasis>нужно</emphasis> делать, если при разборе "
+"значения массива без кавычек возможна неоднозначность. Например, в кавычки "
+"необходимо заключать элементы, содержащие фигурные скобки, запятую (или "
+"разделитель, определённый для данного типа), кавычки, обратную косую черту, "
+"а также пробельные символы в начале или конце строки. Пустые строки и "
+"строки, содержащие одно слово <literal>NULL</literal>, также нужно заключать "
+"в кавычки. Чтобы включить кавычки или обратную косую черту в значение, "
+"заключённое в кавычки, используйте спецпоследовательности с обратной косой "
+"чертой. С другой стороны, чтобы обойтись без кавычек, такими "
+"спецпоследовательностями можно защитить все символы в данных, которые могут "
+"быть восприняты как часть синтаксиса массива."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:778(para)
+msgid ""
+"You can add whitespace before a left brace or after a right brace. You can "
+"also add whitespace before or after any individual item string. In all of "
+"these cases the whitespace will be ignored. However, whitespace within "
+"double-quoted elements, or surrounded on both sides by non-whitespace "
+"characters of an element, is not ignored."
+msgstr ""
+"Перед открывающей и после закрывающей скобки можно добавлять пробельные "
+"символы. Пробелы также могут окружать каждую отдельную строку значения. Во "
+"всех случаях такие пробельные символы игнорируются. Однако все пробелы в "
+"строках, заключённых в кавычки, или окружённые не пробельными символами, "
+"напротив, учитываются."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:792(programlisting)
+#, no-wrap
+msgid "INSERT ... VALUES (E'{\"\\\\\\\\\",\"\\\\\"\"}');"
+msgstr "INSERT ... VALUES (E'{\"\\\\\\\\\",\"\\\\\"\"}');"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:787(para)
+msgid ""
+"Remember that what you write in an SQL command will first be interpreted as "
+"a string literal, and then as an array. This doubles the number of "
+"backslashes you need. For example, to insert a <type>text</type> array value "
+"containing a backslash and a double quote, you'd need to write: "
+"<placeholder-1/> The escape string processor removes one level of "
+"backslashes, so that what arrives at the array-value parser looks like "
+"<literal>{\"\\\\\",\"\\\"\"}</literal>. In turn, the strings fed to the "
+"<type>text</type> data type's input routine become <literal>\\</literal> and "
+"<literal>\"</literal> respectively. (If we were working with a data type "
+"whose input routine also treated backslashes specially, <type>bytea</type> "
+"for example, we might need as many as eight backslashes in the command to "
+"get one backslash into the stored array element.) Dollar quoting (see <xref "
+"linkend=\"sql-syntax-dollar-quoting\"/>) can be used to avoid the need to "
+"double backslashes."
+msgstr ""
+"Помните, что написанная SQL-команда прежде всего интерпретируется как "
+"текстовая строка, а затем как массив. Вследствие этого число символов "
+"обратной косой черты удваивается. Например, чтобы ввести в массив значения "
+"типа <type>text</type> с обратной косой чертой и кавычками, команду нужно "
+"будет записать так: <placeholder-1/> Сначала обработчик "
+"спецпоследовательностей удаляет один уровень обратной косой черты, так что "
+"анализатор значения массива получает на вход <literal>{\"\\\\\",\"\\\"\"}</"
+"literal>. В свою очередь, он передаёт эти строки процедуре ввода значения "
+"типа <type>text</type>, где они преобразуются в <literal>\\</literal> и "
+"<literal>\"</literal> соответственно. (Если бы мы работали с типом данных, "
+"процедура ввода которого также интерпретирует обратную косую черту особым "
+"образом, например <type>bytea</type>, нам могло бы понадобиться уже восемь "
+"таких символов, чтобы сохранить этот символ в элементе массива.) Во "
+"избежание такого дублирования спецсимволов строки можно заключать в доллары "
+"(см. <xref remap=\"4\" linkend=\"sql-syntax-dollar-quoting\"/>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:808(para)
+msgid ""
+"The <literal>ARRAY</literal> constructor syntax (see <xref linkend=\"sql-"
+"syntax-array-constructors\"/>) is often easier to work with than the array-"
+"literal syntax when writing array values in SQL commands. In <literal>ARRAY</"
+"literal>, individual element values are written the same way they would be "
+"written when not members of an array."
+msgstr ""
+"Записывать значения массивов в командах SQL часто бывает удобнее с помощью "
+"конструктора <literal>ARRAY</literal> (см. <xref remap=\"4\" linkend=\"sql-"
+"syntax-array-constructors\"/>). В <literal>ARRAY</literal> отдельные "
+"значения элементов записываются так же, как если бы они не были членами "
+"массива."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: array.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

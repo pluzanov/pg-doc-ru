@@ -1,0 +1,906 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-08-15 11:32+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:5(title)
+msgid "pgstattuple"
+msgstr "pgstattuple"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:7(indexterm) pgstattuple.xml:31(indexterm)
+msgid "<primary>pgstattuple</primary>"
+msgstr "<primary>pgstattuple</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:11(para)
+msgid ""
+"The <filename>pgstattuple</filename> module provides various functions to "
+"obtain tuple-level statistics."
+msgstr ""
+"Модуль <filename>pgstattuple</filename> предоставляет различные функции для "
+"получения статистики на уровне кортежей."
+
+#. +> REL_10
+#: pgstattuple.xml:16(para)
+msgid ""
+"As these functions return detailed page-level information, only the "
+"superuser has EXECUTE privileges on them upon installation. After the "
+"functions have been installed, users may issue <command>GRANT</command> "
+"commands to change the privileges on the functions to allow non-superusers "
+"to execute them. Members of the <literal>pg_stat_scan_tables</literal> role "
+"are granted access by default. See the description of the <xref linkend="
+"\"sql-grant\"/> command for specifics."
+msgstr ""
+"Так как эти функции возвращают подробную информацию, относящуюся к уровню "
+"страницы, только суперпользователь имеет право выполнять их (EXECUTE) после "
+"установки. После того, как эти функции установлены, с помощью команды "
+"<command>GRANT</command> можно изменить права доступа к этим функциям, чтобы "
+"выполнять их могли не только суперпользователи. По умолчанию доступ к ним "
+"имеют члены роли <literal>pg_stat_scan_tables</literal>. За подробностями "
+"обратитесь к описанию команды <xref linkend=\"sql-grant\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:26(title)
+msgid "Functions"
+msgstr "Функции"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:34(function)
+msgid "pgstattuple(regclass) returns record"
+msgstr "pgstattuple(regclass) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:44(programlisting)
+#, no-wrap
+msgid ""
+"test=&gt; SELECT * FROM pgstattuple('pg_catalog.pg_proc');\n"
+"-[ RECORD 1 ]------+-------\n"
+"table_len          | 458752\n"
+"tuple_count        | 1470\n"
+"tuple_len          | 438896\n"
+"tuple_percent      | 95.67\n"
+"dead_tuple_count   | 11\n"
+"dead_tuple_len     | 3157\n"
+"dead_tuple_percent | 0.69\n"
+"free_space         | 8932\n"
+"free_percent       | 1.95"
+msgstr ""
+"test=&gt; SELECT * FROM pgstattuple('pg_catalog.pg_proc');\n"
+"-[ RECORD 1 ]------+-------\n"
+"table_len          | 458752\n"
+"tuple_count        | 1470\n"
+"tuple_len          | 438896\n"
+"tuple_percent      | 95.67\n"
+"dead_tuple_count   | 11\n"
+"dead_tuple_len     | 3157\n"
+"dead_tuple_percent | 0.69\n"
+"free_space         | 8932\n"
+"free_percent       | 1.95"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:38(para)
+msgid ""
+"<function>pgstattuple</function> returns a relation's physical length, "
+"percentage of <quote>dead</quote> tuples, and other info. This may help "
+"users to determine whether vacuum is necessary or not. The argument is the "
+"target relation's name (optionally schema-qualified) or OID. For example: "
+"<placeholder-1/> The output columns are described in <xref linkend="
+"\"pgstattuple-columns\"/>."
+msgstr ""
+"Функция <function>pgstattuple</function> возвращает физическую длину "
+"отношения, процент <quote>мёртвых</quote> кортежей и другую информацию. Она "
+"может быть полезна для принятия решения о необходимости очистки. В аргументе "
+"передаётся имя (возможно, дополненное схемой) или OID целевого отношения. "
+"Например: <placeholder-1/> Столбцы результата описаны в <xref remap=\"6\" "
+"linkend=\"pgstattuple-columns\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:61(title)
+msgid "<function>pgstattuple</function> Output Columns"
+msgstr "Столбцы результата <function>pgstattuple</function>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:65(entry) pgstattuple.xml:195(entry)
+#: pgstattuple.xml:325(entry) pgstattuple.xml:390(entry)
+#: pgstattuple.xml:545(entry)
+msgid "Column"
+msgstr "Столбец"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:66(entry) pgstattuple.xml:196(entry)
+#: pgstattuple.xml:326(entry) pgstattuple.xml:391(entry)
+#: pgstattuple.xml:546(entry)
+msgid "Type"
+msgstr "Тип"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:67(entry) pgstattuple.xml:197(entry)
+#: pgstattuple.xml:327(entry) pgstattuple.xml:392(entry)
+#: pgstattuple.xml:547(entry)
+msgid "Description"
+msgstr "Описание"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:73(structfield) pgstattuple.xml:553(structfield)
+msgid "table_len"
+msgstr "table_len"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:74(type) pgstattuple.xml:79(type) pgstattuple.xml:84(type)
+#: pgstattuple.xml:94(type) pgstattuple.xml:99(type) pgstattuple.xml:109(type)
+#: pgstattuple.xml:216(type) pgstattuple.xml:222(type)
+#: pgstattuple.xml:228(type) pgstattuple.xml:234(type)
+#: pgstattuple.xml:240(type) pgstattuple.xml:246(type)
+#: pgstattuple.xml:346(type) pgstattuple.xml:405(type)
+#: pgstattuple.xml:411(type) pgstattuple.xml:417(type)
+#: pgstattuple.xml:423(type) pgstattuple.xml:429(type)
+#: pgstattuple.xml:435(type) pgstattuple.xml:554(type)
+#: pgstattuple.xml:564(type) pgstattuple.xml:569(type)
+#: pgstattuple.xml:579(type) pgstattuple.xml:584(type)
+#: pgstattuple.xml:594(type)
+msgid "bigint"
+msgstr "bigint"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:75(entry)
+msgid "Physical relation length in bytes"
+msgstr "Физическая длина отношения в байтах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:78(structfield)
+msgid "tuple_count"
+msgstr "tuple_count"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:80(entry) pgstattuple.xml:430(entry)
+msgid "Number of live tuples"
+msgstr "Количество &laquo;живых&raquo; кортежей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:83(structfield)
+msgid "tuple_len"
+msgstr "tuple_len"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:85(entry)
+msgid "Total length of live tuples in bytes"
+msgstr "Общая длина &laquo;живых&raquo; кортежей в байтах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:88(structfield)
+msgid "tuple_percent"
+msgstr "tuple_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:89(type) pgstattuple.xml:104(type) pgstattuple.xml:114(type)
+#: pgstattuple.xml:252(type) pgstattuple.xml:258(type)
+#: pgstattuple.xml:559(type) pgstattuple.xml:574(type)
+#: pgstattuple.xml:589(type) pgstattuple.xml:599(type)
+msgid "float8"
+msgstr "float8"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:90(entry) pgstattuple.xml:575(entry)
+msgid "Percentage of live tuples"
+msgstr "Процент &laquo;живых&raquo; кортежей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:93(structfield) pgstattuple.xml:578(structfield)
+msgid "dead_tuple_count"
+msgstr "dead_tuple_count"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:95(entry) pgstattuple.xml:436(entry)
+msgid "Number of dead tuples"
+msgstr "Количество &laquo;мёртвых&raquo; кортежей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:98(structfield) pgstattuple.xml:583(structfield)
+msgid "dead_tuple_len"
+msgstr "dead_tuple_len"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:100(entry)
+msgid "Total length of dead tuples in bytes"
+msgstr "Общая длина &laquo;мёртвых&raquo; кортежей в байтах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:103(structfield) pgstattuple.xml:588(structfield)
+msgid "dead_tuple_percent"
+msgstr "dead_tuple_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:105(entry) pgstattuple.xml:590(entry)
+msgid "Percentage of dead tuples"
+msgstr "Процент &laquo;мёртвых&raquo; кортежей"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:108(structfield)
+msgid "free_space"
+msgstr "free_space"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:110(entry)
+msgid "Total free space in bytes"
+msgstr "Общий объём свободного пространства в байтах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:113(structfield) pgstattuple.xml:440(structfield)
+msgid "free_percent"
+msgstr "free_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:115(entry) pgstattuple.xml:442(entry)
+#: pgstattuple.xml:600(entry)
+msgid "Percentage of free space"
+msgstr "Процент свободного пространства"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:123(para)
+msgid ""
+"The <literal>table_len</literal> will always be greater than the sum of the "
+"<literal>tuple_len</literal>, <literal>dead_tuple_len</literal> and "
+"<literal>free_space</literal>. The difference is accounted for by fixed page "
+"overhead, the per-page table of pointers to tuples, and padding to ensure "
+"that tuples are correctly aligned."
+msgstr ""
+"Значение <literal>table_len</literal> всегда будет больше суммы "
+"<literal>tuple_len</literal>, <literal>dead_tuple_len</literal> и "
+"<literal>free_space</literal>. Разница объясняется фиксированными "
+"издержками, внутристраничной таблицей указателей на кортежи и пропусками, "
+"добавляемыми для выравнивания кортежей."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:132(para)
+msgid ""
+"<function>pgstattuple</function> acquires only a read lock on the relation. "
+"So the results do not reflect an instantaneous snapshot; concurrent updates "
+"will affect them."
+msgstr ""
+"Функция <function>pgstattuple</function> получает блокировку отношения "
+"только для чтения. Таким образом, её результаты отражают не мгновенный "
+"снимок; на них будут влиять параллельные изменения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:138(para)
+msgid ""
+"<function>pgstattuple</function> judges a tuple is <quote>dead</quote> if "
+"<function>HeapTupleSatisfiesDirty</function> returns false."
+msgstr ""
+"<function>pgstattuple</function> считает кортеж <quote>мёртвым</quote>, если "
+"<function>HeapTupleSatisfiesDirty</function> возвращает false."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:147(function)
+msgid "pgstattuple(text) returns record"
+msgstr "pgstattuple(text) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:151(para)
+msgid ""
+"This is the same as <function>pgstattuple(regclass)</function>, except that "
+"the target relation is specified as TEXT. This function is kept because of "
+"backward-compatibility so far, and will be deprecated in some future release."
+msgstr ""
+"Эта функция равнозначна функции <function>pgstattuple(regclass)</function> "
+"за исключением того, что для неё целевое отношение задаётся в текстовом "
+"виде. Данная функция оставлена для обратной совместимости, в будущем она "
+"может перейти в разряд устаревших."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:162(indexterm)
+msgid "<primary>pgstatindex</primary>"
+msgstr "<primary>pgstatindex</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:165(function)
+msgid "pgstatindex(regclass) returns record"
+msgstr "pgstatindex(regclass) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:172(programlisting)
+#, no-wrap
+msgid ""
+"test=&gt; SELECT * FROM pgstatindex('pg_cast_oid_index');\n"
+"-[ RECORD 1 ]------+------\n"
+"version            | 2\n"
+"tree_level         | 0\n"
+"index_size         | 16384\n"
+"root_block_no      | 1\n"
+"internal_pages     | 0\n"
+"leaf_pages         | 1\n"
+"empty_pages        | 0\n"
+"deleted_pages      | 0\n"
+"avg_leaf_density   | 54.27\n"
+"leaf_fragmentation | 0"
+msgstr ""
+"test=&gt; SELECT * FROM pgstatindex('pg_cast_oid_index');\n"
+"-[ RECORD 1 ]------+------\n"
+"version            | 2\n"
+"tree_level         | 0\n"
+"index_size         | 16384\n"
+"root_block_no      | 1\n"
+"internal_pages     | 0\n"
+"leaf_pages         | 1\n"
+"empty_pages        | 0\n"
+"deleted_pages      | 0\n"
+"avg_leaf_density   | 54.27\n"
+"leaf_fragmentation | 0"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:169(para)
+msgid ""
+"<function>pgstatindex</function> returns a record showing information about "
+"a B-tree index. For example: <placeholder-1/>"
+msgstr ""
+"Функция <function>pgstatindex</function> возвращает запись с информацией об "
+"индексе типа B-дерево. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:203(structfield) pgstattuple.xml:333(structfield)
+#: pgstattuple.xml:398(structfield)
+msgid "version"
+msgstr "version"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:204(type) pgstattuple.xml:210(type)
+#: pgstattuple.xml:334(type) pgstattuple.xml:340(type)
+#: pgstattuple.xml:399(type)
+msgid "integer"
+msgstr "integer"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:205(entry)
+msgid "B-tree version number"
+msgstr "Номер версии B-дерева"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:209(structfield)
+msgid "tree_level"
+msgstr "tree_level"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:211(entry)
+msgid "Tree level of the root page"
+msgstr "Уровень корневой страницы в дереве"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:215(structfield)
+msgid "index_size"
+msgstr "index_size"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:217(entry)
+msgid "Total index size in bytes"
+msgstr "Общий объём индекса в байтах"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:221(structfield)
+msgid "root_block_no"
+msgstr "root_block_no"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:223(entry)
+msgid "Location of root page (zero if none)"
+msgstr "Расположение страницы корня (0, если её нет)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:227(structfield)
+msgid "internal_pages"
+msgstr "internal_pages"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:229(entry)
+msgid "Number of <quote>internal</quote> (upper-level) pages"
+msgstr "Количество <quote>внутренних</quote> страниц (верхнего уровня)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:233(structfield)
+msgid "leaf_pages"
+msgstr "leaf_pages"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:235(entry)
+msgid "Number of leaf pages"
+msgstr "Количество страниц на уровне листьев"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:239(structfield)
+msgid "empty_pages"
+msgstr "empty_pages"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:241(entry)
+msgid "Number of empty pages"
+msgstr "Количество пустых страниц"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:245(structfield)
+msgid "deleted_pages"
+msgstr "deleted_pages"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:247(entry)
+msgid "Number of deleted pages"
+msgstr "Количество удалённых страниц"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:251(structfield)
+msgid "avg_leaf_density"
+msgstr "avg_leaf_density"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:253(entry)
+msgid "Average density of leaf pages"
+msgstr "Средняя плотность страниц на уровне листьев"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:257(structfield)
+msgid "leaf_fragmentation"
+msgstr "leaf_fragmentation"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:259(entry)
+msgid "Leaf page fragmentation"
+msgstr "Фрагментация на уровне листьев"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:188(para) pgstattuple.xml:318(para)
+#: pgstattuple.xml:383(para)
+msgid "The output columns are: <placeholder-1/>"
+msgstr "Столбцы результата: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:267(para)
+msgid ""
+"The reported <literal>index_size</literal> will normally correspond to one "
+"more page than is accounted for by <literal>internal_pages + leaf_pages + "
+"empty_pages + deleted_pages</literal>, because it also includes the index's "
+"metapage."
+msgstr ""
+"Выдаваемый размер индекса (<literal>index_size</literal>) обычно вычисляется "
+"по формуле <literal>internal_pages + leaf_pages + empty_pages + "
+"deleted_pages</literal> плюс одна страница, так как в нём учитывается и "
+"метастраница индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:274(para)
+msgid ""
+"As with <function>pgstattuple</function>, the results are accumulated page-"
+"by-page, and should not be expected to represent an instantaneous snapshot "
+"of the whole index."
+msgstr ""
+"Как и <function>pgstattuple</function>, эта функция собирает данные страница "
+"за страницей и не следует ожидать, что её результат представляет мгновенный "
+"снимок всего индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:284(function)
+msgid "pgstatindex(text) returns record"
+msgstr "pgstatindex(text) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:288(para)
+msgid ""
+"This is the same as <function>pgstatindex(regclass)</function>, except that "
+"the target index is specified as TEXT. This function is kept because of "
+"backward-compatibility so far, and will be deprecated in some future release."
+msgstr ""
+"Эта функция равнозначна функции <function>pgstatindex(regclass)</function> "
+"за исключением того, что для неё целевое отношение задаётся в текстовом "
+"виде. Данная функция оставлена для обратной совместимости, в будущем она "
+"может перейти в разряд устаревших."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:299(indexterm)
+msgid "<primary>pgstatginindex</primary>"
+msgstr "<primary>pgstatginindex</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:302(function)
+msgid "pgstatginindex(regclass) returns record"
+msgstr "pgstatginindex(regclass) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:309(programlisting)
+#, no-wrap
+msgid ""
+"test=&gt; SELECT * FROM pgstatginindex('test_gin_index');\n"
+"-[ RECORD 1 ]--+--\n"
+"version        | 1\n"
+"pending_pages  | 0\n"
+"pending_tuples | 0"
+msgstr ""
+"test=&gt; SELECT * FROM pgstatginindex('test_gin_index');\n"
+"-[ RECORD 1 ]--+--\n"
+"version        | 1\n"
+"pending_pages  | 0\n"
+"pending_tuples | 0"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:306(para)
+msgid ""
+"<function>pgstatginindex</function> returns a record showing information "
+"about a GIN index. For example: <placeholder-1/>"
+msgstr ""
+"Функция <function>pgstatginindex</function> возвращает запись с информацией "
+"об индексе типа GIN. Например: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:335(entry)
+msgid "GIN version number"
+msgstr "Номер версии GIN"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:339(structfield)
+msgid "pending_pages"
+msgstr "pending_pages"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:341(entry)
+msgid "Number of pages in the pending list"
+msgstr "Количество страниц в списке ожидающих обработки"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:345(structfield)
+msgid "pending_tuples"
+msgstr "pending_tuples"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:347(entry)
+msgid "Number of tuples in the pending list"
+msgstr "Количество кортежей в списке ожидающих обработки"
+
+#. +> REL_10
+#: pgstattuple.xml:359(indexterm)
+msgid "<primary>pgstathashindex</primary>"
+msgstr "<primary>pgstathashindex</primary>"
+
+#. +> REL_10
+#: pgstattuple.xml:362(function)
+msgid "pgstathashindex(regclass) returns record"
+msgstr "pgstathashindex(regclass) returns record"
+
+#. +> REL_10
+#: pgstattuple.xml:369(programlisting)
+#, no-wrap
+msgid ""
+"test=&gt; select * from pgstathashindex('con_hash_index');\n"
+"-[ RECORD 1 ]--+-----------------\n"
+"version        | 4\n"
+"bucket_pages   | 33081\n"
+"overflow_pages | 0\n"
+"bitmap_pages   | 1\n"
+"unused_pages   | 32455\n"
+"live_items     | 10204006\n"
+"dead_items     | 0\n"
+"free_percent   | 61.8005949100872"
+msgstr ""
+"test=&gt; select * from pgstathashindex('con_hash_index');\n"
+"-[ RECORD 1 ]--+-----------------\n"
+"version        | 4\n"
+"bucket_pages   | 33081\n"
+"overflow_pages | 0\n"
+"bitmap_pages   | 1\n"
+"unused_pages   | 32455\n"
+"live_items     | 10204006\n"
+"dead_items     | 0\n"
+"free_percent   | 61.8005949100872"
+
+#. +> REL_10
+#: pgstattuple.xml:366(para)
+msgid ""
+"<function>pgstathashindex</function> returns a record showing information "
+"about a HASH index. For example: <placeholder-1/>"
+msgstr ""
+"Функция <function>pgstathashindex</function> возвращает запись с информацией "
+"о хеш-индексе. Например: <placeholder-1/>"
+
+#. +> REL_10
+#: pgstattuple.xml:400(entry)
+msgid "HASH version number"
+msgstr "Номер версии HASH"
+
+#. +> REL_10
+#: pgstattuple.xml:404(structfield)
+msgid "bucket_pages"
+msgstr "bucket_pages"
+
+#. +> REL_10
+#: pgstattuple.xml:406(entry)
+msgid "Number of bucket pages"
+msgstr "Количество страниц групп"
+
+#. +> REL_10
+#: pgstattuple.xml:410(structfield)
+msgid "overflow_pages"
+msgstr "overflow_pages"
+
+#. +> REL_10
+#: pgstattuple.xml:412(entry)
+msgid "Number of overflow pages"
+msgstr "Количество страниц переполнения"
+
+#. +> REL_10
+#: pgstattuple.xml:416(structfield)
+msgid "bitmap_pages"
+msgstr "bitmap_pages"
+
+#. +> REL_10
+#: pgstattuple.xml:418(entry)
+msgid "Number of bitmap pages"
+msgstr "Количество страниц битовой карты"
+
+#. +> REL_10
+#: pgstattuple.xml:422(structfield)
+msgid "unused_pages"
+msgstr "unused_pages"
+
+#. +> REL_10
+#: pgstattuple.xml:424(entry)
+msgid "Number of unused pages"
+msgstr "Количество неиспользованных страниц"
+
+#. +> REL_10
+#: pgstattuple.xml:428(structfield)
+msgid "live_items"
+msgstr "live_items"
+
+#. +> REL_10
+#: pgstattuple.xml:434(structfield)
+msgid "dead_tuples"
+msgstr "dead_tuples"
+
+#. +> REL_10
+#: pgstattuple.xml:441(type)
+msgid "float"
+msgstr "float"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:454(indexterm)
+msgid "<primary>pg_relpages</primary>"
+msgstr "<primary>pg_relpages</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:457(function)
+msgid "pg_relpages(regclass) returns bigint"
+msgstr "pg_relpages(regclass) returns bigint"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:461(para)
+msgid ""
+"<function>pg_relpages</function> returns the number of pages in the relation."
+msgstr ""
+"Функция <function>pg_relpages</function> возвращает число страниц в "
+"отношении."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:470(function)
+msgid "pg_relpages(text) returns bigint"
+msgstr "pg_relpages(text) returns bigint"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:474(para)
+msgid ""
+"This is the same as <function>pg_relpages(regclass)</function>, except that "
+"the target relation is specified as TEXT. This function is kept because of "
+"backward-compatibility so far, and will be deprecated in some future release."
+msgstr ""
+"Эта функция равнозначна функции <function>pg_relpages(regclass)</function> "
+"за исключением того, что для неё целевое отношение задаётся в текстовом "
+"виде. Данная функция оставлена для обратной совместимости, в будущем она "
+"может перейти в разряд устаревших."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:485(indexterm)
+msgid "<primary>pgstattuple_approx</primary>"
+msgstr "<primary>pgstattuple_approx</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:488(function)
+msgid "pgstattuple_approx(regclass) returns record"
+msgstr "pgstattuple_approx(regclass) returns record"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:497(programlisting)
+#, no-wrap
+msgid ""
+"test=&gt; SELECT * FROM pgstattuple_approx('pg_catalog.pg_proc'::regclass);\n"
+"-[ RECORD 1 ]--------+-------\n"
+"table_len            | 573440\n"
+"scanned_percent      | 2\n"
+"approx_tuple_count   | 2740\n"
+"approx_tuple_len     | 561210\n"
+"approx_tuple_percent | 97.87\n"
+"dead_tuple_count     | 0\n"
+"dead_tuple_len       | 0\n"
+"dead_tuple_percent   | 0\n"
+"approx_free_space    | 11996\n"
+"approx_free_percent  | 2.09"
+msgstr ""
+"test=&gt; SELECT * FROM pgstattuple_approx('pg_catalog.pg_proc'::regclass);\n"
+"-[ RECORD 1 ]--------+-------\n"
+"table_len            | 573440\n"
+"scanned_percent      | 2\n"
+"approx_tuple_count   | 2740\n"
+"approx_tuple_len     | 561210\n"
+"approx_tuple_percent | 97.87\n"
+"dead_tuple_count     | 0\n"
+"dead_tuple_len       | 0\n"
+"dead_tuple_percent   | 0\n"
+"approx_free_space    | 11996\n"
+"approx_free_percent  | 2.09"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:492(para)
+msgid ""
+"<function>pgstattuple_approx</function> is a faster alternative to "
+"<function>pgstattuple</function> that returns approximate results. The "
+"argument is the target relation's name or OID. For example: <placeholder-1/> "
+"The output columns are described in <xref linkend=\"pgstatapprox-columns\"/>."
+msgstr ""
+"Функция <function>pgstattuple_approx</function> является более быстрой "
+"альтернативой <function>pgstattuple</function>, возвращающей приблизительные "
+"результаты. В качестве аргумента ей передаётся имя или OID целевого "
+"отношения. Например: <placeholder-1/> Выходные столбцы описаны в <xref remap="
+"\"6\" linkend=\"pgstatapprox-columns\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:514(para)
+msgid ""
+"Whereas <function>pgstattuple</function> always performs a full-table scan "
+"and returns an exact count of live and dead tuples (and their sizes) and "
+"free space, <function>pgstattuple_approx</function> tries to avoid the full-"
+"table scan and returns exact dead tuple statistics along with an "
+"approximation of the number and size of live tuples and free space."
+msgstr ""
+"Тогда как <function>pgstattuple</function> всегда производит полное "
+"сканирование таблицы и возвращает точное число живых и мёртвых кортежей (и "
+"их размер), а также точный объём свободного пространства, функция "
+"<function>pgstattuple_approx</function> пытается избежать полного "
+"сканирования и возвращает точную статистику только по мёртвым кортежам, а "
+"количество и объём живых кортежей, как и объём свободного пространства "
+"определяет приблизительно."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:523(para)
+msgid ""
+"It does this by skipping pages that have only visible tuples according to "
+"the visibility map (if a page has the corresponding VM bit set, then it is "
+"assumed to contain no dead tuples). For such pages, it derives the free "
+"space value from the free space map, and assumes that the rest of the space "
+"on the page is taken up by live tuples."
+msgstr ""
+"Она делает это, пропуская страницы, в которых, согласно карте видимости, "
+"есть только видимые кортежи (если для страницы установлен соответствующий "
+"бит, предполагается, что она не содержит мёртвых кортежей). Для таких "
+"страниц эта функция узнаёт объём свободного пространства из карты свободного "
+"пространства и предполагает, что остальное пространство на странице занято "
+"живыми кортежами."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:532(para)
+msgid ""
+"For pages that cannot be skipped, it scans each tuple, recording its "
+"presence and size in the appropriate counters, and adding up the free space "
+"on the page. At the end, it estimates the total number of live tuples based "
+"on the number of pages and tuples scanned (in the same way that VACUUM "
+"estimates pg_class.reltuples)."
+msgstr ""
+"На страницах, которые нельзя пропустить, она сканирует каждый кортеж, "
+"отражает его наличие и размер в соответствующих счётчиках и суммирует "
+"свободное пространство на странице. В конце она оценивает приблизительно "
+"общее число живых кортежей, исходя из числа просканированных страниц и "
+"кортежей (так же, как VACUUM рассчитывает значение pg_class.reltuples)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:541(title)
+msgid "<function>pgstattuple_approx</function> Output Columns"
+msgstr "Столбцы результата <function>pgstattuple_approx</function>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:555(entry)
+msgid "Physical relation length in bytes (exact)"
+msgstr "Физическая длина отношения в байтах (точная)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:558(structfield)
+msgid "scanned_percent"
+msgstr "scanned_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:560(entry)
+msgid "Percentage of table scanned"
+msgstr "Просканированный процент таблицы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:563(structfield)
+msgid "approx_tuple_count"
+msgstr "approx_tuple_count"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:565(entry)
+msgid "Number of live tuples (estimated)"
+msgstr "Количество &laquo;живых&raquo; кортежей (приблизительное)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:568(structfield)
+msgid "approx_tuple_len"
+msgstr "approx_tuple_len"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:570(entry)
+msgid "Total length of live tuples in bytes (estimated)"
+msgstr "Общая длина &laquo;живых&raquo; кортежей в байтах (приблизительная)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:573(structfield)
+msgid "approx_tuple_percent"
+msgstr "approx_tuple_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:580(entry)
+msgid "Number of dead tuples (exact)"
+msgstr "Количество &laquo;мёртвых&raquo; кортежей (точное)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:585(entry)
+msgid "Total length of dead tuples in bytes (exact)"
+msgstr "Общая длина &laquo;мёртвых&raquo; кортежей в байтах (точная)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:593(structfield)
+msgid "approx_free_space"
+msgstr "approx_free_space"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:595(entry)
+msgid "Total free space in bytes (estimated)"
+msgstr "Общий объём свободного пространства в байтах (приблизительный)"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:598(structfield)
+msgid "approx_free_percent"
+msgstr "approx_free_percent"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:607(para)
+msgid ""
+"In the above output, the free space figures may not match the "
+"<function>pgstattuple</function> output exactly, because the free space map "
+"gives us an exact figure, but is not guaranteed to be accurate to the byte."
+msgstr ""
+"В показанном выше выводе показатели свободного пространства могут не "
+"соответствовать выводу <function>pgstattuple</function> в точности, потому "
+"что карта свободного пространства показывает верное значение, но не "
+"гарантируется, что оно будет точным до байта."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:621(title)
+msgid "Authors"
+msgstr "Авторы"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:623(para)
+msgid "Tatsuo Ishii, Satoshi Nagayasu and Abhijit Menon-Sen"
+msgstr "Тацуо Исии, Сатоши Нагаясу и Абхиджит Менон-Сен"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: pgstattuple.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

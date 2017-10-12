@@ -1,0 +1,407 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:5(title)
+msgid "citext"
+msgstr "citext"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:7(indexterm)
+msgid "<primary>citext</primary>"
+msgstr "<primary>citext</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:11(para)
+msgid ""
+"The <filename>citext</filename> module provides a case-insensitive character "
+"string type, <type>citext</type>. Essentially, it internally calls "
+"<function>lower</function> when comparing values. Otherwise, it behaves "
+"almost exactly like <type>text</type>."
+msgstr ""
+"Модуль <filename>citext</filename> предоставляет тип данных для строк, "
+"нечувствительных к регистру, <type>citext</type>. По сути он сравнивает "
+"значения, вызывая внутри себя функцию <function>lower</function>. В "
+"остальном он почти не отличается от типа <type>text</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:19(title)
+msgid "Rationale"
+msgstr "Обоснование"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:26(programlisting)
+#, no-wrap
+msgid "SELECT * FROM tab WHERE lower(col) = LOWER(?);"
+msgstr "SELECT * FROM tab WHERE lower(col) = LOWER(?);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:21(para)
+msgid ""
+"The standard approach to doing case-insensitive matches in "
+"<productname>PostgreSQL</productname> has been to use the <function>lower</"
+"function> function when comparing values, for example <placeholder-1/>"
+msgstr ""
+"Стандартный способ выполнить сравнение строк без учёта регистра в "
+"<productname>PostgreSQL</productname> заключается в использовании функции "
+"<function>lower</function> при сравнении значений, например <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:31(para)
+msgid "This works reasonably well, but has a number of drawbacks:"
+msgstr "Этот подход работает довольно хорошо, но имеет ряд недостатков:"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:37(para)
+msgid ""
+"It makes your SQL statements verbose, and you always have to remember to use "
+"<function>lower</function> on both the column and the query value."
+msgstr ""
+"Операторы SQL становятся громоздкими, и нужно не забывать всегда "
+"обрабатывать функцией <function>lower</function> и столбец, и значение."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:43(para)
+msgid ""
+"It won't use an index, unless you create a functional index using "
+"<function>lower</function>."
+msgstr ""
+"Индекс не будет использоваться, если только дополнительно не создать "
+"функциональный индекс с функцией <function>lower</function>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:49(para)
+msgid ""
+"If you declare a column as <literal>UNIQUE</literal> or <literal>PRIMARY "
+"KEY</literal>, the implicitly generated index is case-sensitive. So it's "
+"useless for case-insensitive searches, and it won't enforce uniqueness case-"
+"insensitively."
+msgstr ""
+"Если вы объявляете столбец как <literal>UNIQUE</literal> или "
+"<literal>PRIMARY KEY</literal>, неявно создаваемый индекс будет "
+"чувствительным к регистру. Поэтому он бесполезен для регистронезависимого "
+"поиска, так же как он не будет обеспечивать уникальность без учёта регистра."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:58(para)
+msgid ""
+"The <type>citext</type> data type allows you to eliminate calls to "
+"<function>lower</function> in SQL queries, and allows a primary key to be "
+"case-insensitive. <type>citext</type> is locale-aware, just like <type>text</"
+"type>, which means that the matching of upper case and lower case characters "
+"is dependent on the rules of the database's <literal>LC_CTYPE</literal> "
+"setting. Again, this behavior is identical to the use of <function>lower</"
+"function> in queries. But because it's done transparently by the data type, "
+"you don't have to remember to do anything special in your queries."
+msgstr ""
+"Тип данных <type>citext</type> позволяет исключить вызовы <function>lower</"
+"function> в SQL-запросах и позволяет сделать первичный ключ "
+"регистронезависимым. Тип <type>citext</type> учитывает локаль, так же, как и "
+"тип <type>text</type>, что означает, что сравнение символов в верхнем и "
+"нижнем регистре зависит от правил <literal>LC_CTYPE</literal> для базы "
+"данных. Это поведение, опять же, не отличается от вызовов <function>lower</"
+"function> в запросах. Но так как оно реализуется прозрачно типом данных, в "
+"самих запросах дополнительно не нужно ничего делать."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:73(title)
+msgid "How to Use It"
+msgstr "Как его использовать"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:78(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE users (\n"
+"    nick CITEXT PRIMARY KEY,\n"
+"    pass TEXT   NOT NULL\n"
+");\n"
+"\n"
+"INSERT INTO users VALUES ( 'larry',  md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Tom',    md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Damian', md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'NEAL',   md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Bj&oslash;rn',  md5(random()::text) );\n"
+"\n"
+"SELECT * FROM users WHERE nick = 'Larry';"
+msgstr ""
+"CREATE TABLE users (\n"
+"    nick CITEXT PRIMARY KEY,\n"
+"    pass TEXT   NOT NULL\n"
+");\n"
+"\n"
+"INSERT INTO users VALUES ( 'larry',  md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Tom',    md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Damian', md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'NEAL',   md5(random()::text) );\n"
+"INSERT INTO users VALUES ( 'Bj&oslash;rn',  md5(random()::text) );\n"
+"\n"
+"SELECT * FROM users WHERE nick = 'Larry';"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:75(para)
+msgid ""
+"Here's a simple example of usage: <placeholder-1/> The <command>SELECT</"
+"command> statement will return one tuple, even though the <structfield>nick</"
+"structfield> column was set to <literal>larry</literal> and the query was "
+"for <literal>Larry</literal>."
+msgstr ""
+"Простой пример использования: <placeholder-1/> Оператор <command>SELECT</"
+"command> вернёт один кортеж, несмотря на то, что в столбец "
+"<structfield>nick</structfield> записано значение <literal>larry</literal>, "
+"а в запросе фигурирует <literal>Larry</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:100(title)
+msgid "String Comparison Behavior"
+msgstr "Поведение при сравнении строк"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:102(para)
+msgid ""
+"<type>citext</type> performs comparisons by converting each string to lower "
+"case (as though <function>lower</function> were called) and then comparing "
+"the results normally. Thus, for example, two strings are considered equal if "
+"<function>lower</function> would produce identical results for them."
+msgstr ""
+"Модуль <type>citext</type> выполняет сравнения, приводя каждую строку к "
+"нижнему регистру (как если бы вызывалась функция <function>lower</function>) "
+"и затем производя сравнения как обычно. Так, например, две строки будут "
+"считаться равными, если функция <function>lower</function>, обработав их, "
+"выдаст одинаковые результаты."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:109(para)
+msgid ""
+"In order to emulate a case-insensitive collation as closely as possible, "
+"there are <type>citext</type>-specific versions of a number of string-"
+"processing operators and functions. So, for example, the regular expression "
+"operators <literal>~</literal> and <literal>~*</literal> exhibit the same "
+"behavior when applied to <type>citext</type>: they both match case-"
+"insensitively. The same is true for <literal>!~</literal> and <literal>!~*</"
+"literal>, as well as for the <literal>LIKE</literal> operators <literal>~~</"
+"literal> and <literal>~~*</literal>, and <literal>!~~</literal> and "
+"<literal>!~~*</literal>. If you'd like to match case-sensitively, you can "
+"cast the operator's arguments to <type>text</type>."
+msgstr ""
+"Чтобы имитировать правило сортировки без учёта регистра в максимально "
+"возможной степени, этот модуль предоставляет специальные, ориентированные на "
+"<type>citext</type>, операторы и функции для обработки строки. Так, "
+"например, операторы регулярных выражений <literal>~</literal> и <literal>~*</"
+"literal> действуют в том же ключе, когда применяются к типу <type>citext</"
+"type>: оба они не учитывают регистр. Это же распространяется на операторы "
+"<literal>!~</literal> и <literal>!~*</literal>, а также операторы "
+"<literal>LIKE</literal> <literal>~~</literal>, <literal>~~*</literal>, "
+"<literal>!~~</literal> и <literal>!~~*</literal>. Если же вы хотите, чтобы "
+"эти операторы учитывали регистр, вы можете привести их аргументы к типу "
+"<type>text</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:122(para)
+msgid ""
+"Similarly, all of the following functions perform matching case-"
+"insensitively if their arguments are <type>citext</type>:"
+msgstr ""
+"Подобным образом, все следующие функции выполняют сопоставления без учёта "
+"регистра, если их аргументы имеют тип <type>citext</type>:"
+
+#. +> REL_10
+#: citext.xml:130(function)
+msgid "regexp_match()"
+msgstr "regexp_match()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:135(function)
+msgid "regexp_matches()"
+msgstr "regexp_matches()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:140(function)
+msgid "regexp_replace()"
+msgstr "regexp_replace()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:145(function)
+msgid "regexp_split_to_array()"
+msgstr "regexp_split_to_array()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:150(function)
+msgid "regexp_split_to_table()"
+msgstr "regexp_split_to_table()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:155(function)
+msgid "replace()"
+msgstr "replace()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:160(function)
+msgid "split_part()"
+msgstr "split_part()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:165(function)
+msgid "strpos()"
+msgstr "strpos()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:170(function)
+msgid "translate()"
+msgstr "translate()"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:175(para)
+msgid ""
+"For the regexp functions, if you want to match case-sensitively, you can "
+"specify the <quote>c</quote> flag to force a case-sensitive match. "
+"Otherwise, you must cast to <type>text</type> before using one of these "
+"functions if you want case-sensitive behavior."
+msgstr ""
+"Для функций с регулярными выражениями, если вам нужно регистрозависимое "
+"сопоставление, вы можете добавить флаг <quote>c</quote>, чтобы принудительно "
+"включить этот режим. Чтобы получить регистрозависимое поведение без этого "
+"флага, вы должны привести аргумент к типу <type>text</type>, прежде чем "
+"вызывать эту функцию."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:185(title)
+msgid "Limitations"
+msgstr "Ограничения"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:189(para)
+msgid ""
+"<type>citext</type>'s case-folding behavior depends on the "
+"<literal>LC_CTYPE</literal> setting of your database. How it compares values "
+"is therefore determined when the database is created. It is not truly case-"
+"insensitive in the terms defined by the Unicode standard. Effectively, what "
+"this means is that, as long as you're happy with your collation, you should "
+"be happy with <type>citext</type>'s comparisons. But if you have data in "
+"different languages stored in your database, users of one language may find "
+"their query results are not as expected if the collation is for another "
+"language."
+msgstr ""
+"Смена регистра символов в <type>citext</type> зависит от параметра "
+"<literal>LC_CTYPE</literal> вашей базы данных. Таким образом, как будут "
+"сравниваться значения, определяется при создании базы данных. На самом деле, "
+"по определениям стандарта Unicode, это сравнение не будет истинно "
+"регистронезависимым. По сути это означает, что если вас устраивает "
+"установленное правило сортировки, вас должны устраивать и сравнения "
+"<type>citext</type>. Но если в вашей базе данных хранятся строки на разных "
+"языках, пользователи одного языка могут получать неожиданные результаты "
+"запросов, если правило сортировки предназначено для другого языка."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:204(para)
+msgid ""
+"As of <productname>PostgreSQL</productname> 9.1, you can attach a "
+"<literal>COLLATE</literal> specification to <type>citext</type> columns or "
+"data values. Currently, <type>citext</type> operators will honor a non-"
+"default <literal>COLLATE</literal> specification while comparing case-folded "
+"strings, but the initial folding to lower case is always done according to "
+"the database's <literal>LC_CTYPE</literal> setting (that is, as though "
+"<literal>COLLATE \"default\"</literal> were given). This may be changed in a "
+"future release so that both steps follow the input <literal>COLLATE</"
+"literal> specification."
+msgstr ""
+"Начиная с <productname>PostgreSQL</productname> версии 9.1, вы можете "
+"добавлять указание <literal>COLLATE</literal> к значениям данных или "
+"столбцам <type>citext</type>. В настоящее время операторы <type>citext</"
+"type> принимают во внимание такое явное указание <literal>COLLATE</literal>, "
+"сравнивая строки в нижнем регистре, но изначальное приведение в нижний "
+"регистр всегда выполняется согласно параметру <literal>LC_CTYPE</literal> "
+"базы данных (как если бы указывалось <literal>COLLATE \"default\"</"
+"literal>). Это может быть изменено в будущем, чтобы на обоих этапах "
+"учитывалось указание <literal>COLLATE</literal> во входных данных."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:218(para)
+msgid ""
+"<type>citext</type> is not as efficient as <type>text</type> because the "
+"operator functions and the B-tree comparison functions must make copies of "
+"the data and convert it to lower case for comparisons. It is, however, "
+"slightly more efficient than using <function>lower</function> to get case-"
+"insensitive matching."
+msgstr ""
+"Тип <type>citext</type> не так эффективен, как <type>text</type>, так как "
+"функции операторов и функции сравнения для B-дерева должны делать копии "
+"данных и переводить их в нижний регистр для сравнения. Однако он несколько "
+"эффективнее варианта с применением <function>lower</function> для получения "
+"регистронезависимого сравнения."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:228(para)
+msgid ""
+"<type>citext</type> doesn't help much if you need data to compare case-"
+"sensitively in some contexts and case-insensitively in other contexts. The "
+"standard answer is to use the <type>text</type> type and manually use the "
+"<function>lower</function> function when you need to compare case-"
+"insensitively; this works all right if case-insensitive comparison is needed "
+"only infrequently. If you need case-insensitive behavior most of the time "
+"and case-sensitive infrequently, consider storing the data as <type>citext</"
+"type> and explicitly casting the column to <type>text</type> when you want "
+"case-sensitive comparison. In either situation, you will need two indexes if "
+"you want both types of searches to be fast."
+msgstr ""
+"Тип <type>citext</type> малополезен в ситуациях, когда вам нужно сравнивать "
+"данные без учёта регистра в одних контекстах, и с учётом регистра — в "
+"других. Обычно в таких случаях используют <type>text</type> и вручную "
+"применяют функцию <function>lower</function>, когда нужно выполнить "
+"сравнение без учёта регистра; это прекрасно работает, если "
+"регистронезависимое сравнение требуется выполнять относительно редко. Если "
+"же почти всегда сравнение должно быть регистронезависимым и только иногда "
+"регистрозависимым, имеет смысл сохранить данные в столбце типа <type>citext</"
+"type>, и явно приводить их к типу <type>text</type> для регистрозависимого "
+"сравнения. В любом случае, чтобы оба варианта поиска были быстрыми, вам "
+"потребуются два индекса."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:243(para)
+msgid ""
+"The schema containing the <type>citext</type> operators must be in the "
+"current <varname>search_path</varname> (typically <literal>public</"
+"literal>); if it is not, the normal case-sensitive <type>text</type> "
+"operators will be invoked instead."
+msgstr ""
+"Схема, содержащая операторы <type>citext</type>, должна находиться в текущем "
+"пути <varname>search_path</varname> (обычно это схема <literal>public</"
+"literal>); в противном случае будут вызываться регистрозависимые операторы "
+"для типа <type>text</type>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:254(title)
+msgid "Author"
+msgstr "Автор"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:256(para)
+msgid "David E. Wheeler <email>david@kineticode.com</email>"
+msgstr "Дэвид Е. Уилер <email>david@kineticode.com</email>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:260(para)
+msgid "Inspired by the original <type>citext</type> module by Donald Fraser."
+msgstr ""
+"Разработку вдохновил оригинальный модуль <type>citext</type> Дональда "
+"Фрейзера."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: citext.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

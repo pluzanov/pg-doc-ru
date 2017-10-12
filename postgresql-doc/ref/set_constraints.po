@@ -1,0 +1,233 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:4(indexterm)
+msgid "<primary>SET CONSTRAINTS</primary>"
+msgstr "<primary>SET CONSTRAINTS</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:9(refentrytitle)
+msgctxt "refentrytitle"
+msgid "SET CONSTRAINTS"
+msgstr "SET CONSTRAINTS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:10(manvolnum)
+msgid "7"
+msgstr "7"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:11(refmiscinfo)
+msgid "SQL - Language Statements"
+msgstr "Операторы языка SQL"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:15(refname)
+msgctxt "refname"
+msgid "SET CONSTRAINTS"
+msgstr "SET CONSTRAINTS"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:16(refpurpose)
+msgid "set constraint check timing for the current transaction"
+msgstr "установить время проверки ограничений для текущей транзакции"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:21(replaceable)
+msgid "name"
+msgstr "имя"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:20(synopsis)
+#, no-wrap
+msgid "SET CONSTRAINTS { ALL | <placeholder-1/> [, ...] } { DEFERRED | IMMEDIATE }"
+msgstr "SET CONSTRAINTS { ALL | <placeholder-1/> [, ...] } { DEFERRED | IMMEDIATE }"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:26(title)
+msgid "Description"
+msgstr "Описание"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:28(para)
+msgid ""
+"<command>SET CONSTRAINTS</command> sets the behavior of constraint checking "
+"within the current transaction. <literal>IMMEDIATE</literal> constraints are "
+"checked at the end of each statement. <literal>DEFERRED</literal> "
+"constraints are not checked until transaction commit. Each constraint has "
+"its own <literal>IMMEDIATE</literal> or <literal>DEFERRED</literal> mode."
+msgstr ""
+"<command>SET CONSTRAINTS</command> определяет, когда будут проверяться "
+"ограничения в текущей транзакции. Ограничения <literal>IMMEDIATE</literal> "
+"проверяются в конце каждого оператора, а ограничения <literal>DEFERRED</"
+"literal> откладываются до фиксации транзакции. Режим <literal>IMMEDIATE</"
+"literal> или <literal>DEFERRED</literal> задаётся для каждого ограничения "
+"независимо."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:37(para)
+msgid ""
+"Upon creation, a constraint is given one of three characteristics: "
+"<literal>DEFERRABLE INITIALLY DEFERRED</literal>, <literal>DEFERRABLE "
+"INITIALLY IMMEDIATE</literal>, or <literal>NOT DEFERRABLE</literal>. The "
+"third class is always <literal>IMMEDIATE</literal> and is not affected by "
+"the <command>SET CONSTRAINTS</command> command. The first two classes start "
+"every transaction in the indicated mode, but their behavior can be changed "
+"within a transaction by <command>SET CONSTRAINTS</command>."
+msgstr ""
+"При создании ограничение получает одну из следующих характеристик: "
+"<literal>DEFERRABLE INITIALLY DEFERRED</literal> (откладываемое, изначально "
+"отложенное), <literal>DEFERRABLE INITIALLY IMMEDIATE</literal> "
+"(откладываемое, изначально немедленное) или <literal>NOT DEFERRABLE</"
+"literal> (неоткладываемое). Третий вариант всегда подразумевает "
+"<literal>IMMEDIATE</literal> и на него команда <command>SET CONSTRAINTS</"
+"command> не влияет. Первые два варианта запускаются в каждой транзакции в "
+"указанном режиме, но их поведение можно изменить в рамках транзакции "
+"командой <command>SET CONSTRAINTS</command>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:48(para)
+msgid ""
+"<command>SET CONSTRAINTS</command> with a list of constraint names changes "
+"the mode of just those constraints (which must all be deferrable). Each "
+"constraint name can be schema-qualified. The current schema search path is "
+"used to find the first matching name if no schema name is specified. "
+"<command>SET CONSTRAINTS ALL</command> changes the mode of all deferrable "
+"constraints."
+msgstr ""
+"<command>SET CONSTRAINTS</command> со списком имён ограничений меняет режим "
+"только этих ограничений (все они должны быть откладываемыми). Имя любого "
+"ограничения можно дополнить схемой. Если имя схемы не указано, в поисках "
+"первого подходящего имени будет просматриваться текущий путь поиска схем. "
+"<command>SET CONSTRAINTS ALL</command> меняет режим всех откладываемых "
+"ограничений."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:57(para)
+msgid ""
+"When <command>SET CONSTRAINTS</command> changes the mode of a constraint "
+"from <literal>DEFERRED</literal> to <literal>IMMEDIATE</literal>, the new "
+"mode takes effect retroactively: any outstanding data modifications that "
+"would have been checked at the end of the transaction are instead checked "
+"during the execution of the <command>SET CONSTRAINTS</command> command. If "
+"any such constraint is violated, the <command>SET CONSTRAINTS</command> "
+"fails (and does not change the constraint mode). Thus, <command>SET "
+"CONSTRAINTS</command> can be used to force checking of constraints to occur "
+"at a specific point in a transaction."
+msgstr ""
+"Когда <command>SET CONSTRAINTS</command> меняет режим ограничения с "
+"<literal>DEFERRED</literal> на <literal>IMMEDIATE</literal>, новый режим "
+"начинает действовать в обратную сторону: все изменения данных, ожидающие "
+"проверки в конце транзакции, вместо этого проверяются в момент выполнения "
+"команды <command>SET CONSTRAINTS</command>. Если какое-либо ограничение "
+"нарушается, при выполнении <command>SET CONSTRAINTS</command> происходит "
+"ошибка (и режим проверки не меняется). Таким образом, с помощью <command>SET "
+"CONSTRAINTS</command> можно принудительно проверить ограничения в "
+"определённом месте транзакции."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:70(para)
+msgid ""
+"Currently, only <literal>UNIQUE</literal>, <literal>PRIMARY KEY</literal>, "
+"<literal>REFERENCES</literal> (foreign key), and <literal>EXCLUDE</literal> "
+"constraints are affected by this setting. <literal>NOT NULL</literal> and "
+"<literal>CHECK</literal> constraints are always checked immediately when a "
+"row is inserted or modified (<emphasis>not</emphasis> at the end of the "
+"statement). Uniqueness and exclusion constraints that have not been declared "
+"<literal>DEFERRABLE</literal> are also checked immediately."
+msgstr ""
+"В настоящее время это распространяется только на ограничения "
+"<literal>UNIQUE</literal>, <literal>PRIMARY KEY</literal>, "
+"<literal>REFERENCES</literal> (внешний ключ) и <literal>EXCLUDE</literal>. "
+"Ограничения <literal>NOT NULL</literal> и <literal>CHECK</literal> всегда "
+"проверяются немедленно в момент добавления или изменения строки "
+"(<emphasis>не</emphasis> в конце оператора). Ограничения уникальности и "
+"ограничения-исключения, объявленные без указания <literal>DEFERRABLE</"
+"literal>, так же проверяются немедленно."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:81(para)
+msgid ""
+"The firing of triggers that are declared as <quote>constraint triggers</"
+"quote> is also controlled by this setting &mdash; they fire at the same time "
+"that the associated constraint should be checked."
+msgstr ""
+"Срабатывание триггеров, объявленных как <quote>триггеры ограничений</quote> "
+"так же зависит от этой команды &mdash; они срабатывают в момент, когда "
+"должно проверяться соответствующее ограничение."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:89(title)
+msgid "Notes"
+msgstr "Замечания"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:91(para)
+msgid ""
+"Because <productname>PostgreSQL</productname> does not require constraint "
+"names to be unique within a schema (but only per-table), it is possible that "
+"there is more than one match for a specified constraint name. In this case "
+"<command>SET CONSTRAINTS</command> will act on all matches. For a non-schema-"
+"qualified name, once a match or matches have been found in some schema in "
+"the search path, schemas appearing later in the path are not searched."
+msgstr ""
+"Так как <productname>PostgreSQL</productname> не требует, чтобы имена "
+"ограничений были уникальны в схеме (достаточно уникальности в таблице), "
+"возможно, что для заданного имени найдётся несколько соответствующих "
+"ограничений. В этом случае <command>SET CONSTRAINTS</command> подействует на "
+"все эти ограничения. Для имён без указания схемы, её действие будет "
+"распространяться только на ограничение(я), найденное в первой из схем; "
+"другие схемы просматриваться не будут."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:101(para)
+msgid ""
+"This command only alters the behavior of constraints within the current "
+"transaction. Issuing this outside of a transaction block emits a warning and "
+"otherwise has no effect."
+msgstr ""
+"Эта команда меняет поведение ограничений только в текущей транзакции. При "
+"выполнении этой команды вне блока транзакции выдаётся предупреждение и "
+"больше ничего не происходит."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:109(title)
+msgid "Compatibility"
+msgstr "Совместимость"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:111(para)
+msgid ""
+"This command complies with the behavior defined in the SQL standard, except "
+"for the limitation that, in <productname>PostgreSQL</productname>, it does "
+"not apply to <literal>NOT NULL</literal> and <literal>CHECK</literal> "
+"constraints. Also, <productname>PostgreSQL</productname> checks non-"
+"deferrable uniqueness constraints immediately, not at end of statement as "
+"the standard would suggest."
+msgstr ""
+"Эта команда реализует поведение, описанное в стандарте SQL, с одним "
+"исключением — в <productname>PostgreSQL</productname> она не влияет на "
+"проверку ограничений <literal>NOT NULL</literal> и <literal>CHECK</literal>. "
+"Кроме того, <productname>PostgreSQL</productname> проверяет неоткладываемые "
+"ограничения уникальности немедленно, а не в конце оператора, как предлагает "
+"стандарт."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: ref/set_constraints.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
