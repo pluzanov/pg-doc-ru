@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -14,14 +14,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:5(title)
 msgid "lo"
 msgstr "lo"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:7(indexterm)
 msgid "<primary>lo</primary>"
 msgstr "<primary>lo</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:11(para)
 msgid ""
 "The <filename>lo</filename> module provides support for managing Large "
@@ -32,10 +35,12 @@ msgstr ""
 "(БО или LO, Large Objects, иногда BLOB, Binary Large OBjects). Он реализует "
 "тип данных <type>lo</type> и триггер <function>lo_manage</function>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:18(title)
 msgid "Rationale"
 msgstr "Обоснование"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:20(para)
 msgid ""
 "One of the problems with the JDBC driver (and this affects the ODBC driver "
@@ -47,6 +52,7 @@ msgstr ""
 "том, что спецификация типа предполагает, что ссылки на BLOB хранятся в "
 "таблице, и если запись меняется, связанный BLOB удаляется из базы."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:27(para)
 msgid ""
 "As <productname>PostgreSQL</productname> stands, this doesn't occur. Large "
@@ -61,6 +67,7 @@ msgstr ""
 "могут ссылаться несколько записей таблицы, так что система не удаляет "
 "большой объект, только потому что вы меняете или удаляете такую запись."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:35(para)
 msgid ""
 "Now this is fine for <productname>PostgreSQL</productname>-specific "
@@ -73,6 +80,7 @@ msgstr ""
 "удалять эти объекты, в результате чего они окажутся потерянными &mdash; "
 "объектами, которые никак не задействованы, а просто занимают место на диске."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:42(para)
 msgid ""
 "The <filename>lo</filename> module allows fixing this by attaching a trigger "
@@ -89,6 +97,7 @@ msgstr ""
 "триггер предполагает, что на любой большой объект, на который ссылается "
 "контролируемый им столбец, указывает только одна ссылка!"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:51(para)
 msgid ""
 "The module also provides a data type <type>lo</type>, which is really just a "
@@ -109,14 +118,17 @@ msgstr ""
 "триггер. Кроме того, поступали сообщения, что драйвер ODBC не работает "
 "корректно, если для столбцов BLOB используется не тип <type>lo</type>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:64(title)
 msgid "How to Use It"
 msgstr "Как его использовать"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:66(para)
 msgid "Here's a simple example of usage:"
 msgstr "Пример его использования:"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:70(programlisting)
 #, no-wrap
 msgid ""
@@ -130,6 +142,7 @@ msgstr ""
 "CREATE TRIGGER t_raster BEFORE UPDATE OR DELETE ON image\n"
 "    FOR EACH ROW EXECUTE PROCEDURE lo_manage(raster);"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:77(para)
 msgid ""
 "For each column that will contain unique references to large objects, create "
@@ -150,10 +163,12 @@ msgstr ""
 "столбцов <type>lo</type>, создайте отдельный триггер для каждого (при этом "
 "обязательно нужно дать всем триггерам в одной таблице разные имена)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:90(title)
 msgid "Limitations"
 msgstr "Ограничения"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:94(para)
 msgid ""
 "Dropping a table will still orphan any objects it contains, as the trigger "
@@ -166,10 +181,12 @@ msgstr ""
 "выполнив перед <command>DROP TABLE</command> команду <command>DELETE FROM "
 "<replaceable>таблица</replaceable></command>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:100(para)
 msgid "<command>TRUNCATE</command> has the same hazard."
 msgstr "То же касается и команды <command>TRUNCATE</command>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:104(para)
 msgid ""
 "If you already have, or suspect you have, orphaned large objects, see the "
@@ -183,6 +200,7 @@ msgstr ""
 "<application>vacuumlo</application> в качестве меры, дополняющей действие "
 "триггера <function>lo_manage</function>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:113(para)
 msgid ""
 "Some frontends may create their own tables, and will not create the "
@@ -193,15 +211,18 @@ msgstr ""
 "создавать для них соответствующие триггеры. Кроме того, и пользователи могут "
 "не создавать такие триггеры (забывая о них, либо не зная, как это сделать)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:123(title)
 msgid "Author"
 msgstr "Автор"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:125(para)
 msgid "Peter Mount <email>peter@retep.org.uk</email>"
 msgstr "Питер Маунт <email>peter@retep.org.uk</email>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
 #: lo.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"

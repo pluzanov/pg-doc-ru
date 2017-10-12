@@ -1,10 +1,11 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-06-22 23:27+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -14,32 +15,39 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:8(indexterm)
 msgid "<primary>pg_rewind</primary>"
 msgstr "<primary>pg_rewind</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:13(application)
 msgctxt "application"
 msgid "pg_rewind"
 msgstr "pg_rewind"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:14(manvolnum)
 msgid "1"
 msgstr "1"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:15(refmiscinfo)
 msgid "Application"
 msgstr "Приложение"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:19(refname)
 msgctxt "refname"
 msgid "pg_rewind"
 msgstr "pg_rewind"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:20(productname)
 msgid "PostgreSQL"
 msgstr "PostgreSQL"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:20(refpurpose)
 msgid ""
 "synchronize a <placeholder-1/> data directory with another data directory "
@@ -48,45 +56,55 @@ msgstr ""
 "синхронизировать каталог данных <placeholder-1/> с другим каталогом, "
 "ответвлённым от него"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:25(command)
 msgctxt "command"
 msgid "pg_rewind"
 msgstr "pg_rewind"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:26(replaceable)
 msgid "option"
 msgstr "параметр"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:29(option)
 msgid "-D"
 msgstr "-D"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:30(option)
 msgid "--target-pgdata"
 msgstr "--target-pgdata"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:32(replaceable) ref/pg_rewind.xml:34(replaceable)
 #: ref/pg_rewind.xml:110(replaceable) ref/pg_rewind.xml:111(replaceable)
 #: ref/pg_rewind.xml:122(replaceable)
 msgid "directory"
 msgstr "каталог"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:34(option) ref/pg_rewind.xml:122(option)
 msgid "--source-pgdata=<placeholder-1/>"
 msgstr "--source-pgdata=<placeholder-1/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:35(replaceable) ref/pg_rewind.xml:133(replaceable)
 msgid "connstr"
 msgstr "строка_подключения"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:35(option) ref/pg_rewind.xml:133(option)
 msgid "--source-server=<placeholder-1/>"
 msgstr "--source-server=<placeholder-1/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:42(title)
 msgid "Description"
 msgstr "Описание"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:44(para)
 msgid ""
 "<application>pg_rewind</application> is a tool for synchronizing a "
@@ -101,6 +119,7 @@ msgstr ""
 "— вернуть в работу старый главный сервер после переключения на резервный, в "
 "качестве резервного для сервера, ставшего главным."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:51(para)
 msgid ""
 "The result is equivalent to replacing the target data directory with the "
@@ -122,6 +141,41 @@ msgstr ""
 "большая, но различия между кластерами ограничиваются лишь небольшим "
 "количеством блоков."
 
+#. +> REL_10
+#: ref/pg_rewind.xml:62(para)
+msgid ""
+"<application>pg_rewind</application> examines the timeline histories of the "
+"source and target clusters to determine the point where they diverged, and "
+"expects to find WAL in the target cluster's <filename>pg_wal</filename> "
+"directory reaching all the way back to the point of divergence. The point of "
+"divergence can be found either on the target timeline, the source timeline, "
+"or their common ancestor. In the typical failover scenario where the target "
+"cluster was shut down soon after the divergence, this is not a problem, but "
+"if the target cluster ran for a long time after the divergence, the old WAL "
+"files might no longer be present. In that case, they can be manually copied "
+"from the WAL archive to the <filename>pg_wal</filename> directory, or "
+"fetched on startup by configuring <filename>recovery.conf</filename>. The "
+"use of <application>pg_rewind</application> is not limited to failover, e.g. "
+"a standby server can be promoted, run some write transactions, and then "
+"rewinded to become a standby again."
+msgstr ""
+"Утилита <application>pg_rewind</application> изучает истории линий времени "
+"исходного и целевого кластеров с целью найти точку, в которой они разошлись, "
+"и ожидает найти журналы WAL в каталоге <filename>pg_wal</filename> целевого "
+"кластера вплоть до точки расхождения. Точка расхождения может быть найдена "
+"на целевой или исходной линии времени либо в их общем предке. В типичном "
+"сценарии отработки отказа, когда целевой кластер отключается вскоре после "
+"расхождения, это не проблема, но если целевой кластер проработал долгое "
+"время после расхождения, старые файлы WAL могут быть уже удалены. В этом "
+"случае их можно вручную скопировать из архива WAL в каталог "
+"<filename>pg_wal</filename> либо считать при запуске, настроив "
+"<filename>recovery.conf</filename>. Варианты использования "
+"<application>pg_rewind</application> не ограничиваются отработкой отказа; "
+"например, резервный сервер может быть повышен, выполнить несколько "
+"транзакций с записью, а затем, после восстановления синхронизации, вновь "
+"стать резервным."
+
+#. +> REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:62(para)
 msgid ""
 "<application>pg_rewind</application> examines the timeline histories of the "
@@ -148,13 +202,14 @@ msgstr ""
 "расхождения, это не проблема, но если целевой кластер проработал долгое "
 "время после расхождения, старые файлы WAL могут быть уже удалены. В этом "
 "случае их можно вручную скопировать из архива WAL в каталог "
-"<filename>pg_xlog</filename>, либо считать при запуске, настроив "
+"<filename>pg_xlog</filename> либо считать при запуске, настроив "
 "<filename>recovery.conf</filename>. Варианты использования "
 "<application>pg_rewind</application> не ограничиваются отработкой отказа; "
 "например, резервный сервер может быть повышен, выполнить несколько "
 "транзакций с записью, а затем, после восстановления синхронизации, вновь "
 "стать резервным."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:79(para)
 msgid ""
 "When the target server is started for the first time after running "
@@ -177,6 +232,7 @@ msgstr ""
 "Это можно сделать, создав в целевом каталоге данных файл <filename>recovery."
 "conf</filename> с подходящей командой <varname>restore_command</varname>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:91(para)
 msgid ""
 "<application>pg_rewind</application> requires that the target server either "
@@ -193,18 +249,22 @@ msgstr ""
 "эти режима по умолчанию отключены. Также должен быть включён режим <xref "
 "linkend=\"guc-full-page-writes\"/>, но он по умолчанию включён."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:102(title)
 msgid "Options"
 msgstr "Параметры"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:110(option)
 msgid "-D <placeholder-1/>"
 msgstr "-D <placeholder-1/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:111(option)
 msgid "--target-pgdata=<placeholder-1/>"
 msgstr "--target-pgdata=<placeholder-1/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:113(para)
 msgid ""
 "This option specifies the target data directory that is synchronized with "
@@ -215,6 +275,7 @@ msgstr ""
 "источником. Целевой сервер должен быть отключён штатным образом до запуска "
 "<application>pg_rewind</application>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:124(para)
 msgid ""
 "Specifies the file system path to the data directory of the source server to "
@@ -225,6 +286,7 @@ msgstr ""
 "которым будет синхронизироваться целевой. Для применения этого ключа "
 "исходный сервер должен быть остановлен штатным образом."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:135(para)
 msgid ""
 "Specifies a libpq connection string to connect to the source "
@@ -239,26 +301,32 @@ msgstr ""
 "правами суперпользователя. Для применения этого параметра исходный сервер "
 "должен быть запущен и работать не в режиме восстановления."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:146(option)
 msgid "-n"
 msgstr "-n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:147(option)
 msgid "--dry-run"
 msgstr "--dry-run"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:149(para)
 msgid "Do everything except actually modifying the target directory."
 msgstr "Делать всё, кроме внесения изменений в целевой каталог."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:156(option)
 msgid "-P"
 msgstr "-P"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:157(option)
 msgid "--progress"
 msgstr "--progress"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:159(para)
 msgid ""
 "Enables progress reporting. Turning this on will deliver an approximate "
@@ -267,10 +335,12 @@ msgstr ""
 "Включает вывод сообщений о прогрессе. При этом в процессе копирования данных "
 "из исходного кластера будет выдаваться приблизительный процент выполнения."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:167(option)
 msgid "--debug"
 msgstr "--debug"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:169(para)
 msgid ""
 "Print verbose debugging output that is mostly useful for developers "
@@ -279,30 +349,37 @@ msgstr ""
 "Выводить подробные отладочные сообщения, полезные в основном для "
 "разработчиков, отлаживающих <application>pg_rewind</application>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:177(option)
 msgid "-V"
 msgstr "-V"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:178(option)
 msgid "--version"
 msgstr "--version"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:179(para)
 msgid "Display version information, then exit."
 msgstr "Показать версию, а затем завершиться."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:183(option)
 msgid "-?"
 msgstr "-?"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:184(option)
 msgid "--help"
 msgstr "--help"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:185(para)
 msgid "Show help, then exit."
 msgstr "Показать справку, а затем завершиться."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:104(para)
 msgid ""
 "<application>pg_rewind</application> accepts the following command-line "
@@ -311,10 +388,12 @@ msgstr ""
 "<application>pg_rewind</application> принимает следующие аргументы командной "
 "строки: <placeholder-1/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:193(title)
 msgid "Environment"
 msgstr "Переменные окружения"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:195(para)
 msgid ""
 "When <option>--source-server</option> option is used, "
@@ -327,14 +406,17 @@ msgstr ""
 "<application>libpq</application> (см. <xref remap=\"4\" linkend=\"libpq-"
 "envars\"/>)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:203(title)
 msgid "Notes"
 msgstr "Замечания"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:206(title)
 msgid "How it works"
 msgstr "Как это работает"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:208(para)
 msgid ""
 "The basic idea is to copy all file system-level changes from the source "
@@ -343,6 +425,7 @@ msgstr ""
 "Основная идея состоит в том, чтобы перенести все изменения на уровне "
 "файловой системы из исходного кластера в целевой:"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:215(para)
 msgid ""
 "Scan the WAL log of the target cluster, starting from the last checkpoint "
@@ -358,6 +441,7 @@ msgstr ""
 "блоков данных, которые были изменены в целевом кластере после отделения "
 "исходного."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:225(para)
 msgid ""
 "Copy all those changed blocks from the source cluster to the target cluster, "
@@ -368,6 +452,18 @@ msgstr ""
 "уровне файловой системы (<option>--source-pgdata</option>), либо на уровне "
 "SQL (<option>--source-server</option>)."
 
+#. +> REL_10
+#: ref/pg_rewind.xml:232(para)
+msgid ""
+"Copy all other files such as <filename>pg_xact</filename> and configuration "
+"files from the source cluster to the target cluster (everything except the "
+"relation files)."
+msgstr ""
+"Скопировать все остальные файлы, в частности <filename>pg_xact</filename> и "
+"файлы конфигурации, из исходного кластера в целевой (пропуская при этом "
+"файлы отношений)."
+
+#. +> REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:232(para)
 msgid ""
 "Copy all other files such as <filename>pg_clog</filename> and configuration "
@@ -378,6 +474,7 @@ msgstr ""
 "файлы конфигурации, из исходного кластера в целевой (пропуская при этом "
 "файлы отношений)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:239(para)
 msgid ""
 "Apply the WAL from the source cluster, starting from the checkpoint created "
@@ -393,6 +490,7 @@ msgstr ""
 "воспроизведение всех записей WAL от этой контрольной точки.)"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
 #: ref/pg_rewind.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"

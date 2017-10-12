@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-09 16:00+0300\n"
-"PO-Revision-Date: 2017-05-12 10:55+0300\n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-08-04 13:57+0300\n"
 "Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -15,10 +15,12 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:5(title)
 msgid "How the Planner Uses Statistics"
 msgstr "Как планировщик использует статистику"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:7(para)
 msgid ""
 "This chapter builds on the material covered in <xref linkend=\"using-explain"
@@ -34,6 +36,7 @@ msgstr ""
 "запроса. Это важная составляющая процесса создания плана запроса, "
 "предоставляющая большую часть исходного материала для расчёта стоимости."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:16(para)
 msgid ""
 "The intent of this chapter is not to document the code in detail, but to "
@@ -44,16 +47,19 @@ msgstr ""
 "описание его работы. Возможно, это поможет тем, кто пожелает в дальнейшем "
 "ознакомиться с кодом."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:24(title)
 msgid "Row Estimation Examples"
 msgstr "Примеры оценки количества строк"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:26(indexterm)
 msgid "<primary>row estimation</primary> <secondary>planner</secondary>"
 msgstr ""
 "<primary>Оценка количества строк</primary> <secondary> планировщик</"
 "secondary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:31(para)
 msgid ""
 "The examples shown below use tables in the <productname>PostgreSQL</"
@@ -71,6 +77,7 @@ msgstr ""
 "нового выполнения команды <command>ANALYZE</command> результаты "
 "незначительно изменятся."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:44(programlisting)
 #, no-wrap
 msgid ""
@@ -86,6 +93,7 @@ msgstr ""
 "-------------------------------------------------------------\n"
 " Seq Scan on tenk1  (cost=0.00..458.00 rows=10000 width=244)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:57(programlisting)
 #, no-wrap
 msgid ""
@@ -101,6 +109,7 @@ msgstr ""
 "----------+-----------\n"
 "      358 |     10000"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:41(para)
 msgid ""
 "Let's start with a very simple query: <placeholder-1/> How the planner "
@@ -132,6 +141,7 @@ msgstr ""
 "значение <structfield>relpages</structfield> является актуальным, поэтому "
 "количество строк берётся равным <structfield>reltuples</structfield>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:80(programlisting)
 #, no-wrap
 msgid ""
@@ -153,6 +163,7 @@ msgstr ""
 "   -&gt;  Bitmap Index Scan on tenk1_unique1  (cost=0.00..23.80 rows=1007 width=0)\n"
 "         Index Cond: (unique1 &lt; 1000)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:102(programlisting)
 #, no-wrap
 msgid ""
@@ -170,6 +181,7 @@ msgstr ""
 "------------------------------------------------------\n"
 " {0,993,1997,3050,4040,5036,5957,7057,8029,9016,9995}"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:119(programlisting)
 #, no-wrap
 msgid ""
@@ -181,6 +193,7 @@ msgstr ""
 "            = (1 + (1000 - 993)/(1997 - 993))/10\n"
 "            = 0.100697"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:130(programlisting)
 #, no-wrap
 msgid ""
@@ -192,6 +205,54 @@ msgstr ""
 "     = 10000 * 0.100697\n"
 "     = 1007  (округлённо)"
 
+#. +> REL_10
+#: planstats.xml:76(para)
+msgid ""
+"Let's move on to an example with a range condition in its <literal>WHERE</"
+"literal> clause: <placeholder-1/> The planner examines the <literal>WHERE</"
+"literal> clause condition and looks up the selectivity function for the "
+"operator <literal>&lt;</literal> in <structname>pg_operator</structname>. "
+"This is held in the column <structfield>oprrest</structfield>, and the entry "
+"in this case is <function>scalarltsel</function>. The <function>scalarltsel</"
+"function> function retrieves the histogram for <structfield>unique1</"
+"structfield> from <structname>pg_statistic</structname>. For manual queries "
+"it is more convenient to look in the simpler <structname>pg_stats</"
+"structname> view: <placeholder-2/> Next the fraction of the histogram "
+"occupied by <quote>&lt; 1000</quote> is worked out. This is the selectivity. "
+"The histogram divides the range into equal frequency buckets, so all we have "
+"to do is locate the bucket that our value is in and count <emphasis>part</"
+"emphasis> of it and <emphasis>all</emphasis> of the ones before. The value "
+"1000 is clearly in the second bucket (993-1997). Assuming a linear "
+"distribution of values inside each bucket, we can calculate the selectivity "
+"as: <placeholder-3/> that is, one whole bucket plus a linear fraction of the "
+"second, divided by the number of buckets. The estimated number of rows can "
+"now be calculated as the product of the selectivity and the cardinality of "
+"<structname>tenk1</structname>: <placeholder-4/>"
+msgstr ""
+"Давайте обратимся к примеру с диапазонным условием в предложении "
+"<literal>WHERE</literal>: <placeholder-1/> Планировщик рассматривает условие "
+"предложения <literal>WHERE</literal> и находит в справочнике функцию "
+"избирательности для оператора <literal>&lt;</literal> в "
+"<structname>pg_operator</structname>. Это значение содержится в столбце "
+"<structfield>oprrest</structfield>, и в данном случае значением является "
+"<function>scalarltsel</function>. Функция <function>scalarltsel</function> "
+"извлекает гистограмму для <structfield>unique1</structfield> из "
+"<structname>pg_statistic</structname>. Для вводимых вручную запросов удобнее "
+"просматривать более простое представление <structname>pg_stats</structname>: "
+"<placeholder-2/> Затем обрабатывается часть гистограммы, которая "
+"соответствует условию <quote>&lt; 1000</quote>. Таким образом и определяется "
+"избирательность. Гистограмма делит диапазон на равные частотные группы, "
+"поэтому нужно лишь определить группу, содержащую наше значение, и подсчитать "
+"её <emphasis> долю </emphasis> и <emphasis> долю групп</emphasis>, "
+"предшествующих данной. Очевидно, что значение 1000 находится во второй "
+"группе (993-1997). Если предположить, что внутри каждой группы распределение "
+"значений линейное, мы можем вычислить избирательность следующим образом: "
+"<placeholder-3/> т. е. сумма элементов одной целой группы и пропорциональной "
+"части элементов второй, делённая на число групп. Теперь примерное число "
+"строк может быть рассчитано как произведение избирательности и мощности "
+"<structname>tenk1</structname>: <placeholder-4/>"
+
+#. +> REL9_6_3 REL9_6
 #: planstats.xml:76(para)
 msgid ""
 "Let's move on to an example with a range condition in its <literal>WHERE</"
@@ -238,6 +299,7 @@ msgstr ""
 "примерное число строк может быть рассчитано как произведение избирательности "
 "и мощности <structname>tenk1</structname>: <placeholder-4/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:141(programlisting)
 #, no-wrap
 msgid ""
@@ -255,6 +317,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=30 width=244)\n"
 "   Filter: (stringu1 = 'CRAAAA'::name)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:158(programlisting)
 #, no-wrap
 msgid ""
@@ -274,6 +337,7 @@ msgstr ""
 "most_common_vals  | {EJAAAA,BBAAAA,CRAAAA,FCAAAA,FEAAAA,GSAAAA,JOAAAA,MCAAAA,NAAAAA,WGAAAA}\n"
 "most_common_freqs | {0.00333333,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003}"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:173(programlisting)
 #, no-wrap
 msgid ""
@@ -283,6 +347,7 @@ msgstr ""
 "selectivity = mcf[3]\n"
 "            = 0.003"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:181(programlisting)
 #, no-wrap
 msgid ""
@@ -292,6 +357,7 @@ msgstr ""
 "rows = 10000 * 0.003\n"
 "     = 30"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:137(para)
 msgid ""
 "Next let's consider an example with an equality condition in its "
@@ -323,6 +389,7 @@ msgstr ""
 "Как и в предыдущем примере, оценка числа строк берётся как произведение "
 "мощности и избирательности <structname>tenk1</structname>: <placeholder-4/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:191(programlisting)
 #, no-wrap
 msgid ""
@@ -340,6 +407,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=15 width=244)\n"
 "   Filter: (stringu1 = 'xxx'::name)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:206(programlisting)
 #, no-wrap
 msgid ""
@@ -353,6 +421,7 @@ msgstr ""
 "                    0.003 + 0.003 + 0.003 + 0.003))/(676 - 10)\n"
 "            = 0.0014559"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:222(programlisting)
 #, no-wrap
 msgid ""
@@ -362,6 +431,7 @@ msgstr ""
 "rows = 10000 * 0.0014559\n"
 "     = 15  (округлённо)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:187(para)
 msgid ""
 "Now consider the same query, but with a constant that is not in the "
@@ -394,6 +464,7 @@ msgstr ""
 "числителя). Оценка числа строк затем производится как обычно: <placeholder-3/"
 ">"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:248(programlisting)
 #, no-wrap
 msgid ""
@@ -411,6 +482,7 @@ msgstr ""
 " Seq Scan on tenk1  (cost=0.00..483.00 rows=3077 width=244)\n"
 "   Filter: (stringu1 &lt; 'IAAAAA'::name)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:260(programlisting)
 #, no-wrap
 msgid ""
@@ -428,6 +500,7 @@ msgstr ""
 "--------------------------------------------------------------------------------\n"
 " {AAAAAA,CQAAAA,FRAAAA,IBAAAA,KRAAAA,NFAAAA,PSAAAA,SGAAAA,VAAAAA,XLAAAA,ZZAAAA}"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:273(programlisting)
 #, no-wrap
 msgid ""
@@ -439,6 +512,7 @@ msgstr ""
 "            = 0.00333333 + 0.003 + 0.003 + 0.003 + 0.003 + 0.003\n"
 "            = 0.01833333"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:290(programlisting)
 #, no-wrap
 msgid ""
@@ -456,6 +530,7 @@ msgstr ""
 "rows        = 10000 * 0.307669\n"
 "            = 3077  (округлённо)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:228(para)
 msgid ""
 "The previous example with <literal>unique1 &lt; 1000</literal> was an "
@@ -537,6 +612,7 @@ msgstr ""
 "точность вследствие точного определения избирательности наиболее "
 "распространённых значений."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:312(programlisting)
 #, no-wrap
 msgid ""
@@ -560,6 +636,7 @@ msgstr ""
 "   -&gt;  Bitmap Index Scan on tenk1_unique1  (cost=0.00..23.80 rows=1007 width=0)\n"
 "         Index Cond: (unique1 &lt; 1000)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:327(programlisting)
 #, no-wrap
 msgid ""
@@ -577,6 +654,7 @@ msgstr ""
 "rows        = 10000 * 0.0001466\n"
 "            = 1  (округлённо)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:308(para)
 msgid ""
 "Now let's consider a case with more than one condition in the "
@@ -595,6 +673,7 @@ msgstr ""
 "условию, используемому при работе индекса; это важно, так как влияет на "
 "оценку стоимости для последующих выборок из таблицы."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:345(programlisting)
 #, no-wrap
 msgid ""
@@ -624,6 +703,7 @@ msgstr ""
 "   -&gt;  Index Scan using tenk2_unique2 on tenk2 t2  (cost=0.00..6.27 rows=1 width=244)\n"
 "         Index Cond: (unique2 = t1.unique2)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:367(programlisting)
 #, no-wrap
 msgid ""
@@ -641,6 +721,7 @@ msgstr ""
 "rows        = 10000 * 0.005035\n"
 "            = 50  (округлённо)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:384(programlisting)
 #, no-wrap
 msgid ""
@@ -660,6 +741,7 @@ msgstr ""
 " tenk1     |         0 |         -1 |\n"
 " tenk2     |         0 |         -1 |"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:399(programlisting)
 #, no-wrap
 msgid ""
@@ -671,6 +753,7 @@ msgstr ""
 "            = (1 - 0) * (1 - 0) / max(10000, 10000)\n"
 "            = 0.0001"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:412(programlisting)
 #, no-wrap
 msgid ""
@@ -682,6 +765,7 @@ msgstr ""
 "     = (50 * 10000) * 0.0001\n"
 "     = 50"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:342(para)
 msgid ""
 "Finally we will examine a query that involves a join: <placeholder-1/> The "
@@ -728,6 +812,7 @@ msgstr ""
 "произведения двух входных значений, умноженная на избирательность: "
 "<placeholder-5/>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:419(para)
 msgid ""
 "Had there been MCV lists for the two columns, <function>eqjoinsel</function> "
@@ -742,6 +827,7 @@ msgstr ""
 "MCV. Оценка остальной части данных при этом выполнялась бы представленным "
 "выше способом."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:427(para)
 msgid ""
 "Notice that we showed <literal>inner_cardinality</literal> as 10000, that "
@@ -766,6 +852,7 @@ msgstr ""
 "размера должны давать один и тот же ответ, но из-за ошибок округления и "
 "других факторов иногда они значительно различаются."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:440(para)
 msgid ""
 "For those interested in further details, estimation of the size of a table "
@@ -783,11 +870,271 @@ msgstr ""
 "операторов функции избирательности, в основном, расположены в <filename>src/"
 "backend/utils/adt/selfuncs.c</filename>."
 
-#: planstats.xml:453(title)
+#. +> REL_10
+#: planstats.xml:452(title)
+msgid "Multivariate Statistics Examples"
+msgstr "Примеры многовариантной статистики"
+
+#. +> REL_10
+#: planstats.xml:454(indexterm)
+msgid "<primary>row estimation</primary> <secondary>multivariate</secondary>"
+msgstr ""
+"<primary>оценка числа строк</primary> <secondary>многовариантная</secondary>"
+
+#. +> REL_10
+#: planstats.xml:460(title)
+msgid "Functional Dependencies"
+msgstr "Функциональные зависимости"
+
+#. +> REL_10
+#: planstats.xml:466(programlisting)
+#, no-wrap
+msgid ""
+"CREATE TABLE t (a INT, b INT);\n"
+"INSERT INTO t SELECT i % 100, i % 100 FROM generate_series(1, 10000) s(i);\n"
+"ANALYZE t;"
+msgstr ""
+"CREATE TABLE t (a INT, b INT);\n"
+"INSERT INTO t SELECT i % 100, i % 100 FROM generate_series(1, 10000) s(i);\n"
+"ANALYZE t;"
+
+#. +> REL_10
+#: planstats.xml:476(programlisting)
+#, no-wrap
+msgid ""
+"SELECT relpages, reltuples FROM pg_class WHERE relname = 't';\n"
+"\n"
+" relpages | reltuples\n"
+"----------+-----------\n"
+"       45 |     10000"
+msgstr ""
+"SELECT relpages, reltuples FROM pg_class WHERE relname = 't';\n"
+"\n"
+" relpages | reltuples\n"
+"----------+-----------\n"
+"       45 |     10000"
+
+#. +> REL_10
+#: planstats.xml:462(para)
+msgid ""
+"Multivariate correlation can be demonstrated with a very simple data set "
+"&mdash; a table with two columns, both containing the same values: "
+"<placeholder-1/> As explained in <xref linkend=\"planner-stats\"/>, the "
+"planner can determine cardinality of <structname>t</structname> using the "
+"number of pages and rows obtained from <structname>pg_class</structname>: "
+"<placeholder-2/> The data distribution is very simple; there are only 100 "
+"distinct values in each column, uniformly distributed."
+msgstr ""
+"Многовариантную корреляцию можно продемонстрировать на очень простом наборе "
+"данных &mdash; таблице с двумя столбцами, содержащими одинаковые значения: "
+"<placeholder-1/> Как рассказывается в <xref remap=\"6\" linkend=\"planner-"
+"stats\"/>, планировщик может определить мощность <structname>t</structname>, "
+"исходя из числа страниц и строк, полученного из <structname>pg_class</"
+"structname>: <placeholder-2/> Распределение данных очень простое: в каждом "
+"столбце содержится всего 100 различных значений, равномерно распределённых."
+
+#. +> REL_10
+#: planstats.xml:492(programlisting)
+#, no-wrap
+msgid ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1;\n"
+"                                 QUERY PLAN                                  \n"
+"-------------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..170.00 rows=100 width=8) (actual rows=100 loops=1)\n"
+"   Filter: (a = 1)\n"
+"   Rows Removed by Filter: 9900"
+msgstr ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1;\n"
+"                                 QUERY PLAN                                  \n"
+"-------------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..170.00 rows=100 width=8) (actual rows=100 loops=1)\n"
+"   Filter: (a = 1)\n"
+"   Rows Removed by Filter: 9900"
+
+#. +> REL_10
+#: planstats.xml:509(programlisting)
+#, no-wrap
+msgid ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1 AND b = 1;\n"
+"                                 QUERY PLAN                                  \n"
+"-----------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..195.00 rows=1 width=8) (actual rows=100 loops=1)\n"
+"   Filter: ((a = 1) AND (b = 1))\n"
+"   Rows Removed by Filter: 9900"
+msgstr ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1 AND b = 1;\n"
+"                                 QUERY PLAN                                  \n"
+"-----------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..195.00 rows=1 width=8) (actual rows=100 loops=1)\n"
+"   Filter: ((a = 1) AND (b = 1))\n"
+"   Rows Removed by Filter: 9900"
+
+#. +> REL_10
+#: planstats.xml:488(para)
+msgid ""
+"The following example shows the result of estimating a <literal>WHERE</"
+"literal> condition on the <structfield>a</structfield> column: "
+"<placeholder-1/> The planner examines the condition and determines the "
+"selectivity of this clause to be 1%. By comparing this estimate and the "
+"actual number of rows, we see that the estimate is very accurate (in fact "
+"exact, as the table is very small). Changing the <literal>WHERE</literal> "
+"condition to use the <structfield>b</structfield> column, an identical plan "
+"is generated. But observe what happens if we apply the same condition on "
+"both columns, combining them with <literal>AND</literal>: <placeholder-2/> "
+"The planner estimates the selectivity for each condition individually, "
+"arriving at the same 1% estimates as above. Then it assumes that the "
+"conditions are independent, and so it multiplies their selectivities, "
+"producing a final selectivity estimate of just 0.01%. This is a significant "
+"underestimate, as the actual number of rows matching the conditions (100) is "
+"two orders of magnitude higher."
+msgstr ""
+"Следующий пример показывает результат оценивания условия <literal>WHERE</"
+"literal> по столбцу <structfield>a</structfield>: <placeholder-1/> "
+"Планировщик рассматривает условие и определяет, что его избирательность "
+"равна 1%. Сравнивая эту оценку и фактическое число строк, мы видим, что "
+"оценка очень точна (на самом деле абсолютна точна, так как таблица очень "
+"маленькая). Если изменить условие <literal>WHERE</literal>, чтобы "
+"использовался столбец <structfield>b</structfield>, будет получен такой же "
+"план. Но посмотрите, что получится, если мы применим одинаковое условие к "
+"двум столбцам, объединив их оператором <literal>AND</literal>: "
+"<placeholder-2/> Планировщик оценивает избирательность каждого условия "
+"индивидуально, и получает ту же оценку в 1%, что и выше. Затем он "
+"предполагает, что условия независимы, так что он перемножает избирательности "
+"и выдаёт окончательную оценку избирательности, равную всего 0.01%. Это "
+"значительная недооценка, так как фактическое число строк, соответствующих "
+"условию, (100) на два порядка больше."
+
+#. +> REL_10
+#: planstats.xml:531(programlisting)
+#, no-wrap
+msgid ""
+"CREATE STATISTICS stts (dependencies) ON a, b FROM t;\n"
+"ANALYZE t;\n"
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1 AND b = 1;\n"
+"                                  QUERY PLAN                                   \n"
+"-------------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..195.00 rows=100 width=8) (actual rows=100 loops=1)\n"
+"   Filter: ((a = 1) AND (b = 1))\n"
+"   Rows Removed by Filter: 9900"
+msgstr ""
+"CREATE STATISTICS stts (dependencies) ON a, b FROM t;\n"
+"ANALYZE t;\n"
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT * FROM t WHERE a = 1 AND b = 1;\n"
+"                                  QUERY PLAN                                   \n"
+"-------------------------------------------------------------------------------\n"
+" Seq Scan on t  (cost=0.00..195.00 rows=100 width=8) (actual rows=100 loops=1)\n"
+"   Filter: ((a = 1) AND (b = 1))\n"
+"   Rows Removed by Filter: 9900"
+
+#. +> REL_10
+#: planstats.xml:526(para)
+msgid ""
+"This problem can be fixed by creating a statistics object that directs "
+"<command>ANALYZE</command> to calculate functional-dependency multivariate "
+"statistics on the two columns: <placeholder-1/>"
+msgstr ""
+"Эту проблему можно решить, создав объект статистики, который укажет команде "
+"<command>ANALYZE</command> вычислить многовариантную статистику "
+"функциональной зависимости по двум столбцам: <placeholder-1/>"
+
+#. +> REL_10
+#: planstats.xml:545(title)
+msgid "Multivariate N-Distinct Counts"
+msgstr "Многовариантное число различных значений"
+
+#. +> REL_10
+#: planstats.xml:554(programlisting)
+#, no-wrap
+msgid ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a;\n"
+"                                       QUERY PLAN                                        \n"
+"-----------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=195.00..196.00 rows=100 width=12) (actual rows=100 loops=1)\n"
+"   Group Key: a\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=4) (actual rows=10000 loops=1)"
+msgstr ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a;\n"
+"                                       QUERY PLAN                                        \n"
+"-----------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=195.00..196.00 rows=100 width=12) (actual rows=100 loops=1)\n"
+"   Group Key: a\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=4) (actual rows=10000 loops=1)"
+
+#. +> REL_10
+#: planstats.xml:565(programlisting)
+#, no-wrap
+msgid ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a, b;\n"
+"                                       QUERY PLAN                                        \n"
+"--------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=220.00..230.00 rows=1000 width=16) (actual rows=100 loops=1)\n"
+"   Group Key: a, b\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=8) (actual rows=10000 loops=1)"
+msgstr ""
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a, b;\n"
+"                                       QUERY PLAN                                        \n"
+"--------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=220.00..230.00 rows=1000 width=16) (actual rows=100 loops=1)\n"
+"   Group Key: a, b\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=8) (actual rows=10000 loops=1)"
+
+#. +> REL_10
+#: planstats.xml:575(programlisting)
+#, no-wrap
+msgid ""
+"DROP STATISTICS stts;\n"
+"CREATE STATISTICS stts (dependencies, ndistinct) ON a, b FROM t;\n"
+"ANALYZE t;\n"
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a, b;\n"
+"                                       QUERY PLAN                                        \n"
+"--------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=220.00..221.00 rows=100 width=16) (actual rows=100 loops=1)\n"
+"   Group Key: a, b\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=8) (actual rows=10000 loops=1)"
+msgstr ""
+"DROP STATISTICS stts;\n"
+"CREATE STATISTICS stts (dependencies, ndistinct) ON a, b FROM t;\n"
+"ANALYZE t;\n"
+"EXPLAIN (ANALYZE, TIMING OFF) SELECT COUNT(*) FROM t GROUP BY a, b;\n"
+"                                       QUERY PLAN                                        \n"
+"--------------------------------------------------------------------------------------------\n"
+" HashAggregate  (cost=220.00..221.00 rows=100 width=16) (actual rows=100 loops=1)\n"
+"   Group Key: a, b\n"
+"   -&gt;  Seq Scan on t  (cost=0.00..145.00 rows=10000 width=8) (actual rows=10000 loops=1)"
+
+#. +> REL_10
+#: planstats.xml:547(para)
+msgid ""
+"A similar problem occurs with estimation of the cardinality of sets of "
+"multiple columns, such as the number of groups that would be generated by a "
+"<command>GROUP BY</command> clause. When <command>GROUP BY</command> lists a "
+"single column, the n-distinct estimate (which is visible as the estimated "
+"number of rows returned by the HashAggregate node) is very accurate: "
+"<placeholder-1/> But without multivariate statistics, the estimate for the "
+"number of groups in a query with two columns in <command>GROUP BY</command>, "
+"as in the following example, is off by an order of magnitude: <placeholder-2/"
+"> By redefining the statistics object to include n-distinct counts for the "
+"two columns, the estimate is much improved: <placeholder-3/>"
+msgstr ""
+"Подобная проблема возникает с оценкой мощности наборов с несколькими "
+"столбцами, например, с оценкой числа групп, которые могут быть выданы "
+"предложением <command>GROUP BY</command>. Когда в <command>GROUP BY</"
+"command> указан один столбец, оценка числа различных значений (которую можно "
+"увидеть как ожидаемое число строк, выдаваемое узлом HashAggregate) очень "
+"точная: <placeholder-1/> Но оценка числа групп в запросе с двумя столбцами в "
+"<command>GROUP BY</command> без многовариантной статистики, как и в "
+"предыдущем примере, отличается от правильной на порядок: <placeholder-2/> "
+"Если переопределить объект статистики, чтобы он включал подсчёт числа "
+"различных значений для двух столбцов, оценка станет гораздо лучше: "
+"<placeholder-3/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:592(title)
 msgid "Planner Statistics and Security"
 msgstr "Статистика планировщика и безопасность"
 
-#: planstats.xml:455(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:594(para)
 msgid ""
 "Access to the table <structname>pg_statistic</structname> is restricted to "
 "superusers, so that ordinary users cannot learn about the contents of the "
@@ -822,7 +1169,8 @@ msgstr ""
 "возможность пользователю, не имеющему доступа к таблице "
 "<structname>pg_statistic</structname>, увидеть содержащиеся в ней данные."
 
-#: planstats.xml:473(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:612(para)
 msgid ""
 "In order to prevent this, the following applies to all built-in selectivity "
 "estimation functions. When planning a query, in order to be able to use "
@@ -843,7 +1191,8 @@ msgstr ""
 "бы статистики не было вовсе, и планировщик продолжит работу с общими или "
 "вторичными предположениями."
 
-#: planstats.xml:484(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:623(para)
 msgid ""
 "If a user does not have the required privilege on the table or columns, then "
 "in many cases the query will ultimately receive a permission-denied error, "
@@ -868,7 +1217,8 @@ msgstr ""
 "попробуйте запустить запрос от имени пользователя с расширенными правами и "
 "проверьте, не выбирается ли другой план запроса."
 
-#: planstats.xml:497(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:636(para)
 msgid ""
 "This restriction applies only to cases where the planner would need to "
 "execute a user-defined operator on one or more values from "
@@ -883,7 +1233,8 @@ msgstr ""
 "значений NULL или количество различных значений в столбце, вне зависимости "
 "от прав доступа."
 
-#: planstats.xml:506(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: planstats.xml:645(para)
 msgid ""
 "Selectivity estimation functions contained in third-party extensions that "
 "potentially operate on statistics with user-defined operators should follow "
@@ -895,6 +1246,7 @@ msgstr ""
 "обратитесь к исходному коду PostgreSQL."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
 #: planstats.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"

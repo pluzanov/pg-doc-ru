@@ -1,10 +1,11 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:33+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-09-21 15:24+0300\n"
+"PO-Revision-Date: 2017-09-22 17:57+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -14,14 +15,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:5(title)
 msgid "Triggers"
 msgstr "Триггеры"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:7(indexterm)
 msgid "<primary>trigger</primary>"
 msgstr "<primary>trigger</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:11(para)
 msgid ""
 "This chapter provides general information about writing trigger functions. "
@@ -44,6 +48,7 @@ msgstr ""
 "процедурному языку, чтобы узнать специфические для него детали разработки "
 "триггеров."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:24(para)
 msgid ""
 "It is also possible to write a trigger function in C, although most people "
@@ -54,10 +59,25 @@ msgstr ""
 "проще использовать один из процедурных языков. В настоящее время невозможно "
 "написать триггерную функцию на чистом SQL."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:32(title)
 msgid "Overview of Trigger Behavior"
 msgstr "Обзор механизма работы триггеров"
 
+#. +> REL_10
+#: trigger.xml:34(para)
+msgid ""
+"A trigger is a specification that the database should automatically execute "
+"a particular function whenever a certain type of operation is performed. "
+"Triggers can be attached to tables (partitioned or not), views, and foreign "
+"tables."
+msgstr ""
+"Триггер является указанием, что база данных должна автоматически выполнить "
+"заданную функцию, всякий раз когда выполнен определённый тип операции. "
+"Триггеры можно использовать с таблицами (секционированными и обычными), с "
+"представлениями и с внешними таблицами."
+
+#. +> REL9_6_3 REL9_6
 #: trigger.xml:34(para)
 msgid ""
 "A trigger is a specification that the database should automatically execute "
@@ -69,39 +89,32 @@ msgstr ""
 "Триггеры можно использовать с таблицами, с представлениями и с внешними "
 "таблицами."
 
-#: trigger.xml:40(para)
+#. +> REL_10
+#: trigger.xml:41(para)
 msgid ""
 "On tables and foreign tables, triggers can be defined to execute either "
 "before or after any <command>INSERT</command>, <command>UPDATE</command>, or "
 "<command>DELETE</command> operation, either once per modified row, or once "
-"per <acronym>SQL</acronym> statement. If an <command>INSERT</command> "
-"contains an <literal>ON CONFLICT DO UPDATE</literal> clause, it is possible "
-"that the effects of a BEFORE insert trigger and a BEFORE update trigger can "
-"both be applied together, if a reference to an <varname>EXCLUDED</varname> "
-"column appears. <command>UPDATE</command> triggers can moreover be set to "
-"fire only if certain columns are mentioned in the <literal>SET</literal> "
-"clause of the <command>UPDATE</command> statement. Triggers can also fire "
-"for <command>TRUNCATE</command> statements. If a trigger event occurs, the "
-"trigger's function is called at the appropriate time to handle the event. "
-"Foreign tables do not support the TRUNCATE statement at all."
+"per <acronym>SQL</acronym> statement. <command>UPDATE</command> triggers can "
+"moreover be set to fire only if certain columns are mentioned in the "
+"<literal>SET</literal> clause of the <command>UPDATE</command> statement. "
+"Triggers can also fire for <command>TRUNCATE</command> statements. If a "
+"trigger event occurs, the trigger's function is called at the appropriate "
+"time to handle the event."
 msgstr ""
 "Для обычных и сторонних таблиц можно определять триггеры, которые будут "
 "срабатывать до или после любой из команд <command>INSERT</command>, "
 "<command>UPDATE</command> или <command>DELETE</command>; либо один раз для "
 "каждой модифицируемой строки, либо один раз для оператора <acronym>SQL</"
-"acronym>. С запросом <command>INSERT</command>, содержащим предложение "
-"<literal>ON CONFLICT DO UPDATE</literal>, возможна ситуация, когда проявится "
-"действие сразу двух триггеров BEFORE INSERT и BEFORE UPDATE, если запрос "
-"обращается к столбцам <varname>EXCLUDED</varname>. Более того, триггеры "
-"<command>UPDATE</command> можно установить так, чтобы они срабатывали, "
-"только когда в предложении <literal>SET</literal> оператора <command>UPDATE</"
-"command> упоминаются определённые столбцы. Также триггеры могут срабатывать "
-"для операторов <command>TRUNCATE</command> (сторонние таблицы не "
-"поддерживают этот оператор вовсе). Когда происходит событие триггера, для "
-"обработки этого события в установленный момент времени вызывается функция "
-"триггера."
+"acronym>. Триггеры на <command>UPDATE</command> можно установить так, чтобы "
+"они срабатывали, только когда в предложении <literal>SET</literal> оператора "
+"<command>UPDATE</command> упоминаются определённые столбцы. Также триггеры "
+"могут срабатывать для операторов <command>TRUNCATE</command>. Если "
+"происходит событие триггера, для обработки этого события в установленный "
+"момент времени вызывается функция триггера."
 
-#: trigger.xml:57(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:54(para)
 msgid ""
 "On views, triggers can be defined to execute instead of <command>INSERT</"
 "command>, <command>UPDATE</command>, or <command>DELETE</command> "
@@ -124,7 +137,8 @@ msgstr ""
 "оператор, до или после команд <command>INSERT</command>, <command>UPDATE</"
 "command> или <command>DELETE</command>."
 
-#: trigger.xml:71(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:68(para)
 msgid ""
 "The trigger function must be defined before the trigger itself can be "
 "created. The trigger function must be declared as a function taking no "
@@ -139,7 +153,8 @@ msgstr ""
 "переданной структуры <structname>TriggerData</structname>, а не в форме "
 "обычных аргументов.)"
 
-#: trigger.xml:80(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:77(para)
 msgid ""
 "Once a suitable trigger function has been created, the trigger is "
 "established with <xref linkend=\"sql-createtrigger\"/>. The same trigger "
@@ -149,7 +164,8 @@ msgstr ""
 "\"sql-createtrigger\"/>. Одна и та же триггерная функция может быть "
 "использована для нескольких триггеров."
 
-#: trigger.xml:87(para)
+#. +> REL_10
+#: trigger.xml:84(para)
 msgid ""
 "<productname>PostgreSQL</productname> offers both <firstterm>per-row</"
 "firstterm> triggers and <firstterm>per-statement</firstterm> triggers. With "
@@ -161,30 +177,24 @@ msgid ""
 "execution of any applicable per-statement triggers. These two types of "
 "triggers are sometimes called <firstterm>row-level</firstterm> triggers and "
 "<firstterm>statement-level</firstterm> triggers, respectively. Triggers on "
-"<command>TRUNCATE</command> may only be defined at statement level. On "
-"views, triggers that fire before or after may only be defined at statement "
-"level, while triggers that fire instead of an <command>INSERT</command>, "
-"<command>UPDATE</command>, or <command>DELETE</command> may only be defined "
-"at row level."
+"<command>TRUNCATE</command> may only be defined at statement level, not per-"
+"row."
 msgstr ""
 "<productname>PostgreSQL</productname> предлагает как <firstterm>построчные</"
-"firstterm> триггеры, так и <firstterm>операторные</firstterm> триггеры. В "
-"случае построчного триггера, триггерная функция вызывается один раз для "
-"каждой строки, затронутой оператором, запустившим триггер. В "
-"противоположность этому, операторный триггер вызывается только один раз при "
-"выполнении соответствующего оператора, независимо от количества строк, "
-"которые он затрагивает. В частности оператор, который вообще не затрагивает "
-"строк, все равно приведёт к срабатыванию операторного триггера. Эти два типа "
-"триггеров иногда называют триггерами <firstterm>уровня строк </firstterm> и "
-"триггерами <firstterm>уровня оператора</firstterm> соответственно. Триггеры "
-"на <command>TRUNCATE</command> могут быть определены только на уровне "
-"оператора. Триггеры для представлений, срабатывающие до или после, могут "
-"быть определены только на уровне оператора, в то время как триггеры, "
-"срабатывающие вместо команд <command>INSERT</command>, <command>UPDATE</"
-"command> или <command>DELETE</command>, могут быть определены только на "
-"уровне строк."
+"firstterm>, так и <firstterm>операторные</firstterm> триггеры. В случае "
+"построчного триггера триггерная функция вызывается один раз для каждой "
+"строки, затронутой оператором, запустившим триггер. Операторный же триггер, "
+"напротив, вызывается только один раз при выполнении соответствующего "
+"оператора, независимо от количества строк, которые он затрагивает. В "
+"частности оператор, который не затрагивает никаких строк, всё равно приведёт "
+"к срабатыванию операторного триггера. Эти два типа триггеров также называют "
+"триггерами <firstterm>уровня строк</firstterm> и триггерами "
+"<firstterm>уровня оператора</firstterm>, соответственно. Триггеры на "
+"<command>TRUNCATE</command> могут быть определены только на уровне "
+"оператора, а не на уровне строк."
 
-#: trigger.xml:106(para)
+#. +> REL_10
+#: trigger.xml:100(para)
 msgid ""
 "Triggers are also classified according to whether they fire "
 "<firstterm>before</firstterm>, <firstterm>after</firstterm>, or "
@@ -194,48 +204,64 @@ msgid ""
 "<literal>BEFORE</literal> triggers naturally fire before the statement "
 "starts to do anything, while statement-level <literal>AFTER</literal> "
 "triggers fire at the very end of the statement. These types of triggers may "
-"be defined on tables or views. Row-level <literal>BEFORE</literal> triggers "
-"fire immediately before a particular row is operated on, while row-level "
-"<literal>AFTER</literal> triggers fire at the end of the statement (but "
-"before any statement-level <literal>AFTER</literal> triggers). These types "
-"of triggers may only be defined on tables and foreign tables. Row-level "
-"<literal>INSTEAD OF</literal> triggers may only be defined on views, and "
-"fire immediately as each row in the view is identified as needing to be "
-"operated on."
+"be defined on tables, views, or foreign tables. Row-level <literal>BEFORE</"
+"literal> triggers fire immediately before a particular row is operated on, "
+"while row-level <literal>AFTER</literal> triggers fire at the end of the "
+"statement (but before any statement-level <literal>AFTER</literal> "
+"triggers). These types of triggers may only be defined on non-partitioned "
+"tables and foreign tables, not views. <literal>INSTEAD OF</literal> triggers "
+"may only be defined on views, and only at row level; they fire immediately "
+"as each row in the view is identified as needing to be operated on."
 msgstr ""
-"Триггеры также классифицируются в соответствии с тем, срабатывают ли они "
-"<firstterm>до</firstterm>, <firstterm>после</firstterm> или "
-"<firstterm>вместо</firstterm> операции. Они называются триггерами "
-"<literal>BEFORE</literal>, <literal>AFTER</literal> и <literal>INSTEAD OF</"
-"literal>, соответственно. Триггеры <literal>BEFORE</literal> уровня "
-"оператора срабатывают до того, как оператор начинает делать что-либо, в то "
-"время как триггеры <literal>AFTER</literal> уровня оператора срабатывают в "
-"самом конце работы оператора. Эти типы триггеров могут быть определены для "
-"таблиц или представлений. Триггеры <literal>BEFORE</literal> уровня строки "
-"срабатывают непосредственно перед обработкой конкретной строки, в то время "
-"как триггеры <literal>AFTER</literal> уровня строки срабатывают в конце "
-"работы всего оператора (но до любого из триггеров <literal>AFTER</literal> "
-"уровня оператора). Эти типы триггеров могут определяться только для таблиц и "
-"сторонних таблиц. Триггеры <literal>INSTEAD OF</literal> уровня строки могут "
-"определяться только для представлений и срабатывают для каждой строки, сразу "
-"после того как строка представления идентифицирована как нуждающаяся в "
-"обработке."
+"Триггеры также классифицируются в соответствии с тем, срабатывают ли они до, "
+"после или вместо операции. Они называются триггерами <literal>BEFORE</"
+"literal>, <literal>AFTER</literal> и <literal>INSTEAD OF</literal>, "
+"соответственно. Триггеры <literal>BEFORE</literal> уровня оператора "
+"срабатывают до того, как оператор начинает делать что-либо, тогда как "
+"триггеры <literal>AFTER</literal> уровня оператора срабатывают в самом конце "
+"работы оператора. Эти типы триггеров могут быть определены для таблиц, "
+"представлений или сторонних таблиц. Триггеры <literal>BEFORE</literal> "
+"уровня строки срабатывают непосредственно перед обработкой конкретной "
+"строки, в то время как триггеры <literal>AFTER</literal> уровня строки "
+"срабатывают в конце работы всего оператора (но до любого из триггеров "
+"<literal>AFTER</literal> уровня оператора). Эти типы триггеров могут "
+"определяться только для несекционированных таблиц и сторонних таблиц, но не "
+"для представлений. Триггеры <literal>INSTEAD OF</literal> могут определяться "
+"только для представлений и только на уровне строк: они срабатывают для "
+"каждой строки сразу после того как строка представления идентифицирована как "
+"подлежащая обработке."
 
-#: trigger.xml:125(para)
+#. +> REL_10
+#: trigger.xml:119(para)
+msgid ""
+"A statement that targets a parent table in an inheritance or partitioning "
+"hierarchy does not cause the statement-level triggers of affected child "
+"tables to be fired; only the parent table's statement-level triggers are "
+"fired. However, row-level triggers of any affected child tables will be "
+"fired."
+msgstr ""
+"Оператор, нацеленный на родительскую таблицу в иерархии наследования или "
+"секционирования, не вызывает срабатывания триггеров уровня оператора для "
+"задействованных дочерних таблиц; срабатывать будут только такие триггеры для "
+"родительской таблицы. Однако если для этих дочерних таблиц установлены "
+"триггеры уровня строк, они будут срабатывать."
+
+#. +> REL_10
+#: trigger.xml:127(para)
 msgid ""
 "If an <command>INSERT</command> contains an <literal>ON CONFLICT DO UPDATE</"
-"literal> clause, it is possible that the effects of all row-level "
-"<literal>BEFORE</literal> <command>INSERT</command> triggers and all row-"
-"level <literal>BEFORE</literal> <command>UPDATE</command> triggers can both "
-"be applied in a way that is apparent from the final state of the updated "
-"row, if an <varname>EXCLUDED</varname> column is referenced. There need not "
-"be an <varname>EXCLUDED</varname> column reference for both sets of row-"
-"level <literal>BEFORE</literal> triggers to execute, though. The possibility "
-"of surprising outcomes should be considered when there are both "
+"literal> clause, it is possible that the effects of row-level "
+"<literal>BEFORE</literal> <command>INSERT</command> triggers and row-level "
+"<literal>BEFORE</literal> <command>UPDATE</command> triggers can both be "
+"applied in a way that is apparent from the final state of the updated row, "
+"if an <varname>EXCLUDED</varname> column is referenced. There need not be an "
+"<varname>EXCLUDED</varname> column reference for both sets of row-level "
+"<literal>BEFORE</literal> triggers to execute, though. The possibility of "
+"surprising outcomes should be considered when there are both "
 "<literal>BEFORE</literal> <command>INSERT</command> and <literal>BEFORE</"
-"literal> <command>UPDATE</command> row-level triggers that both affect a row "
-"being inserted/updated (this can still be problematic if the modifications "
-"are more or less equivalent if they're not also idempotent). Note that "
+"literal> <command>UPDATE</command> row-level triggers that change a row "
+"being inserted/updated (this can be problematic even if the modifications "
+"are more or less equivalent, if they're not also idempotent). Note that "
 "statement-level <command>UPDATE</command> triggers are executed when "
 "<literal>ON CONFLICT DO UPDATE</literal> is specified, regardless of whether "
 "or not any rows were affected by the <command>UPDATE</command> (and "
@@ -259,21 +285,22 @@ msgstr ""
 "рассмотреть возможность получения неожиданного результата, когда имеются и "
 "триггеры <literal>BEFORE</literal> <command>INSERT</command>, и "
 "<literal>BEFORE</literal> <command>UPDATE</command> на уровне строки, и они "
-"вместе воздействуют на добавляемую/изменяемую строку (это может быть "
-"проблематично выявить, если изменения более или менее равнозначные, но при "
-"этом не идемпотентные). Заметьте, что триггеры <command>UPDATE</command> "
-"уровня оператора вызываются при <literal>ON CONFLICT DO UPDATE</literal> "
-"независимо от того, будут ли изменены какие-либо строки в результате "
-"<command>UPDATE</command> (и даже в случае, когда альтернативный путь "
-"<command>UPDATE</command> вообще не выбирается). При выполнении запроса "
-"<command>INSERT</command> с предложением <literal>ON CONFLICT DO UPDATE</"
-"literal> сначала выполняются триггеры <literal>BEFORE</literal> "
-"<command>INSERT</command>, затем триггеры <literal>BEFORE</literal> "
-"<command>UPDATE</command>, потом триггеры <literal>AFTER</literal> "
-"<command>UPDATE</command> и, наконец, <literal>AFTER</literal> "
-"<command>INSERT</command> (речь идёт о триггерах на уровне операторов)."
+"вместе модифицируют добавляемую/изменяемую строку (проблемы возможны, даже "
+"если изменения более или менее равнозначные, но при этом не идемпотентные). "
+"Заметьте, что триггеры <command>UPDATE</command> уровня оператора вызываются "
+"при <literal>ON CONFLICT DO UPDATE</literal> независимо от того, будут ли "
+"изменены какие-либо строки в результате <command>UPDATE</command> (и даже в "
+"случае, когда альтернативный путь <command>UPDATE</command> вообще не "
+"выбирается). При выполнении запроса <command>INSERT</command> с предложением "
+"<literal>ON CONFLICT DO UPDATE</literal> сначала выполняются триггеры "
+"<literal>BEFORE</literal> <command>INSERT</command>, затем триггеры "
+"<literal>BEFORE</literal> <command>UPDATE</command>, потом триггеры "
+"<literal>AFTER</literal> <command>UPDATE</command> и, наконец, "
+"<literal>AFTER</literal> <command>INSERT</command> (речь идёт о триггерах на "
+"уровне операторов)."
 
-#: trigger.xml:164(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:167(para)
 msgid ""
 "It can return <symbol>NULL</symbol> to skip the operation for the current "
 "row. This instructs the executor to not perform the row-level operation that "
@@ -285,7 +312,8 @@ msgstr ""
 "со строкой вызвавшей триггер (вставку, изменение или удаление конкретной "
 "строки в таблице)."
 
-#: trigger.xml:173(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:176(para)
 msgid ""
 "For row-level <command>INSERT</command> and <command>UPDATE</command> "
 "triggers only, the returned row becomes the row that will be inserted or "
@@ -297,7 +325,8 @@ msgstr ""
 "обновлена в таблице. Это позволяет триггерной функции изменять вставляемую "
 "или обновляемую строку."
 
-#: trigger.xml:154(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:157(para)
 msgid ""
 "Trigger functions invoked by per-statement triggers should always return "
 "<symbol>NULL</symbol>. Trigger functions invoked by per-row triggers can "
@@ -321,7 +350,8 @@ msgstr ""
 "<command>INSERT</command> и <command>UPDATE</command>, или строку "
 "<varname>OLD</varname> для триггеров <command>DELETE</command>)."
 
-#: trigger.xml:191(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:194(para)
 msgid ""
 "A row-level <literal>INSTEAD OF</literal> trigger should either return "
 "<symbol>NULL</symbol> to indicate that it did not modify any data from the "
@@ -353,7 +383,8 @@ msgstr ""
 "и полезно для того, чтобы не показывать уже не актуальные первоначальные "
 "данные."
 
-#: trigger.xml:210(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:213(para)
 msgid ""
 "The return value is ignored for row-level triggers fired after an operation, "
 "and so they can return <symbol>NULL</symbol>."
@@ -361,7 +392,8 @@ msgstr ""
 "Возвращаемое значение игнорируется для триггеров уровня строки, вызываемых "
 "после операции, поэтому они могут возвращать <symbol>NULL</symbol>."
 
-#: trigger.xml:215(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:218(para)
 msgid ""
 "If more than one trigger is defined for the same event on the same relation, "
 "the triggers will be fired in alphabetical order by trigger name. In the "
@@ -381,7 +413,8 @@ msgstr ""
 "<symbol>NULL</symbol>, операция для этой строки прекращается и последующие "
 "триггеры (для этой строки) не срабатывают."
 
-#: trigger.xml:226(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:229(para)
 msgid ""
 "A trigger definition can also specify a Boolean <literal>WHEN</literal> "
 "condition, which will be tested to see whether the trigger should be fired. "
@@ -422,7 +455,8 @@ msgstr ""
 "нескольких. В триггерах <literal>INSTEAD OF</literal> не поддерживается "
 "использование условий <literal>WHEN</literal>."
 
-#: trigger.xml:249(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:252(para)
 msgid ""
 "Typically, row-level <literal>BEFORE</literal> triggers are used for "
 "checking or modifying the data that will be inserted or updated. For "
@@ -455,7 +489,8 @@ msgstr ""
 "предпочтительнее, так как не требует сохранения информации об операции до "
 "конца работы оператора."
 
-#: trigger.xml:266(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:269(para)
 msgid ""
 "If a trigger function executes SQL commands then these commands might fire "
 "triggers again. This is known as cascading triggers. There is no direct "
@@ -475,7 +510,8 @@ msgstr ""
 "триггер на <command>INSERT</command>. Обязанность программиста не допускать "
 "бесконечную рекурсию в таких случаях."
 
-#: trigger.xml:279(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:282(indexterm)
 msgid ""
 "<primary>trigger</primary> <secondary>arguments for trigger functions</"
 "secondary>"
@@ -483,7 +519,8 @@ msgstr ""
 "<primary>Триггер</primary> <secondary>Аргументы для триггерных функций</"
 "secondary>"
 
-#: trigger.xml:278(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:281(para)
 msgid ""
 "<placeholder-1/> When a trigger is being defined, arguments can be specified "
 "for it. The purpose of including arguments in the trigger definition is to "
@@ -511,7 +548,8 @@ msgstr ""
 "<command>UPDATE</command> аргументы также могут использоваться для "
 "отслеживания последних сделанных изменений."
 
-#: trigger.xml:299(para)
+#. +> REL_10
+#: trigger.xml:302(para)
 msgid ""
 "Each programming language that supports triggers has its own method for "
 "making the trigger input data available to the trigger function. This input "
@@ -520,9 +558,7 @@ msgid ""
 "<command>CREATE TRIGGER</command>. For a row-level trigger, the input data "
 "also includes the <varname>NEW</varname> row for <command>INSERT</command> "
 "and <command>UPDATE</command> triggers, and/or the <varname>OLD</varname> "
-"row for <command>UPDATE</command> and <command>DELETE</command> triggers. "
-"Statement-level triggers do not currently have any way to examine the "
-"individual row(s) modified by the statement."
+"row for <command>UPDATE</command> and <command>DELETE</command> triggers."
 msgstr ""
 "У каждого языка программирования, поддерживающего триггеры, есть свой "
 "собственный метод доступа из триггерной функции к входным данным триггера. "
@@ -530,16 +566,44 @@ msgstr ""
 "<command>INSERT</command> или <command>UPDATE</command>), а также любые "
 "аргументы, перечисленные в <command>CREATE TRIGGER</command>. Для триггеров "
 "уровня строки входные данные также включают строку <varname>NEW</varname> "
-"для триггеров <command>INSERT</command> и <command>UPDATE</command>, и/или "
+"для триггеров <command>INSERT</command> и <command>UPDATE</command> и/или "
 "строку <varname>OLD</varname> для триггеров <command>UPDATE</command> и "
-"<command>DELETE</command>. Триггеры уровня оператора в настоящее время не "
-"имеют возможностей для проверки отдельных строк, модифицированных оператором."
+"<command>DELETE</command>."
 
-#: trigger.xml:316(title)
+#. +> REL_10
+#: trigger.xml:314(para)
+msgid ""
+"By default, statement-level triggers do not have any way to examine the "
+"individual row(s) modified by the statement. But an <literal>AFTER "
+"STATEMENT</literal> trigger can request that <firstterm>transition tables</"
+"firstterm> be created to make the sets of affected rows available to the "
+"trigger. <literal>AFTER ROW</literal> triggers can also request transition "
+"tables, so that they can see the total changes in the table as well as the "
+"change in the individual row they are currently being fired for. The method "
+"for examining the transition tables again depends on the programming "
+"language that is being used, but the typical approach is to make the "
+"transition tables act like read-only temporary tables that can be accessed "
+"by SQL commands issued within the trigger function."
+msgstr ""
+"Триггеры уровня оператора по умолчанию не имеют возможностей для проверки "
+"отдельных строк, модифицированных оператором. Но триггер <literal>AFTER "
+"STATEMENT</literal> может запросить создание для него <firstterm>переходных "
+"таблиц</firstterm>, чтобы ему были доступны наборы затрагиваемых операцией "
+"строк. Триггерам <literal>AFTER ROW</literal> также могут предоставляться "
+"переходные таблицы, чтобы они могли видеть все изменения в таблице, а не "
+"только изменения в отдельных строках, для которых они срабатывают. Метод "
+"обращения к переходным таблицам определяется применяемым языком "
+"программирования, но обычно переходные таблицы представляются как временные "
+"таблицы только для чтения, к которым в триггерной функции можно обращаться, "
+"выполняя SQL-команды."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:331(title)
 msgid "Visibility of Data Changes"
 msgstr "Видимость изменений в данных"
 
-#: trigger.xml:328(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:343(para)
 msgid ""
 "Statement-level triggers follow simple visibility rules: none of the changes "
 "made by a statement are visible to statement-level <literal>BEFORE</literal> "
@@ -550,7 +614,8 @@ msgstr ""
 "изменений, произведённых оператором, не видны в триггерах <literal>BEFORE</"
 "literal>, тогда как в триггерах <literal>AFTER</literal> видны все изменения."
 
-#: trigger.xml:338(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:353(para)
 msgid ""
 "The data change (insertion, update, or deletion) causing the trigger to fire "
 "is naturally <emphasis>not</emphasis> visible to SQL commands executed in a "
@@ -561,7 +626,8 @@ msgstr ""
 "триггере <literal>BEFORE</literal> уровня строки, потому что это изменение "
 "ещё не произошло."
 
-#: trigger.xml:347(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:362(para)
 msgid ""
 "However, SQL commands executed in a row-level <literal>BEFORE</literal> "
 "trigger <emphasis>will</emphasis> see the effects of data changes for rows "
@@ -575,7 +641,8 @@ msgstr ""
 "как порядок обработки строк в целом непредсказуемый; команда SQL, "
 "обрабатывающая множество строк, может делать это в любом порядке."
 
-#: trigger.xml:358(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:373(para)
 msgid ""
 "Similarly, a row-level <literal>INSTEAD OF</literal> trigger will see the "
 "effects of data changes made by previous firings of <literal>INSTEAD OF</"
@@ -585,7 +652,8 @@ msgstr ""
 "изменения данных, внесённые при предыдущих вызовах триггера <literal>INSTEAD "
 "OF</literal> для этой же внешней команды."
 
-#: trigger.xml:366(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:381(para)
 msgid ""
 "When a row-level <literal>AFTER</literal> trigger is fired, all data changes "
 "made by the outer command are already complete, and are visible to the "
@@ -595,7 +663,8 @@ msgstr ""
 "изменения сделанные оператором уже выполнены и видны в вызываемой триггерной "
 "функции."
 
-#: trigger.xml:318(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:333(para)
 msgid ""
 "If you execute SQL commands in your trigger function, and these commands "
 "access the table that the trigger is for, then you need to be aware of the "
@@ -608,7 +677,8 @@ msgstr ""
 "данных, потому что они определяют, будут ли видеть эти SQL-команды изменения "
 "в данных, для которых сработал триггер. Кратко: <placeholder-1/>"
 
-#: trigger.xml:376(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:391(para)
 msgid ""
 "If your trigger function is written in any of the standard procedural "
 "languages, then the above statements apply only if the function is declared "
@@ -622,7 +692,8 @@ msgstr ""
 "literal> или <literal>IMMUTABLE</literal> в любом случае не будут видеть "
 "изменений, сделанных вызывающим оператором."
 
-#: trigger.xml:384(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:399(para)
 msgid ""
 "Further information about data visibility rules can be found in <xref "
 "linkend=\"spi-visibility\"/>. The example in <xref linkend=\"trigger-example"
@@ -632,15 +703,27 @@ msgstr ""
 "remap=\"6\" linkend=\"spi-visibility\"/>. Пример в <xref remap=\"6\" linkend="
 "\"trigger-example\"/> содержит демонстрацию этих правил."
 
-#: trigger.xml:392(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:407(title)
 msgid "Writing Trigger Functions in C"
 msgstr "Триггерные функции на языке C"
 
-#: trigger.xml:394(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:409(indexterm)
 msgid "<primary>trigger</primary> <secondary>in C</secondary>"
 msgstr "<primary>Триггер</primary> <secondary>на C</secondary>"
 
-#: trigger.xml:399(para)
+#. +> REL_10
+#: trigger.xml:414(indexterm)
+msgid ""
+"<primary>transition tables</primary> <secondary>referencing from C trigger</"
+"secondary>"
+msgstr ""
+"<primary>таблицы перехода</primary> <secondary>обращение из триггера на C</"
+"secondary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:419(para)
 msgid ""
 "This section describes the low-level details of the interface to a trigger "
 "function. This information is only needed when writing trigger functions in "
@@ -657,7 +740,8 @@ msgstr ""
 "на C. В документации по каждому процедурному языку объясняется как создавать "
 "триггеры на этом языке."
 
-#: trigger.xml:409(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:429(para)
 msgid ""
 "Trigger functions must use the <quote>version 1</quote> function manager "
 "interface."
@@ -665,17 +749,20 @@ msgstr ""
 "Триггерные функции должны использовать интерфейс функций <quote>версии 1</"
 "quote>."
 
-#: trigger.xml:420(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:440(programlisting)
 #, no-wrap
 msgid "CALLED_AS_TRIGGER(fcinfo)"
 msgstr "CALLED_AS_TRIGGER(fcinfo)"
 
-#: trigger.xml:424(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:444(programlisting)
 #, no-wrap
 msgid "((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, TriggerData))"
 msgstr "((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, TriggerData))"
 
-#: trigger.xml:414(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:434(para)
 msgid ""
 "When a function is called by the trigger manager, it is not passed any "
 "normal arguments, but it is passed a <quote>context</quote> pointer pointing "
@@ -699,90 +786,110 @@ msgstr ""
 "<emphasis>не</emphasis> должна изменять структуру <structname>TriggerData</"
 "structname> или любые данные, которые на неё указывают."
 
-#: trigger.xml:439(programlisting)
+#. +> REL_10
+#: trigger.xml:459(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct TriggerData\n"
 "{\n"
-"    NodeTag       type;\n"
-"    TriggerEvent  tg_event;\n"
-"    Relation      tg_relation;\n"
-"    HeapTuple     tg_trigtuple;\n"
-"    HeapTuple     tg_newtuple;\n"
-"    Trigger      *tg_trigger;\n"
-"    Buffer        tg_trigtuplebuf;\n"
-"    Buffer        tg_newtuplebuf;\n"
+"    NodeTag          type;\n"
+"    TriggerEvent     tg_event;\n"
+"    Relation         tg_relation;\n"
+"    HeapTuple        tg_trigtuple;\n"
+"    HeapTuple        tg_newtuple;\n"
+"    Trigger         *tg_trigger;\n"
+"    Buffer           tg_trigtuplebuf;\n"
+"    Buffer           tg_newtuplebuf;\n"
+"    Tuplestorestate *tg_oldtable;\n"
+"    Tuplestorestate *tg_newtable;\n"
 "} TriggerData;"
 msgstr ""
 "typedef struct TriggerData\n"
 "{\n"
-"    NodeTag       type;\n"
-"    TriggerEvent  tg_event;\n"
-"    Relation      tg_relation;\n"
-"    HeapTuple     tg_trigtuple;\n"
-"    HeapTuple     tg_newtuple;\n"
-"    Trigger      *tg_trigger;\n"
-"    Buffer        tg_trigtuplebuf;\n"
-"    Buffer        tg_newtuplebuf;\n"
+"    NodeTag          type;\n"
+"    TriggerEvent     tg_event;\n"
+"    Relation         tg_relation;\n"
+"    HeapTuple        tg_trigtuple;\n"
+"    HeapTuple        tg_newtuple;\n"
+"    Trigger         *tg_trigger;\n"
+"    Buffer           tg_trigtuplebuf;\n"
+"    Buffer           tg_newtuplebuf;\n"
+"    Tuplestorestate *tg_oldtable;\n"
+"    Tuplestorestate *tg_newtable;\n"
 "} TriggerData;"
 
-#: trigger.xml:457(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:479(structfield)
 msgid "type"
 msgstr "type"
 
-#: trigger.xml:459(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:481(para)
 msgid "Always <literal>T_TriggerData</literal>."
 msgstr "Всегда <literal>T_TriggerData</literal>."
 
-#: trigger.xml:466(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:488(structfield)
 msgid "tg_event"
 msgstr "tg_event"
 
-#: trigger.xml:474(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:496(literal)
 msgid "TRIGGER_FIRED_BEFORE(tg_event)"
 msgstr "TRIGGER_FIRED_BEFORE(tg_event)"
 
-#: trigger.xml:476(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:498(para)
 msgid "Returns true if the trigger fired before the operation."
 msgstr "Возвращает истину, если триггер сработал до операции."
 
-#: trigger.xml:483(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:505(literal)
 msgid "TRIGGER_FIRED_AFTER(tg_event)"
 msgstr "TRIGGER_FIRED_AFTER(tg_event)"
 
-#: trigger.xml:485(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:507(para)
 msgid "Returns true if the trigger fired after the operation."
 msgstr "Возвращает истину, если триггер сработал после операции."
 
-#: trigger.xml:492(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:514(literal)
 msgid "TRIGGER_FIRED_INSTEAD(tg_event)"
 msgstr "TRIGGER_FIRED_INSTEAD(tg_event)"
 
-#: trigger.xml:494(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:516(para)
 msgid "Returns true if the trigger fired instead of the operation."
 msgstr "Возвращает истину, если триггер сработал вместо операции."
 
-#: trigger.xml:501(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:523(literal)
 msgid "TRIGGER_FIRED_FOR_ROW(tg_event)"
 msgstr "TRIGGER_FIRED_FOR_ROW(tg_event)"
 
-#: trigger.xml:503(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:525(para)
 msgid "Returns true if the trigger fired for a row-level event."
 msgstr "Возвращает истину, если триггер сработал на уровне строки."
 
-#: trigger.xml:510(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:532(literal)
 msgid "TRIGGER_FIRED_FOR_STATEMENT(tg_event)"
 msgstr "TRIGGER_FIRED_FOR_STATEMENT(tg_event)"
 
-#: trigger.xml:512(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:534(para)
 msgid "Returns true if the trigger fired for a statement-level event."
 msgstr "Возвращает истину, если триггер сработал на уровне оператора."
 
-#: trigger.xml:519(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:541(literal)
 msgid "TRIGGER_FIRED_BY_INSERT(tg_event)"
 msgstr "TRIGGER_FIRED_BY_INSERT(tg_event)"
 
-#: trigger.xml:521(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:543(para)
 msgid ""
 "Returns true if the trigger was fired by an <command>INSERT</command> "
 "command."
@@ -790,11 +897,13 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>INSERT</"
 "command>."
 
-#: trigger.xml:528(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:550(literal)
 msgid "TRIGGER_FIRED_BY_UPDATE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_UPDATE(tg_event)"
 
-#: trigger.xml:530(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:552(para)
 msgid ""
 "Returns true if the trigger was fired by an <command>UPDATE</command> "
 "command."
@@ -802,22 +911,26 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>UPDATE</"
 "command>."
 
-#: trigger.xml:537(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:559(literal)
 msgid "TRIGGER_FIRED_BY_DELETE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_DELETE(tg_event)"
 
-#: trigger.xml:539(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:561(para)
 msgid ""
 "Returns true if the trigger was fired by a <command>DELETE</command> command."
 msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>DELETE</"
 "command>."
 
-#: trigger.xml:546(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:568(literal)
 msgid "TRIGGER_FIRED_BY_TRUNCATE(tg_event)"
 msgstr "TRIGGER_FIRED_BY_TRUNCATE(tg_event)"
 
-#: trigger.xml:548(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:570(para)
 msgid ""
 "Returns true if the trigger was fired by a <command>TRUNCATE</command> "
 "command."
@@ -825,7 +938,8 @@ msgstr ""
 "Возвращает истину, если триггер сработал для операции <command>TRUNCATE</"
 "command>."
 
-#: trigger.xml:468(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:490(para)
 msgid ""
 "Describes the event for which the function is called. You can use the "
 "following macros to examine <literal>tg_event</literal>: <placeholder-1/>"
@@ -834,11 +948,13 @@ msgstr ""
 "следующие макросы для получения информации о <literal>tg_event</literal>: "
 "<placeholder-1/>"
 
-#: trigger.xml:559(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:581(structfield)
 msgid "tg_relation"
 msgstr "tg_relation"
 
-#: trigger.xml:561(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:583(para)
 msgid ""
 "A pointer to a structure describing the relation that the trigger fired for. "
 "Look at <filename>utils/rel.h</filename> for details about this structure. "
@@ -856,11 +972,13 @@ msgstr ""
 "используйте <literal>SPI_getrelname(tg_relation)</literal>, чтобы получить "
 "тип <type>char*</type> если потребуется копия имени)."
 
-#: trigger.xml:576(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:598(structfield)
 msgid "tg_trigtuple"
 msgstr "tg_trigtuple"
 
-#: trigger.xml:578(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:600(para)
 msgid ""
 "A pointer to the row for which the trigger was fired. This is the row being "
 "inserted, updated, or deleted. If this trigger was fired for an "
@@ -876,11 +994,13 @@ msgstr ""
 "вернуть из функции, только если не планируется изменять строку (в случае "
 "<command>INSERT</command>) или пропускать операцию для этой строки."
 
-#: trigger.xml:592(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:614(structfield)
 msgid "tg_newtuple"
 msgstr "tg_newtuple"
 
-#: trigger.xml:594(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:616(para)
 msgid ""
 "A pointer to the new version of the row, if the trigger was fired for an "
 "<command>UPDATE</command>, and <symbol>NULL</symbol> if it is for an "
@@ -896,11 +1016,13 @@ msgstr ""
 "случае <command>UPDATE</command>, если не планируется изменять строку или "
 "пропускать операцию для этой строки."
 
-#: trigger.xml:608(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:630(structfield)
 msgid "tg_trigger"
 msgstr "tg_trigger"
 
-#: trigger.xml:614(programlisting)
+#. +> REL_10
+#: trigger.xml:636(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct Trigger\n"
@@ -921,6 +1043,8 @@ msgid ""
 "    int16      *tgattr;\n"
 "    char      **tgargs;\n"
 "    char       *tgqual;\n"
+"    char       *tgoldtable;\n"
+"    char       *tgnewtable;\n"
 "} Trigger;"
 msgstr ""
 "typedef struct Trigger\n"
@@ -941,9 +1065,12 @@ msgstr ""
 "    int16      *tgattr;\n"
 "    char      **tgargs;\n"
 "    char       *tgqual;\n"
+"    char       *tgoldtable;\n"
+"    char       *tgnewtable;\n"
 "} Trigger;"
 
-#: trigger.xml:610(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:632(para)
 msgid ""
 "A pointer to a structure of type <structname>Trigger</structname>, defined "
 "in <filename>utils/reltrigger.h</filename>: <placeholder-1/> where "
@@ -961,11 +1088,13 @@ msgstr ""
 "указанные в команде <command>CREATE TRIGGER</command>. Остальные члены "
 "структуры предназначены для внутреннего использования."
 
-#: trigger.xml:647(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:671(structfield)
 msgid "tg_trigtuplebuf"
 msgstr "tg_trigtuplebuf"
 
-#: trigger.xml:649(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:673(para)
 msgid ""
 "The buffer containing <structfield>tg_trigtuple</structfield>, or "
 "<symbol>InvalidBuffer</symbol> if there is no such tuple or it is not stored "
@@ -975,11 +1104,13 @@ msgstr ""
 "<symbol>InvalidBuffer</symbol> — если нет такой строки или она не хранится в "
 "дисковом буфере."
 
-#: trigger.xml:657(structfield)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:681(structfield)
 msgid "tg_newtuplebuf"
 msgstr "tg_newtuplebuf"
 
-#: trigger.xml:659(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:683(para)
 msgid ""
 "The buffer containing <structfield>tg_newtuple</structfield>, or "
 "<symbol>InvalidBuffer</symbol> if there is no such tuple or it is not stored "
@@ -989,7 +1120,44 @@ msgstr ""
 "<symbol>InvalidBuffer</symbol> — если нет такой строки или она не хранится в "
 "дисковом буфере."
 
-#: trigger.xml:435(para)
+#. +> REL_10
+#: trigger.xml:691(structfield)
+msgid "tg_oldtable"
+msgstr "tg_oldtable"
+
+#. +> REL_10
+#: trigger.xml:693(para)
+msgid ""
+"A pointer to a structure of type <structname>Tuplestorestate</structname> "
+"containing zero or more rows in the format specified by "
+"<structfield>tg_relation</structfield>, or a <symbol>NULL</symbol> pointer "
+"if there is no <literal>OLD TABLE</literal> transition relation."
+msgstr ""
+"Указатель на структуру типа <structname>Tuplestorestate</structname>, "
+"содержащую ноль или несколько строк в формате, определяемом содержимым "
+"<structfield>tg_relation</structfield>, или указатель <symbol>NULL</symbol>, "
+"если переходное отношение <literal>OLD TABLE</literal> отсутствует."
+
+#. +> REL_10
+#: trigger.xml:703(structfield)
+msgid "tg_newtable"
+msgstr "tg_newtable"
+
+#. +> REL_10
+#: trigger.xml:705(para)
+msgid ""
+"A pointer to a structure of type <structname>Tuplestorestate</structname> "
+"containing zero or more rows in the format specified by "
+"<structfield>tg_relation</structfield>, or a <symbol>NULL</symbol> pointer "
+"if there is no <literal>NEW TABLE</literal> transition relation."
+msgstr ""
+"Указатель на структуру типа <structname>Tuplestorestate</structname>, "
+"содержащую ноль или несколько строк в формате, определяемом содержимым "
+"<structfield>tg_relation</structfield>, или указатель <symbol>NULL</symbol>, "
+"если переходное отношение <literal>NEW TABLE</literal> отсутствует."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:455(para)
 msgid ""
 "<structname>struct TriggerData</structname> is defined in <filename>commands/"
 "trigger.h</filename>: <placeholder-1/> where the members are defined as "
@@ -999,7 +1167,17 @@ msgstr ""
 "<filename>commands/trigger.h</filename>: <placeholder-1/> где элементы "
 "определяются следующим образом: <placeholder-2/>"
 
-#: trigger.xml:669(para)
+#. +> REL_10
+#: trigger.xml:717(para)
+msgid ""
+"To allow queries issued through SPI to reference transition tables, see "
+"<xref linkend=\"spi-spi-register-trigger-data\"/>."
+msgstr ""
+"Чтобы обращаться к переходным таблицам в запросах, выполняемых через SPI, "
+"используйте <xref linkend=\"spi-spi-register-trigger-data\"/>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:722(para)
 msgid ""
 "A trigger function must return either a <structname>HeapTuple</structname> "
 "pointer or a <symbol>NULL</symbol> pointer (<emphasis>not</emphasis> an SQL "
@@ -1016,11 +1194,13 @@ msgstr ""
 "<structfield>tg_trigtuple</structfield>, либо <structfield>tg_newtuple</"
 "structfield>."
 
-#: trigger.xml:680(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:733(title)
 msgid "A Complete Trigger Example"
 msgstr "Полный пример триггера"
 
-#: trigger.xml:682(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:735(para)
 msgid ""
 "Here is a very simple example of a trigger function written in C. (Examples "
 "of triggers written in procedural languages can be found in the "
@@ -1030,7 +1210,8 @@ msgstr ""
 "триггеров для процедурных языков могут быть найдены в документации на "
 "процедурные языки.)"
 
-#: trigger.xml:688(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:741(para)
 msgid ""
 "The function <function>trigf</function> reports the number of rows in the "
 "table <structname>ttest</structname> and skips the actual operation if the "
@@ -1044,7 +1225,8 @@ msgstr ""
 "образом, триггер действует как ограничение <literal>NOT NULL</literal>, но "
 "не прерывает транзакцию.)"
 
-#: trigger.xml:698(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:751(programlisting)
 #, no-wrap
 msgid ""
 "CREATE TABLE ttest (\n"
@@ -1055,15 +1237,18 @@ msgstr ""
 "    x integer\n"
 ");"
 
-#: trigger.xml:696(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:749(para)
 msgid "First, the table definition: <placeholder-1/>"
 msgstr "Вначале определение таблицы: <placeholder-1/>"
 
-#: trigger.xml:705(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:758(para)
 msgid "This is the source code of the trigger function: <placeholder-1/>"
 msgstr "Теперь исходный код триггерной функции: <placeholder-1/>"
 
-#: trigger.xml:786(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:840(programlisting)
 #, no-wrap
 msgid ""
 "CREATE FUNCTION trigf() RETURNS trigger\n"
@@ -1086,7 +1271,8 @@ msgstr ""
 "CREATE TRIGGER tafter AFTER INSERT OR UPDATE OR DELETE ON ttest\n"
 "    FOR EACH ROW EXECUTE PROCEDURE trigf();"
 
-#: trigger.xml:783(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:837(para)
 msgid ""
 "After you have compiled the source code (see <xref linkend=\"dfunc\"/>), "
 "declare the function and the triggers: <placeholder-1/>"
@@ -1094,7 +1280,8 @@ msgstr ""
 "После компиляции исходного кода (см. <xref remap=\"4\" linkend=\"dfunc\"/>) "
 "объявляем функцию и триггеры: <placeholder-1/>"
 
-#: trigger.xml:799(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:853(para)
 msgid ""
 "Now you can test the operation of the trigger: <screen>\n"
 "=&gt; INSERT INTO ttest VALUES (NULL);\n"
@@ -1228,7 +1415,8 @@ msgstr ""
 "(0 rows)\n"
 "</screen>"
 
-#: trigger.xml:868(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: trigger.xml:922(para)
 msgid ""
 "There are more complex examples in <filename>src/test/regress/regress.c</"
 "filename> and in <xref linkend=\"contrib-spi\"/>."
@@ -1237,6 +1425,264 @@ msgstr ""
 "filename> и в <xref remap=\"6\" linkend=\"contrib-spi\"/>."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
 #: trigger.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:40(para)
+msgid ""
+"On tables and foreign tables, triggers can be defined to execute either "
+"before or after any <command>INSERT</command>, <command>UPDATE</command>, or "
+"<command>DELETE</command> operation, either once per modified row, or once "
+"per <acronym>SQL</acronym> statement. If an <command>INSERT</command> "
+"contains an <literal>ON CONFLICT DO UPDATE</literal> clause, it is possible "
+"that the effects of a BEFORE insert trigger and a BEFORE update trigger can "
+"both be applied together, if a reference to an <varname>EXCLUDED</varname> "
+"column appears. <command>UPDATE</command> triggers can moreover be set to "
+"fire only if certain columns are mentioned in the <literal>SET</literal> "
+"clause of the <command>UPDATE</command> statement. Triggers can also fire "
+"for <command>TRUNCATE</command> statements. If a trigger event occurs, the "
+"trigger's function is called at the appropriate time to handle the event. "
+"Foreign tables do not support the TRUNCATE statement at all."
+msgstr ""
+"Для обычных и сторонних таблиц можно определять триггеры, которые будут "
+"срабатывать до или после любой из команд <command>INSERT</command>, "
+"<command>UPDATE</command> или <command>DELETE</command>; либо один раз для "
+"каждой модифицируемой строки, либо один раз для оператора <acronym>SQL</"
+"acronym>. С запросом <command>INSERT</command>, содержащим предложение "
+"<literal>ON CONFLICT DO UPDATE</literal>, возможна ситуация, когда проявится "
+"действие сразу двух триггеров BEFORE INSERT и BEFORE UPDATE, если запрос "
+"обращается к столбцам <varname>EXCLUDED</varname>. Более того, триггеры "
+"<command>UPDATE</command> можно установить так, чтобы они срабатывали, "
+"только когда в предложении <literal>SET</literal> оператора <command>UPDATE</"
+"command> упоминаются определённые столбцы. Также триггеры могут срабатывать "
+"для операторов <command>TRUNCATE</command> (сторонние таблицы не "
+"поддерживают этот оператор вовсе). Когда происходит событие триггера, для "
+"обработки этого события в установленный момент времени вызывается функция "
+"триггера."
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:87(para)
+msgid ""
+"<productname>PostgreSQL</productname> offers both <firstterm>per-row</"
+"firstterm> triggers and <firstterm>per-statement</firstterm> triggers. With "
+"a per-row trigger, the trigger function is invoked once for each row that is "
+"affected by the statement that fired the trigger. In contrast, a per-"
+"statement trigger is invoked only once when an appropriate statement is "
+"executed, regardless of the number of rows affected by that statement. In "
+"particular, a statement that affects zero rows will still result in the "
+"execution of any applicable per-statement triggers. These two types of "
+"triggers are sometimes called <firstterm>row-level</firstterm> triggers and "
+"<firstterm>statement-level</firstterm> triggers, respectively. Triggers on "
+"<command>TRUNCATE</command> may only be defined at statement level. On "
+"views, triggers that fire before or after may only be defined at statement "
+"level, while triggers that fire instead of an <command>INSERT</command>, "
+"<command>UPDATE</command>, or <command>DELETE</command> may only be defined "
+"at row level."
+msgstr ""
+"<productname>PostgreSQL</productname> предлагает как <firstterm>построчные</"
+"firstterm> триггеры, так и <firstterm>операторные</firstterm> триггеры. В "
+"случае построчного триггера, триггерная функция вызывается один раз для "
+"каждой строки, затронутой оператором, запустившим триггер. В "
+"противоположность этому, операторный триггер вызывается только один раз при "
+"выполнении соответствующего оператора, независимо от количества строк, "
+"которые он затрагивает. В частности оператор, который вообще не затрагивает "
+"строк, все равно приведёт к срабатыванию операторного триггера. Эти два типа "
+"триггеров иногда называют триггерами <firstterm>уровня строк </firstterm> и "
+"триггерами <firstterm>уровня оператора</firstterm> соответственно. Триггеры "
+"на <command>TRUNCATE</command> могут быть определены только на уровне "
+"оператора. Триггеры для представлений, срабатывающие до или после, могут "
+"быть определены только на уровне оператора, в то время как триггеры, "
+"срабатывающие вместо команд <command>INSERT</command>, <command>UPDATE</"
+"command> или <command>DELETE</command>, могут быть определены только на "
+"уровне строк."
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:106(para)
+msgid ""
+"Triggers are also classified according to whether they fire "
+"<firstterm>before</firstterm>, <firstterm>after</firstterm>, or "
+"<firstterm>instead of</firstterm> the operation. These are referred to as "
+"<literal>BEFORE</literal> triggers, <literal>AFTER</literal> triggers, and "
+"<literal>INSTEAD OF</literal> triggers respectively. Statement-level "
+"<literal>BEFORE</literal> triggers naturally fire before the statement "
+"starts to do anything, while statement-level <literal>AFTER</literal> "
+"triggers fire at the very end of the statement. These types of triggers may "
+"be defined on tables or views. Row-level <literal>BEFORE</literal> triggers "
+"fire immediately before a particular row is operated on, while row-level "
+"<literal>AFTER</literal> triggers fire at the end of the statement (but "
+"before any statement-level <literal>AFTER</literal> triggers). These types "
+"of triggers may only be defined on tables and foreign tables. Row-level "
+"<literal>INSTEAD OF</literal> triggers may only be defined on views, and "
+"fire immediately as each row in the view is identified as needing to be "
+"operated on."
+msgstr ""
+"Триггеры также классифицируются в соответствии с тем, срабатывают ли они "
+"<firstterm>до</firstterm>, <firstterm>после</firstterm> или "
+"<firstterm>вместо</firstterm> операции. Они называются триггерами "
+"<literal>BEFORE</literal>, <literal>AFTER</literal> и <literal>INSTEAD OF</"
+"literal>, соответственно. Триггеры <literal>BEFORE</literal> уровня "
+"оператора срабатывают до того, как оператор начинает делать что-либо, в то "
+"время как триггеры <literal>AFTER</literal> уровня оператора срабатывают в "
+"самом конце работы оператора. Эти типы триггеров могут быть определены для "
+"таблиц или представлений. Триггеры <literal>BEFORE</literal> уровня строки "
+"срабатывают непосредственно перед обработкой конкретной строки, в то время "
+"как триггеры <literal>AFTER</literal> уровня строки срабатывают в конце "
+"работы всего оператора (но до любого из триггеров <literal>AFTER</literal> "
+"уровня оператора). Эти типы триггеров могут определяться только для таблиц и "
+"сторонних таблиц. Триггеры <literal>INSTEAD OF</literal> уровня строки могут "
+"определяться только для представлений и срабатывают для каждой строки, сразу "
+"после того как строка представления идентифицирована как нуждающаяся в "
+"обработке."
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:125(para)
+msgid ""
+"If an <command>INSERT</command> contains an <literal>ON CONFLICT DO UPDATE</"
+"literal> clause, it is possible that the effects of all row-level "
+"<literal>BEFORE</literal> <command>INSERT</command> triggers and all row-"
+"level <literal>BEFORE</literal> <command>UPDATE</command> triggers can both "
+"be applied in a way that is apparent from the final state of the updated "
+"row, if an <varname>EXCLUDED</varname> column is referenced. There need not "
+"be an <varname>EXCLUDED</varname> column reference for both sets of row-"
+"level <literal>BEFORE</literal> triggers to execute, though. The possibility "
+"of surprising outcomes should be considered when there are both "
+"<literal>BEFORE</literal> <command>INSERT</command> and <literal>BEFORE</"
+"literal> <command>UPDATE</command> row-level triggers that both affect a row "
+"being inserted/updated (this can still be problematic if the modifications "
+"are more or less equivalent if they're not also idempotent). Note that "
+"statement-level <command>UPDATE</command> triggers are executed when "
+"<literal>ON CONFLICT DO UPDATE</literal> is specified, regardless of whether "
+"or not any rows were affected by the <command>UPDATE</command> (and "
+"regardless of whether the alternative <command>UPDATE</command> path was "
+"ever taken). An <command>INSERT</command> with an <literal>ON CONFLICT DO "
+"UPDATE</literal> clause will execute statement-level <literal>BEFORE</"
+"literal> <command>INSERT</command> triggers first, then statement-level "
+"<literal>BEFORE</literal> <command>UPDATE</command> triggers, followed by "
+"statement-level <literal>AFTER</literal> <command>UPDATE</command> triggers "
+"and finally statement-level <literal>AFTER</literal> <command>INSERT</"
+"command> triggers."
+msgstr ""
+"Если запрос <command>INSERT</command> содержит предложение <literal>ON "
+"CONFLICT DO UPDATE</literal>, возможно совместное применение и триггеров "
+"уровня строк <literal>BEFORE</literal> <command>INSERT</command>, и "
+"триггеров уровня строк <literal>BEFORE</literal> <command>UPDATE</command>, "
+"которое отразится в окончательном состоянии изменяемой строки, если в "
+"запросе задействуются столбцы <varname>EXCLUDED</varname>. При этом "
+"обращение к <varname>EXCLUDED</varname> не обязательно должно иметь место в "
+"обоих наборах триггеров <literal>BEFORE</literal> на уровне строк. Следует "
+"рассмотреть возможность получения неожиданного результата, когда имеются и "
+"триггеры <literal>BEFORE</literal> <command>INSERT</command>, и "
+"<literal>BEFORE</literal> <command>UPDATE</command> на уровне строки, и они "
+"вместе воздействуют на добавляемую/изменяемую строку (это может быть "
+"проблематично выявить, если изменения более или менее равнозначные, но при "
+"этом не идемпотентные). Заметьте, что триггеры <command>UPDATE</command> "
+"уровня оператора вызываются при <literal>ON CONFLICT DO UPDATE</literal> "
+"независимо от того, будут ли изменены какие-либо строки в результате "
+"<command>UPDATE</command> (и даже в случае, когда альтернативный путь "
+"<command>UPDATE</command> вообще не выбирается). При выполнении запроса "
+"<command>INSERT</command> с предложением <literal>ON CONFLICT DO UPDATE</"
+"literal> сначала выполняются триггеры <literal>BEFORE</literal> "
+"<command>INSERT</command>, затем триггеры <literal>BEFORE</literal> "
+"<command>UPDATE</command>, потом триггеры <literal>AFTER</literal> "
+"<command>UPDATE</command> и, наконец, <literal>AFTER</literal> "
+"<command>INSERT</command> (речь идёт о триггерах на уровне операторов)."
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:299(para)
+msgid ""
+"Each programming language that supports triggers has its own method for "
+"making the trigger input data available to the trigger function. This input "
+"data includes the type of trigger event (e.g., <command>INSERT</command> or "
+"<command>UPDATE</command>) as well as any arguments that were listed in "
+"<command>CREATE TRIGGER</command>. For a row-level trigger, the input data "
+"also includes the <varname>NEW</varname> row for <command>INSERT</command> "
+"and <command>UPDATE</command> triggers, and/or the <varname>OLD</varname> "
+"row for <command>UPDATE</command> and <command>DELETE</command> triggers. "
+"Statement-level triggers do not currently have any way to examine the "
+"individual row(s) modified by the statement."
+msgstr ""
+"У каждого языка программирования, поддерживающего триггеры, есть свой "
+"собственный метод доступа из триггерной функции к входным данным триггера. "
+"Входные данные триггера включают в себя тип события (например, "
+"<command>INSERT</command> или <command>UPDATE</command>), а также любые "
+"аргументы, перечисленные в <command>CREATE TRIGGER</command>. Для триггеров "
+"уровня строки входные данные также включают строку <varname>NEW</varname> "
+"для триггеров <command>INSERT</command> и <command>UPDATE</command>, и/или "
+"строку <varname>OLD</varname> для триггеров <command>UPDATE</command> и "
+"<command>DELETE</command>. Триггеры уровня оператора в настоящее время не "
+"имеют возможностей для проверки отдельных строк, модифицированных оператором."
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:439(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct TriggerData\n"
+"{\n"
+"    NodeTag       type;\n"
+"    TriggerEvent  tg_event;\n"
+"    Relation      tg_relation;\n"
+"    HeapTuple     tg_trigtuple;\n"
+"    HeapTuple     tg_newtuple;\n"
+"    Trigger      *tg_trigger;\n"
+"    Buffer        tg_trigtuplebuf;\n"
+"    Buffer        tg_newtuplebuf;\n"
+"} TriggerData;"
+msgstr ""
+"typedef struct TriggerData\n"
+"{\n"
+"    NodeTag       type;\n"
+"    TriggerEvent  tg_event;\n"
+"    Relation      tg_relation;\n"
+"    HeapTuple     tg_trigtuple;\n"
+"    HeapTuple     tg_newtuple;\n"
+"    Trigger      *tg_trigger;\n"
+"    Buffer        tg_trigtuplebuf;\n"
+"    Buffer        tg_newtuplebuf;\n"
+"} TriggerData;"
+
+#. +> REL9_6_3 REL9_6
+#: trigger.xml:614(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct Trigger\n"
+"{\n"
+"    Oid         tgoid;\n"
+"    char       *tgname;\n"
+"    Oid         tgfoid;\n"
+"    int16       tgtype;\n"
+"    char        tgenabled;\n"
+"    bool        tgisinternal;\n"
+"    Oid         tgconstrrelid;\n"
+"    Oid         tgconstrindid;\n"
+"    Oid         tgconstraint;\n"
+"    bool        tgdeferrable;\n"
+"    bool        tginitdeferred;\n"
+"    int16       tgnargs;\n"
+"    int16       tgnattr;\n"
+"    int16      *tgattr;\n"
+"    char      **tgargs;\n"
+"    char       *tgqual;\n"
+"} Trigger;"
+msgstr ""
+"typedef struct Trigger\n"
+"{\n"
+"    Oid         tgoid;\n"
+"    char       *tgname;\n"
+"    Oid         tgfoid;\n"
+"    int16       tgtype;\n"
+"    char        tgenabled;\n"
+"    bool        tgisinternal;\n"
+"    Oid         tgconstrrelid;\n"
+"    Oid         tgconstrindid;\n"
+"    Oid         tgconstraint;\n"
+"    bool        tgdeferrable;\n"
+"    bool        tginitdeferred;\n"
+"    int16       tgnargs;\n"
+"    int16       tgnattr;\n"
+"    int16      *tgattr;\n"
+"    char      **tgargs;\n"
+"    char       *tgqual;\n"
+"} Trigger;"

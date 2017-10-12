@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-09 16:00+0300\n"
-"PO-Revision-Date: 2017-05-12 10:46+0300\n"
+"POT-Creation-Date: 2017-09-15 11:14+0300\n"
+"PO-Revision-Date: 2017-09-29 09:25+0300\n"
 "Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -15,22 +15,26 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:5(title)
 msgid "Reliability and the Write-Ahead Log"
-msgstr "Надёжность и журнал упреждающей записи"
+msgstr "Надёжность и журнал предзаписи"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:7(para)
 msgid ""
 "This chapter explains how the Write-Ahead Log is used to obtain efficient, "
 "reliable operation."
 msgstr ""
 "В данной главе рассказывается, как для обеспечения эффективной и надёжной "
-"работы используется журнал упреждающей записи."
+"работы используется журнал предзаписи."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:13(title)
 msgid "Reliability"
 msgstr "Надёжность"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:15(para)
 msgid ""
 "Reliability is an important property of any serious database system, and "
@@ -58,6 +62,7 @@ msgstr ""
 "в другой похожий компьютер и все подтверждённые транзакции останутся "
 "неповреждёнными."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:30(para)
 msgid ""
 "While forcing data to the disk platters periodically might seem like a "
@@ -81,6 +86,7 @@ msgstr ""
 "(Смотрите параметр <xref linkend=\"guc-wal-sync-method\"/> который отвечает "
 "за то как это делается.)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:43(para)
 msgid ""
 "Next, there might be a cache in the disk drive controller; this is "
@@ -109,6 +115,7 @@ msgstr ""
 "контроллера на батарее, если пропадёт системное питание. После возобновления "
 "питания, данные, оставшиеся в кеше контроллера, будут записаны на диски."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:58(para)
 msgid ""
 "And finally, most disk drives have caches. Some are write-through while some "
@@ -125,6 +132,7 @@ msgstr ""
 "часто имеют кеш отложенной записи, который сбрасывается при потере питания. "
 "Многие SSD-накопители также имеют зависимый от питания кеш отложенной записи."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:67(para)
 msgid ""
 "These caches can typically be disabled; however, the method for doing this "
@@ -133,6 +141,7 @@ msgstr ""
 "Обычно, такое кеширование можно выключить; однако, то, как это делается, "
 "различается для операционной системы и для типа диска:"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:74(para)
 msgid ""
 "On <productname>Linux</productname>, IDE and SATA drives can be queried "
@@ -154,6 +163,7 @@ msgstr ""
 "get=WCE</command>, чтобы проверить, включено ли кеширование записи, и "
 "<command>sdparm --clear=WCE</command>, чтобы выключить его."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:87(para)
 msgid ""
 "On <productname>FreeBSD</productname>, IDE drives can be queried using "
@@ -171,6 +181,7 @@ msgstr ""
 "identify</command>, а кеширование записи изменяется при помощи утилиты "
 "<command>sdparm</command>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:98(para)
 msgid ""
 "On <productname>Solaris</productname>, the disk write cache is controlled by "
@@ -184,6 +195,7 @@ msgstr ""
 "является безопасным, потому что она использует собственные команды сброса "
 "кеша на диск.)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:107(para)
 msgid ""
 "On <productname>Windows</productname>, if <varname>wal_sync_method</varname> "
@@ -204,6 +216,18 @@ msgstr ""
 "literal> или <literal>fsync_writethrough</literal>, что предотвращает "
 "кеширование записи."
 
+#. +> REL_10
+#: wal.xml:118(para)
+msgid ""
+"On <productname>macOS</productname>, write caching can be prevented by "
+"setting <varname>wal_sync_method</varname> to <literal>fsync_writethrough</"
+"literal>."
+msgstr ""
+"В <productname>macOS</productname> кеширование записи можно отключить, "
+"установив для параметра <varname>wal_sync_method</varname> значение "
+"<literal>fsync_writethrough</literal>."
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:118(para)
 msgid ""
 "On <productname>OS X</productname>, write caching can be prevented by "
@@ -214,6 +238,7 @@ msgstr ""
 "установив для параметра <varname>wal_sync_method</varname> значение "
 "<literal>fsync_writethrough</literal>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:125(para)
 msgid ""
 "Recent SATA drives (those following <acronym>ATAPI-6</acronym> or later) "
@@ -255,6 +280,7 @@ msgstr ""
 "данных. Есть надежда, что разработчики файловых систем и контроллеров "
 "дисков, в конце концов, устранят это неоптимальное поведение."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:147(para)
 msgid ""
 "When the operating system sends a write request to the storage hardware, "
@@ -282,6 +308,7 @@ msgstr ""
 "подсистемы ввода/вывода, используя <ulink url=\"http://brad.livejournal."
 "com/2116715.html\"><filename>diskchecker.pl</filename></ulink>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:162(para)
 msgid ""
 "Another risk of data loss is posed by the disk platter write operations "
@@ -321,6 +348,7 @@ msgstr ""
 "питания (BBU) контроллера диска не защищает от частичной записи страниц, "
 "если не гарантируется, что данные записаны в BBU как полные (8kB) страницы."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:188(para)
 msgid ""
 "Each individual record in a WAL file is protected by a CRC-32 (32-bit) check "
@@ -334,6 +362,7 @@ msgstr ""
 "проверяется в ходе восстановления после сбоя, восстановления из архива, и "
 "при репликации."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:196(para)
 msgid ""
 "Data pages are not currently checksummed by default, though full page images "
@@ -347,6 +376,29 @@ msgstr ""
 "application></link> для деталей о включении в страницы данных информации о "
 "контрольных суммах."
 
+#. +> REL_10
+#: wal.xml:204(para)
+msgid ""
+"Internal data structures such as <filename>pg_xact</filename>, "
+"<filename>pg_subtrans</filename>, <filename>pg_multixact</filename>, "
+"<filename>pg_serial</filename>, <filename>pg_notify</filename>, "
+"<filename>pg_stat</filename>, <filename>pg_snapshots</filename> are not "
+"directly checksummed, nor are pages protected by full page writes. However, "
+"where such data structures are persistent, WAL records are written that "
+"allow recent changes to be accurately rebuilt at crash recovery and those "
+"WAL records are protected as discussed above."
+msgstr ""
+"Для внутренних структур данных, таких как <filename>pg_xact</filename>, "
+"<filename>pg_subtrans</filename>, <filename>pg_multixact</filename>, "
+"<filename>pg_serial</filename>, <filename>pg_notify</filename>, "
+"<filename>pg_stat</filename>, <filename>pg_snapshots</filename> не ведётся "
+"расчёт контрольной суммы, равно как и для страниц, защищённых посредством "
+"полностраничной записи. Однако там, где такие структуры данных являются "
+"постоянными, записи WAL пишутся таким образом, чтобы после сбоя было "
+"возможно аккуратно повторить последние изменения, а эти записи WAL "
+"защищаются так же, как описано выше."
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:204(para)
 msgid ""
 "Internal data structures such as <filename>pg_clog</filename>, "
@@ -368,6 +420,7 @@ msgstr ""
 "возможно аккуратно повторить последние изменения, а эти записи WAL "
 "защищаются так же, как описано выше."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:214(para)
 msgid ""
 "Individual state files in <filename>pg_twophase</filename> are protected by "
@@ -376,6 +429,7 @@ msgstr ""
 "Файлы каталога <filename>pg_twophase</filename> защищены с помощью "
 "контрольной суммы CRC-32."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:219(para)
 msgid ""
 "Temporary data files used in larger SQL queries for sorts, materializations "
@@ -386,6 +440,7 @@ msgstr ""
 "материализации и промежуточных результатов, в настоящее время не защищаются "
 "контрольной суммой, а изменения в этих файлах не отражаются в WAL."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:182(para)
 msgid ""
 "<productname>PostgreSQL</productname> also protects against some kinds of "
@@ -399,6 +454,7 @@ msgstr ""
 "например, при операциях чтения/записи во время сборки мусора. <placeholder-1/"
 ">"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:227(para)
 msgid ""
 "<productname>PostgreSQL</productname> does not protect against correctable "
@@ -410,18 +466,22 @@ msgstr ""
 "промышленный стандарт коррекции ошибок (ECC, Error Correcting Codes) или "
 "лучшую защиту."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:235(title)
 msgid "Write-Ahead Logging (<acronym>WAL</acronym>)"
-msgstr "Журнал упреждающей записи (<acronym>WAL</acronym>)"
+msgstr "Журнал предзаписи (<acronym>WAL</acronym>)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:237(indexterm)
 msgid "<primary>WAL</primary>"
 msgstr "<primary>WAL</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:241(indexterm)
 msgid "<primary>transaction log</primary> <see>WAL</see>"
 msgstr "<primary>журнал транзакций</primary> <see>WAL</see>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:246(para)
 msgid ""
 "<firstterm>Write-Ahead Logging</firstterm> (<acronym>WAL</acronym>) is a "
@@ -437,21 +497,21 @@ msgid ""
 "be redone from the log records. (This is roll-forward recovery, also known "
 "as REDO.)"
 msgstr ""
-"<firstterm>Журнал упреждающей записи</firstterm> (<acronym>WAL</acronym>) — "
-"это стандартный метод обеспечения целостности данных. Детальное описание "
-"можно найти в большинстве книг (если не во всех) по обработке транзакций. "
-"Вкратце, основная идея <acronym>WAL</acronym> состоит в том, что изменения в "
-"файлах с данными (где находятся таблицы и индексы) должны записываться "
-"только после того, как эти изменения были занесены в журнал, т. е. после "
-"того как записи журнала, описывающие данные изменения, будут сохранены на "
-"постоянное устройство хранения. Если следовать этой процедуре, то записывать "
-"страницы данных на диск после подтверждения каждой транзакции нет "
-"необходимости, потому что мы знаем, что если случится сбой, то у нас будет "
-"возможность восстановить базу данных с помощью журнала: любые изменения, "
-"которые не были применены к страницам с данными, могут быть воссозданы из "
-"записей журнала. (Это называется восстановлением с воспроизведением, или "
-"REDO.)"
+"<firstterm>Журнал предзаписи</firstterm> (<acronym>WAL</acronym>) — это "
+"стандартный метод обеспечения целостности данных. Детальное описание можно "
+"найти в большинстве книг (если не во всех) по обработке транзакций. Вкратце, "
+"основная идея <acronym>WAL</acronym> состоит в том, что изменения в файлах с "
+"данными (где находятся таблицы и индексы) должны записываться только после "
+"того, как эти изменения были занесены в журнал, т. е. после того как записи "
+"журнала, описывающие данные изменения, будут сохранены на постоянное "
+"устройство хранения. Если следовать этой процедуре, то записывать страницы "
+"данных на диск после подтверждения каждой транзакции нет необходимости, "
+"потому что мы знаем, что если случится сбой, то у нас будет возможность "
+"восстановить базу данных с помощью журнала: любые изменения, которые не были "
+"применены к страницам с данными, могут быть воссозданы из записей журнала. "
+"(Это называется восстановлением с воспроизведением, или REDO.)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:263(para)
 msgid ""
 "Because <acronym>WAL</acronym> restores database file contents after a "
@@ -474,6 +534,7 @@ msgstr ""
 "журналируемыми файловыми системами увеличивается скорость загрузки после "
 "сбоя."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:277(para)
 msgid ""
 "Using <acronym>WAL</acronym> results in a significantly reduced number of "
@@ -498,6 +559,7 @@ msgstr ""
 "подтверждения многих транзакций достаточно одного вызова <function>fsync</"
 "function> на файл журнала."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:291(para)
 msgid ""
 "<acronym>WAL</acronym> also makes it possible to support on-line backup and "
@@ -521,18 +583,22 @@ msgstr ""
 "некоторое время назад, воспроизведение журнала WAL за этот период исправит "
 "все внутренние несоответствия."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:306(title)
 msgid "Asynchronous Commit"
 msgstr "Асинхронное подтверждение транзакций"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:308(indexterm)
 msgid "<primary>synchronous commit</primary>"
 msgstr "<primary>синхронная фиксация данных</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:312(indexterm)
 msgid "<primary>asynchronous commit</primary>"
 msgstr "<primary>асинхронная фиксация данных</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:316(para)
 msgid ""
 "<firstterm>Asynchronous commit</firstterm> is an option that allows "
@@ -545,6 +611,7 @@ msgstr ""
 "транзакции могут быть потеряны. Для многих приложений такой компромисс "
 "приемлем."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:323(para)
 msgid ""
 "As described in the previous section, transaction commit is normally "
@@ -572,6 +639,7 @@ msgstr ""
 "на диск. Это может значительно увеличить производительность при выполнении "
 "небольших транзакций."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:338(para)
 msgid ""
 "Asynchronous commit introduces the risk of data loss. There is a short time "
@@ -595,6 +663,7 @@ msgstr ""
 "случаях, таких как журналирование событий, столь серьёзная гарантия "
 "сохранности данных не нужна."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:351(para)
 msgid ""
 "The risk that is taken by using asynchronous commit is of data loss, not "
@@ -621,6 +690,7 @@ msgstr ""
 "такого, что изменения, выполненные \"A\" были потеряны, а изменения, "
 "внесённые \"B\" сохранены."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:365(para)
 msgid ""
 "The user can select the commit mode of each transaction, so that it is "
@@ -642,6 +712,7 @@ msgstr ""
 "значения <varname>synchronous_commit</varname>, которое действует на момент "
 "начала этой транзакции."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:377(para)
 msgid ""
 "Certain utility commands, for instance <command>DROP TABLE</command>, are "
@@ -659,6 +730,7 @@ msgstr ""
 "подтверждение транзакций, такие как <command>PREPARE TRANSACTION</command>, "
 "также всегда синхронные."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:386(para)
 msgid ""
 "If the database crashes during the risk window between an asynchronous "
@@ -682,6 +754,7 @@ msgstr ""
 "что WAL writer разработан так, чтобы сразу сохранять целые страницы во время "
 "периодов занятости."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:401(para)
 msgid ""
 "An immediate-mode shutdown is equivalent to a server crash, and will "
@@ -691,6 +764,7 @@ msgstr ""
 "и приведёт, таким образом, к потере всех не сохранённых асинхронных "
 "транзакций."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:407(para)
 msgid ""
 "Asynchronous commit provides behavior different from setting <xref linkend="
@@ -718,6 +792,7 @@ msgstr ""
 "предоставляет лучшую производительность, чем то, что можно получить "
 "выключением <varname>fsync</varname>, но без риска повреждения данных."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:422(para)
 msgid ""
 "<xref linkend=\"guc-commit-delay\"/> also sounds very similar to "
@@ -744,10 +819,12 @@ msgstr ""
 "группируются для единовременной записи на диск. Это распределяет стоимость "
 "записи между несколькими транзакциями."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:438(title)
 msgid "<acronym>WAL</acronym> Configuration"
 msgstr "Настройка <acronym>WAL</acronym>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:440(para)
 msgid ""
 "There are several <acronym>WAL</acronym>-related configuration parameters "
@@ -760,10 +837,12 @@ msgstr ""
 "их использовании. Общую информацию об установке параметров конфигурации "
 "сервера смотрите в <xref remap=\"6\" linkend=\"runtime-config\"/>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:448(indexterm)
 msgid "<primary>checkpoint</primary>"
 msgstr "<primary>контрольная точка</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:447(para)
 msgid ""
 "<firstterm>Checkpoints</firstterm><placeholder-1/> are points in the "
@@ -797,6 +876,7 @@ msgstr ""
 "архивирование WAL будет завершено, сегменты журнала должны быть архивированы "
 "перед их удалением или циклической перезаписи.)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:465(para)
 msgid ""
 "The checkpoint requirement of flushing all dirty data pages to disk can "
@@ -812,6 +892,7 @@ msgstr ""
 "перед стартом следующей контрольной точки; это минимизирует потерю "
 "производительности во время прохождения контрольных точек."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:473(para)
 msgid ""
 "The server's checkpointer process automatically performs a checkpoint every "
@@ -840,6 +921,7 @@ msgstr ""
 "выполнить контрольную точку принудительно, воспользовавшись SQL-командой "
 "<command>CHECKPOINT</command>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:490(para)
 msgid ""
 "Reducing <varname>checkpoint_timeout</varname> and/or <varname>max_wal_size</"
@@ -868,6 +950,7 @@ msgstr ""
 "интервала записи, и в любом случае приводит к увеличению объёма обмена с "
 "диском"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:505(para)
 msgid ""
 "Checkpoints are fairly expensive, first because they require writing out all "
@@ -901,6 +984,7 @@ msgstr ""
 "нескольких таких предупреждений, если вы не установили "
 "<varname>max_wal_size</varname> достаточно большим."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:523(para)
 msgid ""
 "To avoid flooding the I/O system with a burst of page writes, writing dirty "
@@ -948,6 +1032,7 @@ msgstr ""
 "что приведёт к потере производительности из-за неожиданных колебаний "
 "требуемого количества сегментов WAL."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:549(para)
 msgid ""
 "On Linux and POSIX platforms <xref linkend=\"guc-checkpoint-flush-after\"/> "
@@ -969,6 +1054,47 @@ msgstr ""
 "нагрузки больше <xref linkend=\"guc-shared-buffers\"/>, но меньше кеша "
 "страниц в ОС."
 
+#. +> REL_10
+#: wal.xml:560(para)
+msgid ""
+"The number of WAL segment files in <filename>pg_wal</filename> directory "
+"depends on <varname>min_wal_size</varname>, <varname>max_wal_size</varname> "
+"and the amount of WAL generated in previous checkpoint cycles. When old log "
+"segment files are no longer needed, they are removed or recycled (that is, "
+"renamed to become future segments in the numbered sequence). If, due to a "
+"short-term peak of log output rate, <varname>max_wal_size</varname> is "
+"exceeded, the unneeded segment files will be removed until the system gets "
+"back under this limit. Below that limit, the system recycles enough WAL "
+"files to cover the estimated need until the next checkpoint, and removes the "
+"rest. The estimate is based on a moving average of the number of WAL files "
+"used in previous checkpoint cycles. The moving average is increased "
+"immediately if the actual usage exceeds the estimate, so it accommodates "
+"peak usage rather than average usage to some extent. <varname>min_wal_size</"
+"varname> puts a minimum on the amount of WAL files recycled for future "
+"usage; that much WAL is always recycled for future use, even if the system "
+"is idle and the WAL usage estimate suggests that little WAL is needed."
+msgstr ""
+"Число файлов сегментов WAL в каталоге <filename>pg_wal</filename> зависит от "
+"<varname>min_wal_size</varname>, <varname>max_wal_size</varname> и объёма "
+"WAL, сгенерированного в предыдущих циклах контрольных точек. Когда старые "
+"файлы сегментов оказываются не нужны, они удаляются или перерабатываются (то "
+"есть переименовываются, чтобы стать будущими сегментами в нумерованной "
+"последовательности). Если вследствие кратковременного скачка интенсивности "
+"записи в журнал, предел <varname>max_wal_size</varname> превышается, "
+"ненужные файлы сегментов будут удаляться, пока система не опустится ниже "
+"этого предела. Оставаясь ниже этого предела, система перерабатывает столько "
+"файлов WAL, сколько необходимо для покрытия ожидаемой потребности до "
+"следующей контрольной точки, и удаляет остальные. Эта оценка базируется на "
+"скользящем среднем числа файлов WAL, задействованных в предыдущих циклах "
+"контрольных точек. Скользящее среднее увеличивается немедленно, если "
+"фактическое использование превышает оценку, так что в нём в некоторой "
+"степени накапливается пиковое использование, а не среднее. Значение "
+"<varname>min_wal_size</varname> ограничивает снизу число файлов WAL, которые "
+"будут переработаны для будущего использования; такой объём WAL всегда будет "
+"перерабатываться, даже если система простаивает и оценка использования "
+"говорит, что нужен совсем небольшой WAL."
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:560(para)
 msgid ""
 "The number of WAL segment files in <filename>pg_xlog</filename> directory "
@@ -1008,6 +1134,31 @@ msgstr ""
 "перерабатываться, даже если система простаивает и оценка использования "
 "говорит, что нужен совсем небольшой WAL."
 
+#. +> REL_10
+#: wal.xml:580(para)
+msgid ""
+"Independently of <varname>max_wal_size</varname>, <xref linkend=\"guc-wal-"
+"keep-segments\"/> + 1 most recent WAL files are kept at all times. Also, if "
+"WAL archiving is used, old segments can not be removed or recycled until "
+"they are archived. If WAL archiving cannot keep up with the pace that WAL is "
+"generated, or if <varname>archive_command</varname> fails repeatedly, old "
+"WAL files will accumulate in <filename>pg_wal</filename> until the situation "
+"is resolved. A slow or failed standby server that uses a replication slot "
+"will have the same effect (see <xref linkend=\"streaming-replication-slots\"/"
+">)."
+msgstr ""
+"Вне зависимости от <varname>max_wal_size</varname>, в количестве <xref "
+"linkend=\"guc-wal-keep-segments\"/> + 1 самые последние файлы WAL "
+"сохраняются в любом случае. Так же, если применяется архивация WAL, старые "
+"сегменты не могут быть удалены или переработаны, пока они не будут "
+"заархивированы. Если WAL архивируется медленнее, чем генерируется, либо если "
+"команда <varname>archive_command</varname> постоянно даёт сбои, старые файлы "
+"WAL будут накапливаться в <filename>pg_wal</filename>, пока ситуация не "
+"будет разрешена. Медленно работающий или отказавший ведомый сервер, "
+"использующий слот репликации, даст тот же эффект (см. <xref remap=\"4\" "
+"linkend=\"streaming-replication-slots\"/>)."
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:580(para)
 msgid ""
 "Independently of <varname>max_wal_size</varname>, <xref linkend=\"guc-wal-"
@@ -1027,14 +1178,55 @@ msgstr ""
 "заархивированы. Если WAL архивируется медленнее, чем генерируется, либо если "
 "команда <varname>archive_command</varname> постоянно даёт сбои, старые файлы "
 "WAL будут накапливаться в <filename>pg_xlog</filename>, пока ситуация не "
-"будет разрешена. Медленно работающий или отказавший резервный сервер, "
+"будет разрешена. Медленно работающий или отказавший ведомый сервер, "
 "использующий слот репликации, даст тот же эффект (см. <xref remap=\"4\" "
 "linkend=\"streaming-replication-slots\"/>)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:594(indexterm)
 msgid "<primary>restartpoint</primary>"
 msgstr "<primary>точка перезапуска</primary>"
 
+#. +> REL_10
+#: wal.xml:592(para)
+msgid ""
+"In archive recovery or standby mode, the server periodically performs "
+"<firstterm>restartpoints</firstterm>,<placeholder-1/> which are similar to "
+"checkpoints in normal operation: the server forces all its state to disk, "
+"updates the <filename>pg_control</filename> file to indicate that the "
+"already-processed WAL data need not be scanned again, and then recycles any "
+"old log segment files in the <filename>pg_wal</filename> directory. "
+"Restartpoints can't be performed more frequently than checkpoints in the "
+"master because restartpoints can only be performed at checkpoint records. A "
+"restartpoint is triggered when a checkpoint record is reached if at least "
+"<varname>checkpoint_timeout</varname> seconds have passed since the last "
+"restartpoint, or if WAL size is about to exceed <varname>max_wal_size</"
+"varname>. However, because of limitations on when a restartpoint can be "
+"performed, <varname>max_wal_size</varname> is often exceeded during "
+"recovery, by up to one checkpoint cycle's worth of WAL. "
+"(<varname>max_wal_size</varname> is never a hard limit anyway, so you should "
+"always leave plenty of headroom to avoid running out of disk space.)"
+msgstr ""
+"В режиме восстановления архива или горячего резерва сервер периодически "
+"выполняет <firstterm>точки перезапуска</firstterm><placeholder-1/>, которые "
+"похожи на контрольные точки в обычном режиме работы: сервер принудительно "
+"сбрасывает своё состояние на диск, обновляет файл <filename>pg_control</"
+"filename>, чтобы показать, что уже обработанные данные WAL не нужно "
+"сканировать снова, и затем перерабатывает все старые файлы сегментов журнала "
+"в каталоге <filename>pg_wal</filename>. Точки перезапуска не могут "
+"выполняться чаще, чем контрольные точки на главном сервере, так как они "
+"могут происходить только в записях контрольных точек. Точка перезапуска "
+"производится, когда достигается запись контрольной точки и после предыдущей "
+"точки перезапуска прошло не меньше <varname>checkpoint_timeout</varname> "
+"секунд или размер WAL может превысить <varname>max_wal_size</varname>. "
+"Однако из-за того, что на время выполнения точек перезапуска накладываются "
+"ограничения, <varname>max_wal_size</varname> часто превышается при "
+"восстановлении, вплоть до объёма WAL, записываемого в цикле между "
+"контрольными точками. (Значение <varname>max_wal_size</varname> никогда и не "
+"было жёстким пределом, так что всегда следует оставлять приличный запас "
+"сверху, чтобы не остаться без свободного места на диске.)"
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:592(para)
 msgid ""
 "In archive recovery or standby mode, the server periodically performs "
@@ -1073,6 +1265,7 @@ msgstr ""
 "было жёстким пределом, так что всегда следует оставлять приличный запас "
 "сверху, чтобы не остаться без свободного места на диске.)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:612(para)
 msgid ""
 "There are two commonly used internal <acronym>WAL</acronym> functions: "
@@ -1124,6 +1317,7 @@ msgstr ""
 "сгладить скачки во времени ответа в период сразу после каждой контрольной "
 "точки."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:639(para)
 msgid ""
 "The <xref linkend=\"guc-commit-delay\"/> parameter defines for how many "
@@ -1157,6 +1351,7 @@ msgstr ""
 "в некоторых системах состояние сна может продлиться несколько дольше, чем "
 "требует параметр."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:657(para)
 msgid ""
 "Since the purpose of <varname>commit_delay</varname> is to allow the cost of "
@@ -1206,6 +1401,7 @@ msgstr ""
 "значения параметра <varname>commit_delay</varname> может увеличить задержку "
 "транзакции настолько, что пострадает общая производительность транзакций."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:684(para)
 msgid ""
 "When <varname>commit_delay</varname> is set to zero (the default), it is "
@@ -1234,6 +1430,7 @@ msgstr ""
 "подсистемы. Однако при задержке из-за низкой скорости вращения диска, эта "
 "настройка может оказаться полезной даже всего при двух сеансах."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:701(para)
 msgid ""
 "The <xref linkend=\"guc-wal-sync-method\"/> parameter determines how "
@@ -1258,6 +1455,7 @@ msgstr ""
 "Обратите внимание, что данный параметр не имеет значения, если "
 "<varname>fsync</varname> выключен."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:715(para)
 msgid ""
 "Enabling the <xref linkend=\"guc-wal-debug\"/> configuration parameter "
@@ -1274,11 +1472,18 @@ msgstr ""
 "function> и <function>XLogFlush</function> будут протоколироваться в журнале "
 "сервера. В будущем данный параметр может быть заменён более общим механизмом."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: wal.xml:726(title)
 msgid "WAL Internals"
 msgstr "Внутреннее устройство WAL"
 
-#: wal.xml:728(para)
+#. +> REL_10
+#: wal.xml:728(indexterm)
+msgid "<primary>LSN</primary>"
+msgstr "<primary>LSN</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: wal.xml:732(para)
 msgid ""
 "<acronym>WAL</acronym> is automatically enabled; no action is required from "
 "the administrator except ensuring that the disk-space requirements for the "
@@ -1291,6 +1496,170 @@ msgstr ""
 "выполнены все необходимые действия по тонкой настройке (см. <xref remap="
 "\"4\" linkend=\"wal-configuration\"/>)."
 
+#. +> REL_10
+#: wal.xml:740(para)
+msgid ""
+"<acronym>WAL</acronym> records are appended to the <acronym>WAL</acronym> "
+"logs as each new record is written. The insert position is described by a "
+"Log Sequence Number (<acronym>LSN</acronym>) that is a byte offset into the "
+"logs, increasing monotonically with each new record. <acronym>LSN</acronym> "
+"values are returned as the datatype <link linkend=\"datatype-pg-lsn"
+"\"><type>pg_lsn</type></link>. Values can be compared to calculate the "
+"volume of <acronym>WAL</acronym> data that separates them, so they are used "
+"to measure the progress of replication and recovery."
+msgstr ""
+"Записи <acronym>WAL</acronym> добавляются в журналы <acronym>WAL</acronym> "
+"по мере поступления. Позицию добавления в журнал определяет значение "
+"<acronym>LSN</acronym> (Log Sequence Number, Последовательный номер в "
+"журнале), представляющее собой смещение в байтах внутри журнала, монотонно "
+"увеличивающееся с каждой новой записью. Значения <acronym>LSN</acronym> "
+"возвращаются с типом данных <link linkend=\"datatype-pg-lsn\"><type>pg_lsn</"
+"type></link>. Сравнивая эти значения, можно вычислить объём данных "
+"<acronym>WAL</acronym> между ними, так что они могут быть полезны для "
+"вычисления прогресса при репликации и восстановлении."
+
+#. +> REL_10
+#: wal.xml:752(para)
+msgid ""
+"<acronym>WAL</acronym> logs are stored in the directory <filename>pg_wal</"
+"filename> under the data directory, as a set of segment files, normally each "
+"16 MB in size (but the size can be changed by altering the <option>--with-"
+"wal-segsize</option> configure option when building the server). Each "
+"segment is divided into pages, normally 8 kB each (this size can be changed "
+"via the <option>--with-wal-blocksize</option> configure option). The log "
+"record headers are described in <filename>access/xlogrecord.h</filename>; "
+"the record content is dependent on the type of event that is being logged. "
+"Segment files are given ever-increasing numbers as names, starting at "
+"<filename>000000010000000000000000</filename>. The numbers do not wrap, but "
+"it will take a very, very long time to exhaust the available stock of "
+"numbers."
+msgstr ""
+"Журналы <acronym>WAL</acronym> хранятся в каталоге <filename>pg_wal</"
+"filename>, который находится в каталоге data, в виде списка файлов "
+"сегментов, обычно 16MB каждый (этот размер может быть изменён с помощью "
+"указания configure <option>--with-wal-segsize</option> во время компиляции "
+"сервера). Каждый файл сегмента разделяется на страницы, обычно по 8KB каждая "
+"(данный размер может быть изменён с помощью указания configure <option>--"
+"with-wal-blocksize</option>). Заголовки записи журнала описываются в "
+"<filename>access/xlogrecord.h</filename>; содержимое самой записи зависит от "
+"типа события, которое сохраняется в журнале. Файлы сегментов имеют имена-"
+"номера, которые начинаются с <filename>000000010000000000000000</filename> и "
+"увеличиваются автоматически. Эти номера не должны зацикливаться, но для "
+"использования доступных номеров потребуется очень, очень много времени."
+
+#. +> REL9_6_3 REL9_6
+#: wal.xml:752(para)
+msgid ""
+"It is advantageous if the log is located on a different disk from the main "
+"database files. This can be achieved by moving the <filename>pg_xlog</"
+"filename> directory to another location (while the server is shut down, of "
+"course) and creating a symbolic link from the original location in the main "
+"data directory to the new location."
+msgstr ""
+"Выгодно размещать журналы WAL на другом диске, отличном от того, где "
+"находятся основные файлы базы данных. Для этого можно переместить каталог "
+"<filename>pg_xlog</filename> в другое место (разумеется, когда сервер "
+"остановлен) и создать символьную ссылку из исходного места на перемещённый "
+"каталог."
+
+#. +> REL_10
+#: wal.xml:768(para)
+msgid ""
+"It is advantageous if the log is located on a different disk from the main "
+"database files. This can be achieved by moving the <filename>pg_wal</"
+"filename> directory to another location (while the server is shut down, of "
+"course) and creating a symbolic link from the original location in the main "
+"data directory to the new location."
+msgstr ""
+"Выгодно размещать журналы WAL на другом диске, отличном от того, где "
+"находятся основные файлы базы данных. Для этого можно переместить каталог "
+"<filename>pg_wal</filename> в другое место (разумеется, когда сервер "
+"остановлен) и создать символьную ссылку из исходного места на перемещённый "
+"каталог."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: wal.xml:779(indexterm)
+msgid "<primary>disk drive</primary>"
+msgstr "<primary>дисковое устройство</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: wal.xml:776(para)
+msgid ""
+"The aim of <acronym>WAL</acronym> is to ensure that the log is written "
+"before database records are altered, but this can be subverted by disk "
+"drives<placeholder-1/> that falsely report a successful write to the kernel, "
+"when in fact they have only cached the data and not yet stored it on the "
+"disk. A power failure in such a situation might lead to irrecoverable data "
+"corruption. Administrators should try to ensure that disks holding "
+"<productname>PostgreSQL</productname>'s <acronym>WAL</acronym> log files do "
+"not make such false reports. (See <xref linkend=\"wal-reliability\"/>.)"
+msgstr ""
+"Для <acronym>WAL</acronym> важно, чтобы запись в журнал выполнялась до "
+"изменений данных в базе. Но этот порядок могут нарушить дисковые "
+"устройства<placeholder-1/>, которые ложно сообщают ядру об успешном "
+"завершении записи, хотя фактически они только выполнили кеширование данных и "
+"пока не сохранили их на диск. Сбой питания в такой ситуации может привести к "
+"неисправимому повреждению данных. Администраторы должны убедиться, что "
+"диски, где хранятся файлы журналов <acronym>WAL</acronym> "
+"<productname>PostgreSQL</productname>, не выдают таких ложных сообщений "
+"ядру. (См. <xref remap=\"4\" linkend=\"wal-reliability\"/>.)"
+
+#. +> REL_10
+#: wal.xml:789(para)
+msgid ""
+"After a checkpoint has been made and the log flushed, the checkpoint's "
+"position is saved in the file <filename>pg_control</filename>. Therefore, at "
+"the start of recovery, the server first reads <filename>pg_control</"
+"filename> and then the checkpoint record; then it performs the REDO "
+"operation by scanning forward from the log location indicated in the "
+"checkpoint record. Because the entire content of data pages is saved in the "
+"log on the first page modification after a checkpoint (assuming <xref "
+"linkend=\"guc-full-page-writes\"/> is not disabled), all pages changed since "
+"the checkpoint will be restored to a consistent state."
+msgstr ""
+"После выполнения контрольной точки и сброса журнала позиция контрольной "
+"точки сохраняется в файл <filename>pg_control</filename>. Таким образом, при "
+"старте восстановления сервер сперва читает файл <filename>pg_control</"
+"filename> и затем запись контрольной точки; затем он выполняет операцию "
+"REDO, сканируя вперёд от позиции в журнале, обозначенной в записи "
+"контрольной точки. Поскольку полное содержимое страниц данных сохраняется в "
+"журнале в первой странице после контрольной точки (предполагается, что "
+"включён режим <xref linkend=\"guc-full-page-writes\"/>), все страницы, "
+"изменённые с момента контрольной точки, будут восстановлены в целостном "
+"состоянии."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: wal.xml:803(para)
+msgid ""
+"To deal with the case where <filename>pg_control</filename> is corrupt, we "
+"should support the possibility of scanning existing log segments in reverse "
+"order &mdash; newest to oldest &mdash; in order to find the latest "
+"checkpoint. This has not been implemented yet. <filename>pg_control</"
+"filename> is small enough (less than one disk page) that it is not subject "
+"to partial-write problems, and as of this writing there have been no reports "
+"of database failures due solely to the inability to read "
+"<filename>pg_control</filename> itself. So while it is theoretically a weak "
+"spot, <filename>pg_control</filename> does not seem to be a problem in "
+"practice."
+msgstr ""
+"В случае, если файл <filename>pg_control</filename> повреждён, мы должны "
+"поддерживать возможность сканирования существующих сегментов журнала в "
+"обратном порядке &mdash; от новых к старым &mdash; чтобы найти последнюю "
+"контрольную точку. Это пока не реализовано. <filename>pg_control</filename> "
+"является достаточно маленьким файлом (меньше, чем одна дисковая страница), "
+"который не должен попадать под проблему частичной записи и на момент "
+"написания данной документации, не было ни одного сообщения о сбоях СУБД "
+"исключительно из-за невозможности чтения самого файла <filename>pg_control</"
+"filename>. Таким образом, хотя теоретически это является слабым местом, на "
+"практике проблем с <filename>pg_control</filename> не обнаружено."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: wal.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
 #: wal.xml:736(para)
 msgid ""
 "<acronym>WAL</acronym> logs are stored in the directory <filename>pg_xlog</"
@@ -1319,45 +1688,7 @@ msgstr ""
 "увеличиваются автоматически. Эти номера не перекрываются, но пока доступные "
 "номера исчерпаются, пройдёт очень, очень долгое время."
 
-#: wal.xml:752(para)
-msgid ""
-"It is advantageous if the log is located on a different disk from the main "
-"database files. This can be achieved by moving the <filename>pg_xlog</"
-"filename> directory to another location (while the server is shut down, of "
-"course) and creating a symbolic link from the original location in the main "
-"data directory to the new location."
-msgstr ""
-"Выгодно размещать журналы WAL на другом диске, отличном от того, где "
-"находятся основные файлы базы данных. Для этого можно переместить каталог "
-"<filename>pg_xlog</filename> в другое место (разумеется, когда сервер "
-"остановлен) и создать символьную ссылку из исходного места на перемещённый "
-"каталог."
-
-#: wal.xml:763(indexterm)
-msgid "<primary>disk drive</primary>"
-msgstr "<primary>дисковое устройство</primary>"
-
-#: wal.xml:760(para)
-msgid ""
-"The aim of <acronym>WAL</acronym> is to ensure that the log is written "
-"before database records are altered, but this can be subverted by disk "
-"drives<placeholder-1/> that falsely report a successful write to the kernel, "
-"when in fact they have only cached the data and not yet stored it on the "
-"disk. A power failure in such a situation might lead to irrecoverable data "
-"corruption. Administrators should try to ensure that disks holding "
-"<productname>PostgreSQL</productname>'s <acronym>WAL</acronym> log files do "
-"not make such false reports. (See <xref linkend=\"wal-reliability\"/>.)"
-msgstr ""
-"Для <acronym>WAL</acronym> важно, чтобы запись в журнал выполнялась до "
-"изменений данных в базе. Но этот порядок могут нарушить дисковые "
-"устройства<placeholder-1/>, которые ложно сообщают ядру об успешном "
-"завершении записи, хотя фактически они только выполнили кеширование данных и "
-"пока не сохранили их на диск. Сбой питания в такой ситуации может привести к "
-"неисправимому повреждению данных. Администраторы должны убедиться, что "
-"диски, где хранятся файлы журналов <acronym>WAL</acronym> "
-"<productname>PostgreSQL</productname>, не выдают таких ложных сообщений "
-"ядру. (См. <xref remap=\"4\" linkend=\"wal-reliability\"/>.)"
-
+#. +> REL9_6_3 REL9_6
 #: wal.xml:773(para)
 msgid ""
 "After a checkpoint has been made and the log flushed, the checkpoint's "
@@ -1370,41 +1701,12 @@ msgid ""
 "linkend=\"guc-full-page-writes\"/> is not disabled), all pages changed since "
 "the checkpoint will be restored to a consistent state."
 msgstr ""
-"При наступлении контрольной точки и сохранения журнала, позиция контрольной "
+"После выполнения контрольной точки и сброса журнала позиция контрольной "
 "точки сохраняется в файл <filename>pg_control</filename>. Таким образом, при "
-"старте восстановления, сервер сперва читает файл <filename>pg_control</"
+"старте восстановления сервер сперва читает файл <filename>pg_control</"
 "filename> и затем запись контрольной точки; затем он выполняет операцию "
 "REDO, сканируя вперёд от точки журнала, обозначенной в записи контрольной "
 "точки. Поскольку полное содержимое страниц данных сохраняется в журнале в "
 "первой странице после контрольной точки (предполагается, что включён режим "
 "<xref linkend=\"guc-full-page-writes\"/>), все страницы, изменённые с "
-"момента контрольной точки будут восстановлены в целостное состояние."
-
-#: wal.xml:787(para)
-msgid ""
-"To deal with the case where <filename>pg_control</filename> is corrupt, we "
-"should support the possibility of scanning existing log segments in reverse "
-"order &mdash; newest to oldest &mdash; in order to find the latest "
-"checkpoint. This has not been implemented yet. <filename>pg_control</"
-"filename> is small enough (less than one disk page) that it is not subject "
-"to partial-write problems, and as of this writing there have been no reports "
-"of database failures due solely to the inability to read "
-"<filename>pg_control</filename> itself. So while it is theoretically a weak "
-"spot, <filename>pg_control</filename> does not seem to be a problem in "
-"practice."
-msgstr ""
-"В случае, если файл <filename>pg_control</filename> повреждён, мы должны "
-"поддерживать возможность сканирования существующих сегментов журнала в "
-"обратном порядке &mdash; от новых к старым &mdash; чтобы найти последнюю "
-"контрольную точку. Это пока не реализовано. <filename>pg_control</filename> "
-"является достаточно маленьким файлом (меньше, чем одна дисковая страница), "
-"который не должен попадать под проблему частичной записи и на момент "
-"написания данной документации, не было ни одного сообщения о сбоях СУБД "
-"исключительно из-за невозможности чтения самого файла <filename>pg_control</"
-"filename>. Таким образом, хотя теоретически это является слабым местом, на "
-"практике проблем с <filename>pg_control</filename> не обнаружено."
-
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: wal.xml:0(None)
-msgid "translator-credits"
-msgstr "translator-credits"
+"момента контрольной точки, будут восстановлены в целостном состоянии."

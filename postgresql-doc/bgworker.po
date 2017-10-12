@@ -1,10 +1,11 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:31+0300\n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
 "PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -14,14 +15,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:5(title)
 msgid "Background Worker Processes"
 msgstr "Фоновые рабочие процессы"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:7(indexterm)
 msgid "<primary>Background workers</primary>"
 msgstr "<primary>Фоновые рабочие процессы</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:11(para)
 msgid ""
 "PostgreSQL can be extended to run user-supplied code in separate processes. "
@@ -45,6 +49,7 @@ msgstr ""
 "application>, они могут подключаться к серверу и работать как обычные "
 "клиентские приложения."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:23(para)
 msgid ""
 "There are considerable robustness and security risks in using background "
@@ -61,6 +66,7 @@ msgstr ""
 "должны быть крайне осторожными. Запускать рабочие процессы можно разрешать "
 "только модулям, прошедшим всесторонний аудит."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:33(para)
 msgid ""
 "Background workers can be initialized at the time that "
@@ -89,6 +95,39 @@ msgstr ""
 "из управляющего процесса, <function>RegisterDynamicBackgroundWorker</"
 "function> должна вызываться из обычного обслуживающего процесса."
 
+#. +> REL_10
+#: bgworker.xml:50(programlisting)
+#, no-wrap
+msgid ""
+"typedef void (*bgworker_main_type)(Datum main_arg);\n"
+"typedef struct BackgroundWorker\n"
+"{\n"
+"    char        bgw_name[BGW_MAXLEN];\n"
+"    int         bgw_flags;\n"
+"    BgWorkerStartTime bgw_start_time;\n"
+"    int         bgw_restart_time;       /* in seconds, or BGW_NEVER_RESTART */\n"
+"    char        bgw_library_name[BGW_MAXLEN];\n"
+"    char        bgw_function_name[BGW_MAXLEN];\n"
+"    Datum       bgw_main_arg;\n"
+"    char        bgw_extra[BGW_EXTRALEN];\n"
+"    int         bgw_notify_pid;\n"
+"} BackgroundWorker;"
+msgstr ""
+"typedef void (*bgworker_main_type)(Datum main_arg);\n"
+"typedef struct BackgroundWorker\n"
+"{\n"
+"    char        bgw_name[BGW_MAXLEN];\n"
+"    int         bgw_flags;\n"
+"    BgWorkerStartTime bgw_start_time;\n"
+"    int         bgw_restart_time;   /* время в секундах либо BGW_NEVER_RESTART */\n"
+"    char        bgw_library_name[BGW_MAXLEN];\n"
+"    char        bgw_function_name[BGW_MAXLEN];\n"
+"    Datum       bgw_main_arg;\n"
+"    char        bgw_extra[BGW_EXTRALEN];\n"
+"    int         bgw_notify_pid;\n"
+"} BackgroundWorker;"
+
+#. +> REL9_6_3 REL9_6
 #: bgworker.xml:50(programlisting)
 #, no-wrap
 msgid ""
@@ -113,7 +152,7 @@ msgstr ""
 "    char        bgw_name[BGW_MAXLEN];\n"
 "    int         bgw_flags;\n"
 "    BgWorkerStartTime bgw_start_time;\n"
-"    int         bgw_restart_time;       /* в секундах, либо BGW_NEVER_RESTART */\n"
+"    int         bgw_restart_time;   /* время в секундах либо BGW_NEVER_RESTART */\n"
 "    bgworker_main_type bgw_main;\n"
 "    char        bgw_library_name[BGW_MAXLEN];   /* только если bgw_main — NULL */\n"
 "    char        bgw_function_name[BGW_MAXLEN];  /* только если bgw_main — NULL */\n"
@@ -122,6 +161,7 @@ msgstr ""
 "    int         bgw_notify_pid;\n"
 "} BackgroundWorker;"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:48(para)
 msgid ""
 "The structure <structname>BackgroundWorker</structname> is defined thus: "
@@ -130,7 +170,8 @@ msgstr ""
 "Структура <structname>BackgroundWorker</structname> определяется так: "
 "<placeholder-1/>"
 
-#: bgworker.xml:68(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:67(para)
 msgid ""
 "<structfield>bgw_name</structfield> is a string to be used in log messages, "
 "process listings and similar contexts."
@@ -138,15 +179,18 @@ msgstr ""
 "Поле <structfield>bgw_name</structfield> содержит строку, выводимую в "
 "отладочных сообщениях, списках процессов и подобных контекстах."
 
-#: bgworker.xml:79(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:78(literal)
 msgid "BGWORKER_SHMEM_ACCESS"
 msgstr "BGWORKER_SHMEM_ACCESS"
 
-#: bgworker.xml:82(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:81(indexterm)
 msgid "<primary>BGWORKER_SHMEM_ACCESS</primary>"
 msgstr "<primary>BGWORKER_SHMEM_ACCESS</primary>"
 
-#: bgworker.xml:81(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:80(para)
 msgid ""
 "<placeholder-1/> Requests shared memory access. Workers without shared "
 "memory access cannot access any of <productname>PostgreSQL's</productname> "
@@ -160,15 +204,18 @@ msgstr ""
 "блокировкам, общим буферам, или каким-либо структурам данным, которые "
 "рабочий процесс может создавать для собственного пользования."
 
-#: bgworker.xml:93(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:92(literal)
 msgid "BGWORKER_BACKEND_DATABASE_CONNECTION"
 msgstr "BGWORKER_BACKEND_DATABASE_CONNECTION"
 
-#: bgworker.xml:96(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:95(indexterm)
 msgid "<primary>BGWORKER_BACKEND_DATABASE_CONNECTION</primary>"
 msgstr "<primary>BGWORKER_BACKEND_DATABASE_CONNECTION</primary>"
 
-#: bgworker.xml:95(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:94(para)
 msgid ""
 "<placeholder-1/> Requests the ability to establish a database connection "
 "through which it can later run transactions and queries. A background worker "
@@ -183,7 +230,8 @@ msgstr ""
 "памяти, установив <literal>BGWORKER_SHMEM_ACCESS</literal>; в противном "
 "случае процесс не запустится."
 
-#: bgworker.xml:73(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:72(para)
 msgid ""
 "<structfield>bgw_flags</structfield> is a bitwise-or'd bit mask indicating "
 "the capabilities that the module wants. Possible values are: <placeholder-1/>"
@@ -192,7 +240,8 @@ msgstr ""
 "обозначающую запрашиваемые модулем возможности. Допустимые в нём флаги: "
 "<placeholder-1/>"
 
-#: bgworker.xml:110(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:109(para)
 msgid ""
 "<structfield>bgw_start_time</structfield> is the server state during which "
 "<command>postgres</command> should start the process; it can be one of "
@@ -223,7 +272,8 @@ msgstr ""
 "должны запускаться процессы; при переходе в другое состояние они не будут "
 "останавливаться."
 
-#: bgworker.xml:126(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:125(para)
 msgid ""
 "<structfield>bgw_restart_time</structfield> is the interval, in seconds, "
 "that <command>postgres</command> should wait before restarting the process, "
@@ -237,33 +287,54 @@ msgstr ""
 "либо <literal>BGW_NEVER_RESTART</literal>, указывающее, что процесс не нужно "
 "перезапускать в случае сбоя."
 
-#: bgworker.xml:134(para)
+#. +> REL_10
+#: bgworker.xml:133(para)
 msgid ""
-"<structfield>bgw_main</structfield> is a pointer to the function to run when "
-"the process is started. This field can only safely be used to launch "
-"functions within the core server, because shared libraries may be loaded at "
-"different starting addresses in different backend processes. This will "
-"happen on all platforms when the library is loaded using any mechanism other "
-"than <xref linkend=\"guc-shared-preload-libraries\"/>. Even when that "
-"mechanism is used, address space layout variations will still occur on "
-"Windows, and when <literal>EXEC_BACKEND</literal> is used. Therefore, most "
-"users of this API should set this field to NULL. If it is non-NULL, it takes "
-"precedence over <structfield>bgw_library_name</structfield> and "
-"<structfield>bgw_function_name</structfield>."
+"<structfield>bgw_library_name</structfield> is the name of a library in "
+"which the initial entry point for the background worker should be sought. "
+"The named library will be dynamically loaded by the worker process and "
+"<structfield>bgw_function_name</structfield> will be used to identify the "
+"function to be called. If loading a function from the core code, this must "
+"be set to \"postgres\"."
 msgstr ""
-"В <structfield>bgw_main</structfield> записывается указатель на функцию, "
-"вызываемую при запуске процесса. Этот указатель может безопасно "
-"использоваться для вызова функций только из ядра сервера, так как "
-"разделяемые библиотеки могут загружаться в разные рабочие процессы по разным "
-"адресам. Это происходит на всех платформах, если для загрузки библиотек "
-"применяется не механизм <xref linkend=\"guc-shared-preload-libraries\"/>. И "
-"даже когда применяется этот механизм, в системе Windows в карте адресного "
-"пространства возможны различия и при использовании <literal>EXEC_BACKEND</"
-"literal>. Поэтому пользователи этого API обычно должны записывать в это поле "
-"NULL. Если его значение отлично от NULL, оно имеет приоритет над "
-"<structfield>bgw_library_name</structfield> и "
-"<structfield>bgw_function_name</structfield>."
+"<structfield>bgw_library_name</structfield> определяет имя библиотеки, в "
+"которой следует искать точку входа для запуска рабочего процесса. Указанная "
+"библиотека будет динамически загружена рабочим процессом, а вызываемая "
+"функция будет выбрана по имени <structfield>bgw_function_name</structfield>. "
+"Для функции, загружаемой из кода ядра, в этом поле должно быть \"postgres\"."
 
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:142(para)
+msgid ""
+"<structfield>bgw_function_name</structfield> is the name of a function in a "
+"dynamically loaded library which should be used as the initial entry point "
+"for a new background worker."
+msgstr ""
+"<structfield>bgw_function_name</structfield> определяет имя функции в "
+"динамически загружаемой библиотеке, которая будет точкой входа в новый "
+"рабочий процесс."
+
+#. +> REL_10
+#: bgworker.xml:148(para)
+msgid ""
+"<structfield>bgw_main_arg</structfield> is the <type>Datum</type> argument "
+"to the background worker main function. This main function should take a "
+"single argument of type <type>Datum</type> and return <type>void</type>. "
+"<structfield>bgw_main_arg</structfield> will be passed as the argument. In "
+"addition, the global variable <literal>MyBgworkerEntry</literal> points to a "
+"copy of the <structname>BackgroundWorker</structname> structure passed at "
+"registration time; the worker may find it helpful to examine this structure."
+msgstr ""
+"В <structfield>bgw_main_arg</structfield> задаётся аргумент <type>Datum</"
+"type>, передаваемый основной функции фонового процесса. Эта функция должна "
+"принимать один аргумент типа <type>Datum</type> и возвращать <type>void</"
+"type>. В качестве этого аргумента ей и передаётся <structfield>bgw_main_arg</"
+"structfield>. Кроме того, глобальная переменная <literal>MyBgworkerEntry</"
+"literal> указывает на копию структуры <structname>BackgroundWorker</"
+"structname>, переданной при регистрации; содержимое этой структуры может "
+"быть полезно рабочему процессу."
+
+#. +> REL9_6_3 REL9_6
 #: bgworker.xml:148(para)
 msgid ""
 "<structfield>bgw_library_name</structfield> is the name of a library in "
@@ -280,41 +351,8 @@ msgstr ""
 "Для функции, загружаемой из кода ядра, вместо него следует задать "
 "<structfield>bgw_main</structfield>."
 
-#: bgworker.xml:157(para)
-msgid ""
-"<structfield>bgw_function_name</structfield> is the name of a function in a "
-"dynamically loaded library which should be used as the initial entry point "
-"for a new background worker."
-msgstr ""
-"<structfield>bgw_function_name</structfield> определяет имя функции в "
-"динамически загружаемой библиотеке, которая будет точкой входа в новый "
-"рабочий процесс."
-
-#: bgworker.xml:163(para)
-msgid ""
-"<structfield>bgw_main_arg</structfield> is the <type>Datum</type> argument "
-"to the background worker main function. Regardless of whether that function "
-"is specified via <structfield>bgw_main</structfield> or via the combination "
-"of <function>bgw_library_name</function> and <function>bgw_function_name</"
-"function>, this main function should take a single argument of type "
-"<type>Datum</type> and return <type>void</type>. <structfield>bgw_main_arg</"
-"structfield> will be passed as the argument. In addition, the global "
-"variable <literal>MyBgworkerEntry</literal> points to a copy of the "
-"<structname>BackgroundWorker</structname> structure passed at registration "
-"time; the worker may find it helpful to examine this structure."
-msgstr ""
-"В <structfield>bgw_main_arg</structfield> задаётся аргумент <type>Datum</"
-"type>, передаваемый основной функции фонового процесса. Независимо от того, "
-"задаётся ли эта функция значением поля <structfield>bgw_main</structfield> "
-"или сочетанием полей <function>bgw_library_name</function> и "
-"<function>bgw_function_name</function>, она должна принимать один аргумент "
-"типа <type>Datum</type> и возвращать <type>void</type>. В качестве этого "
-"аргумента ей и передаётся <structfield>bgw_main_arg</structfield>. Кроме "
-"того, глобальная переменная <literal>MyBgworkerEntry</literal> указывает на "
-"копию структуры <structname>BackgroundWorker</structname>, переданной при "
-"регистрации; содержимое этой структуры может быть полезно рабочему процессу."
-
-#: bgworker.xml:177(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:159(para)
 msgid ""
 "On Windows (and anywhere else where <literal>EXEC_BACKEND</literal> is "
 "defined) or in dynamic background workers it is not safe to pass a "
@@ -333,7 +371,8 @@ msgstr ""
 "<type>text</type>, этот указатель нельзя будет использовать в новом рабочем "
 "процессе."
 
-#: bgworker.xml:187(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:169(para)
 msgid ""
 "<structfield>bgw_extra</structfield> can contain extra data to be passed to "
 "the background worker. Unlike <structfield>bgw_main_arg</structfield>, this "
@@ -346,7 +385,8 @@ msgstr ""
 "аргумента основной функции рабочего процесса, но могут быть получены через "
 "<literal>MyBgworkerEntry</literal>, как описывалось выше."
 
-#: bgworker.xml:194(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:176(para)
 msgid ""
 "<structfield>bgw_notify_pid</structfield> is the PID of a PostgreSQL backend "
 "process to which the postmaster should send <literal>SIGUSR1</literal> when "
@@ -363,7 +403,8 @@ msgstr ""
 "ждать окончания запуска рабочего процесса. Во всех остальных случаях в нём "
 "должно быть значение <literal>MyProcPid</literal>."
 
-#: bgworker.xml:203(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:185(para)
 msgid ""
 "Once running, the process can connect to a database by calling "
 "<function>BackgroundWorkerInitializeConnection(<parameter>char *dbname</"
@@ -395,23 +436,24 @@ msgstr ""
 "двух этих функций и только один раз. Переключаться между базами данных он не "
 "может."
 
-#: bgworker.xml:217(para)
+#. +> REL_10
+#: bgworker.xml:199(para)
 msgid ""
-"Signals are initially blocked when control reaches the "
-"<structfield>bgw_main</structfield> function, and must be unblocked by it; "
-"this is to allow the process to customize its signal handlers, if necessary. "
-"Signals can be unblocked in the new process by calling "
-"<function>BackgroundWorkerUnblockSignals</function> and blocked by calling "
-"<function>BackgroundWorkerBlockSignals</function>."
+"Signals are initially blocked when control reaches the background worker's "
+"main function, and must be unblocked by it; this is to allow the process to "
+"customize its signal handlers, if necessary. Signals can be unblocked in the "
+"new process by calling <function>BackgroundWorkerUnblockSignals</function> "
+"and blocked by calling <function>BackgroundWorkerBlockSignals</function>."
 msgstr ""
-"Сигналы изначально блокируются при вызове функции <structfield>bgw_main</"
-"structfield> и при необходимости должны быть разблокированы ей; это "
-"позволяет процессу настроить собственные обработчики событий. Новый процесс "
-"может разблокировать сигналы, вызвав "
-"<function>BackgroundWorkerUnblockSignals</function>, и заблокировать их, "
-"вызвав <function>BackgroundWorkerBlockSignals</function>."
+"Сигналы изначально блокируются при вызове основной функции рабочего процесса "
+"и должны быть разблокированы ей: это позволяет процессу при необходимости "
+"настроить собственные обработчики событий. Новый процесс может "
+"разблокировать сигналы, вызвав <function>BackgroundWorkerUnblockSignals</"
+"function>, и заблокировать их, вызвав "
+"<function>BackgroundWorkerBlockSignals</function>."
 
-#: bgworker.xml:226(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:208(para)
 msgid ""
 "If <structfield>bgw_restart_time</structfield> for a background worker is "
 "configured as <literal>BGW_NEVER_RESTART</literal>, or if it exits with an "
@@ -443,7 +485,8 @@ msgstr ""
 "корректно выйти в экстренном случае, когда был завершён сам "
 "<command>postgres</command>."
 
-#: bgworker.xml:242(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:224(para)
 msgid ""
 "When a background worker is registered using the "
 "<function>RegisterDynamicBackgroundWorker</function> function, it is "
@@ -489,7 +532,8 @@ msgstr ""
 "<literal>SIGTERM</literal> рабочему процессу, если он работает, и перестаёт "
 "его контролировать сразу по его завершении."
 
-#: bgworker.xml:265(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:247(para)
 msgid ""
 "In some cases, a process which registers a background worker may wish to "
 "wait for the worker to start up. This can be accomplished by initializing "
@@ -519,7 +563,8 @@ msgstr ""
 "возвращается значение <literal>BGWH_STOPPED</literal> или "
 "<literal>BGWH_POSTMASTER_DIED</literal>."
 
-#: bgworker.xml:281(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:263(para)
 msgid ""
 "If a background worker sends asynchronous notifications with the "
 "<command>NOTIFY</command> command via the Server Programming Interface "
@@ -541,7 +586,8 @@ msgstr ""
 "будут выводиться, но перехватить и обработать эти уведомления программным "
 "образом нет возможности."
 
-#: bgworker.xml:293(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:275(para)
 msgid ""
 "The <filename>src/test/modules/worker_spi</filename> module contains a "
 "working example, which demonstrates some useful techniques."
@@ -549,7 +595,8 @@ msgstr ""
 "Рабочий пример, демонстрирующий некоторые полезные приёмы, можно найти в "
 "модуле <filename>src/test/modules/worker_spi</filename>."
 
-#: bgworker.xml:299(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: bgworker.xml:281(para)
 msgid ""
 "The maximum number of registered background workers is limited by <xref "
 "linkend=\"guc-max-worker-processes\"/>."
@@ -558,6 +605,77 @@ msgstr ""
 "ограничивается значением <xref linkend=\"guc-max-worker-processes\"/>."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
 #: bgworker.xml:0(None)
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: bgworker.xml:134(para)
+msgid ""
+"<structfield>bgw_main</structfield> is a pointer to the function to run when "
+"the process is started. This field can only safely be used to launch "
+"functions within the core server, because shared libraries may be loaded at "
+"different starting addresses in different backend processes. This will "
+"happen on all platforms when the library is loaded using any mechanism other "
+"than <xref linkend=\"guc-shared-preload-libraries\"/>. Even when that "
+"mechanism is used, address space layout variations will still occur on "
+"Windows, and when <literal>EXEC_BACKEND</literal> is used. Therefore, most "
+"users of this API should set this field to NULL. If it is non-NULL, it takes "
+"precedence over <structfield>bgw_library_name</structfield> and "
+"<structfield>bgw_function_name</structfield>."
+msgstr ""
+"В <structfield>bgw_main</structfield> записывается указатель на функцию, "
+"вызываемую при запуске процесса. Этот указатель может безопасно "
+"использоваться для вызова функций только из ядра сервера, так как "
+"разделяемые библиотеки могут загружаться в разные рабочие процессы по разным "
+"адресам. Это происходит на всех платформах, если для загрузки библиотек "
+"применяется не механизм <xref linkend=\"guc-shared-preload-libraries\"/>. И "
+"даже когда применяется этот механизм, в системе Windows в карте адресного "
+"пространства возможны различия и при использовании <literal>EXEC_BACKEND</"
+"literal>. Поэтому пользователи этого API обычно должны записывать в это поле "
+"NULL. Если его значение отлично от NULL, оно имеет приоритет над "
+"<structfield>bgw_library_name</structfield> и "
+"<structfield>bgw_function_name</structfield>."
+
+#. +> REL9_6_3 REL9_6
+#: bgworker.xml:163(para)
+msgid ""
+"<structfield>bgw_main_arg</structfield> is the <type>Datum</type> argument "
+"to the background worker main function. Regardless of whether that function "
+"is specified via <structfield>bgw_main</structfield> or via the combination "
+"of <function>bgw_library_name</function> and <function>bgw_function_name</"
+"function>, this main function should take a single argument of type "
+"<type>Datum</type> and return <type>void</type>. <structfield>bgw_main_arg</"
+"structfield> will be passed as the argument. In addition, the global "
+"variable <literal>MyBgworkerEntry</literal> points to a copy of the "
+"<structname>BackgroundWorker</structname> structure passed at registration "
+"time; the worker may find it helpful to examine this structure."
+msgstr ""
+"В <structfield>bgw_main_arg</structfield> задаётся аргумент <type>Datum</"
+"type>, передаваемый основной функции фонового процесса. Независимо от того, "
+"задаётся ли эта функция значением поля <structfield>bgw_main</structfield> "
+"или сочетанием полей <function>bgw_library_name</function> и "
+"<function>bgw_function_name</function>, она должна принимать один аргумент "
+"типа <type>Datum</type> и возвращать <type>void</type>. В качестве этого "
+"аргумента ей и передаётся <structfield>bgw_main_arg</structfield>. Кроме "
+"того, глобальная переменная <literal>MyBgworkerEntry</literal> указывает на "
+"копию структуры <structname>BackgroundWorker</structname>, переданной при "
+"регистрации; содержимое этой структуры может быть полезно рабочему процессу."
+
+#. +> REL9_6_3 REL9_6
+#: bgworker.xml:217(para)
+msgid ""
+"Signals are initially blocked when control reaches the "
+"<structfield>bgw_main</structfield> function, and must be unblocked by it; "
+"this is to allow the process to customize its signal handlers, if necessary. "
+"Signals can be unblocked in the new process by calling "
+"<function>BackgroundWorkerUnblockSignals</function> and blocked by calling "
+"<function>BackgroundWorkerBlockSignals</function>."
+msgstr ""
+"Сигналы изначально блокируются при вызове функции <structfield>bgw_main</"
+"structfield> и при необходимости должны быть разблокированы ей; это "
+"позволяет процессу настроить собственные обработчики событий. Новый процесс "
+"может разблокировать сигналы, вызвав "
+"<function>BackgroundWorkerUnblockSignals</function>, и заблокировать их, "
+"вызвав <function>BackgroundWorkerBlockSignals</function>."

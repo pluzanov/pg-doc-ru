@@ -1,0 +1,1014 @@
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: REL 10_BETA1\n"
+"POT-Creation-Date: 2017-07-31 21:47+0300\n"
+"PO-Revision-Date: 2017-09-28 18:20+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
+"Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#. +> REL_10
+#: logical-replication.xml:5(title)
+msgid "Logical Replication"
+msgstr "Логическая репликация"
+
+#. +> REL_10
+#: logical-replication.xml:7(para)
+msgid ""
+"Logical replication is a method of replicating data objects and their "
+"changes, based upon their replication identity (usually a primary key). We "
+"use the term logical in contrast to physical replication, which uses exact "
+"block addresses and byte-by-byte replication. PostgreSQL supports both "
+"mechanisms concurrently, see <xref linkend=\"high-availability\"/>. Logical "
+"replication allows fine-grained control over both data replication and "
+"security."
+msgstr ""
+"Логическая репликация — это метод репликации объектов данных и изменений в "
+"них, использующий репликационные идентификаторы (обычно это первичный ключ). "
+"Мы называем такую репликацию «логической», в отличие от физической, которая "
+"построена на точных адресах блоков и побайтовом копировании. PostgreSQL "
+"поддерживает оба механизма одновременно; см. <xref remap=\"4\" linkend="
+"\"high-availability\"/>. Логическая репликация позволяет более детально "
+"управлять репликацией данных и аспектами безопасности."
+
+#. +> REL_10
+#: logical-replication.xml:17(para)
+msgid ""
+"Logical replication uses a <firstterm>publish</firstterm> and "
+"<firstterm>subscribe</firstterm> model with one or more "
+"<firstterm>subscribers</firstterm> subscribing to one or more "
+"<firstterm>publications</firstterm> on a <firstterm>publisher</firstterm> "
+"node. Subscribers pull data from the publications they subscribe to and may "
+"subsequently re-publish data to allow cascading replication or more complex "
+"configurations."
+msgstr ""
+"В логической репликации используется модель <firstterm>публикаций</"
+"firstterm>/<firstterm>подписок</firstterm> с одним или несколькими "
+"<firstterm>подписчиками</firstterm>, которые подписываются на одну или "
+"несколько <firstterm>публикаций</firstterm> на <firstterm>публикующем</"
+"firstterm> узле. Подписчики получают данные из публикаций, на которые они "
+"подписаны, и могут затем повторно опубликовать данные для организации "
+"каскадной репликации или более сложных конфигураций."
+
+#. +> REL_10
+#: logical-replication.xml:27(para)
+msgid ""
+"Logical replication of a table typically starts with taking a snapshot of "
+"the data on the publisher database and copying that to the subscriber. Once "
+"that is done, the changes on the publisher are sent to the subscriber as "
+"they occur in real-time. The subscriber applies the data in the same order "
+"as the publisher so that transactional consistency is guaranteed for "
+"publications within a single subscription. This method of data replication "
+"is sometimes referred to as transactional replication."
+msgstr ""
+"Логическая репликация таблицы обычно начинается с создания снимка данных в "
+"публикуемой базе данных и копирования её подписчику. После этого изменения "
+"на стороне публикации передаются подписчику в реальном времени, когда они "
+"происходят. Подписчик применяет изменения в том же порядке, что и узел "
+"публикации, так что для публикаций в рамках одной подписки гарантируется "
+"транзакционная целостность. Этот метод репликации данных иногда называется "
+"транзакционной репликацией."
+
+#. +> REL_10
+#: logical-replication.xml:42(para)
+msgid ""
+"Sending incremental changes in a single database or a subset of a database "
+"to subscribers as they occur."
+msgstr ""
+"Передача подписчикам инкрементальных изменений в одной базе данных или "
+"подмножестве базы данных, когда они происходят."
+
+#. +> REL_10
+#: logical-replication.xml:49(para)
+msgid ""
+"Firing triggers for individual changes as they arrive on the subscriber."
+msgstr ""
+"Срабатывание триггеров для отдельных изменений, когда их получает подписчик."
+
+#. +> REL_10
+#: logical-replication.xml:56(para)
+msgid ""
+"Consolidating multiple databases into a single one (for example for "
+"analytical purposes)."
+msgstr ""
+"Объединение нескольких баз данных в одну (например, для целей анализа)."
+
+#. +> REL_10
+#: logical-replication.xml:63(para)
+msgid "Replicating between different major versions of PostgreSQL."
+msgstr "Репликация между разными основными версиями PostgreSQL."
+
+#. +> REL_10
+#: logical-replication.xml:69(para)
+msgid "Giving access to replicated data to different groups of users."
+msgstr ""
+"Предоставление доступа к реплицированным данным другим группам пользователей."
+
+#. +> REL_10
+#: logical-replication.xml:75(para)
+msgid "Sharing a subset of the database between multiple databases."
+msgstr "Разделение подмножества базы данных между несколькими базами данных."
+
+#. +> REL_10
+#: logical-replication.xml:37(para)
+msgid "The typical use-cases for logical replication are: <placeholder-1/>"
+msgstr ""
+"Типичные сценарии использования логической репликации: <placeholder-1/>"
+
+#. +> REL_10
+#: logical-replication.xml:82(para)
+msgid ""
+"The subscriber database behaves in the same way as any other PostgreSQL "
+"instance and can be used as a publisher for other databases by defining its "
+"own publications. When the subscriber is treated as read-only by "
+"application, there will be no conflicts from a single subscription. On the "
+"other hand, if there are other writes done either by an application or by "
+"other subscribers to the same set of tables, conflicts can arise."
+msgstr ""
+"База данных подписчика функционирует так же, как и любой другой экземпляр "
+"базы PostgreSQL, и может стать публикующей, если создать публикации в ней. "
+"Когда подписчик действует как исключительно читающее приложение, никаких "
+"конфликтов с одной подпиской не будет. Но они могут возникнуть, если в тот "
+"же набор таблиц производят запись какие-либо приложения или другие "
+"подписчики."
+
+#. +> REL_10
+#: logical-replication.xml:92(title)
+msgid "Publication"
+msgstr "Публикация"
+
+#. +> REL_10
+#: logical-replication.xml:94(para)
+msgid ""
+"A <firstterm>publication</firstterm> can be defined on any physical "
+"replication master. The node where a publication is defined is referred to "
+"as <firstterm>publisher</firstterm>. A publication is a set of changes "
+"generated from a table or a group of tables, and might also be described as "
+"a change set or replication set. Each publication exists in only one "
+"database."
+msgstr ""
+"<firstterm>Публикация</firstterm> может быть определена на любом ведущем "
+"сервере физической репликации. Сервер, на котором определяется публикация, "
+"называется <firstterm>публикующим</firstterm>. Публикация — это набор "
+"изменений, выделяемых в таблице или в группе таблиц (он также может "
+"называться набором репликации). Публикация существует только в одной базе "
+"данных."
+
+#. +> REL_10
+#: logical-replication.xml:102(para)
+msgid ""
+"Publications are different from schemas and do not affect how the table is "
+"accessed. Each table can be added to multiple publications if needed. "
+"Publications may currently only contain tables. Objects must be added "
+"explicitly, except when a publication is created for <literal>ALL TABLES</"
+"literal>."
+msgstr ""
+"Публикации отличаются от схем и они никак не влияют на доступ к таблице. "
+"Если требуется, каждую таблицу можно включить в несколько публикаций. В "
+"настоящее время публикации могут содержать только таблицы. Объекты в них "
+"нужно добавлять явным образом, если только публикация не создана для всех "
+"таблиц (с указанием <literal>ALL TABLES</literal>)."
+
+#. +> REL_10
+#: logical-replication.xml:110(para)
+msgid ""
+"Publications can choose to limit the changes they produce to any combination "
+"of <command>INSERT</command>, <command>UPDATE</command>, and "
+"<command>DELETE</command>, similar to how triggers are fired by particular "
+"event types. By default, all operation types are replicated."
+msgstr ""
+"Публикации могут ограничивать набор публикуемых изменений, выбирая любое "
+"сочетание операций из <command>INSERT</command>, <command>UPDATE</command> и "
+"<command>DELETE</command>, подобно тому как триггеры могут срабатывать для "
+"разных типов событий. По умолчанию реплицируются все типы операций."
+
+#. +> REL_10
+#: logical-replication.xml:117(para)
+msgid ""
+"A published table must have a <quote>replica identity</quote> configured in "
+"order to be able to replicate <command>UPDATE</command> and <command>DELETE</"
+"command> operations, so that appropriate rows to update or delete can be "
+"identified on the subscriber side. By default, this is the primary key, if "
+"there is one. Another unique index (with certain additional requirements) "
+"can also be set to be the replica identity. If the table does not have any "
+"suitable key, then it can be set to replica identity <quote>full</quote>, "
+"which means the entire row becomes the key. This, however, is very "
+"inefficient and should only be used as a fallback if no other solution is "
+"possible. If a replica identity other than <quote>full</quote> is set on the "
+"publisher side, a replica identity comprising the same or fewer columns must "
+"also be set on the subscriber side. See <xref linkend=\"sql-createtable-"
+"replica-identity\"/> for details on how to set the replica identity. If a "
+"table without a replica identity is added to a publication that replicates "
+"<command>UPDATE</command> or <command>DELETE</command> operations then "
+"subsequent <command>UPDATE</command> or <command>DELETE</command> operations "
+"will cause an error on the publisher. <command>INSERT</command> operations "
+"can proceed regardless of any replica identity."
+msgstr ""
+"Чтобы можно было реплицировать операции <command>UPDATE</command> и "
+"<command>DELETE</command>, в публикуемой таблице должен быть настроен "
+"<quote>репликационный идентификатор</quote> для нахождения соответствующих "
+"строк для изменения или удаления на стороне подписчика. По умолчанию это "
+"первичный ключ, если он создан. Также репликационным идентификатором можно "
+"назначить другой уникальный индекс (с некоторыми дополнительными условиями). "
+"Если в таблице нет подходящего ключа, в качестве репликационного "
+"идентификатора можно задать <quote>full</quote>, что будет означать, что "
+"ключом будет вся строка. Это, однако, очень неэффективно и должно "
+"применяться как крайняя мера, если другого решения нет. Если на стороне "
+"публикации выбран репликационный идентификатор, отличный от <quote>full</"
+"quote>, то идентификатор, состоящий из того же или меньшего количества "
+"столбцов, также должен быть определён на стороне подписчика. Подробнее о "
+"назначении репликационного идентификатора рассказывается в <xref remap=\"6\" "
+"linkend=\"sql-createtable-replica-identity\"/>. Если в публикацию, в которой "
+"реплицируются операции <command>UPDATE</command> и <command>DELETE</"
+"command>, добавляется таблица без репликационного идентификатора, то "
+"последующие команды <command>UPDATE</command> и <command>DELETE</command> на "
+"стороне публикации вызовут ошибку. Команды <command>INSERT</command> могут "
+"выполняться вне зависимости от такого идентификатора."
+
+#. +> REL_10
+#: logical-replication.xml:139(para)
+msgid "Every publication can have multiple subscribers."
+msgstr "У каждой публикации может быть множество подписчиков."
+
+#. +> REL_10
+#: logical-replication.xml:143(para)
+msgid ""
+"A publication is created using the <xref linkend=\"sql-createpublication\"/> "
+"command and may later be altered or dropped using corresponding commands."
+msgstr ""
+"Публикация создаётся командой <xref linkend=\"sql-createpublication\"/> и "
+"может быть впоследствии изменена или удалена с помощью соответствующих "
+"команд."
+
+#. +> REL_10
+#: logical-replication.xml:148(para)
+msgid ""
+"The individual tables can be added and removed dynamically using <xref "
+"linkend=\"sql-alterpublication\"/>. Both the <literal>ADD TABLE</literal> "
+"and <literal>DROP TABLE</literal> operations are transactional; so the table "
+"will start or stop replicating at the correct snapshot once the transaction "
+"has committed."
+msgstr ""
+"В публикации можно динамически добавлять или удалять отдельные таблицы, "
+"используя команду <xref linkend=\"sql-alterpublication\"/>. Операции "
+"<literal>ADD TABLE</literal> и <literal>DROP TABLE</literal> являются "
+"транзакционными, так что репликация таблицы будет начата или закончена с "
+"определённым снимком только после фиксации транзакции."
+
+#. +> REL_10
+#: logical-replication.xml:158(title)
+msgid "Subscription"
+msgstr "Подписка"
+
+#. +> REL_10
+#: logical-replication.xml:160(para)
+msgid ""
+"A <firstterm>subscription</firstterm> is the downstream side of logical "
+"replication. The node where a subscription is defined is referred to as the "
+"<firstterm>subscriber</firstterm>. A subscription defines the connection to "
+"another database and set of publications (one or more) to which it wants to "
+"subscribe."
+msgstr ""
+"<firstterm>Подписка</firstterm> — это принимающая сторона логической "
+"репликации. Узел, на котором определяется подписка, называется "
+"<firstterm>подписчиком</firstterm>. В свойствах подписки определяется "
+"подключение к другой базе данных и набор публикаций (из одной или "
+"нескольких), на которые подписчик хочет подписаться."
+
+#. +> REL_10
+#: logical-replication.xml:168(para)
+msgid ""
+"The subscriber database behaves in the same way as any other PostgreSQL "
+"instance and can be used as a publisher for other databases by defining its "
+"own publications."
+msgstr ""
+"База данных подписчика работает так же, как и экземпляр любой другой базы "
+"PostgreSQL, и может быть публикующей для других баз, если в ней определены "
+"собственные подписки."
+
+#. +> REL_10
+#: logical-replication.xml:174(para)
+msgid ""
+"A subscriber node may have multiple subscriptions if desired. It is possible "
+"to define multiple subscriptions between a single publisher-subscriber pair, "
+"in which case care must be taken to ensure that the subscribed publication "
+"objects don't overlap."
+msgstr ""
+"Узел подписчика может подписываться на несколько подписок, если требуется. В "
+"одной паре публикующий сервер/подписчик могут быть определены несколько "
+"подписок, но при этом нужно позаботиться о том, чтобы публикуемые объекты в "
+"разных подписках не перекрывались."
+
+#. +> REL_10
+#: logical-replication.xml:181(para)
+msgid ""
+"Each subscription will receive changes via one replication slot (see <xref "
+"linkend=\"streaming-replication-slots\"/>). Additional temporary replication "
+"slots may be required for the initial data synchronization of pre-existing "
+"table data."
+msgstr ""
+"Изменения в каждой подписке будут приходить через один слот репликации (см. "
+"<xref remap=\"4\" linkend=\"streaming-replication-slots\"/>). Дополнительные "
+"слоты репликации могут потребоваться для начальной синхронизации уже "
+"существующих данных таблиц."
+
+#. +> REL_10
+#: logical-replication.xml:188(para)
+msgid ""
+"A logical replication subscription can be a standby for synchronous "
+"replication (see <xref linkend=\"synchronous-replication\"/>). The standby "
+"name is by default the subscription name. An alternative name can be "
+"specified as <literal>application_name</literal> in the connection "
+"information of the subscription."
+msgstr ""
+"Подписка логической репликации может представлять собой ведомый узел для "
+"синхронной репликации (см. <xref remap=\"4\" linkend=\"synchronous-"
+"replication\"/>). В этом случае именем ведомого узла по умолчанию будет имя "
+"подписки. Другое имя можно задать в свойстве <literal>application_name</"
+"literal> в строке подключения для данной подписки."
+
+#. +> REL_10
+#: logical-replication.xml:196(para)
+msgid ""
+"Subscriptions are dumped by <command>pg_dump</command> if the current user "
+"is a superuser. Otherwise a warning is written and subscriptions are "
+"skipped, because non-superusers cannot read all subscription information "
+"from the <structname>pg_subscription</structname> catalog."
+msgstr ""
+"Подписки могут быть выгружены командой <command>pg_dump</command>, если её "
+"выполняет суперпользователь. В противном случае выдаётся предупреждение и "
+"подписки пропускаются, так как обычным пользователям не разрешено читать всю "
+"информацию о подписках из каталога <structname>pg_subscription</structname>."
+
+#. +> REL_10
+#: logical-replication.xml:203(para)
+msgid ""
+"The subscription is added using <xref linkend=\"sql-createsubscription\"/> "
+"and can be stopped/resumed at any time using the <xref linkend=\"sql-"
+"altersubscription\"/> command and removed using <xref linkend=\"sql-"
+"dropsubscription\"/>."
+msgstr ""
+"Подписки добавляются командой <xref linkend=\"sql-createsubscription\"/> и "
+"могут быть остановлены/возобновлены в любой момент командой <xref linkend="
+"\"sql-altersubscription\"/>, а также удалены командой <xref linkend=\"sql-"
+"dropsubscription\"/>."
+
+#. +> REL_10
+#: logical-replication.xml:210(para)
+msgid ""
+"When a subscription is dropped and recreated, the synchronization "
+"information is lost. This means that the data has to be resynchronized "
+"afterwards."
+msgstr ""
+"Когда подписка удаляется и пересоздаётся, информация о синхронизации "
+"теряется. Это означает, что после этого данные необходимо синхронизировать "
+"заново."
+
+#. +> REL_10
+#: logical-replication.xml:216(para)
+msgid ""
+"The schema definitions are not replicated, and the published tables must "
+"exist on the subscriber. Only regular tables may be the target of "
+"replication. For example, you can't replicate to a view."
+msgstr ""
+"Определения схемы не реплицируются, а публикуемые таблицы должны "
+"существовать в базе подписчика. Объектами репликации могут быть только "
+"обычные таблицы. Так, например, нельзя произвести репликацию в представление."
+
+#. +> REL_10
+#: logical-replication.xml:222(para)
+msgid ""
+"The tables are matched between the publisher and the subscriber using the "
+"fully qualified table name. Replication to differently-named tables on the "
+"subscriber is not supported."
+msgstr ""
+"Таблицы публикации сопоставляются с таблицами подписчика по полностью "
+"заданным именам таблиц. Репликация в таблицы с другими именами на стороне "
+"подписчика не поддерживается."
+
+#. +> REL_10
+#: logical-replication.xml:228(para)
+msgid ""
+"Columns of a table are also matched by name. A different order of columns in "
+"the target table is allowed, but the column types have to match. The target "
+"table can have additional columns not provided by the published table. Those "
+"will be filled with their default values."
+msgstr ""
+"Столбцы таблиц также сопоставляются по именам. Другой порядок столбцов в "
+"целевой таблице допускается, но типы столбцов должны совпадать. Целевая "
+"таблица может содержать дополнительные столбцы, отсутствующие в публикуемой "
+"таблице. Они будут заполнены установленными для них значениями по умолчанию."
+
+#. +> REL_10
+#: logical-replication.xml:236(title)
+msgid "Replication Slot Management"
+msgstr "Управление слотами репликации"
+
+#. +> REL_10
+#: logical-replication.xml:250(para)
+msgid ""
+"When creating a subscription, the replication slot already exists. In that "
+"case, the subscription can be created using the <literal>create_slot = "
+"false</literal> option to associate with the existing slot."
+msgstr ""
+"При создании подписки слот репликации может уже существовать. В этом случае "
+"подписку можно создать с параметром <literal>create_slot = false</literal>, "
+"чтобы она была связана с существующим слотом."
+
+#. +> REL_10
+#: logical-replication.xml:259(para)
+msgid ""
+"When creating a subscription, the remote host is not reachable or in an "
+"unclear state. In that case, the subscription can be created using the "
+"<literal>connect = false</literal> option. The remote host will then not be "
+"contacted at all. This is what <application>pg_dump</application> uses. The "
+"remote replication slot will then have to be created manually before the "
+"subscription can be activated."
+msgstr ""
+"Про создании подписки удалённый узел может быть недоступен или находиться в "
+"нерабочем состоянии. В этом случае подписку можно создать с указанием "
+"<literal>connect = false</literal>. При этом подключение к удалённому узлу "
+"не будет устанавливаться. Этот вариант использует <application>pg_dump</"
+"application>. Чтобы активировать такую подписку впоследствии, удалённый слот "
+"репликации нужно будет создать вручную."
+
+#. +> REL_10
+#: logical-replication.xml:270(para)
+msgid ""
+"When dropping a subscription, the replication slot should be kept. This "
+"could be useful when the subscriber database is being moved to a different "
+"host and will be activated from there. In that case, disassociate the slot "
+"from the subscription using <command>ALTER SUBSCRIPTION</command> before "
+"attempting to drop the subscription."
+msgstr ""
+"При ликвидации репликации может потребоваться сохранить слот репликации. "
+"Например, это полезно, когда нужно перенести базу данных подписчика на "
+"другой узел и активировать её там. В этом случае разорвите связь подписки со "
+"слотом, используя команду <command>ALTER SUBSCRIPTION</command>, прежде чем "
+"удалять подписку."
+
+#. +> REL_10
+#: logical-replication.xml:280(para)
+msgid ""
+"When dropping a subscription, the remote host is not reachable. In that "
+"case, disassociate the slot from the subscription using <command>ALTER "
+"SUBSCRIPTION</command> before attempting to drop the subscription. If the "
+"remote database instance no longer exists, no further action is then "
+"necessary. If, however, the remote database instance is just unreachable, "
+"the replication slot should then be dropped manually; otherwise it would "
+"continue to reserve WAL and might eventually cause the disk to fill up. Such "
+"cases should be carefully investigated."
+msgstr ""
+"При ликвидации подписки удалённый узел может быть недоступен. В этом случае "
+"разорвите связь подписки со слотом, используя команду <command>ALTER "
+"SUBSCRIPTION</command>, прежде чем пытаться удалять подписку. Если удалённый "
+"экземпляр базы данных прекратил существование, больше никакие действия не "
+"требуются. Если же экземпляр удалённой базы данных просто оказался "
+"недоступным, слот репликации нужно будет удалить вручную; в противном случае "
+"публикующий сервер продолжит сохранять WAL и может в конце концов заполнить "
+"всё место на диске. Такие случаи заслуживают самого серьёзного "
+"разбирательства."
+
+#. +> REL_10
+#: logical-replication.xml:238(para)
+msgid ""
+"As mentioned earlier, each (active) subscription receives changes from a "
+"replication slot on the remote (publishing) side. Normally, the remote "
+"replication slot is created automatically when the subscription is created "
+"using <command>CREATE SUBSCRIPTION</command> and it is dropped automatically "
+"when the subscription is dropped using <command>DROP SUBSCRIPTION</command>. "
+"In some situations, however, it can be useful or necessary to manipulate the "
+"subscription and the underlying replication slot separately. Here are some "
+"scenarios: <placeholder-1/>"
+msgstr ""
+"Как было сказано ранее, каждая (активная) подписка получает изменения из "
+"слота репликации на удалённой стороне (стороне публикации). Обычно удалённый "
+"слот репликации создаётся автоматически, когда подписка создаётся командой "
+"<command>CREATE SUBSCRIPTION</command>, и удаляется автоматически, когда она "
+"удаляется командой <command>DROP SUBSCRIPTION</command>. Однако в некоторых "
+"ситуациях может быть полезно или необходимо манипулировать подпиской и "
+"нижележащим слотом по отдельности. Например, возможны такие сценарии: "
+"<placeholder-1/>"
+
+#. +> REL_10
+#: logical-replication.xml:298(title)
+msgid "Conflicts"
+msgstr "Конфликты"
+
+#. +> REL_10
+#: logical-replication.xml:300(para)
+msgid ""
+"Logical replication behaves similarly to normal DML operations in that the "
+"data will be updated even if it was changed locally on the subscriber node. "
+"If incoming data violates any constraints the replication will stop. This is "
+"referred to as a <firstterm>conflict</firstterm>. When replicating "
+"<command>UPDATE</command> or <command>DELETE</command> operations, missing "
+"data will not produce a conflict and such operations will simply be skipped."
+msgstr ""
+"Логическая репликация работает подобно обычным операциям DML в том смысле, "
+"что данные будут изменены, даже если они независимо изменялись на стороне "
+"подписчика. Если входящие данные нарушат какие-либо ограничения, репликация "
+"остановится. Эта ситуация называется <firstterm>конфликтом</firstterm>. При "
+"репликации операций <command>UPDATE</command> или <command>DELETE</command> "
+"отсутствие данных не вызывает конфликта, так что такие операции просто "
+"пропускаются."
+
+#. +> REL_10
+#: logical-replication.xml:310(para)
+msgid ""
+"A conflict will produce an error and will stop the replication; it must be "
+"resolved manually by the user. Details about the conflict can be found in "
+"the subscriber's server log."
+msgstr ""
+"В случае конфликта выдаётся ошибка и репликация останавливается; разрешить "
+"возникшую проблему пользователь должен вручную. Подробности конфликта можно "
+"найти в журнале сервера-подписчика."
+
+#. +> REL_10
+#: logical-replication.xml:316(para)
+msgid ""
+"The resolution can be done either by changing data on the subscriber so that "
+"it does not conflict with the incoming change or by skipping the transaction "
+"that conflicts with the existing data. The transaction can be skipped by "
+"calling the <link linkend=\"pg-replication-origin-advance"
+"\"><function>pg_replication_origin_advance()</function></link> function with "
+"a <parameter>node_name</parameter> corresponding to the subscription name, "
+"and a position. The current position of origins can be seen in the <link "
+"linkend=\"view-pg-replication-origin-status"
+"\"><structname>pg_replication_origin_status</structname></link> system view."
+msgstr ""
+"Разрешение может заключаться либо в изменении данных на стороне подписчика, "
+"чтобы они не конфликтовали с приходящим изменением, либо в пропуске "
+"транзакции, конфликтующей с существующими данными. Пропустить транзакцию "
+"можно, вызвав функцию <link linkend=\"pg-replication-origin-advance"
+"\"><function>pg_replication_origin_advance()</function></link>, которой "
+"передаётся в <parameter>node_name</parameter> соответствующее имя подписки, "
+"а также позиция. Текущие позиции источников можно увидеть в системном "
+"представлении <link linkend=\"view-pg-replication-origin-status"
+"\"><structname>pg_replication_origin_status</structname></link>."
+
+#. +> REL_10
+#: logical-replication.xml:330(title)
+msgid "Restrictions"
+msgstr "Ограничения"
+
+#. +> REL_10
+#: logical-replication.xml:332(para)
+msgid ""
+"Logical replication currently has the following restrictions or missing "
+"functionality. These might be addressed in future releases."
+msgstr ""
+"Логическая репликация в настоящее время имеет ограничения и недостатки, "
+"описанные ниже. Они могут быть устранены в будущих выпусках."
+
+#. +> REL_10
+#: logical-replication.xml:339(para)
+msgid ""
+"The database schema and DDL commands are not replicated. The initial schema "
+"can be copied by hand using <literal>pg_dump --schema-only</literal>. "
+"Subsequent schema changes would need to be kept in sync manually. (Note, "
+"however, that there is no need for the schemas to be absolutely the same on "
+"both sides.) Logical replication is robust when schema definitions change in "
+"a live database: When the schema is changed on the publisher and replicated "
+"data starts arriving at the subscriber but does not fit into the table "
+"schema, replication will error until the schema is updated. In many cases, "
+"intermittent errors can be avoided by applying additive schema changes to "
+"the subscriber first."
+msgstr ""
+"Схема базы данных и команды DDL не реплицируются. Изначальную схему можно "
+"скопировать, воспользовавшись командой <literal>pg_dump --schema-only</"
+"literal>. Последующие изменения схемы необходимо будет синхронизировать "
+"вручную. (Заметьте, однако, что схемы не обязательно должны быть абсолютно "
+"идентичными на обеих сторонах репликации.) Если определения схемы в исходной "
+"базе данных меняются, логическая репликация работает надёжно — когда данные "
+"после изменения схемы прибывают на сторону подписчика, но не вписываются в "
+"схему его таблиц, выдаётся ошибка, требующая обновления схемы. Во многих "
+"случаях возникновение таких ошибок можно предупредить, сначала применяя "
+"дополняющие изменения на подписчике."
+
+#. +> REL_10
+#: logical-replication.xml:354(para)
+msgid ""
+"Sequence data is not replicated. The data in serial or identity columns "
+"backed by sequences will of course be replicated as part of the table, but "
+"the sequence itself would still show the start value on the subscriber. If "
+"the subscriber is used as a read-only database, then this should typically "
+"not be a problem. If, however, some kind of switchover or failover to the "
+"subscriber database is intended, then the sequences would need to be updated "
+"to the latest values, either by copying the current data from the publisher "
+"(perhaps using <command>pg_dump</command>) or by determining a sufficiently "
+"high value from the tables themselves."
+msgstr ""
+"Данные последовательностей не реплицируются. Данные в столбцах serial или "
+"столбцах идентификации, выдаваемые последовательностями, конечно, будут "
+"реплицированы в составе таблицы, но сама последовательность на подписчике "
+"будет сохранять стартовое значение. Если подписчик используется в качестве "
+"базы только для чтения, обычно это не является проблемой. Если же, однако, "
+"предусматривается возможность переключения на базу подписчика некоторым "
+"образом, текущие значения в этих последовательностях нужно будет обновить, "
+"либо скопировав текущие данные из базы публикации (вероятно, с применением "
+"<command>pg_dump</command>), либо выбрав достаточно большие значения из "
+"самих таблиц."
+
+#. +> REL_10
+#: logical-replication.xml:369(para)
+msgid ""
+"<command>TRUNCATE</command> commands are not replicated. This can, of "
+"course, be worked around by using <command>DELETE</command> instead. To "
+"avoid accidental <command>TRUNCATE</command> invocations, you can revoke the "
+"<literal>TRUNCATE</literal> privilege from tables."
+msgstr ""
+"Команды <command>TRUNCATE</command> не реплицируются. Разумеется, это можно "
+"обойти, выполняя вместо них команды <command>DELETE</command>. Чтобы "
+"предотвратить случайное выполнение <command>TRUNCATE</command>, вы можете "
+"отозвать право <literal>TRUNCATE</literal> для реплицируемых таблиц."
+
+#. +> REL_10
+#: logical-replication.xml:378(para)
+msgid ""
+"Large objects (see <xref linkend=\"largeobjects\"/>) are not replicated. "
+"There is no workaround for that, other than storing data in normal tables."
+msgstr ""
+"Большие объекты (см. <xref remap=\"4\" linkend=\"largeobjects\"/>) не "
+"реплицируются. Это ограничение нельзя обойти никак, кроме как хранить данные "
+"в обычных таблицах."
+
+#. +> REL_10
+#: logical-replication.xml:386(para)
+msgid ""
+"Replication is only possible from base tables to base tables. That is, the "
+"tables on the publication and on the subscription side must be normal "
+"tables, not views, materialized views, partition root tables, or foreign "
+"tables. In the case of partitions, you can therefore replicate a partition "
+"hierarchy one-to-one, but you cannot currently replicate to a differently "
+"partitioned setup. Attempts to replicate tables other than base tables will "
+"result in an error."
+msgstr ""
+"Реплицировать данные возможно только из базовых таблиц в базовые таблицы. То "
+"есть таблицы на стороне публикации и на стороне подписки должны быть "
+"обычными, а не представлениями, мат. представлениями, секционированными или "
+"сторонними таблицами. Это означает, что вы можете реплицировать секции одну "
+"в одну, но реплицировать данные в таблицы, секционированные по-другому, "
+"нельзя. При попытке реплицировать таблицы, отличные от базовых, будет выдана "
+"ошибка."
+
+#. +> REL_10
+#: logical-replication.xml:400(title)
+msgid "Architecture"
+msgstr "Архитектура"
+
+#. +> REL_10
+#: logical-replication.xml:402(para)
+msgid ""
+"Logical replication starts by copying a snapshot of the data on the "
+"publisher database. Once that is done, changes on the publisher are sent to "
+"the subscriber as they occur in real time. The subscriber applies data in "
+"the order in which commits were made on the publisher so that transactional "
+"consistency is guaranteed for the publications within any single "
+"subscription."
+msgstr ""
+"Логическая репликация начинается с копирования снимка данных в базе данных "
+"публикации. По завершении этой операции изменения на стороне публикации "
+"передаются подписчику в реальном времени, когда они происходят. Подписчик "
+"применяет изменения в том же порядке, в каком они вносятся на узле "
+"публикации, так что для публикаций в рамках одной подписки гарантируется "
+"транзакционная целостность."
+
+#. +> REL_10
+#: logical-replication.xml:411(para)
+msgid ""
+"Logical replication is built with an architecture similar to physical "
+"streaming replication (see <xref linkend=\"streaming-replication\"/>). It is "
+"implemented by <quote>walsender</quote> and <quote>apply</quote> processes. "
+"The walsender process starts logical decoding (described in <xref linkend="
+"\"logicaldecoding\"/>) of the WAL and loads the standard logical decoding "
+"plugin (pgoutput). The plugin transforms the changes read from WAL to the "
+"logical replication protocol (see <xref linkend=\"protocol-logical-"
+"replication\"/>) and filters the data according to the publication "
+"specification. The data is then continuously transferred using the streaming "
+"replication protocol to the apply worker, which maps the data to local "
+"tables and applies the individual changes as they are received, in correct "
+"transactional order."
+msgstr ""
+"Логическая репликация построена по схеме, подобной физической потоковой "
+"репликации (см. <xref remap=\"4\" linkend=\"streaming-replication\"/>). Она "
+"реализуется процессами <quote>walsender</quote> (передачи WAL) и "
+"<quote>apply</quote> (применения). Процесс walsender запускает логическое "
+"декодирование (описанное в <xref remap=\"6\" linkend=\"logicaldecoding\"/>) "
+"WAL и загружает стандартный модуль логического декодирования (pgoutput). "
+"Этот модуль преобразует изменения, считываемые из WAL, в протокол логической "
+"репликации (см. <xref remap=\"4\" linkend=\"protocol-logical-replication\"/"
+">) и отфильтровывает данные согласно спецификации публикации. Затем данные "
+"последовательно передаются по протоколу логической репликации рабочему "
+"процессу применения изменений, который сопоставляет данные с логическими "
+"таблицами и применяет отдельные изменения по мере их поступления, сохраняя "
+"транзакционный порядок."
+
+#. +> REL_10
+#: logical-replication.xml:426(para)
+msgid ""
+"The apply process on the subscriber database always runs with "
+"<varname>session_replication_role</varname> set to <literal>replica</"
+"literal>, which produces the usual effects on triggers and constraints."
+msgstr ""
+"Процесс применения изменений в базе данных подписчика всегда выполняется со "
+"значением <varname>session_replication_role</varname>, равным "
+"<literal>replica</literal>, что влечёт соответствующие эффекты для триггеров "
+"и ограничений."
+
+#. +> REL_10
+#: logical-replication.xml:433(para)
+msgid ""
+"The logical replication apply process currently only fires row triggers, not "
+"statement triggers. The initial table synchronization, however, is "
+"implemented like a <command>COPY</command> command and thus fires both row "
+"and statement triggers for <command>INSERT</command>."
+msgstr ""
+"Процесс применения логической репликации в настоящее время вызывает только "
+"триггеры уровня строк, но не триггеры операторов. Однако начальная "
+"синхронизация таблицы реализована как команда <command>COPY</command> и "
+"поэтому вызывает триггеры для <command>INSERT</command> и уровня строк, и "
+"уровня оператора."
+
+#. +> REL_10
+#: logical-replication.xml:441(title)
+msgid "Initial Snapshot"
+msgstr "Начальный снимок"
+
+#. +> REL_10
+#: logical-replication.xml:442(para)
+msgid ""
+"The initial data in existing subscribed tables are snapshotted and copied in "
+"a parallel instance of a special kind of apply process. This process will "
+"create its own temporary replication slot and copy the existing data. Once "
+"existing data is copied, the worker enters synchronization mode, which "
+"ensures that the table is brought up to a synchronized state with the main "
+"apply process by streaming any changes that happened during the initial data "
+"copy using standard logical replication. Once the synchronization is done, "
+"the control of the replication of the table is given back to the main apply "
+"process where the replication continues as normal."
+msgstr ""
+"Начальные данные существующих таблиц в подписке помещаются в снимок и "
+"копируются в параллельном экземпляре процесса применения особого вида. Этот "
+"процесс создаёт собственный слот репликации и производит копирование "
+"существующих данных. Когда существующие данные будут скопированы, этот "
+"рабочий процесс переходит в режим синхронизации, в котором таблица "
+"приводится в синхронизированное состояние для основного процесса применения, "
+"то есть передаёт все изменения, произошедшие во время начального копирования "
+"данных, используя стандартную логическую репликацию. По завершении "
+"синхронизации управление репликацией этой таблицы возвращается главному "
+"процессу, который продолжает репликацию в обычном режиме."
+
+#. +> REL_10
+#: logical-replication.xml:458(title)
+msgid "Monitoring"
+msgstr "Мониторинг"
+
+#. +> REL_10
+#: logical-replication.xml:460(para)
+msgid ""
+"Because logical replication is based on a similar architecture as <link "
+"linkend=\"streaming-replication\">physical streaming replication</link>, the "
+"monitoring on a publication node is similar to monitoring of a physical "
+"replication master (see <xref linkend=\"streaming-replication-monitoring\"/"
+">)."
+msgstr ""
+"Так как логическая репликация построена по схеме, подобной <link linkend="
+"\"streaming-replication\">физической потоковой репликации</link>, мониторинг "
+"публикующего узла подобен мониторингу ведущего сервера при физической "
+"репликации (см. <xref remap=\"4\" linkend=\"streaming-replication-monitoring"
+"\"/>)."
+
+#. +> REL_10
+#: logical-replication.xml:468(para)
+msgid ""
+"The monitoring information about subscription is visible in <link linkend="
+"\"pg-stat-subscription\"><literal>pg_stat_subscription</literal></link>. "
+"This view contains one row for every subscription worker. A subscription can "
+"have zero or more active subscription workers depending on its state."
+msgstr ""
+"Информацию о подписке для мониторинга можно получить в представлении <link "
+"linkend=\"pg-stat-subscription\"><literal>pg_stat_subscription</literal></"
+"link>. Это представление содержит по одной строке для каждого рабочего "
+"процесса подписчика. В зависимости от состояния подписки, с ней может быть "
+"связано ноль или более активных рабочих процессов."
+
+#. +> REL_10
+#: logical-replication.xml:475(para)
+msgid ""
+"Normally, there is a single apply process running for an enabled "
+"subscription. A disabled subscription or a crashed subscription will have "
+"zero rows in this view. If the initial data synchronization of any table is "
+"in progress, there will be additional workers for the tables being "
+"synchronized."
+msgstr ""
+"Обычно для включённой подписки работает только один процесс применения. Для "
+"отключённой или нарушенной подписки это представление будет содержать ноль "
+"строк. Если выполняется начальная синхронизация данных для каких-либо "
+"таблиц, для этих таблиц будут показаны дополнительные рабочие процессы, "
+"производящие синхронизацию."
+
+#. +> REL_10
+#: logical-replication.xml:485(title)
+msgid "Security"
+msgstr "Безопасность"
+
+#. +> REL_10
+#: logical-replication.xml:487(para)
+msgid ""
+"The role used for the replication connection must have the "
+"<literal>REPLICATION</literal> attribute (or be a superuser). Access for the "
+"role must be configured in <filename>pg_hba.conf</filename>."
+msgstr ""
+"Роль, используемая для подключения репликации, должна иметь атрибут "
+"<literal>REPLICATION</literal> (или быть суперпользователем). Доступ для "
+"этой роли должен быть настроен в <filename>pg_hba.conf</filename>."
+
+#. +> REL_10
+#: logical-replication.xml:493(para)
+msgid ""
+"To create a publication, the user must have the <literal>CREATE</literal> "
+"privilege in the database."
+msgstr ""
+"Чтобы создать публикацию, пользователь должен иметь право <literal>CREATE</"
+"literal> в базе данных."
+
+#. +> REL_10
+#: logical-replication.xml:498(para)
+msgid ""
+"To add tables to a publication, the user must have ownership rights on the "
+"table. To create a publication that publishes all tables automatically, the "
+"user must be a superuser."
+msgstr ""
+"Чтобы добавлять таблицы в публикацию, пользователь должен иметь права "
+"владельца для этих таблиц. Создавать публикации, публикующие все таблицы "
+"автоматически, разрешено только суперпользователям."
+
+#. +> REL_10
+#: logical-replication.xml:504(para)
+msgid "To create a subscription, the user must be a superuser."
+msgstr "Создавать подписки разрешено только суперпользователям."
+
+#. +> REL_10
+#: logical-replication.xml:508(para)
+msgid ""
+"The subscription apply process will run in the local database with the "
+"privileges of a superuser."
+msgstr ""
+"Процесс применения изменений подписки будет выполняться в локальной базе с "
+"правами суперпользователя."
+
+#. +> REL_10
+#: logical-replication.xml:513(para)
+msgid ""
+"Privileges are only checked once at the start of a replication connection. "
+"They are not re-checked as each change record is read from the publisher, "
+"nor are they re-checked for each change when applied."
+msgstr ""
+"Права проверяются только один раз при установлении подключения для "
+"репликации. Они не перепроверяются при чтении каждой записи изменения с "
+"публикующего сервера и не перепроверяются при применении каждого изменения."
+
+#. +> REL_10
+#: logical-replication.xml:521(title)
+msgid "Configuration Settings"
+msgstr "Параметры конфигурации"
+
+#. +> REL_10
+#: logical-replication.xml:523(para)
+msgid "Logical replication requires several configuration options to be set."
+msgstr ""
+"Для осуществления логической репликации необходимо установить несколько "
+"параметров конфигурации."
+
+#. +> REL_10
+#: logical-replication.xml:527(para)
+msgid ""
+"On the publisher side, <varname>wal_level</varname> must be set to "
+"<literal>logical</literal>, and <varname>max_replication_slots</varname> "
+"must be set to at least the number of subscriptions expected to connect, "
+"plus some reserve for table synchronization. And <varname>max_wal_senders</"
+"varname> should be set to at least the same as "
+"<varname>max_replication_slots</varname> plus the number of physical "
+"replicas that are connected at the same time."
+msgstr ""
+"На публикующем сервере параметр <varname>wal_level</varname> должен иметь "
+"значение <literal>logical</literal>, а в <varname>max_replication_slots</"
+"varname> должно быть задано число не меньше ожидаемого числа подписчиков "
+"плюс некоторый резерв для синхронизации таблиц. А в "
+"<varname>max_wal_senders</varname> должно быть значение как минимум равное "
+"<varname>max_replication_slots</varname> плюс число возможных физических "
+"реплик, работающих одновременно."
+
+#. +> REL_10
+#: logical-replication.xml:537(para)
+msgid ""
+"The subscriber also requires the <varname>max_replication_slots</varname> to "
+"be set. In this case it should be set to at least the number of "
+"subscriptions that will be added to the subscriber. "
+"<varname>max_logical_replication_workers</varname> must be set to at least "
+"the number of subscriptions, again plus some reserve for the table "
+"synchronization. Additionally the <varname>max_worker_processes</varname> "
+"may need to be adjusted to accommodate for replication workers, at least "
+"(<varname>max_logical_replication_workers</varname> + <literal>1</literal>). "
+"Note that some extensions and parallel queries also take worker slots from "
+"<varname>max_worker_processes</varname>."
+msgstr ""
+"Также на стороне подписчика необходимо установить параметр "
+"<varname>max_replication_slots</varname>. В данном случае он должен быть не "
+"меньше числа подписок, на которые будет подписываться данный подписчик. В "
+"<varname>max_logical_replication_workers</varname> необходимо установить "
+"минимум число подписок плюс некоторый резерв для синхронизации таблиц. Кроме "
+"того, может потребоваться изменить <varname>max_worker_processes</varname>, "
+"чтобы это число включало дополнительные рабочие процессы для репликации (как "
+"минимум <varname>max_logical_replication_workers</varname> + <literal>1</"
+"literal>). Заметьте, что некоторые расширения и параллельные запросы также "
+"занимают слоты из числа <varname>max_worker_processes</varname>."
+
+#. +> REL_10
+#: logical-replication.xml:552(title)
+msgid "Quick Setup"
+msgstr "Быстрая настройка"
+
+#. +> REL_10
+#: logical-replication.xml:556(programlisting)
+#, no-wrap
+msgid "wal_level = logical"
+msgstr "wal_level = logical"
+
+#. +> REL_10
+#: logical-replication.xml:554(para)
+msgid ""
+"First set the configuration options in <filename>postgresql.conf</filename>: "
+"<placeholder-1/> The other required settings have default values that are "
+"sufficient for a basic setup."
+msgstr ""
+"Сначала установите параметры конфигурации в <filename>postgresql.conf</"
+"filename>: <placeholder-1/> Другие необходимые параметры по умолчанию имеют "
+"значения, подходящие для базовой настройки."
+
+#. +> REL_10
+#: logical-replication.xml:567(programlisting)
+#, no-wrap
+msgid "host     all     repuser     0.0.0.0/0     md5"
+msgstr "host     all     repuser     0.0.0.0/0     md5"
+
+#. +> REL_10
+#: logical-replication.xml:563(para)
+msgid ""
+"<filename>pg_hba.conf</filename> needs to be adjusted to allow replication "
+"(the values here depend on your actual network configuration and user you "
+"want to use for connecting): <placeholder-1/>"
+msgstr ""
+"В файл <filename>pg_hba.conf</filename> необходимо внести изменения, чтобы "
+"разрешить репликацию (конкретные значения будут зависеть от фактической "
+"конфигурации сети и имени пользователя, с которым вы будете подключаться): "
+"<placeholder-1/>"
+
+#. +> REL_10
+#: logical-replication.xml:574(programlisting)
+#, no-wrap
+msgid "CREATE PUBLICATION mypub FOR TABLE users, departments;"
+msgstr "CREATE PUBLICATION mypub FOR TABLE users, departments;"
+
+#. +> REL_10
+#: logical-replication.xml:572(para)
+msgid "Then on the publisher database: <placeholder-1/>"
+msgstr "Затем в базе данных публикации выполните: <placeholder-1/>"
+
+#. +> REL_10
+#: logical-replication.xml:581(programlisting)
+#, no-wrap
+msgid "CREATE SUBSCRIPTION mysub CONNECTION 'dbname=foo host=bar user=repuser' PUBLICATION mypub;"
+msgstr "CREATE SUBSCRIPTION mysub CONNECTION 'dbname=foo host=bar user=repuser' PUBLICATION mypub;"
+
+#. +> REL_10
+#: logical-replication.xml:579(para)
+msgid "And on the subscriber database: <placeholder-1/>"
+msgstr "И в базе данных подписчика: <placeholder-1/>"
+
+#. +> REL_10
+#: logical-replication.xml:586(para)
+msgid ""
+"The above will start the replication process, which synchronizes the initial "
+"table contents of the tables <literal>users</literal> and "
+"<literal>departments</literal> and then starts replicating incremental "
+"changes to those tables."
+msgstr ""
+"Показанная выше команда запустит процесс репликации, который вначале "
+"синхронизирует исходное содержимого таблиц <literal>users</literal> и "
+"<literal>departments</literal>, а затем начнёт перенос инкрементальных "
+"изменений в этих таблицах."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10
+#: logical-replication.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"

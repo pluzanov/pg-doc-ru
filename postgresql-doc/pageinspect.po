@@ -1,10 +1,11 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016.
+# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2012, 2013, 2015, 2016, 2017.
 # Pavel Luzanov <p.luzanov@postgrespro.ru>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-08-19 11:32+0300\n"
-"PO-Revision-Date: 2016-04-13 09:36+0300\n"
+"POT-Creation-Date: 2017-09-15 11:13+0300\n"
+"PO-Revision-Date: 2017-08-15 11:32+0300\n"
+"Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -14,14 +15,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:5(title)
 msgid "pageinspect"
 msgstr "pageinspect"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:7(indexterm)
 msgid "<primary>pageinspect</primary>"
 msgstr "<primary>pageinspect</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:11(para)
 msgid ""
 "The <filename>pageinspect</filename> module provides functions that allow "
@@ -33,18 +37,27 @@ msgstr ""
 "исследовать страницы баз данных на низком уровне, что бывает полезно для "
 "отладки. Все эти функции могут вызывать только суперпользователи."
 
+#. +> REL_10
+#: pageinspect.xml:18(title)
+msgid "General Functions"
+msgstr "Функции общего назначения"
+
+#. +> REL9_6_3 REL9_6
 #: pageinspect.xml:18(title)
 msgid "Functions"
 msgstr "Функции"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:23(function)
 msgid "get_raw_page(relname text, fork text, blkno int) returns bytea"
 msgstr "get_raw_page(relname text, fork text, blkno int) returns bytea"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:24(indexterm)
 msgid "<primary>get_raw_page</primary>"
 msgstr "<primary>get_raw_page</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:30(para)
 msgid ""
 "<function>get_raw_page</function> reads the specified block of the named "
@@ -62,10 +75,12 @@ msgstr ""
 "свободного пространства, <literal>'vm'</literal> — к карте видимости, либо "
 "<literal>'init'</literal> — к слою инициализации."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:44(function)
 msgid "get_raw_page(relname text, blkno int) returns bytea"
 msgstr "get_raw_page(relname text, blkno int) returns bytea"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:48(para)
 msgid ""
 "A shorthand version of <function>get_raw_page</function>, for reading from "
@@ -76,14 +91,17 @@ msgstr ""
 "основного слоя. Синоним <literal>get_raw_page(relname, 'main', blkno)</"
 "literal>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:58(function)
 msgid "page_header(page bytea) returns record"
 msgstr "page_header(page bytea) returns record"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:59(indexterm)
 msgid "<primary>page_header</primary>"
 msgstr "<primary>page_header</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: pageinspect.xml:65(para)
 msgid ""
 "<function>page_header</function> shows fields that are common to all "
@@ -92,6 +110,36 @@ msgstr ""
 "Функция <function>page_header</function> показывает поля, общие для всех "
 "страниц кучи и индекса <productname>PostgreSQL</productname>."
 
+#. +> REL_10
+#: pageinspect.xml:70(para)
+msgid ""
+"A page image obtained with <function>get_raw_page</function> should be "
+"passed as argument. For example: <screen>\n"
+"test=# SELECT * FROM page_header(get_raw_page('pg_class', 0));\n"
+"    lsn    | checksum | flags  | lower | upper | special | pagesize | "
+"version | prune_xid\n"
+"-----------+----------+--------+-------+-------+---------+----------"
+"+---------+-----------\n"
+" 0/24A1B50 |        0 |      1 |   232 |   368 |    8192 |     8192 |       "
+"4 |         0\n"
+"</screen> The returned columns correspond to the fields in the "
+"<structname>PageHeaderData</structname> struct. See <filename>src/include/"
+"storage/bufpage.h</filename> for details."
+msgstr ""
+"В качестве аргумента ей передаётся образ страницы, полученный в результате "
+"вызова <function>get_raw_page</function>. Например: <screen>\n"
+"test=# SELECT * FROM page_header(get_raw_page('pg_class', 0));\n"
+"    lsn    | checksum | flags  | lower | upper | special | pagesize | "
+"version | prune_xid\n"
+"-----------+----------+--------+-------+-------+---------+----------"
+"+---------+-----------\n"
+" 0/24A1B50 |        0 |      1 |   232 |   368 |    8192 |     8192 |       "
+"4 |         0\n"
+"</screen> Возвращаемые столбцы соответствуют полям в структуре "
+"<structname>PageHeaderData</structname>. За подробностями обратитесь к "
+"<filename>src/include/storage/bufpage.h</filename>."
+
+#. +> REL9_6_3 REL9_6
 #: pageinspect.xml:70(para)
 msgid ""
 "A page image obtained with <function>get_raw_page</function> should be "
@@ -120,15 +168,85 @@ msgstr ""
 "<structname>PageHeaderData</structname>. За подробностями обратитесь к "
 "<filename>src/include/storage/bufpage.h</filename>."
 
-#: pageinspect.xml:88(function)
+#. +> REL_10
+#: pageinspect.xml:84(para)
+msgid ""
+"The <structfield>checksum</structfield> field is the checksum stored in the "
+"page, which might be incorrect if the page is somehow corrupted. If data "
+"checksums are not enabled for this instance, then the value stored is "
+"meaningless."
+msgstr ""
+"Поле <structfield>checksum</structfield> содержит контрольную сумму, "
+"сохранённую для страницы. Эта сумма может быть неверной при повреждении "
+"страницы. Если в данном экземпляре кластера контрольные суммы отключены, это "
+"значение не имеет смысла."
+
+#. +> REL_10
+#: pageinspect.xml:95(function)
+msgid "page_checksum(page bytea, blkno int4) returns smallint"
+msgstr "page_checksum(page bytea, blkno int4) returns smallint"
+
+#. +> REL_10
+#: pageinspect.xml:96(indexterm)
+msgid "<primary>page_checksum</primary>"
+msgstr "<primary>page_checksum</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:102(para)
+msgid ""
+"<function>page_checksum</function> computes the checksum for the page, as if "
+"it was located at the given block."
+msgstr ""
+"Функция <function>page_checksum</function> вычисляет контрольную сумму "
+"страницы, которая должна была бы находиться в заданном блоке."
+
+#. +> REL_10
+#: pageinspect.xml:107(para)
+msgid ""
+"A page image obtained with <function>get_raw_page</function> should be "
+"passed as argument. For example: <screen>\n"
+"test=# SELECT page_checksum(get_raw_page('pg_class', 0), 0);\n"
+" page_checksum\n"
+"---------------\n"
+"         13443\n"
+"</screen> Note that the checksum depends on the block number, so matching "
+"block numbers should be passed (except when doing esoteric debugging)."
+msgstr ""
+"В качестве аргумента ей передаётся образ страницы, полученный в результате "
+"вызова <function>get_raw_page</function>. Например: <screen>\n"
+"test=# SELECT page_checksum(get_raw_page('pg_class', 0), 0);\n"
+" page_checksum\n"
+"---------------\n"
+"         13443\n"
+"</screen> Заметьте, что вычисление контрольной суммы зависит от номера "
+"блока, поэтому обеим функциям нужно передавать одинаковые номера (за "
+"исключением случаев эзотерической отладки)."
+
+#. +> REL_10
+#: pageinspect.xml:120(para)
+msgid ""
+"The checksum computed with this function can be compared with the "
+"<structfield>checksum</structfield> result field of the function "
+"<function>page_header</function>. If data checksums are enabled for this "
+"instance, then the two values should be equal."
+msgstr ""
+"Контрольную сумму, вычисленную этой функцией, можно сравнить с полем "
+"<structfield>checksum</structfield> результата функции "
+"<function>page_header</function>. Если контрольные суммы для текущего "
+"экземпляра БД включены, эти значения должны быть равны."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:131(function)
 msgid "heap_page_items(page bytea) returns setof record"
 msgstr "heap_page_items(page bytea) returns setof record"
 
-#: pageinspect.xml:89(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:132(indexterm)
 msgid "<primary>heap_page_items</primary>"
 msgstr "<primary>heap_page_items</primary>"
 
-#: pageinspect.xml:95(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:138(para)
 msgid ""
 "<function>heap_page_items</function> shows all line pointers on a heap page. "
 "For those line pointers that are in use, tuple headers as well as tuple raw "
@@ -140,7 +258,8 @@ msgstr ""
 "заголовки кортежей. При этом показываются все кортежи, независимо от того, "
 "были ли видны они в снимке MVCC в момент копирования исходной страницы."
 
-#: pageinspect.xml:102(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:145(para)
 msgid ""
 "A heap page image obtained with <function>get_raw_page</function> should be "
 "passed as argument. For example: <screen>\n"
@@ -149,14 +268,15 @@ msgid ""
 "<filename>src/include/access/htup_details.h</filename> for explanations of "
 "the fields returned."
 msgstr ""
-"В качестве аргумента ей нужно передать образ страницы кучи, полученный в "
+"В качестве аргумента ей передаётся образ страницы кучи, полученный в "
 "результате вызова <function>get_raw_page</function>. Например: <screen>\n"
 "test=# SELECT * FROM heap_page_items(get_raw_page('pg_class', 0));\n"
 "</screen> Описание возвращаемых полей можно найти в <filename>src/include/"
 "storage/itemid.h</filename> и <filename>src/include/access/htup_details.h</"
 "filename>."
 
-#: pageinspect.xml:117(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:160(function)
 msgid ""
 "tuple_data_split(rel_oid, t_data bytea, t_infomask integer, t_infomask2 "
 "integer, t_bits text [, do_detoast bool]) returns bytea[]"
@@ -164,11 +284,13 @@ msgstr ""
 "tuple_data_split(rel_oid, t_data bytea, t_infomask integer, t_infomask2 "
 "integer, t_bits text [, do_detoast bool]) returns bytea[]"
 
-#: pageinspect.xml:118(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:161(indexterm)
 msgid "<primary>tuple_data_split</primary>"
 msgstr "<primary>tuple_data_split</primary>"
 
-#: pageinspect.xml:123(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:166(para)
 msgid ""
 "<function>tuple_data_split</function> splits tuple data into attributes in "
 "the same way as backend internals. <screen>\n"
@@ -184,7 +306,8 @@ msgstr ""
 "</screen> В качестве аргументов этой функции должны передаваться атрибуты, "
 "возвращаемые функцией <function>heap_page_items</function>."
 
-#: pageinspect.xml:132(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:175(para)
 msgid ""
 "If <parameter>do_detoast</parameter> is <literal>true</literal>, attribute "
 "that will be detoasted as needed. Default value is <literal>false</literal>."
@@ -193,7 +316,8 @@ msgstr ""
 "literal>, полученные атрибуты будут распакованы по мере необходимости. Если "
 "он не задан, подразумевается <literal>false</literal>."
 
-#: pageinspect.xml:142(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:185(function)
 msgid ""
 "heap_page_item_attrs(rel_oid, t_data bytea, [, do_detoast bool]) returns "
 "bytea[]"
@@ -201,11 +325,13 @@ msgstr ""
 "heap_page_item_attrs(rel_oid, t_data bytea, [, do_detoast bool]) returns "
 "bytea[]"
 
-#: pageinspect.xml:143(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:186(indexterm)
 msgid "<primary>heap_page_item_attrs</primary>"
 msgstr "<primary>heap_page_item_attrs</primary>"
 
-#: pageinspect.xml:148(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:191(para)
 msgid ""
 "<function>heap_page_item_attrs</function> is equivalent to "
 "<function>heap_page_items</function> except that it returns tuple raw data "
@@ -219,7 +345,8 @@ msgstr ""
 "если установлен флаг <parameter>do_detoast</parameter> (по умолчанию они не "
 "распаковываются)."
 
-#: pageinspect.xml:155(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:198(para)
 msgid ""
 "A heap page image obtained with <function>get_raw_page</function> should be "
 "passed as argument. For example: <screen>\n"
@@ -227,21 +354,64 @@ msgid ""
 "'pg_class'::regclass);\n"
 "</screen>"
 msgstr ""
-"В качестве аргумента ей должен передаваться образ страницы, выданный "
-"функцией <function>get_raw_page</function>. Например: <screen>\n"
+"В качестве аргумента ей передаётся образ страницы кучи, полученный в "
+"результате вызова <function>get_raw_page</function>. Например: <screen>\n"
 "test=# SELECT * FROM heap_page_item_attrs(get_raw_page('pg_class', 0), "
 "'pg_class'::regclass);\n"
 "</screen>"
 
-#: pageinspect.xml:167(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:210(function)
+msgid "fsm_page_contents(page bytea) returns text"
+msgstr "fsm_page_contents(page bytea) returns text"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:211(indexterm)
+msgid "<primary>fsm_page_contents</primary>"
+msgstr "<primary>fsm_page_contents</primary>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:217(para)
+msgid ""
+"<function>fsm_page_contents</function> shows the internal node structure of "
+"a FSM page. The output is a multiline string, with one line per node in the "
+"binary tree within the page. Only those nodes that are not zero are printed. "
+"The so-called \"next\" pointer, which points to the next slot to be returned "
+"from the page, is also printed."
+msgstr ""
+"Функция <function>fsm_page_contents</function> показывает внутреннюю "
+"структуру узла на странице FSM. Она выдаёт текст из нескольких строк, по "
+"одной строке на узел двоичного дерева на заданной странице. При этом "
+"выдаются только ненулевые узлы. Также выводится так называемый указатель "
+"&laquo;следующего слота&raquo;, который указывает на следующий слот, "
+"получаемый с этой страницы."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:224(para)
+msgid ""
+"See <filename>src/backend/storage/freespace/README</filename> for more "
+"information on the structure of an FSM page."
+msgstr ""
+"Подробнее структура страницы FSM описана в <filename>src/backend/storage/"
+"freespace/README</filename>."
+
+#. +> REL_10
+#: pageinspect.xml:234(title)
+msgid "B-tree Functions"
+msgstr "Функции для индексов-B-деревьев"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:239(function)
 msgid "bt_metap(relname text) returns record"
 msgstr "bt_metap(relname text) returns record"
 
-#: pageinspect.xml:168(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:240(indexterm)
 msgid "<primary>bt_metap</primary>"
 msgstr "<primary>bt_metap</primary>"
 
-#: pageinspect.xml:174(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:246(para)
 msgid ""
 "<function>bt_metap</function> returns information about a B-tree index's "
 "metapage. For example: <screen>\n"
@@ -267,15 +437,18 @@ msgstr ""
 "fastlevel | 0\n"
 "</screen>"
 
-#: pageinspect.xml:193(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:265(function)
 msgid "bt_page_stats(relname text, blkno int) returns record"
 msgstr "bt_page_stats(relname text, blkno int) returns record"
 
-#: pageinspect.xml:194(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:266(indexterm)
 msgid "<primary>bt_page_stats</primary>"
 msgstr "<primary>bt_page_stats</primary>"
 
-#: pageinspect.xml:200(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:272(para)
 msgid ""
 "<function>bt_page_stats</function> returns summary information about single "
 "pages of B-tree indexes. For example: <screen>\n"
@@ -311,15 +484,18 @@ msgstr ""
 "btpo_flags    | 3\n"
 "</screen>"
 
-#: pageinspect.xml:224(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:296(function)
 msgid "bt_page_items(relname text, blkno int) returns setof record"
 msgstr "bt_page_items(relname text, blkno int) returns setof record"
 
-#: pageinspect.xml:225(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:297(indexterm) pageinspect.xml:341(indexterm)
 msgid "<primary>bt_page_items</primary>"
 msgstr "<primary>bt_page_items</primary>"
 
-#: pageinspect.xml:231(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:303(para)
 msgid ""
 "<function>bt_page_items</function> returns detailed information about all of "
 "the items on a B-tree index page. For example: <screen>\n"
@@ -358,7 +534,8 @@ msgstr ""
 "страницу в самом индексе, а часть смещения (второе число) игнорируется и "
 "обычно равняется 1."
 
-#: pageinspect.xml:252(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:324(para)
 msgid ""
 "Note that the first item on any non-rightmost page (any page with a non-zero "
 "value in the <structfield>btpo_next</structfield> field) is the page's "
@@ -381,15 +558,66 @@ msgstr ""
 "<structfield>data</structfield>. Однако такой элемент содержит в своём поле "
 "<structfield>ctid</structfield> корректную ссылку на данные."
 
-#: pageinspect.xml:268(function)
+#. +> REL_10
+#: pageinspect.xml:340(function)
+msgid "bt_page_items(page bytea) returns setof record"
+msgstr "bt_page_items(page bytea) returns setof record"
+
+#. +> REL_10
+#: pageinspect.xml:347(para)
+msgid ""
+"It is also possible to pass a page to <function>bt_page_items</function> as "
+"a <type>bytea</type> value. A page image obtained with "
+"<function>get_raw_page</function> should be passed as argument. So the last "
+"example could also be rewritten like this: <screen>\n"
+"test=# SELECT * FROM bt_page_items(get_raw_page('pg_cast_oid_index', 1));\n"
+" itemoffset |  ctid   | itemlen | nulls | vars |    data\n"
+"------------+---------+---------+-------+------+-------------\n"
+"          1 | (0,1)   |      12 | f     | f    | 23 27 00 00\n"
+"          2 | (0,2)   |      12 | f     | f    | 24 27 00 00\n"
+"          3 | (0,3)   |      12 | f     | f    | 25 27 00 00\n"
+"          4 | (0,4)   |      12 | f     | f    | 26 27 00 00\n"
+"          5 | (0,5)   |      12 | f     | f    | 27 27 00 00\n"
+"          6 | (0,6)   |      12 | f     | f    | 28 27 00 00\n"
+"          7 | (0,7)   |      12 | f     | f    | 29 27 00 00\n"
+"          8 | (0,8)   |      12 | f     | f    | 2a 27 00 00\n"
+"</screen> All the other details are the same as explained in the previous "
+"item."
+msgstr ""
+"Также можно передать функции <function>bt_page_items</function> страницу в "
+"виде значения <type>bytea</type>. Образ страницы для передачи в аргументе "
+"можно получить в результате вызова <function>get_raw_page</function>. Таким "
+"образом, последний пример можно также переписать так: <screen>\n"
+"test=# SELECT * FROM bt_page_items(get_raw_page('pg_cast_oid_index', 1));\n"
+" itemoffset |  ctid   | itemlen | nulls | vars |    data\n"
+"------------+---------+---------+-------+------+-------------\n"
+"          1 | (0,1)   |      12 | f     | f    | 23 27 00 00\n"
+"          2 | (0,2)   |      12 | f     | f    | 24 27 00 00\n"
+"          3 | (0,3)   |      12 | f     | f    | 25 27 00 00\n"
+"          4 | (0,4)   |      12 | f     | f    | 26 27 00 00\n"
+"          5 | (0,5)   |      12 | f     | f    | 27 27 00 00\n"
+"          6 | (0,6)   |      12 | f     | f    | 28 27 00 00\n"
+"          7 | (0,7)   |      12 | f     | f    | 29 27 00 00\n"
+"          8 | (0,8)   |      12 | f     | f    | 2a 27 00 00\n"
+"</screen> Все остальные детали те же, что и с предыдущим вариантом вызова."
+
+#. +> REL_10
+#: pageinspect.xml:373(title)
+msgid "BRIN Functions"
+msgstr "Функции для индексов BRIN"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:378(function)
 msgid "brin_page_type(page bytea) returns text"
 msgstr "brin_page_type(page bytea) returns text"
 
-#: pageinspect.xml:269(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:379(indexterm)
 msgid "<primary>brin_page_type</primary>"
 msgstr "<primary>brin_page_type</primary>"
 
-#: pageinspect.xml:275(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:385(para)
 msgid ""
 "<function>brin_page_type</function> returns the page type of the given "
 "<acronym>BRIN</acronym> index page, or throws an error if the page is not a "
@@ -410,15 +638,18 @@ msgstr ""
 " meta\n"
 "</screen>"
 
-#: pageinspect.xml:291(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:401(function)
 msgid "brin_metapage_info(page bytea) returns record"
 msgstr "brin_metapage_info(page bytea) returns record"
 
-#: pageinspect.xml:292(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:402(indexterm)
 msgid "<primary>brin_metapage_info</primary>"
 msgstr "<primary>brin_metapage_info</primary>"
 
-#: pageinspect.xml:298(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:408(para)
 msgid ""
 "<function>brin_metapage_info</function> returns assorted information about a "
 "<acronym>BRIN</acronym> index metapage. For example: <screen>\n"
@@ -436,19 +667,22 @@ msgstr ""
 " 0xA8109CFA |       1 |             4 |              2\n"
 "</screen>"
 
-#: pageinspect.xml:313(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:423(function)
 msgid "brin_revmap_data(page bytea) returns setof tid"
 msgstr "brin_revmap_data(page bytea) returns setof tid"
 
-#: pageinspect.xml:314(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:424(indexterm)
 msgid "<primary>brin_revmap_data</primary>"
 msgstr "<primary>brin_revmap_data</primary>"
 
-#: pageinspect.xml:320(para)
+#. +> REL_10
+#: pageinspect.xml:430(para)
 msgid ""
 "<function>brin_revmap_data</function> returns the list of tuple identifiers "
 "in a <acronym>BRIN</acronym> index range map page. For example: <screen>\n"
-"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) limit 5;\n"
+"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) LIMIT 5;\n"
 "  pages  \n"
 "---------\n"
 " (6,137)\n"
@@ -461,7 +695,7 @@ msgstr ""
 "Функция <function>brin_revmap_data</function> выдаёт список идентификаторов "
 "кортежей со страницы сопоставлений зон индекса <acronym>BRIN</acronym>. "
 "Например: <screen>\n"
-"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) limit 5;\n"
+"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) LIMIT 5;\n"
 "  pages  \n"
 "---------\n"
 " (6,137)\n"
@@ -471,15 +705,18 @@ msgstr ""
 " (6,141)\n"
 "</screen>"
 
-#: pageinspect.xml:340(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:450(function)
 msgid "brin_page_items(page bytea, index oid) returns setof record"
 msgstr "brin_page_items(page bytea, index oid) returns setof record"
 
-#: pageinspect.xml:341(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:451(indexterm)
 msgid "<primary>brin_page_items</primary>"
 msgstr "<primary>brin_page_items</primary>"
 
-#: pageinspect.xml:347(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:457(para)
 msgid ""
 "<function>brin_page_items</function> returns the data stored in the "
 "<acronym>BRIN</acronym> data page. For example: <screen>\n"
@@ -526,15 +763,23 @@ msgstr ""
 "<structname>BrinMemTuple</structname> и <structname>BrinValues</structname>. "
 "Подробнее они описаны в <filename>src/include/access/brin_tuple.h</filename>."
 
-#: pageinspect.xml:372(function)
+#. +> REL_10
+#: pageinspect.xml:483(title)
+msgid "GIN Functions"
+msgstr "Функции для индексов GIN"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:488(function)
 msgid "gin_metapage_info(page bytea) returns record"
 msgstr "gin_metapage_info(page bytea) returns record"
 
-#: pageinspect.xml:373(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:489(indexterm)
 msgid "<primary>gin_metapage_info</primary>"
 msgstr "<primary>gin_metapage_info</primary>"
 
-#: pageinspect.xml:379(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:495(para)
 msgid ""
 "<function>gin_metapage_info</function> returns information about a "
 "<acronym>GIN</acronym> index metapage. For example: <screen>\n"
@@ -568,15 +813,18 @@ msgstr ""
 "version          | 2\n"
 "</screen>"
 
-#: pageinspect.xml:402(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:518(function)
 msgid "gin_page_opaque_info(page bytea) returns record"
 msgstr "gin_page_opaque_info(page bytea) returns record"
 
-#: pageinspect.xml:403(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:519(indexterm)
 msgid "<primary>gin_page_opaque_info</primary>"
 msgstr "<primary>gin_page_opaque_info</primary>"
 
-#: pageinspect.xml:409(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:525(para)
 msgid ""
 "<function>gin_page_opaque_info</function> returns information about a "
 "<acronym>GIN</acronym> index opaque area, like the page type. For example: "
@@ -598,14 +846,327 @@ msgstr ""
 "(1 row)\n"
 "</screen>"
 
-#: pageinspect.xml:426(function)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:542(function)
 msgid "gin_leafpage_items(page bytea) returns setof record"
 msgstr "gin_leafpage_items(page bytea) returns setof record"
 
-#: pageinspect.xml:427(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:543(indexterm)
 msgid "<primary>gin_leafpage_items</primary>"
 msgstr "<primary>gin_leafpage_items</primary>"
 
+#. +> REL_10
+#: pageinspect.xml:549(para)
+msgid ""
+"<function>gin_leafpage_items</function> returns information about the data "
+"stored in a <acronym>GIN</acronym> leaf page. For example: <screen>\n"
+"test=# SELECT first_tid, nbytes, tids[0:5] AS some_tids\n"
+"        FROM gin_leafpage_items(get_raw_page('gin_test_idx', 2));\n"
+" first_tid | nbytes |                        some_tids\n"
+"-----------+--------"
+"+----------------------------------------------------------\n"
+" (8,41)    |    244 | {\"(8,41)\",\"(8,43)\",\"(8,44)\",\"(8,45)\","
+"\"(8,46)\"}\n"
+" (10,45)   |    248 | {\"(10,45)\",\"(10,46)\",\"(10,47)\",\"(10,48)\","
+"\"(10,49)\"}\n"
+" (12,52)   |    248 | {\"(12,52)\",\"(12,53)\",\"(12,54)\",\"(12,55)\","
+"\"(12,56)\"}\n"
+" (14,59)   |    320 | {\"(14,59)\",\"(14,60)\",\"(14,61)\",\"(14,62)\","
+"\"(14,63)\"}\n"
+" (167,16)  |    376 | {\"(167,16)\",\"(167,17)\",\"(167,18)\",\"(167,19)\","
+"\"(167,20)\"}\n"
+" (170,30)  |    376 | {\"(170,30)\",\"(170,31)\",\"(170,32)\",\"(170,33)\","
+"\"(170,34)\"}\n"
+" (173,44)  |    197 | {\"(173,44)\",\"(173,45)\",\"(173,46)\",\"(173,47)\","
+"\"(173,48)\"}\n"
+"(7 rows)\n"
+"</screen>"
+msgstr ""
+"Функция <function>gin_leafpage_items</function> выдаёт информацию о данных, "
+"хранящихся в странице индекса <acronym>GIN</acronym> на уровне листьев. "
+"Например: <screen>\n"
+"test=# SELECT first_tid, nbytes, tids[0:5] AS some_tids\n"
+"        FROM gin_leafpage_items(get_raw_page('gin_test_idx', 2));\n"
+" first_tid | nbytes |                        some_tids\n"
+"-----------+--------"
+"+----------------------------------------------------------\n"
+" (8,41)    |    244 | {\"(8,41)\",\"(8,43)\",\"(8,44)\",\"(8,45)\","
+"\"(8,46)\"}\n"
+" (10,45)   |    248 | {\"(10,45)\",\"(10,46)\",\"(10,47)\",\"(10,48)\","
+"\"(10,49)\"}\n"
+" (12,52)   |    248 | {\"(12,52)\",\"(12,53)\",\"(12,54)\",\"(12,55)\","
+"\"(12,56)\"}\n"
+" (14,59)   |    320 | {\"(14,59)\",\"(14,60)\",\"(14,61)\",\"(14,62)\","
+"\"(14,63)\"}\n"
+" (167,16)  |    376 | {\"(167,16)\",\"(167,17)\",\"(167,18)\",\"(167,19)\","
+"\"(167,20)\"}\n"
+" (170,30)  |    376 | {\"(170,30)\",\"(170,31)\",\"(170,32)\",\"(170,33)\","
+"\"(170,34)\"}\n"
+" (173,44)  |    197 | {\"(173,44)\",\"(173,45)\",\"(173,46)\",\"(173,47)\","
+"\"(173,48)\"}\n"
+"(7 rows)\n"
+"</screen>"
+
+#. +> REL_10
+#: pageinspect.xml:573(title)
+msgid "Hash Functions"
+msgstr "Функции для хеш-индексов"
+
+#. +> REL_10
+#: pageinspect.xml:578(function)
+msgid "hash_page_type(page bytea) returns text"
+msgstr "hash_page_type(page bytea) returns text"
+
+#. +> REL_10
+#: pageinspect.xml:579(indexterm)
+msgid "<primary>hash_page_type</primary>"
+msgstr "<primary>hash_page_type</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:585(para)
+msgid ""
+"<function>hash_page_type</function> returns page type of the given "
+"<acronym>HASH</acronym> index page. For example: <screen>\n"
+"test=# SELECT hash_page_type(get_raw_page('con_hash_index', 0));\n"
+" hash_page_type \n"
+"----------------\n"
+" metapage\n"
+"</screen>"
+msgstr ""
+"Функция <function>hash_page_type</function> возвращает тип страницы для "
+"заданной страницы хеш-индекса. Например: <screen>\n"
+"test=# SELECT hash_page_type(get_raw_page('con_hash_index', 0));\n"
+" hash_page_type \n"
+"----------------\n"
+" metapage\n"
+"</screen>"
+
+#. +> REL_10
+#: pageinspect.xml:600(function)
+msgid "hash_page_stats(page bytea) returns setof record"
+msgstr "hash_page_stats(page bytea) returns setof record"
+
+#. +> REL_10
+#: pageinspect.xml:601(indexterm)
+msgid "<primary>hash_page_stats</primary>"
+msgstr "<primary>hash_page_stats</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:607(para)
+msgid ""
+"<function>hash_page_stats</function> returns information about a bucket or "
+"overflow page of a <acronym>HASH</acronym> index. For example: <screen>\n"
+"test=# SELECT * FROM hash_page_stats(get_raw_page('con_hash_index', 1));\n"
+"-[ RECORD 1 ]---+-----------\n"
+"live_items      | 407\n"
+"dead_items      | 0\n"
+"page_size       | 8192\n"
+"free_size       | 8\n"
+"hasho_prevblkno | 4096\n"
+"hasho_nextblkno | 8474\n"
+"hasho_bucket    | 0\n"
+"hasho_flag      | 66\n"
+"hasho_page_id   | 65408\n"
+"</screen>"
+msgstr ""
+"Функция <function>hash_page_stats</function> возвращает информацию о "
+"странице группы или переполнения хеш-индекса. Например: <screen>\n"
+"test=# SELECT * FROM hash_page_stats(get_raw_page('con_hash_index', 1));\n"
+"-[ RECORD 1 ]---+-----------\n"
+"live_items      | 407\n"
+"dead_items      | 0\n"
+"page_size       | 8192\n"
+"free_size       | 8\n"
+"hasho_prevblkno | 4096\n"
+"hasho_nextblkno | 8474\n"
+"hasho_bucket    | 0\n"
+"hasho_flag      | 66\n"
+"hasho_page_id   | 65408\n"
+"</screen>"
+
+#. +> REL_10
+#: pageinspect.xml:630(function)
+msgid "hash_page_items(page bytea) returns setof record"
+msgstr "hash_page_items(page bytea) returns setof record"
+
+#. +> REL_10
+#: pageinspect.xml:631(indexterm)
+msgid "<primary>hash_page_items</primary>"
+msgstr "<primary>hash_page_items</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:637(para)
+msgid ""
+"<function>hash_page_items</function> returns information about the data "
+"stored in a bucket or overflow page of a <acronym>HASH</acronym> index page. "
+"For example: <screen>\n"
+"test=# SELECT * FROM hash_page_items(get_raw_page('con_hash_index', 1)) "
+"LIMIT 5;\n"
+" itemoffset |   ctid    |    data    \n"
+"------------+-----------+------------\n"
+"          1 | (899,77)  | 1053474816\n"
+"          2 | (897,29)  | 1053474816\n"
+"          3 | (894,207) | 1053474816\n"
+"          4 | (892,159) | 1053474816\n"
+"          5 | (890,111) | 1053474816\n"
+"</screen>"
+msgstr ""
+"Функция <function>hash_page_items</function> возвращает информацию о данных, "
+"хранящихся на странице группы или переполнения хеш-индекса. Например: "
+"<screen>\n"
+"test=# SELECT * FROM hash_page_items(get_raw_page('con_hash_index', 1)) "
+"LIMIT 5;\n"
+" itemoffset |   ctid    |    data    \n"
+"------------+-----------+------------\n"
+"          1 | (899,77)  | 1053474816\n"
+"          2 | (897,29)  | 1053474816\n"
+"          3 | (894,207) | 1053474816\n"
+"          4 | (892,159) | 1053474816\n"
+"          5 | (890,111) | 1053474816\n"
+"</screen>"
+
+#. +> REL_10
+#: pageinspect.xml:657(function)
+msgid "hash_bitmap_info(index oid, blkno int) returns record"
+msgstr "hash_bitmap_info(index oid, blkno int) returns record"
+
+#. +> REL_10
+#: pageinspect.xml:658(indexterm)
+msgid "<primary>hash_bitmap_info</primary>"
+msgstr "<primary>hash_bitmap_info</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:664(para)
+msgid ""
+"<function>hash_bitmap_info</function> shows the status of a bit in the "
+"bitmap page for a particular overflow page of <acronym>HASH</acronym> index. "
+"For example: <screen>\n"
+"test=# SELECT * FROM hash_bitmap_info('con_hash_index', 2052);\n"
+" bitmapblkno | bitmapbit | bitstatus \n"
+"-------------+-----------+-----------\n"
+"          65 |         3 | t\n"
+"</screen>"
+msgstr ""
+"Функция <function>hash_bitmap_info</function> показывает состояние бита в "
+"странице битовой карты для определённой страницы переполнения хеш-индекса. "
+"Например: <screen>\n"
+"test=# SELECT * FROM hash_bitmap_info('con_hash_index', 2052);\n"
+" bitmapblkno | bitmapbit | bitstatus \n"
+"-------------+-----------+-----------\n"
+"          65 |         3 | t\n"
+"</screen>"
+
+#. +> REL_10
+#: pageinspect.xml:680(function)
+msgid "hash_metapage_info(page bytea) returns record"
+msgstr "hash_metapage_info(page bytea) returns record"
+
+#. +> REL_10
+#: pageinspect.xml:681(indexterm)
+msgid "<primary>hash_metapage_info</primary>"
+msgstr "<primary>hash_metapage_info</primary>"
+
+#. +> REL_10
+#: pageinspect.xml:687(para)
+msgid ""
+"<function>hash_metapage_info</function> returns information stored in meta "
+"page of a <acronym>HASH</acronym> index. For example: <screen>\n"
+"test=# SELECT magic, version, ntuples, ffactor, bsize, bmsize, bmshift,\n"
+"test-#     maxbucket, highmask, lowmask, ovflpoint, firstfree, nmaps, "
+"procid,\n"
+"test-#     regexp_replace(spares::text, '(,0)*}', '}') as spares,\n"
+"test-#     regexp_replace(mapp::text, '(,0)*}', '}') as mapp\n"
+"test-# FROM hash_metapage_info(get_raw_page('con_hash_index', 0));\n"
+"-[ RECORD "
+"1 ]-------------------------------------------------------------------------------\n"
+"spares    | "
+"{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204}\n"
+"magic     | 105121344\n"
+"version   | 3\n"
+"ntuples   | 500500\n"
+"ffactor   | 40\n"
+"bsize     | 8152\n"
+"bmsize    | 4096\n"
+"bmshift   | 15\n"
+"maxbucket | 12512\n"
+"highmask  | 16383\n"
+"lowmask   | 8191\n"
+"ovflpoint | 28\n"
+"firstfree | 1204\n"
+"nmaps     | 1\n"
+"procid    | 450\n"
+"spares    | "
+"{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204}\n"
+"mapp      | {65}\n"
+"</screen>"
+msgstr ""
+"<function>hash_metapage_info</function> возвращает информацию, хранящуюся в "
+"метастранице хеш-индекса. Например: <screen>\n"
+"test=# SELECT magic, version, ntuples, ffactor, bsize, bmsize, bmshift,\n"
+"test-#     maxbucket, highmask, lowmask, ovflpoint, firstfree, nmaps, "
+"procid,\n"
+"test-#     regexp_replace(spares::text, '(,0)*}', '}') as spares,\n"
+"test-#     regexp_replace(mapp::text, '(,0)*}', '}') as mapp\n"
+"test-# FROM hash_metapage_info(get_raw_page('con_hash_index', 0));\n"
+"-[ RECORD "
+"1 ]-------------------------------------------------------------------------------\n"
+"spares    | "
+"{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204}\n"
+"magic     | 105121344\n"
+"version   | 3\n"
+"ntuples   | 500500\n"
+"ffactor   | 40\n"
+"bsize     | 8152\n"
+"bmsize    | 4096\n"
+"bmshift   | 15\n"
+"maxbucket | 12512\n"
+"highmask  | 16383\n"
+"lowmask   | 8191\n"
+"ovflpoint | 28\n"
+"firstfree | 1204\n"
+"nmaps     | 1\n"
+"procid    | 450\n"
+"spares    | "
+"{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204}\n"
+"mapp      | {65}\n"
+"</screen>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: pageinspect.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: pageinspect.xml:320(para)
+msgid ""
+"<function>brin_revmap_data</function> returns the list of tuple identifiers "
+"in a <acronym>BRIN</acronym> index range map page. For example: <screen>\n"
+"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) limit 5;\n"
+"  pages  \n"
+"---------\n"
+" (6,137)\n"
+" (6,138)\n"
+" (6,139)\n"
+" (6,140)\n"
+" (6,141)\n"
+"</screen>"
+msgstr ""
+"Функция <function>brin_revmap_data</function> выдаёт список идентификаторов "
+"кортежей со страницы сопоставлений зон индекса <acronym>BRIN</acronym>. "
+"Например: <screen>\n"
+"test=# SELECT * FROM brin_revmap_data(get_raw_page('brinidx', 2)) limit 5;\n"
+"  pages  \n"
+"---------\n"
+" (6,137)\n"
+" (6,138)\n"
+" (6,139)\n"
+" (6,140)\n"
+" (6,141)\n"
+"</screen>"
+
+#. +> REL9_6_3 REL9_6
 #: pageinspect.xml:433(para)
 msgid ""
 "<function>gin_leafpage_items</function> returns information about the data "
@@ -657,38 +1218,55 @@ msgstr ""
 "(7 rows)\n"
 "</screen>"
 
-#: pageinspect.xml:456(function)
-msgid "fsm_page_contents(page bytea) returns text"
-msgstr "fsm_page_contents(page bytea) returns text"
-
-#: pageinspect.xml:457(indexterm)
-msgid "<primary>fsm_page_contents</primary>"
-msgstr "<primary>fsm_page_contents</primary>"
-
-#: pageinspect.xml:463(para)
-msgid ""
-"<function>fsm_page_contents</function> shows the internal node structure of "
-"a FSM page. The output is a multiline string, with one line per node in the "
-"binary tree within the page. Only those nodes that are not zero are printed. "
-"The so-called \"next\" pointer, which points to the next slot to be returned "
-"from the page, is also printed."
-msgstr ""
-"Функция <function>fsm_page_contents</function> показывает внутреннюю "
-"структуру узла на странице FSM. Она выдаёт текст из нескольких строк, по "
-"одной строке на узел двоичного дерева на заданной странице. При этом "
-"выдаются только ненулевые узлы. Также выводится так называемый указатель "
-"&laquo;следующего слота&raquo;, который указывает на следующий слот, "
-"получаемый с этой страницы."
-
-#: pageinspect.xml:470(para)
-msgid ""
-"See <filename>src/backend/storage/freespace/README</filename> for more "
-"information on the structure of an FSM page."
-msgstr ""
-"Подробнее структура страницы FSM описана в <filename>src/backend/storage/"
-"freespace/README</filename>."
-
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: pageinspect.xml:0(None)
-msgid "translator-credits"
-msgstr "translator-credits"
+#~ msgid ""
+#~ "<function>hash_metapage_info</function> returns information stored in "
+#~ "meta page of a <acronym>HASH</acronym> index. For example: <screen>\n"
+#~ "test=# SELECT * FROM hash_metapage_info(get_raw_page('con_hash_index', "
+#~ "0));\n"
+#~ "-[ RECORD "
+#~ "1 ]-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"
+#~ "magic     | 105121344\n"
+#~ "version   | 3\n"
+#~ "ntuples   | 500500\n"
+#~ "ffactor   | 40\n"
+#~ "bsize     | 8152\n"
+#~ "bmsize    | 4096\n"
+#~ "bmshift   | 15\n"
+#~ "maxbucket | 12512\n"
+#~ "highmask  | 16383\n"
+#~ "lowmask   | 8191\n"
+#~ "ovflpoint | 28\n"
+#~ "firstfree | 1204\n"
+#~ "nmaps     | 1\n"
+#~ "procid    | 450\n"
+#~ "spares    | "
+#~ "{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}\n"
+#~ "mapp      | "
+#~ "{65,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}\n"
+#~ "</screen>"
+#~ msgstr ""
+#~ "Функция <function>hash_metapage_info</function> возвращает информацию, "
+#~ "хранящуюся в метастранице хеш-индекса. Например: <screen>\n"
+#~ "test=# SELECT * FROM hash_metapage_info(get_raw_page('con_hash_index', "
+#~ "0));\n"
+#~ "-[ RECORD "
+#~ "1 ]-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"
+#~ "magic     | 105121344\n"
+#~ "version   | 3\n"
+#~ "ntuples   | 500500\n"
+#~ "ffactor   | 40\n"
+#~ "bsize     | 8152\n"
+#~ "bmsize    | 4096\n"
+#~ "bmshift   | 15\n"
+#~ "maxbucket | 12512\n"
+#~ "highmask  | 16383\n"
+#~ "lowmask   | 8191\n"
+#~ "ovflpoint | 28\n"
+#~ "firstfree | 1204\n"
+#~ "nmaps     | 1\n"
+#~ "procid    | 450\n"
+#~ "spares    | "
+#~ "{0,0,0,0,0,0,1,1,1,1,1,1,1,1,3,4,4,4,45,55,58,59,508,567,628,704,1193,1202,1204,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}\n"
+#~ "mapp      | "
+#~ "{65,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}\n"
+#~ "</screen>"

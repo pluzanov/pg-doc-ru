@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-09 16:00+0300\n"
-"PO-Revision-Date: 2017-05-12 10:53+0300\n"
+"POT-Creation-Date: 2017-09-21 15:23+0300\n"
+"PO-Revision-Date: 2017-09-28 16:30+0300\n"
 "Last-Translator: Alexander Lakhin <a.lakhin@postgrespro.ru>\n"
 "Language-Team: Russian <pgsql-docs@lists.postgrespro.ru>\n"
 "Language: ru\n"
@@ -15,14 +15,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:4(title) logicaldecoding.xml:174(title)
 msgid "Logical Decoding"
 msgstr "Логическое декодирование"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:5(indexterm) logicaldecoding.xml:176(indexterm)
 msgid "<primary>Logical Decoding</primary>"
 msgstr "<primary>Логическое декодирование</primary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:8(para)
 msgid ""
 "PostgreSQL provides infrastructure to stream the modifications performed via "
@@ -33,12 +36,14 @@ msgstr ""
 "выполняемых через SQL, внешним потребителям. Эта функциональность может быть "
 "полезна для самых разных целей, включая аудит и реализацию репликации."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:14(para)
 msgid ""
 "Changes are sent out in streams identified by logical replication slots."
 msgstr ""
 "Изменения передаются в потоках, связываемых со слотами логической репликации."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:18(para)
 msgid ""
 "The format in which those changes are streamed is determined by the output "
@@ -61,6 +66,7 @@ msgstr ""
 "зависит от выбора варианта идентификации реплики (см. описание <xref linkend="
 "\"sql-createtable-replica-identity\"/>)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:31(para)
 msgid ""
 "Changes can be consumed either using the streaming replication protocol (see "
@@ -78,10 +84,12 @@ msgstr ""
 "через слот репликации, не модифицируя код ядра сервера (см. <xref remap="
 "\"4\" linkend=\"logicaldecoding-writer\"/>)."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:42(title)
 msgid "Logical Decoding Examples"
 msgstr "Примеры логического декодирования"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:44(para)
 msgid ""
 "The following example demonstrates controlling logical decoding using the "
@@ -90,6 +98,7 @@ msgstr ""
 "Следующий пример демонстрирует управление логическим декодированием на "
 "уровне SQL."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:49(para)
 msgid ""
 "Before you can use logical decoding, you must set <xref linkend=\"guc-wal-"
@@ -103,6 +112,187 @@ msgstr ""
 "меньшее 1. После этого вы должны подключиться к целевой базе данных (в "
 "следующем примере, это <literal>postgres</literal>) как суперпользователь."
 
+#. +> REL_10
+#: logicaldecoding.xml:57(programlisting)
+#, no-wrap
+msgid ""
+"postgres=# -- Create a slot named 'regression_slot' using the output plugin 'test_decoding'\n"
+"postgres=# SELECT * FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');\n"
+"    slot_name    |    lsn\n"
+"-----------------+-----------\n"
+" regression_slot | 0/16B1970\n"
+"(1 row)\n"
+"\n"
+"postgres=# SELECT slot_name, plugin, slot_type, database, active, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;\n"
+"    slot_name    |    plugin     | slot_type | database | active | restart_lsn | confirmed_flush_lsn\n"
+"-----------------+---------------+-----------+----------+--------+-------------+-----------------\n"
+" regression_slot | test_decoding | logical   | postgres | f      | 0/16A4408   | 0/16A4440\n"
+"(1 row)\n"
+"\n"
+"postgres=# -- There are no changes to see yet\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+" lsn | xid | data \n"
+"-----+-----+------\n"
+"(0 rows)\n"
+"\n"
+"postgres=# CREATE TABLE data(id serial primary key, data text);\n"
+"CREATE TABLE\n"
+"\n"
+"postgres=# -- DDL isn't replicated, so all you'll see is the transaction\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |     data     \n"
+"-----------+-------+--------------\n"
+" 0/BA2DA58 | 10297 | BEGIN 10297\n"
+" 0/BA5A5A0 | 10297 | COMMIT 10297\n"
+"(2 rows)\n"
+"\n"
+"postgres=# -- Once changes are read, they're consumed and not emitted\n"
+"postgres=# -- in a subsequent call:\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+" lsn | xid | data \n"
+"-----+-----+------\n"
+"(0 rows)\n"
+"\n"
+"postgres=# BEGIN;\n"
+"postgres=# INSERT INTO data(data) VALUES('1');\n"
+"postgres=# INSERT INTO data(data) VALUES('2');\n"
+"postgres=# COMMIT;\n"
+"\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A688 | 10298 | BEGIN 10298\n"
+" 0/BA5A6F0 | 10298 | table public.data: INSERT: id[integer]:1 data[text]:'1'\n"
+" 0/BA5A7F8 | 10298 | table public.data: INSERT: id[integer]:2 data[text]:'2'\n"
+" 0/BA5A8A8 | 10298 | COMMIT 10298\n"
+"(4 rows)\n"
+"\n"
+"postgres=# INSERT INTO data(data) VALUES('3');\n"
+"\n"
+"postgres=# -- You can also peek ahead in the change stream without consuming changes\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- The next call to pg_logical_slot_peek_changes() returns the same changes again\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- options can be passed to output plugin, to influence the formatting\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-timestamp', 'on');\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299 (at 2017-05-10 12:07:21.272494-04)\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- Remember to destroy a slot you no longer need to stop it consuming\n"
+"postgres=# -- server resources:\n"
+"postgres=# SELECT pg_drop_replication_slot('regression_slot');\n"
+" pg_drop_replication_slot\n"
+"-----------------------\n"
+"\n"
+"(1 row)"
+msgstr ""
+"postgres=# -- Создать слот с именем 'regression_slot', использующий модуль вывода 'test_decoding'\n"
+"postgres=# SELECT * FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');\n"
+"    slot_name    |    lsn\n"
+"-----------------+-----------\n"
+" regression_slot | 0/16B1970\n"
+"(1 row)\n"
+"\n"
+"postgres=# SELECT slot_name, plugin, slot_type, database, active, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;\n"
+"    slot_name    |    plugin     | slot_type | database | active | restart_lsn | confirmed_flush_lsn\n"
+"-----------------+---------------+-----------+----------+--------+-------------+-----------------\n"
+" regression_slot | test_decoding | logical   | postgres | f      | 0/16A4408   | 0/16A4440\n"
+"(1 row)\n"
+"\n"
+"postgres=# -- Пока никакие изменения не видны\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+" lsn | xid | data \n"
+"-----+-----+------\n"
+"(0 rows)\n"
+"\n"
+"postgres=# CREATE TABLE data(id serial primary key, data text);\n"
+"CREATE TABLE\n"
+"\n"
+"postgres=# -- DDL не реплицируется, поэтому видна только транзакция\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |     data     \n"
+"-----------+-------+--------------\n"
+" 0/BA2DA58 | 10297 | BEGIN 10297\n"
+" 0/BA5A5A0 | 10297 | COMMIT 10297\n"
+"(2 rows)\n"
+"\n"
+"postgres=# -- Когда изменения прочитаны, они считаются обработанными и уже не выдаются\n"
+"postgres=# -- в последующем вызове:\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+" lsn | xid | data \n"
+"-----+-----+------\n"
+"(0 rows)\n"
+"\n"
+"postgres=# BEGIN;\n"
+"postgres=# INSERT INTO data(data) VALUES('1');\n"
+"postgres=# INSERT INTO data(data) VALUES('2');\n"
+"postgres=# COMMIT;\n"
+"\n"
+"postgres=# SELECT * FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A688 | 10298 | BEGIN 10298\n"
+" 0/BA5A6F0 | 10298 | table public.data: INSERT: id[integer]:1 data[text]:'1'\n"
+" 0/BA5A7F8 | 10298 | table public.data: INSERT: id[integer]:2 data[text]:'2'\n"
+" 0/BA5A8A8 | 10298 | COMMIT 10298\n"
+"(4 rows)\n"
+"\n"
+"postgres=# INSERT INTO data(data) VALUES('3');\n"
+"\n"
+"postgres=# -- Также можно заглянуть вперёд в потоке изменений, не считывая эти изменения\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- Следующий вызов pg_logical_slot_peek_changes() снова возвращает те же изменения\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL);\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- Модулю вывода можно передать параметры, влияющие на форматирование\n"
+"postgres=# SELECT * FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-timestamp', 'on');\n"
+"    lsn    |  xid  |                          data                           \n"
+"-----------+-------+---------------------------------------------------------\n"
+" 0/BA5A8E0 | 10299 | BEGIN 10299\n"
+" 0/BA5A8E0 | 10299 | table public.data: INSERT: id[integer]:3 data[text]:'3'\n"
+" 0/BA5A990 | 10299 | COMMIT 10299 (at 2017-05-10 12:07:21.272494-04)\n"
+"(3 rows)\n"
+"\n"
+"postgres=# -- Не забудьте удалить слот, который вам больше не нужен, чтобы он\n"
+"postgres=# -- не потреблял ресурсы сервера:\n"
+"postgres=# SELECT pg_drop_replication_slot('regression_slot');\n"
+" pg_drop_replication_slot\n"
+"-----------------------\n"
+"\n"
+"(1 row)"
+
+#. +> REL9_6_3 REL9_6
 #: logicaldecoding.xml:57(programlisting)
 #, no-wrap
 msgid ""
@@ -282,6 +472,7 @@ msgstr ""
 "\n"
 "(1 row)"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:147(para)
 msgid ""
 "The following example shows how logical decoding is controlled over the "
@@ -300,6 +491,7 @@ msgstr ""
 "authentication\"/>) и чтобы значение <varname>max_wal_senders</varname> было "
 "достаточно большим и позволило установить дополнительное подключение."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:157(programlisting)
 #, no-wrap
 msgid ""
@@ -325,10 +517,12 @@ msgstr ""
 "<keycombo action=\"simul\"><keycap>Control</keycap><keycap>C</keycap></keycombo>\n"
 "$ pg_recvlogical -d postgres --slot test --drop-slot"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:172(title)
 msgid "Logical Decoding Concepts"
 msgstr "Концепции логического декодирования"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:180(para)
 msgid ""
 "Logical decoding is the process of extracting all persistent changes to a "
@@ -340,6 +534,7 @@ msgstr ""
 "формате, который можно интерпретировать, не имея полного представления о "
 "внутреннем состоянии базы данных."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:187(para)
 msgid ""
 "In <productname>PostgreSQL</productname>, logical decoding is implemented by "
@@ -348,14 +543,16 @@ msgid ""
 "such as a stream of tuples or SQL statements."
 msgstr ""
 "В <productname>PostgreSQL</productname> логическое декодирование реализуется "
-"путём перевода содержимого <link linkend=\"wal\">журнала упреждающей записи</"
-"link>, описывающего изменения на уровне хранения, в специальную форму уровня "
+"путём перевода содержимого <link linkend=\"wal\">журнала предзаписи</link>, "
+"описывающего изменения на уровне хранения, в специальную форму уровня "
 "приложения, например, в поток кортежей или операторов SQL."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:196(title)
 msgid "Replication Slots"
 msgstr "Слоты репликации"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:198(indexterm)
 msgid ""
 "<primary>replication slot</primary> <secondary>logical replication</"
@@ -364,6 +561,7 @@ msgstr ""
 "<primary>слот репликации</primary> <secondary>логическая репликация</"
 "secondary>"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:203(para)
 msgid ""
 "In the context of logical replication, a slot represents a stream of changes "
@@ -375,6 +573,7 @@ msgstr ""
 "исходном сервере. Через каждый слот передаётся последовательность изменений "
 "в одной базе данных."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:211(para)
 msgid ""
 "<productname>PostgreSQL</productname> also has streaming replication slots "
@@ -385,6 +584,7 @@ msgstr ""
 "репликации (см. <xref remap=\"4\" linkend=\"streaming-replication\"/>), но "
 "они используются несколько по-другому."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:217(para)
 msgid ""
 "A replication slot has an identifier that is unique across all databases in "
@@ -395,6 +595,7 @@ msgstr ""
 "кластере <productname>PostgreSQL</productname>. Слоты сохраняются независимо "
 "от подключений, использующих их, и защищены от сбоев сервера."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:223(para)
 msgid ""
 "A logical slot will emit each change just once in normal operation. The "
@@ -423,6 +624,7 @@ msgstr ""
 "подробнее в описании <link linkend=\"replication-origins\">источников "
 "репликации</link>."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:237(para)
 msgid ""
 "Multiple independent slots may exist for a single database. Each slot has "
@@ -436,6 +638,7 @@ msgstr ""
 "данных. Для большинства приложений каждому потребителю требуется отдельный "
 "слот."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:244(para)
 msgid ""
 "A logical replication slot knows nothing about the state of the receiver(s). "
@@ -450,6 +653,7 @@ msgstr ""
 "перестал получать предыдущий потребитель. Но в любой определённый момент "
 "получать изменения может только один потребитель."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:253(para)
 msgid ""
 "Replication slots persist across crashes and know nothing about the state of "
@@ -466,22 +670,51 @@ msgstr ""
 "удалить в результате <command>VACUUM</command>, пока они нужны этому слоту "
 "репликации. Поэтому, если слот больше не требуется, его следует удалять."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:265(title)
 msgid "Output Plugins"
 msgstr "Модули вывода"
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:266(para)
 msgid ""
 "Output plugins transform the data from the write-ahead log's internal "
 "representation into the format the consumer of a replication slot desires."
 msgstr ""
 "Модули вывода переводят данные из внутреннего представления в журнале "
-"упреждающей записи в формат, устраивающий потребителя слота репликации."
+"предзаписи в формат, устраивающий потребителя слота репликации."
 
+#. +> REL_10 REL9_6_3 REL9_6
 #: logicaldecoding.xml:273(title)
 msgid "Exported Snapshots"
 msgstr "Экспортированные снимки"
 
+#. +> REL_10
+#: logicaldecoding.xml:274(para)
+msgid ""
+"When a new replication slot is created using the streaming replication "
+"interface (see <xref linkend=\"protocol-replication-create-slot\"/>), a "
+"snapshot is exported (see <xref linkend=\"functions-snapshot-synchronization"
+"\"/>), which will show exactly the state of the database after which all "
+"changes will be included in the change stream. This can be used to create a "
+"new replica by using <link linkend=\"sql-set-transaction\"><literal>SET "
+"TRANSACTION SNAPSHOT</literal></link> to read the state of the database at "
+"the moment the slot was created. This transaction can then be used to dump "
+"the database's state at that point in time, which afterwards can be updated "
+"using the slot's contents without losing any changes."
+msgstr ""
+"Когда новый слот репликации создаётся через интерфейс потоковой репликации, "
+"экспортируется снимок (см. <xref remap=\"4\" linkend=\"protocol-replication-"
+"create-slot\"/>), который будет показывать ровно то состояние базы данных, "
+"изменения после которого будут включаться в поток изменений. Используя его, "
+"можно создать новую реплику, воспользовавшись командой <link linkend=\"sql-"
+"set-transaction\"><literal>SET TRANSACTION SNAPSHOT</literal></link>, чтобы "
+"получить состояние базы в момент создания слота. После этого данную "
+"транзакцию можно использовать для выгрузки состояния базы на момент экспорта "
+"снимка, а затем изменять это состояние, применяя содержимое слота, так что "
+"никакие изменения не будут потеряны."
+
+#. +> REL9_6_3 REL9_6
 #: logicaldecoding.xml:274(para)
 msgid ""
 "When a new replication slot is created using the streaming replication "
@@ -502,35 +735,59 @@ msgstr ""
 "linkend=\"sql-set-transaction\"><literal>SET TRANSACTION SNAPSHOT</literal></"
 "link>, чтобы получить состояние базы в момент создания слота. После этого "
 "данную транзакцию можно использовать для выгрузки состояния базы на момент "
-"экспорт снимка, а затем изменять это состояние, применяя содержимое слота, "
+"экспорта снимка, а затем изменять это состояние, применяя содержимое слота, "
 "так что никакие изменения не будут потеряны."
 
-#: logicaldecoding.xml:290(title)
+#. +> REL_10
+#: logicaldecoding.xml:287(para)
+msgid ""
+"Creation of a snapshot is not always possible. In particular, it will fail "
+"when connected to a hot standby. Applications that do not require snapshot "
+"export may suppress it with the <literal>NOEXPORT_SNAPSHOT</literal> option."
+msgstr ""
+"Создание снимка возможно не всегда. В частности, невозможно создать снимок "
+"при подключении к горячему резерву. Приложения, которым не требуется экспорт "
+"снимка, могут подавить его, воспользовавшись указанием "
+"<literal>NOEXPORT_SNAPSHOT</literal>."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:297(title)
 msgid "Streaming Replication Protocol Interface"
 msgstr "Интерфейс протокола потоковой репликации"
 
-#: logicaldecoding.xml:296(replaceable) logicaldecoding.xml:300(replaceable)
-#: logicaldecoding.xml:304(replaceable)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:303(replaceable) logicaldecoding.xml:307(replaceable)
+#: logicaldecoding.xml:311(replaceable)
 msgid "slot_name"
 msgstr "имя_слота"
 
-#: logicaldecoding.xml:296(replaceable)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:303(replaceable)
 msgid "output_plugin"
 msgstr "модуль_вывода"
 
-#: logicaldecoding.xml:296(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:303(literal)
 msgid "CREATE_REPLICATION_SLOT <placeholder-1/> LOGICAL <placeholder-2/>"
 msgstr "CREATE_REPLICATION_SLOT <placeholder-1/> LOGICAL <placeholder-2/>"
 
-#: logicaldecoding.xml:300(literal)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:307(literal)
 msgid "DROP_REPLICATION_SLOT <placeholder-1/>"
 msgstr "DROP_REPLICATION_SLOT <placeholder-1/>"
 
-#: logicaldecoding.xml:304(literal)
+#. +> REL_10
+#: logicaldecoding.xml:307(literal)
+msgid "WAIT"
+msgstr "WAIT"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:311(literal)
 msgid "START_REPLICATION SLOT <placeholder-1/> LOGICAL ..."
 msgstr "START_REPLICATION SLOT <placeholder-1/> LOGICAL ..."
 
-#: logicaldecoding.xml:292(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:299(para)
 msgid ""
 "The commands <placeholder-1/> are used to create, drop, and stream changes "
 "from a replication slot, respectively. These commands are only available "
@@ -542,7 +799,8 @@ msgstr ""
 "для соединения репликации; их нельзя использовать в обычном SQL. Подробнее "
 "они описаны в <xref remap=\"6\" linkend=\"protocol-replication\"/>."
 
-#: logicaldecoding.xml:313(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:320(para)
 msgid ""
 "The command <xref linkend=\"app-pgrecvlogical\"/> can be used to control "
 "logical decoding over a streaming replication connection. (It uses these "
@@ -552,11 +810,13 @@ msgstr ""
 "можно применять программу <xref linkend=\"app-pgrecvlogical\"/>. (Внутри неё "
 "используются эти команды.)"
 
-#: logicaldecoding.xml:321(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:328(title)
 msgid "Logical Decoding <acronym>SQL</acronym> Interface"
 msgstr "Интерфейс логического декодирования на уровне <acronym>SQL</acronym>"
 
-#: logicaldecoding.xml:323(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:330(para)
 msgid ""
 "See <xref linkend=\"functions-replication\"/> for detailed documentation on "
 "the SQL-level API for interacting with logical decoding."
@@ -565,7 +825,8 @@ msgstr ""
 "декодированием описан в <xref remap=\"6\" linkend=\"functions-replication\"/"
 ">."
 
-#: logicaldecoding.xml:328(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:335(para)
 msgid ""
 "Synchronous replication (see <xref linkend=\"synchronous-replication\"/>) is "
 "only supported on replication slots used over the streaming replication "
@@ -578,31 +839,35 @@ msgstr ""
 "дополнительные, не системные интерфейсы не поддерживают синхронную "
 "репликацию."
 
-#: logicaldecoding.xml:337(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:344(title)
 msgid "System Catalogs Related to Logical Decoding"
 msgstr "Системные каталоги, связанные с логическим декодированием"
 
-#: logicaldecoding.xml:339(para)
+#. +> REL_10
+#: logicaldecoding.xml:346(para)
 msgid ""
 "The <link linkend=\"view-pg-replication-slots"
 "\"><structname>pg_replication_slots</structname></link> view and the <link "
-"linkend=\"monitoring-stats-views-table\"><structname>pg_stat_replication</"
+"linkend=\"pg-stat-replication-view\"><structname>pg_stat_replication</"
 "structname></link> view provide information about the current state of "
 "replication slots and streaming replication connections respectively. These "
 "views apply to both physical and logical replication."
 msgstr ""
 "Информацию о текущем состоянии слотов репликации и соединений потоковой "
 "репликации отображают представления <link linkend=\"view-pg-replication-slots"
-"\"><structname>pg_replication_slots</structname></link> и <link linkend="
-"\"monitoring-stats-views-table\"><structname>pg_stat_replication</"
-"structname></link>, соответственно. Эти представления относятся и к "
-"физической, и к логической репликации."
+"\"><structname>pg_replication_slots</structname></link> и <link linkend=\"pg-"
+"stat-replication-view\"><structname>pg_stat_replication</structname></link>, "
+"соответственно. Эти представления относятся и к физической, и к логической "
+"репликации."
 
-#: logicaldecoding.xml:350(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:357(title)
 msgid "Logical Decoding Output Plugins"
 msgstr "Модули вывода логического декодирования"
 
-#: logicaldecoding.xml:351(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:358(para)
 msgid ""
 "An example output plugin can be found in the <link linkend=\"test-decoding"
 "\"><filename>contrib/test_decoding</filename></link> subdirectory of the "
@@ -612,15 +877,18 @@ msgstr ""
 "\"><filename>contrib/test_decoding</filename></link> в дереве исходного кода "
 "PostgreSQL."
 
-#: logicaldecoding.xml:359(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:366(title)
 msgid "Initialization Function"
 msgstr "Функция инициализации"
 
-#: logicaldecoding.xml:360(indexterm)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:367(indexterm)
 msgid "<primary>_PG_output_plugin_init</primary>"
 msgstr "<primary>_PG_output_plugin_init</primary>"
 
-#: logicaldecoding.xml:372(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:379(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct OutputPluginCallbacks\n"
@@ -649,7 +917,8 @@ msgstr ""
 "\n"
 "typedef void (*LogicalOutputPluginInit) (struct OutputPluginCallbacks *cb);"
 
-#: logicaldecoding.xml:363(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:370(para)
 msgid ""
 "An output plugin is loaded by dynamically loading a shared library with the "
 "output plugin's name as the library base name. The normal library search "
@@ -676,11 +945,13 @@ msgstr ""
 "<function>startup_cb</function>, <function>filter_by_origin_cb</function> и "
 "<function>shutdown_cb</function> могут отсутствовать."
 
-#: logicaldecoding.xml:395(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:402(title)
 msgid "Capabilities"
 msgstr "Возможности"
 
-#: logicaldecoding.xml:404(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:411(programlisting)
 #, no-wrap
 msgid ""
 "ALTER TABLE user_catalog_table SET (user_catalog_table = true);\n"
@@ -689,7 +960,8 @@ msgstr ""
 "ALTER TABLE user_catalog_table SET (user_catalog_table = true);\n"
 "CREATE TABLE another_catalog_table(data text) WITH (user_catalog_table = true);"
 
-#: logicaldecoding.xml:397(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:404(para)
 msgid ""
 "To decode, format and output changes, output plugins can use most of the "
 "backend's normal infrastructure, including calling output functions. Read "
@@ -710,11 +982,13 @@ msgstr ""
 "действиям относятся операции записи в таблицы, изменения DDL и вызов "
 "<literal>txid_current()</literal>."
 
-#: logicaldecoding.xml:415(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:422(title)
 msgid "Output Modes"
 msgstr "Режимы вывода"
 
-#: logicaldecoding.xml:417(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:424(para)
 msgid ""
 "Output plugin callbacks can pass data to the consumer in nearly arbitrary "
 "formats. For some use cases, like viewing the changes via SQL, returning "
@@ -742,11 +1016,13 @@ msgstr ""
 "передать в значении типа <type>text</type>. Это контролируется в сборках с "
 "включёнными проверочными утверждениями."
 
-#: logicaldecoding.xml:434(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:441(title)
 msgid "Output Plugin Callbacks"
 msgstr "Обработчики в модуле вывода"
 
-#: logicaldecoding.xml:436(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:443(para)
 msgid ""
 "An output plugin gets notified about changes that are happening via various "
 "callbacks it needs to provide."
@@ -754,7 +1030,8 @@ msgstr ""
 "Модуль вывода уведомляется о происходящих изменениях через различные "
 "обработчики, которые он должен установить."
 
-#: logicaldecoding.xml:441(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:448(para)
 msgid ""
 "Concurrent transactions are decoded in commit order, and only changes "
 "belonging to a specific transaction are decoded between the <literal>begin</"
@@ -770,7 +1047,8 @@ msgstr ""
 "точки сохранения заворачиваются в транзакцию, содержащую их, в том порядке, "
 "в како они выполнялись в этой транзакции."
 
-#: logicaldecoding.xml:453(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:460(para)
 msgid ""
 "Only transactions that have already safely been flushed to disk will be "
 "decoded. That can lead to a <command>COMMIT</command> not immediately being "
@@ -784,11 +1062,13 @@ msgstr ""
 "literal>, когда <varname>synchronous_commit</varname> имеет значение "
 "<literal>off</literal>."
 
-#: logicaldecoding.xml:463(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:470(title)
 msgid "Startup Callback"
 msgstr "Обработчик запуска"
 
-#: logicaldecoding.xml:468(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:475(programlisting)
 #, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeStartupCB) (struct LogicalDecodingContext *ctx,\n"
@@ -799,7 +1079,8 @@ msgstr ""
 "                                        OutputPluginOptions *options,\n"
 "                                        bool is_init);"
 
-#: logicaldecoding.xml:477(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:484(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct OutputPluginOptions\n"
@@ -812,7 +1093,8 @@ msgstr ""
 "    OutputPluginOutputType output_type;\n"
 "} OutputPluginOptions;"
 
-#: logicaldecoding.xml:464(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:471(para)
 msgid ""
 "The optional <function>startup_cb</function> callback is called whenever a "
 "replication slot is created or asked to stream changes, independent of the "
@@ -837,7 +1119,8 @@ msgstr ""
 "<literal>OUTPUT_PLUGIN_BINARY_OUTPUT</literal>. См. также <xref remap=\"4\" "
 "linkend=\"logicaldecoding-output-mode\"/>."
 
-#: logicaldecoding.xml:489(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:496(para)
 msgid ""
 "The startup callback should validate the options present in <literal>ctx-&gt;"
 "output_plugin_options</literal>. If the output plugin needs to have a state, "
@@ -848,16 +1131,19 @@ msgstr ""
 "поддерживать состояние, он может сохранить его в <literal>ctx-&gt;"
 "output_plugin_private</literal>."
 
-#: logicaldecoding.xml:498(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:505(title)
 msgid "Shutdown Callback"
 msgstr "Обработчик выключения"
 
-#: logicaldecoding.xml:505(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:512(programlisting)
 #, no-wrap
 msgid "typedef void (*LogicalDecodeShutdownCB) (struct LogicalDecodingContext *ctx);"
 msgstr "typedef void (*LogicalDecodeShutdownCB) (struct LogicalDecodingContext *ctx);"
 
-#: logicaldecoding.xml:500(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:507(para)
 msgid ""
 "The optional <function>shutdown_cb</function> callback is called whenever a "
 "formerly active replication slot is not used anymore and can be used to "
@@ -870,11 +1156,13 @@ msgstr ""
 "удаляется, прекращается только потоковая передача через него. <placeholder-1/"
 ">"
 
-#: logicaldecoding.xml:512(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:519(title)
 msgid "Transaction Begin Callback"
 msgstr "Обработчик начала транзакции"
 
-#: logicaldecoding.xml:518(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:525(programlisting)
 #, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeBeginCB) (struct LogicalDecodingContext *ctx,\n"
@@ -883,7 +1171,8 @@ msgstr ""
 "typedef void (*LogicalDecodeBeginCB) (struct LogicalDecodingContext *ctx,\n"
 "                                      ReorderBufferTXN *txn);"
 
-#: logicaldecoding.xml:514(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:521(para)
 msgid ""
 "The required <function>begin_cb</function> callback is called whenever a "
 "start of a committed transaction has been decoded. Aborted transactions and "
@@ -897,11 +1186,13 @@ msgstr ""
 "<parameter>txn</parameter> содержит метаинформацию о транзакции, в частности "
 "её идентификатор и время её фиксирования."
 
-#: logicaldecoding.xml:529(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:536(title)
 msgid "Transaction End Callback"
 msgstr "Обработчик завершения транзакции"
 
-#: logicaldecoding.xml:537(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:544(programlisting)
 #, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeCommitCB) (struct LogicalDecodingContext *ctx,\n"
@@ -912,7 +1203,8 @@ msgstr ""
 "                                       ReorderBufferTXN *txn,\n"
 "                                       XLogRecPtr commit_lsn);"
 
-#: logicaldecoding.xml:531(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:538(para)
 msgid ""
 "The required <function>commit_cb</function> callback is called whenever a "
 "transaction commit has been decoded. The <function>change_cb</function> "
@@ -924,11 +1216,13 @@ msgstr ""
 "вызываться обработчик <function>change_cb</function> для всех изменённых "
 "строк (если строки были изменены). <placeholder-1/>"
 
-#: logicaldecoding.xml:546(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:553(title)
 msgid "Change Callback"
 msgstr "Обработчик изменения"
 
-#: logicaldecoding.xml:555(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:562(programlisting)
 #, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeChangeCB) (struct LogicalDecodingContext *ctx,\n"
@@ -941,7 +1235,8 @@ msgstr ""
 "                                       Relation relation,\n"
 "                                       ReorderBufferChange *change);"
 
-#: logicaldecoding.xml:548(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:555(para)
 msgid ""
 "The required <function>change_cb</function> callback is called for every "
 "individual row modification inside a transaction, may it be an "
@@ -967,7 +1262,8 @@ msgstr ""
 "принадлежит строка, а структура <parameter>change</parameter> описывает "
 "передаваемое изменение строки."
 
-#: logicaldecoding.xml:571(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:578(para)
 msgid ""
 "Only changes in user defined tables that are not unlogged (see <xref linkend="
 "\"sql-createtable-unlogged\"/>) and not temporary (see <xref linkend=\"sql-"
@@ -978,11 +1274,13 @@ msgstr ""
 "createtable-unlogged\"/>) или временными (см. описание <xref remap=\"4\" "
 "linkend=\"sql-createtable-temporary\"/>)."
 
-#: logicaldecoding.xml:581(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:588(title)
 msgid "Origin Filter Callback"
 msgstr "Обработчик фильтрации источника"
 
-#: logicaldecoding.xml:588(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:595(programlisting)
 #, no-wrap
 msgid ""
 "typedef bool (*LogicalDecodeFilterByOriginCB) (struct LogicalDecodingContext *ctx,\n"
@@ -991,7 +1289,8 @@ msgstr ""
 "typedef bool (*LogicalDecodeFilterByOriginCB) (struct LogicalDecodingContext *ctx,\n"
 "                                               RepOriginId origin_id);"
 
-#: logicaldecoding.xml:583(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:590(para)
 msgid ""
 "The optional <function>filter_by_origin_cb</function> callback is called to "
 "determine whether data that has been replayed from <parameter>origin_id</"
@@ -1012,7 +1311,8 @@ msgstr ""
 "случае он должен вернуть false. Другие обработчики для фильтруемых "
 "транзакций и изменений вызываться не будут."
 
-#: logicaldecoding.xml:599(para)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:606(para)
 msgid ""
 "This is useful when implementing cascading or multidirectional replication "
 "solutions. Filtering by the origin allows to prevent replicating the same "
@@ -1026,11 +1326,13 @@ msgstr ""
 "можно также извлечь из транзакций и изменений, фильтрация с помощью этого "
 "обработчика гораздо более эффективна."
 
-#: logicaldecoding.xml:610(title)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:617(title)
 msgid "Generic Message Callback"
 msgstr "Обработчик произвольных сообщений"
 
-#: logicaldecoding.xml:615(programlisting)
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:622(programlisting)
 #, no-wrap
 msgid ""
 "typedef void (*LogicalDecodeMessageCB) (struct LogicalDecodingContext *ctx,\n"
@@ -1049,6 +1351,183 @@ msgstr ""
 "                                        Size message_size,\n"
 "                                        const char *message);"
 
+#. +> REL_10
+#: logicaldecoding.xml:619(para)
+msgid ""
+"The optional <function>message_cb</function> callback is called whenever a "
+"logical decoding message has been decoded. <placeholder-1/> The "
+"<parameter>txn</parameter> parameter contains meta information about the "
+"transaction, like the time stamp at which it has been committed and its XID. "
+"Note however that it can be NULL when the message is non-transactional and "
+"the XID was not assigned yet in the transaction which logged the message. "
+"The <parameter>lsn</parameter> has WAL location of the message. The "
+"<parameter>transactional</parameter> says if the message was sent as "
+"transactional or not. The <parameter>prefix</parameter> is arbitrary null-"
+"terminated prefix which can be used for identifying interesting messages for "
+"the current plugin. And finally the <parameter>message</parameter> parameter "
+"holds the actual message of <parameter>message_size</parameter> size."
+msgstr ""
+"Необязательный обработчик <function>message_cb</function> вызывается при "
+"получении сообщения логического декодирования. <placeholder-1/> Параметр "
+"<parameter>txn</parameter> содержит метаинформацию о транзакции, включая "
+"время её фиксации и её XID. Заметьте, однако, что в нём может передаваться "
+"NULL, когда сообщение нетранзакционное и транзакции, в которой было выдано "
+"сообщение, ещё не назначен XID. В параметре <parameter>lsn</parameter> "
+"отмечается позиция сообщения в WAL. Параметр <parameter>transactional</"
+"parameter> показывает, было ли сообщение передано как транзакционное. В "
+"параметре <parameter>prefix</parameter> передаётся некоторый префикс "
+"(завершающийся нулём), по которому текущий модуль может выделять "
+"интересующие его сообщения. И наконец, параметр <parameter>message</"
+"parameter> содержит само сообщение размером <parameter>message_size</"
+"parameter> байт."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:643(para)
+msgid ""
+"Extra care should be taken to ensure that the prefix the output plugin "
+"considers interesting is unique. Using name of the extension or the output "
+"plugin itself is often a good choice."
+msgstr ""
+"Необходимо дополнительно позаботиться о том, чтобы префикс, определяющий "
+"интересующие модуль вывода сообщения, был уникальным. Удачным выбором обычно "
+"будет имя расширения или самого модуля вывода."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:653(title)
+msgid "Functions for Producing Output"
+msgstr "Функции для формирования вывода"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:655(para)
+msgid ""
+"To actually produce output, output plugins can write data to the "
+"<literal>StringInfo</literal> output buffer in <literal>ctx-&gt;out</"
+"literal> when inside the <function>begin_cb</function>, <function>commit_cb</"
+"function>, or <function>change_cb</function> callbacks. Before writing to "
+"the output buffer, <function>OutputPluginPrepareWrite(ctx, last_write)</"
+"function> has to be called, and after finishing writing to the buffer, "
+"<function>OutputPluginWrite(ctx, last_write)</function> has to be called to "
+"perform the write. The <parameter>last_write</parameter> indicates whether a "
+"particular write was the callback's last write."
+msgstr ""
+"Чтобы действительно вывести данные, модули вывода могут записывать их в "
+"буфер <literal>StringInfo</literal> через <literal>ctx-&gt;out</literal>, "
+"внутри обработчиков <function>begin_cb</function>, <function>commit_cb</"
+"function> или <function>change_cb</function>. Прежде чем записывать данные в "
+"этот буфер, необходимо вызвать <function>OutputPluginPrepareWrite(ctx, "
+"last_write)</function>, а завершив запись в буфер, нужно вызвать "
+"<function>OutputPluginWrite(ctx, last_write)</function>, чтобы собственно "
+"произвести запись. Параметр <parameter>last_write</parameter> указывает, "
+"была ли эта определённая операция записи последней в данном обработчике."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:671(programlisting)
+#, no-wrap
+msgid ""
+"OutputPluginPrepareWrite(ctx, true);\n"
+"appendStringInfo(ctx-&gt;out, \"BEGIN %u\", txn-&gt;xid);\n"
+"OutputPluginWrite(ctx, true);"
+msgstr ""
+"OutputPluginPrepareWrite(ctx, true);\n"
+"appendStringInfo(ctx-&gt;out, \"BEGIN %u\", txn-&gt;xid);\n"
+"OutputPluginWrite(ctx, true);"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:668(para)
+msgid ""
+"The following example shows how to output data to the consumer of an output "
+"plugin: <placeholder-1/>"
+msgstr ""
+"Следующий пример показывает, как вывести данные для потребителя модуля "
+"вывода: <placeholder-1/>"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:681(title)
+msgid "Logical Decoding Output Writers"
+msgstr "Запись вывода логического декодирования"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:683(para)
+msgid ""
+"It is possible to add more output methods for logical decoding. For details, "
+"see <filename>src/backend/replication/logical/logicalfuncs.c</filename>. "
+"Essentially, three functions need to be provided: one to read WAL, one to "
+"prepare writing output, and one to write the output (see <xref linkend="
+"\"logicaldecoding-output-plugin-output\"/>)."
+msgstr ""
+"Архитектура сервера позволяет добавлять другие методы вывода для логического "
+"декодирования. За подробностями обратитесь к коду <filename>src/backend/"
+"replication/logical/logicalfuncs.c</filename>. По сути, необходимо "
+"реализовать три функции: одну для чтения WAL, другую для подготовки к "
+"записи, и третью для записи вывода (см. <xref remap=\"4\" linkend="
+"\"logicaldecoding-output-plugin-output\"/>)."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:694(title)
+msgid "Synchronous Replication Support for Logical Decoding"
+msgstr "Поддержка синхронной репликации для логического декодирования"
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:696(para)
+msgid ""
+"Logical decoding can be used to build <link linkend=\"synchronous-replication"
+"\">synchronous replication</link> solutions with the same user interface as "
+"synchronous replication for <link linkend=\"streaming-replication"
+"\">streaming replication</link>. To do this, the streaming replication "
+"interface (see <xref linkend=\"logicaldecoding-walsender\"/>) must be used "
+"to stream out data. Clients have to send <literal>Standby status update (F)</"
+"literal> (see <xref linkend=\"protocol-replication\"/>) messages, just like "
+"streaming replication clients do."
+msgstr ""
+"Логическое декодирование может использоваться для реализации <link linkend="
+"\"synchronous-replication\">синхронной репликации</link> с тем же внешним "
+"интерфейсом, что и синхронная репликация поверх <link linkend=\"streaming-"
+"replication\">потоковой репликации</link>. Для этого потоковая передача "
+"данных должна происходить через интерфейс потоковой репликации (см. <xref "
+"remap=\"4\" linkend=\"logicaldecoding-walsender\"/>). Клиенты такой "
+"репликации должны посылать сообщения <literal>Обновление состояния "
+"резервного сервера (F)</literal> (см. <xref remap=\"4\" linkend=\"protocol-"
+"replication\"/>), как и клиенты потоковой репликации."
+
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:709(para)
+msgid ""
+"A synchronous replica receiving changes via logical decoding will work in "
+"the scope of a single database. Since, in contrast to that, "
+"<parameter>synchronous_standby_names</parameter> currently is server wide, "
+"this means this technique will not work properly if more than one database "
+"is actively used."
+msgstr ""
+"Синхронная реплика, получающая изменения через логическое декодирование, "
+"будет работать в рамках одной базы данных. Так как "
+"<parameter>synchronous_standby_names</parameter> в настоящее время, "
+"напротив, устанавливается на уровне сервера, это означает, что этот подход "
+"не будет работать корректно при использовании нескольких баз данных."
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#. +> REL_10 REL9_6_3 REL9_6
+#: logicaldecoding.xml:0(None)
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#. +> REL9_6_3 REL9_6
+#: logicaldecoding.xml:339(para)
+msgid ""
+"The <link linkend=\"view-pg-replication-slots"
+"\"><structname>pg_replication_slots</structname></link> view and the <link "
+"linkend=\"monitoring-stats-views-table\"><structname>pg_stat_replication</"
+"structname></link> view provide information about the current state of "
+"replication slots and streaming replication connections respectively. These "
+"views apply to both physical and logical replication."
+msgstr ""
+"Информацию о текущем состоянии слотов репликации и соединений потоковой "
+"репликации отображают представления <link linkend=\"view-pg-replication-slots"
+"\"><structname>pg_replication_slots</structname></link> и <link linkend="
+"\"monitoring-stats-views-table\"><structname>pg_stat_replication</"
+"structname></link>, соответственно. Эти представления относятся и к "
+"физической, и к логической репликации."
+
+#. +> REL9_6_3 REL9_6
 #: logicaldecoding.xml:612(para)
 msgid ""
 "The optional <function>message_cb</function> callback is called whenever a "
@@ -1077,121 +1556,3 @@ msgstr ""
 "интересующие его сообщения. И наконец, параметр <parameter>message</"
 "parameter> содержит само сообщение размером <parameter>message_size</"
 "parameter> байт."
-
-#: logicaldecoding.xml:636(para)
-msgid ""
-"Extra care should be taken to ensure that the prefix the output plugin "
-"considers interesting is unique. Using name of the extension or the output "
-"plugin itself is often a good choice."
-msgstr ""
-"Необходимо дополнительно позаботиться о том, чтобы префикс, определяющий "
-"интересующие модуль вывода сообщения, был уникальным. Удачным выбором обычно "
-"будет имя расширения или самого модуля вывода."
-
-#: logicaldecoding.xml:646(title)
-msgid "Functions for Producing Output"
-msgstr "Функции для формирования вывода"
-
-#: logicaldecoding.xml:648(para)
-msgid ""
-"To actually produce output, output plugins can write data to the "
-"<literal>StringInfo</literal> output buffer in <literal>ctx-&gt;out</"
-"literal> when inside the <function>begin_cb</function>, <function>commit_cb</"
-"function>, or <function>change_cb</function> callbacks. Before writing to "
-"the output buffer, <function>OutputPluginPrepareWrite(ctx, last_write)</"
-"function> has to be called, and after finishing writing to the buffer, "
-"<function>OutputPluginWrite(ctx, last_write)</function> has to be called to "
-"perform the write. The <parameter>last_write</parameter> indicates whether a "
-"particular write was the callback's last write."
-msgstr ""
-"Чтобы действительно вывести данные, модули вывода могут записывать их в "
-"буфер <literal>StringInfo</literal> через <literal>ctx-&gt;out</literal>, "
-"внутри обработчиков <function>begin_cb</function>, <function>commit_cb</"
-"function> или <function>change_cb</function>. Прежде чем записывать данные в "
-"этот буфер, необходимо вызвать <function>OutputPluginPrepareWrite(ctx, "
-"last_write)</function>, а завершив запись в буфер, нужно вызвать "
-"<function>OutputPluginWrite(ctx, last_write)</function>, чтобы собственно "
-"произвести запись. Параметр <parameter>last_write</parameter> указывает, "
-"была ли эта определённая операция записи последней в данном обработчике."
-
-#: logicaldecoding.xml:664(programlisting)
-#, no-wrap
-msgid ""
-"OutputPluginPrepareWrite(ctx, true);\n"
-"appendStringInfo(ctx-&gt;out, \"BEGIN %u\", txn-&gt;xid);\n"
-"OutputPluginWrite(ctx, true);"
-msgstr ""
-"OutputPluginPrepareWrite(ctx, true);\n"
-"appendStringInfo(ctx-&gt;out, \"BEGIN %u\", txn-&gt;xid);\n"
-"OutputPluginWrite(ctx, true);"
-
-#: logicaldecoding.xml:661(para)
-msgid ""
-"The following example shows how to output data to the consumer of an output "
-"plugin: <placeholder-1/>"
-msgstr ""
-"Следующий пример показывает, как вывести данные для потребителя модуля "
-"вывода: <placeholder-1/>"
-
-#: logicaldecoding.xml:674(title)
-msgid "Logical Decoding Output Writers"
-msgstr "Запись вывода логического декодирования"
-
-#: logicaldecoding.xml:676(para)
-msgid ""
-"It is possible to add more output methods for logical decoding. For details, "
-"see <filename>src/backend/replication/logical/logicalfuncs.c</filename>. "
-"Essentially, three functions need to be provided: one to read WAL, one to "
-"prepare writing output, and one to write the output (see <xref linkend="
-"\"logicaldecoding-output-plugin-output\"/>)."
-msgstr ""
-"Архитектура сервера позволяет добавлять другие методы вывода для логического "
-"декодирования. За подробностями обратитесь к коду <filename>src/backend/"
-"replication/logical/logicalfuncs.c</filename>. По сути, необходимо "
-"реализовать три функции: одну для чтения WAL, другую для подготовки к "
-"записи, и третью для записи вывода (см. <xref remap=\"4\" linkend="
-"\"logicaldecoding-output-plugin-output\"/>)."
-
-#: logicaldecoding.xml:687(title)
-msgid "Synchronous Replication Support for Logical Decoding"
-msgstr "Поддержка синхронной репликации для логического декодирования"
-
-#: logicaldecoding.xml:689(para)
-msgid ""
-"Logical decoding can be used to build <link linkend=\"synchronous-replication"
-"\">synchronous replication</link> solutions with the same user interface as "
-"synchronous replication for <link linkend=\"streaming-replication"
-"\">streaming replication</link>. To do this, the streaming replication "
-"interface (see <xref linkend=\"logicaldecoding-walsender\"/>) must be used "
-"to stream out data. Clients have to send <literal>Standby status update (F)</"
-"literal> (see <xref linkend=\"protocol-replication\"/>) messages, just like "
-"streaming replication clients do."
-msgstr ""
-"Логическое декодирование может использоваться для реализации <link linkend="
-"\"synchronous-replication\">синхронной репликации</link> с тем же внешним "
-"интерфейсом, что и синхронная репликация поверх <link linkend=\"streaming-"
-"replication\">потоковой репликации</link>. Для этого потоковая передача "
-"данных должна происходить через интерфейс потоковой репликации (см. <xref "
-"remap=\"4\" linkend=\"logicaldecoding-walsender\"/>). Клиенты такой "
-"репликации должны посылать сообщения <literal>Обновление состояния "
-"резервного сервера (F)</literal> (см. <xref remap=\"4\" linkend=\"protocol-"
-"replication\"/>), как и клиенты потоковой репликации."
-
-#: logicaldecoding.xml:702(para)
-msgid ""
-"A synchronous replica receiving changes via logical decoding will work in "
-"the scope of a single database. Since, in contrast to that, "
-"<parameter>synchronous_standby_names</parameter> currently is server wide, "
-"this means this technique will not work properly if more than one database "
-"is actively used."
-msgstr ""
-"Синхронная реплика, получающая изменения через логическое декодирование, "
-"будет работать в рамках одной базы данных. Так как "
-"<parameter>synchronous_standby_names</parameter> в настоящее время, "
-"напротив, устанавливается на уровне сервера, это означает, что этот подход "
-"не будет работать корректно при использовании нескольких баз данных."
-
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: logicaldecoding.xml:0(None)
-msgid "translator-credits"
-msgstr "translator-credits"
